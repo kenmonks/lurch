@@ -32,7 +32,10 @@
  *      instantiating
  *   * `updateFreq` - how often to give a progress update during a pass
  *   * `badResultMsg` - what the feedback message should be internally to
- *     expressions which are not found to be propositionally valid 
+ *      expressions which are not found to be propositionally valid 
+ *   *  `runStudentTests` - use all of the student test files in the acid test suite
+ *   *  `startStudentTest` - the number of the first student test to run 
+ *   *  `endStudentTest` - the number of the last student test to run
  *
  */
 export const LurchOptions = { 
@@ -52,7 +55,10 @@ export const LurchOptions = {
   swapTheoremProofPairs: true ,
   updateProgress: async () => { }  ,
   updateFreq: 100 ,
-  badResultMsg: 'indeterminate' 
+  badResultMsg: 'indeterminate',
+  runStudentTests: false,
+  startStudentTest: 0,
+  endStudentTest: Infinity 
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -9,11 +9,17 @@ let start = Date.now()
 ////////////////////////////////////////////////////////////////////////////
 
 const verbose = true
+// Note that you can specify the start and end student files for smaller tests
+const startTest = LurchOptions.startStudentTest
+const endTest = LurchOptions.endStudentTest
+// const startTest = 10
+// const endTest = 10
+
 acid=[]
 const loadtest = (name, folder='acid tests', extension='lurch',
                   language='lurch', desc = '') => { 
   let lasttime = Date.now()
-  const showFile = verbose && !/studentfiles299/.test(folder)
+  const showFile = verbose && !/studentfiles/.test(folder)
   // student files have their own verbose mode
   if ( showFile ) 
     // avoid newline at the end of this by not using console.log
@@ -49,7 +55,7 @@ const getEquationResult = chain => {
   return 
 }
 
-// Load student test files
+// Load student test files iff requested
 if (LurchOptions.runStudentTests) {
   const studentFolder = 'math299/studentfiles299'
   const getStudentFiles = () => {
@@ -57,11 +63,7 @@ if (LurchOptions.runStudentTests) {
              .filter(x=>x.endsWith('.txt')) 
   }
   const studentFiles = getStudentFiles()
-  // Test the student files iff requested
-  // Note that you can specify the start and end files for smaller tests
-  const a = LurchOptions.firstStudentTest
-  const b = LurchOptions.lastStudentTest
-  studentFiles.slice(a,b)
+  studentFiles.slice(startTest,endTest+1)
               .forEach( (filename,i) => {
     let lasttime = Date.now()
     process.stdout.write(defaultPen(
@@ -96,7 +98,6 @@ loadtest('BIHchain','math299','txt','putdown','small BIH & trans chain test')
 loadtest('inapplicable','math299','txt','putdown','testing an inapplicable')
 // Misc test zone - edit for one-off tests
 // loadtest(filename, studentFolder, ext, 'putdown/lurch', filename)
-loadtest('assignment 21 student 7', 'math299/studentfiles299', 'txt', 'putdown', 'assignment 21 student 7')
 
 // skip a space
 console.log()
@@ -175,7 +176,7 @@ ${checkPen('    1')} ${stringPen('parser test')}
 console.log(`Test result stored in the array 'acid'\n`)
 
 ///////////////////////////////////////////////////////////
-// closing    
+// closing
 console.log(defaultPen(`done! (${msToTime(Date.now()-start)})`))
 // don't echo anything
 undefined
