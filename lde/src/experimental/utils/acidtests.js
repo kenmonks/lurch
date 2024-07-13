@@ -13,7 +13,7 @@ acid=[]
 const loadtest = (name, folder='acid tests', extension='lurch',
                   language='lurch', desc = '') => { 
   let lasttime = Date.now()
-  const showFile = verbose && !/studentfiles/.test(folder)
+  const showFile = verbose && !/studentfiles299/.test(folder)
   // student files have their own verbose mode
   if ( showFile ) 
     // avoid newline at the end of this by not using console.log
@@ -51,7 +51,7 @@ const getEquationResult = chain => {
 
 // Load student test files
 if (LurchOptions.runStudentTests) {
-  const studentFolder = 'math299/studentfiles'
+  const studentFolder = 'math299/studentfiles299'
   const getStudentFiles = () => {
     return fs.readdirSync( './proofs/'+studentFolder )
              .filter(x=>x.endsWith('.txt')) 
@@ -96,7 +96,7 @@ loadtest('BIHchain','math299','txt','putdown','small BIH & trans chain test')
 loadtest('inapplicable','math299','txt','putdown','testing an inapplicable')
 // Misc test zone - edit for one-off tests
 // loadtest(filename, studentFolder, ext, 'putdown/lurch', filename)
-loadtest('assignment 21 student 7', 'math299/studentfiles', 'txt', 'putdown', 'assignment 21 student 7')
+loadtest('assignment 21 student 7', 'math299/studentfiles299', 'txt', 'putdown', 'assignment 21 student 7')
 
 // skip a space
 console.log()

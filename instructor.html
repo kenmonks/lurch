@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <title>Lurch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="module" src="lurchmath/editor.js"></script>
+  <script type="module" src="lde/src/experimental/lde-debug.js"></script>
+  <link rel="shortcut icon" href="lurchmath/favicon.ico">
+  <link rel="stylesheet" href="lurchmath/main-app-styles.css">
+</head>
+
+<body onbeforeunload='return unloadmsg()'>
+  <div id="editor-container">
+    <div id="logo">Lurch<span id="check">&#x2713</span></div>
+  </div>
+  <script>
+    unloadmsg = () => { return "Did you save your work?" }
+    window.addEventListener('load', () => {
+      
+      // toggle to use the instructor menu
+      const instructormode =  true
+      
+      // make sure editor.js doesn't show or hide the menu overwriting ours
+      localStorage.setItem( 'lurch-developer mode on', false )
+
+      // options go here
+      const options = {
+        preventLeaving: true, 
+        autoSaveEnabled: false,
+        editor: {
+          draggable_modal: true,
+          menubar : 'file edit format math developer help',
+          content_css : [ 'document', 
+          // `lurchmath/editor-styles.css`,
+          // `lurchmath/leftborder-theme.css`+`?nocache=${new Date().getTime()}`,
+          `lurchmath/syntax-theme.css`+`?nocache=${new Date().getTime()}`,
+          // `lurchmath/syntax-theme.css`,
+          'https://unpkg.com/mathlive@0.100.0/dist/mathlive-static.css' ]
+        },
+        menuData: {
+          file: {
+            title: 'File',
+            items: 'newlurchdocument opendocument savedocument exportlatex | print'
+          },
+          edit: {
+            title: 'Edit',
+            items: 'paragraphabove paragraphbelow | undo redo | cut copy paste pastetext | selectall | link unlink openlink | searchreplace | listprops'
+          },
+          format: {
+            title: 'Format',
+            items: 'expositorymath hr codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | removeformat'
+          },
+          math: {
+            title: 'Math',
+            items: 'expression environment | viewdependencyurls togglemeaning validate'
+          }
+        },
+        helpPages: [
+          {
+            title: 'Math 299 Home Page',
+            url: 'https://monks.scranton.edu/math299'
+          },
+          {
+            title: 'Quick Start Guide',
+            url: '?load=help/quick-start-guide.lurch'
+          },
+          {
+            title: 'Example Proofs',
+            url: '?load=help/example-proofs.lurch'
+          },
+          {
+            title: 'Lurch Math Reference',
+            url: 'lde/src/experimental/parsers/lurch-parser-docs.html'
+          }
+        ],
+        // fileOpenTabs can be any subset of:
+        //    'your computer',
+        //    'the web',
+        //    'Dropbox',
+        //    'in-browser storage'
+        // fileSaveTabs can be any subset of:
+        //    'your computer',
+        //    'Dropbox',
+        //    'in-browser storage'
+        // fileDeleteTabs can be any subset of:
+        //    'Dropbox',
+        //    'in-browser storage'
+        fileSaveTabs: ['your computer'],
+        fileOpenTabs: ['your computer', 'the web'],
+        appRoot: './lurchmath',
+        appDefaults: {
+          'notation': 'Lurch notation',
+          'expression editor type': 'Advanced',
+          'expository math editor type': 'Advanced',
+          'dollar sign shortcut': true,
+          'default shell style': 'minimal',
+          'application width in window': 'Fixed size',
+          'developer mode on': false,
+          'default open dialog tab': 'From your computer',
+          'default save dialog tab': 'To your computer',
+          'preferred meaning style': 'Code',
+          'add LaTeX document wrapper': false,
+          'export LaTeX selection only': false,
+          'export LaTeX shells': false
+        },
+        documentDefaults: {
+          'notation': 'Lurch notation',
+          'shell style': 'minimal'
+        }
+      }
+      // add developer menu if requested
+      if (instructormode) options.menuData.developer =
+        { title: 'Instructor',
+          items: 'editdependencyurls | extractheader embedheader | redpen | docsettings preferences | downloaddocumentcode'
+        }
+
+      Lurch.createApp(document.getElementById('editor-container'), options)
+    } )
+  </script>
+</body>
+
+</html>

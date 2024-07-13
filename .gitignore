@@ -7,17 +7,9 @@ node_modules/
 
 # ignore lots of stuff for local customizations
 
-# ignore all html and markdown files in the root folder ...
-/*.html
-/*.md
 # ignore the initproofs.js file for Lode
 initproofs.js
-# ... except for the readme file
-!README.md
+
 # ignore the following folders from math299
-/*299*
-/*pima*
-/math
-/help
-test\ files
-lde/src/experimental/proofs/math299/studentfiles
+/math299
+studentfiles299

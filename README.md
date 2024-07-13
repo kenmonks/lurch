@@ -1,10 +1,7 @@
+# Lurch for Math 299
 
-# Lurch
+### Ken Monks - University of Scranton - 2024
 
-This repository is becoming the central location for the latest version of the Lurch project.
-The migration from three other repositories into this one is still in progress,
-but when it completes, it will make it much easier for all that code to work together.
+Math 299 is the undergraduate Introduction to Proof course for math majors.  This repository contains all of the rule definition libraries and homework assignments given on Lurch during the Spring 2024 semester.  The file `welcome.html` has links to those documents, and some other information.  It can be accessed via Github Pages at [kenmonks.github.io/299-site/welcome.html](kenmonks.github.io/299-site/welcome.html). 
 
-If you're interested in learning more about the project now, please check out
-[the project website, here](http://lurchmath.github.io).
-
+To use this as a template for your own Lurch course content, simply fork this repository to your own account, and then use Github Pages to serve the files from your forked copy.  To enable the optional node utilties, run `npm install` in the `lde` folder.
