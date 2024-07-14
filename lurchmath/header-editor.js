@@ -370,7 +370,7 @@ export const install = editor => {
     // Revealing these previews also shows a search/filter box in the toolbar.
     editor.ui.registry.addMenuItem( 'viewdependencyurls', {
         text : 'Show/Hide rules',
-        icon : 'character-count',
+        icon: 'preview',
         shortcut : 'meta+alt+0',
         tooltip : 'View the mathematical content on which this document depends',
         onAction : () => {
