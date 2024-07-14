@@ -266,6 +266,7 @@ window.Lurch = {
                 browser_spellcheck: true,
                 contextmenu : 'atoms',
                 plugins : 'lists link',
+                link_context_toolbar: true,
                 statusbar : false,
                 setup : editor => {
                     // Save the options object for any part of the app to reference:
