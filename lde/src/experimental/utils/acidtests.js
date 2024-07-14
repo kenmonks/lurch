@@ -13,7 +13,7 @@ const verbose = true
 const startTest = LurchOptions.startStudentTest
 const endTest = LurchOptions.endStudentTest
 // const startTest = 10
-// const endTest = 10
+// const endTest = 12
 
 acid=[]
 const loadtest = (name, folder='acid tests', extension='lurch',
@@ -66,8 +66,9 @@ if (LurchOptions.runStudentTests) {
   studentFiles.slice(startTest,endTest+1)
               .forEach( (filename,i) => {
     let lasttime = Date.now()
+    const numfiles = Math.min(studentFiles.length,endTest-startTest+1)
     process.stdout.write(defaultPen(
-      `Loading student test file ${i} of ${studentFiles.length}`.padEnd(50,'.')))
+      `Loading student test file ${i} of ${numfiles}`.padEnd(50,'.')))
     loadtest(filename, studentFolder, 'txt', 'putdown', filename)
     console.log(attributePen(
       `${msToTime(Date.now()-lasttime).padStart(11,' ')} (${msToTime(Date.now()-start)} total)`))
