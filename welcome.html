@@ -91,11 +91,15 @@ dd {
   <h1 style='margin:0;'>Lurch for Math 299</h1>
   <img src='lurchlogo.png' style='margin-left:10px' width='15%'>
 </div>
-<p>Lurch is a math editor that can check your proofs (coauthored with Nathan Carter). Instructors who would like to create their own Lurch course materials using the rule libraries and content from my <a href='https://monks.scranton.edu/math299'>Math 299 course (Spring 2024)</a> can find supporting materials here. NOTE: much of this is under construction.</p>
+<p>Lurch is a math editor that can check your proofs (coauthored with <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to create their own Lurch course materials using the rule libraries and content from my <a href='https://monks.scranton.edu/math299'>Math 299 course (Spring 2024)</a> can find supporting materials here. NOTE: much of this is under construction.</p>
 
-<h2>Lurch for Instructors</h2>
-		 <a href='' class='button' onclick="openLurch('instructor.html'); return false;">
-			Lurch</a> &#8211; is a math word processor that can check your proofs! This button will open a blank document with no rules or background material in the instructor version of Lurch.
+<h2>Documentation (instructor version)</h2>
+<ul class='disc'>
+  <li><a href='instructor.html?load=help/quick-start-guide.lurch'>Quick Start Guide</a></li>
+	<li><a href='instructor.html?load=help/example-proofs.lurch'>Examples</a> &#8211; a few proofs done in Lurch using the topics defined above.</li>
+  <li><a href="lurch-parser-docs.html">Lurch
+				Syntax</a> &#8211; a quick reference showing how to type various math expressions in Lurch</li>
+</ul>
 
 <h2>Math 299 Lurch Rule Libraries</h2>
 <div style=
@@ -171,16 +175,11 @@ dd {
 			
 		<dt><a href='instructor.html?load=math/Functions-Sets-Equations-Logic.lurch'>Functions, Sets, Equations, and Logic</a></dt>
 		  <dd>Functions, Set Theory Theorems, Set Theory, Equations, Logic Theorems, Predicate Logic, Propositional Logic.</dd>
+
+    <dt><a href='instructor.html?load=math/Topology.lurch'>Topology</a> </dt>
+			<dd> Defines <code>topological space</code>, <code>open</code>, <code>closed</code>, and <code>continuous</code> (in a toplogical space). Includes the Functions library above. (<a href="instructor.html?load=math/Topology-Rules.lurch">view rules</a>)</dd>  
 	</dl>
 </div>
-
-<h2>Documentation</h2>
-<ul class='disc'>
-  <li><a href='instructor.html?load=help/quick-start-guide.lurch'>Quick Start Guide</a></li>
-	<li><a href='instructor.html?load=help/example-proofs.lurch'>Examples</a> &#8211; a few proofs done in Lurch using the topics defined above.</li>
-  <li><a href="lurch-parser-docs.html">Lurch
-				Syntax</a> &#8211; a quick reference showing how to type various math expressions in Lurch</li>
-</ul>
 
 <h2>Example Assignments</h2>
 <div>
@@ -215,10 +214,13 @@ dd {
   </dl>
 </div>
 
+<h2>Lurch for Instructors</h2>
+		 <a href='' class='button' onclick="openLurch('instructor.html'); return false;">
+			Lurch</a> &#8211; is a math word processor that can check your proofs! This button will open a blank document with no rules or background material in the instructor version of Lurch.
+
 <h2>Lurch for Students</h2>
 		 <a href='' class='button' onclick="openLurch('/'); return false;">
 			Lurch</a> &#8211; This button will open a blank document with no rules or background material in the student version of Lurch.  The only difference is that the student version does not have the Instructor menu.
-
 
     </div><!-- container -->
   </div><!-- content-block -->
