@@ -3,12 +3,12 @@
  * Lurch files and libraries in a local LFY installation.  To run it, simply
  * call `toc()` in Lode.
  *
- * It will create a file in the root of the LFY called `toc.html`.  When opened
+ * It will create a file in the root of the Site called `toc.html`.  When opened
  * in the browser it shows a collapsible nested list of all of the folders
  * specified by the Lode global `contentFolders` array, and hyperlinks to any
  * `.lurch` files in those folders that when clicked will open the given file
  * directly in Lurch. For lurch files in local folders that are not contained in
- * the LFY root you can create a symbolic link to those folders to have them
+ * the Site root you can create a symbolic link to those folders to have them
  * included.
  */
 
@@ -25,7 +25,7 @@ const CSS = fs.readFileSync( path.join(
     path.dirname( url.fileURLToPath( import.meta.url ) ),
     'toc.css' ), 'utf8' )
 
-// We can assume that for an LFY the root folder of the server contains
+// We assume that for an LFY the root folder of the server contains
 // the lurchmath repo as one of its subfolder.
 const rootFolder = path.resolve(url.fileURLToPath( import.meta.url ),'../../..')
 

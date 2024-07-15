@@ -1,0 +1,7 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" rx="4" ry="4" fill="#FFF" />
+  <text x="8" y="12" font-size="12" font-weight= "800"
+   text-anchor="middle" fill="#357a28">L</text>
+  <!-- red pen color : "#DA1D0C" -->
+  <!-- green check color : "#67AD5B" -->
+</svg>

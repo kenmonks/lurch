@@ -516,7 +516,7 @@ StringLiteral = $('"' [^"]* '"')
 Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs)
                      !alphanum { return txt(a) }
   // Shorthands
-  Equiv   = 'equiv'i { return '\\text{ iff }' }
+  Equiv   = 'equiv'i { return '~\\equiv~' }
   BIH     = $('since'i / 'because'i / 'recall'i)
   Ruleset = $(('rules'i / 'axioms'i / 'definitions'i) ':'?) 
   Rule    = $(('rule'i / 'axiom'i / 'definition'i) ':'?)

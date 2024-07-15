@@ -807,7 +807,7 @@ function peg$parse(input, options) {
   var peg$f1 = function(a) { return a.join(',') };
   var peg$f2 = function(a) { return a.replace(/"([^"]*)"/,"\\text{``$1''}") };
   var peg$f3 = function(a) { return txt(a) };
-  var peg$f4 = function() { return '\\text{ iff }' };
+  var peg$f4 = function() { return '~\\equiv~' };
   var peg$f5 = function() { return 'Substitution' };
   var peg$f6 = function(a, b) { 
           return (/^\s*:\s*$/.test(a)) ? b : `${txt(a)} ${b}` };

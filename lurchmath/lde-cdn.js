@@ -8,9 +8,9 @@
  */
 
 export {
-    LogicConcept, MathConcept,
-    Environment, Declaration, Expression, LurchSymbol
-} from 'https://cdn.jsdelivr.net/gh/lurchmath/lde@master/src/index.js'
+  LogicConcept, MathConcept,
+  Environment, Declaration, Expression, LurchSymbol
+} from '../lde/src/index.js' 
 
-import branchLDE from 'https://cdn.jsdelivr.net/gh/lurchmath/lde@a584652687e37356dad01cd7eeea84cecad56b52/src/experimental/global-validation.js'
+import branchLDE from '../lde/src/experimental/global-validation.js'
 export const LDE = branchLDE

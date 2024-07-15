@@ -16,6 +16,8 @@
     
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300' rel='stylesheet' type='text/css'>
     
+    <link rel="shortcut icon" href="favicon.svg">
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.js"></script>
     		
@@ -28,6 +30,15 @@
 			};
 		</script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script"></script>
+    <script>
+      // JavaScript to set all links to open in a new tab
+      document.addEventListener("DOMContentLoaded", function() {
+          const links = document.querySelectorAll('a[href]')
+          links.forEach(function(link) {
+              link.setAttribute('target', '_blank')
+          })
+      })
+  </script>
   </head>
 
   <body>
@@ -112,7 +123,7 @@ dd {
 		<dt><a href="instructor.html?load=math/Equations.lurch">Equations</a></dt>
 		  <dd>defines a single &#8216;rule&#8217; that enables Lurch to validate transitive chains of equalities without needing substitution, reflexivity, symmetry, or transitivity (<a href="instructor.html?load=math/Equations-Rules.lurch">view rules</a>)</dd>
 			
-		<dt><a href="instructor.html?load=math/Number-theory-theorems.lurch">Number Theory Theorems</a></dt>   <dd>provides some useful theorems from Number Theory that are provable from the Peano Axioms (<a href="instructor.html?load=math/Number-theory-theorems.lurch">view rules</a>)</dd>
+		<dt><a href="instructor.html?load=math/Number-theory-theorems.lurch">Number Theory Theorems</a></dt>   <dd>provides some useful theorems from Number Theory that are provable from the Peano Axioms (<a href="instructor.html?load=math/Number-theory-theorems-Rules.lurch">view rules</a>)</dd>
 		
 		<dt><a href="instructor.html?load=math/Sequences.lurch">Sequences and Recursion</a></dt>
 		  <dd>defines <code>summation</code> $\left(\sum\right)$, <code>Fibonnaci numbers</code> $\left(F_n\right)$, <code>factorial</code> $\left(!\right)$, <code>multinomial coefficients</code> $\binom{n}{k}$, <code>binomial coefficients</code>, <code>exponentiation</code> $\left(z^n\right)$ (<a href="instructor.html?load=math/Sequences-Rules.lurch">view rules</a>)</dd>
