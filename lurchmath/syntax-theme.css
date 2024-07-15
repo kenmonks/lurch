@@ -274,7 +274,7 @@ body.shell-style-boxed {
   }
   /* Add a shell title for premises */
   [data-metadata_type='"premise"']::before {
-    content: "Premise:";
+    content: "Premises:";
     left: -6rem;
   }
   /* manually handle nested premises */
@@ -368,6 +368,12 @@ body.shell-style-boxed
   background-color: var(--rule-color);
   border-color: var(--rule-color);
 }
+/* Premises */
+body.shell-style-boxed {
+  [data-metadata_type*="premise"] {
+    background-color: #fff6e9;
+  }
+}
 /* Theorems */
 [data-metadata_type*="theorem"]:not(.atom-is-selected, :hover), 
 [data-metadata_type*="theorem"]:not(.atom-is-selected, :hover) .lurch-atom {
@@ -386,7 +392,7 @@ body.shell-style-boxed
 
 /* Highlight on hover */
 
-/* in both views hovered inline atomms use the darker hover color */
+/* in both views hovered inline atoms use the darker hover color */
 span.lurch-atom:hover {
   background-color: var(--hover-color);
   border-color: var(--hover-color);
