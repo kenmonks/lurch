@@ -585,29 +585,33 @@ export class Rule extends Shell {
         shellLC.makeIntoA( 'given' )
         shellLC.makeIntoA( 'Rule' )
     }
-    contextMenu ( forThis ) {
-        const result = super.contextMenu( forThis )
-        result.unshift( {
-            text : 'Copy rule as a template',
-            onAction : () => {
-                const copy = this.element.cloneNode( true )
-                const makeTemplate = node => {
-                    if ( Atom.isAtomElement( node ) ) {
-                        const atom = Atom.from( node, this.editor )
-                        if ( atom.getMetadata( 'type' ) == 'premise' )
-                            atom.setMetadata( 'type', 'subproof' )
-                        if ( node.tagName == 'DIV' )
-                            Array.from( node.childNodes ).forEach( makeTemplate )
-                    } else {
-                        Array.from( node.childNodes ).forEach( makeTemplate )
-                    }
-                }
-                makeTemplate( copy )
-                copyHTMLToClipboard( copy.innerHTML )
-            }
-        } )
-        return result
-    }
+    // TODO: debug this.  Copying a rule and pasting it put the conclusion
+    // in as an expression labeled as a subproof.
+    //
+    // contextMenu ( forThis ) {
+    //     const result = super.contextMenu( forThis )
+    //     result.unshift( {
+    //         text : 'Copy rule as a template',
+    //         onAction : () => {
+    //             const copy = this.element.cloneNode( true )
+    //             const makeTemplate = node => {
+    //                 if ( Atom.isAtomElement( node ) ) {
+    //                     const atom = Atom.from( node, this.editor )
+    //                     if ( atom.getMetadata( 'type' ) == 'premise' )
+    //                         node.replaceWith( ...node.childNodes )
+    //                         atom.setMetadata( 'type', 'subproof' )
+    //                     if ( node.tagName == 'DIV' )
+    //                         Array.from( node.childNodes ).forEach( makeTemplate )
+    //                 } else {
+    //                     Array.from( node.childNodes ).forEach( makeTemplate )
+    //                 }
+    //             }
+    //             makeTemplate( copy )
+    //             copyHTMLToClipboard( copy.innerHTML )
+    //         }
+    //     } )
+    //     return result
+    // }
 }
 
 /**
