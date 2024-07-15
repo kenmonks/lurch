@@ -143,20 +143,34 @@ dd {
 </div>
 
 <h2>Other Useful Contexts</h2>
+
 <div style=
 	'background-color:#e7f3fd; 
 	 padding:1rem 1rem 0.25rem 1rem;
 	 margin-left:0;
 	 border-radius: 12pt;'>
+  <p><strong>Additional Rules.</strong> The following rules can be optionally added by the instructor to any context above in a particular document. Currently, only one of the three Arithmetic rules can be used in a single document.</p>
+  <dl>
+    <dt><a href='instructor.html?load=math/Arithmetic-naturals.lurch'>Arithmetic in the Natural Numbers</a> </dt>
+			<dd> Allows the user to say <code>by arithmetic</code> after an expression to try to justify it using a CAS.  The expression can only contain natural number constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$, and $\^$, and the relations $=$, $\leq$, and $\lt$. (<a href="instructor.html?load=math/Arithmetic-naturals-Rules.lurch">view rules</a>)</dd>
+    <dt><a href='instructor.html?load=math/Arithmetic-integers.lurch'>Arithmetic in the Integers</a> </dt>
+			<dd> Allows the user to say <code>by arithmetic</code> after an expression to try to justify it using a CAS.  The expression can only contain natural number constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$, $\^$, and $-$ and the relations $=$, $\leq$, and $\lt$. Exponents cannot be negative. (<a href="instructor.html?load=math/Arithmetic-integers-Rules.lurch">view rules</a>)</dd>
+    <dt><a href='instructor.html?load=math/Arithmetic-rationals.lurch'>Arithmetic in the Rationals</a> </dt>
+			<dd> Allows the user to say <code>by arithmetic</code> after an expression to try to justify it using a CAS.  The expression can only contain natural number constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$, $\^$, $-$, and $/$, and the relations $=$, $\leq$, and $\lt$. Exponents must be integers and you cannot divide by zero. (<a href="instructor.html?load=math/Arithmetic-rationals-Rules.lurch">view rules</a>)</dd>
+    <dt><a href='instructor.html?load=math/Algebra.lurch'>Algebra</a> </dt>
+			<dd> Allows the user to say <code>by algebra</code> after any (binary) equation to try to justify it using a CAS.  There are no restrictions on what the expression can contain, so use at your own discretion.  The identity is evaluated using <a href="http://algebrite.org">Algebrite</a>. (<a href="instructor.html?load=math/Algebra-Rules.lurch">view rules</a>)</dd>
+  </dl>
+
+  <p><strong>Useful Cumulative Contexts.</strong> These contexts combine some proper subsets of the cumulative Math 299 contexts listed above.</p>
 	<dl>
     <dt><a href='instructor.html?load=math/Equations-Logic.lurch'>Equations and Logic Only</a> </dt>
 			<dd> Equations, Logic Theorems, Predicate Logic, Propositional Logic.</dd>
 			
   	<dt><a href='instructor.html?load=math/Sets-Equations-Logic.lurch'>Sets, Equations, and Logic</a></dt>
-			<dd> Set Theory, Equations, Logic Theorems, Predicate Logic, Propositional Logic.</dd>
+			<dd> Set Theory, Equations, Logic Theorems, Predicate Logic, Propositional Logic.  This does not include Set Theory Theorems.</dd>
 			
 		<dt><a href='instructor.html?load=math/Functions-Sets-Equations-Logic.lurch'>Functions, Sets, Equations, and Logic</a></dt>
-		  <dd>Functions, Set Theory, Equations, Logic Theorems, Predicate Logic, Propositional Logic.</dd>
+		  <dd>Functions, Set Theory Theorems, Set Theory, Equations, Logic Theorems, Predicate Logic, Propositional Logic.</dd>
 	</dl>
 </div>
 
@@ -240,4 +254,3 @@ dd {
 
 </body>
 </html>
-

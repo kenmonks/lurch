@@ -274,7 +274,7 @@ body.shell-style-boxed {
   }
   /* Add a shell title for premises */
   [data-metadata_type='"premise"']::before {
-    content: "Premises:";
+    content: "Premise:";
     left: -6rem;
   }
   /* manually handle nested premises */
