@@ -165,7 +165,7 @@
       strictPartialOrder  : '\\text{strict partial order}' ,
       partialOrder        : '\\text{partial order}'        ,
       totalOrder          : '\\text{total order}'          ,
-      topSpace            : '\\text{topologial space}'          
+      topSpace            : '\\text{topological space}'          
     } 
     return (tex[s]) ? tex[s] : s
   }
