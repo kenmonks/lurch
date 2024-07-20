@@ -34,7 +34,7 @@ const fileToHTML = ( name, relPath ) => {
     const relPathName = 
         path.join( path.sep, relPath , name ).replace(/#/g,'%2523')
     return `<div class="file">
-        <a href="/?load=${relPathName}" target="_blank">${name}</a>
+        <a href="instructor.html?load=${relPathName}" target="_blank">${name}</a>
     </div>`
 }
 
