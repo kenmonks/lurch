@@ -4,16 +4,19 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
             <div id="metadata" style="display: none;"></div>
             <div id="document"><hr><hr>
 <h2>This is the Document Context</h2>
-<p>If this was a real document we would list rules and definitions here that you could use in your proofs.&nbsp; For example, we <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;declare subset, in&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">declare </span><span class="ML__cmr">&sube;</span><span class="ML__text"> and </span><span class="ML__cmr">&isin;</span></span></span></span></span> to be constants, and have simple rules like this.</p>
+<p>If this was a real document we would list rules and definitions here that you could use in your proofs.&nbsp; For example, we <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;declare subset, in, 1,2,+,=&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">declare </span><span class="ML__cmr">&sube;</span><span class="ML__text">, </span><span class="ML__cmr">&isin;</span><span class="ML__text">, </span><span class="ML__cmr">1</span><span class="ML__text">, </span><span class="ML__cmr">2</span><span class="ML__text">, </span><span class="ML__cmr">+</span><span class="ML__text">, and </span><span class="ML__cmr">=</span></span></span></span></span> to be constants, and have simple rules like this.</p>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Definition of subset:&nbsp;</strong>If <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A subset B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span> and <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem (iconic math fact): &nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;1+1=2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">1</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span></span></span></span></span></p>
 </div>
 <p>Some documents don't have any context.&nbsp; Other documents can have hundreds of rules in their context.&nbsp; All of them appear here.&nbsp; Choosing&nbsp;<code>Show/Hide feedback</code>from the math menu (or pressing its hotkey) will alternately show and hide this context.</p>
 <hr><hr>

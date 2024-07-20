@@ -79,7 +79,7 @@ export const install = editor => {
         searchBox.classList.add( 'search-input' )
         const searchLabel = document.createElement( 'p' )
         searchLabel.classList.add( 'search-label' )
-        searchLabel.textContent = 'Search rules: '
+        searchLabel.textContent = 'Show rules that mention'
         searchLabel.appendChild( searchBox )
         searchCounter = new Text( '' )
         searchLabel.appendChild( searchCounter )

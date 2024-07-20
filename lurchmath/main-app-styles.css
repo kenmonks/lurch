@@ -80,7 +80,7 @@ body:not(.fullscreen) #editor-container {
   margin : 12px 0 6px;
 }
 .tox .search-input {
-  margin: 0 12px;
+  margin: 0 18px 0 6px;
   padding : 3px;
   border : 1px solid #90979E;
   border-radius : 4px;

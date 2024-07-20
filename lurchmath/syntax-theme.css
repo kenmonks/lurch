@@ -290,29 +290,37 @@ body.shell-style-boxed {
 
 /* feedback icons on inline atoms */
 span.feedback-marker-valid::after,
+span.marker-checkmark::after,
 span.feedback-marker-indeterminate::after,
+span.marker-questionmark::after,
 span.feedback-marker-invalid::after,
+span.marker-redx::after,
 span.feedback-marker-inapplicable::after,
+span.marker-nosymbol::after,
 span.feedback-marker-error::after {
   font-family: "Lucida Grande";
   font-weight: bold;
 }
-span.feedback-marker-valid::after {
+span.feedback-marker-valid::after,
+span.marker-checkmark::after {
   content: "✓";
   color: var(--check-color);
 }
-span.feedback-marker-indeterminate::after {
+span.feedback-marker-indeterminate::after, 
+span.marker-questionmark::after {
   content: "?";
   color: var(--questionmark-color);
   /* background-color: var(--questionmark-background-color);
   padding: 0px 3px;
   border-radius: 3px; */
 }
-span.feedback-marker-invalid::after {
+span.feedback-marker-invalid::after,
+span.marker-redx::after {
   content: "✗";
   color: var(--x-color);
 }
-span.feedback-marker-inapplicable::after {
+span.feedback-marker-inapplicable::after, 
+span.marker-nosymbol::after {
   content: "⊘";
   font-size: 110%;
   font-weight: bold;
@@ -460,7 +468,7 @@ the MathLive rendering spills outside the atom we want to shade that as well */
    and less padding. */
 code {
   font-size: 0.95em;
-  padding: 0.2em;
+  padding: 0.2em 0.3em;
   border-radius: 4px;
   /* font-family: 'Roboto Mono', 'Anonymous Pro', 'PT Mono', 'Oxygen monospace', monospace; */
   font-family: "Anonymous Pro", "PT Mono", "Oxygen monospace", monospace;
