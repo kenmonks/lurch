@@ -748,10 +748,6 @@ export class Expression extends Atom {
         if ( this.isInAdvancedMode() ) {
             const { lurchNotation } = this.loadAdvancedModeData()
             const ans = parse( lurchNotation, 'lurchNotation' )
-            console.log(`Parsing ${lurchNotation} and got ${ans.length} lcs`)
-            console.log(ans[0].toPutdown())
-            console.log(ans[0].isA('given'))
-            console.log(ans[0])
             const results = this.getValidationResults()
             // there might be more than one result, e.g for transitive chains,
             // so show the worst one
@@ -767,7 +763,6 @@ export class Expression extends Atom {
             if (results.length>0 && ans.length==1) {
                 ans.forEach( x => x.setAttribute('ExpectedResult',result) )
             }
-            console.log(ans)
             return ans
         }
     }
