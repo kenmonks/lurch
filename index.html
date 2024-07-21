@@ -45,18 +45,23 @@
     <div id="wrap">
       <div id="header-block">
         <nav class="navbar" role="navigation">
-          <div class="container">
-					 
+          <div class="container">					 
 						<div class="navbar-header">
 							
 	            <a class="navbar-brand" href="/"><div id="top-logo">
-                <h2>KEN MONKS</h2>
-                <h3><span style="font-size:1.1em;position:relative;top:-1px">&#8718;</span> Professor of Mathematics <span style="font-size:1.1em;position:relative;top:-1px">&#8718;</span></h3>  
-	              <h4>monks@scranton.edu</h4>
+                <img src='lurchlogo.png' style='margin-left:10px' width='100%'>
+                <h3>for Math 299</h3>
               </div></a>
 
+              <div id="rightheader">
+                <div>KEN MONKS</div>
+                <div>University of Scranton</div>
+                <div>monks@scranton.edu</div>
+                <div>Spring 2024</div>
+              </div>
+              
             </div>
-            
+          </div>  
         </nav>
       </div>
       
@@ -85,17 +90,45 @@ dd {
   background: #e7f3fd;
 	font-size: 110%;
 }
+#rightheader {
+  font-family: monospace, Courier;
+  color: #333;
+  margin-top: 1.2rem;
+  margin-left: auto;
+  line-height: 1.2;
+}
+.container .navbar-header {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+}
+#rightheader div {
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
 </style>
 
 <div style='display: flex; align-items: center; justify-content: space-between;padding-bottom:2rem;'>
+  
   <h1 style='margin:0;'>Lurch for Math 299</h1>
-  <img src='lurchlogo.png' style='margin-left:10px' width='15%'>
+  <!-- <img src='lurchlogo.png' style='margin-left:10px' width='15%'> -->
 </div>
 <p>Lurch is a math editor that can check your proofs (coauthored with <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to create their own Lurch course materials using the rule libraries and content from my <a href='https://monks.scranton.edu/math299'>Math 299 course (Spring 2024)</a> can find supporting materials here. NOTE: much of this is under construction.</p>
 
+<div class="video-container">
+  <video autoplay muted loop>
+      <source src="media/splash.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+  </video>
+</div>
+
+
 <h2>Documentation (instructor version)</h2>
 <ul class='disc'>
-  <li><a href='instructor.html?load=help/quick-start-guide.lurch'>Quick Start Guide</a></li>
+  <li><a href='student.html?load=help/quick-start-guide.lurch'>Quick Start Guide</a> - how to use the student version of Lurch.</li>
 	<li><a href='instructor.html?load=help/example-proofs.lurch'>Examples</a> &#8211; a few proofs done in Lurch using the topics defined below.</li>
   <li><a href="lurch-parser-docs.html">Lurch
 				Syntax</a> &#8211; a quick reference showing how to type various math expressions in Lurch</li>
