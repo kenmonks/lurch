@@ -64,22 +64,38 @@
     };
   </script>
   <script>
-    window.onload = function() {
+    window.onload = function () {
       document.querySelectorAll('#leftnav a').forEach(anchor => {
-          anchor.addEventListener('click', function(e) {
-              e.preventDefault()
-              const targetId = this.getAttribute('href').substring(1)
-              document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' })
-          })
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault()
+          const targetId = this.getAttribute('href').substring(1)
+          document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' })
+        })
       })
     }
   </script>
 
   <style>
+    .pagerow {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+      width: 100%;
+    }
+
     .container {
+      margin-left: 221px;
+      margin-right: auto;
       padding-left: 20px;
       padding-right: 10px;
     }
+
+    .container .navbar-header {
+      width: 100%;
+      display: flex;
+      justify-content: left;
+    }
+
     dt {
       font-weight: normal;
     }
@@ -107,12 +123,6 @@
       line-height: 1.2;
     }
 
-    .container .navbar-header {
-      width: 100%;
-      display: flex;
-      justify-content: left;
-    }
-
     #rightheader div {
       flex-direction: column;
       align-items: flex-end;
@@ -137,7 +147,7 @@
       box-sizing: border-box;
       overflow-y: auto;
     }
-    
+
     #leftnav ul {
       margin-top: 1rem;
       border-top: #bbd6fb 1px solid;
@@ -145,730 +155,762 @@
       padding-bottom: 10px;
       border-bottom: #bbd6fb 1px solid;
     }
-    
+
     #leftnav li {
       display: block;
       padding: 5px 5px;
     }
-    
-    #leftnav li:hover, 
+
+    #leftnav li:hover,
     #leftnav li:hover a {
-      background-color: #bbd6fb; /* #b1cbfa;  */
+      background-color: #bbd6fb;
+      /* #b1cbfa;  */
       color: #0068c2;
     }
-
   </style>
 </head>
 
 <body>
   <div id="top"></div>
-  <div id="leftnav">
-    <ul>
-      <li><a href="#top">Home</a></li>
-      <li><a href="#documentation">Documentation</a></li>
-      <li><a href="#libraries">Rule Libraries</a></li>
-      <li><a href="#contexts">Other Contexts</a></li>
-      <li><a href="#assignments">Example Assignments</a></li>
-      <li><a href="#lurchforinstructors">Lurch for Instructors</a></li>
-      <li><a href="#lurchforstudents">Lurch for Students</a></li>
-    </ul>
-  </div>
-  <div id="wrap">
-    <div id="header-block">
-      <div class="container">
-        <nav class="navbar" role="navigation">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="/">
-              <div id="top-logo">
-                <img src="lurchlogo.png" style="margin-left: 10px" width="100%" />
-                <h3>for Math 299</h3>
-              </div>
-            </a>
-
-            <div id="rightheader">
-              <div>University of Scranton</div>
-              <div>monks@scranton.edu</div>
-              <div>Spring 2024</div>
-            </div>
-          </div>
-        </div>
-      </nav>
+  <div id="pagerow">
+    <div id="leftnav">
+      <ul>
+        <li><a href="#top">Home</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+        <li><a href="#libraries">Rule Libraries</a></li>
+        <li><a href="#contexts">Other Contexts</a></li>
+        <li><a href="#assignments">Example Assignments</a></li>
+        <li><a href="#lurchforinstructors">Lurch for Instructors</a></li>
+        <li><a href="#lurchforstudents">Lurch for Students</a></li>
+      </ul>
     </div>
+    <div id="wrap">
+      <div id="header-block">
+        <div class="container">
+          <nav class="navbar" role="navigation">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/">
+                <div id="top-logo">
+                  <img src="lurchlogo.png" style="margin-left: 10px" width="100%" />
+                  <h3>for Math 299</h3>
+                </div>
+              </a>
 
-    <div id="content-block">
-      <div class="container">
-        <div style="
+              <div id="rightheader">
+                <div>University of Scranton</div>
+                <div>monks@scranton.edu</div>
+                <div>Spring 2024</div>
+              </div>
+            </div>
+        </div>
+        </nav>
+      </div>
+
+      <div id="content-block">
+        <div class="container">
+          <div style="
               display: flex;
               align-items: center;
               justify-content: space-between;
               padding-bottom: 2rem;
             ">
-          <h1 style="margin: 0">Lurch for Math 299</h1>
-          <!-- <img src='lurchlogo.png' style='margin-left:10px' width='15%'> -->
-        </div>
-        <p>
-          Lurch is a math editor that can check your proofs (coauthored with
-          <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to create
-          their own Lurch course
-          materials using the rule libraries and content from my
-          <a href="https://monks.scranton.edu/math299" target="_blank">Math 299 course (Spring 2024)</a>
-          can find supporting materials here. NOTE: much of this is under
-          construction.
-        </p>
+            <h1 style="margin: 0">Lurch for Math 299</h1>
+            <!-- <img src='lurchlogo.png' style='margin-left:10px' width='15%'> -->
+          </div>
+          <p>
+            Lurch is a math editor that can check your proofs (coauthored with
+            <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to
+            create
+            their own Lurch course
+            materials using the rule libraries and content from my
+            <a href="https://monks.scranton.edu/math299" target="_blank">Math 299 course (Spring 2024)</a>
+            can find supporting materials here. NOTE: much of this is under
+            construction.
+          </p>
 
-        <div class="video-container">
-          <video autoplay muted loop>
-            <source src="media/splash.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
+          <div class="video-container">
+            <video autoplay muted loop>
+              <source src="media/splash.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
 
-        <h2 id="documentation">Documentation</h2>
-        <ul class="disc">
-          <li>
-            <strong><a href="student.html?load=help/quick-start-guide.lurch">Quick Start Guide</a></strong>
-            &#8211; how to use the student version of Lurch.
-          </li>
-          <li>
-            <strong><a href="instructor.html?load=help/example-proofs.lurch" target="_blank">Examples</a></strong>
-            &#8211; a few proofs done in Lurch using the topics defined below.
-          </li>
-          <li>
-            <strong><a href="lurch-parser-docs.html" target="_blank">Lurch Syntax</a></strong>
-            &#8211; a quick reference showing how to type various math
-            expressions in Lurch
-          </li>
-        </ul>
+          <h2 id="documentation">Documentation</h2>
+          <ul class="disc">
+            <li>
+              <strong><a href="student.html?load=help/quick-start-guide.lurch">Quick Start Guide</a></strong>
+              &#8211; how to use the student version of Lurch.
+            </li>
+            <li>
+              <strong><a href="instructor.html?load=help/example-proofs.lurch" target="_blank">Examples</a></strong>
+              &#8211; a few proofs done in Lurch using the topics defined below.
+            </li>
+            <li>
+              <strong><a href="lurch-parser-docs.html" target="_blank">Lurch Syntax</a></strong>
+              &#8211; a quick reference showing how to type various math
+              expressions in Lurch
+            </li>
+          </ul>
 
-        <h2 id="libraries">Math 299 Lurch Rule Libraries</h2>
-        <div style="
+          <h2 id="libraries">Math 299 Lurch Rule Libraries</h2>
+          <div style="
               background-color: #e7f3fd;
               padding: 1rem 1rem 0.25rem 1rem;
               margin-left: 0;
               border-radius: 12pt;
             ">
-          <p>
-            <strong><span style="font-size: 110%">Cumulative Topics</span></strong>
-            &#8211; each link one opens a blank Lurch document whose context
-            consists of the rules for that topic, and those from the topics
-            above it.
-          </p>
-          <dl>
-            <dt>
-              <a href="instructor.html?load=math/Prop.lurch" target="_blank">Propositional Logic</a>
-            </dt>
-            <dd>
-              defines <code>and</code>, <code>or</code>, <code>not</code>,
-              <code>implies</code>, <code>iff</code>, and
-              <code>contradiction</code> (<a href="instructor.html?load=math/Prop-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+            <p>
+              <strong><span style="font-size: 110%">Cumulative Topics</span></strong>
+              &#8211; each link one opens a blank Lurch document whose context
+              consists of the rules for that topic, and those from the topics
+              above it.
+            </p>
+            <dl>
+              <dt>
+                <a href="instructor.html?load=math/Prop.lurch" target="_blank">Propositional Logic</a>
+              </dt>
+              <dd>
+                defines <code>and</code>, <code>or</code>, <code>not</code>,
+                <code>implies</code>, <code>iff</code>, and
+                <code>contradiction</code> (<a href="instructor.html?load=math/Prop-Rules.lurch" target="_blank">view
+                  rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Pred.lurch" target="_blank">Predicate Logic with Equality</a>
-            </dt>
-            <dd>
-              defines <code>forall</code> $\left(\forall\right)$,
-              <code>exists</code> $\left(\exists\right)$,
-              <code>equality</code> $\left(=\right)$,
-              <code>unique existence</code> $\left(\exists!\right)$ (<a
-                href="instructor.html?load=math/Pred-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Pred.lurch" target="_blank">Predicate Logic with Equality</a>
+              </dt>
+              <dd>
+                defines <code>forall</code> $\left(\forall\right)$,
+                <code>exists</code> $\left(\exists\right)$,
+                <code>equality</code> $\left(=\right)$,
+                <code>unique existence</code> $\left(\exists!\right)$ (<a
+                  href="instructor.html?load=math/Pred-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Logic-theorems.lurch" target="_blank">Logic Theorems</a>
-            </dt>
-            <dd>
-              provides some common theorems from Logic (<a
-                href="instructor.html?load=math/Logic-theorems-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Logic-theorems.lurch" target="_blank">Logic Theorems</a>
+              </dt>
+              <dd>
+                provides some common theorems from Logic (<a href="instructor.html?load=math/Logic-theorems-Rules.lurch"
+                  target="_blank">view rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Peano.lurch" target="_blank">Natural Numbers</a>
-            </dt>
-            <dd>
-              the Peano Axioms for the Natural Numbers (<a href="instructor.html?load=math/Peano-Rules.lurch" target="_blank">view
-                rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Peano.lurch" target="_blank">Natural Numbers</a>
+              </dt>
+              <dd>
+                the Peano Axioms for the Natural Numbers (<a href="instructor.html?load=math/Peano-Rules.lurch"
+                  target="_blank">view
+                  rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Number-theory.lurch" target="_blank">Number Theory Definitions</a>
-            </dt>
-            <dd>
-              defines, <code>less than</code> $\left(\lt\right)$,
-              <code>divides</code> $\left(\mid\right)$, <code>prime</code>,
-              <code>even</code>, <code>odd</code> (<a href="instructor.html?load=math/Number-theory-Rules.lurch" target="_blank">view
-                rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Number-theory.lurch" target="_blank">Number Theory Definitions</a>
+              </dt>
+              <dd>
+                defines, <code>less than</code> $\left(\lt\right)$,
+                <code>divides</code> $\left(\mid\right)$, <code>prime</code>,
+                <code>even</code>, <code>odd</code> (<a href="instructor.html?load=math/Number-theory-Rules.lurch"
+                  target="_blank">view
+                  rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Equations.lurch" target="_blank">Equations</a>
-            </dt>
-            <dd>
-              defines a single &#8216;rule&#8217; that enables Lurch to
-              validate transitive chains of equalities without needing
-              substitution, reflexivity, symmetry, or transitivity (<a
-                href="instructor.html?load=math/Equations-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Equations.lurch" target="_blank">Equations</a>
+              </dt>
+              <dd>
+                defines a single &#8216;rule&#8217; that enables Lurch to
+                validate transitive chains of equalities without needing
+                substitution, reflexivity, symmetry, or transitivity (<a
+                  href="instructor.html?load=math/Equations-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Number-theory-theorems.lurch" target="_blank">Number Theory Theorems</a>
-            </dt>
-            <dd>
-              provides some useful theorems from Number Theory that are
-              provable from the Peano Axioms (<a
-                href="instructor.html?load=math/Number-theory-theorems-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Number-theory-theorems.lurch" target="_blank">Number Theory
+                  Theorems</a>
+              </dt>
+              <dd>
+                provides some useful theorems from Number Theory that are
+                provable from the Peano Axioms (<a href="instructor.html?load=math/Number-theory-theorems-Rules.lurch"
+                  target="_blank">view rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Sequences.lurch" target="_blank">Sequences and Recursion</a>
-            </dt>
-            <dd>
-              defines <code>summation</code> $\left(\sum\right)$,
-              <code>Fibonnaci numbers</code> $\left(F_n\right)$,
-              <code>factorial</code> $\left(!\right)$,
-              <code>multinomial coefficients</code> $\binom{n}{k}$,
-              <code>binomial coefficients</code>,
-              <code>exponentiation</code> $\left(z^n\right)$ (<a
-                href="instructor.html?load=math/Sequences-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Sequences.lurch" target="_blank">Sequences and Recursion</a>
+              </dt>
+              <dd>
+                defines <code>summation</code> $\left(\sum\right)$,
+                <code>Fibonnaci numbers</code> $\left(F_n\right)$,
+                <code>factorial</code> $\left(!\right)$,
+                <code>multinomial coefficients</code> $\binom{n}{k}$,
+                <code>binomial coefficients</code>,
+                <code>exponentiation</code> $\left(z^n\right)$ (<a
+                  href="instructor.html?load=math/Sequences-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Reals.lurch" target="_blank">Real Numbers</a>
-            </dt>
-            <dd>
-              defines the field axioms for the Real Numbers (<a href="instructor.html?load=math/Reals-Rules.lurch" target="_blank">view
-                rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Reals.lurch" target="_blank">Real Numbers</a>
+              </dt>
+              <dd>
+                defines the field axioms for the Real Numbers (<a href="instructor.html?load=math/Reals-Rules.lurch"
+                  target="_blank">view
+                  rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Sets.lurch" target="_blank">Set Theory</a>
-            </dt>
-            <dd>
-              defines <code>in</code> $\left(\in\right)$,
-              <code>subset</code> $\left(\subseteq\right)$,
-              <code>intersection</code> $\left(\cap\right)$,
-              <code>union</code> $\left(\cup\right)$,
-              <code>complement</code> $\left(&#8216;\right)$,
-              <code>set difference</code> $\left(\setminus\right)$,
-              <code>powerset</code> $\left(\mathscr{P}\right)$,
-              <code>Cartesian product</code> $\left(\times\right)$,
-              <code>finite set</code> $\left(\{ \ldots \}\right)$,
-              <code>tuple</code> $\langle\ldots\rangle$,
-              <code>Indexed Union</code> $\left(\bigcup\right)$,
-              <code>Indexed Intersection</code> $\left(\bigcap\right)$,
-              <code>Set Builder notation</code> $\left(\{ z : \ldots\}\right)$
-              (<a href="instructor.html?load=math/Sets-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Sets.lurch" target="_blank">Set Theory</a>
+              </dt>
+              <dd>
+                defines <code>in</code> $\left(\in\right)$,
+                <code>subset</code> $\left(\subseteq\right)$,
+                <code>intersection</code> $\left(\cap\right)$,
+                <code>union</code> $\left(\cup\right)$,
+                <code>complement</code> $\left(&#8216;\right)$,
+                <code>set difference</code> $\left(\setminus\right)$,
+                <code>powerset</code> $\left(\mathscr{P}\right)$,
+                <code>Cartesian product</code> $\left(\times\right)$,
+                <code>finite set</code> $\left(\{ \ldots \}\right)$,
+                <code>tuple</code> $\langle\ldots\rangle$,
+                <code>Indexed Union</code> $\left(\bigcup\right)$,
+                <code>Indexed Intersection</code> $\left(\bigcap\right)$,
+                <code>Set Builder notation</code> $\left(\{ z : \ldots\}\right)$
+                (<a href="instructor.html?load=math/Sets-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Functions.lurch" target="_blank">Functions</a>
-            </dt>
-            <dd>
-              defines <code>maps</code> $\left(f\colon A \to B\right)$,
-              <code>function application</code> $\left(f(x)\right)$,
-              <code>maps to</code> $\left(\mapsto\right)$,
-              <code>image</code> $\left(f(U)\right)$,
-              <code>identity map</code> $\left(\text{id}_A\right)$
-              <code>inverse image</code> $\left(f^\text{inv}(U)\right)$,
-              <code>composition</code> $\left(\circ\right)$,
-              <code>inverse function</code> $\left(f^{-1}\right)$,
-              <code>injective</code>, <code>surjective</code>,
-              <code>bijective</code> (<a href="instructor.html?load=math/Functions-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Functions.lurch" target="_blank">Functions</a>
+              </dt>
+              <dd>
+                defines <code>maps</code> $\left(f\colon A \to B\right)$,
+                <code>function application</code> $\left(f(x)\right)$,
+                <code>maps to</code> $\left(\mapsto\right)$,
+                <code>image</code> $\left(f(U)\right)$,
+                <code>identity map</code> $\left(\text{id}_A\right)$
+                <code>inverse image</code> $\left(f^\text{inv}(U)\right)$,
+                <code>composition</code> $\left(\circ\right)$,
+                <code>inverse function</code> $\left(f^{-1}\right)$,
+                <code>injective</code>, <code>surjective</code>,
+                <code>bijective</code> (<a href="instructor.html?load=math/Functions-Rules.lurch" target="_blank">view
+                  rules</a>)
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Relations.lurch" target="_blank">Relations</a>
-            </dt>
-            <dd>
-              defines <code>reflexive</code>, <code>symmetric</code>,
-              <code>transitive</code>, <code>irreflexive</code>,
-              <code>antisymmetric</code>, <code>total</code>,
-              <code>partial order</code>, <code>strict partial order</code>,
-              <code>total order</code>, <code>equivalence relation</code>,
-              <code>partition</code>, <code>equivalence class</code> $[a]$ (<a
-                href="instructor.html?load=math/Relations-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
-          </dl>
-        </div>
+              <dt>
+                <a href="instructor.html?load=math/Relations.lurch" target="_blank">Relations</a>
+              </dt>
+              <dd>
+                defines <code>reflexive</code>, <code>symmetric</code>,
+                <code>transitive</code>, <code>irreflexive</code>,
+                <code>antisymmetric</code>, <code>total</code>,
+                <code>partial order</code>, <code>strict partial order</code>,
+                <code>total order</code>, <code>equivalence relation</code>,
+                <code>partition</code>, <code>equivalence class</code> $[a]$ (<a
+                  href="instructor.html?load=math/Relations-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
+            </dl>
+          </div>
 
-        <h2 id="contexts">Other Useful Contexts</h2>
+          <h2 id="contexts">Other Useful Contexts</h2>
 
-        <div style="
+          <div style="
               background-color: #e7f3fd;
               padding: 1rem 1rem 0.25rem 1rem;
               margin-left: 0;
               border-radius: 12pt;
             ">
-          <p>
-            <strong>Additional Rules.</strong> The following rules can be
-            optionally added by the instructor to any context above in a
-            particular document. Currently, only one of the three Arithmetic
-            rules can be used in a single document.
-          </p>
-          <dl>
-            <dt>
-              <a href="instructor.html?load=math/Arithmetic-naturals.lurch" target="_blank">Arithmetic in the Natural Numbers</a>
-            </dt>
-            <dd>
-              Allows the user to say <code>by arithmetic</code> after an
-              expression to try to justify it using a CAS. The expression can
-              only contain natural number constants (e.g. $0$, $1$, $2$, etc)
-              the operators $+$, $\cdot$, and $\text{^}$, and the relations
-              $=$, $\leq$, and $\lt$. (<a href="instructor.html?load=math/Arithmetic-naturals-Rules.lurch" target="_blank">view
-                rules</a>)
-            </dd>
-            <dt>
-              <a href="instructor.html?load=math/Arithmetic-integers.lurch" target="_blank">Arithmetic in the Integers</a>
-            </dt>
-            <dd>
-              Allows the user to say <code>by arithmetic</code> after an
-              expression to try to justify it using a CAS. The expression can
-              only contain natural number constants (e.g. $0$, $1$, $2$, etc)
-              the operators $+$, $\cdot$, $\text{^}$, and $-$ and the
-              relations $=$, $\leq$, and $\lt$. Exponents cannot be negative.
-              (<a href="instructor.html?load=math/Arithmetic-integers-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
-            <dt>
-              <a href="instructor.html?load=math/Arithmetic-rationals.lurch" target="_blank">Arithmetic in the Rationals</a>
-            </dt>
-            <dd>
-              Allows the user to say <code>by arithmetic</code> after an
-              expression to try to justify it using a CAS. The expression can
-              only contain natural number constants (e.g. $0$, $1$, $2$, etc)
-              the operators $+$, $\cdot$, $\text{^}$, $-$, and $/$, and the
-              relations $=$, $\leq$, and $\lt$. Exponents must be integers and
-              you cannot divide by zero. (<a href="instructor.html?load=math/Arithmetic-rationals-Rules.lurch" target="_blank">view
-                rules</a>)
-            </dd>
-            <dt>
-              <a href="instructor.html?load=math/Algebra.lurch" target="_blank">Algebra</a>
-            </dt>
-            <dd>
-              Allows the user to say <code>by algebra</code> after any
-              (binary) equation to try to justify it using a CAS. There are no
-              restrictions on what the expression can contain, so use at your
-              own discretion. The identity is evaluated using
-              <a href="http://algebrite.org" target="_blank">Algebrite</a>. (<a
-                href="instructor.html?load=math/Algebra-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
-          </dl>
+            <p>
+              <strong>Additional Rules.</strong> The following rules can be
+              optionally added by the instructor to any context above in a
+              particular document. Currently, only one of the three Arithmetic
+              rules can be used in a single document.
+            </p>
+            <dl>
+              <dt>
+                <a href="instructor.html?load=math/Arithmetic-naturals.lurch" target="_blank">Arithmetic in the Natural
+                  Numbers</a>
+              </dt>
+              <dd>
+                Allows the user to say <code>by arithmetic</code> after an
+                expression to try to justify it using a CAS. The expression can
+                only contain natural number constants (e.g. $0$, $1$, $2$, etc)
+                the operators $+$, $\cdot$, and $\text{^}$, and the relations
+                $=$, $\leq$, and $\lt$. (<a href="instructor.html?load=math/Arithmetic-naturals-Rules.lurch"
+                  target="_blank">view
+                  rules</a>)
+              </dd>
+              <dt>
+                <a href="instructor.html?load=math/Arithmetic-integers.lurch" target="_blank">Arithmetic in the
+                  Integers</a>
+              </dt>
+              <dd>
+                Allows the user to say <code>by arithmetic</code> after an
+                expression to try to justify it using a CAS. The expression can
+                only contain natural number constants (e.g. $0$, $1$, $2$, etc)
+                the operators $+$, $\cdot$, $\text{^}$, and $-$ and the
+                relations $=$, $\leq$, and $\lt$. Exponents cannot be negative.
+                (<a href="instructor.html?load=math/Arithmetic-integers-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
+              <dt>
+                <a href="instructor.html?load=math/Arithmetic-rationals.lurch" target="_blank">Arithmetic in the
+                  Rationals</a>
+              </dt>
+              <dd>
+                Allows the user to say <code>by arithmetic</code> after an
+                expression to try to justify it using a CAS. The expression can
+                only contain natural number constants (e.g. $0$, $1$, $2$, etc)
+                the operators $+$, $\cdot$, $\text{^}$, $-$, and $/$, and the
+                relations $=$, $\leq$, and $\lt$. Exponents must be integers and
+                you cannot divide by zero. (<a href="instructor.html?load=math/Arithmetic-rationals-Rules.lurch"
+                  target="_blank">view
+                  rules</a>)
+              </dd>
+              <dt>
+                <a href="instructor.html?load=math/Algebra.lurch" target="_blank">Algebra</a>
+              </dt>
+              <dd>
+                Allows the user to say <code>by algebra</code> after any
+                (binary) equation to try to justify it using a CAS. There are no
+                restrictions on what the expression can contain, so use at your
+                own discretion. The identity is evaluated using
+                <a href="http://algebrite.org" target="_blank">Algebrite</a>. (<a
+                  href="instructor.html?load=math/Algebra-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
+            </dl>
 
-          <p>
-            <strong>Useful Cumulative Contexts.</strong> These contexts
-            combine some proper subsets of the cumulative Math 299 contexts
-            listed above.
-          </p>
-          <dl>
-            <dt>
-              <a href="instructor.html?load=math/Equations-Logic.lurch" target="_blank">Equations and Logic Only</a>
-            </dt>
-            <dd>
-              Equations, Logic Theorems, Predicate Logic, Propositional Logic.
-            </dd>
+            <p>
+              <strong>Useful Cumulative Contexts.</strong> These contexts
+              combine some proper subsets of the cumulative Math 299 contexts
+              listed above.
+            </p>
+            <dl>
+              <dt>
+                <a href="instructor.html?load=math/Equations-Logic.lurch" target="_blank">Equations and Logic Only</a>
+              </dt>
+              <dd>
+                Equations, Logic Theorems, Predicate Logic, Propositional Logic.
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Sets-Equations-Logic.lurch" target="_blank">Sets, Equations, and Logic</a>
-            </dt>
-            <dd>
-              Set Theory, Equations, Logic Theorems, Predicate Logic,
-              Propositional Logic. This does not include Set Theory Theorems.
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Sets-Equations-Logic.lurch" target="_blank">Sets, Equations, and
+                  Logic</a>
+              </dt>
+              <dd>
+                Set Theory, Equations, Logic Theorems, Predicate Logic,
+                Propositional Logic. This does not include Set Theory Theorems.
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Functions-Sets-Equations-Logic.lurch" target="_blank">Functions, Sets, Equations, and
-                Logic</a>
-            </dt>
-            <dd>
-              Functions, Set Theory Theorems, Set Theory, Equations, Logic
-              Theorems, Predicate Logic, Propositional Logic.
-            </dd>
+              <dt>
+                <a href="instructor.html?load=math/Functions-Sets-Equations-Logic.lurch" target="_blank">Functions,
+                  Sets, Equations, and
+                  Logic</a>
+              </dt>
+              <dd>
+                Functions, Set Theory Theorems, Set Theory, Equations, Logic
+                Theorems, Predicate Logic, Propositional Logic.
+              </dd>
 
-            <dt>
-              <a href="instructor.html?load=math/Topology.lurch" target="_blank">Topology</a>
-            </dt>
-            <dd>
-              Defines <code>topological space</code>, <code>open</code>,
-              <code>closed</code>, and <code>continuous</code> (in a
-              toplogical space). Includes the Functions library above. (<a
-                href="instructor.html?load=math/Topology-Rules.lurch" target="_blank">view rules</a>)
-            </dd>
-          </dl>
+              <dt>
+                <a href="instructor.html?load=math/Topology.lurch" target="_blank">Topology</a>
+              </dt>
+              <dd>
+                Defines <code>topological space</code>, <code>open</code>,
+                <code>closed</code>, and <code>continuous</code> (in a
+                toplogical space). Includes the Functions library above. (<a
+                  href="instructor.html?load=math/Topology-Rules.lurch" target="_blank">view rules</a>)
+              </dd>
+            </dl>
+          </div>
+
+          <h2 id="assignments">Example Assignments</h2>
+          <div>
+            <p>
+              <strong><span style="font-size: 110%">Math 299 Spring 2024 Assignments</span></strong>
+              &#8211; each link one opens a Lurch document containing a homework
+              assignment from the course. Note that Lurch was under development
+              during this semester so that some assignments are not good
+              examples of what can be done today if these were rewritten to take
+              advantage of some of the new features. We are in the process of
+              updating them.
+            </p>
+            <dl>
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-12.lurch" target="_blank">Assignment #12</a>Peano
+                arithmetic and
+                Induction
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 7.3 (no number is it's own successor):</strong>
+                    $n\neq\sigma(n)$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.4 (alternate definition of $\sigma$):</strong>
+                    $\sigma(n)=n+1$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.5 (associativity of addition):</strong>
+                    $(m+n)+p=m+(n+p)$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.6 (additive identity, part 2):</strong>
+                    $0+n=n$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.7 (commutativity of adding $1$):</strong>
+                    $1+n=n+1$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.8 (commutativity of addition):</strong>$m+n=n+m$
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-13.lurch" target="_blank">Assignment #13</a>Peano
+                arithmetic and
+                Induction
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 7.11 (left multiplication by zero):</strong>
+                    $0\cdot m=0$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.19 (nonzero naturals are positive):</strong>
+                    <ul>
+                      <li>(a) $0\leq n$</li>
+                      <li>(b) $0\lt n \Leftrightarrow n\neq 0$</li>
+                    </ul>
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-14.lurch" target="_blank">Assignment
+                  #14</a>Sequences, Recursion, and
+                Induction
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 8.3(a) (a useful identity):</strong>
+                    $n^2=n\cdot n$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.3(b) (useful identity):</strong> $2\cdot
+                    n=n+n$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.2(b) (power law):</strong> $z^m\cdot
+                    z^n=z^{m+n}$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.2(c) (power law):</strong>
+                    $(z^m)^n=z^{m\cdot n}$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.4 (quadratic beats linear):</strong>If
+                    $a+b\leq n$ then $a\cdot n+b\leq n^2$
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-15.lurch" target="_blank">Assignment
+                  #15</a>Sequences, Recursion, and
+                Induction
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 8.7 (Fib fun):</strong> $F_{n+3}+F_n=2\cdot
+                    F_{n+2}$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.5(b) (basic sum property):</strong>
+                    $\displaystyle \sum_{i=0}^n s\cdot a_i = s\cdot \sum_{i=0}^n
+                    a_i$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.11 (closed formula for binomial
+                      coefficients):</strong>
+                    $\displaystyle(m!\cdot n!)\cdot \binom{n+m}{m}=(n+m)!$
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-16.lurch" target="_blank">Assignment #16</a>Real
+                numbers and Field
+                axioms
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 9.3 (cancellation for addition):</strong> If
+                    $x+z=y+z$ then $x=y$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.2(b) (signed product):</strong>
+                    $(-1)\cdot(-1)=1$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.2(c) (harder than it looks):</strong>
+                    $0\lt 1$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.2(d) (not mod 2):</strong> $-1\neq 1$
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-17.lurch" target="_blank">Assignment #17</a>Real
+                numbers and Field
+                axioms
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 9.4 (cancellation for multiplication):</strong>
+                    If $\neq 0$ and $z\cdot x=z\cdot y$ then $x=y$.
+                  </li>
+                  <li>
+                    <strong>Theorem 9.6 (multiplicative inverses are unique):</strong>
+                    If $z\cdot x=1$ and $z\cdot y=1$ then $x=y$.
+                  </li>
+                  <li>
+                    <strong>Theorem 9.10 (alternate additive inverse):</strong>
+                    $-x=-1\cdot x$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.18 (adding inequalities):</strong>If $w\lt
+                    y$ and $x\lt z$ then $w+x\lt y+z$.
+                  </li>
+                  <li>
+                    <strong>Theorem 9.23 (scaling by a negative):</strong> If
+                    $z\lt 0$ and $x\lt y$ then $z\cdot y\lt z\cdot x$.
+                  </li>
+                  <li>
+                    <strong>Theorem (between):</strong> There exists a real
+                    number strictly between 0 and 1, i.e., $\exists r.0\lt r
+                    \text{ and }r\lt 1$.
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-18.lurch" target="_blank">Assignment
+                  #18</a>Elementary Set Theory
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 10.5 (double negative):</strong>
+                    $\left(A'\right)'=A$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.32 (always in the power set):</strong>
+                    $\{~~\}\in \mathscr{P}(A)$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.34. (power sets of subsets):</strong> If
+                    $A\subseteq B$ then $\mathscr{P}(A)\subset\mathscr{P}(B)$.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.38 (relative complement is not
+                      associative):</strong>
+                    If $x\in A$, $x\in B$, and $x\in C$ then $(A\setminus
+                    B)\setminus C\neq A\setminus (B\setminus C)$.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.7 (a set of sets):</strong>
+                    $\{\,1,2\,\}\in\left\{\,Y:\{\,1\,\}\subseteq Y\right\}$
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-19.lurch" target="_blank">Assignment
+                  #19</a>Elementary Set Theory
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 10.23(b) (∩ distributes over ∪):</strong>$ A
+                    \cap (B \cup C) \subseteq (A \cap B) \cup (A \cap C)$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.37 (subsets are contagious):</strong>If
+                    $A \subseteq C$ and $B\subseteq D$ then $A\times B\subset
+                    C\times D$.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.31 (not a subset):</strong>$A \nsubseteq
+                    B$ if and only if $\exists x.x \in A \cap B'$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.27 (Baby DeMorgan):</strong>$A \setminus
+                    (B \cap C) = (A \setminus B) \cup (A \setminus C)$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.29 (Papa DeMorgan):</strong>
+                    $\displaystyle\left(\bigcap_{i \in I} A_i\right)' =
+                    \bigcup_{j\in I} A_j'$
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-20.lurch" target="_blank">Assignment
+                  #20</a>Functions and Composition
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 10.41 (composition is associative):</strong>
+                    If $h\colon A \to B$, $g\colon B \to C$, $f\colon C \to D$
+                    then $$f\circ(g\circ h)=(f\circ g)\circ h.$$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.53 (a) (identity maps are injective):</strong>The map $\mathrm{id}_A$ is
+                    injective.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.53 (b) (identity maps are surjective):</strong>The map $\mathrm{id}_A$ is
+                    surjective.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.46 (image of subsets):</strong>If
+                    $f\colon A \to B$, $S \subseteq T$, and $T \subseteq A$ then
+                    $f(S)\subseteq f(T)$.
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-21.lurch" target="_blank">Assignment
+                  #21</a>Functions and Composition
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 10.43 (a linear bijection):</strong>If If
+                    $f\colon \mathbb{R} \to \mathbb{R}$ and $\forall
+                    x.f(x)=3\cdot x+1$ then $f$ is bijective.
+                  </li>
+                  <li>
+                    <strong>Theorem (inverse images respect intersection):</strong>If $f\colon A \to B$, $S \subseteq
+                    B$,
+                    $T \subseteq B$ then
+                    $$f^\mathrm{inv}(S \cap T)=f^\mathrm{inv}(S) \cap
+                    f^\mathrm{inv}(T)$$
+                  </li>
+                  <li>
+                    <strong>Theorem (inverse functions are bijective):</strong>If $f\colon A \to B$ and $f$ is bijective
+                    then $f^{-1}$ is
+                    bijective.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.52 (inverse of a composition):</strong>If
+                    $f\colon A \to B$, $g\colon B \to C$, $f$ is bijective, and
+                    $g$ is bijective then $$(g \circ f)^{-1} = f^{-1} \circ
+                    g^{-1}$$
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-22.lurch" target="_blank">Assignment
+                  #22</a>Equivalence relations and
+                Partial orders
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem (integer associates)</strong>Define $\sim$
+                    to be the relation on $\mathbb{Z}$ such that for all $x,y\in
+                    \mathbb{Z}$, $$x\sim y\text{ if and only if }y=x\text{ or
+                    }y=−x$$ Then $\sim$ is an equivalence relation.
+                  </li>
+                  <li>
+                    <strong>Theorem ($\subseteq$ is a partial order)</strong>Let
+                    $A$ be a set and suppose $\sim$ is a relation on
+                    $\mathscr{P}(A)$ such that for all $S,T\in\mathscr{P}(A)$
+                    $$S\sim T\text{ if and only if }S\subseteq T$$ Then $\sim$
+                    is a partial order.
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-23.lurch" target="_blank">Assignment
+                  #23</a>Equivalence relations and
+                Partial orders
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 10.65</strong>Congruence mod $m$ is an
+                    equivalence relation on the set of integers.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.66 (class representatives):</strong>
+                    Every integer $a$ is congruent mod $m$ to a unique natural
+                    number that is less than $m$, i.e., $\exists r.a
+                    \underset{m}{\equiv}r\text{ and }0\leq r\text{ and }r\lt m$
+                    and if $a \underset{m}{\equiv} s$, $0\leq s$, and $s\lt m$
+                    and $a \underset{m}{\equiv} t$, $0\leq t$, and $t\lt m$ then
+                    $s=t$.
+                  </li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-24.lurch" target="_blank">Assignment #24</a>Modular
+                arithmetic
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li>
+                    <strong>Theorem 10.68 (modular addition):</strong>For any
+                    integers $a,b,c,d$, if $a \underset{m}{\equiv} b$ and $c
+                    \underset{m}{\equiv} d$ then $a+c \underset{m}{\equiv} b+d$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.69 (modular multiplication):</strong>For
+                    any integers $a,b,c,d$, if $a \underset{m}{\equiv} b$ and $c
+                    \underset{m}{\equiv} d$ then $a\cdot c \underset{m}{\equiv}
+                    b\cdot d$
+                  </li>
+                </ol>
+              </dd>
+            </dl>
+          </div>
+
+          <h2 id="lurchforinstructors">Lurch for Instructors</h2>
+          <a href="" class="button" onclick="openLurch('instructor.html'); return false;">
+            Lurch</a>
+          &#8211; is a math word processor that can check your proofs! This
+          button will open a blank document with no rules or background material
+          in the instructor version of Lurch.
+
+          <h2 id="lurchforstudents">Lurch for Students</h2>
+          <a href="" class="button" onclick="openLurch('student.html'); return false;">
+            Lurch</a>
+          &#8211; This button will open a blank document with no rules or
+          background material in the student version of Lurch. The only
+          difference is that the student version does not have the Instructor
+          menu.
         </div>
-
-        <h2 id="assignments">Example Assignments</h2>
-        <div>
-          <p>
-            <strong><span style="font-size: 110%">Math 299 Spring 2024 Assignments</span></strong>
-            &#8211; each link one opens a Lurch document containing a homework
-            assignment from the course. Note that Lurch was under development
-            during this semester so that some assignments are not good
-            examples of what can be done today if these were rewritten to take
-            advantage of some of the new features. We are in the process of
-            updating them.
-          </p>
-          <dl>
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-12.lurch" target="_blank">Assignment #12</a>Peano arithmetic and
-              Induction
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 7.3 (no number is it's own successor):</strong>
-                  $n\neq\sigma(n)$
-                </li>
-                <li>
-                  <strong>Theorem 7.4 (alternate definition of $\sigma$):</strong>
-                  $\sigma(n)=n+1$
-                </li>
-                <li>
-                  <strong>Theorem 7.5 (associativity of addition):</strong>
-                  $(m+n)+p=m+(n+p)$
-                </li>
-                <li>
-                  <strong>Theorem 7.6 (additive identity, part 2):</strong>
-                  $0+n=n$
-                </li>
-                <li>
-                  <strong>Theorem 7.7 (commutativity of adding $1$):</strong>
-                  $1+n=n+1$
-                </li>
-                <li>
-                  <strong>Theorem 7.8 (commutativity of addition):</strong>$m+n=n+m$
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-13.lurch" target="_blank">Assignment #13</a>Peano arithmetic and
-              Induction
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 7.11 (left multiplication by zero):</strong>
-                  $0\cdot m=0$
-                </li>
-                <li>
-                  <strong>Theorem 7.19 (nonzero naturals are positive):</strong>
-                  <ul>
-                    <li>(a) $0\leq n$</li>
-                    <li>(b) $0\lt n \Leftrightarrow n\neq 0$</li>
-                  </ul>
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-14.lurch" target="_blank">Assignment #14</a>Sequences, Recursion, and
-              Induction
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 8.3(a) (a useful identity):</strong>
-                  $n^2=n\cdot n$
-                </li>
-                <li>
-                  <strong>Theorem 8.3(b) (useful identity):</strong> $2\cdot
-                  n=n+n$
-                </li>
-                <li>
-                  <strong>Theorem 8.2(b) (power law):</strong> $z^m\cdot
-                  z^n=z^{m+n}$
-                </li>
-                <li>
-                  <strong>Theorem 8.2(c) (power law):</strong>
-                  $(z^m)^n=z^{m\cdot n}$
-                </li>
-                <li>
-                  <strong>Theorem 8.4 (quadratic beats linear):</strong>If
-                  $a+b\leq n$ then $a\cdot n+b\leq n^2$
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-15.lurch" target="_blank">Assignment #15</a>Sequences, Recursion, and
-              Induction
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 8.7 (Fib fun):</strong> $F_{n+3}+F_n=2\cdot
-                  F_{n+2}$
-                </li>
-                <li>
-                  <strong>Theorem 8.5(b) (basic sum property):</strong>
-                  $\displaystyle \sum_{i=0}^n s\cdot a_i = s\cdot \sum_{i=0}^n
-                  a_i$
-                </li>
-                <li>
-                  <strong>Theorem 8.11 (closed formula for binomial
-                    coefficients):</strong>
-                  $\displaystyle(m!\cdot n!)\cdot \binom{n+m}{m}=(n+m)!$
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-16.lurch" target="_blank">Assignment #16</a>Real numbers and Field
-              axioms
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 9.3 (cancellation for addition):</strong> If
-                  $x+z=y+z$ then $x=y$
-                </li>
-                <li>
-                  <strong>Theorem 9.2(b) (signed product):</strong>
-                  $(-1)\cdot(-1)=1$
-                </li>
-                <li>
-                  <strong>Theorem 9.2(c) (harder than it looks):</strong>
-                  $0\lt 1$
-                </li>
-                <li>
-                  <strong>Theorem 9.2(d) (not mod 2):</strong> $-1\neq 1$
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-17.lurch" target="_blank">Assignment #17</a>Real numbers and Field
-              axioms
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 9.4 (cancellation for multiplication):</strong>
-                  If $\neq 0$ and $z\cdot x=z\cdot y$ then $x=y$.
-                </li>
-                <li>
-                  <strong>Theorem 9.6 (multiplicative inverses are unique):</strong>
-                  If $z\cdot x=1$ and $z\cdot y=1$ then $x=y$.
-                </li>
-                <li>
-                  <strong>Theorem 9.10 (alternate additive inverse):</strong>
-                  $-x=-1\cdot x$
-                </li>
-                <li>
-                  <strong>Theorem 9.18 (adding inequalities):</strong>If $w\lt
-                  y$ and $x\lt z$ then $w+x\lt y+z$.
-                </li>
-                <li>
-                  <strong>Theorem 9.23 (scaling by a negative):</strong> If
-                  $z\lt 0$ and $x\lt y$ then $z\cdot y\lt z\cdot x$.
-                </li>
-                <li>
-                  <strong>Theorem (between):</strong> There exists a real
-                  number strictly between 0 and 1, i.e., $\exists r.0\lt r
-                  \text{ and }r\lt 1$.
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-18.lurch" target="_blank">Assignment #18</a>Elementary Set Theory
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 10.5 (double negative):</strong>
-                  $\left(A'\right)'=A$
-                </li>
-                <li>
-                  <strong>Theorem 10.32 (always in the power set):</strong>
-                  $\{~~\}\in \mathscr{P}(A)$
-                </li>
-                <li>
-                  <strong>Theorem 10.34. (power sets of subsets):</strong> If
-                  $A\subseteq B$ then $\mathscr{P}(A)\subset\mathscr{P}(B)$.
-                </li>
-                <li>
-                  <strong>Theorem 10.38 (relative complement is not
-                    associative):</strong>
-                  If $x\in A$, $x\in B$, and $x\in C$ then $(A\setminus
-                  B)\setminus C\neq A\setminus (B\setminus C)$.
-                </li>
-                <li>
-                  <strong>Theorem 10.7 (a set of sets):</strong>
-                  $\{\,1,2\,\}\in\left\{\,Y:\{\,1\,\}\subseteq Y\right\}$
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-19.lurch" target="_blank">Assignment #19</a>Elementary Set Theory
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 10.23(b) (∩ distributes over ∪):</strong>$ A
-                  \cap (B \cup C) \subseteq (A \cap B) \cup (A \cap C)$
-                </li>
-                <li>
-                  <strong>Theorem 10.37 (subsets are contagious):</strong>If
-                  $A \subseteq C$ and $B\subseteq D$ then $A\times B\subset
-                  C\times D$.
-                </li>
-                <li>
-                  <strong>Theorem 10.31 (not a subset):</strong>$A \nsubseteq
-                  B$ if and only if $\exists x.x \in A \cap B'$
-                </li>
-                <li>
-                  <strong>Theorem 10.27 (Baby DeMorgan):</strong>$A \setminus
-                  (B \cap C) = (A \setminus B) \cup (A \setminus C)$
-                </li>
-                <li>
-                  <strong>Theorem 10.29 (Papa DeMorgan):</strong>
-                  $\displaystyle\left(\bigcap_{i \in I} A_i\right)' =
-                  \bigcup_{j\in I} A_j'$
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-20.lurch" target="_blank">Assignment #20</a>Functions and Composition
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 10.41 (composition is associative):</strong>
-                  If $h\colon A \to B$, $g\colon B \to C$, $f\colon C \to D$
-                  then $$f\circ(g\circ h)=(f\circ g)\circ h.$$
-                </li>
-                <li>
-                  <strong>Theorem 10.53 (a) (identity maps are injective):</strong>The map $\mathrm{id}_A$ is injective.
-                </li>
-                <li>
-                  <strong>Theorem 10.53 (b) (identity maps are surjective):</strong>The map $\mathrm{id}_A$ is
-                  surjective.
-                </li>
-                <li>
-                  <strong>Theorem 10.46 (image of subsets):</strong>If
-                  $f\colon A \to B$, $S \subseteq T$, and $T \subseteq A$ then
-                  $f(S)\subseteq f(T)$.
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-21.lurch" target="_blank">Assignment #21</a>Functions and Composition
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 10.43 (a linear bijection):</strong>If If
-                  $f\colon \mathbb{R} \to \mathbb{R}$ and $\forall
-                  x.f(x)=3\cdot x+1$ then $f$ is bijective.
-                </li>
-                <li>
-                  <strong>Theorem (inverse images respect intersection):</strong>If $f\colon A \to B$, $S \subseteq B$,
-                  $T \subseteq B$ then
-                  $$f^\mathrm{inv}(S \cap T)=f^\mathrm{inv}(S) \cap
-                  f^\mathrm{inv}(T)$$
-                </li>
-                <li>
-                  <strong>Theorem (inverse functions are bijective):</strong>If $f\colon A \to B$ and $f$ is bijective
-                  then $f^{-1}$ is
-                  bijective.
-                </li>
-                <li>
-                  <strong>Theorem 10.52 (inverse of a composition):</strong>If
-                  $f\colon A \to B$, $g\colon B \to C$, $f$ is bijective, and
-                  $g$ is bijective then $$(g \circ f)^{-1} = f^{-1} \circ
-                  g^{-1}$$
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-22.lurch" target="_blank">Assignment #22</a>Equivalence relations and
-              Partial orders
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem (integer associates)</strong>Define $\sim$
-                  to be the relation on $\mathbb{Z}$ such that for all $x,y\in
-                  \mathbb{Z}$, $$x\sim y\text{ if and only if }y=x\text{ or
-                  }y=−x$$ Then $\sim$ is an equivalence relation.
-                </li>
-                <li>
-                  <strong>Theorem ($\subseteq$ is a partial order)</strong>Let
-                  $A$ be a set and suppose $\sim$ is a relation on
-                  $\mathscr{P}(A)$ such that for all $S,T\in\mathscr{P}(A)$
-                  $$S\sim T\text{ if and only if }S\subseteq T$$ Then $\sim$
-                  is a partial order.
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-23.lurch" target="_blank">Assignment #23</a>Equivalence relations and
-              Partial orders
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 10.65</strong>Congruence mod $m$ is an
-                  equivalence relation on the set of integers.
-                </li>
-                <li>
-                  <strong>Theorem 10.66 (class representatives):</strong>
-                  Every integer $a$ is congruent mod $m$ to a unique natural
-                  number that is less than $m$, i.e., $\exists r.a
-                  \underset{m}{\equiv}r\text{ and }0\leq r\text{ and }r\lt m$
-                  and if $a \underset{m}{\equiv} s$, $0\leq s$, and $s\lt m$
-                  and $a \underset{m}{\equiv} t$, $0\leq t$, and $t\lt m$ then
-                  $s=t$.
-                </li>
-              </ol>
-            </dd>
-
-            <dt>
-              <a href="instructor.html?load=assignments/assignment-24.lurch" target="_blank">Assignment #24</a>Modular arithmetic
-            </dt>
-            <dd>
-              <ol class="thmlist">
-                <li>
-                  <strong>Theorem 10.68 (modular addition):</strong>For any
-                  integers $a,b,c,d$, if $a \underset{m}{\equiv} b$ and $c
-                  \underset{m}{\equiv} d$ then $a+c \underset{m}{\equiv} b+d$
-                </li>
-                <li>
-                  <strong>Theorem 10.69 (modular multiplication):</strong>For
-                  any integers $a,b,c,d$, if $a \underset{m}{\equiv} b$ and $c
-                  \underset{m}{\equiv} d$ then $a\cdot c \underset{m}{\equiv}
-                  b\cdot d$
-                </li>
-              </ol>
-            </dd>
-          </dl>
-        </div>
-
-        <h2 id="lurchforinstructors">Lurch for Instructors</h2>
-        <a href="" class="button" onclick="openLurch('instructor.html'); return false;">
-          Lurch</a>
-        &#8211; is a math word processor that can check your proofs! This
-        button will open a blank document with no rules or background material
-        in the instructor version of Lurch.
-
-        <h2 id="lurchforstudents">Lurch for Students</h2>
-        <a href="" class="button" onclick="openLurch('student.html'); return false;">
-          Lurch</a>
-        &#8211; This button will open a blank document with no rules or
-        background material in the student version of Lurch. The only
-        difference is that the student version does not have the Instructor
-        menu.
+        <!-- container -->
       </div>
-      <!-- container -->
+      <!-- content-block -->
     </div>
-    <!-- content-block -->
+    <!-- wrap -->
   </div>
-  <!-- wrap -->
+  <!-- pagerow -->
 
   <footer>
     <div id="footer-block">
