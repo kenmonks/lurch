@@ -64,6 +64,8 @@
   --selected-color: #a1c6f5;
   /* borders and titles of shells color */
   --border-color: #b4d7ff;
+  /* marginal annotation of shell types */
+  --margin-color: #b4d7ff;
   /* left border of shells in semantic view */
   --left-border-color: #b4d7ff;
   /* green checkmark color */
@@ -259,7 +261,7 @@ body.shell-style-boxed {
   /* Add a shell title in the left margin */
   [data-shell_title]::before {
     content: attr(data-shell_title);
-    color: var(--border-color);
+    color: var(--margin-color);
     background-color: transparent;
     font-family: "Anonymous Pro", "PT Mono", "Oxygen monospace", monospace;
     font-size: smaller;
