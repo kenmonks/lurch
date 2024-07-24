@@ -529,9 +529,82 @@
               during this semester so that some assignments are not good
               examples of what can be done today if these were rewritten to take
               advantage of some of the new features. We are in the process of
-              updating them.
+              updating them.  I also intend to revise the entire syllabus in like of having Lurch available to spend less time on formal logic and more time on the later topics in the course (and perhaps add a few new ones).
             </p>
             <dl>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-06.lurch" target="_blank">Assignment #06</a>Propositional logic
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li><strong>Theorem (Iff is stronger):</strong>$(P\Leftrightarrow Q)\Rightarrow(Q\Rightarrow P)$</li>
+                  <li><strong>Theorem (the other way around):</strong>$\neg(\neg A)\Rightarrow A$</li>
+                  <li><strong>Theorem (Modus Tollens):</strong>$(S \Rightarrow T)\text{ and } \neg T \Rightarrow \neg S$</li>
+                  <li><strong>Theorem (atomic statements don't have to be variables):</strong>$0 \lt x\text{ or }x\lt 10 \Rightarrow x\lt 10\text{ or } 0\lt x$</li>
+                  <li><strong>Theorem (excluded middle):</strong>$K\text{ or } \neg K$</li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-07.lurch" target="_blank">Assignment #07</a>Propositional logic
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li><strong>Theorem (implies is transitive):</strong>$((P\Rightarrow Q)\text{ and }(Q \Rightarrow R)) \Rightarrow (P \Rightarrow R)$</li>
+                  <li><strong>Theorem (alternate or-):</strong>$(S\text{ or } T)\text{ and } \neg S \Rightarrow T$</li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-08.lurch" target="_blank">Assignment #08</a>Predicate logic with Equality
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li><strong>Theorem (alpha equivalence warm up):</strong>$(\forall x.P(x)) \Rightarrow (\forall y.P(y))$</li>
+                  <li><strong>Theorem (same thing but for exists):</strong>$(\exists x.P(x)) \Rightarrow (\exists y.P(y))$</li>
+                  <li><strong>Theorem (commuting quantifiers):</strong>$(\forall x.\forall y.x\text{ loves }y) \Rightarrow (\forall y.\forall x.x\text{ loves }y)$</li>
+                  <li><strong>Theorem (same thing for exists):</strong>$(\exists x.\exists y.x\text{ loves }y) \Rightarrow (\exists y.\exists x.x\text{ loves }y)$</li>
+                  <li><strong>Theorem (DeMorgan):</strong>$\neg (S\text{ and }T) \Rightarrow \neg S\text{ or } \neg T$</li>
+                  <li><strong>Theorem (DeMorgan):</strong>$\neg (\forall x.R(x)) \Rightarrow (\exists x.\neg R(x))$</li>
+                  <li><strong>Theorem ($=$ is transitive):</strong>$x=y\text{ and }y=z$ \Rightarrow x=z$</li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-09.lurch" target="_blank">Assignment #09</a>Logic theorems
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li><strong>Theorem 5.10 (some are the same):</strong>$(\forall x.\forall y.P(x,y)) \Rightarrow (\forall z.P(z,z))$</li>
+                  <li><strong>Theorem 5.16 (excluded middle):</strong>$(\forall x.Q(x))\text{ or } (\exists x.\neg Q(x))$</li>
+                  <li><strong>Theorem 4.22 (alternate $\Rightarrow$):</strong>$(R \Rightarrow S) \Rightarrow \neg R\text{ or }S$</li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-10.lurch" target="_blank">Assignment #10</a>Logic review
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li><strong>Theorem (ex falso quodlibet):</strong>If Dracula fears Alice and Dracula does not fear Alice then Bob loves Alice.</li>
+                  <li><strong>Theorem 4.29 (the most beautiful?):$S \Rightarrow (S \Leftrightarrow S\text{ or }(\neg S \text{ and } S))$</strong></li>
+                  <li><strong>Theorem 4.25 (shunting):</strong>$((P \text{ and } Q) \Rightarrow R) \Leftrightarrow (P \Rightarrow (Q \Rightarrow R))$</li>
+                  <li><strong>Theorem 5.21 (avoiding vacuous domains):</strong>$(\exists x. x = x)\text{ and }(\forall y. T(y)) \Rightarrow (\exists z. T(z))$</li>
+                  <li><strong>Theorem 5.5 (distributivity):</strong>$(\exists x. A(x) \Rightarrow B(x)) \Leftrightarrow (\forall y. A(y)) \Rightarrow (\exists z. B(z))$</li>
+                </ol>
+              </dd>
+
+              <dt>
+                <a href="instructor.html?load=assignments/assignment-11.lurch" target="_blank">Assignment #11</a>Logic review
+              </dt>
+              <dd>
+                <ol class="thmlist">
+                  <li><strong>Theorem (Pierce's Law)</strong>$((S \Rightarrow T) \Rightarrow S) \Rightarrow S$</li>
+                  <li><strong>Theorem (quantifier fun):</strong>$(\forall x.\exists y.\forall z.A(x,y,z)) \Rightarrow (\forall z.\forall x.\exists y.A(x,y,z))$</li>
+                </ol>
+              </dd>
+
               <dt>
                 <a href="instructor.html?load=assignments/assignment-12.lurch" target="_blank">Assignment #12</a>Peano
                 arithmetic and
@@ -939,7 +1012,6 @@
       </div>
       <div id="copyright">
         Copyright &copy; Kenneth G. Monks &nbsp; | &nbsp;
-        <a href="/acknowledgments" target="_blank">Acknowledgments</a>
       </div>
     </div>
   </footer>
