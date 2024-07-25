@@ -67,7 +67,8 @@ export const generatePage = (...folders) => {
 `
 <html>
     <head><style>${CSS}</style>
-        <link rel="shortcut icon" href="lurchmath/grading-tools/favicon.svg">
+      <title>Lurch ToC</title>
+      <link rel="shortcut icon" href="lurchmath/grading-tools/favicon.svg">
     </head>
     <body>
       <div id='container'>
