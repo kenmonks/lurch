@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Lurch for Math 299</title>
+  <title>Welcome!</title>
   <meta name="description"
     content="This is the website of Dr. Kenneth G. Monks, Professor of Mathematics at the University of Scranton." />
   <meta name="keywords"
@@ -165,7 +165,7 @@
       display: block;
       width: 100%;
       text-decoration: none;
-      box-sizing: border-box; 
+      box-sizing: border-box;
     }
 
     #leftnav li:hover,
@@ -226,12 +226,10 @@
           </div>
           <p>
             Lurch is a math editor that can check your proofs (coauthored with
-            <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to
-            create
-            their own Lurch course
+            <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to create their own Lurch course
             materials using the rule libraries and content from my
             <a href="https://monks.scranton.edu/math299" target="_blank">Math 299 course (Spring 2024)</a>
-            can find supporting materials here. NOTE: much of this is under
+            can find supporting materials here. NOTE: some of this is still under
             construction.
           </p>
 
@@ -245,12 +243,34 @@
           <h2 id="documentation">Documentation</h2>
           <ul class="disc">
             <li>
-              <strong><a href="student.html?load=help/quick-start-guide.lurch">Quick Start Guide</a></strong>
+              <strong>CICM Workshop Presentation</strong>
+              <ul>
+                <li><a href="student.html?load=cicm/cicm.lurch" target="_blank">Part 1</a>&#8211; student view and doing proofs in Lurch</li>
+                <li>Part 2</a>&#8211; instructor view</li>
+                <li>Part 3</a>&#8211; the Lurch deductive engine (how does it work)</li>
+              </ul>
+            </li>
+            <li>
+              <strong><a href="student.html?load=help/quick-start-guide.lurch" target="_blank">Quick Start Guide</a></strong>
               &#8211; how to use the student version of Lurch.
             </li>
             <li>
-              <strong><a href="instructor.html?load=help/example-proofs.lurch" target="_blank">Examples</a></strong>
+              <strong>Example Proofs</strong>
               &#8211; a few proofs done in Lurch using the topics defined below.
+              <ul>
+                <li>
+                  <strong><a href="instructor.html?load=help/example-proofs.lurch" target="_blank">Examples</a></strong>
+                  - a sample of some proofs in Lurch using a variety of topics and styles.
+                </li>
+                <li>
+                  <strong><a href="student.html?load=math/examples/Mar 26 - in class.lurch"
+                      target="_blank">Double induction</a></strong> - a proof of a binomial coefficient identity using double induction (and the recursive definition of binomial coefficients given in the course).
+                </li>
+                <li>
+                  <strong><a href="student.html?load=math/examples/Topo-logical - soln.lurch"
+                      target="_blank">Topo-logical</a></strong> - a proof that the composition of continuous functions is continuous in Topology.
+                </li>
+              </ul>
             </li>
             <li>
               <strong><a href="lurch-parser-docs.html" target="_blank">Lurch Syntax</a></strong>
@@ -270,7 +290,9 @@
               <strong><span style="font-size: 110%">Cumulative Topics</span></strong>
               &#8211; each link one opens a blank Lurch document whose context
               consists of the rules for that topic, and those from the topics
-              above it. The Theorem numbers refer to exercises in the draft of the <a href='https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf' target="_blank">course lecture notes.</a>
+              above it. The Theorem numbers refer to exercises in the draft of the <a
+                href='https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf' target="_blank">course
+                lecture notes.</a>
             </p>
             <dl>
               <dt>
@@ -536,79 +558,103 @@
               during this semester so that some assignments are not good
               examples of what can be done today if these were rewritten to take
               advantage of some of the new features. We are in the process of
-              updating them.  I also intend to revise the entire syllabus in like of having Lurch available to spend less time on formal logic and more time on the later topics in the course (and perhaps add a few new ones).
+              updating them. I also intend to revise the entire syllabus in like of having Lurch available to spend less
+              time on formal logic and more time on the later topics in the course (and perhaps add a few new ones).
             </p>
             <dl>
 
               <dt>
-                <a href="instructor.html?load=assignments/assignment-06.lurch" target="_blank">Assignment #06</a>Propositional logic
+                <a href="instructor.html?load=assignments/assignment-06.lurch" target="_blank">Assignment
+                  #06</a>Propositional logic
               </dt>
               <dd>
                 <ol class="thmlist">
                   <li><strong>Theorem (Iff is stronger):</strong>$(P\Leftrightarrow Q)\Rightarrow(Q\Rightarrow P)$</li>
                   <li><strong>Theorem (the other way around):</strong>$\neg(\neg A)\Rightarrow A$</li>
-                  <li><strong>Theorem (Modus Tollens):</strong>$(S \Rightarrow T)\text{ and } \neg T \Rightarrow \neg S$</li>
-                  <li><strong>Theorem (atomic statements don't have to be variables):</strong>$0 \lt x\text{ or }x\lt 10 \Rightarrow x\lt 10\text{ or } 0\lt x$</li>
+                  <li><strong>Theorem (Modus Tollens):</strong>$(S \Rightarrow T)\text{ and } \neg T \Rightarrow \neg S$
+                  </li>
+                  <li><strong>Theorem (atomic statements don't have to be variables):</strong>$0 \lt x\text{ or }x\lt 10
+                    \Rightarrow x\lt 10\text{ or } 0\lt x$</li>
                   <li><strong>Theorem (excluded middle):</strong>$K\text{ or } \neg K$</li>
                 </ol>
               </dd>
 
               <dt>
-                <a href="instructor.html?load=assignments/assignment-07.lurch" target="_blank">Assignment #07</a>Propositional logic
+                <a href="instructor.html?load=assignments/assignment-07.lurch" target="_blank">Assignment
+                  #07</a>Propositional logic
               </dt>
               <dd>
                 <ol class="thmlist">
-                  <li><strong>Theorem (implies is transitive):</strong>$((P\Rightarrow Q)\text{ and }(Q \Rightarrow R)) \Rightarrow (P \Rightarrow R)$</li>
+                  <li><strong>Theorem (implies is transitive):</strong>$((P\Rightarrow Q)\text{ and }(Q \Rightarrow R))
+                    \Rightarrow (P \Rightarrow R)$</li>
                   <li><strong>Theorem (alternate or-):</strong>$(S\text{ or } T)\text{ and } \neg S \Rightarrow T$</li>
                 </ol>
               </dd>
 
               <dt>
-                <a href="instructor.html?load=assignments/assignment-08.lurch" target="_blank">Assignment #08</a>Predicate logic with Equality
+                <a href="instructor.html?load=assignments/assignment-08.lurch" target="_blank">Assignment
+                  #08</a>Predicate logic with Equality
               </dt>
               <dd>
                 <ol class="thmlist">
-                  <li><strong>Theorem (alpha equivalence warm up):</strong>$(\forall x.P(x)) \Rightarrow (\forall y.P(y))$</li>
-                  <li><strong>Theorem (same thing but for exists):</strong>$(\exists x.P(x)) \Rightarrow (\exists y.P(y))$</li>
-                  <li><strong>Theorem (commuting quantifiers):</strong>$(\forall x.\forall y.x\text{ loves }y) \Rightarrow (\forall y.\forall x.x\text{ loves }y)$</li>
-                  <li><strong>Theorem (same thing for exists):</strong>$(\exists x.\exists y.x\text{ loves }y) \Rightarrow (\exists y.\exists x.x\text{ loves }y)$</li>
-                  <li><strong>Theorem (DeMorgan):</strong>$\neg (S\text{ and }T) \Rightarrow \neg S\text{ or } \neg T$</li>
+                  <li><strong>Theorem (alpha equivalence warm up):</strong>$(\forall x.P(x)) \Rightarrow (\forall
+                    y.P(y))$</li>
+                  <li><strong>Theorem (same thing but for exists):</strong>$(\exists x.P(x)) \Rightarrow (\exists
+                    y.P(y))$</li>
+                  <li><strong>Theorem (commuting quantifiers):</strong>$(\forall x.\forall y.x\text{ loves }y)
+                    \Rightarrow (\forall y.\forall x.x\text{ loves }y)$</li>
+                  <li><strong>Theorem (same thing for exists):</strong>$(\exists x.\exists y.x\text{ loves }y)
+                    \Rightarrow (\exists y.\exists x.x\text{ loves }y)$</li>
+                  <li><strong>Theorem (DeMorgan):</strong>$\neg (S\text{ and }T) \Rightarrow \neg S\text{ or } \neg T$
+                  </li>
                   <li><strong>Theorem (DeMorgan):</strong>$\neg (\forall x.R(x)) \Rightarrow (\exists x.\neg R(x))$</li>
                   <li><strong>Theorem ($=$ is transitive):</strong>$x=y\text{ and }y=z$ \Rightarrow x=z$</li>
                 </ol>
               </dd>
 
               <dt>
-                <a href="instructor.html?load=assignments/assignment-09.lurch" target="_blank">Assignment #09</a>Logic theorems
+                <a href="instructor.html?load=assignments/assignment-09.lurch" target="_blank">Assignment #09</a>Logic
+                theorems
               </dt>
               <dd>
                 <ol class="thmlist">
-                  <li><strong>Theorem 5.10 (some are the same):</strong>$(\forall x.\forall y.P(x,y)) \Rightarrow (\forall z.P(z,z))$</li>
-                  <li><strong>Theorem 5.16 (excluded middle):</strong>$(\forall x.Q(x))\text{ or } (\exists x.\neg Q(x))$</li>
-                  <li><strong>Theorem 4.22 (alternate $\Rightarrow$):</strong>$(R \Rightarrow S) \Rightarrow \neg R\text{ or }S$</li>
+                  <li><strong>Theorem 5.10 (some are the same):</strong>$(\forall x.\forall y.P(x,y)) \Rightarrow
+                    (\forall z.P(z,z))$</li>
+                  <li><strong>Theorem 5.16 (excluded middle):</strong>$(\forall x.Q(x))\text{ or } (\exists x.\neg
+                    Q(x))$</li>
+                  <li><strong>Theorem 4.22 (alternate $\Rightarrow$):</strong>$(R \Rightarrow S) \Rightarrow \neg
+                    R\text{ or }S$</li>
                 </ol>
               </dd>
 
               <dt>
-                <a href="instructor.html?load=assignments/assignment-10.lurch" target="_blank">Assignment #10</a>Logic review
+                <a href="instructor.html?load=assignments/assignment-10.lurch" target="_blank">Assignment #10</a>Logic
+                review
               </dt>
               <dd>
                 <ol class="thmlist">
-                  <li><strong>Theorem (ex falso quodlibet):</strong>If Dracula fears Alice and Dracula does not fear Alice then Bob loves Alice.</li>
-                  <li><strong>Theorem 4.29 (the most beautiful?):$S \Rightarrow (S \Leftrightarrow S\text{ or }(\neg S \text{ and } S))$</strong></li>
-                  <li><strong>Theorem 4.25 (shunting):</strong>$((P \text{ and } Q) \Rightarrow R) \Leftrightarrow (P \Rightarrow (Q \Rightarrow R))$</li>
-                  <li><strong>Theorem 5.21 (avoiding vacuous domains):</strong>$(\exists x. x = x)\text{ and }(\forall y. T(y)) \Rightarrow (\exists z. T(z))$</li>
-                  <li><strong>Theorem 5.5 (distributivity):</strong>$(\exists x. A(x) \Rightarrow B(x)) \Leftrightarrow (\forall y. A(y)) \Rightarrow (\exists z. B(z))$</li>
+                  <li><strong>Theorem (ex falso quodlibet):</strong>If Dracula fears Alice and Dracula does not fear
+                    Alice then Bob loves Alice.</li>
+                  <li><strong>Theorem 4.29 (the most beautiful?):$S \Rightarrow (S \Leftrightarrow S\text{ or }(\neg S
+                      \text{ and } S))$</strong></li>
+                  <li><strong>Theorem 4.25 (shunting):</strong>$((P \text{ and } Q) \Rightarrow R) \Leftrightarrow (P
+                    \Rightarrow (Q \Rightarrow R))$</li>
+                  <li><strong>Theorem 5.21 (avoiding vacuous domains):</strong>$(\exists x. x = x)\text{ and }(\forall
+                    y. T(y)) \Rightarrow (\exists z. T(z))$</li>
+                  <li><strong>Theorem 5.5 (distributivity):</strong>$(\exists x. A(x) \Rightarrow B(x)) \Leftrightarrow
+                    (\forall y. A(y)) \Rightarrow (\exists z. B(z))$</li>
                 </ol>
               </dd>
 
               <dt>
-                <a href="instructor.html?load=assignments/assignment-11.lurch" target="_blank">Assignment #11</a>Logic review
+                <a href="instructor.html?load=assignments/assignment-11.lurch" target="_blank">Assignment #11</a>Logic
+                review
               </dt>
               <dd>
                 <ol class="thmlist">
                   <li><strong>Theorem (Pierce's Law)</strong>$((S \Rightarrow T) \Rightarrow S) \Rightarrow S$</li>
-                  <li><strong>Theorem (quantifier fun):</strong>$(\forall x.\exists y.\forall z.A(x,y,z)) \Rightarrow (\forall z.\forall x.\exists y.A(x,y,z))$</li>
+                  <li><strong>Theorem (quantifier fun):</strong>$(\forall x.\exists y.\forall z.A(x,y,z)) \Rightarrow
+                    (\forall z.\forall x.\exists y.A(x,y,z))$</li>
                 </ol>
               </dd>
 
@@ -970,7 +1016,7 @@
           </div>
 
           <h2 id="lurchforinstructors">Lurch for Instructors</h2>
-          <a href="" class="button" onclick="openLurch('instructor.html'); return false;">
+          <a href="" class="button" onclick="window.open('instructor.html','target=_blank'); return false;">
             Lurch</a>
           &#8211; is a math word processor that can check your proofs! This
           button will open a blank document with no rules or background material

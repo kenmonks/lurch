@@ -597,13 +597,17 @@ export class Atom {
         // inline atoms use a suffix span to store validation feedback while
         // shells use an attribute, so we get both
 
-        // first get the suffix element of this Atom (if it doesn't have one this
-        // routine will make an empty one)
-        let ans = Array.from(this.getChild('suffix')
-            .querySelectorAll( '[class^=feedback-marker]' ))
-            .map( s => Array.from(s.classList).filter( x => 
-                  x.startsWith('feedback-marker') ))
-                      .flat().map( x => x.slice(16)) // remove prefixes
+        let ans = []
+        // first get the suffix element of this Atom. If it doesn't have one,
+        // just return the empty array.
+        const suffix=this.getChild('suffix',false)
+        if (suffix) {
+            ans = Array.from(suffix
+                .querySelectorAll( '[class^=feedback-marker]' ))
+                .map( s => Array.from(s.classList).filter( x => 
+                      x.startsWith('feedback-marker') ))
+                          .flat().map( x => x.slice(16)) // remove prefixes
+        }
         // now check if the result is an attribute
         const attr = this.element.dataset['validation_result']
         // add it to the end if both are present (they shouldn't be)

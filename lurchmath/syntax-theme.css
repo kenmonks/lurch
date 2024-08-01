@@ -65,7 +65,7 @@
   /* borders and titles of shells color */
   --border-color: #b4d7ff;
   /* marginal annotation of shell types */
-  --margin-color: #b4d7ff;
+  --margin-color: transparent; /* #b4d7ff; */
   /* left border of shells in semantic view */
   --left-border-color: #b4d7ff;
   /* green checkmark color */
@@ -183,7 +183,7 @@ div.lurch-atom {
 /* typically don't need bottom margin or padding because of the qed symbol */
 div.lurch-atom[data-metadata_type*="proof"] { 
   margin-bottom: 0; 
-  padding-bottom: 0; 
+  padding-bottom: 0.25rem; 
 }
 
 /* Problem boxes */
@@ -331,6 +331,11 @@ span.marker-nosymbol::after {
 span.feedback-marker-error::after {
   content: "!";
   color: var(--error-color);
+}
+div.lurch-atom[data-metadata_type*="rule"] span.feedback-marker-invalid::after,
+div.lurch-atom[data-metadata_type*="rule"] span.marker-redx::after {
+  content: "";
+  color: transparent;
 }
 /* feedback icons on shells */
 div.lurch-atom[data-shell_title][data-validation_result="valid"]::after,

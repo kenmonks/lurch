@@ -369,7 +369,7 @@ export const install = editor => {
     // to see a list of all axioms, theorems, and rules in force can do so.
     // Revealing these previews also shows a search/filter box in the toolbar.
     editor.ui.registry.addMenuItem( 'viewdependencyurls', {
-        text : 'Show/Hide rules',
+        text : 'Show/Hide context',
         icon: 'preview',
         shortcut : 'meta+alt+0',
         tooltip : 'View the mathematical content on which this document depends',
