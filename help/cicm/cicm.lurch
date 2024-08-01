@@ -1,0 +1,522 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="settings" data-key="instantiateEverything" data-value-type="json">false</div></div>
+            <div id="document"><h1>Introduction to Lurch for Math 299</h1>
+<p>Lurch was used in Math 299: <em>Introduction to Mathematical Proof</em>&nbsp;at the University of Scranton during the Spring 2024 Semester.&nbsp; It is a four credit undergraduate course for math and math education majors that is usually take in the Spring of their sophomore year and is a prerequisite for many of our junior and senior level undergraduate courses in pure mathematics.</p>
+<p><strong>Topics:</strong></p>
+<p style="line-height: 1.5;">I. Lurch for Students<br><span style="font-size: var(--base-font-size);">II. Proofs in Lurch<br></span><span style="font-size: var(--base-font-size);">III. Lurch for Instructors<br></span>IV. Lurch Deductive Engine</p>
+<hr>
+<h1 style="line-height: 1;">I. Lurch for Students</h1>
+<p>We begin by exploring what using Lurch is like from a student's perspective.&nbsp; Lurch is designed to have an <em>extremely</em> minimal learning curve for students. The following exposition is how we might explain Lurch to students.</p>
+<p><span style="font-size: 11pt;">Q: What is Lurch?</span></p>
+<div>
+<div style="text-align: left;"><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Lurch is a word processor that provides three insights into mathematical nature of your document: context, meaning, and validity.</em></span></div>
+</div>
+<p><span style="font-size: 11pt;">Q: What do I need to know to use Lurch?</span></p>
+<div>
+<div style="text-align: left;"><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Just the five things on the</em><code>Math</code><em>menu.&nbsp; </em></span></div>
+<div style="text-align: left;"><span style="font-size: 8pt;"><em>(see the Quick Start Guide on the</em><code>Help</code><em>menu)</em></span></div>
+<div>&nbsp;</div>
+<div><span style="font-size: 11pt;">Q: How do I get a Lurch assignment?</span></div>
+<div>&nbsp;</div>
+<div><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Just click on a link</em><em>.</em></span></span></div>
+<div><span style="font-size: 8pt;"><em>(see the sample assignments on 299-site</em><em>)</em></span></div>
+<div>&nbsp;</div>
+</div>
+<div>
+<div><span style="font-size: 11pt;">Q: How do I type the expressions?</span></div>
+<div><span style="font-size: 11pt;">&nbsp;</span></div>
+<div><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Just copy what the instructor typed (in the assignment or context)</em><em>.</em></span></span></div>
+<div><span style="font-size: 8pt;"><em>(see the sample assignments on 299-site, and also the Lurch Math Reference on the</em><code>Help</code>m<em>enu</em><em>)</em></span></div>
+<div>
+<div>
+<div>&nbsp;</div>
+</div>
+<div>
+<div><span style="font-size: 11pt;">Q: How do I save my work?</span></div>
+<div><span style="font-size: 11pt;">&nbsp;</span></div>
+<div><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Just use the Lurch</em><code>File&gt;Save</code>and<code>File&gt;Open</code><em>menus to save and reload your work to your laptop.</em></span></span></div>
+<div>&nbsp;</div>
+</div>
+<div><span style="font-size: 11pt;">Q: What is validation?</span>
+<div>
+<div style="text-align: left;">
+<ul>
+<li style="font-size: 11pt;"><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Lurch has a collection of tools that can be used to check the validity of your claims.</em></span></li>
+<li style="font-size: 11pt;"><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Some tools are very elementary and apply to all Lurch documents. Others more sophisticated and are only needed in special situations if your instructor deems necessary.</em></span></li>
+</ul>
+<p><span style="font-size: 11pt;">Q: What tools are available, and how do I use them?</span></p>
+<p><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Glad you asked.&nbsp; Let's go through them all!.</em></span></span></p>
+<h1>II. Proofs in Lurch</h1>
+<h2>1. Basics</h2>
+<h3>Meaningful vs Expository</h3>
+<ul>
+<li>Lurch only considers what you enter as Math Expressions and Math Environments for validation.&nbsp;Everything else is just expository, like comment statements in code (we like to call it <em>flarf).</em></li>
+<li>When showing meaning, meaningful text is indicated with gold font, and environments indicated with shadow-boxes.&nbsp; (Meaningful content is also highlighted when you hover with the mouse.)</li>
+</ul>
+<h3>No built-in math!</h3>
+<ul>
+<li>A blank Lurch document with no context doesn't presume any math facts.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;1+1=2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">1</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A subset A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit">A</span></span></span></span></span><br><em>I'm pretty sure that</em> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;3 is prime&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">3</span><span class="ML__text"> is prime</span></span></span></span></span>.</p>
+</div>
+<h3>Previous assertions justify later ones</h3>
+<ul>
+<li>Once something meaningful is stated, it then can justify later* instances of the same statement in the document.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;5 is prime&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">5</span><span class="ML__text"> is prime</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;5 is prime&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">5</span><span class="ML__text"> is prime</span></span></span></span></span><br><em>Someone said that</em> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;B subset B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.06em;">B</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span>&nbsp;<em>and</em> <em>from that we can conclude</em> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;B subset B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.06em;">B</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span>.</p>
+</div>
+<p style="text-align: left; padding-left: 40px;"><span style="font-size: 8pt;">*for an appropriate definition of 'later'</span></p>
+<ul>
+<li>They do not have to be consecutive.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Gina loves chocolate&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Gina loves chocolate</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;3 is prime&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">3</span><span class="ML__text"> is prime</span></span></span></span></span> <span style="font-size: 10pt;">(see above)<br></span><span style="font-size: 10pt;"><em>Oh, by the way </em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Gina loves chocolate&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Gina loves chocolate</span></span></span></span></span></span></p>
+</div>
+<p>&nbsp;&nbsp;</p>
+<p style="padding-left: 40px;"><strong><span style="color: rgb(53, 152, 219);">REMEMBER:</span></strong><span style="color: rgb(53, 152, 219);"> <em>Statements can justify later copies of themselves</em>.&nbsp;</span></p>
+<p>&nbsp;</p>
+<h3>Assumptions &amp; Claims</h3>
+<ul>
+<li>If you want to assert something as an assumption, you can prefix it with "Assume" (or one of its synonyms from the Lurch Math Reference).&nbsp; Lurch will not try to validate assumptions since you are asserting them by fiat.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume 7&lt;3&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__cmr">7</span><span class="ML__cmr">&lt;</span><span class="ML__cmr">3</span></span></span></span></span><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If 12 is prime&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__cmr">12</span><span class="ML__text"> is prime</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;12 is prime&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">12</span><span class="ML__text"> is prime</span></span></span></span></span>.</p>
+</div>
+<ul>
+<li style="text-align: left;">Assumptions can still justify later instances of the same assertion ('If' is a synonym of 'Assume').</li>
+<li style="text-align: left;">An assumed Expression (or Environment) is called an&nbsp;<em>assumption </em>(or a <em>given</em>)<em>.&nbsp; </em>An Expression (or Environment) which is not an assumption is called a c<em>laim.</em></li>
+<li>TIP: you can enter more than one assumption at a time by separating expressions by commas after the 'Assume' (or it's synonyms). e.g.,</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume J,K,L&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.1em;">J</span><span class="ML__text">, </span><span class="ML__mathit" style="margin-right: 0.08em;">K</span><span class="ML__text">, and </span><span class="ML__mathit">L</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;K&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.08em;">K</span></span></span></span></span> must be true (and so must <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;J&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.1em;">J</span></span></span></span></span> and <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;L&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">L</span></span></span></span></span>).</p>
+</div>
+<h4>&nbsp;</h4>
+<h2>2. If-then environments</h2>
+<ul>
+<li style="text-align: left;">An If-then environment is an environment containing one or more assumptions followed by one or more claims. (For example, the Fun Fact in the following example.)</li>
+<li style="text-align: left;">If-then environments are treated like implications.</li>
+</ul>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Suppose mocha is chocolate&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Suppose mocha is chocolate</span></span></span></span></span>.&nbsp; Additionally, assume the following Fun Fact:</p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><strong>Trivia:&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If mocha is chocolate&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If mocha is chocolate</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Gina loves mocha&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Gina loves mocha</span></span></span></span></span>.</p>
+</div>
+<p>Then we can conclude that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Gina loves mocha&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Gina loves mocha</span></span></span></span></span>.</p>
+<hr>
+<div class="lurch-atom-suffix">
+<ul>
+<li>TRY IT:&nbsp; Compare what happens if you delete various pieces of meaningful content in the Example and revalidate.</li>
+<li>Q: Why doesn't the claim 'Gina loves mocha' in the Trivia get validated?</li>
+</ul>
+<p style="padding-left: 40px;">&nbsp;</p>
+<p style="padding-left: 40px;"><span style="color: rgb(53, 152, 219);"><strong>REMEMBER:</strong>&nbsp;<em>If-then environments are treated like implications</em>.&nbsp;</span></p>
+<h4>&nbsp;</h4>
+<h2>3. Rules</h2>
+<p>Consider the following.</p>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume 2|m&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit">m</span></span></span></span></span>, and suppose we know the following fun fact:</p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><strong>Fun Fact:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If 2|n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit">n</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<p>Then we don't know if&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__text"> is even</span></span></span></span></span>. But,&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;if 2|n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">if </span><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit">n</span></span></span></span></span> then we do know that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+<hr>
+<ul>
+<li>To state the Fun Fact for all integers&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span> we can use a Rule environment instead of a Premise environment.</li>
+<li>Rule environments are treated as the universal closure over the non-constant symbols they contain.</li>
+<li>Rule environments are assumed, and therefore are not checked by validation.</li>
+<li>Proof environments cannot be used as Rules, and are checked by validation.</li>
+<li>Theorem environments can be used as a Rule and are checked by validation like a Proof.</li>
+</ul>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>To make the Fun Fact hold for any integer <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span> (but not for all adjectives 'even' or all relations 'is') let's first <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;declare even, is, |, +, *, 0, 1, 2, 3, 4&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">declare even, is, </span><span class="ML__cmr">∣</span><span class="ML__text">, </span><span class="ML__cmr">+</span><span class="ML__text">, </span><span class="ML__cmr">&sdot;</span><span class="ML__text">, </span><span class="ML__cmr">0</span><span class="ML__text">, </span><span class="ML__cmr">1</span><span class="ML__text">, </span><span class="ML__cmr">2</span><span class="ML__text">, </span><span class="ML__cmr">3</span><span class="ML__text">, and </span><span class="ML__cmr">4</span></span></span></span></span> to be constants. Now we can state the Fun Fact as a Rule.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Fun Fact Rule:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If 2|n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit">n</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p>Now&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;suppose 2|k, 2|j&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">suppose </span><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__text"> and </span><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit" style="margin-right: 0.06em;">j</span></span></span></span></span>.&nbsp;Then we do know that both&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;k is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__text"> is even</span></span></span></span></span> and <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;j is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.06em;">j</span><span class="ML__text"> is even</span></span></span></span></span>. And still&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;if 2|n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">if </span><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit">n</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<hr><hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>Suppose all variables represent natural numbers. Consider this definition.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of Divides:&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If n=m*k&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">n</span><span class="ML__cmr">=</span><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m | n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">∣</span><span class="ML__mathit">n</span></span></span></span></span>.</p>
+</div>
+<p>Additionally, suppose we have this theorem.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem (transitivity of divides): </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If a | b, b | c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">a</span><span class="ML__cmr">∣</span><span class="ML__mathit">b</span><span class="ML__text"> and </span><span class="ML__mathit">b</span><span class="ML__cmr">∣</span><span class="ML__mathit">c</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;a|c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">a</span><span class="ML__cmr">∣</span><span class="ML__mathit">c</span></span></span></span></span>.</p>
+</div>
+<p>Using these and the Fun Fact rule above, prove the following Theorem (where we <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;declare 6,24&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">declare </span><span class="ML__cmr">6</span><span class="ML__text"> and </span><span class="ML__cmr">24</span></span></span></span></span> to be constants).</p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If 24=6*4,6=2*3&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__cmr">24</span><span class="ML__cmr">=</span><span class="ML__cmr">6</span><span class="ML__cmr">&sdot;</span><span class="ML__cmr">4</span><span class="ML__text"> and </span><span class="ML__cmr">6</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span><span class="ML__cmr">&sdot;</span><span class="ML__cmr">3</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;24 is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">24</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p>&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<p>TRY IT:&nbsp; We can do better!</p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If s=t*j,t=2*k&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">s</span><span class="ML__cmr">=</span><span class="ML__mathit">t</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit" style="margin-right: 0.06em;">j</span><span class="ML__text"> and </span><span class="ML__mathit">t</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;s is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">s</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p>&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<p>Q:&nbsp;<em>What would happen if we did not declared 3, 4, 6, and 24 to be constants?</em></p>
+<hr>&nbsp;
+<p style="padding-left: 40px;"><span style="color: rgb(53, 152, 219);"><strong>REMEMBER:</strong> <em>Rule environments are treated like the universal closure over the non-constant symbols they contain.</em></span></p>
+</div>
+<div class="lurch-atom-suffix">
+<p>&nbsp;</p>
+<h2>4. Iff-environments</h2>
+<p>One way to define an ordered pair would be to use two if-then environments as rules. <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare pair&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare pair</span></span></span></span></span> to be a constant.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of ordered pair:&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;if pair(a,b)=pair(c,d)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">if </span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.8888799999999999em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit">a</span><span class="ML__cmr">,</span><span class="ML__mathit">b</span><span class="ML__small-delim ML__close">⟩</span></span><span class="ML__cmr">=</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.8888799999999999em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit">c</span><span class="ML__cmr">,</span><span class="ML__mathit">d</span><span class="ML__small-delim ML__close">⟩</span></span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;a=c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">a</span><span class="ML__cmr">=</span><span class="ML__mathit">c</span></span></span></span></span> ,&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;b=d&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">b</span><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span></span>.&nbsp;</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of ordered pair:&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If a=c, b=d&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">a</span><span class="ML__cmr">=</span><span class="ML__mathit">c</span><span class="ML__text"> and </span><span class="ML__mathit">b</span><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;pair(a,b)=pair(c,d)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.8888799999999999em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit">a</span><span class="ML__cmr">,</span><span class="ML__mathit">b</span><span class="ML__small-delim ML__close">⟩</span></span><span class="ML__cmr">=</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.8888799999999999em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit">c</span><span class="ML__cmr">,</span><span class="ML__mathit">d</span><span class="ML__small-delim ML__close">⟩</span></span></span></span></span></span>.</p>
+</div>
+<p>This situation occurs frequently enough that we have a shorthand way to enter both rules at the same time:</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of ordered pair:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;pair(a,b)=pair(c,d)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.8888799999999999em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit">a</span><span class="ML__cmr">,</span><span class="ML__mathit">b</span><span class="ML__small-delim ML__close">⟩</span></span><span class="ML__cmr">=</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.8888799999999999em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit">c</span><span class="ML__cmr">,</span><span class="ML__mathit">d</span><span class="ML__small-delim ML__close">⟩</span></span></span></span></span></span>&nbsp;&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;equiv&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&nbsp;&equiv;&nbsp;</span></span></span></span></span>&nbsp;&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;a=c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">a</span><span class="ML__cmr">=</span><span class="ML__mathit">c</span></span></span></span></span> ,&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;b=d&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">b</span><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span></span>.</p>
+</div>
+<ul>
+<li>An <em>iff-environment </em>is an environment with the symbol <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\equiv&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&equiv;</span></span></span></span></span> separating two non-empty sequences of claims.</li>
+<li>It is interpreted as a shorthand for the two if-then environments as illustrated above.</li>
+</ul>
+<hr>
+<p>&nbsp;<span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>We can use an iff-environment to extend the definition of 'even' above.&nbsp;</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of even:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span> &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;equiv&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&nbsp;&equiv;&nbsp;</span></span></span></span></span> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;2|n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">2</span><span class="ML__cmr">∣</span><span class="ML__mathit">n</span></span></span></span></span></p>
+</div>
+<hr>
+<h2>&nbsp;</h2>
+<h2>5. Subproofs</h2>
+<ul>
+<li>In the previous example the definitions and theorems all used the I<em>f-then environment style</em>.&nbsp; Another style that produces an equivalent definition or theorem is one that is frequently seen in high school geometry classes, which we call the&nbsp;<em>Given-conclude style.</em></li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem (transitivity of divides):</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><em>Given</em></p>
+<p><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;a |b&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">a</span><span class="ML__cmr">∣</span><span class="ML__mathit">b</span></span></span></span></span></em></p>
+<p><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;b|c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">b</span><span class="ML__cmr">∣</span><span class="ML__mathit">c</span></span></span></span></span></em></p>
+</div>
+<p><em>Conclude</em> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;a|c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">a</span><span class="ML__cmr">∣</span><span class="ML__mathit">c</span></span></span></span></span></p>
+</div>
+<ul>
+<li>This is particularly useful for rules that have if-then environments as premises.</li>
+</ul>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span> Proving an 'iff' theorem.&nbsp;</p>
+<p>Let's&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;declare iff&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">declare </span><span class="ML__cmr">&hArr;</span></span></span></span></span> to be a constant. Then we can make a rule like this.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of if-and-only-if:</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><em>Given</em></p>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></p>
+</div>
+</div>
+<p><em>Conclude</em> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W iff V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">&hArr;</span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
+</div>
+<ul>
+<li style="font-style: italic;"><em>Notice that we have not defined the logical </em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\Rightarrow&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&rArr;</span></span></span></span></span><em> operator, nor used it in this definition.</em></li>
+</ul>
+<p>Suppose we also know that&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;=&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">=</span></span></span></span></span> is symmetric:</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Symmetry of equality:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If a=b&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">a</span><span class="ML__cmr">=</span><span class="ML__mathit">b</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;b=a&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">b</span><span class="ML__cmr">=</span><span class="ML__mathit">a</span></span></span></span></span>.</p>
+</div>
+<p>Let's use these to prove a simple theorem.</p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem:&nbsp;</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;pair(x,y)=pair(y,x) iff x=y&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.625em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit">x</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__small-delim ML__close">⟩</span></span><span class="ML__cmr">=</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.625em;"><span class="ML__small-delim ML__open">⟨</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__cmr">,</span><span class="ML__mathit">x</span><span class="ML__small-delim ML__close">⟩</span></span><span class="ML__cmr">&hArr;</span><span class="ML__mathit">x</span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span></span></span></span></span></p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p>&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<hr>
+<h4>&nbsp;</h4>
+<h2>6. Let-environments</h2>
+<ul>
+<li>A&nbsp;<em>Let-environment</em> is an if-then environment that begins with a&nbsp;<em>Let-declaration </em>instead of an assumption.</li>
+<li>They are used to justify that some claim is true for all math objects of the declared type.</li>
+</ul>
+<h4>Let declarations</h4>
+<ul>
+<li style="text-align: left;">The math expression 'Let&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span></span></span></span></span>' declares the symbol <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span></span></span></span></span> to be arbitrary.&nbsp;</li>
+<li style="text-align: left;">Symbols can be any string of one or more characters and digits that do not start with a digit. e.g.,</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p style="text-align: left;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Let r &quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Let </span><span class="ML__mathit" style="margin-right: 0.03em;">r</span></span></span></span></span>,&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;let alpha&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">let </span><span class="lcGreek ML__mathit" style="margin-right: 0.01em;">&alpha;</span></span></span></span></span>,&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Let Fred&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Let Fred</span></span></span></span></span>,&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;let x0&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">let x0</span></span></span></span></span></p>
+</div>
+<ul>
+<li style="text-align: left;">The symbol is considered to be declared until the end of the document or the end of the innermost environment (the <em>parent</em> environment) containing the declaration. This is the&nbsp;<em>scope</em> of the declaration.</li>
+<li style="text-align: left;">Redeclaring the same symbol in its scope is marked as an error by validation.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p style="text-align: left;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Let r&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Let </span><span class="ML__mathit" style="margin-right: 0.03em;">r</span></span></span></span></span> , <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Let r&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Let </span><span class="ML__mathit" style="margin-right: 0.03em;">r</span></span></span></span></span>&nbsp;</p>
+</div>
+<ul>
+<li style="text-align: left;">But you can redeclare the same symbol as long as they have disjoint scopes.</li>
+<li style="text-align: left;">The expression 'Let <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span></span></span></span></span> be such that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;P(x)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit">x</span><span class="ML__cmr">)</span></span></span></span></span>' declares <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span></span></span></span></span> to be an arbitrary entity with the property&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;P(x)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit">x</span><span class="ML__cmr">)</span></span></span></span></span>.</li>
+<li style="text-align: left;">The expression 'Let <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x\\in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span>' is a shorthand for 'Let <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span></span></span></span></span> be such that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x\\in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span>'.</li>
+<li style="text-align: left;">Let-declarations are treated as assumptions for validation purposes.</li>
+</ul>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>Suppose we want to define the notions of intersection and subset. We can <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;declare cap, subset, in&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">declare </span><span class="ML__cmr">&cap;</span><span class="ML__text">, </span><span class="ML__cmr">&sube;</span><span class="ML__text">, and </span><span class="ML__cmr">&isin;</span></span></span></span></span> to be constants and one possible way to define them is as follows.&nbsp;</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of Intersection:</strong> &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in A cap B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span><span class="ML__cmr">&cap;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span> &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;equiv&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&nbsp;&equiv;&nbsp;</span></span></span></span></span> &nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span>,&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span>&nbsp;</p>
+</div>
+<ul>
+<li style="font-style: italic;"><em>Notice that we have not defined the logical 'and' operator, nor used it in this definition.</em></li>
+</ul>
+<p>For subsets we might use to rules instead of one.&nbsp; Let's use the Given-Conclude style.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of Subset</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><em>Given</em></p>
+<p><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A subset B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span></em></p>
+<p><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span></em></p>
+</div>
+<p><em>Conclude</em> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span></p>
+</div>
+<p>but to prove something is a subset we need to prove that an arbitrary element of <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span></span></span></span></span> is an element of <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span>.&nbsp; So we might define that like this.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of Subset</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><em>Given</em></p>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Let x in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Let </span><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span></p>
+</div>
+</div>
+<p>&nbsp;<em>Conclude&nbsp;</em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A subset B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span></p>
+</div>
+<ul>
+<li style="font-style: italic;"><em>Notice we have not define the quantifier </em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\forall&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&forall;</span></span></span></span></span><em>, nor used it in this definition.</em></li>
+</ul>
+<p>Let's put it to work.</p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (transitivity of <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\subseteq&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&sube;</span></span></span></span></span>: </strong>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If A subset B, B subset C&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span><span class="ML__text"> and </span><span class="ML__mathit" style="margin-right: 0.06em;">B</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.08em;">C</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A subset C&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.08em;">C</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom unindented" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p>&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (intersection is idempotent):</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A subset A intersect A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit">A</span><span class="ML__cmr">&cap;</span><span class="ML__mathit">A</span></span></span></span></span></p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p>&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<hr>
+<p style="padding-left: 40px;">&nbsp;</p>
+<p style="padding-left: 40px;"><span style="color: rgb(53, 152, 219);"><strong>REMEMBER:&nbsp;</strong>Let-environments justify a claim that something is universally true.</span></p>
+<p>&nbsp;</p>
+<h2>7. For-some declarations</h2>
+<ul>
+<li style="text-align: left;">The math expression '<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;P(c)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit">c</span><span class="ML__cmr">)</span></span></span></span></span> for some <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">c</span></span></span></span></span>' asserts that there exists something that has the property <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;P(c)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit">c</span><span class="ML__cmr">)</span></span></span></span></span> and gives it the name <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">c</span></span></span></span></span>. e.g.,</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p style="text-align: left;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;0&lt;c for some c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">0</span><span class="ML__cmr">&lt;</span><span class="ML__mathit">c</span><span class="ML__text"> for some </span><span class="ML__mathit">c</span></span></span></span></span></p>
+</div>
+<ul>
+<li>For both Let-declarations and For-some-declarations, you cannot redeclare a symbol that is already in use.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Let c be such that 0&lt;c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Let </span><span class="ML__mathit">c</span><span class="ML__text"> be such that </span><span class="ML__cmr">0</span><span class="ML__cmr">&lt;</span><span class="ML__mathit">c</span></span></span></span></span>.&nbsp; Then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;0&lt;c for some c&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">0</span><span class="ML__cmr">&lt;</span><span class="ML__mathit">c</span><span class="ML__text"> for some </span><span class="ML__mathit">c</span></span></span></span></span>.</p>
+<p>Suppose that&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;0&lt;t for some t&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">0</span><span class="ML__cmr">&lt;</span><span class="ML__mathit">t</span><span class="ML__text"> for some </span><span class="ML__mathit">t</span></span></span></span></span>.&nbsp; Now <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;let t&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">let </span><span class="ML__mathit">t</span></span></span></span></span> be arbitrary.</p>
+</div>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>Using this we can extend and enhance our definition of 'divides'.&nbsp; Let's assume all variables represent natural numbers.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Definition of Divides:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If m divides n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">m</span><span class="ML__cmr">∣</span><span class="ML__mathit">n</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n=m*k for some k&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__cmr">=</span><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__text"> for some </span><span class="ML__mathit" style="margin-right: 0.04em;">k</span></span></span></span></span>.&nbsp;</p>
+</div>
+<ul>
+<li><em>Notice we have not defined the quantifier <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\exists&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&exist;</span></span></span></span></span></em><em>, nor used it in this definition.</em></li>
+</ul>
+<hr>
+<p style="padding-left: 40px;">&nbsp;</p>
+<p style="padding-left: 40px;"><span style="color: rgb(53, 152, 219);"><strong>REMEMBER:&nbsp;</strong>For-some declarations assert that something exists, and give it a name.</span></p>
+<h2>&nbsp;</h2>
+<h2>8. Substitution</h2>
+<p>Substitution is handled in two different ways in Lurch.&nbsp; Axiomatically and with a special tool for handling equations.</p>
+<h3>A. Leibniz Definition of =</h3>
+<p>Leibniz suggested that = is defined by two rules:</p>
+<p>Reflexive Property:</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x=x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">=</span><span class="ML__mathit">x</span></span></span></span></span></p>
+</div>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;SubsRule&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Substitution </span></span></span></span></span> rule:</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If x=y, @P(x)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">x</span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__text"> and </span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">x</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;@P(y)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.625em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span></p>
+</div>
+<ul>
+<li>In the substitution rule, the expression <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathcal{P}(x)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit">x</span><span class="ML__cmr">)</span></span></span></span></span> is called an&nbsp;<em>expression function application</em>, and is entered by typing<code>@P(x)</code>.&nbsp; (Students don't need to know this.)</li>
+<li>For efficiency reasons, we label this rule with the meaningful expression 'Substitution' and explicitly cite it 'by substitution' following an expression we want to justify using this rule (explained later).</li>
+</ul>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem: </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If s=2, s|t&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">s</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span><span class="ML__text"> and </span><span class="ML__mathit">s</span><span class="ML__cmr">∣</span><span class="ML__mathit">t</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;t is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">t</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p>&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<hr>
+<ul>
+<li>Using expression function applications we can define a very nice rule for induction.&nbsp; We state it here in Given-Conclude style.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Induction</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><em>Given</em></p>
+<p><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;@P(0)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__left-right" style="margin-top: 0em; height: 0.64444em;"><span class="ML__small-delim ML__open">(</span><span class="ML__cmr">0</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span>&nbsp; &nbsp;(base case)</em></p>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Let k be such that @P(k)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Let </span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__text"> be such that </span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__left-right" style="margin-top: 0em; height: 0.69444em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span>&nbsp; (inductive hypothesis)</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;@P(k+1)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__left-right" style="margin-top: -0.08333em; height: 0.77777em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span></p>
+</div>
+</div>
+<p><em>Conclude <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;@P(n)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">n</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span></em></p>
+</div>
+<ul>
+<li>&nbsp;Compare that to the rule stating it as a single formal axiom.</li>
+</ul>
+<p style="text-align: center;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathcal{P}(0)\\wedge\\big(\\forall k.\\mathcal{P}(k)\\Rightarrow\\mathcal{P}(k+1)\\big)\\Rightarrow \\forall n.\\mathcal{P}(n)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(0)</span><span class="ML__cmr">&and;</span><span class="ML__delim-size1">(</span><span class="ML__cmr">&forall;</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">.</span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">)</span><span class="ML__cmr">&rArr;</span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">+</span><span class="ML__cmr">1)</span><span class="ML__delim-size1">)</span><span class="ML__cmr">&rArr;</span><span class="ML__cmr">&forall;</span><span class="ML__mathit">n</span><span class="ML__cmr">.</span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit">n</span><span class="ML__cmr">)</span></span></span></span></span></p>
+<ul>
+<li style="text-align: left;">(see March 24 In Class examples on the <a href="https://kenmonks.github.io/299-site">299-site welcome page</a>)</li>
+</ul>
+<h3>B. Equations Rule</h3>
+<div>
+<ul>
+<li style="text-align: left;">Lurch provides a special built-in validation tool for dealing with proofs involving lengthy transitive chains of equation such as</li>
+</ul>
+<p style="text-align: center;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\begin{align} a &amp;= b \\\\ &amp;= c \\\\ &amp;= d \\end{align}&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mtable"><span class="col-align-r"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__mathit">a</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="col-align-l"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">b</span></span></span><span style="top: -3.01em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">c</span></span></span><span style="top: -1.51em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span></span></span></span></span></span></p>
+<p style="text-align: left; padding-left: 40px;"><br>(entered as a=b=c=d).</p>
+<ul>
+<li style="text-align: left;">It automates the application of the substitution and reflexive rules of equality, the derived properties of symmetry and transitivity, and checks each pair in the chain for both direct equality, and equality via a single substitution.</li>
+<li style="text-align: left;">The Equations Rule is only available if you have a Rule environment in your document or its context.&nbsp; (It's usually in the context.)</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Equations Rule: </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;EquationsRule&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">EquationsRule</span></span></span></span></span></p>
+</div>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>Suppose all variables represent natural numbers, and we have the distributive law.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Distributive law):</strong> &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m*(n+p)=m*n+m*p&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.7777700000000001em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">n</span><span class="ML__cmr">+</span><span class="ML__mathit">p</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">=</span><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">n</span><span class="ML__cmr">+</span><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">p</span></span></span></span></span>&nbsp;</p>
+</div>
+<p>&nbsp;We can combine this with our definitions and theorems above to prove the following.</p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (addition preserves parity):</strong> &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If m is even, n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">m</span><span class="ML__text"> is even and </span><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m+n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">+</span><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p style="text-align: left;">&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<p>For products we might need associativity.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Associativity of multiplication:&nbsp; </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m*(n*p)=(m*n)*p&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.63889em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">n</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">p</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">=</span><span class="ML__left-right" style="margin-top: 0em; height: 0.44445em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">n</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">p</span></span></span></span></span></p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (multiples of evens are even):</strong> &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If m is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">m</span><span class="ML__text"> is even</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m*n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p style="text-align: left;">&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<hr>
+<h2>&nbsp;9. Arithmetic &amp; Algebra</h2>
+<ul>
+<li>Is <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;1+1=2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">1</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span></span></span></span></span>? In Math 299 we prove that from the Peano Axioms (<span style="font-size: 10pt;">see <code>Help&gt;Examples</code></span>)</li>
+<li>But we can add a simple CAS tool to Lurch to check basic arithmetic.</li>
+<li>Arithmetic in&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{N} &quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">N</span></span></span></span></span>, <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{Z} &quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">Z</span></span></span></span></span>, or <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{Q}&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">Q</span></span></span></span></span> is available in a Lurch document only if you have a Rule environment in your document or its context like the following.&nbsp; It's usually in the context.&nbsp; (see Other Useful Contexts on the <a href="https://kenmonks.github.io/299-site" target="_blank" rel="noopener">299-site welcome page</a> )</li>
+<li>As with substitution, we explicitly cite 'by arithmetic' following an expression we want to justify using this rule.</li>
+</ul>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Natural Number Arithmetic:&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Arithmetic(NN)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Arithmetic</span><span class="ML__left-right" style="margin-top: 0em; height: 0.68889em;"><span class="ML__small-delim ML__open">(</span><span class="ML__bb">N</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span></p>
+</div>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>Suppose all variables represent natural numbers. Let's add commutativity of multiplication to the list of things we know.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Multiplication is commutative: </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m*n=n*m&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">n</span><span class="ML__cmr">=</span><span class="ML__mathit">n</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">m</span></span></span></span></span></p>
+</div>
+<p>Using the rule defined so far we can now prove this.</p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (products of evens):&nbsp;</strong><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If m is even, n is even&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">m</span><span class="ML__text"> is even and </span><span class="ML__mathit">n</span><span class="ML__text"> is even</span></span></span></span></span></em> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;4 divides m*n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">4</span><span class="ML__cmr">∣</span><span class="ML__mathit">m</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">n</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
+<p><strong>Proof:</strong></p>
+<p>&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<hr>
+<ul>
+<li>Similarly, we can add a simple CAS tool to Lurch to check basic algebraic identities (equations only for now).&nbsp;</li>
+<li>Arithmetic in&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{N} &quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">N</span></span></span></span></span>, <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{Z} &quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">Z</span></span></span></span></span>, or <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{Q}&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">Q</span></span></span></span></span> is available in a Lurch document only if you have a Rule environment in your document or its context like the following.&nbsp; It's usually in the context.&nbsp; (see Other Useful Contexts on the <a href="https://kenmonks.github.io/299-site" target="_blank" rel="noopener">299-site welcome page</a> )</li>
+<li>As with substitution, we explicitly cite 'by arithmetic' following an expression we want to justify using this rule.</li>
+<li>As with arithmetic, we explicitly cite 'by algebra' following an expression we want to justify using this rule.</li>
+</ul>
+<h2>&nbsp;10. Alpha Equivalence</h2>
+<ul>
+<li>Lurch does have <em>binding expressions</em> of the form <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x.Q(x)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">.</span><span class="ML__mathit">Q</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">x</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span> where <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span></span></span></span></span> is&nbsp;<em>bound</em> to the expression itself.&nbsp;</li>
+<li>Alpha-equivalent expressions are treated as the same thing for validation.</li>
+</ul>
+<hr>
+<p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
+<p>We do not need to prove the following theorems because everything is justified by the reflexive property of equality and alpha equivalence.</p>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (alpha equivalence):&nbsp; </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;sum k to n of k^2 = sum j to n of j^2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__op-group"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 1.66em;"><span class="ML__center" style="top: -1.84em;"><span style="height: 0.49em; display: inline-block; font-size: 70%;"><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">=0</span></span></span><span class="ML__center" style="top: -3.05em;"><span style="height: 1.61em; display: inline-block;"><span class="ML__op-symbol ML__large-op">&sum;</span></span></span><span class="ML__center" style="top: -4.3em;"><span style="height: 0.31em; display: inline-block; font-size: 70%;"><span class="ML__mathit">n</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.87em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.46em; display: inline-block; font-size: 70%;"><span class="ML__cmr">2</span></span></span></span></span></span></span><span class="ML__cmr">=</span><span class="ML__op-group"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 1.66em;"><span class="ML__center" style="top: -1.87em;"><span style="height: 0.6em; display: inline-block; font-size: 70%;"><span class="ML__mathit" style="margin-right: 0.06em;">j</span><span class="ML__cmr">=0</span></span></span><span class="ML__center" style="top: -3.05em;"><span style="height: 1.61em; display: inline-block;"><span class="ML__op-symbol ML__large-op">&sum;</span></span></span><span class="ML__center" style="top: -4.3em;"><span style="height: 0.31em; display: inline-block; font-size: 70%;"><span class="ML__mathit">n</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="ML__mathit" style="margin-right: 0.06em;">j</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.87em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.46em; display: inline-block; font-size: 70%;"><span class="ML__cmr">2</span></span></span></span></span></span></span></span></span></span></span></p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (alpha equivalence:&nbsp;</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If forall x.0 leq x^2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__cmr">&forall;</span><span class="ML__mathit">x</span><span class="ML__cmr">.</span><span class="ML__cmr">0</span><span class="ML__cmr">&le;</span><span class="ML__mathit">x</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.87em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.46em; display: inline-block; font-size: 70%;"><span class="ML__cmr">2</span></span></span></span></span></span></span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;forall y.0 leq y^2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&forall;</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__cmr">.</span><span class="ML__cmr">0</span><span class="ML__cmr">&le;</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.87em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.46em; display: inline-block; font-size: 70%;"><span class="ML__cmr">2</span></span></span></span></span></span></span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
+<p><strong>Theorem (alpha equivalence:</strong>&nbsp; <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If exists x.0 &lt; x^2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__cmr">&exist;</span><span class="ML__mathit">x</span><span class="ML__cmr">.</span><span class="ML__cmr">0</span><span class="ML__cmr">&lt;</span><span class="ML__mathit">x</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.87em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.46em; display: inline-block; font-size: 70%;"><span class="ML__cmr">2</span></span></span></span></span></span></span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;exists y.0 &lt; y^2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&exist;</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__cmr">.</span><span class="ML__cmr">0</span><span class="ML__cmr">&lt;</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.87em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.46em; display: inline-block; font-size: 70%;"><span class="ML__cmr">2</span></span></span></span></span></span></span></span></span></span></span>.</p>
+</div>
+<hr>
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+        
