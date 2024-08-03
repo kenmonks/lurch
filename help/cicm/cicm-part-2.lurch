@@ -45,7 +45,7 @@
 <ul>
 <li><span style="font-size: var(--base-font-size);">are claims and therefore are validated by Lurch</span></li>
 <li><span style="font-size: var(--base-font-size);">frequently nested inside Proofs, Premises, and other Subproofs, and less frequently inside Theorems or Rules</span></li>
-<li><span style="font-size: var(--base-font-size);">TRY IT: Try to type the following Proof again below it.&nbsp; Then toggle the 'meaning' view on and off and see if yours matches the example.&nbsp;</span></li>
+<li><span style="font-size: var(--base-font-size);">TRY IT:&nbsp; Toggle the 'meaning' view on and off and look at this proof, compared to the definition of set equality below. Notice anything?</span></li>
 </ul>
 <div class="lurch-atom unindented" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
 <p><strong>Proof:</strong></p>
@@ -66,7 +66,7 @@
 <li><span style="font-size: var(--base-font-size);">are assumed (givens) and therefore are not validated by Lurch</span></li>
 <li><span style="font-size: var(--base-font-size);">represent the universal closure over the non-constant symbols it contains</span></li>
 <li><span style="font-size: var(--base-font-size);">rarely nested inside any other environment</span></li>
-<li><span style="font-size: var(--base-font-size);">can be an if-then environment but should not be a let-environment (it can contain let-environments as either Premises or Subproofs inside of Premises</span></li>
+<li><span style="font-size: var(--base-font-size);">can be an if-then environment but should not be a let-environment (it can contain let-environments as either Premises or Subproofs inside of Premises)</span></li>
 </ul>
 <p><span style="font-size: var(--base-font-size);"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare gcd, =, +, *&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare gcd, </span><span class="ML__cmr">=</span><span class="ML__text">, </span><span class="ML__cmr">+</span><span class="ML__text">, and </span><span class="ML__cmr">&sdot;</span></span></span></span></span> to be constants and assume all variables are integers.</span></p>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
@@ -77,7 +77,6 @@
 <ul>
 <li><span style="font-size: var(--base-font-size);">are assumed (givens) and therefore are not validated by Lurch</span></li>
 <li><span style="font-size: var(--base-font-size);">usually appear inside Rules either as an if-then-environment of a let-environment, or as a wrapper for all of the expressions and subproof premises in the Given-conclude style.</span></li>
-<li>TRY IT: <span style="font-size: var(--base-font-size);">Try to type the following Rules again below each one.&nbsp; Capital letters represent sets.</span></li>
 </ul>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Definition of set equality</strong></p>
@@ -108,7 +107,7 @@
 <hr>
 <h3><span style="font-size: 12pt;">Theorems</span></h3>
 <ul>
-<li>are validated as claims by Lurch but also can be used as Rules (it is effectively both a Subproof and a Rule combined).</li>
+<li>are validated as claims by Lurch but also can be used as Rules (they are effectively both a Subproof and a Rule combined)</li>
 <li>if they immediately precede a Proof they are validated as if they occur after the Proof</li>
 <li><span style="font-size: var(--base-font-size);">rarely nested inside any other environment</span></li>
 <li>since it is also a Rule it should follow the same restrictions</li>
@@ -130,7 +129,7 @@
 <p style="padding-left: 40px;">or assert simple facts like <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;2=2*1&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">2</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span><span class="ML__cmr">&sdot;</span><span class="ML__cmr">1</span></span></span></span></span> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;by arithmetic&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">by arithmetic</span></span></span></span></span>.</p>
 <ul>
 <li>But those rules aren't available in this document.&nbsp; To make them all available we can add then to the document's context using the<code>Edit background material</code>item on the<code>Instructor</code>menu.</li>
-<li>To do that, add<code>help/cicm/cicm.html</code>as a dynamic dependency to this document.</li>
+<li>To do that, add<code>help/cicm/cicm.lurch</code>as a dynamic dependency to this document.</li>
 <li>Revalidate the document and look at the above claims.</li>
 <li>View the document's context with the<code>Math</code>menu.&nbsp;&nbsp;</li>
 <li>The context is treated as if you had typed the entire document at the top of your document for validation purposes.</li>
