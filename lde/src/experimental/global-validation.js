@@ -1052,8 +1052,8 @@ const processAlgebra = doc => {
     x=>!(x.isA('Rule') || x.isA('Inst') || x===doc))
   // if there is no Algebra Rule loaded we are done
   if (!rule) return
-  console.log(`found`)
-  console.log(rule)
+  // console.log(`found`)
+  // console.log(rule)
   // get all the things the user wants to checked as a conclusion by CAS
   const userAlgebras = [...doc.descendantsSatisfyingIterator( x => 
     typeof x.by === 'string' && x.by ==='algebra' )]
