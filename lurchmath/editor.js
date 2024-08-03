@@ -307,11 +307,11 @@ window.Lurch = {
                     } )            
                     // Add About Lurch menu item
                     editor.ui.registry.addMenuItem( 'aboutlurch', {
-                        text : 'About Lurch',
+                        text : 'About Lurch for Math 299',
                         // icon : 'help',
-                        tooltip : 'About Lurch',
+                        tooltip : 'About Lurch for Math 299',
                         onAction : () => window.open(
-                            'https://lurchmath.github.io/site/about/', '_blank' )
+                            '/', '_blank' )
                     } )
 
                     // Add red pen menu item
