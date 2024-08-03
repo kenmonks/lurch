@@ -204,9 +204,9 @@
               </a>
 
               <div id="rightheader">
-                <div>University of Scranton</div>
-                <div>monks@scranton.edu</div>
-                <div>Spring 2024</div>
+                <div><a href='mailto:monks@scranton.edu'>monks@scranton.edu</a></div>
+                <div><a href='https://monks.scranton.edu'>monks.scranton.edu</a></div>
+                <div><a href='https://proveitmath.org'>proveitmath.org</a></div>
               </div>
             </div>
         </div>
@@ -222,62 +222,87 @@
               padding-bottom: 2rem;
             ">
             <h1 style="margin: 0">Lurch for Math 299</h1>
-            <!-- <img src='lurchlogo.png' style='margin-left:10px' width='15%'> -->
           </div>
           <p>
             Lurch is a math editor that can check your proofs (coauthored with
-            <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to create their own Lurch course
+            <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan Carter</a>). Instructors who would like to
+            create their own Lurch course
             materials using the rule libraries and content from my
-            <a href="https://monks.scranton.edu/math299" target="_blank">Math 299 course (Spring 2024)</a>
-            can find supporting materials here. NOTE: some of this is still under
-            construction.
+            <a href="https://monks.scranton.edu/math299" target="_blank">Math 299 course (Spring 2024)</a> can find
+            supporting materials here. Math 299 is a four credit undergraduate course for math and math education majors
+            that is usually taken in the Spring of their sophomore year and is a prerequisite for many of our junior and
+            senior level undergraduate courses in pure mathematics.
           </p>
+          <h4 id='documentation'>Documentation and Examples</h4>
+          <ul class="disc">
+            <li><strong>Introductory Worksheets</strong></li>
+            <ul>
+              <li>
+                <strong><a href="student.html?load=help/quick-start-guide.lurch" target="_blank">1. Quick Start
+                    Guide</a></strong>
+                &#8211; how to use the student version of Lurch.
+              </li>
+              <li><strong><a href="student.html?load=help/proofs-worksheet.lurch" target="_blank">2. Doing Proofs in
+                    Lurch</a></strong>&#8211;
+                introduction to proofs in Lurch</li>
+              <li><strong><a href="instructor.html?load=help/instructors-worksheet.lurch" target="_blank">3. Lurch for
+                    instructors</a></strong>&#8211; additional features of Lurch for instructors</li>
+            </ul>
+            <li>
+              <strong>Examples</strong>
+              &#8211; a few proofs done in Lurch using the topics defined below.
+              <ul class="circle">
+                <li>
+                  <strong><a href="instructor.html?load=help/example-proofs.lurch" target="_blank">Example
+                      Proofs</a></strong>
+                  - a sample of some proofs in Lurch using a variety of topics and styles.
+                </li>
+                <li>
+                  <strong><a href="student.html?load=math/examples/Mar 26 - in class.lurch" target="_blank">Double
+                      induction</a></strong> - a proof of a binomial coefficient identity done in class using double induction (and
+                  the recursive definition of binomial coefficients given in the course).  Colored fonts are used to help keep track of which induction is which.
+                </li>
+                <li>
+                  <strong><a href="student.html?load=math/examples/Topo-logical - soln.lurch"
+                      target="_blank">Topo-logical</a></strong> - a proof that the composition of continuous functions
+                  is continuous in Topology. (spoiler alert: this is the solution to part D of the Final Exam below)
+                </li>
+              </ul>
+            </li>
+            <li><strong>Final Exam!</strong> - try your hand at the Math 299 Final Exam from Spring 2024 (four parts)
+              <ul>
+                <li><strong><a href=""
+                      onclick="openLurch('student.html?load=math/examples/A. The Logic of Love.lurch'); return false;">A.
+                      The Logic of Love</a></strong></li>
+                <li><strong><a href=""
+                      onclick="openLurch('student.html?load=math/examples/B. Nostalgia for Calculus.lurch'); return false;">B.
+                      Nostalgia for Calculus</a></strong></li>
+                <li><strong><a href=""
+                      onclick="openLurch('student.html?load=math/examples/C. Putnam Practice.lurch'); return false;">C.
+                      Putnam Practice</a></strong></li>
+                <li><strong><a href=""
+                      onclick="openLurch('student.html?load=math/examples/D. Topo-logical.lurch'); return false;">D.
+                      Topo-logical</a></strong></li>
+              </ul>
+            </li>
+            <li><strong>Lurch Deductive Engine</strong>&#8211; the nitty gritty details under the hood of the validation
+              algorithm used by the Lurch Deductive Engine for developers (not up to date, but mostly correct)</li>
+            <li>
+              <strong><a href="lde/src/experimental/parsers/lurch-parser-docs.html" target="_blank">Lurch
+                  Syntax</a></strong>
+              &#8211; a quick reference showing how to type various math
+              expressions in Lurch
+            </li>
+          </ul>
 
+          <!-- ----------------------------------------------------- -->
           <div class="video-container">
             <video autoplay muted loop>
               <source src="media/splash.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
-
-          <h2 id="documentation">Documentation</h2>
-          <ul class="disc">
-            <li>
-              <strong>CICM Workshop Presentation</strong>
-              <ul>
-                <li><a href="student.html?load=help/cicm/cicm.lurch" target="_blank">Part 1</a>&#8211; Lurch for students and doing proofs</li>
-                <li><a href="instructor.html?load=help/cicm/cicm-part-2.lurch" target="_blank">Part 2</a>&#8211; Lurch for instructors</li>
-                <li>Part 3</a>&#8211; the Lurch deductive engine (how does it work)</li>
-              </ul>
-            </li>
-            <li>
-              <strong><a href="student.html?load=help/quick-start-guide.lurch" target="_blank">Quick Start Guide</a></strong>
-              &#8211; how to use the student version of Lurch.
-            </li>
-            <li>
-              <strong>Example Proofs</strong>
-              &#8211; a few proofs done in Lurch using the topics defined below.
-              <ul>
-                <li>
-                  <strong><a href="instructor.html?load=help/example-proofs.lurch" target="_blank">Examples</a></strong>
-                  - a sample of some proofs in Lurch using a variety of topics and styles.
-                </li>
-                <li>
-                  <strong><a href="student.html?load=math/examples/Mar 26 - in class.lurch"
-                      target="_blank">Double induction</a></strong> - a proof of a binomial coefficient identity using double induction (and the recursive definition of binomial coefficients given in the course).
-                </li>
-                <li>
-                  <strong><a href="student.html?load=math/examples/Topo-logical - soln.lurch"
-                      target="_blank">Topo-logical</a></strong> - a proof that the composition of continuous functions is continuous in Topology.
-                </li>
-              </ul>
-            </li>
-            <li>
-              <strong><a href="lde/src/experimental/parsers/lurch-parser-docs.html" target="_blank">Lurch Syntax</a></strong>
-              &#8211; a quick reference showing how to type various math
-              expressions in Lurch
-            </li>
-          </ul>
+          <!-- ----------------------------------------------------- -->
 
           <h2 id="libraries">Math 299 Lurch Rule Libraries</h2>
           <div style="

@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'https://kenmonks.github.io/299-site/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:2999/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -93,5 +93,49 @@
 <div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
 <p><strong>Proof:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Suppose A subset B, B subset C, x in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Suppose </span><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span><span class="ML__text">, </span><span class="ML__mathit" style="margin-right: 0.06em;">B</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.08em;">C</span><span class="ML__text">, and </span><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span>. Then since <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;A\\subseteq B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span> and <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x\\in A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit">A</span></span></span></span></span> we know that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span> by the definition of subset.&nbsp; Similarly, since <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;B\\subseteq C&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.06em;">B</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.08em;">C</span></span></span></span></span> and <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x\\in B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span> we can conclude that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x in C&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">&isin;</span><span class="ML__mathit" style="margin-right: 0.08em;">C</span></span></span></span></span> as desired.</p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
+</div>
+<hr>
+<h2>FAQ</h2>
+<p><span style="font-size: 11pt;">Q: What is Lurch?</span></p>
+<div>
+<div style="text-align: left;"><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Lurch is a word processor that provides three insights into mathematical nature of your document: context, meaning, and validity.</em></span></div>
+</div>
+<p><span style="font-size: 11pt;">Q: What do I need to know to use Lurch?</span></p>
+<div>
+<div style="text-align: left;"><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Just the five things on the</em><code>Math</code><em>menu.</em></span></div>
+<div>&nbsp;</div>
+<div><span style="font-size: 11pt;">Q: How do I get a Lurch assignment?</span></div>
+<div>&nbsp;</div>
+<div><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Just click on a link</em><em>.</em></span></span></div>
+<div><span style="font-size: 8pt;"><em>(see the sample assignments on <a href="https://kenmonks.github.io/299-site">299-site</a></em><em>)</em></span></div>
+<div>&nbsp;</div>
+</div>
+<div>
+<div><span style="font-size: 11pt;">Q: How do I type the expressions?</span></div>
+<div><span style="font-size: 11pt;">&nbsp;</span></div>
+<div><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Just copy what the instructor typed (in the assignment or context)</em><em>.</em></span></span></div>
+<div><span style="font-size: 8pt;"><em>(see the sample assignments on <a href="https://kenmonks.github.io/299-site">299-site</a>, and also the Lurch Math Reference on the</em><code>Help</code>m<em>enu</em><em>)</em></span></div>
+<div>
+<div>
+<div>&nbsp;</div>
+</div>
+<div>
+<div><span style="font-size: 11pt;">Q: How do I save my work?</span></div>
+<div><span style="font-size: 11pt;">&nbsp;</span></div>
+<div><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Just use the Lurch</em><code>File&gt;Save</code>and<code>File&gt;Open</code><em>menus to save and reload your work to and from your laptop.</em></span></span></div>
+<div>&nbsp;</div>
+</div>
+<div><span style="font-size: 11pt;">Q: What is validation?</span>
+<div>
+<div style="text-align: left;">
+<p><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Lurch has a collection of tools that can be used to check the validity of your claims.</em></span></p>
+<p><span style="color: rgb(53, 152, 219); font-size: 11pt;"><em>Some tools are very elementary and apply to all Lurch documents. Others more sophisticated and are only needed in special situations if your instructor deems necessary.</em></span></p>
+<p><span style="font-size: 11pt;">Q: What tools are available, and how do I use them?</span></p>
+<p><span style="font-size: 11pt;"><span style="color: rgb(53, 152, 219);"><em>Glad you asked.&nbsp; They are explained in the Intro to Proofs worksheet on the</em><code>Help</code><em>menu.</em></span></span></p>
+<h1>&nbsp;</h1>
+</div>
+</div>
+</div>
+</div>
 </div></div>
         
