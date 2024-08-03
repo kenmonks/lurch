@@ -311,7 +311,7 @@ window.Lurch = {
                         // icon : 'help',
                         tooltip : 'About Lurch for Math 299',
                         onAction : () => window.open(
-                            '/', '_blank' )
+                            '/299-site', '_blank' )
                     } )
 
                     // Add red pen menu item
