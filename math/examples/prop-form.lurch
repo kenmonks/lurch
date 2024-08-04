@@ -1,0 +1,33 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div></div>
+            <div id="document"><h1>Lurch Deductive Engine</h1>
+<p>This document</p>
+<hr>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">A</span></span></span></span></span>&nbsp; then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span>&nbsp;&nbsp;</p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If A&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">A</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;C&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.08em;">C</span></span></span></span></span></p>
+</div>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;C&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.08em;">C</span></span></span></span></span> and <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;D&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.03em;">D</span></span></span></span></span></p>
+</div>
+<p><span class="lurch-atom" title="You have not yet convinced me of this." contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;C&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.08em;">C</span></span></span></span><span class="lurch-atom-suffix"><span class="feedback-marker-indeterminate">&nbsp;</span></span></span> and <span class="lurch-atom" title="You have not yet convinced me of this." contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;D&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.03em;">D</span></span></span></span><span class="lurch-atom-suffix"><span class="feedback-marker-indeterminate">&nbsp;</span></span></span></p>
+<hr>
+<p>has the following meaning in Lurch's internal notation (: indicates the expression is 'given' and { } indicate environments)</p>
+<p style="text-align: center;"><code>{ :{ :{ :A B } { :A C } } :{ :B C D } C D }</code></p>
+<p style="text-align: left;">which has propositional form</p>
+<p style="text-align: center;"><code>&not;( &not;( &not;A or B ) or ( &not;A or C ) ) or&nbsp;&not;( &not;B or (C and D) ) or (C and D)</code></p>
+<p style="text-align: left;">which is not a tautology, therefore it is not valid.</p></div>
+        

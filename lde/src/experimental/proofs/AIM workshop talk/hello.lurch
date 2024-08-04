@@ -1,7 +1,9 @@
-Declare and < 0 1
-Rule { Assume m  Assume n  m and n }
+// Declare 2,|,is,even,+
 
-Assume 0<x 
-Assume x<1
+Rule {  2|n  ≡  n is even }
 
-0<x and x<1
+// Spiders love coffee
+// coffee=7
+// If spiders love coffee       coffee=7
+// If 2 | coffee       coffee is even
+// Theorem: { If 2|coffee   coffee is even }
