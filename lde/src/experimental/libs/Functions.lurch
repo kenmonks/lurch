@@ -6,8 +6,8 @@ include libs/Sets
 //////////////////////////////////
 // Definitions for Functions
 //////////////////////////////////
-Declare maps ℕ ℤ ℚ ℝ ℂ inv ∘ 
-Declare Domain Codomain Range injective surjective bijective
+Declare NN, ZZ, QQ, RR, CC, maps, inv, ∘ 
+Declare Domain, Codomain, Range, injective, surjective, bijective
 Definitions:  
 {
 	:{ :f:A→B :x∈A  f(x)∈B }                     // function

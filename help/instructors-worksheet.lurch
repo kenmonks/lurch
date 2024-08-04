@@ -124,7 +124,7 @@
 <p style="padding-left: 40px;">or assert simple facts like <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;2=2*1&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">2</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span><span class="ML__cmr">&sdot;</span><span class="ML__cmr">1</span></span></span></span></span> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;by arithmetic&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">by arithmetic</span></span></span></span></span>.</p>
 <ul>
 <li>But those rules aren't available in this document.&nbsp; To make them all available we can add then to the document's context using the<code>Edit background material</code>item on the<code>Instructor</code>menu.</li>
-<li>To do that, add<code>help/cicm/cicm.lurch</code>as a dynamic dependency to this document.</li>
+<li>To do that, add<code>help/proofs-worksheet.lurch</code>as a dynamic dependency to this document.</li>
 <li>Revalidate the document and look at the above claims.</li>
 <li>View the document's context with the<code>Math</code>menu.&nbsp;&nbsp;</li>
 <li>The context is treated as if you had typed the entire document at the top of your document for validation purposes.</li>
