@@ -1011,7 +1011,7 @@ const processCases = doc => {
 }
 
 /**
- * Find all of the Rules that have a conclusion that is a single metavariable, and only appears in the Rule as a single metavariable outermost expression (i.e., not contained in any other expression).  This is called a _caselike_ rule. 
+ * Find all of the Rules that have a conclusion that is a single metavariable and only appears in the Rule as a single metavariable outermost expression (i.e., not contained in any other expression).  This is called a _caselike_ rule. 
  */
 const getCaselikeRules = doc => {
   return doc.Rules().filter( rule => {

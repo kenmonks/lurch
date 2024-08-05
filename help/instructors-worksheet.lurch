@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://kenmonks.github.io/299-site/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -12,7 +12,6 @@
             <div id="document"><h1 style="line-height: 1;">Lurch for Instructors</h1>
 <p>In this worksheet we explore what using Lurch is like from a instructor's perspective.&nbsp; Naturally, instructors need to be familiar with some aspects of Lurch beyond what students normally need. You should be familiar with the information in the <a href="student.html?load=help/quick-start-guide.lurch">Quick Start Guide</a> and the <a href="student.html?load=help/proofs-worksheet.lurch">Intro to Proofs in Lurch</a> documents on the <span style="font-family: 'andale mono', monospace;">Help</span> menu.</p>
 <div>
-<div style="text-align: left;">&nbsp;</div>
 <div style="text-align: left;">
 <h2>The Instructor Menu</h2>
 <p>The instructor menu in Lurch for Math 299 has options that are meant for instructors but not students.</p>
