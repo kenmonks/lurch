@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'https://kenmonks.github.io/299-site/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:2999/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -1110,7 +1110,7 @@
 </div>
 </div>
 <div>&nbsp;</div></div>
-        </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Source:</td><td><tt>math/Functions-Rules.lurch</tt> (web)</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div></div>
+        </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Source:</td><td><tt>math/Functions-Rules.lurch</tt> (web)</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div><div data-category="settings" data-key="shell style" data-value-type="json">"minimal"</div></div>
             <div id="document"><h1>Topo-logical</h1>
 <p>Topology is a branch of mathematics that studies properties of continuous functions and geometric properties that they preserve.&nbsp; &nbsp;We begin by defining a topological space.</p>
 <p><strong>Definition: </strong>The pair <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\langle X,\\tau\\rangle&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">⟨</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__cmr">,</span><span class="lcGreek ML__mathit" style="margin-right: 0.12em;">&tau;</span><span class="ML__cmr">⟩</span></span></span></span></span> is a <em>topological space </em>if and only if it has the following properties.</p>
