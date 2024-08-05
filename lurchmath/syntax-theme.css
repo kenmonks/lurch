@@ -65,7 +65,7 @@
   /* borders and titles of shells color */
   --border-color: #b4d7ff;
   /* marginal annotation of shell types */
-  --margin-color: transparent; /* #b4d7ff; */
+  --margin-color:  #b4d7ff; /* transparent; */
   /* left border of shells in semantic view */
   --left-border-color: #b4d7ff;
   /* green checkmark color */

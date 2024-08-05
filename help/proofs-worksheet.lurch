@@ -8,7 +8,7 @@
                 </script>
             </div>
         
-            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="settings" data-key="instantiateEverything" data-value-type="json">false</div></div>
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"minimal"</div><div data-category="settings" data-key="instantiateEverything" data-value-type="json">false</div></div>
             <div id="document"><div>
 <div>
 <div>
@@ -334,7 +334,7 @@
 <p style="padding-left: 40px;"><span style="color: rgb(53, 152, 219);"><strong>REMEMBER:&nbsp;</strong>For-some declarations assert that something exists, and give it a name.</span></p>
 <h2>&nbsp;</h2>
 <h2>8. Substitution</h2>
-<p>Substitution is handled in two different ways in Lurch: (A) axiomatically and (B) with a special tool for handling equations.</p>
+<p>Substitution can be handled in two different ways in Lurch: (A) axiomatically and (B) with a special tool for handling equations.</p>
 <h3>A. Leibniz Definition of =</h3>
 <p>Leibniz suggested that = is defined by two rules:</p>
 <p>Reflexive Property:</p>
@@ -474,8 +474,7 @@
 <hr>
 <h2>10. Alpha Equivalence</h2>
 <ul>
-<li>Lurch does have <em>binding expressions</em> of the form <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;x.Q(x)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span><span class="ML__cmr">.</span><span class="ML__mathit">Q</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">x</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span> where <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;x&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">x</span></span></span></span></span> is&nbsp;<em>bound</em> to the expression itself.&nbsp;</li>
-<li>Alpha-equivalent expressions are treated as the same thing for validation.</li>
+<li>.Alpha-equivalent expressions are treated as the same thing for validation.</li>
 </ul>
 <hr>
 <p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>

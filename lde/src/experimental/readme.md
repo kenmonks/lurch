@@ -4,18 +4,18 @@ Welcome to the [experimental](../) folder of this branch of the Lurch LDE projec
 
 The main experiment currently in progress is an implementation of the $n$-_compact polynomial time global validation algorithm_. This is accessible via the function `validate()` and its supporting tools and options. 
 
-A _document_ is any LC environment. It may (and usually will) additionally contain declarations of type `Declare` and environments of type `Rule`, `Theorem`, `BIH`, and `Cases`, all of which are specified by the user as part of the document. An _inference_ is a descendant of a document that is either an environment, outermost expression, or declaration all of whose ancestors (including itself) are claims.  The `validate()` routine can validate any specified inference in any document.
+A _document_ is any LC environment. It may (and usually will) additionally contain declarations of type `Declare` and environments of type `Rule`, `Proof`, `Theorem`, `BIH`, `Substitution` and `Cases`, all of which are specified by the user as part of the document. An _inference_ is a descendant of a document that is either an environment, outermost expression, or declaration all of whose ancestors (including itself) are claims.  The `validate()` routine can validate any specified inference in any document.
 
 This routine and supporting infrastructure is contained primarily in the following files.
    1. [lode.js](../lode.js) - All lurch documents, libraries, rules, theorems, and proofs begin essentially as a string (or more generally, text).  Each UI provides some way for the users and library authors to enter, save, store, load, and merge such text.  
    
       𝕃𝕠𝕕𝕖 is a node.js command line UI intended for developers. Document text is created either directly at the command prompt as short test strings, or in an external editor and saved as a file for larger documents.  This file defines the 𝕃𝕠𝕕𝕖 repl and contains utilities for listing, loading, and merging such strings.
 
-   2. [parsing.js](../parsing.js) - If the UI produces a string representing user's content it must be parsed into an LC before validation.  Currently available parsers are for `putdown` and an [asciimath](parsers/asciimath.peggy) extension of putdown that supports a small but useful subset of asciimath (http://asciimath.org). In some cases it may be easier to obtain the desired LC by first parsing the string to an LC has been converted to an LC by post processing what we refer to as `Shorthands` - special LC content that indicate some way in which the LC needs further modification before proceeding.
+   2. [parsing.js](../parsing.js) - If the UI produces a string representing user's content it must be parsed into an LC before validation.  Currently available parsers are for `putdown` and an [asciimath](parsers/asciimath.peggy) extension of putdown that supports a small but useful subset of asciimath (http://asciimath.org) and LaTeX, which we will call `Lurch Notation`. In some cases it may be easier to obtain the desired LC by first parsing the string to an intermediate LC which is then converted to a different LC by post processing what we refer to as `Shorthands` - special LC content that indicate some way in which the LC needs further modification before proceeding.
 
    3. [interpret.js](interpret.js) - Any LC environment can be validated by $n$-_compact validation_, but will usually need to be modified extensively to prepare it for validation by calling the `interpret()` routine defined in this file.  In particular, it will add global system declarations to the document, process all shorthands, move all global constant declarations to the top of the environment, create a rule associated with each user _Theorem_, move declaration bodies after the declaration, wrap all `Let` declarations in an environment as needed to form _Let environments_, give all bound variables a canonical alpha-equivalent name, convert all rules into formulas and store information about their domains, assign unique names to symbols declared with a body, and mark all global constants throughout the document. These must all be performed in order before validation.
 
-   4. [global-validation.js](global-validation.js) - this is the main part of the validation routine.  It constructs all of the relevant instantiations, both for the $n$-compact global validation algorithm and for other validation tools that are compatible with $n$-compact validation. Currently these tools are for BIHs, Equations, Cases, and Scoping.  Each of these validation tools is run and it's validation results stored in the relevant locations in the document. Additional information, such as which user espressions lead to a particular instantiation, is stored in the instantiations as well for future reporting.  Once that information is available, it is easy to validate a particular target or validate things in different ways that are determined by the options stored in the object `LurchOptions`.
+   4. [global-validation.js](global-validation.js) - this is the main part of the validation routine.  It constructs all of the relevant instantiations, both for the $n$-compact global validation algorithm and for other validation tools that are compatible with $n$-compact validation. Currently these tools are for BIHs, Equations, Cases, Arithmetic, Algebra, and Scoping.  Each of these validation tools is run and it's validation results stored in the relevant locations in the document. Additional information, such as which user espressions lead to a particular instantiation, is stored in the instantiations as well for future reporting.  Once that information is available, it is easy to validate a particular target or validate things in different ways that are determined by the options stored in the object `LurchOptions`.
 
    5. [reporting.js](reporting.js) - once a document is fully instanted, we can generate reports about the results.  This can be as simple as putting a green checkmark or red ✗ after a conclusion, to giving entire reports about how a particular instantiation is found or what rules had something to say about a particular conclusion.  The routines in this file can mine a validated document for various information, and report it in a way that is compatible with 𝕃𝕠𝕕𝕖 (terminal output).
 
@@ -41,7 +41,7 @@ An LC is a *$n$-compact Document* (or simply a *doc*) if it is a claim environme
    - `markDeclaredSymbols` - mark every symbol declared by a global `Declare` declaration as a `.constant`.
 
 This processing should be generally useful to any validation tool. Additionally, the following processing of the document is more specific to the $n$-compact validation algorithm.   
-   - `processDomains()` - for each formula (`Rule` or `Part`) and each proposition they contain, store the domain (=set of metavariable names), whether or not the formula is a Weeny (contains a non-forbidden proposition containing all of the metavariables), and what it's weenies are, if any (propositions containing the maximal number of metavariables, even if the formula isn't itself a weeny formula). The only part of this that is specified by the $n$-compact validation algorithm is the definition of what is 'forbidden'. So if we consider that to be a parameter, then this can be moved up with the previous collection of utilities that pre-process the document before validation. 
+   - `processDomains()` - for each formula (`Rule` or `Part`) and each proposition they contain, store the domain (=set of metavariable names), whether or not the formula is a Weeny (contains a non-forbidden proposition containing all of the metavariables), and what its weenies are, if any (propositions containing the maximal number of metavariables, even if the formula isn't itself a weeny formula). The only part of this that is specified by the $n$-compact validation algorithm is the definition of what is 'forbidden'. So if we consider that to be a parameter, then this can be moved up with the previous collection of utilities that pre-process the document before validation. 
 
 This algorithm and related utilties can be tested using the files in the following subfolders:
  * [libs](../libs) - libraries that can be loaded at the top of documents
@@ -64,18 +64,18 @@ Here we describe the n-compact algorithm in detail as currently implemented.  Th
 **Document** - an LC is considered to be a document if it consists of a single LC environment, whose children are either 
   1. `Declare` - Declarations of symbols that cannot be metavariables.
   2. `Rules` - given environments used as formulas.
-  3. `User's content` - a claims which contain the user's theorems, definitions, and proofs.
+  3. `User's content` - the user's theorems, definitions, and proofs.
 
-The Lode command `loadStr(filename)` loads the file specified by `filename` as a string.  The file extension '.lurch' can be omitted. The command `loadDoc(filename)` loads the string, parses it with the asciimath parser, interprets it, and validates it. Each such file can contain lines of the form `include file-to-include`, which must be on a line by themselves, to recursively include other files.  This is useful for specifying, e.g. what libraries to load at the top of a proof document.
+The Lode command `loadStr(filename)` loads the file specified by `filename` as a string.  The file extension '.lurch' can be omitted. The command `loadDoc(filename)` loads the string, parses it with the Lurch Notation  parser, interprets it, and validates it. Each such file can contain lines of the form `include file-to-include`, which must be on a line by themselves, to recursively include other files.  This is useful for specifying, e.g. what libraries to load at the top of a proof document.
 
 To construct and validate a document it does the following.
 
 ### I. Load the text document
 1. This can be a string typed at the console, created in a text editor and saved, then loaded with `loadStr(filename)`, or provided by a UI.
-2. The user is responsible for marking environments as a `Rule`, `Declare`, and   `Theorem`, i.e., that is part of user content, not interpreted from his document.
+2. The user is responsible for marking environments as a `Rule`, `Declare`,   `Theorem`, `Proof`, and so on i.e., that is part of user content, not interpreted from his document.
 
 ### II. Parse the document
-1. Run the string through the ascii parser to produce a 'raw' LC environment.
+1. Run the string through the parser to produce a 'raw' LC environment.
 2. Process the shorthands in the resulting LC to produce a 'cooked' LC environment.
 
 ### III. Interpret the document
@@ -124,6 +124,23 @@ To construct and validate a document it does the following.
    5. Check if `LurchOptions.autoCases` is true, and if so, do the following.
    6. Get every case-like rule (i.e., a rule with a single metavariable as its last child which only appears in the rule as an outermost expression) and match every user conclusion to it, inserting any `Inst`s or `Part`s found after the corresponding rule. (Note: this is generally slow except for small documents or documents with no caselike rules.)
 
+#### Process Arithmetic
+   1. Check if `LurchOptions.processArithmetic` is true, and if so, do the following.
+   2. Find the first rule marked as a `ArithmeticRule(ring)`  by the library author, where `ring` is one of ℕ, ℤ, or ℚ.
+   3. Get all of the user conclusions with attribute `.by` equal to `arithmetic`.
+   4. For each such conclusion, $e$, check if it represents a valid statement of arithmetic in the given ring, using the `isArithmetic[ring](e)` command in [parsing.js](../parsing.js).  If it does not, mark its validation result for `arithmetic` to `inapplicable` and return without doing anything further.
+   5. If $e$ does represent an allowed statement of arithmetic in the given ring, convert it to the appropriate CAS notation and ask the Algebrite CAS to check if it is true. Mark its validation result for `arithmetic` to `valid` or `invalid` accordingly.
+   6. Either way, insert an instantiation of the form `:{ e }` after the Arithmetic rule found in step 2.
+
+#### Process Algebra
+   1. Check if `LurchOptions.processAlgebra` is true, and if so, do the following.
+   2. Find the first rule marked as a `ArithmeticRule(ring)`  by the library author, where `ring` is one of ℕ, ℤ, or ℚ.
+   3. Get all of the user conclusions with attribute `.by` equal to `algebra`.
+   4. For each such conclusion, $e$, see if it has a `lurchNotation` attribute, and let $s$ be its content (should be a string).
+   5. Do a simple regex check to ensure that $s$ is of the form `LHS=RHS` where `LHS` and `RHS` do not contain `=`, and mark it as return if it doesn't because we only allow identities for now.
+   6. Ask the CAS to evaluate `simplify(LHS-RHS)`.  If it returns $0$, mark the validation result for `algebra` on $e$ to `valid`.  Otherwise set it to `invalid`.
+   6. Either way, insert an instantiation of the form `:{ e }` after the Arithmetic rule found in step 2.
+
 #### Instantiate (for $n$-compact validation)
    1. Get the set of propositions, `E`, in the user's document.
    2. Get the set, `F`, of all unfinished formulas with any max weenies.
@@ -131,16 +148,16 @@ To construct and validate a document it does the following.
       1. Match each maximally weeny `p` in `f` to each `e` in `E`. 
       2. Every time a match is found.
          1. Create the instantiation.
-         2. Insert it after `f`
-         3. Update its Proper Names
-         4. Store `f` in its `.rule` attribute
-         5. Add `e` to it's `.creators` list
-         6. Make it a `given` and a `LDE CI`
+         2. Insert it after `f`.
+         3. Update its Proper Names.
+         4. Store `f` in its `.rule` attribute.
+         5. Add `e` to it's `.creators` list.
+         6. Make it a `given` and a `LDE CI`.
          7. Rename its bound variables.
          8. Mark its declared constants.
          9. Cache its domain information.
-         10. If it contains metavariables, mark it asA `Part` with  `.ignore` true
-         11. Otherwise mark it as an `Inst` with no `.ignore` attribute
+         10. If it contains metavariables, mark it asA `Part` with  `.ignore` true.
+         11. Otherwise mark it as an `Inst` with no `.ignore` attribute.
    4. Mark `f` as `.finished`.  It cannot be instantiated again on future
       passes because while the number of available formulas can go up on each
       pass, the set of user expressions `E` cannot.
@@ -161,6 +178,9 @@ To construct and validate a document it does the following.
       3. if it is no longer propositionally valid, it is a preemie, so mark it and all of its ancestors as a preemie
       4. to narrow down specifically what inside the `Let` environment is a preemie, check all of it's conclusions to see if they are a preemie, and mark all of their ancestors as one if one or more is found. 
 
+This completess the validation algorithm.
+
+---
 ## Attributes
 
 Any LC in a document can have two kinds of attributes - LC attributes and ordinary js attributes. This validation algorithm uses many different attributes of both kinds to carry out its work in addition to those already defined for all LCs. Attributes which must be supplied by the user are saved as LC attributes as part of the document content.  Attributes which can be computed from the user's content are stored in js attributes.  There are exceptions to this however, because the `LC.copy()` function only copies LC attributes, not js attributes, so sometimes we use an LC attribute when having that functionality available makes the code simpler or is necessary.
@@ -171,6 +191,8 @@ The following attributes set the type of the LC.
 * `Declare` - an LC used to define global constants.  Always appears at the top of the document.
 * `Rule` - an LC that defines a rule. It must be a given environment.
 * `Theorem` - a claim environment that the user wants to prove, and then use as a new rule after that.
+* `Proof` - a claim environment that the user wants to have validate.  If a Theorem immediately precedes a Proof, their order is interchanged before validation.
+* `Subs` - a special rule marked for use with the Substitution tool.
 * `BIH` - a blatant instantiation hint. Allows the user to provide an explicit instantiation of some rule in the document.
 * `Cases` - a special rule marked for use with the Cases tool.
 * `Consider` - this proposition should be added to the list of user propositions for the purpose of creating instantiations, but it has no propositional form itself, so it is neither claimed or assumed as part of the document's propositional meaning.

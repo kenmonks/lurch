@@ -1,9 +1,9 @@
 // Declare 2,|,is,even,+
 
-Rule {  2|n  ≡  n is even }
+Rule {  if 2|n   n is even }
 
-// Spiders love coffee
-// coffee=7
-// If spiders love coffee       coffee=7
+// Spiders love coffee    
+// 2 | Spiders
+// coffee is 17
 // If 2 | coffee       coffee is even
 // Theorem: { If 2|coffee   coffee is even }
