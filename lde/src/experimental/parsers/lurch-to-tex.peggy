@@ -176,6 +176,7 @@
       Fib     : 'F'         , by       : '\\text{by }' , pie        : '🥧'           ,
       basket  : '🧺'        , tree     : '🌳'           , apple      : '🍎'           ,
       cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       , 
+      infty   : '\\infty'   , infinity : '\\infty',
       iff                 : '\\Leftrightarrow'             ,   
       contradiction       : '\\rightarrow\\leftarrow'      ,
       equivalenceRelation : '\\text{equivalence relation}' ,

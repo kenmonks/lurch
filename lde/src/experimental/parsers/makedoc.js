@@ -73,6 +73,7 @@ const syntax =
 [['g circ f', 'g comp f' , 'g∘f'     ],`g\\circ f`],
 [['A times B', 'A cross B' ,'A×B'    ],`A\\times B`],
 [['pair(x,y)' , 'tuple(x,y)', '⟨x,y⟩'],`\\langle x,y \\rangle`],
+[['infty' , 'infinity'               ],`\\infty`],
 [['triple(x,y,z)' , 'tuple(x,y,z)', 
   '⟨x,y,z⟩'                          ],`\\langle x,y,z \\rangle`],
 [['tuple(w,x,y,z)' , '⟨w,x,y,z⟩'     ],`\\langle x,y \\rangle`],

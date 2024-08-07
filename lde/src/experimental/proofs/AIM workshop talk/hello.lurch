@@ -1,9 +1,12 @@
-// Declare 2,|,is,even,+
+Declare 2,|,is,even,+,loves,gcd,<
 
-Rule {  if 2|n   n is even }
+Rule {  if 2|n    n is even  }
+
+Rule { if x^4+y^4=z^4   z leq x*y }
 
 // Spiders love coffee    
 // 2 | Spiders
-// coffee is 17
+// Spiders is even
 // If 2 | coffee       coffee is even
+// 2 | coffee   gcd(3,5)<2 coffee is even
 // Theorem: { If 2|coffee   coffee is even }
