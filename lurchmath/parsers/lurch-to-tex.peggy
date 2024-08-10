@@ -564,8 +564,8 @@ Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression
           { return `${txt(a)}${b}\\text{ such that }${c}` }    /
       a:'Let'i __ b:SymbolSeq { return `${txt(a)}${b}`       }
   // Comma separated symbols, numbers, and reserved words
-  DeclareSeq = a:(Symbol / Number / ReservedWord)|1..,comma| 
-                {return sequence(a) }
+  DeclareSeq = a:('cdot /' / Symbol / Number / ReservedWord)|1..,comma| 
+                {return sequence(a.map(x=>(x=='cdot /'?'/':x))) }
   // We allow Reserved Words and Numbers to be declared by a Declare, but not
   // by a Let or ForSome.
   SymbolSeq  = a:(Symbol)|1..,comma| { return sequence(a) }

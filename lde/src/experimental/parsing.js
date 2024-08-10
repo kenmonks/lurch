@@ -338,7 +338,6 @@ const numericToCAS = e => {
  *       | 'thm>'      | 'Theorem' |
  *       | '<thm'      | 'Theorem' |
  *       | 'proof>'    | 'Proof'   |
- *       | 'proof>'    | 'Proof'   |
  *
  *   * Scan for occurrences of the symbol `rules>`. Its next sibling should be
  *     an environment containing given Environments. Mark each child of the next

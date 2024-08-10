@@ -179,7 +179,7 @@
   // symbol that might appear in the declare sequence.  If the name isn't on the list
   // then it is internally just iteslf
   const internal = s => {
-    return internalNames[s] || s
+    return (s=='cdot /') ? '/' : internalNames[s] || s
   }
 
   // replace phrases first
@@ -430,8 +430,8 @@ Let = 'Let'i __ a:Symbol __ 'in'i __ b:Expression
                             { return `:[${a}, ${b}]` } /
       'Let'i __ a:SymbolSeq { return `:[${a}]`       }
   // Comma separated symbols, numbers, and reserved words
-  DeclareSeq = a:(Symbol / Number / ReservedWord)|1..,comma| 
-                { return a.map(internal).join(' ') }    
+  DeclareSeq = a:('cdot /' / Symbol / Number / ReservedWord)|1..,comma| 
+                { return a.map(internal).join(' ') }
   // We allow Reserved Words and Numbers to be declared by a Declare, but not
   // by a Let or ForSome.
   SymbolSeq  = a:(Symbol)|1..,comma| { return a.join(' ') }
@@ -761,12 +761,12 @@ Natural = $( [1-9][0-9]* / '0' )
 // symbols.
 Symbol "Symbol" = 
   '✔︎' / '✗' / '⁉︎' / '⊘'/ // useful unicode
+  ('infty'/'infinity') { return '∞'  }  /
   'contradiction' { return '→←' }  /  'sigma'         { return 'σ'  }   /
   'NN'            { return 'ℕ'  }  /  'ZZ'            { return 'ℤ'  }   /
   'QQ'            { return 'ℚ'  }  /  'RR'            { return 'ℝ'  }   /
   'CC'            { return 'ℂ'  }  /  'II'            { return '𝕀'  }   /  
   'OO'            { return '𝕆'  }  /  '~'                              /
-  ('infty'/'infinity') { return '∞'  }  / 
   !(ReservedWord !alphanum) @$([a-z]i alphanum* ) 
 
 // Reserved Words
