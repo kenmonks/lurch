@@ -173,7 +173,7 @@
       subset  : '\\subseteq', powerset : '\\mathscr{P}', complement : '\''           ,
       '^'     : '{}^\\wedge', cross    : '\\times'     , '~'        : '\\sim'        ,
       circ    : '\\circ'    , comp     : '\\circ'      , inv        : '\\text{inv}'  ,
-      Fib     : 'F'         , by       : '\\text{by }' , pie        : '🥧'           ,
+      Fib     : 'F'         , by       : '\\text{ by }' , pie        : '🥧'           ,
       basket  : '🧺'        , tree     : '🌳'           , apple      : '🍎'           ,
       cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       , 
       infty   : '\\infty'   , infinity : '\\infty',
