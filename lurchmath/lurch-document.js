@@ -192,11 +192,13 @@ export class LurchDocument {
     }
 
     /**
-     * Load the given document into the editor given at construction time.  This
-     * will replace what's visible in the UI with the visible portion of the
-     * given document, and will also replace the invisible document settings and
-     * dependencies with those of the given document.  It also clears the
-     * editor's dirty flag.
+     * Load the given document into the editor instance that was given at
+     * construction time.  This will replace what's visible in the UI with the
+     * visible portion of the given document, and will also replace the
+     * invisible document settings and dependencies with those of the given
+     * document.  It also clears the editor's dirty flag and modifies the body
+     * element of the editor with the classes necessitated by the settings of
+     * the given document.
      * 
      * @param {string} document - the document as it was retrieved from a
      *   filesystem (or another source), ready to be loaded into this editor
@@ -216,6 +218,8 @@ export class LurchDocument {
             this.clearDocument()
         this.editor.undoManager.clear()
         this.editor.setDirty( false )
+        // Respect settings in the document that necessitate classes on DOM body
+        this.updateBodyClasses()
         // refresh any URL-based dependencies marked as "auto-refresh"
         Dependency.refreshAllIn( this.editor.lurchMetadata, true ).catch( error =>
             Dialog.notify( this.editor, 'error',
