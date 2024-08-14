@@ -1060,7 +1060,10 @@ const processAlgebra = doc => {
 
   userAlgebras.forEach( c => { 
     // get the lurch notation for the expression
-    const lurchmath = c.getAttribute('lurchNotation')
+    let lurchmath = c.getAttribute('lurchNotation')
+    // if the user included 'by algebra' in the same Atom as the identity, truncate it
+    const match=lurchmath.match(/\s*by \s*algebra/)
+    if (match) lurchmath=lurchmath.slice(0,match.index)
     // a regex for an equation
     const eqn = /^([^=]+)=([^=]+)$/
     // if it's not a simple equation we're done
