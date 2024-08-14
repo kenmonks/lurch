@@ -1,8 +1,6 @@
-Declare 2,|,is,even,+,loves,gcd,<
+// Declare 2,|,is,even,+,loves,gcd,<
 
 Rule {  if 2|n    n is even  }
-
-Rule { if x^4+y^4=z^4   z leq x*y }
 
 // Spiders love coffee    
 // 2 | Spiders
