@@ -1,0 +1,17 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div></div>
+            <div id="document"><div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;AlgebraRule&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">AlgebraRule</span></span></span></span></span></p>
+</div>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;det([[1,2],[3,4]])=-2 by algebra&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">det</span><span class="ML__left-right" style="margin-top: -0.95003em; height: 2.40003em;"><span class="ML__open ML__delim-size3">(</span><span class="ML__left-right" style="margin-top: -0.9500000000000004em; height: 2.4000000000000004em;"><span class="ML__open ML__delim-size3">[</span><span class="ML__mtable"><span class="col-align-c"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 1.45em;"><span style="top: -3.61em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">1</span></span></span><span style="top: -2.4em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">3</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="col-align-c"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 1.45em;"><span style="top: -3.61em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">2</span></span></span><span style="top: -2.4em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">4</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span></span><span class="ML__close ML__delim-size3">]</span></span><span class="ML__close ML__delim-size3">)</span></span><span class="ML__cmr">=</span><span class="ML__cmr">&minus;2</span><span class="ML__text"> by algebra</span></span></span></span><span class="lurch-atom-suffix"><span class="feedback-marker-valid">&nbsp;</span></span></span>&nbsp;</p>
+<p>&nbsp;</p></div>
+        
