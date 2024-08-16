@@ -66,7 +66,6 @@ import Compact from './global-validation.js'
 // load the custom formatters and reporting tools
 import Reporting from './reporting.js' 
 // import the parsing utiltiies (processShorthands comes from Interpret)
-import { parseLines, isArithmetic, arithmeticToCAS } from './parsing.js'
 import ParsingTools from './parsing.js'
 // load the CNFProp tools for testing
 import { CNFProp } from './CNFProp.js'
@@ -106,7 +105,26 @@ global.tex = (s,opts)  => {
 
 // load the Lurch to putdown parser precompiled for efficiency
 import { parse as lurchToPutdownTrace } from './parsers/lurch-to-putdown-trace.js'
-global.trace = lurchToPutdownTrace
+global.trace = s => {
+
+  const tracer = new Tracer(s,
+    { showTrace : true,
+      showFullPath : false,
+      hiddenPaths : [ "__" , "_" ]
+    }
+  )
+
+  // show backtracing whether it's an error or not
+  try { 
+    const ans = lurchToPutdownTrace(s,{ cache:true, tracer:tracer })
+    console.log(tracer.getBacktraceString())
+    return ans
+  } catch(e) {
+    console.log('error!')
+    console.log(tracer.getBacktraceString())
+    return undefined
+  }
+}
 // load the Lurch to TeX parser precompiled for efficiency
 import { parse as lurchToTexTrace } from './parsers/lurch-to-tex-trace.js'
 global.textrace = lurchToTexTrace
@@ -360,12 +378,6 @@ global.scrape = scrape
 global.scrapeToGomez = () => 
   exec('cd ../../..;cp scrape.txt ~/Dropbox/shared/Gomez/Lurch')
 
-// function to parse a test file one line at a time with the parser given as the
-// first argument and file to parse as the second (optional)
-global.parseLines = parseLines
-global.isArithmetic = isArithmetic
-global.arithmeticToCAS = arithmeticToCAS
-
 // global.mathlive = MathLive.convertLatexToMarkup
 // global.html = katex.renderToString
 
@@ -482,7 +494,8 @@ rpl.defineCommand( "features", {
       ${itemPen('.test')}         : run the acidtests script
       ${itemPen('.makedocs')}     : make the jsdoc docs
       ${itemPen('.showdocs')}     : open the jsdoc docs in the browser
-      ${itemPen('.compileparser')}: compile the parser to js
+      ${itemPen('.compileparser')}: compile the parsers to js. If the argument 'true' is 
+                      present, it will compile the trace parsers as well. 
       ${itemPen('exec(command)')} : execute the given shell commmand and print the result
       ${itemPen('initialize()')}  : loads and executes 'initproof.js' from the scripts
                       folder. A different file can be executed by calling 
@@ -554,15 +567,24 @@ rpl.defineCommand( "rebuildparsers", {
 
 // Define the Lode .compileparser command. 
 //
-// The tracing parser is only for Lode and debugging, so we usually want to make
-// changes and recompile it frequently, so we use the Lode commmand .trace for
-// that.
+// The tracing parser is only for Lode and debugging so we only compile it if the sparate
+// argument 'true' is supplied for the trace parameter to .compileparser. 
+// Use the Lode commmand .rebuildparsers for that.
 rpl.defineCommand( "compileparser", {
   help: "Compile the Lurch parser and rebuild the parser docs.",
-  action() {
+  action(trace) {
+
+    if (!trace) console.log(
+      chalk.ansi256(246).italic(
+        `\n(Use the optional argument 'true' to recompile the trace parser.)\n`))
+
     const compile = (name) => {
         console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}.js...`))
         execStr(`cd parsers && peggy --cache --format es -o lurch-to-${name}.js lurch-to-${name}.peggy`)
+        if (trace) {
+          console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}-trace.js...`))
+          execStr(`cd parsers && peggy --cache --trace --format es -o lurch-to-${name}-trace.js lurch-to-${name}.peggy`)
+        }
         execStr(`cd parsers && cp lurch-to-${name}.js ../../../../lurchmath/parsers/`)
         execStr(`cd parsers && cp lurch-to-${name}.peggy ../../../../lurchmath/parsers/`)
       }
@@ -573,6 +595,7 @@ rpl.defineCommand( "compileparser", {
     } catch (err) {
       console.log(xPen('Error compiling the parser.'))
     }
+
     try {
       console.log(`${defaultPen('Rebuilding the parser doc page...')}`)
       makedoc()
