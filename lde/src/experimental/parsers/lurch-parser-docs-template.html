@@ -20,7 +20,7 @@
           // console.log(
             // `changing render from ${text} to ${tex} with meaning ${putdown}` )
           const meaningDiv = document.getElementById('meaning')
-          meaningDiv.innerHTML = putdown
+          meaningDiv.textContent = putdown
           const renderDiv = document.getElementById('rendered')
           renderDiv.innerHTML = tex
           try { MathJax.typeset([renderDiv]) } catch (e) { }
