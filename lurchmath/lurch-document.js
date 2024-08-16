@@ -502,7 +502,8 @@ export class LurchDocument {
         ),
         new SettingsCategoryMetadata(
           'Validation options',
-          new BoolSettingMetadata( 'instantiateEverything', 'Try harder to validate (can be much slower)', false )
+          new BoolSettingMetadata( 'instantiateEverything', 'Try harder to validate (can be much slower)', false ),
+          new BoolSettingMetadata( 'hideShellNames', 'Hide marginal shell annotations in semantic view', false )
        )
     )
 

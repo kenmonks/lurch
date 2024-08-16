@@ -65,7 +65,7 @@
   }
 
   // cleaner notation for latex plain text
-  const txt = a => `\\text{${a} }`
+  const txt = a => (a.length>1)?`\\text{${a} }`:a
 
   // tex utilities
   const texUnary = (op,arg) => {
@@ -173,17 +173,17 @@
       subset  : '\\subseteq', powerset : '\\mathscr{P}', complement : '\''           ,
       '^'     : '{}^\\wedge', cross    : '\\times'     , '~'        : '\\sim'        ,
       circ    : '\\circ'    , comp     : '\\circ'      , inv        : '\\text{inv}'  ,
-      Fib     : 'F'         , by       : '\\text{ by }' , pie        : '🥧'           ,
+      Fib     : 'F'         , by       : '\\text{ by }' , pie       : '🥧'           ,
       basket  : '🧺'        , tree     : '🌳'           , apple      : '🍎'           ,
       cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       , 
-      infty   : '\\infty'   , infinity : '\\infty',
+      infty   : '\\infty'   , infinity : '\\infty'     ,
       iff                 : '\\Leftrightarrow'             ,   
       contradiction       : '\\rightarrow\\leftarrow'      ,
       equivalenceRelation : '\\text{equivalence relation}' ,
       strictPartialOrder  : '\\text{strict partial order}' ,
       partialOrder        : '\\text{partial order}'        ,
       totalOrder          : '\\text{total order}'          ,
-      topSpace            : '\\text{topological space}'          
+      topSpace            : '\\text{topological space}'
     } 
     return (tex[s]) ? tex[s] : s
   }
@@ -257,6 +257,12 @@
 
   // replace tabs with a space
   const replaceTabs = s => s.replace(/\t/g,' ') 
+
+  // pad commas so they become shorthands
+  const padCommas = s => s.replace(/,/g,' , ') 
+
+  // pad colons so they become shorthands
+  const padColons = s => s.replace(/:/g,': ') 
 
   // shrink consecutive spaces to a single space
   const shrink = s => s.replace(/ ( +)/g,' ') 
@@ -376,6 +382,10 @@
   //
   // replace tabs with a space
   input = replaceTabs(input)
+  // pad commas for when they are shorthands
+  input = padCommas(input)
+  // pad colons for when they are shorthands
+  input = padColons(input)
   // remove double spaces
   input = shrink(input)
 
@@ -514,7 +524,7 @@ StringLiteral = $('"' [^"]* '"')
 // Shorthands are special symbols which are not allowed to be part
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
-Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs)
+Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma)
                      !alphanum { return txt(a) }
   // Shorthands
   Equiv   = 'equiv'i { return '~\\equiv~' }
@@ -525,6 +535,7 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs)
   Proof   = $('proof'i ':'?)
   Cases   = $('CasesRule'i ':'?)
   Subs    = 'SubsRule'i ':'? { return 'Substitution' }
+  Comma   = $(',')
 
 ///////////////////////////////////////////////////////////////////////////////
 // Givens
@@ -532,12 +543,12 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs)
 // A Given label that is not part of a longer symbol or followed by another :
 // character, separated from either an Environment or Expession sequence by
 // optional spaces.
-// TODO: use Expression|1..,comma|
-Given = a:GivenLabel b:Environment { 
-          return (/^\s*:\s*$/.test(a)) ? b : `${txt(a)} ${b}` } /
-        a:GivenLabel b:Expression|1..,comma| { return `${txt(a)} ${sequence(b)}` }
-  GivenLabel = @':'_ / @('assume'i / 'given'i / 'suppose'i / 
-                         'if'i / 'from'i / 'define'i ) _x
+// Given = a:GivenLabel b:Environment { 
+//           return (/^\s*:\s*$/.test(a)) ? b : `${txt(a)} ${b}` } /
+//         a:GivenLabel b:Expression|1..,comma| { return `${txt(a)} ${sequence(b)}` }
+Given = a:GivenLabel { return `${txt(a) }`}
+  GivenLabel = $':' / $(('assume'i / 'given'i / 'suppose'i / 
+                         'if'i / 'from'i / 'define'i ) !alphanum)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Environments
@@ -589,8 +600,8 @@ Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression
 // Quantified and Binding
 //
 // quantified binding expressions
-Quantified = 'forall' _x b:Binding           { return `\\forall ${b}`   } /
-             'exists' _x b:Binding           { return `\\exists ${b}`   } /
+Quantified = 'forall' _x b:Binding           { return `\\forall ${b}`  } /
+             'exists' _x b:Binding           { return `\\exists ${b}`  } /
              'existsUnique' _x b:Binding     { return `\\exists! ${b}` } 
 // binding expressions / anonymous maps
 Binding = a:Symbol period _ b:Expression 
@@ -695,7 +706,7 @@ Set = RelativeComp
                     { return a.join('\\circ ') }
   
   // We imitate Summation to implement both IndexedUnion and IndexedIntersection
-  // and give it rought the same precedence
+  // and give it roughly the same precedence
   BigUnionName = 'Union'/'Cup'/'bigcup'i 
   IndexedUnion = BigUnionName __ k:Symbol __ 'in'_x a:Set __ 'of' __ f:Set
                   { return union(f,k,a) }  / 
@@ -858,8 +869,11 @@ Prefix =  // LDE EFA's first
           'set('i _ a:Symbol _ ':' _ b:Expression _')'  
             { return `\\left\\{\\,${a}:\\,${b}\\right\\}` } /
           // allow 'set' to be case insensitive
-          'set('i _ b:ExpressionSeq _ ')'  
-            { return `\\left\\{\\,${b}\\,\\right\\}` } /
+          'set('i _ a:ExpressionSeq _ ')'  
+            { return `\\left\\{\\,${a}\\,\\right\\}` } /
+          // allow 'class' to be case insensitive (one or two args)
+          'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
+          'class('i _ a:Expression comma b:Expression')'  { return `\\left[${a}\\right]_{${b}}` } /
           // allow 'tuple' to be case insensitive and format it appropriately
           'tuple('i _ b:ExpressionSeq _ ')'  
             { return `\\left\\langle\\,${b}\\,\\right\\rangle` } /  
@@ -882,7 +896,8 @@ Prefix =  // LDE EFA's first
 // Atomic Expressions
 //
 // morally atomic expressions (do not require parentheses)
-Atomic = Parenthesized / EquivalenceClass / Tuple / SetBracketed / Symbol / Number
+Atomic = Parenthesized / // EquivalenceClass 
+         Matrix / Tuple / SetBracketed / Symbol / Number
 
 ///////////////////////////////////////////////////////////////////////////////
 // Things in parentheses
@@ -890,12 +905,21 @@ Atomic = Parenthesized / EquivalenceClass / Tuple / SetBracketed / Symbol / Numb
 
 // equivalence class - if the optional relation is missing from an equivalence
 //                     class we use '~'
-EquivalenceClass = 
-  '[' a:( @Expression ) ']'                   { return `\\left[${a}\\right]` } /
-  '[' a:Expression comma b:Symbol ']'    { return `\\left[${a}\\right]_${b}` } /
-  '[' a:Expression comma b:'~' ']'    { return `\\left[${a}\\right]_{\\sim}` }
+// EquivalenceClass = 
+//   '[' a:( @Expression ) ']'                   { return `\\left[${a}\\right]` } /
+//   '[' a:Expression comma b:Symbol ']'    { return `\\left[${a}\\right]_${b}` } /
+//   '[' a:Expression comma b:'~' ']'    { return `\\left[${a}\\right]_{\\sim}` }
+// matrices - semantically they are just tuples of tuples, but we format them in 2d
+Matrix = '['_ a:Tuple|..,comma| _']' !alphanum 
+         { return `\\left[\\begin{matrix}\n ${
+            a.map( s =>
+              s.replace(/,/g, ' & ')
+               .replace(/\\left\\langle{|}\\right\\rangle/g,''))
+             .join(' \\\\\n ')}\n\\end{matrix}\\right]` }
 // tuples
-Tuple = 'langle'_x a:ExpressionSeq _'rangle'!alphanum
+Tuple = '['_ a:ExpressionSeq _']'!alphanum 
+        { return `\\left\\langle{${a}}\\right\\rangle` } /
+        'langle'_x a:ExpressionSeq _'rangle'!alphanum
         { return `\\left\\langle{${a}}\\right\\rangle` }
 // sets
 SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝' 
@@ -925,7 +949,7 @@ Natural = $( [1-9][0-9]* / '0' )
 //
 // For clarity in reading the putdown output we rename some special frequently used
 // symbols.
-Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~') { return texsymbol(a) } / 
+Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { return texsymbol(a) } / 
   !(ReservedWord !alphanum) a:([a-z]i alphanum* ) 
   { let b = texsymbol(a[0]+a[1].join(''))
     return (b.length>1 && !b.startsWith('\\')) ? `\\text{${b}}` : b }

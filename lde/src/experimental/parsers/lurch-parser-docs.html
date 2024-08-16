@@ -20,7 +20,7 @@
           // console.log(
             // `changing render from ${text} to ${tex} with meaning ${putdown}` )
           const meaningDiv = document.getElementById('meaning')
-          meaningDiv.innerHTML = putdown
+          meaningDiv.textContent = putdown
           const renderDiv = document.getElementById('rendered')
           renderDiv.innerHTML = tex
           try { MathJax.typeset([renderDiv]) } catch (e) { }
@@ -307,20 +307,27 @@
           <td>$A\times B$</td>
         </tr>
 <tr>
-          <td>pair(x,y)<br/>tuple(x,y)<br/>⟨x,y⟩</td>
-          <td>$\left\langle\,x,y\,\right\rangle$</td>
-        </tr>
-<tr>
           <td>infty<br/>infinity</td>
           <td>$\infty$</td>
         </tr>
 <tr>
-          <td>triple(x,y,z)<br/>tuple(x,y,z)<br/>⟨x,y,z⟩</td>
-          <td>$\left\langle\,x,y,z\,\right\rangle$</td>
+          <td>[x,y]<br/>pair(x,y)<br/>tuple(x,y)<br/>⟨x,y⟩</td>
+          <td>$\left\langle{x,y}\right\rangle$</td>
         </tr>
 <tr>
-          <td>tuple(w,x,y,z)<br/>⟨w,x,y,z⟩</td>
-          <td>$\left\langle\,w,x,y,z\,\right\rangle$</td>
+          <td>[x,y,z]<br/>triple(x,y,z)<br/>tuple(x,y,z)<br/>⟨x,y,z⟩</td>
+          <td>$\left\langle{x,y,z}\right\rangle$</td>
+        </tr>
+<tr>
+          <td>[w,x,y,z]<br/>tuple(w,x,y,z)<br/>⟨w,x,y,z⟩</td>
+          <td>$\left\langle{w,x,y,z}\right\rangle$</td>
+        </tr>
+<tr>
+          <td>[[1,2],[3,4]]</td>
+          <td>$\left[\begin{matrix}
+ 1 & 2 \\
+ 3 & 4
+\end{matrix}\right]$</td>
         </tr>
 <tr>
           <td>Union i in I of A_(i)<br/>Union of A_(i) for i in I<br/>Union(A_(i),i,I)<br/>Cup i in I of A_(i)<br/>bigcup i in I of A_(i)</td>
@@ -388,24 +395,24 @@
           <td>$\sim\text{ is }\text{an }\text{equivalence relation}$</td>
         </tr>
 <tr>
-          <td>[a]</td>
+          <td>class(a)</td>
           <td>$\left[a\right]$</td>
         </tr>
 <tr>
-          <td>[a,~]</td>
-          <td>$\left[a\right]_\sim$</td>
+          <td>class(a,~)</td>
+          <td>$\left[a\right]_{\sim}$</td>
         </tr>
 <tr>
           <td>'~' is a strict partial order</td>
-          <td>$\sim\text{ is }\text{a }\text{strict partial order}$</td>
+          <td>$\sim\text{ is }a\text{strict partial order}$</td>
         </tr>
 <tr>
           <td>'~' is a partial order</td>
-          <td>$\sim\text{ is }\text{a }\text{partial order}$</td>
+          <td>$\sim\text{ is }a\text{partial order}$</td>
         </tr>
 <tr>
           <td>'~' is a total order</td>
-          <td>$\sim\text{ is }\text{a }\text{total order}$</td>
+          <td>$\sim\text{ is }a\text{total order}$</td>
         </tr>
 
 <tr><td colspan="2" class="subheader">Assumptions and Declarations (case insensitive, phrase is echoed)</td></tr>

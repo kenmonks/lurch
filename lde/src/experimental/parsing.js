@@ -30,7 +30,7 @@ import './extensions.js'
  * @param {string} parserstr - the peggy parser definition string  
  * @returns {function[]} - the normal, tracing, and raw parsers
  */
-export const makeParser = parserstr => {
+const makeParser = parserstr => {
   
   const opts = { cache:true }
   const traceopts = { ...opts , trace:true }
@@ -84,7 +84,7 @@ export const makeParser = parserstr => {
 // failed to parse.  The main use is to take a file with LurchNotation lines and
 // convert it to either putdown or latex, and print the results as a test of the
 // parser.
-export const parseLines = (parser,verbose=true,name='LurchParserTests',opts) => {
+const parseLines = (parser,verbose=true,name='LurchParserTests',opts) => {
   let ans = []
   const lines = 
     loadStr(name,'./parsers/','lurch').split('\n')
@@ -367,7 +367,17 @@ const numericToCAS = e => {
  *   * Scan for occurrences of the symbol `by` and mark its previous sibling's
  *     `.by` attribute with the text of its next sibling, which must be a
  *     LurchSymbol. Then delete both the `by` and it's next sibling.  Currently
- *     used by the `Cases` tool and the CAS tool.
+ *     used by the `Cases` tool, the Substitution rule, the CAS tool, and the
+ *     Arithmetic and Algebra tools.
+ *
+ *   * Scan for occurrences of the symbol `<comma` and mark its previous
+ *     sibling's `.continued` attribute true. Then delete the `<comma` symbol.  
+ *
+ *   * Scan for occurrences of the symbol `given>` and mark its next sibling as
+ *     a `given`.  If the next sibling has attribute `.continued` true then do the
+ *     same for it's next sibling and iterate until a sibling is found that does
+ *     not have that propoerty (or you run out of next siblings) Then delete the
+ *     `given>` symbol.  
  *
  *   * Scan for occurrences of the symbol `✔︎`, `✗`, and `⁉︎` and mark its
  *     previous sibling with .expectedResult 'valid', 'indeterminate', and
@@ -435,7 +445,33 @@ export const processShorthands = L => {
       s.ExpectedResult = s.getAttribute('ExpectedResult')
       s.clearAttributes('ExpectedResult')
     } ) 
+  
+  // attribute the previous sibling with .continued attribute whose value is true if
+  // its next sibling is a `<comma` symbol.
+  processSymbol( '<comma' ,  m => { 
+    let LHS = m.previousSibling()
+    // for testing purposes if the previous sibling is an 'expected result' marker
+    // attribute its previous sibling instead
+    if (['✔︎','✗','⁉︎','⊘'].some(x=>LHS.matches(x))) LHS = LHS.previousSibling()
+    LHS.continued = true
+    m.remove()  
+    return 
+  } )
 
+  // make the next sibling into a Given, and if it has `.continued` equal to
+  // true, do the same for its next sibling, and iterate until you reach a next
+  // sibling that doesn't have that attribute or you run out of next siblings,
+  // whichever comes first.  Then delete the 'given>' symbol.
+  processSymbol( 'given>' ,  m => { 
+    let next = m.nextSibling()
+    while (next) { 
+      next.makeIntoA('given')
+      next = (next.continued) ? next.nextSibling() : undefined
+    }
+    m.remove()  
+    return 
+  } )
+  
   // declare the type of the next or previous sibling 
   processSymbol( 'BIH>'          , m => makeNext(m,'BIH','claim') )
   processSymbol( 'declare>'      , m => makeNext(m,'Declare','given') )
@@ -542,7 +578,9 @@ export const processShorthands = L => {
     if (inputArray.length === 1) groups.push(inputArray[0])
     else groups.push(inputArray)
   
-    // for each group, if it is an array, create a new Environment containing the group elements, otherwise just use the element itself.  Collect them all into a results array.
+    // for each group, if it is an array, create a new Environment containing
+    // the group elements, otherwise just use the element itself.  Collect them
+    // all into a results array.
     const results = []
     groups.forEach( group => {
       if (Array.isArray(group) ) {
@@ -628,6 +666,6 @@ export const processShorthands = L => {
 export default {
   isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger, isRational,
   isNumeric, isNaturalArithmetic,  isIntegerArithmetic, isRationalArithmetic, 
-  numericToCAS
+  numericToCAS, parseLines, makeParser
 }
 ///////////////////////////////////////////////////////////////////////////////

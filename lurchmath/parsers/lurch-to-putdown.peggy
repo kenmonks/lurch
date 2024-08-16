@@ -127,6 +127,11 @@
   // replace tabs with a space
   const replaceTabs = s => s.replace(/\t/g,' ') 
 
+  // put spaces around commas, and colons since they are now treated as symbols
+  const padCommas = s => s.replace(/,/g,' , ')
+  // for the colons, only pad on the right to allow things like Rules: 
+  const padColons = s => s.replace(/:/g,': ') 
+
   // shrink consecutive spaces to a single space
   const shrink = s => s.replace(/ ( +)/g,' ') 
   
@@ -177,7 +182,7 @@
 
   // for use in Declare's, look up the internal name of a reserved word or
   // symbol that might appear in the declare sequence.  If the name isn't on the list
-  // then it is internally just iteslf
+  // then it is internally just iteslf.  Handle division as a special case.
   const internal = s => {
     return (s=='cdot /') ? '/' : internalNames[s] || s
   }
@@ -241,10 +246,14 @@
   // with (➤ " ") to act as a line break in the output in Lode
   input = input.replace(/^([ \t]*)➤[ \t]*$/mg, '$1➤ " " \n')
   
-  // Tabs and Spaces
+  // Tabs, Spaces, Commas
   //
   // replace tabs with a space
   input = replaceTabs(input)
+  // pad commas for when they are shorthands
+  input = padCommas(input)
+  // pad colons for when they are shorthands
+  input = padColons(input)
   // remove double spaces
   input = shrink(input)
 
@@ -382,7 +391,7 @@ StringLiteral = $('"' [^"]* '"')
 // Shorthands are special symbols which are not allowed to be part
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
-Shorthand = a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Equiv) 
+Shorthand = a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Equiv / Comma) 
               !alphanum { return a }
   // Shorthands
   Equiv = 'equiv'i { return '≡' }
@@ -393,6 +402,7 @@ Shorthand = a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Equiv)
   Proof = 'proof'i ':'? { return 'proof>' }
   Cases = 'CasesRule'i ':'? { return 'cases>' }
   Subs = 'SubsRule'i ':'? { return 'subs>' }
+  Comma = ',' { return '<comma'}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Givens
@@ -400,11 +410,11 @@ Shorthand = a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Equiv)
 // A Given label that is not part of a longer symbol or followed by another :
 // character, separated from either an Environment or Expession sequence by
 // optional spaces.
-// TODO: use Expression|1..,comma|
-Given = GivenLabel a:Environment { return ':'+a } /
-        GivenLabel a:Expression|1..,comma| { return a.map(x=>':'+x).join(' ') }
-  GivenLabel = ':'_ / ('assume'i / 'given'i / 'suppose'i / 
-                       'if'i / 'from'i / 'define'i ) _x
+// Given = GivenLabel a:Environment { return ':'+a } /
+//         GivenLabel a:Expression|1..,comma| { return a.map(x=>':'+x).join(' ') }
+Given = GivenLabel
+  GivenLabel = (':' / ('assume'i / 'given'i / 'suppose'i / 
+                       'if'i / 'from'i / 'define'i ) !alphanum ) { return 'given>' }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Environments
@@ -705,6 +715,9 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
               // allow 'set' to be case insensitive
               'set('i _ b:ExpressionSeq _')'  
                 { return `(set ${b})` } /
+              // allow 'class' to be case insensitive
+              'class('i _ b:ExpressionSeq _')'  
+                { return `(class ${b})` } /
               // everything else
               a:(Exp / Symbol / Parenthesized) '_'?
               b:( '('_ @ExpressionSeq _')' )+ 
@@ -723,7 +736,8 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
 // Atomic Expressions
 //
 // morally atomic expressions (do not require parentheses)
-Atomic = StringLiteral / Parenthesized / EquivalenceClass / Tuple / SetBracketed / Symbol / Number
+Atomic = StringLiteral / Parenthesized / // EquivalenceClass / 
+         Tuple / SetBracketed / Symbol / Number
 
 ///////////////////////////////////////////////////////////////////////////////
 // Things in parentheses
@@ -731,11 +745,16 @@ Atomic = StringLiteral / Parenthesized / EquivalenceClass / Tuple / SetBracketed
 
 // equivalence class - if the optional relation is missing from an equivalence
 //                     class we use '~'
-EquivalenceClass = 
-  '[' b:( @Expression ) ']'                   { return lispPrefix('class',[b,'~']) } /
-  '[' a:Expression comma b:('~'/Symbol) ']'   { return lispPrefix('class',[a,b]) }
+// TODO: upgrade everything to use class(a) and class(a,~) instead of this to 
+//       make room for matrices.
+//
+// EquivalenceClass = 
+//   '[' b:( @Expression ) ']'                   { return lispPrefix('class',[b,'~']) } /
+//   '[' a:Expression comma b:('~'/Symbol) ']'   { return lispPrefix('class',[a,b]) }
+
 // tuples
-Tuple = 'langle'_x a:ExpressionSeq _'rangle'!alphanum { return `(tuple ${a})` }
+Tuple = '['_ a:ExpressionSeq _']'!alphanum { return `(tuple ${a})` } /
+        'langle'_x a:ExpressionSeq _'rangle'!alphanum { return `(tuple ${a})` }
 // sets
 SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝' 
                  { return `(setbuilder (${a},${b}))` } /
@@ -760,7 +779,7 @@ Natural = $( [1-9][0-9]* / '0' )
 // For clarity in reading the putdown output we rename some special frequently used
 // symbols.
 Symbol "Symbol" = 
-  '✔︎' / '✗' / '⁉︎' / '⊘'/ // useful unicode
+  '✔︎' / '✗' / '⁉︎' / '⊘' / // useful unicode
   ('infty'/'infinity') { return '∞'  }  /
   'contradiction' { return '→←' }  /  'sigma'         { return 'σ'  }   /
   'NN'            { return 'ℕ'  }  /  'ZZ'            { return 'ℤ'  }   /
