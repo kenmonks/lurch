@@ -571,107 +571,6 @@ export const install = editor => {
 }
 
 /**
- * A rule is a type of shell with the following features.
- * 
- *  - It labels itself as a "rule" using the attribute the LDE respects for
- *    rules of inference, so that validation will treat it as one.
- *  - It marks itself as a given, which the LDE requires for rules.
- */
-export class Rule extends Shell {
-    static subclassName = Atom.registerSubclass( 'rule', Rule )
-    static advancedName = 'an axiom, definition, or rule'
-    static latexEnvironment = 'lurchrule'
-    finalize ( shellLC ) {
-        shellLC.makeIntoA( 'given' )
-        shellLC.makeIntoA( 'Rule' )
-    }
-    // TODO: debug this.  Copying a rule and pasting it put the conclusion
-    // in as an expression labeled as a subproof.
-    //
-    // contextMenu ( forThis ) {
-    //     const result = super.contextMenu( forThis )
-    //     result.unshift( {
-    //         text : 'Copy rule as a template',
-    //         onAction : () => {
-    //             const copy = this.element.cloneNode( true )
-    //             const makeTemplate = node => {
-    //                 if ( Atom.isAtomElement( node ) ) {
-    //                     const atom = Atom.from( node, this.editor )
-    //                     if ( atom.getMetadata( 'type' ) == 'premise' )
-    //                         node.replaceWith( ...node.childNodes )
-    //                         atom.setMetadata( 'type', 'subproof' )
-    //                     if ( node.tagName == 'DIV' )
-    //                         Array.from( node.childNodes ).forEach( makeTemplate )
-    //                 } else {
-    //                     Array.from( node.childNodes ).forEach( makeTemplate )
-    //                 }
-    //             }
-    //             makeTemplate( copy )
-    //             copyHTMLToClipboard( copy.innerHTML )
-    //         }
-    //     } )
-    //     return result
-    // }
-}
-
-/**
- * A definition is a type of shell that functions exactly like a {@link Rule},
- * except has the word "Definition" on top instead of "Rule".
- */
-export class Definition extends Rule {
-    static subclassName = Atom.registerSubclass( 'definition', Definition )
-    static advancedFriendly = false
-    static latexEnvironment = 'definition'
-}    
-
-/**
- * An axiom is a type of shell that functions exactly like a {@link Rule},
- * except has the word "Axiom" on top instead of "Rule".
- */
-export class Axiom extends Rule {
-    static subclassName = Atom.registerSubclass( 'axiom', Axiom )
-    static advancedFriendly = false
-    static latexEnvironment = 'axiom'
-}
-
-/**
- * A theorem is a type of shell that labels itself as a "theorem" using the
- * attribute the LDE respects for theorem statements, so that validation will
- * treat it as one.
- */
-export class Theorem extends Shell {
-    static subclassName = Atom.registerSubclass( 'theorem', Theorem )
-    static advancedName = 'a theorem, lemma, or corollary'
-    static beginnerFriendly = true
-    static latexEnvironment = 'theorem'
-    finalize ( shellLC ) {
-        shellLC.makeIntoA( 'Theorem' )
-    }
-}
-
-/**
- * A lemma is a type of shell that functions exactly like a {@link Theorem},
- * except has the word "Lemma" on top instead of "Theorem".
- */
-export class Lemma extends Theorem {
-    static subclassName = Atom.registerSubclass( 'lemma', Lemma )
-    static beginnerFriendly = false
-    static advancedFriendly = false
-    static latexEnvironment = 'lemma'
-}
-
-/**
- * A corollary is a type of shell that functions exactly like a {@link Theorem},
- * except has the word "Corollary" on top instead of "Theorem".
- */
-export class Corollary extends Theorem {
-    static subclassName = Atom.registerSubclass( 'corollary', Corollary )
-    static beginnerFriendly = false
-    static advancedFriendly = false
-    static latexEnvironment = 'corollary'
-}
-
-/**
  * A proof is a type of shell that has the word "Proof" on top and no other
  * special functionality.  The LDE will treat it as a container with things
  * inside that should be validated.
@@ -686,6 +585,7 @@ export class Corollary extends Theorem {
 export class Proof extends Shell {
     static subclassName = Atom.registerSubclass( 'proof', Proof )
     static beginnerFriendly = true
+    static advancedFriendly = true
     static latexEnvironment = 'proof'
     finalize ( shellLC ) {
         shellLC.makeIntoA( 'Proof' )
@@ -719,6 +619,7 @@ export class Proof extends Shell {
 export class Subproof extends Shell {
     static subclassName = Atom.registerSubclass( 'subproof', Subproof )
     static beginnerFriendly = true
+    static advancedFriendly = true
     toLatex ( innerLatex ) { return `\n\n${innerLatex}\n\n` }
     getTitle () { return '' }
 }
@@ -731,6 +632,7 @@ export class Subproof extends Shell {
  */
 export class Premise extends Shell {
     static subclassName = Atom.registerSubclass( 'premise', Premise )
+    static advancedFriendly = true
     getTitle () { return '' }
     finalize ( shellLC ) {
         shellLC.makeIntoA( 'given' )
@@ -738,6 +640,110 @@ export class Premise extends Shell {
     toLatex ( innerLatex ) {
         return super.toLatex( '(Rule premise) ' + innerLatex )
     }
+}
+
+
+/**
+ * A rule is a type of shell with the following features.
+ * 
+ *  - It labels itself as a "rule" using the attribute the LDE respects for
+ *    rules of inference, so that validation will treat it as one.
+ *  - It marks itself as a given, which the LDE requires for rules.
+ */
+export class Rule extends Shell {
+  static subclassName = Atom.registerSubclass( 'rule', Rule )
+  static advancedName = 'an axiom, definition, or rule'
+  static advancedFriendly = true
+  static latexEnvironment = 'lurchrule'
+  finalize ( shellLC ) {
+      shellLC.makeIntoA( 'given' )
+      shellLC.makeIntoA( 'Rule' )
+  }
+  // TODO: debug this.  Copying a rule and pasting it put the conclusion
+  // in as an expression labeled as a subproof.
+  //
+  // contextMenu ( forThis ) {
+  //     const result = super.contextMenu( forThis )
+  //     result.unshift( {
+  //         text : 'Copy rule as a template',
+  //         onAction : () => {
+  //             const copy = this.element.cloneNode( true )
+  //             const makeTemplate = node => {
+  //                 if ( Atom.isAtomElement( node ) ) {
+  //                     const atom = Atom.from( node, this.editor )
+  //                     if ( atom.getMetadata( 'type' ) == 'premise' )
+  //                         node.replaceWith( ...node.childNodes )
+  //                         atom.setMetadata( 'type', 'subproof' )
+  //                     if ( node.tagName == 'DIV' )
+  //                         Array.from( node.childNodes ).forEach( makeTemplate )
+  //                 } else {
+  //                     Array.from( node.childNodes ).forEach( makeTemplate )
+  //                 }
+  //             }
+  //             makeTemplate( copy )
+  //             copyHTMLToClipboard( copy.innerHTML )
+  //         }
+  //     } )
+  //     return result
+  // }
+}
+
+/**
+* A definition is a type of shell that functions exactly like a {@link Rule},
+* except has the word "Definition" on top instead of "Rule".
+*/
+export class Definition extends Rule {
+  static subclassName = Atom.registerSubclass( 'definition', Definition )
+  static advancedFriendly = false
+  static latexEnvironment = 'definition'
+}    
+
+/**
+* An axiom is a type of shell that functions exactly like a {@link Rule},
+* except has the word "Axiom" on top instead of "Rule".
+*/
+export class Axiom extends Rule {
+  static subclassName = Atom.registerSubclass( 'axiom', Axiom )
+  static advancedFriendly = false
+  static latexEnvironment = 'axiom'
+}
+
+/**
+* A theorem is a type of shell that labels itself as a "theorem" using the
+* attribute the LDE respects for theorem statements, so that validation will
+* treat it as one.
+*/
+export class Theorem extends Shell {
+  static subclassName = Atom.registerSubclass( 'theorem', Theorem )
+  static advancedName = 'a theorem, lemma, or corollary'
+  static advancedFriendly = true
+  static beginnerFriendly = true
+  static latexEnvironment = 'theorem'
+  finalize ( shellLC ) {
+      shellLC.makeIntoA( 'Theorem' )
+  }
+}
+
+/**
+* A lemma is a type of shell that functions exactly like a {@link Theorem},
+* except has the word "Lemma" on top instead of "Theorem".
+*/
+export class Lemma extends Theorem {
+  static subclassName = Atom.registerSubclass( 'lemma', Lemma )
+  static beginnerFriendly = false
+  static advancedFriendly = false
+  static latexEnvironment = 'lemma'
+}
+
+/**
+* A corollary is a type of shell that functions exactly like a {@link Theorem},
+* except has the word "Corollary" on top instead of "Theorem".
+*/
+export class Corollary extends Theorem {
+  static subclassName = Atom.registerSubclass( 'corollary', Corollary )
+  static beginnerFriendly = false
+  static advancedFriendly = false
+  static latexEnvironment = 'corollary'
 }
 
 /**
@@ -750,6 +756,7 @@ export class Premise extends Shell {
  */
 export class Recall extends Shell {
     static subclassName = Atom.registerSubclass( 'recall', Recall )
+    static advancedFriendly = false
     static latexEnvironment = 'recall'
     finalize ( shellLC ) {
         shellLC.makeIntoA( 'BIH' )
