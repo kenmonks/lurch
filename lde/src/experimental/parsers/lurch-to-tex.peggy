@@ -546,7 +546,9 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma
 // Given = a:GivenLabel b:Environment { 
 //           return (/^\s*:\s*$/.test(a)) ? b : `${txt(a)} ${b}` } /
 //         a:GivenLabel b:Expression|1..,comma| { return `${txt(a)} ${sequence(b)}` }
-Given = a:GivenLabel { return `${txt(a) }`}
+Given = a:GivenLabel _ b:Expression|1..,comma| !comma
+                     { return `${txt(a)} ${sequence(b)}` } /
+        a:GivenLabel { return `${txt(a) }`}
   GivenLabel = $':' / $(('assume'i / 'given'i / 'suppose'i / 
                          'if'i / 'from'i / 'define'i ) !alphanum)
 
@@ -684,7 +686,7 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
 //
 // We imitate Algebraic operator precendence as much as possible and rank from
 // lowest to highest: set difference < set product < ∪ and ∩ (tied) <
-// composition , complement (tie) Thus, as for Prop we only need for Set to
+// composition, complement (tie) Thus, as for Prop we only need for Set to
 // point to the first one. Algebraic bubbles up from Composition.
 Set = RelativeComp
 
@@ -873,7 +875,8 @@ Prefix =  // LDE EFA's first
             { return `\\left\\{\\,${a}\\,\\right\\}` } /
           // allow 'class' to be case insensitive (one or two args)
           'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
-          'class('i _ a:Expression comma b:Expression')'  { return `\\left[${a}\\right]_{${b}}` } /
+          'class('i _ a:Expression comma b:Expression')'  
+            { return `\\left[${a}\\right]_{${b}}` } /
           // allow 'tuple' to be case insensitive and format it appropriately
           'tuple('i _ b:ExpressionSeq _ ')'  
             { return `\\left\\langle\\,${b}\\,\\right\\rangle` } /  

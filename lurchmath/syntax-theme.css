@@ -258,7 +258,7 @@ body.shell-style-boxed {
 
   /* Shell titles */
 
-  /* Add a shell title in the left margin */
+  /* Add a shell title in the left margin except for subproofs */
   [data-shell_title]::before {
     content: attr(data-shell_title);
     color: var(--margin-color);
