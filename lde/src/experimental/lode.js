@@ -127,7 +127,26 @@ global.trace = s => {
 }
 // load the Lurch to TeX parser precompiled for efficiency
 import { parse as lurchToTexTrace } from './parsers/lurch-to-tex-trace.js'
-global.textrace = lurchToTexTrace
+global.textrace = s => {
+
+  const tracer = new Tracer(s,
+    { showTrace : true,
+      showFullPath : false,
+      hiddenPaths : [ "__" , "_" ]
+    }
+  )
+
+  // show backtracing whether it's an error or not
+  try { 
+    const ans = lurchToTexTrace(s,{ cache:true, tracer:tracer })
+    console.log(tracer.getBacktraceString())
+    return ans
+  } catch(e) {
+    console.log('error!')
+    console.log(tracer.getBacktraceString())
+    return undefined
+  }
+}
 // load the Lurch to LaTeX parser precompiled for efficiency
 import { makedoc } from './parsers/makedoc.js'
 // load the utility to create the site lurch file index page
