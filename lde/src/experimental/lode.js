@@ -604,8 +604,8 @@ rpl.defineCommand( "compileparser", {
           console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}-trace.js...`))
           execStr(`cd parsers && peggy --cache --trace --format es -o lurch-to-${name}-trace.js lurch-to-${name}.peggy`)
         }
-        execStr(`cd parsers && cp lurch-to-${name}.js ../../../../lurchmath/parsers/`)
-        execStr(`cd parsers && cp lurch-to-${name}.peggy ../../../../lurchmath/parsers/`)
+        // execStr(`cd parsers && cp lurch-to-${name}.js ../../../../lurchmath/parsers/`)
+        // execStr(`cd parsers && cp lurch-to-${name}.peggy ../../../../lurchmath/parsers/`)
       }
 
     try {
