@@ -324,6 +324,15 @@ const numericToCAS = e => {
  *
  * The following are what we have for Shorthands. More might be added later. 
  *
+ *   * Scan for occurrences of the symbol `<comma` and mark its previous
+ *     sibling's `.continued` attribute true. Then delete the `<comma` symbol.  
+ *
+ *   * Scan for occurrences of the symbol `given>` and mark its next sibling as
+ *     a `given`.  If the next sibling has attribute `.continued` true then do
+ *     the same for it's next sibling and iterate until a sibling is found that
+ *     does not have that propoerty (or you run out of next siblings) Then
+ *     delete the `given>` symbol.  
+ *
  *   * Scan a document looking for any of the following Shorthands and convert
  *     the next (>) or previous (<) sibling to the corresponding type in the asA
  *     column.
@@ -351,6 +360,24 @@ const numericToCAS = e => {
  *     compatibility) and replace that with the symbol "LDE EFA" (which then
  *     will still print as '𝜆' but it's what is needed under the hood).
  *
+ *   * Scan for occurrences of the symbol `then`. They are intended to be a
+ *     shorthand way to enter an If-then environment inline without using a
+ *     shell. The 'then' should be between given siblings and one or more claim
+ *     siblings in a continuation chain determined by commas. For example, `If
+ *     A,B,C then D,E,F` will then be converted to the environment `{ :A :B :C D
+ *     E F }`.  These cannot be nested.  This is useful for both inserting
+ *     If-then environments inline, and also for using them as the body of a
+ *     declaration.  Thus, for example you can say e.g. 
+ *     `If A,B,C then D,E,F for some c` or 
+ *     `Let x be such that if A,B,C then D,E,F`
+ *     If you just want a conjunction you can also do `D,E,F for some c` or
+ *     `Let x be such that D,E,F `
+ *
+ * The Rule will then be replaced by the expanded version and the `≡` symbols
+ *     removed, following the cyclic TFAE style of implications.  For example,
+ *     if the Rule has the form `:{ a ≡ b c ≡ d }` then it will be replaced by
+ *     `:{ {:a {b c}} {:{b c} d } {:d a} }`.
+ *
  *   * Scan for occurrences of the symbol `≡`. They are intended to be a
  *     shorthand way to enter IFF rules (equivalences).  The '≡' should be a
  *     child of a Rule environment, and should not be the first or last child.
@@ -369,15 +396,6 @@ const numericToCAS = e => {
  *     LurchSymbol. Then delete both the `by` and it's next sibling.  Currently
  *     used by the `Cases` tool, the Substitution rule, the CAS tool, and the
  *     Arithmetic and Algebra tools.
- *
- *   * Scan for occurrences of the symbol `<comma` and mark its previous
- *     sibling's `.continued` attribute true. Then delete the `<comma` symbol.  
- *
- *   * Scan for occurrences of the symbol `given>` and mark its next sibling as
- *     a `given`.  If the next sibling has attribute `.continued` true then do the
- *     same for it's next sibling and iterate until a sibling is found that does
- *     not have that propoerty (or you run out of next siblings) Then delete the
- *     `given>` symbol.  
  *
  *   * Scan for occurrences of the symbol `✔︎`, `✗`, and `⁉︎` and mark its
  *     previous sibling with .expectedResult 'valid', 'indeterminate', and
@@ -480,7 +498,29 @@ export const processShorthands = L => {
   processSymbol( '<thm'          , m => makePrevious(m,'Theorem','claim') )  
   processSymbol( 'proof>'        , m => makeNext(m,'Proof','claim') )
   processSymbol( 'cases>'        , m => makeNext(m,'Cases','given') )  
-  
+
+  // Label a rule.  We imitate
+  processSymbol( 'label>'         , m => {
+    // if it isn't inside a Rule (or inside more than one) do nothing
+    const rules = m.ancestorsSatisfying(x=>x.isA('Rule'))
+    if (!rules.length==1) return
+    const rule = rules[0]
+    // it should have a next sibling from the parser, and it should be a
+    // symbol whose text is the quoted string the user typed inside the
+    // argument to the label command.
+    const label = m.nextSibling().text().toLowerCase().replace(/\s+/g,'')
+    // if the parent has no .labels attribute add one as an array of labels,
+    // otherwise add this label to the rest.
+    if (rule.labels) {
+      // Convert to lower case and remove all whitespace before saving to give
+      // users a little slack.
+      if (!rule.labels.includes(label)) rule.labels.push(label)
+    } else {
+      rule.labels = [ label ]
+    }
+    m.parent().remove()
+  })
+
   // Mark a rule as the substitution rule, and mark it's conclusion as a 
   // substitution EFA so that it can be instantiated by expressions marked
   // with .by='substitution'
@@ -489,34 +529,57 @@ export const processShorthands = L => {
     makeNext(m,'Subs','given')
   })  
   
+  // Deprecated: This is the old version that was made at the AiM workshop to
+  // accommodate the CAS rule.  But the CAS rule has been updated to the Algebra
+  // Tool rule, so this is probably going to be deleted eventually.
+  //
+  // attribute the previous sibling with .by attribute whose value is the text
+  // of the next sibling if it is a symbol, and the next sibling LC itself if it isn't.
+  // processSymbol( 'by' ,  m => { 
+  //   let LHS = m.previousSibling()
+  //   // for testing purposes if the previous sibling is an 'expected result' marker
+  //   // attribute its previous sibling instead
+  //   if (['✔︎','✗','⁉︎','⊘'].some(x=>LHS.matches(x))) LHS = LHS.previousSibling()
+  //   const RHS = m.nextSibling()
+  //   // it should be a LurchSymbol or an Application
+  //   if (RHS instanceof LurchSymbol) {
+  //     if (RHS.text()==='CAS') {
+  //       LHS.by = { CAS: lc2algebrite(LHS) }
+  //       m.remove()
+  //       RHS.remove()
+  //     } else {
+  //       LHS.by = RHS.text()
+  //       m.remove()
+  //       RHS.remove()
+  //     }
+  //   } else if (RHS instanceof Application ) {
+  //     if (RHS.child(0) instanceof LurchSymbol && RHS.child(0).text()==='CAS') { 
+  //       // TODO: handle the case where no arg is passed or it's not a symbol
+  //       LHS.by = { CAS: RHS.child(1).text() }
+  //       m.remove()
+  //       RHS.remove()
+  //     }
+  //   }
+  //   return 
+  // } )
+  
   // attribute the previous sibling with .by attribute whose value is the text
   // of the next sibling if it is a symbol, and the next sibling LC itself if it isn't.
   processSymbol( 'by' ,  m => { 
     let LHS = m.previousSibling()
+    // if there is no previous sibling, do nothing
+    if (!LHS) return
     // for testing purposes if the previous sibling is an 'expected result' marker
     // attribute its previous sibling instead
     if (['✔︎','✗','⁉︎','⊘'].some(x=>LHS.matches(x))) LHS = LHS.previousSibling()
+    // if there is no previous sibling, do nothing
+    if (!LHS) return
     const RHS = m.nextSibling()
-    // it should be a LurchSymbol or an Application
-    if (RHS instanceof LurchSymbol) {
-      if (RHS.text()==='CAS') {
-        LHS.by = { CAS: lc2algebrite(LHS) }
-        m.remove()
-        RHS.remove()
-      } else {
-        LHS.by = RHS.text()
-        m.remove()
-        RHS.remove()
-      }
-    } else if (RHS instanceof Application ) {
-      if (RHS.child(0) instanceof LurchSymbol && RHS.child(0).text()==='CAS') { 
-        // TODO: handle the case where no arg is passed or it's not a symbol
-        LHS.by = { CAS: RHS.child(1).text() }
-        m.remove()
-        RHS.remove()
-      }
-    }
-    return 
+    // if there is no next sibling, or it's not a symbol, do nothing
+    if (!(RHS && RHS instanceof LurchSymbol) ) return
+    LHS.by = RHS.text()
+    m.remove()
+    RHS.remove()
   } )
   
   // rules> - Mark each of the children of the next sibling (which should be an
@@ -611,6 +674,78 @@ export const processShorthands = L => {
     parent.replaceWith(ans)
   } )
 
+  // Expand equivalences
+  processSymbol( 'then' ,  m => { 
+    // make a new array to contain the relevant LHS and RHS siblings
+    let sibs = []
+    // get all of the consecutive previous given siblings and unshift them onto
+    // the array
+    let prev = m.previousSibling()
+    while (prev && prev.isA('given')) { 
+      sibs.unshift(prev)
+      prev=prev.previousSibling()
+    }
+    // if there weren't any, just return without doing anything
+    if (!sibs.length) return
+    // now get the continuation-sequence of claims that follow it and push them
+    // onto the array
+    let next = m.nextSibling()
+    // if there aren't any, just return without doing anything
+    if (!next || next.isA('given')) return
+    // otherwise get them all
+    while (next && !next.isA('given')) { 
+      sibs.push(next)
+      next = (next.continued) ? next.nextSibling() : undefined
+    }
+    // put them all in an environment - this removes them from the document
+    const env = new Environment(...sibs)
+    // then replace the instance of `then` with the new environment (which does
+    // not contain the `then`)
+    m.replaceWith(env)
+  } )
+
+  // add the next sibling, if present, to the body of the previous declaration.
+  // Note that this should not appear in the user's document if it is not after
+  // a Let declaration whose body is empty (i.e., its last child is the symbol
+  // "LDE empty") because the UI doesn't allow it to be constructed otherwise,
+  // so we don't check for that.
+  processSymbol( '<be' ,  m => { 
+    let dec = m.previousSibling()
+    const body = m.nextSibling()
+    // if it doesn't have a next sibling, don't do anything.
+    if (!body) return
+    dec.popChild()
+    dec.pushChild(body) // should remove body as the next sibling too
+    m.remove()
+    return 
+  } )
+
+  // add the previous sibling, if present, to the body of the next declaration.
+  // There are two possible cases to check for, depending if the declaration
+  // already has an environment as a body or not (due to the `for some x,y in A`
+  // shortcut). Note that this should not appear in the user's document if it is
+  // not before a ForSome declaration whose body is either empty (i.e., its last
+  // child is the symbol "LDE empty") or an environment containing one or more
+  // `x∈A` expressions, because the UI doesn't allow it to be constructed
+  // otherwise, so we don't check for that.
+  processSymbol( 'some>' ,  m => { 
+    let prev = m.previousSibling()
+    // if it doesn't have a previous sibling, don't do anything.
+    if (!prev) return
+    const dec = m.nextSibling()
+    // if its body is already an environment, just push the prev onto it
+    if (dec.body() instanceof Environment) {
+      dec.body().pushChild(prev)
+    // otherwise, make prev the body
+    } else {
+      dec.popChild() // remove the placeholder
+      dec.pushChild(prev) 
+    }
+    // either way, prev should no longer be where it was, so just get rid of the some>
+    m.remove()
+    return 
+  } )
+
   // For testing purposes, flag the expected result
   processSymbol( '✔︎' , m => { 
     m.previousSibling().ExpectedResult = 'valid'
@@ -650,7 +785,7 @@ export const processShorthands = L => {
   //     s.remove()
   //   } ) 
 
-     // depricated but kept for backward compatibility
+  // depricated but kept for backward compatibility
   processSymbol( '<<' , m => { 
     const target = m.previousSibling()
     const type = (target instanceof Declaration) ? 'Declare' : 'BIH'

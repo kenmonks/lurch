@@ -303,8 +303,13 @@
   //  4. In Lode and the testing suite it is disabled, but in that case the
   //     unicode curly brackets can be entered directly with a keyboard shortcut
   //     to make test proofs involving sets.
+  //  5. One challenge is that we want to allow set brackets for rule labels and 
+  //     citations even when enableSets is true. To handle that situation we replace
+  //     set brackets with ordinary parentheses first, in that case.
+  input = input.replace(/(\b(label|by)\s*)\{([^{}]+)\}/g,'$2($3)')
+  // Now proceed with the set bracket replacements
   if (options.enableSets) 
-    input = input.replace(/{/g,'｛').replace(/}/g,'｝')
+    input = input.replace(/{/g,'｛').replace(/}/g,'｝')  
 
   // set options.debug to true for debugging
   if (options.debug) say(input)
@@ -361,7 +366,7 @@ LCs "LC" = _ a:(LC)|..,__| _  { return a.join(' ') }
 // A single LC
 LC = Meta / Given / Environment / Declaration / Expression
   // Things it searches for and replaces up front
-  Meta = Putdown / Comment / StringLiteral / Shorthand 
+  Meta = Putdown / Comment / Label / Ref / StringLiteral / Shorthand 
   // Declarations
   Declaration = Declare / ForSome / Let 
   // Expressions
@@ -388,6 +393,16 @@ Comment = ( '%' / 'Comment'i ) __ a:StringLiteral
 // A string literal is anything enclosed in double quotes
 // Currently only used for comments
 StringLiteral = $('"' [^"]* '"')
+// Labels - generalization of LaTeX \label{} command (including that syntax)
+Label = 'label'i _ [(\[{"] _ a:([^)\]}"]+) _ [)\]}"] { return `(label> "${a.join('')}")` }
+// Refs - generalization of LaTeX \ref{} command (including that syntax)
+Ref = RefLabel _ [(\[{"] _ a:([^)\]}"]+) _ [)\]}"] 
+      { return `by "${a.join('')}"` } /
+      // But it might be split between atoms, in which case we handle it this
+      // way In this case it has to be followed by a symbol (which can have
+      // spaces if wrapped in " ").
+      RefLabel !alphanum { return 'by'}
+  RefLabel = $('ref'i/'by'i)  
 // Shorthands are special symbols which are not allowed to be part
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
@@ -427,17 +442,22 @@ Environment =  '{' a:LCs '}' { return `{ ${a} }` }
 // Declare constants (cannot have a body and is a given)
 Declare = 'declare'i __ a:DeclareSeq { return `declare> :[${a}]` }
 // ForSome declaration (always a claim)
-// We also allow the special shorthand `for some x∈A` since it is so common.
-ForSome = body:Expression __ 'for'i __ 'some'i __ a:Symbol __ 'in'i __ b:Expression
-            { return `[${a}, (and ${body} (∈ ${a} ${b}))]` } /
-          body:Expression __ 'for'i __ 'some'i __ a:SymbolSeq 
-            { return `[${a}, ${body}]` }
+// We also allow the special shorthand `for some x in A` since it is so common.
+// upgrade some> to a shorthand to allow environment bodies
+ForSome = 'for'i __ 'some'i __ a:(Symbol)|1..,comma| __ 'in'i __ b:Expression 
+       // body:Expression __ 'for'i __ 'some'i __ a:Symbol __ 'in'i __ b:Expression
+            { return `some> [${a.join(' ')},{ ${a.map(x=>`(∈ ${x} ${b})`).join(' ')} }]` } /
+            // { return `[${a}, (and ${body} (∈ ${a} ${b}))]` } /
+          'for'i __ 'some'i __ a:SymbolSeq 
+       // body:Expression __ 'for'i __ 'some'i __ a:SymbolSeq 
+            { return `some> [${a}]` }
 // the 'given' colon is optional since these are always 'given'. We also 
 // allow the special shorthand `Let x∈A` since it is so common.          
 Let = 'Let'i __ a:Symbol __ 'in'i __ b:Expression 
                             { return `:[${a}, ${lispBinary('∈',a,b)}]` } /
-      'Let'i __ a:SymbolSeq __ ('be'i __)? 'such'i __ 'that'i __ b:Expression 
-                            { return `:[${a}, ${b}]` } /
+      // upgrade <be to a shorthand to allow environment bodies                      
+      'Let'i __ a:SymbolSeq __ ('be'i __)? 'such'i __ 'that'i // __ b:Expression 
+                            { return `:[${a}] <be` } /
       'Let'i __ a:SymbolSeq { return `:[${a}]`       }
   // Comma separated symbols, numbers, and reserved words
   DeclareSeq = a:('cdot /' / Symbol / Number / ReservedWord)|1..,comma| 

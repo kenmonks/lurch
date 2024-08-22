@@ -435,9 +435,13 @@
   //  4. In Lode and the testing suite it is disabled, but in that case the
   //     unicode curly brackets can be entered directly with a keyboard shortcut
   //     to make test proofs involving sets.
+  //  5. One challenge is that we want to allow set brackets for rule labels and 
+  //     citations even when enableSets is true. To handle that situation we replace
+  //     set brackets with ordinary parentheses first, in that case.
+  input = input.replace(/(\b(label|by)\s*)\{([^{}]+)\}/g,'$2($3)')
+  // Now proceed with the set bracket replacements
   if (options.enableSets) 
-    input = input.replace(/{/g,'｛').replace(/}/g,'｝')
-  
+    input = input.replace(/{/g,'｛').replace(/}/g,'｝')  
   // uncomment the following for debugging
   if (options.debug) say(input)
 }
@@ -492,7 +496,7 @@ LCs "LC" = _ a:(LC)|..,__| _  { return a.join(' ') }
 // A single LC
 LC = Meta / Given / Environment / Declaration / Expression
   // Things it searches for and replaces up front
-  Meta = Putdown / Comment / StringLiteral / Shorthand 
+  Meta = Putdown / Comment / StringLiteral / Label / Ref / Shorthand 
   // Declarations
   Declaration = Declare / ForSome / Let 
   // Expressions
@@ -521,6 +525,13 @@ Comment = ( '%' / 'Comment'i ) __ a:StringLiteral
 // A string literal is anything enclosed in double quotes
 // Currently only used for comments
 StringLiteral = $('"' [^"]* '"') 
+// Labels
+Label = 'label'i _ [(\[{"] _ a:([^)\]}"]+) _ [)\]}"] 
+  { return `\\text{\\textcolor{grey}{${a.join('')}}}` }
+// Refs - generalization of LaTeX \ref{} command (including that syntax)
+Ref = a:RefLabel _ [(\[{"] _ b:([^)\]}"]+) _ [)\]}"] 
+      { return `\\text{\\textcolor{grey}{ ${a} ${b.join('')}}}` }
+  RefLabel = $('ref'i/'by'i) // TODO: move 'since' and 'because' here  
 // Shorthands are special symbols which are not allowed to be part
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
@@ -571,10 +582,10 @@ ForSome = body:Expression __ 'for'i __ 'some'i __ a:Symbol __ 'in'i __ b:Express
 // allow the special shortand `Let x∈A` since it is so common.            
 Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression 
           { return `${txt(a)}${b}\\in ${c}` } /
-      a:'Let'i __ b:SymbolSeq __ 'be' __ 'such' __ 'that' __ c:Expression 
-          { return `${txt(a)}${b}\\text{ be such that }${c}` } /
-      a:'Let'i __ b:SymbolSeq __ 'such'i __ 'that'i __ c:Expression
-          { return `${txt(a)}${b}\\text{ such that }${c}` }    /
+      a:'Let'i __ b:SymbolSeq __ 'be' __ 'such' __ 'that' // __ c:Expression 
+          { return `${txt(a)}${b}\\text{ be such that }` } /
+      a:'Let'i __ b:SymbolSeq __ 'such'i __ 'that'i // __ c:Expression
+          { return `${txt(a)}${b}\\text{ such that }` }    /
       a:'Let'i __ b:SymbolSeq { return `${txt(a)}${b}`       }
   // Comma separated symbols, numbers, and reserved words
   DeclareSeq = a:('cdot /' / Symbol / Number / ReservedWord)|1..,comma| 
