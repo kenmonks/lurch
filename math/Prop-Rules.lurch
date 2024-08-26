@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:2999/?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -18,7 +18,7 @@
             <div id="document"><h1>Math 299 Rules, Definitions, and Theorems</h1>
 <h3>Ken Monks - University of Scranton -&nbsp;Spring 2024</h3>
 <p>Welcome to Math 299.&nbsp; Below you will find some of the rules, definitions, theorems, and declarations that we use in the course.&nbsp; For more detail about these rules see the Course Lecture Notes on the Math 299 Home Page accessible via the Lurch <code>Help</code> menu at the top of the page.&nbsp; (<em>Note that some of the definitions below differ from what is in the lecture notes as they are still in the process of being updated to be consistent with the rules below</em>.)</p>
-<p>There are many ways to write the same definition, theorem, or rule in Lurch.&nbsp; For consistency most of the rules below use the same style that imitates the format used in many high school geometry textbooks.</p>
+<p>There are many ways to write the same definition, theorem, or rule in Lurch.&nbsp; For consistency most of the rules below use the same style that imitates the <em>Given-Conclude</em> format used in many high school geometry textbooks.</p>
 <p>&nbsp;</p></div>
         </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Filename:</td><td><tt>math/Intro.lurch</tt></td></tr><tr><td>Source:</td><td>the web</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div></div>
             <div id="document"><h1>Propositional Logic</h1>
@@ -69,7 +69,7 @@
 <div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
 <p><em>Given</em></p>
 <div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
-<p>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;" data-metadata_latex="&quot;V&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;" data-metadata_latex="&quot;V&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
 </div>
 <div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W&quot;" data-metadata_latex="&quot;W&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></p>
