@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://kenmonks.github.io/299-site/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -388,6 +388,5 @@
 <p><strong>Quadrant</strong> condition:&nbsp;<strong> </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If value(x,y,z)=value(x,y,w)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If value</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.625em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">x</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.05em;">z</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">=</span><span class="ML__text">value</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.625em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">x</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.03em;">w</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;w=z&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.03em;">w</span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.05em;">z</span></span></span></span></span>.</p>
 </div>
 <hr>
-<p><span style="color: rgb(53, 152, 219);"><strong>Example:</strong></span></p>
 <p><span style="color: rgb(53, 152, 219);">TODO: The challenge here is the combinatorial part: how to handle things like value(x,y,z) must be from a certain finite set, so that e.g. if a row contains 1,2,3 the remaining value must be 4 and not something else. Pigeonhole stuff.</span></p></div>
         
