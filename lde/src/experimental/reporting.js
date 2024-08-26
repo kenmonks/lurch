@@ -353,7 +353,7 @@ const format = (x,options,indentlevel=0) => {
       x.toPutdown(formatter(options), 
         text => /\n/.test( text )         || 
                 /^[ \t"]*$/.test( text )  ||
-                erase(text).length > 50  
+                erase(text).length > 120  
       ),indentlevel))
   } else if (typeof x === 'string') { 
     return indent(stringPen(x),indentlevel)

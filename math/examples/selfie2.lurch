@@ -1,0 +1,53 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:2999/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="settings" data-key="instantiateEverything" data-value-type="json">true</div></div>
+            <div id="document"><h2>Lurch allows implicit implications</h2>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare implies, star&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare </span><span class="ML__cmr">&rArr;</span><span class="ML__text"> and </span><span class="ML__cmr">⋆</span></span></span></span></span> to be a constant.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Implication introduction</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><em>Given</em></p>
+<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
+</div>
+</div>
+<p><em>Conclude <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W implies V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">&rArr;</span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></em></p>
+</div>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Implication elimination</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p><em>Given</em></p>
+<p><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W implies V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">&rArr;</span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></em></p>
+<p><em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></em></p>
+</div>
+<p><em>Conclude&nbsp;</em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
+</div>
+<p>(<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\Leftarrow&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&lArr;</span></span></span></span></span>)</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem with no <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\Rightarrow&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&rArr;</span></span></span></span></span>:&nbsp;</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If W star W, W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">⋆</span><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__text"> and </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom" title="Good work!" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:" data-validation_result="valid">
+<p><strong>Nonsense Rule with <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\Rightarrow&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&rArr;</span></span></span></span></span>:&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If W star W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">⋆</span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span>&nbsp; then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W implies V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">&rArr;</span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span><span class="lurch-atom-suffix"><span class="feedback-marker-valid">&nbsp;</span></span></span></p>
+</div>
+<div class="lurch-atom" title="Good work!" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:" data-validation_result="valid">
+<p><strong>Proof:</strong></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W star W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">⋆</span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></p>
+<div class="lurch-atom" title="Good work!" data-metadata_type="&quot;subproof&quot;" data-shell_title="" data-validation_result="valid">
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></p>
+<p><span class="lurch-atom" title="Good work!" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span><span class="lurch-atom-suffix"><span class="feedback-marker-valid">&nbsp;</span></span></span></p>
+</div>
+<p><span class="lurch-atom" title="Good work!" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W implies V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__cmr">&rArr;</span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span><span class="lurch-atom-suffix"><span class="feedback-marker-valid">&nbsp;</span></span></span></p>
+<p><strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></strong></p>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div>
+        
