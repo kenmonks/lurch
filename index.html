@@ -199,8 +199,9 @@
         <li><a href="#libraries">Rule Libraries</a></li>
         <li><a href="#contexts">Other Contexts</a></li>
         <li><a href="#assignments">Example Assignments</a></li>
-        <li><a href="#lurchforinstructors">Lurch for Instructors</a></li>
         <li><a href="#lurchforstudents">Lurch for Students</a></li>
+        <li><a href="#lurchforinstructors">Lurch for Instructors</a></li>
+        <li><a href="#getlurch">Customize this Site</a></li>
       </ul>
     </div>
     <div id="wrap">
@@ -354,12 +355,14 @@
                 <strong><a
                     href="instructor.html?load=math/examples/theory.lurch"
                     target="_blank">Validation in Lurch</a></strong>
-                - introduction to the Global $n$-compact validation algorithm used in this version of Lurch.
+                - introduction to the Global $n$-compact validation algorithm
+                used in this version of Lurch.
               </li>
               <li>
                 <strong><a href="lde/src/experimental/docs"
                     target="_blank">Validation Algorithm API docs</a></strong>
-                - the code documentation for the Global $n$-compact algorithm and supporting
+                - the source code documentation for the Global $n$-compact
+                algorithm and supporting
                 infrastructure
               </li>
               <li>
@@ -370,8 +373,8 @@
               </li>
               <li>
                 <strong><a href="https://github.com/kenmonks/299-site"
-                    target="_blank">Source Repo on Github</a></strong>
-                - the source code and content of this repository on Github
+                    target="_blank">Source Repo on GitHub</a></strong>
+                - the source code and content of this repository on GitHub
               </li>
             </ul>
             <li>
@@ -381,6 +384,13 @@
               &#8211; a quick reference showing how to type various math
               expressions in Lurch
             </li>
+            <li>
+              <strong><a href="media/Goals" target="_blank">Goals and
+                  Status</a></strong>
+              &#8211; a very short high level summary of the project's goal and
+              current status (right arrow to see status)
+            </li>
+
           </ul>
 
           <!-- ----------------------------------------------------- -->
@@ -695,7 +705,7 @@
 
           <h2 id="assignments">Example Assignments</h2>
           <div>
-            <p>
+            <p class='smallskip'>
               <strong><span style="font-size: 110%">Math 299 Spring 2024
                   Assignments</span></strong>
               &#8211; each link one opens a Lurch document containing a
@@ -708,6 +718,14 @@
               time on formal logic and more time on the later topics in the
               course (and perhaps add a few new ones).
             </p>
+            <p class='medskip'>The theorem numbers for the assigned problems
+              below refer to the following course lecture notes. These are not
+              fully updated to be consistent with the libraries used in the
+              assignments below and may be revised frequently.</p>
+            <p class='medskip'><a
+                href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf"
+                class='button' target="_blank" rel="noopener noreferrer">Lecture
+                Notes</a></p>
             <dl>
               <dt>
                 <a href="instructor.html?load=assignments/assignment-06.lurch"
@@ -1246,22 +1264,36 @@
             </dl>
           </div>
 
-          <h2 id="lurchforinstructors">Lurch for Instructors</h2>
-          <a href="" class="button"
-            onclick="window.open('instructor.html','target=_blank'); return false;">
-            Lurch</a>
-          &#8211; is a math word processor that can check your proofs! This
-          button will open a blank document with no rules or background
-          material in the instructor version of Lurch.
-
           <h2 id="lurchforstudents">Lurch for Students</h2>
           <a href="" class="button"
             onclick="openLurch('student.html'); return false;">
             Lurch</a>
           &#8211; This button will open a blank document with no rules or
           background material in the student version of Lurch. The only
-          difference is that the student version does not have the Instructor
-          menu.
+          difference is that the student version does not have the Table or
+          Instructor menus, and it will open in a restricted window useful for
+          testing.
+
+          <h2 id="lurchforinstructors">Lurch for Instructors</h2>
+          <a href="" class="button"
+            onclick="window.open('instructor.html','target=_blank'); return false;">
+            Lurch</a>
+          &#8211; This button will open a blank document with no rules or
+          background material in the instructor version of Lurch.
+
+          <h2 id="getlurch">Customize this Site</h2>
+          <p>Instructors who would like to customize this site for use in their own courses can do that easily by forking this repository on GitHub.
+            <ol>
+              <li>Sign into your account on Github (or create a free account).</li>
+              <li>Go to <a href="https://github.com/kenmonks/299-site/fork" target='_blank'><tt>github.com/kenmonks/299-site/fork</tt></a> and choose your account from the "Owner" dropdown.  You can also optionally change the repository name. Then click "Create fork"</a>.</li>
+              <li>Go to "<tt>https://github.com/<em>your_account</em>/<em>your_sitename</em>/settings/pages</tt>" where <tt><em>your_account</em></tt> is your GitHub account name and <tt><em>your_sitename</em></tt> is the name you chose for your site in the previous step.</li>
+              <li>Tell it to deploy from a branch, and select the branch "<tt>main</tt>" with the default "<tt>/(root)</tt>" folder.  Then click the "Save" button.</li>
+              <li>After a minute or so you should be able to access your site at "<tt>https://<em>your_account</em>.github.io/<em>your_sitename</em></tt>".</li>
+            </ol>
+          <p>You can then replace the "<tt>index.html</tt>" file and other content with whatever you want to customize the site for use in your course.  You will also be able to pull bug fixes and new features from my site in the future if you wish.</p>
+            
+          </p>
+
         </div>
         <!-- container -->
       </div>
