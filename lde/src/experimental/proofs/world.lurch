@@ -1,11 +1,11 @@
-Declare is, loves
+// Declare is, loves
 
 Rule {  If x is y, z loves y     z loves x }
 
-// Assume mocha is chocolate,
-// Gina loves chocolate
+// Assume mocha is chocolate
+// Assume Gina loves chocolate
 // Gina loves mocha
 
-Theorem: { If chocolate is chocolate, Gina loves chocolate   Gina loves chocolate }
+// Theorem: { If chocolate is chocolate, Gina loves chocolate   Gina loves chocolate }
 
-Gina loves chocolate
+// Gina loves chocolate

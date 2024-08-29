@@ -154,9 +154,11 @@
 <hr>
 <p>&nbsp;</p></div>
         </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Filename:</td><td><tt>math/Prop-Rules.lurch</tt></td></tr><tr><td>Source:</td><td>the web</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div></div>
-            <div id="document"><h1 style="text-align: center;">(Meta) True about Everything</h1>
-<h3 style="text-align: center;">Global <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span>-compact Validation in Lurch</h3>
+            <div id="document"><h1 style="text-align: left;">(Meta) True about Everything</h1>
+<h3 style="text-align: left;">Global <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span>-compact Validation in Lurch</h3>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
 <p><strong>Goals: </strong></p>
 <ol>
 <li>Proofs in <em>Lurch </em>should be natural.</li>
