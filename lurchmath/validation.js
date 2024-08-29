@@ -148,7 +148,7 @@ export const install = editor => {
 
     // Add menu item for toggling validation
     editor.ui.registry.addMenuItem( 'validate', {
-        text : 'Show/Hide feedback ✔︎',
+        text : 'Show/Hide validity ✔︎',
         icon : 'preview',
         tooltip : 'Run Lurch\'s checking algorithm on the document',
         shortcut : 'meta+0',
