@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:2999/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://kenmonks.github.io/299-site/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -226,7 +226,7 @@
 </div>
 <div>&nbsp;</div>
 <div><hr><br>
-<h2>Student demo</h2>
+<h2><span style="color: rgb(53, 152, 219);">Student demo</span></h2>
 <div>
 <ul>
 <li>Let's do an assigned student homework problem (<a href="https://kenmonks.github.io/299-site/">assignments are here</a>).</li>
@@ -235,7 +235,7 @@
 <div>&nbsp;</div>
 </div>
 <div><hr><br>
-<h2>Instructor demo</h2>
+<h2><span style="color: rgb(53, 152, 219);">Instructor demo</span></h2>
 <div>
 <ul>
 <li>Let's make a simple definition for "Linear" and create a homework assignment using it.</li>
