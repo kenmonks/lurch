@@ -415,6 +415,7 @@ export const install = editor => {
             editor.insertContent( allPreviewHTML )
             editor.undoManager.clear()
             editor.selection.setCursorLocation() // deselect new insertions
+            editor.getWin().scrollTo(0, 0) // scroll the window to the top
         }
     } )
 }
