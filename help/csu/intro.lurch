@@ -67,7 +67,7 @@
 <p>&nbsp;</p>
 <hr>
 <p>&nbsp;</p>
-<h2><span style="font-size: 18pt; color: rgb(53, 152, 219);">Goals</span></h2>
+<h2><span style="font-size: 18pt; color: rgb(53, 152, 219);">Project Goals</span></h2>
 <ul class="ul1">
 <li class="li1" style="font-size: 14pt;"><span class="s2" style="font-size: 14pt;">Word processor-like user interface</span>
 <ul class="ul1">
@@ -144,6 +144,7 @@
 <li style="font-size: 14pt;"><span style="font-size: 14pt;">paragraph level meaningful content</span></li>
 <li style="font-size: 14pt;"><span style="font-size: 14pt;">analogous to environments in LaTeX <br>(e.g., <span style="font-family: 'andale mono', monospace;">\begin{theorem} </span><span style="font-family: 'andale mono', monospace;">\end{theorem}</span>)</span></li>
 </ul>
+<p>&nbsp;</p>
 </div>
 <div><hr></div>
 <div>&nbsp;</div>
@@ -172,7 +173,7 @@
 <div style="padding-left: 40px;">
 <ul>
 <li>Which claims, theorems, and proofs in the are valid, invalid, and indeterminate?&nbsp;</li>
-<li>Annotates the document with green checks<span class="marker-checkmark" style="font-size: var(--base-font-size);">&nbsp;</span><span style="font-size: var(--base-font-size);">, red x's </span><span class="marker-redx" style="font-size: var(--base-font-size);">&nbsp;</span><span style="font-size: var(--base-font-size);"> , and yellow question marks</span><span class="marker-questionmark" style="font-size: var(--base-font-size);">&nbsp;</span><span style="font-size: var(--base-font-size);"> respectively</span></li>
+<li>Annotates the document with green checks<span class="marker-checkmark" style="font-size: var(--base-font-size);">&nbsp;</span><span style="font-size: var(--base-font-size);">, red x's </span><span class="marker-redx" style="font-size: var(--base-font-size);">&nbsp;</span><span style="font-size: var(--base-font-size);"> , and yellow question marks</span><span class="marker-questionmark" style="font-size: var(--base-font-size);">&nbsp;</span><span style="font-size: var(--base-font-size);"> respectively. (They love this!)</span></li>
 </ul>
 </div>
 <div style="padding-left: 40px;">&nbsp;</div>
