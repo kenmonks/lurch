@@ -89,7 +89,10 @@
 <hr>
 <p>&nbsp;</p>
 <p><img src="lurchlogo.png"></p>
+<p>(Joint with Nathan Carter, Bentley University)</p>
 <p>&nbsp;</p>
+<hr>
+<h2>&nbsp;</h2>
 <h2><span style="font-size: 18pt; color: rgb(53, 152, 219);">Math 299: Spring 2024</span></h2>
 <div>
 <div style="text-align: left;"><span style="font-size: 14pt;">Course materials and associated version of Lurch are available at</span></div>
@@ -128,7 +131,7 @@
 </div>
 <div><hr></div>
 <div>
-<p>&nbsp;</p>
+<p>Anything I type is meaningless!!</p>
 <h2><span style="color: rgb(53, 152, 219); font-size: 18pt;">Two Kinds of Meaningful Content</span></h2>
 <h2><span style="font-size: 14pt;"><strong>1. Expressions</strong></span></h2>
 <ul>
@@ -139,9 +142,8 @@
 <div>
 <ul>
 <li style="font-size: 14pt;"><span style="font-size: 14pt;">paragraph level meaningful content</span></li>
-<li style="font-size: 14pt;"><span style="font-size: 14pt;">analogous to environments in LaTeX <br>(e.g., <span style="font-family: 'andale mono', monospace;">\begin{theorem} \end{theorem}</span>)</span></li>
+<li style="font-size: 14pt;"><span style="font-size: 14pt;">analogous to environments in LaTeX <br>(e.g., <span style="font-family: 'andale mono', monospace;">\begin{theorem} </span><span style="font-family: 'andale mono', monospace;">\end{theorem}</span>)</span></li>
 </ul>
-<p style="text-align: left;">&nbsp;</p>
 </div>
 <div><hr></div>
 <div>&nbsp;</div>
