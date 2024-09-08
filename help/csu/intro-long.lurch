@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'https://kenmonks.github.io/299-site/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://kenmonks.github.io/lurch/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -115,7 +115,7 @@
 <div>
 <div><span style="font-size: 14pt;">My Math 299 materials and version of Lurch are available at</span></div>
 <div><span style="font-size: 14pt;">&nbsp;</span></div>
-<div style="text-align: center;"><span style="font-size: 18pt;"><a href="https://kenmonks.github.io/299-site/">kenmonks.github.io/299-site</a></span></div>
+<div style="text-align: center;"><span style="font-size: 18pt;"><a href="https://kenmonks.github.io/lurch/">kenmonks.github.io/lurch</a></span></div>
 <div style="text-align: left;">&nbsp;</div>
 <div style="text-align: left;"><span style="font-size: 14pt;">including</span>&nbsp;</div>
 <div>
@@ -203,7 +203,7 @@
 <li>What rules, facts, definitions, and tools are assumed in this document?</li>
 <li>Comprised of ordinary Lurch document content.</li>
 <li>Lurch has no context by default.</li>
-<li>See <a href="https://kenmonks.github.io/299-site/">Math 299 libraries</a>.</li>
+<li>See <a href="https://kenmonks.github.io/lurch/">Math 299 libraries</a>.</li>
 </ul>
 </div>
 <div style="padding-left: 40px;"><span style="font-size: 14pt;"><strong>2. Meaning</strong></span></div>
@@ -228,7 +228,7 @@
 <h2><span style="color: rgb(53, 152, 219);">Student demo</span></h2>
 <div>
 <ul>
-<li>Let's do an assigned student homework problem (<a href="https://kenmonks.github.io/299-site/">assignments are here</a>).</li>
+<li>Let's do an assigned student homework problem (<a href="https://kenmonks.github.io/lurch/">assignments are here</a>).</li>
 </ul>
 </div>
 <div>&nbsp;</div>

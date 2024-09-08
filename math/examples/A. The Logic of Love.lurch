@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'https://kenmonks.github.io/299-site/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://kenmonks.github.io/lurch/student.html?load=' + thisURL )
                 </script>
             </div>
         

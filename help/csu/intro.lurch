@@ -97,7 +97,7 @@
 <div>
 <div style="text-align: left;"><span style="font-size: 14pt;">Course materials and associated version of Lurch are available at</span></div>
 <div><span style="font-size: 14pt;">&nbsp;</span></div>
-<div style="text-align: center;"><span style="font-size: 18pt;"><a href="https://kenmonks.github.io/299-site/">kenmonks.github.io/299-site</a></span></div>
+<div style="text-align: center;"><span style="font-size: 18pt;"><a href="https://kenmonks.github.io/lurch/">kenmonks.github.io/lurch</a></span></div>
 <div style="text-align: left;">&nbsp;</div>
 <div>
 <p style="text-align: center;"><span style="font-size: 14pt;">(and I'm on sabbatical!)</span></p>
@@ -159,7 +159,7 @@
 <ul>
 <li>What rules, facts, definitions, and tools are available in this document?</li>
 <li>Lurch has no context by default.</li>
-<li>e.g. <a href="https://kenmonks.github.io/299-site/">Math 299 libraries</a>.</li>
+<li>e.g. <a href="https://kenmonks.github.io/lurch/">Math 299 libraries</a>.</li>
 </ul>
 </div>
 <div style="padding-left: 40px;"><span style="font-size: 14pt;"><strong>4. Meaning</strong></span></div>
@@ -183,7 +183,7 @@
 <h2><span style="color: rgb(53, 152, 219);">Student demo</span></h2>
 <div>
 <ul>
-<li>Let's do an assigned student homework problem (<a href="https://kenmonks.github.io/299-site/">assignments are here</a>).</li>
+<li>Let's do an assigned student homework problem (<a href="https://kenmonks.github.io/lurch/">assignments are here</a>).</li>
 </ul>
 </div>
 <div>&nbsp;</div>

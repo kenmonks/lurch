@@ -20,7 +20,7 @@
 <div style="text-align: left;">
 <h2>1. Environment types</h2>
 <ul>
-<li>Students working on an assignment given to them by the instructor such at those on the <a href="https://kenmonks.github.io/299-site">299-site welcome page</a> only need to know how to enter math expressions (by imitating and modifying what the instructor gave them) and (optionally, depending on the topic) a subproof environment.</li>
+<li>Students working on an assignment given to them by the instructor such at those on the <a href="https://kenmonks.github.io/lurch">lurch welcome page</a> only need to know how to enter math expressions (by imitating and modifying what the instructor gave them) and (optionally, depending on the topic) a subproof environment.</li>
 <li>Instructors who want to make assignments will generally need to enter and use the other environment types, Proofs, Subproofs, Rules, Premises, Theorems.&nbsp; They can be entered either from the menu or conveniently by pressing '\' (after a space).</li>
 <li>Depending on the css theme used they can be formatted or annotated in various ways.&nbsp;In the theme used for these documents they have different background colors. Rules:blue, Premises:orange, Theorems: grey, Proofs and Subproofs: white.</li>
 <li>We summarize them here.</li>

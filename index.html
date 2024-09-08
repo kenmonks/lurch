@@ -24,6 +24,9 @@
   <link
     href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
     rel="stylesheet" type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+    rel="stylesheet">
 
   <link rel="shortcut icon" href="media/favicon.svg" />
 
@@ -128,7 +131,7 @@
     #rightheader {
       font-family: monospace, Courier;
       color: #333;
-      margin-top: 1.2rem;
+      margin-top: 0; /* 1.2rem; */
       margin-left: auto;
       line-height: 1.2;
     }
@@ -183,6 +186,26 @@
       background-color: #bbd6fb;
       /* #b1cbfa;  */
       color: #0068c2;
+    }
+
+    .haiku {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .haiku p {
+      font-style: italic;
+      font-family: "Merriweather", Georgia, serif;
+    }
+
+    .haiku .attribution {
+      font-variant: small-caps;
+      font-size: 0.85em;
+      text-align: right;
+    }
+
+    .haiku .attribution span {
+      font-size: 0.75em; /* Adjust the size to match small caps */
     }
 
     #video-container {
@@ -244,7 +267,10 @@
                 justify-content: space-between;
                 padding-bottom: 2rem;
               ">
-            <h1 style="margin: 0; font-weight: bold">Lurch for Math 299</h1>
+            <div>  
+              <h1 style="margin: 0; font-weight: bold">Proof Verification with Lurch</h1>
+              <h2 style="margin: 1rem 0 0 0; font-weight: bold">Building the bridge to higher mathematics</h2>
+            </div>
             <div id="rightheader">
               <div>
                 <a href="mailto:monks@scranton.edu">monks@scranton.edu</a>
@@ -259,9 +285,20 @@
               </div>
             </div>
           </div>
+          <div class="haiku">
+            <p>
+              Is my proof correct?<br />
+              Lurch says it is not convinced.<br />
+              I need to say more.
+            </p>
+            <p class="attribution">
+              anonymous, circa <span>2024</span>
+            </p>
+          </div>
           <p>
             Lurch is a math editor that can check your proofs (coauthored with
-            <a ref="https://faculty.bentley.edu/profile/ncarter">Nathan
+            <a href="https://faculty.bentley.edu/profile/ncarter"
+              target="_blank">Nathan
               Carter</a>). Math 299 is a four credit undergraduate course for
             math and
             math education majors that is usually taken in the Spring of their
@@ -382,7 +419,7 @@
                 and other core utilties
               </li>
               <li>
-                <strong><a href="https://github.com/kenmonks/299-site"
+                <strong><a href="https://github.com/kenmonks/lurch"
                     target="_blank">Source Repo on GitHub</a></strong>
                 - the source code and content of this repository on GitHub
               </li>
@@ -1318,8 +1355,8 @@
           <ol>
             <li>Sign into your account on Github (or create a free account).
             </li>
-            <li>Go to <a href="https://github.com/kenmonks/299-site/fork"
-                target='_blank'><tt>github.com/kenmonks/299-site/fork</tt></a>
+            <li>Go to <a href="https://github.com/kenmonks/lurch/fork"
+                target='_blank'><tt>github.com/kenmonks/lurch/fork</tt></a>
               and choose your account from the "Owner" dropdown. You can also
               optionally change the repository name. Then click "Create
               fork"</a>.</li>
