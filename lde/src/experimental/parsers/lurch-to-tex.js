@@ -873,7 +873,7 @@ function peg$parse(input, options) {
   var peg$f44 = function(a, b, c) { return `${a}${txt(' '+b)}${c}` };
   var peg$f45 = function(a, b, c) { return `${a}${txt(' '+b)}${c}` };
   var peg$f46 = function(a, b, c) { return (b.length==4) 
-                  ? `${a}\\text{ ${b[0]} }${txt(b[2])}${c}`
+                  ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
                   : `${a}\\text{ ${b[0]} }${c}` };
   var peg$f47 = function(a) { return a.join('\\setminus ') };
   var peg$f48 = function(a) { return a.join('\\times ') };

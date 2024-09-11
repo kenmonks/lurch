@@ -272,7 +272,7 @@ body.shell-style-boxed {
   }
   /* If it is inside a wrapper shell, move the title left */
   [data-shell_title] [data-shell_title]::before {
-    left: -76pt;
+    left: -74pt;
   }
   /* Add a shell title for premises */
   [data-metadata_type='"premise"']::before {

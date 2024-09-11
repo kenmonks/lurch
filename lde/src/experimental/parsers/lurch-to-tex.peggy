@@ -688,7 +688,7 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                 { return `${a}${txt(' '+b)}${c}` }
   Is         = a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __/'are'__) c:RelArg
                 { return (b.length==4) 
-                  ? `${a}\\text{ ${b[0]} }${txt(b[2])}${c}`
+                  ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
                   : `${a}\\text{ ${b[0]} }${c}` }
 
 
