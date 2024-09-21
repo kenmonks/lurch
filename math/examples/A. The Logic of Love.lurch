@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'https://kenmonks.github.io/lurch/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -85,7 +85,7 @@
 <div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
 <p><em>Given</em></p>
 <div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
-<p>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;" data-metadata_latex="&quot;V&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;" data-metadata_latex="&quot;V&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span></p>
 </div>
 <div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Assume V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Assume </span><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W&quot;" data-metadata_latex="&quot;W&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span></p>
@@ -282,10 +282,10 @@
 </tbody>
 </table>
 </div>
-</div></div><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div></div>
+</div></div><div data-category="settings" data-key="shell style" data-value-type="json">"minimal"</div></div>
             <div id="document"><h1>The Logic of Love</h1>
 <p>In the&nbsp;<em>Logic of Love</em> soap opera, the main characters are Alice and Bob.&nbsp; It's a feel-good show, so all of the characters love themselves and always tell the truth.&nbsp; &nbsp;In one episode Bob tells Alice that he loves everyone that she does.&nbsp; Prove that Bob loves Alice.</p>
-<p><span style="font-size: 10pt;"><strong>Instructions</strong><em>: For this problem we define Alice, Bob, and loves </em><em>to be constants.You can only use the rules shown with the </em><code>Show/hide context</code><em> menu to justify your proof. You cannot add any rules of your own, and&nbsp; you can only assume things that are explicitly given in the problem statement.&nbsp; It is up to you to decide what you are allowed to assume and what you need to prove.&nbsp; For this proof you do have to get all green checks from Lurch in order to get credit, assuming your proof does prove what is asked.</em></span></p>
+<p><span style="font-size: 10pt;"><strong>Instructions</strong><em>: For this problem we <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;define Alice, Bob, loves&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">define Alice, Bob, and loves</span></span></span></span></span> </em><em>to be constants.You can only use the rules shown with the </em><code>Show/hide context</code><em> menu to justify your proof. You cannot add any rules of your own, and&nbsp; you can only assume things that are explicitly given in the problem statement.&nbsp; It is up to you to decide what you are allowed to assume and what you need to prove.&nbsp; For this proof you do have to get all green checks from Lurch in order to get credit, assuming your proof does prove what is asked.</em></span></p>
 <div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
 <p><strong>Proof:</strong></p>
 <p>&nbsp;</p>
