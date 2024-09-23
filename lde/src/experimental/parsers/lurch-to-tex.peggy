@@ -686,7 +686,14 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                 { return `${a}${txt(' '+b)}${c}` }
   Fears      = a:RelArg _ b:('fears'/'fear')_x c:RelArg
                 { return `${a}${txt(' '+b)}${c}` }
-  Is         = a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __/'are'__) c:RelArg
+  Is         = a:RelArg _ b:('is' __ 'not' __ 'an' __ /
+                             'is' __ 'not' __ 'a'__   /
+                             'is' __ 'not' __         /
+                             'are'__ 'not' __ ) c:RelArg
+                { return (b.length==6) 
+                  ? `${a}\\text{ ${b[0]} not ${b[2]} }${c}`
+                  : `${a}\\text{ ${b[0]} not }${c}` } /
+               a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __/'are'__) c:RelArg
                 { return (b.length==4) 
                   ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
                   : `${a}\\text{ ${b[0]} }${c}` }
@@ -884,6 +891,13 @@ Prefix =  // LDE EFA's first
           // allow 'set' to be case insensitive
           'set('i _ a:ExpressionSeq _ ')'  
             { return `\\left\\{\\,${a}\\,\\right\\}` } /
+          // allow 'paren' to wrap an expression in visual parens with no
+          // meaning change
+          'paren('i _ b:Expression _')'  
+            { return `\\left(${b}\\right)` } /
+          // format sqrt appropriately
+          'sqrt('i _ a:ExpressionSeq _ ')'  
+            { return `\\sqrt{${a}}` } /
           // allow 'class' to be case insensitive (one or two args)
           'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
           'class('i _ a:Expression comma b:Expression')'  

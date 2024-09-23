@@ -551,7 +551,12 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                 { return lispBinary('loves',a,b) }
   Fears      = a:RelArg _('fears'/'fear')_x b:RelArg
                 { return lispBinary('fears',a,b) }
-  Is         = a:RelArg _('is' __ 'an' __/'is' __ 'a'__/'is'__/'are'__) b:RelArg
+  Is         = a:RelArg _('is' __ 'not' __ 'an' __ /
+                          'is' __ 'not' __ 'a'__   /
+                          'is' __ 'not' __         /
+                          'are'__ 'not' __ ) b:RelArg
+                { return `(¬ ${lispBinary('is',a,b)})` } /
+               a:RelArg _('is' __ 'an' __/'is' __ 'a'__/'is'__/'are'__) b:RelArg
                 { return lispBinary('is',a,b) }
 
 
@@ -735,6 +740,9 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
               // allow 'set' to be case insensitive
               'set('i _ b:ExpressionSeq _')'  
                 { return `(set ${b})` } /
+              // allow 'paren' to wrap an expression in visual parens with no
+              // meaning change
+              'paren('i _ b:Expression _')'  { return b } /
               // allow 'class' to be case insensitive
               'class('i _ b:ExpressionSeq _')'  
                 { return `(class ${b})` } /
