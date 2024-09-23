@@ -720,26 +720,53 @@ export const processShorthands = L => {
     return 
   } )
 
-  // add the previous sibling, if present, to the body of the next declaration.
+  // Add the previous sibling, if present, to the body of the next declaration.
+  // If the previous sibling is a continuation (the last in a comma separated
+  // list of claims) then do this for the entire sequence. Note that if the
+  // some> is preceded by an if-then sequence the if-then will be converted to
+  // an environment first, so that the previous element will just be a single
+  // LC.
+  //
   // There are two possible cases to check for, depending if the declaration
   // already has an environment as a body or not (due to the `for some x,y in A`
   // shortcut). Note that this should not appear in the user's document if it is
   // not before a ForSome declaration whose body is either empty (i.e., its last
   // child is the symbol "LDE empty") or an environment containing one or more
   // `x∈A` expressions, because the UI doesn't allow it to be constructed
-  // otherwise, so we don't check for that.
-  processSymbol( 'some>' ,  m => { 
-    let prev = m.previousSibling()
+  // otherwise, so we don't check for that. 
+  processSymbol( 'some>' ,  m => {
     // if it doesn't have a previous sibling, don't do anything.
+    let prev = m.previousSibling()
     if (!prev) return
+    // the UI can only construct some> if it's followed by a symbol
     const dec = m.nextSibling()
-    // if its body is already an environment, just push the prev onto it
-    if (dec.body() instanceof Environment) {
-      dec.body().pushChild(prev)
-    // otherwise, make prev the body
-    } else {
+    // base case: if the body isn't an environment, and the previous sibling is not a continuation, just make it the body as expected
+    if (!(dec.body() instanceof Environment) && 
+        !prev.previousSibling()?.continued ) {
       dec.popChild() // remove the placeholder
-      dec.pushChild(prev) 
+      dec.pushChild(prev) // replace with the prev expression
+    // otherwise
+    } else { 
+      // if the body isn't an environment, make it one
+      if (!(dec.body() instanceof Environment)) {
+        dec.popChild() // remove the placeholder
+        dec.pushChild(new Environment()) 
+      } 
+      // then unshift the prev sequence onto it
+      while (prev) {
+        // write('prev is')
+        // write(prev)
+        dec.body().unshiftChild(prev)
+        // write('new dec is')
+        // write(dec)
+        // write('new dec prev sibling is')
+        // write(dec.previousSibling())
+        // write('and it is')
+        // write(dec.previousSibling()?.continued)
+        prev = (m.previousSibling()?.continued) ? m.previousSibling() : undefined
+        // write('new prev is')
+        // write(prev)
+      }
     }
     // either way, prev should no longer be where it was, so just get rid of the some>
     m.remove()
