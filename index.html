@@ -76,7 +76,7 @@
   </script>
   <script>
     window.onload = function () {
-      document.querySelectorAll("#leftnav a").forEach((anchor) => {
+      document.querySelectorAll("#leftnav a:not(:first-of-type)").forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
           const targetId = this.getAttribute("href").substring(1);
@@ -225,8 +225,9 @@
   <div id="top"></div>
   <div id="pagerow">
     <div id="leftnav">
+      <a href="index.html">
       <img src="lurchlogo.png" style="margin: 0px; border-radius: 5px"
-        width="100%" />
+        width="100%" /></a>
       <ul>
         <li><a href="#top">Home</a></li>
         <li><a href="#documentation">Documentation</a></li>
@@ -239,26 +240,6 @@
       </ul>
     </div>
     <div id="wrap">
-      <!--  <div id="header-block">
-        <div class="container">
-          <nav class="navbar" role="navigation">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="/">
-                <div id="top-logo">
-                  <img src="lurchlogo.png" style="margin-left: 10px" width="100%" />
-                  <h3>for Math 299</h3>
-                </div>
-              </a>
-
-              <div id="rightheader">
-                <div><a href='mailto:monks@scranton.edu'>monks@scranton.edu</a></div>
-                <div><a href='https://monks.scranton.edu' target="_blank">monks.scranton.edu</a></div>
-                <div><a href='https://proveitmath.org' target="_blank">proveitmath.org</a></div>
-              </div>
-            </div>
-        </div>
-        </nav>
-      </div> -->
 
       <div id="content-block">
         <div class="container">
@@ -321,7 +302,7 @@
               </li>
               <li>
                 <strong><a href="student.html?load=help/proofs-worksheet.lurch"
-                    target="_blank">2. Doing Proofs in Lurch</a></strong>&#8211;
+                    target="_blank">2. Doing Proofs in Lurch</a></strong> &#8211;
                 introduction to proofs in Lurch (<a
                   href="student.html?load=help/proofs-worksheet-solns.lurch"
                   target="_blank">solutions</a>)
@@ -329,7 +310,7 @@
               <li>
                 <strong><a
                     href="instructor.html?load=help/instructors-worksheet.lurch"
-                    target="_blank">3. Lurch for instructors</a></strong>&#8211;
+                    target="_blank">3. Lurch for instructors</a></strong> &#8211;
                 additional features of Lurch for instructors
               </li>
             </ul>
@@ -361,6 +342,10 @@
                   - a proof that the composition of continuous functions is
                   continuous in Topology. (spoiler alert: this is the solution
                   to part D of the Final Exam below)
+                </li>
+                <li>
+                  <strong><a href="100.html" target="_blank">100 Famous Theorems Challenge!</a>
+                  </strong> - Lurch's status in verifying the proofs of theorems on the 100 famous theorems challenge list.  Game on!
                 </li>
               </ul>
             </li>
