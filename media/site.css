@@ -1,0 +1,188 @@
+/* The css for the pages on this site */
+
+.pagerow {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+#wrap {
+  width: fit-content;
+}
+
+.container {
+  margin-left: 221px;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.container .navbar-header {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+}
+
+dt {
+  font-weight: normal;
+}
+
+dt a {
+  font-weight: bold;
+  padding-right: 1rem;
+}
+
+dd {
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+}
+
+#content-block code {
+  background: #e7f3fd;
+  font-size: 110%;
+}
+
+#rightheader {
+  font-family: monospace, Courier;
+  color: #333;
+  margin-top: 0;
+  margin-left: auto;
+  line-height: 1.2;
+}
+
+#rightheader div {
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+#content-block h1#title {
+  margin: 0;
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+#content-block h2#subtitle {
+  margin: 1rem 0 0 0;
+  /* font-weight: bold; */
+}
+
+.thmlist strong {
+  padding-right: 1rem;
+}
+
+#leftnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100%;
+  background-color: #101B27;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+#leftnav ul {
+  margin-top: 1rem;
+  border-top: #bbd6fb 1px solid;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: #bbd6fb 1px solid;
+}
+
+#leftnav li {
+  display: block;
+  padding: 5px 5px;
+}
+
+#leftnav a,
+#leftnav a:visited {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+  color: #5DA9E9;
+}
+
+#leftnav li:hover,
+#leftnav li:hover a {
+  background-color: #bbd6fb;
+  color: #0068c2;
+}
+
+.haiku {
+  text-align: center;
+  width: 50%;
+  margin: 40px auto;
+}
+
+.haiku p {
+  font-style: italic;
+  font-family: "Merriweather", Georgia, serif;
+}
+
+.haiku .attribution {
+  /* font-variant: small-caps; */
+  font-style: normal;
+  font-size: 0.85em;
+  text-align: right;
+}
+
+.haiku .attribution span {
+  /* Adjust the size to match small caps */
+  font-size: 0.75em;
+}
+
+#video-container {
+  width: 75%;
+  margin: 0 auto;
+}
+
+#video-container video {
+  width: 100%;
+  height: auto;
+}
+
+#wrapboard {
+  display: flex;
+}
+
+#scoreboard {
+  background-color: whitesmoke;
+  padding: 20px 40px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  width: auto;
+  display: inline-block;
+  margin: 0 auto 2rem;
+}
+
+#checklist td:first-child,
+.question-mark,
+.checkmark {
+  font-family: "Lucida Grande";
+  font-weight: bold;
+  color: #d8b400;
+  text-align: center;
+}
+
+#checklist td.done,
+.checkmark {
+  color: #4caf50
+}
+
+#checklist tbody tr:hover {
+  background-color: #bbd6fb;
+  color: #0068c2;
+}
+
+#checklist tbody tr[data-href]:hover {
+  cursor: pointer;
+}

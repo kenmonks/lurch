@@ -20,6 +20,7 @@
     href="https://monks.scranton.edu/wp-content/themes/Monks/social-buttons-3.css" />
   <link rel="stylesheet"
     href="https://monks.scranton.edu/wp-content/themes/Monks/style.css" />
+  <link rel="stylesheet" href="media/site.css" />
 
   <link
     href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
@@ -67,7 +68,7 @@
   </script>
   <script>
     window.onload = function () {
-      document.querySelectorAll("#leftnav a:not(:first-of-type)").forEach((anchor) => {
+      document.querySelectorAll("#leftnav li a").forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault()
           const targetId = this.getAttribute("href").substring(1);
@@ -92,184 +93,13 @@
       })
     })
   </script>
-
-  <style>
-    .pagerow {
-      display: flex;
-      flex-direction: row;
-      height: 100%;
-      width: 100%;
-    }
-
-    .container {
-      margin-left: 221px;
-      margin-right: auto;
-      padding-left: 20px;
-      padding-right: 10px;
-    }
-
-    .container .navbar-header {
-      width: 100%;
-      display: flex;
-      justify-content: left;
-    }
-
-    dt {
-      font-weight: normal;
-    }
-
-    dt a {
-      font-weight: bold;
-      padding-right: 1rem;
-    }
-
-    dd {
-      margin-bottom: 0.5rem;
-      margin-left: 1rem;
-    }
-
-    #content-block code {
-      background: #e7f3fd;
-      font-size: 110%;
-    }
-
-    #rightheader {
-      font-family: monospace, Courier;
-      color: #333;
-      margin-top: 0;
-      margin-left: auto;
-      line-height: 1.2;
-    }
-
-    #rightheader div {
-      flex-direction: column;
-      align-items: flex-end;
-      text-align: left;
-      margin: 0;
-      padding: 0;
-    }
-
-    .thmlist strong {
-      padding-right: 1rem;
-    }
-
-    #leftnav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 220px;
-      height: 100%;
-      background-color: #333;
-      color: white;
-      padding: 20px;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-
-    #leftnav ul {
-      margin-top: 1rem;
-      border-top: #bbd6fb 1px solid;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      border-bottom: #bbd6fb 1px solid;
-    }
-
-    #leftnav li {
-      display: block;
-      padding: 5px 5px;
-    }
-
-    #leftnav a {
-      display: block;
-      width: 100%;
-      text-decoration: none;
-      box-sizing: border-box;
-    }
-
-    #leftnav li:hover,
-    #leftnav li:hover a {
-      background-color: #bbd6fb;
-      /* #b1cbfa;  */
-      color: #0068c2;
-    }
-
-    .haiku {
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    .haiku p {
-      font-style: italic;
-      font-family: "Merriweather", Georgia, serif;
-    }
-
-    .haiku .attribution {
-      font-variant: small-caps;
-      font-size: 0.85em;
-      text-align: right;
-    }
-
-    .haiku .attribution span {
-      /* Adjust the size to match small caps */
-      font-size: 0.75em;
-    }
-
-    #video-container {
-      width: 75%;
-      margin: 0 auto;
-    }
-
-    #video-container video {
-      width: 100%;
-      height: auto;
-    }
-
-    #wrapboard { display: flex; }
-    #scoreboard {
-      /* background-color: #333; */
-      background-color: whitesmoke;
-      /* color: white; */
-      padding: 20px 40px;
-      border-radius: 10px;
-      font-size: 1.5rem;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-      width: auto;
-      display: inline-block;
-      margin: 0 auto 2rem;
-    }
-
-    #checklist td:first-child,
-    .question-mark,
-    .checkmark {
-      font-family: "Lucida Grande";
-      font-weight: bold;
-      color: #d8b400;
-      text-align: center;
-    }
-
-    #checklist td.done,
-    .checkmark {
-      color: #4caf50
-    }
-
-    #checklist tbody tr:hover {
-      background-color: #bbd6fb;
-      /* #b1cbfa;  */
-      color: #0068c2;
-    }
-
-    #checklist tbody tr[data-href]:hover {
-      cursor: pointer;
-    }
-  </style>
 </head>
 
 <body>
   <div id="top"></div>
   <div id="pagerow">
     <div id="leftnav">
-      <a href="index.html">
+      <a href="/">
         <img src="lurchlogo.png" style="margin: 0px; border-radius: 5px"
           width="100%" /></a>
       <ul>
@@ -288,12 +118,12 @@
                 padding-bottom: 2rem;
               ">
             <div>
-              <h1 style="margin: 0; font-weight: bold">100 Theorems vs. Lurch
+              <h1 id="title">100 Theorems in Lurch
               </h1>
             </div>
             <div id="rightheader">
               <div>
-                <a href="mailto:monks@scranton.edu">monks@scranton.edu</a>
+                <a href="mailto:monks@scranton.edu">Ken Monks</a>
               </div>
               <div>
                 <a href="https://monks.scranton.edu"
@@ -329,7 +159,7 @@
             proof of the theorem in a textbook or other valid source can certify
             that this criteria has been met.</p>
 
-            <h2 id="status">100 Theorem Checklist</h2>
+          <h2 id="status">100 Theorem Checklist</h2>
 
           <p>The following table is reproduced from <a
               href="http://web.archive.org/web/20080105074243/http://personal.stevens.edu/~nkahl/Top100Theorems.html">here</a>
