@@ -65,9 +65,15 @@ dd {
   font-size: 2.5rem;
 }
 
+/* the h2 elements pointed to by the nav menu */
+#content-block h2 {
+  margin: 2em 0 1em;
+  font-weight: bold;
+}
+
 #content-block h2#subtitle {
   margin: 1rem 0 0 0;
-  /* font-weight: bold; */
+  font-weight: normal;
 }
 
 .thmlist strong {
@@ -185,4 +191,29 @@ dd {
 
 #checklist tbody tr[data-href]:hover {
   cursor: pointer;
+}
+
+#content-block table#checklist {
+  margin-bottom: 4rem;
+}
+
+#footer-block {
+  background: none;
+  color: black;
+  text-align: left;
+  border-top: #888 1px solid;
+  line-height: normal;
+  padding: 1rem;
+}
+
+#footer-block a {
+  color: #5DA9E9;
+}
+
+#footer-block div #lurch-footer {
+  text-align: center;
+}
+
+#footer-block div #facebook-footer {
+  text-align: right;
 }
