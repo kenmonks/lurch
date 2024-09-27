@@ -11,6 +11,7 @@ node_modules/
 initproofs.js
 
 # ignore the following folders from math299
+/mystuff
 /math299
 /pima
 /cicm
