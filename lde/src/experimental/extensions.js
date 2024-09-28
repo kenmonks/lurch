@@ -301,8 +301,8 @@ LogicConcept.prototype.declarations = function ( onlywithbodies ) {
  * 
  * @memberof Extensions
  */
-LogicConcept.prototype.Declares = function () {
-  return [...this.descendantsSatisfyingIterator( x => x.isA('Declare') )]
+LogicConcept.prototype.getDeclares = function () {
+  return this.Declares ??= [...this.descendantsSatisfyingIterator( x => x.isA('Declare') )]
 }
 
 /** 

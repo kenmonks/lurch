@@ -111,12 +111,12 @@ const addSystemDeclarations = doc => {
 
 /** Move `Declare` declarations to the top of the document. */
 const moveDeclaresToTop = doc => {
-  doc.Declares().reverse().forEach( dec => {
-    if (dec.body()) { 
-      write(dec)
-      console.log(dec.body())
-      // throw new Error('Global constant declarations cannot have a body.')
-    }
+  doc.getDeclares().reverse().forEach( dec => {
+    // if (dec.body()) { 
+    //   write(dec)
+    //   console.log(dec.body())
+    //   // throw new Error('Global constant declarations cannot have a body.')
+    // }
     dec.remove()
   doc.unshiftChild(dec)
 })
@@ -487,7 +487,7 @@ const resetComputedAttributes = doc => {
  */
 const markDeclaredSymbols = ( doc, target=doc ) => {
   // fetch all of the declarations
-  let Declares = doc.Declares()
+  let Declares = doc.getDeclares()
   // fetch all of the symbols
   let symbols = target.descendantsSatisfying( x => x instanceof LurchSymbol )
   // for each one, see if it is in the scope of any Declare declaration of that symbol
