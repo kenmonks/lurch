@@ -155,7 +155,7 @@ return doc
  * accessibilty in that situation.
  */
 const processTheorems = doc => {
-  [ ...doc.descendantsSatisfyingIterator( x => x.isA('Theorem') ) ].forEach( 
+  doc.getTheorems().forEach( 
     thm => {
       // to make this idempotent, check if the rule copy is already there
       if ( thm.nextSibling()?.userRule ) { return }
@@ -252,7 +252,7 @@ const processBindings = doc => {
  */
 const processRules = doc => {
   // get all of the Rules
-  [...doc.descendantsSatisfyingIterator(x=>x.isA('Rule'))].forEach( f => {
+  doc.getRules().forEach( f => {
     // check if f is not an Environment, or is a Let-environment, and throw
     // an error either way
     if (!f instanceof Environment || f.isALetEnvironment() )
@@ -297,8 +297,7 @@ const assignProperNames = doc => {
   const metavariable = "LDE MV"
   
   // get the declarations with a body (hence the 'true') which is an expression
-  let declarations = doc.declarations(true)//.filter( x => 
-    // x.body() instanceof Expression)
+  let declarations = doc.declarations(true)
   
   // rename all of the declared symbols with body that aren't metavars
   declarations.forEach( decl => {

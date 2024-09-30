@@ -126,7 +126,19 @@ const timer = (f,msg='') => {
   console.log(`${msg} ${(Date.now()-start)} ms`)
 }
 
+/** 
+ * Report the time it took to execute function `f`, passed as an argument. 
+ */
+const profile = (f,name) => {
+  if (!Accumulator[name]) Accumulator[name] = { count: 0, time:0 }
+  let start = Date.now()
+  const ans = f()
+  Accumulator[name].count++
+  Accumulator[name].time += Date.now()-start
+  return ans
+}
+
 export default {
   commonInitialSlice, checkExtension, checkFolder, tab, indent, 
-  lineNum, subscript, rgb2hex, msToTime, timer
+  lineNum, subscript, rgb2hex, msToTime, timer, profile
 }

@@ -141,6 +141,7 @@ import { LurchOptions } from './lurch-options.js'
 //
 const instantiation = 'LDE CI'
 const metavariable  = 'LDE MV'
+const EFA  = 'LDE EFA'
 
 // Debug is a global boolean
 const time = (description) => { if (Debug) console.time(description) }
@@ -181,7 +182,7 @@ const timeEnd = (description) => { if (Debug) console.timeEnd(description) }
  * @param {Environment} target - the inference to validate
  */
 const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen ) => {
-  
+
   // if the target is the full document, check if the document contains anything
   // marked with attribute 'target:true', and if so make the first occurrence of
   // that thing the target
@@ -966,7 +967,7 @@ const processCases = doc => {
  * Find all of the Rules that have a conclusion that is a single metavariable and only appears in the Rule as a single metavariable outermost expression (i.e., not contained in any other expression).  This is called a _caselike_ rule. 
  */
 const getCaselikeRules = doc => {
-  return doc.Rules().filter( rule => {
+  return doc.getRules().filter( rule => {
     const U = rule.lastChild() 
     if (!U.isA(metavariable)) return false
     const others = rule.descendantsSatisfying( x => x.equals(U) )
@@ -1173,6 +1174,7 @@ const instantiate = doc => {
       // mark it as finished.
       f.finished = true
     })
+
     // increment the pass number
     n++
     // finally, get any unfinished formulas for the next pass
@@ -1246,7 +1248,9 @@ const getUserPropositions = doc => {
  // TODO: Add to Problem class and Matching as needed. We assume the bodies of
  //       ForSomes are expressions for now.
 const matchPropositions = (p, e) => {
-  // if they are both Expressions proceed as usual.
+  // fast dumb matching check
+  if (cantMatch(p,e)) { return [ ] }
+  // now use the real deal
   if (p instanceof Expression && e instanceof Expression) {
     return Array.from(new Problem(p, e).solutions())
     // if they are declarations that declare the same number of symbols ...
@@ -1266,6 +1270,114 @@ const matchPropositions = (p, e) => {
   return []
 }
 
+/*
+ * Dumb Matching 
+ *
+ * Quickly eliminate pairs that can't match by signature or type.
+ * Returns true if the pair is a dumb Match, otherwise they can't possibly match
+ * 
+ */
+const cantMatch = (p,e) => {
+
+  // local utility
+  const isEFA = x => { 
+    return ((x instanceof Application) && 
+            x.child(0) instanceof LurchSymbol &&
+            x.child(0).text() === EFA)
+  }
+  
+  // Case 0: If p is an EFA or metavariable, it can match
+  if (isEFA(p) || p.isA(metavariable)) return false
+
+  // Case 1: p is a constant, so e has to match it
+  if (p.constant &&
+      !(e instanceof LurchSymbol && e.text()===p.text())) return true
+  
+  // Case 2: p is not a Symbol or EFA, so it has at least one child, and has a
+  // different number of children than e    
+  if (p.numChildren()!==e.numChildren()) return true
+
+  // Case 3: p is compound and e has the wrong type 
+  if (((p instanceof Application) && !(e instanceof Application)) ||
+      ((p instanceof Declaration) && !(e instanceof Declaration)) ||
+      ((p instanceof BindingExpression) && !(e instanceof BindingExpression)) ) return true
+
+  // Case 4: p is compound and e has the same class and the same number of
+  // children, but some corresponding pair of kids can't match
+  if ( p.children().some( (kid,k) => cantMatch(kid,e.child(k)) )
+     ) return true
+
+  // if it hasn't been eliminated by one of these cases, go ahead and match it
+  return false
+
+  // // p is a non-constant symbol (a metavar) or an EFA, e matches it
+  // if (p.isA(metavariable)) {
+  //   // console.log(`p is a metavariable, so ok`)
+  //   return true
+  // }
+  // if (isEFA(p)) {
+  //   // console.log(`p is an EFA, so ok`)
+  //   return true
+  // }
+
+  // // if p is a constant Symbol then e has to equal it
+  // if (p instanceof LurchSymbol && p.constant && 
+  //   e instanceof LurchSymbol && p.text()===e.text()) {
+  //     // console.log(`p is a constant and e is equal to it, so ok`)
+  //     return true
+  // }
+    
+  // // if p is a Symbol but not constant then e has to be a Symbol 
+  // // TODO:
+  // // it usually has to match, but I'm not sure what has to be done for bound
+  // // variables which are constantly being renamed
+  // if (p instanceof LurchSymbol && !(p.constant) && e instanceof LurchSymbol) {
+  //     // console.log(`p is a Symbol that is not a constant and e is a Symbol, so ok`)
+  //   return true
+  // }
+
+  // // if p is an Application, Declaration, or Binding then e has to be the same thing
+  // if ((p instanceof Application && e instanceof Application) || 
+  //     (p instanceof Declaration && e instanceof Declaration) ||
+  //    ( p instanceof BindingExpression && e instanceof BindingExpression))  {
+  //   // console.log(`p and e are both the same non-Symbol type...`)
+  //   // in every case it has to have the same number of children, and they all have
+  //   // to dumbMatch their corresponding partner
+  //   if (p.numChildren()===e.numChildren()) {
+  //     // console.log(`..they have the same number of children...`)
+  //     if (p.children().every( (kid,k)=>dumbMatch(p.child(k),e.child(k)))) {
+  //       // console.log(`..and the corresponding kids dumbMatch, so ok.`)
+  //       return true
+  //     } 
+  //   }
+  // }  
+  
+  // // otherwise let it run the Matching Package in case we missed something
+  // return false
+
+  // return p.isA(metavariable) || isEFA(p) ||
+
+  // // if p is a constant Symbol then e has to equal it
+  // (p instanceof LurchSymbol && p.constant && 
+  //  e instanceof LurchSymbol && p.equals(e)) ||
+
+  // // if p is a Symbol but not constant then e has to be a Symbol 
+  // // TODO:
+  // // it usually has to match, but I'm not sure what has to be done for bound
+  // // variables which are constantly being renamed
+  // (p instanceof LurchSymbol && !(p.constant) && e instanceof LurchSymbol) ||
+
+  // // if p is an Application, Declaration, or Binding then e has to be the same thing
+  // (((p instanceof Application && e instanceof Application) || 
+  //   (p instanceof Declaration && e instanceof Declaration) ||
+  //   (p instanceof BindingExpression && e instanceof BindingExpression)
+  //  ) &&
+  //  // in every case it has to have the same number of children, and they all have
+  //  // to dumbMatch their corresponding partner
+  //  p.numChildren()===e.numChildren() &&
+  //  p.children().every( (kid,k)=>dumbMatch(p.child(k),e.child(k))))
+
+}
 
 /**
  * Many of the tools that work with $n$-compact validation (including the
@@ -1303,11 +1415,10 @@ const insertInstantiation = ( inst, formula, creator ) => {
       inst = new Environment(inst)
       // and it can be ignored as well
       inst.ignore=true
-      // inst.makeIntoA('Inst')  // do we need this?
     }
 
     // it might contain a Let which was instantiated by some other
-    // statment, so we might have to add the tickmarks.
+    // statement, so we might have to add the tickmarks.
     //
     // Note: we had to check that in a rule like :{:{:Let(x) (@ P
     //       x)} (@ P y)} that it doesn't instantiate (@ P y) first
@@ -1318,13 +1429,14 @@ const insertInstantiation = ( inst, formula, creator ) => {
     //       :Let(z) Q(z) } instead of just ∀y,Q(y). 
     //
     // TODO: does this have to be done before inserting it?
+    // Ans: I tried that and it works, but it's slightly slower for some reason.
     assignProperNames(inst)
 
     // insert it after the formula, the order doesn't matter
     inst.insertAfter(formula)
 
     // and mark the declared constants in the instantiation
-    markDeclaredSymbols(inst.root(), inst)
+    markDeclaredSymbols(inst.root(), inst) // Can this be removed?
 
     // check if this instantiation should be rejected because it contains a
     // declaration that is declaring a constant or a declaration declaring more than

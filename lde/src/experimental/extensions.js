@@ -298,20 +298,42 @@ LogicConcept.prototype.declarations = function ( onlywithbodies ) {
 
 /** 
  * Compute the array of all Declare's in this LC. 
- * 
+ *
+ * Note that a Declare cannot be produced during instantiation because we assume
+ * that they are global, and therefore declared at the top level of the
+ * document, never inside a Rule. So we can cache these.
+ *
  * @memberof Extensions
  */
 LogicConcept.prototype.getDeclares = function () {
-  return this.Declares ??= [...this.descendantsSatisfyingIterator( x => x.isA('Declare') )]
+  return this.Declares ??= 
+    [...this.descendantsSatisfyingIterator( x => x.isA('Declare') )]
 }
 
 /** 
  * Compute the array of all Rule's in this LC. 
- * 
+ *
+ * Note that a Rule cannot be produced during instantiation.  It must be present
+ * to begin with or created when processing Theorems. So we can cache these.
+ *
  * @memberof Extensions
  */
-LogicConcept.prototype.Rules = function () {
-  return [...this.descendantsSatisfyingIterator( x => x.isA('Rule') )]
+LogicConcept.prototype.getRules = function () {
+  return this.Rules ??= 
+    [...this.descendantsSatisfyingIterator( x => x.isA('Rule') )]
+}
+
+/** 
+ * Compute the array of all Rule's in this LC. 
+ *
+ * Note that a Theorem cannot be produced during instantiation.  It must be present
+ * to begin with. So we can cache these.
+ *
+ * @memberof Extensions
+ */
+LogicConcept.prototype.getTheorems = function () {
+  return this.Theorems ??= 
+    [...this.descendantsSatisfyingIterator( x => x.isA('Theorem') )]
 }
 
 /** 

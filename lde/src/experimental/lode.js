@@ -282,6 +282,7 @@ global.matchMaker = (decl,pstr,estr) => {
   const p = doc.child(2,0)
   const e = doc.child(3)
   const ans = matchPropositions(p,e)
+  console.log(ans)
   return ans.toString().split(/(?<=}),(?={)/)
             .map( s=>s.slice(1,-1) )
             .map( s=>s.split(/(?<=\)),(?=\()/) )
@@ -548,6 +549,7 @@ rpl.defineCommand( "list", {
 rpl.defineCommand( "test", {
   help: "Run the default test script ('acidtests.js').",
   action() { 
+    clearAccumulator()
     initialize('utils/acidtests')
     this.displayPrompt()
   }
@@ -714,4 +716,5 @@ global.write = s => console.log(rpl.writer(s))
 // to it if you want to benchmark e.g. number of times a routine is called,
 // total time, number of instantiations created, etc.
 global.Accumulator = { }
+global.clearAccumulator = () => Accumulator = { }
 /////////////////////////////////////////////

@@ -58,7 +58,8 @@ export const LurchOptions = {
   badResultMsg: 'indeterminate',
   runStudentTests: false,
   startStudentTest: 0,
-  endStudentTest: Infinity 
+  endStudentTest: Infinity,
+  runAcidTests: true 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
