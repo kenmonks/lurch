@@ -7,12 +7,12 @@ import { Constraint } from "./constraint.js"
 import { Substitution } from "./substitution.js"
 import { Solution } from "./solution.js"
 import {
-    constantEF, projectionEF, applicationEF, fullBetaReduce
+    constantEF, projectionEF, applicationEF, fullBetaReduce, newEF
 } from './expression-functions.js'
 import { NewSymbolStream } from "./new-symbol-stream.js"
 import {
     isEncodedBinding, adjustIndices, free as deBruijnFree,
-    decodeExpression, deBruijn
+    decodeExpression, deBruijn, equal as deBruijnEqual
 } from "./de-bruijn.js"
 
 /**
@@ -541,6 +541,78 @@ export class Problem {
             // dbg( '--3--' )
             const numChildren = expr.children().length
             if ( numChildren > 0 ) {
+
+                //////////////////////////
+                //
+                // Here begins a special case.
+                // The algorithm works fine without this section, but this
+                // section is useful for speeding the algorithm up by taking
+                // one particularly slow case and making it faster.
+                // If we have an EFA of an uninstantiated metavariable P to some
+                // non-metavariable expression x, then rather than apply the
+                // applicationEF() function, which will explode the size of the
+                // problem, let's just enumerate all 2^n-1 cases immediately,
+                // which saves time when n is small, which it typically is.
+                // If you're reading this code to understand it, skip this
+                // special case section, then come back to it later.
+                //
+                if ( args.length == 1
+                  && !args[0].isA( metavariable )
+                  && !args[0].equals( expr )
+                ) {
+                    // This subroutine is a version of descendantsSatisfying(),
+                    // but for deBruijn encoded LCs, and specialized to the case
+                    // where the predicate is an "equal to X" predicate.
+                    const descendantsEqualTo = ( eqToThis, inThis ) => {
+                        if ( deBruijnEqual( eqToThis, inThis ) ) return [ inThis ]
+                        if ( isEncodedBinding( inThis ) ) {
+                            eqToThis = eqToThis.copy()
+                            adjustIndices( eqToThis, 1, 0 )
+                        }
+                        return inThis.children()
+                            .map( child => descendantsEqualTo( eqToThis, child ) )
+                            .reduce( ( a, b ) => a.concat( b ), [ ] )
+                    }
+                    // Find all addresses in expr that are equal to the one
+                    // argument of the EFA, all addresses relative to expr.
+                    const addresses = descendantsEqualTo( args[0], expr )
+                        .map( d => d.address( expr ) )
+                    // We create a bit vector to represent subsets of that
+                    // address array, and an add1() function to increment it.
+                    const bits = addresses.map( _ => 0 )
+                    const add1 = () => {
+                        for ( let i = bits.length - 1 ; i >= 0 ; i-- ) {
+                            bits[i] = ( bits[i] + 1 ) % 2
+                            if ( bits[i] == 1 ) return
+                        }
+                    }
+                    // All solutions will be of the form (lambda v , body) for
+                    // some variable v, which must be new, so we make it here:
+                    const newvar = this._stream.nextN( 1 )[0]
+                    // How to convert any bit vector into an instantiation
+                    // for the expression function metavariable `head`.
+                    const bitsToEF = () => {
+                        const body = expr.copy()
+                        const toReplace = addresses.map( a => body.index( a ) )
+                        toReplace.forEach( ( d, i ) => {
+                            if ( bits[i] == 1 ) d.replaceWith( newvar.copy() )
+                        } )
+                        return newEF( newvar.copy(), body )
+                    }
+                    // For all 2^n-1 bit vectors (ignoring the 0 vector, since
+                    // we already did the constant function case earlier), recur
+                    // using that possible solution, and yield all results.
+                    while ( bits.some( bit => bit == 0 ) ) {
+                        add1() // do this first to skip the 0 vector
+                        yield* addEF( head, bitsToEF() )
+                    }
+                    return
+                }
+                //
+                // End of special case
+                //
+                //////////////////////////
+
                 const metavars = this._stream.nextN( numChildren )
                     .map( symbol => symbol.asA( metavariable ) )
                 const ef = applicationEF( args.length, metavars )
