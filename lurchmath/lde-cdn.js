@@ -8,7 +8,7 @@
  */
 
 export {
-  LogicConcept, MathConcept,
+  LogicConcept, MathConcept, BindingExpression, Application, 
   Environment, Declaration, Expression, LurchSymbol
 } from '../lde/src/index.js' 
 

@@ -119,7 +119,7 @@ import CNF from '../validation/conjunctive-normal-form.js'
 // import Validation from '../validation.js'
 import {
   LogicConcept, Expression, Declaration, Environment, LurchSymbol,
-  Matching, Formula, Scoping, Validation, Application
+  Matching, Formula, Scoping, Validation, Application, BindingExpression
 } from '../index.js'
 import { isArithmetic, arithmeticToCAS } from './parsing.js'
 
@@ -1278,7 +1278,6 @@ const matchPropositions = (p, e) => {
  * 
  */
 const cantMatch = (p,e) => {
-  return false
   // local utility
   const isEFA = x => { 
     return ((x instanceof Application) && 
@@ -1300,7 +1299,8 @@ const cantMatch = (p,e) => {
   // Case 3: p is compound and e has the wrong type 
   if (((p instanceof Application) && !(e instanceof Application)) ||
       ((p instanceof Declaration) && !(e instanceof Declaration)) ||
-      ((p instanceof BindingExpression) && !(e instanceof BindingExpression)) ) return true
+      ((p instanceof BindingExpression) && !(e instanceof BindingExpression)) 
+     ) return true
 
   // Case 4: p is compound and e has the same class and the same number of
   // children, but some corresponding pair of kids can't match
