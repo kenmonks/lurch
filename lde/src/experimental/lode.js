@@ -282,7 +282,6 @@ global.matchMaker = (decl,pstr,estr) => {
   const p = doc.child(2,0)
   const e = doc.child(3)
   const ans = matchPropositions(p,e)
-  console.log(ans)
   return ans.toString().split(/(?<=}),(?={)/)
             .map( s=>s.slice(1,-1) )
             .map( s=>s.split(/(?<=\)),(?=\()/) )
@@ -392,7 +391,7 @@ global.makedoc = makedoc
 // store the folders we want to be scanned as part of the indexing page
 // relative folders are relative to the root of the server (the lurch folder 
 // of the LFY)
-global.contentFolders = ['math','help','assignments','math299','pima']
+global.contentFolders = ['math','help','mystuff']
 global.toc = () => generatePage(...contentFolders)
 global.scrape = scrape
 global.scrapeToGomez = () => 
