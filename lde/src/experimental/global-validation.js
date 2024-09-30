@@ -1278,7 +1278,7 @@ const matchPropositions = (p, e) => {
  * 
  */
 const cantMatch = (p,e) => {
-
+  return false
   // local utility
   const isEFA = x => { 
     return ((x instanceof Application) && 
