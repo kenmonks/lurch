@@ -4,16 +4,11 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'https://lurch.plus/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
-            <div id="metadata" style="display: none;"><div data-category="main" data-key="header" data-value-type="html">
-<p>We temporarily cheat until we fix this.</p>
-<div class="lurch-atom atom-is-selected" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
-<p><strong>Substitution for is:</strong> <span class="lurch-atom atom-is-selected" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If x=y, x is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">x</span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__text"> and </span><span class="ML__mathit">x</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span> then <span class="lurch-atom atom-is-selected" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;y is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span>.</p>
-</div>
-<p>&nbsp;</p><div class="lurch-atom" contenteditable="false" data-metadata_type="&quot;dependency&quot;" data-metadata_description="&quot;none&quot;" data-metadata_filename="&quot;math/Functions-Rules.lurch&quot;" data-metadata_source="&quot;web&quot;" data-metadata_content="&quot;&quot;" data-metadata_auto-refresh="true" style="border: 1px solid gray; padding: 0px 1em;"><div class="lurch-atom-metadata" style="display: none;"><div data-key="content">
+            <div id="metadata" style="display: none;"><div data-category="main" data-key="header" data-value-type="html"><div class="lurch-atom" contenteditable="false" data-metadata_type="&quot;dependency&quot;" data-metadata_description="&quot;none&quot;" data-metadata_filename="&quot;math/Functions-Rules.lurch&quot;" data-metadata_source="&quot;web&quot;" data-metadata_content="&quot;&quot;" data-metadata_auto-refresh="true" style="border: 1px solid gray; padding: 0px 1em;"><div class="lurch-atom-metadata" style="display: none;"><div data-key="content">
             <div id="loadlink">
                 <p><a>Open this file in the Lurch web app</a></p>
                 
@@ -543,7 +538,12 @@
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;EquationsRule&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">EquationsRule</span></span></span></span></span></p>
 </div>
 <hr>
-<p>&nbsp;</p></div>
+<p>We can also add some convenient rules to avoid the need for explicitly citing 'by substitution' in common situations.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Substitution for is:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If x=y, x is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">x</span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__text"> and </span><span class="ML__mathit">x</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;y is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span>.</p>
+</div>
+<p>&nbsp;</p>
+<h1>&nbsp;</h1></div>
         </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Source:</td><td><tt>math/Equations-Rules.lurch</tt> (web)</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div></div>
             <div id="document"><h1>Number Theory Theorems</h1>
 <p>Once we have proven theorems it is convenient to add the most useful ones as new rules rather than reproving them from scratch each time we need to use one.&nbsp; This library contains some of the most useful theorems about the natural numbers that can be proven using the Peano Axioms.&nbsp; All of the rules from the Number Theory library are also available.</p>
