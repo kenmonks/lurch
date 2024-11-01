@@ -19,28 +19,28 @@
   <script>
     unloadmsg = () => { return "Did you save your work?" }
     window.addEventListener('load', () => {
-      
+
       // toggle to use the instructor menu
-      const instructormode =  true
-      
+      const instructormode = true
+
       // make sure editor.js doesn't show or hide the menu overwriting ours
-      localStorage.setItem( 'lurch-developer mode on', false )
+      localStorage.setItem('lurch-developer mode on', false)
 
       // options go here
       const options = {
-        preventLeaving: true, 
+        preventLeaving: true,
         autoSaveEnabled: false,
         editor: {
           font_size_formats: '8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 36pt',
           draggable_modal: true,
-          plugins : 'lists link table',
-          menubar : 'file edit format table math developer help',
-          content_css : [ 'document', 
-          // `lurchmath/editor-styles.css`,
-          // `lurchmath/leftborder-theme.css`+`?nocache=${new Date().getTime()}`,
-          `lurchmath/syntax-theme.css`+`?nocache=${new Date().getTime()}`,
-          // `lurchmath/syntax-theme.css`,
-          'https://unpkg.com/mathlive@0.100.0/dist/mathlive-static.css' ]
+          plugins: 'lists link table code',
+          menubar: 'file edit format table math developer help',
+          content_css: ['document',
+            // `lurchmath/editor-styles.css`,
+            // `lurchmath/leftborder-theme.css`+`?nocache=${new Date().getTime()}`,
+            `lurchmath/syntax-theme.css` + `?nocache=${new Date().getTime()}`,
+            // `lurchmath/syntax-theme.css`,
+            'https://unpkg.com/mathlive@0.100.0/dist/mathlive-static.css']
         },
         menuData: {
           file: {
@@ -61,7 +61,7 @@
           }
         },
         helpPages: [
-        {
+          {
             title: 'Quick Start Guide',
             url: 'student.html?load=help/quick-start-guide.lurch'
           },
@@ -123,12 +123,13 @@
       }
       // add developer menu if requested
       if (instructormode) options.menuData.developer =
-        { title: 'Instructor',
-          items: 'editdependencyurls | extractheader embedheader | redpen | docsettings preferences | downloaddocumentcode'
-        }
+      {
+        title: 'Instructor',
+        items: 'editdependencyurls | extractheader embedheader | redpen | docsettings preferences | downloaddocumentcode'
+      }
 
       Lurch.createApp(document.getElementById('editor-container'), options)
-    } )
+    })
   </script>
 </body>
 

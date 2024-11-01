@@ -129,6 +129,7 @@ const timer = (f,msg='') => {
 /** 
  * Report the time it took to execute function `f`, passed as an argument. 
  */
+globalThis.Accumulator = globalThis.Accumulator || { }
 const profile = (f,name) => {
   if (!Accumulator[name]) Accumulator[name] = { count: 0, time:0 }
   let start = Date.now()
@@ -137,8 +138,20 @@ const profile = (f,name) => {
   Accumulator[name].time += Date.now()-start
   return ans
 }
+const benchmark = data => {
+  console.log(`| Function Name            | Count | Time (ms) |`);
+  console.log(`|--------------------------|-------|-----------|`);
+
+  // Iterate over each key in the object
+  for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+          const { count, time } = data[key];
+          console.log(`| ${key.padEnd(24)} | ${String(count).padStart(5)} | ${String(time).padStart(9)} |`);
+      }
+  }
+}
 
 export default {
   commonInitialSlice, checkExtension, checkFolder, tab, indent, 
-  lineNum, subscript, rgb2hex, msToTime, timer, profile
+  lineNum, subscript, rgb2hex, msToTime, timer, profile, benchmark
 }

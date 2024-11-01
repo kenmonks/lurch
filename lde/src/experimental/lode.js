@@ -29,6 +29,10 @@ import fs, { write } from 'fs'
 import { execSync } from 'child_process'
 import util from 'util'
 import peggy from 'peggy'
+import yaml from 'js-yaml'
+import mdIt from 'markdown-it'
+import mdAttrs from 'markdown-it-attrs'
+global.md = mdIt().use(mdAttrs)
 import { XMLParser } from 'fast-xml-parser'
 global.xml = (s) => new XMLParser({ ignoreAttributes:false }).parse(s)
 // import asciimath2latex from './parsers/asciimath-to-latex.js'
@@ -52,6 +56,7 @@ import './disable-event-target.js'
 import * as Lurch from '../index.js'
 import { Problem } from '../matching/problem.js'
 import CNF from '../validation/conjunctive-normal-form.js'
+import { LurchOptions } from './lurch-options.js'
 
 // Experimental Code
 //
@@ -189,6 +194,8 @@ global.CNFProp = CNFProp
 global.satSolve = satSolve
 global.Algebrite = Algebrite
 global.peggy = peggy
+global.yaml = yaml.load
+global.markdown = md.render.bind(md)
 // global.Tokenizer = Tokenizer
 // global.Grammar = Grammar
 // global.MathLive = MathLive

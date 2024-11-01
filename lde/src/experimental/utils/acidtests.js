@@ -1,8 +1,6 @@
-////////////////////////////////////////////////////////////////////////////
-// WARNING: putting let or const in front of a definition will cause it to 
-// be local to the init file and not exported to the Lode global.  Don't use
-// const or let for things you want to export.
-////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+//  Acid Tests
+//
 // opening
 process.stdout.write(itemPen(`\nLoading the acid tests ...\n\n`))
 let start = Date.now()
@@ -15,7 +13,9 @@ const endTest = LurchOptions.endStudentTest
 // const startTest = 10
 // const endTest = 12
 
+// declare the acide array
 acid=[]
+// define a nice utility for loading a test
 const loadtest = (name, folder='acid tests', extension='lurch',
                   language='lurch', desc = '') => { 
   let lasttime = Date.now()
@@ -62,13 +62,12 @@ if (LurchOptions.runStudentTests) {
     return fs.readdirSync( './proofs/'+studentFolder )
              .filter(x=>x.endsWith('.txt')) 
   }
-  const studentFiles = getStudentFiles()
-  studentFiles.slice(startTest,endTest+1)
-              .forEach( (filename,i) => {
+  const studentFiles = getStudentFiles().slice(startTest,endTest+1)
+  studentFiles.forEach( (filename,i) => {
     let lasttime = Date.now()
     const numfiles = Math.min(studentFiles.length,endTest-startTest+1)
     process.stdout.write(defaultPen(
-      `Loading student test file ${i} of ${numfiles}`.padEnd(50,'.')))
+      `Loading student test file ${i+1} of ${numfiles}`.padEnd(50,'.')))
     loadtest(filename, studentFolder, 'txt', 'putdown', filename)
     console.log(attributePen(
       `${msToTime(Date.now()-lasttime).padStart(11,' ')} (${msToTime(Date.now()-start)} total)`))
@@ -132,11 +131,11 @@ acid.forEach( (T,k) => {
 
   T.descendantsSatisfying( x => x.ExpectedResult).forEach( (s,i) => {
     if ((Validation.result(s) && 
-          (Validation.result(s).result==s.ExpectedResult ||
-          // handle the inapplicable arithmetic case
-          s.results('arithmetic')?.result==s.ExpectedResult ||
-          // handle the bad BIH case
-          (s.badBIH && s.ExpectedResult == 'invalid') ) ) ||
+        (Validation.result(s).result==s.ExpectedResult ||
+        // handle the inapplicable arithmetic case
+        s.results('arithmetic')?.result==s.ExpectedResult ||
+        // handle the bad BIH case
+        (s.badBIH && s.ExpectedResult == 'invalid') ) ) ||
         // handle the redeclared variable case
         (s.getAttribute('scope errors')?.redeclared && s.ExpectedResult=='invalid') ||
         // handle the transitive chain equations case - see if some equation derived

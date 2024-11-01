@@ -492,7 +492,6 @@ const markDeclaredSymbols = ( doc, target=doc ) => {
   // for each one, see if it is in the scope of any Declare declaration of that symbol
   symbols.forEach( s => {
       if (Declares.some( d => 
-        (d.isAccessibleTo(s) || (s.parent()===d)) && 
          d.symbols().map(x=>x.text()).includes(s.text())
       ))
       s.constant = true

@@ -10,83 +10,102 @@
 
 /* Background color */
 body {
-    margin : 0;
-    min-height : 100vh;
+  margin: 0;
+  min-height: 100vh;
 }
+
 /* Don't use background color in full screen mode so that it doesn't peek in around
    the rounded corners of the application. */
 body:not(.fullscreen) {
-    background : linear-gradient(45deg, darkslategrey, transparent);
+  background: linear-gradient(45deg, darkslategrey, transparent);
 }
 
 /* Prevent this from being seen while the page is loading. */
 textarea#editor {
-    display: none;
+  display: none;
 }
 
 /* position and size the editor container div */
 #editor-container {
-    margin : 0 auto;
-    height : 100vh;
-    position : relative
+  margin: 0 auto;
+  height: 100vh;
+  position: relative
 }
+
 /* set the maximum width for fixed width mode  */
 body:not(.fullscreen) #editor-container {
-    max-width : 853px;
+  max-width: 853px;
 }
 
 /* The Lurch Logo  */
-#logo { 
-    position: absolute; 
-    top : 0; 
-    right : 0; 
-    width : 120px;
-    z-index: 9999; 
-    margin: 25.5px 40px; 
-    font-size: xx-large; 
-    font-family: Lato; 
-    font-weight: 900; 
-    letter-spacing:-0.01em;
-    color:#000;
-    text-align:center;
+#logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  z-index: 9999;
+  margin: 25.5px 40px;
+  font-size: xx-large;
+  font-family: Lato;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #000;
+  text-align: center;
 }
 
-#logo #check { 
-    color:#4CAF50;
+#logo #check {
+  color: #4CAF50;
 }
 
-#logo a { 
-    color:#000;
-    text-decoration: none;
+#logo a {
+  color: #000;
+  text-decoration: none;
 }
 
 /* The text area for the advanced mode expression editor  */
 .tox .tox-textarea-wrap .tox-textarea.advancedTextArea:focus,
 .tox .tox-textarea-wrap .tox-textarea.advancedTextArea {
-    resize: auto;
-    font-family: "Roboto Mono"
+  resize: auto;
+  font-family: "Roboto Mono"
 }
 
-/* The text area for the advanced mode expression editor  */
+/* The text area for the advanced mode expression editor with bad syntax */
 /* Note: if you want to style the border instead, target 
    .tox.tox-textarea-wrap:focus-within, */
 .tox .tox-textarea-wrap .tox-textarea.advancedTextArea.badsyntax:focus,
 .tox .tox-textarea-wrap .tox-textarea.advancedTextArea.badsyntax {
-    background-color: #fff7f7
+  background-color: #fff7f7
+}
+
+/* The MathJax preview div in the Advanced mode text editor (inline)*/
+.tox .tox-dialog div#mathjaxPreview {
+  width: 100%;
+  border: 0;
+  padding: 0.5rem 0 0 0.5rem;
+}
+
+/* The MathJax preview div in the Advanced mode text editor (display)*/
+.tox .tox-dialog div#mathjaxPreview mjx-container[jax="SVG"][display="true"] {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 /* Search box for filtering the rules list */
 .tox .search-label {
-  margin : 12px 0 6px;
+  margin: 12px 0 6px;
 }
+
 .tox .search-input {
   margin: 0 18px 0 6px;
-  padding : 3px;
-  border : 1px solid #90979E;
-  border-radius : 4px;
+  padding: 3px;
+  border: 1px solid #90979E;
+  border-radius: 4px;
 }
+
 /* override the repeating gradient to avoid extraneous hrule in the search area */
-div.tox .tox-toolbar__overflow{
+div.tox .tox-toolbar__overflow {
   background-image: linear-gradient(#e3e3e3 0 1px, transparent 1px 39px);
 }
 
@@ -94,7 +113,7 @@ div.tox .tox-toolbar__overflow{
 /* Commenting this out for now until we design something better */
 
 #lurch-filename-display {
-    display: none;
+  display: none;
 }
 
 /*
@@ -126,4 +145,3 @@ div:has(> #lurch-filename-display) {
 }
  *
  */
-
