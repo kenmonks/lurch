@@ -31,8 +31,18 @@ import util from 'util'
 import peggy from 'peggy'
 import yaml from 'js-yaml'
 import mdIt from 'markdown-it'
-import mdAttrs from 'markdown-it-attrs'
-global.md = mdIt().use(mdAttrs)
+import spans from 'markdown-it-bracketed-spans'
+import attrs from 'markdown-it-attrs'
+import deflist from 'markdown-it-deflist'
+import divs from 'markdown-it-div'
+global.md = mdIt({ html: true })
+  .use(attrs)
+  .use(spans)
+  .use(deflist)
+  .use(divs)
+
+import * as prettier from 'prettier'
+global.prettier = x => prettier.format(x,{ parser: 'html' })
 import { XMLParser } from 'fast-xml-parser'
 global.xml = (s) => new XMLParser({ ignoreAttributes:false }).parse(s)
 // import asciimath2latex from './parsers/asciimath-to-latex.js'

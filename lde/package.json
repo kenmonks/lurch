@@ -12,9 +12,10 @@
     "clean-jsdoc-theme": "^4.2.14",
     "coffeescript": "^2.7.0",
     "esm": "^3.2.25",
-    "jsdoc": "^3.6.7",
+    "jsdoc": "^4.0.4",
     "mocha": "^10.0.0",
-    "puppeteer": "^15.1.1",
+    "prettier": "^3.3.3",
+    "puppeteer": "^23.7.1",
     "tidy-jsdoc": "^1.4.1"
   },
   "scripts": {
@@ -43,6 +44,9 @@
     "js-yaml": "^4.1.0",
     "katex": "^0.16.9",
     "markdown-it-attrs": "^4.2.0",
+    "markdown-it-bracketed-spans": "^1.0.1",
+    "markdown-it-deflist": "^3.0.0",
+    "markdown-it-div": "^1.1.0",
     "mathlive": "^0.98.4",
     "peggy": "^3.0.2",
     "pegjs-backtrace": "^0.2.1",
