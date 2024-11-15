@@ -11,6 +11,9 @@
 
 import "./disable-event-target.js"
 
+// Note: in ES2020 they introduced globalThis, which is all three.  They can be
+// distinguished by chcking if globalThis.window, globalThis.self, and
+// globalThis.global are defined.
 let testarg
 if (typeof window === "object") {
   console.log(`In a browser window.`)

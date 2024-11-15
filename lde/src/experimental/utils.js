@@ -138,6 +138,8 @@ const profile = (f,name) => {
   Accumulator[name].time += Date.now()-start
   return ans
 }
+// Run any code in Lode (validate something, run the test suite, etc.) and then call
+// `benchmark(Accumulator)` to see a report.
 const benchmark = data => {
   console.log(`| Function Name            | Count | Time (ms) |`);
   console.log(`|--------------------------|-------|-----------|`);

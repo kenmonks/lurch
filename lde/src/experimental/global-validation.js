@@ -132,6 +132,8 @@ const { markDeclaredSymbols, renameBindings, assignProperNames, interpret } = In
 // import experimental utilities
 import Utils from './utils.js'
 const commonInitialSlice = Utils.commonInitialSlice
+// profile it iff running in Lode
+const profile = (globalThis.global) ? Utils.profile : f=>f()
 // import the LDE options
 import { LurchOptions } from './lurch-options.js'
 
@@ -196,10 +198,10 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   } 
 
   // interpret it if it hasn't been already (the interpret routine checks)
-  interpret( doc )
+  profile(()=>interpret( doc ),'interpret')
 
   // process the domains (if they aren't already)
-  processDomains(doc)
+  profile(()=>processDomains(doc),'process domains')
 
   //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
   // Here is the location to install new validation tools that are compatible
@@ -207,11 +209,11 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   
   ///////////////////////////////////
   // BIHs
-  processBIHs(doc)
+  profile(()=>processBIHs(doc),'process BIHs')
     
   ///////////////////////////////////
   // Proof by Cases
-  processCases(doc)
+  profile(()=>processCases(doc),'process Cases')
   
   // while this idea works in general for any forbidden Weeny formula, it's not
   // efficent because there are way more ways to match something like f(x+1,y-2)
@@ -238,7 +240,7 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   // Equations
   //
   // Rule: { EquationsRule }
-  processEquations(doc)
+  profile(()=>processEquations(doc),'process Equations')
 
   ///////////////////////////////////
   // Arithmetic
@@ -257,7 +259,7 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   // Arithmetic in ℚ: +,⋅,^,=,<,≤.-,/ and denominators nonzero.
   // Arithmetic in ℝ (or ℂ): for now just uses the Algebra rule. 
   //
-  processArithmetic(doc)
+  profile(()=>processArithmetic(doc),'process Arithmetic')
 
   ///////////////////////////////////
   // Algebra
@@ -268,7 +270,7 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   // 
   // Currently only evaluates algebraic identities. An equation of the form
   // LHS=RHS is valid by asking Algebrite if (LHS)-(RHS) evaluates to zero.
-  processAlgebra(doc)
+  profile(()=>processAlgebra(doc),'process Algebra')
 
   //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
   
@@ -276,11 +278,11 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   // the list of user propositions and the document catalog.  This must be done
   // after the tools above in case they instantiate a 'Part' that then is used
   // for further instantiation (e.g. as with the Cases tool)
-  instantiate(doc)
+  profile(()=>instantiate(doc),'instantiate')
   
   ///////////////
   // Scoping
-  Scoping.validate(doc, scopingMethod )
+  profile(()=>Scoping.validate(doc, scopingMethod ),'Scoping')
   
   ///////////////
   // Caching
@@ -292,22 +294,22 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   
   // when its all complete mark the declared symbols again (this is fast, so no
   // need to do it too carefully)
-  markDeclaredSymbols(doc)
+  profile(()=>markDeclaredSymbols(doc),'Mark Declared Symbols')
 
   ///////////////
   // Prop Check
   if (LurchOptions.validateall) {
-    doc._validateall( target )
+    profile(()=>doc._validateall( target ),'validate all')
     if (LurchOptions.checkPreemies) doc._validateall( target , true ) 
   } else { 
-    doc._validate( target )
+    profile(()=>doc._validate( target ),'validate target')
     if (LurchOptions.checkPreemies) doc._validate( target , true ) 
   }
 
   // For debugging purposes, before leaving, rename all of the ProperNames to
   // something human-readable. 
   // TODO: maybe improve or eliminate this in the future
-  tidyProperNames(doc)
+  profile(()=>tidyProperNames(doc),'tidy Proper Names')
   // re-cache the catalog, since these are new prop names
   doc.cat = doc.catalog()
 
@@ -954,7 +956,7 @@ const processCases = doc => {
             // then insert this instantiation after its formula
             Formula.addCachedInstantiation(r, inst)
             // finally mark the declared symbols in the instantiation
-            markDeclaredSymbols(doc, inst)
+            // markDeclaredSymbols(doc, inst)
           })
         } catch { }
       })
@@ -1436,7 +1438,7 @@ const insertInstantiation = ( inst, formula, creator ) => {
     inst.insertAfter(formula)
 
     // and mark the declared constants in the instantiation
-    markDeclaredSymbols(inst.root(), inst) // Can this be removed?
+    // markDeclaredSymbols(inst.root(), inst) // Can this be removed?
 
     // check if this instantiation should be rejected because it contains a
     // declaration that is declaring a constant or a declaration declaring more than
@@ -1626,7 +1628,7 @@ LogicConcept.prototype._validate = function (target = this,
       ans = Validation.result(target).result === 'valid'
     } else {
       // say(`Not already validated by n-compact.. checking`)
-      ans = satCheck(this, target)
+      ans = profile(()=>satCheck(this, target),'SAT check')
       // determine the appropriate feedback
       result = (ans)
         ? { result: 'valid', reason: 'n-compact' }
@@ -1659,7 +1661,7 @@ LogicConcept.prototype._validate = function (target = this,
       if (Validation.result(target).result === 'valid') {
         // say(`Prop valid, so checking for preemies`)
         // say(`this is currently a given ${this.isA('given')}`)
-        ans = satCheck(this, target, true)
+        ans = profile(()=>satCheck(this, target, true),'SAT check')
         // determine the appropriate feedback
         result = (ans)
           ? { result: 'valid', reason: 'n-compact' }
