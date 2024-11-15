@@ -1,0 +1,300 @@
+/*  
+ * CSS for lurch.plus
+ *
+ *  It overrides and extends the css from monks.scranton.edu.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth
+}
+
+/* the left nav column */
+#leftnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 228px;
+  height: 100%;
+  background-color: #101B27;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* flex column for content-block and footer */
+#wrap {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: 870px;
+  margin-left: 229px;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+#wrap #content-block {
+  flex: 1;
+}
+
+/* .container {
+  margin-left: 221px;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 10px;
+  max-width: 870px;
+} */
+
+/* .container .navbar-header {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+} */
+
+.greyback {
+  background-color: #F2F2F2;
+}
+
+#content-block code {
+  font-size: 110%;
+}
+
+#content-block .blue-box code {
+  background: #e7f3fd;
+}
+
+dl {
+  margin-top: 0;
+  margin-bottom: 22px;
+}
+
+dt {
+  font-weight: normal;
+  line-height: 1.42857143;
+}
+
+dt a {
+  font-weight: bold;
+  padding-right: 0.75rem;
+}
+
+dd {
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  line-height: 1.42857143;
+}
+
+#leftnav #contact a,
+#leftnav #contact a:visited
+ {
+  font-family: monospace, Courier;
+  color: #e7f3fd;
+  margin-top: 0;
+  margin-left: auto;
+  line-height: 1.25;
+  font-size: smaller;
+}
+
+#leftnav #contact div {
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+/* The page title box.  Usually has an h1 for the title and h2 for the subtitle. */
+div.title-box {
+  padding-bottom: 32px;
+  margin-bottom: 2rem;
+}  
+
+#content-block div.title-box h1 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+#content-block div.title-box h2 {
+  margin: 1rem 0 0 0;
+  font-weight: normal;
+}
+
+/* the h2 elements pointed to by the nav menu */
+#content-block h2 {
+  margin: 2em 0 1em;
+  font-weight: bold;
+}
+
+#content-block .thmlist strong {
+  padding-right: 0.75rem;
+}
+
+#leftnav ul {
+  margin-top: 1rem;
+  border-top: #bbd6fb 1px solid;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: #bbd6fb 1px solid;
+}
+
+#leftnav li {
+  display: block;
+  padding: 5px 5px;
+}
+
+#leftnav a,
+#leftnav a:visited {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+  color: #5DA9E9;
+}
+
+#leftnav li:hover,
+#leftnav li:hover a {
+  background-color: #bbd6fb;
+  color: #0068c2;
+}
+
+.haiku {
+  text-align: center;
+  width: 50%;
+  margin: 40px auto;
+}
+
+.haiku p {
+  font-style: italic;
+  font-family: "Merriweather", Georgia, serif;
+}
+
+.haiku .attribution {
+  /* font-variant: small-caps; */
+  font-style: normal;
+  font-size: 0.85em;
+  text-align: right;
+}
+
+.haiku .attribution span {
+  /* Adjust the size to match small caps */
+  font-size: 0.75em;
+}
+
+#video-container {
+  width: 75%;
+  margin: 0 auto;
+}
+
+#video-container video {
+  width: 100%;
+  height: auto;
+}
+
+div.blue-box {
+  background-color: #e7f3fd;
+  padding: 1rem 1rem 0.25rem 1rem;
+  margin-left: 0;
+  border-radius: 12pt;
+}
+
+.strong-tags li a:first-of-type {
+  font-weight: bold;
+}
+
+.strong-tags.dash-after li:not(.nodash) > a:first-of-type::after {
+  content: ' \2013';
+  font-weight: normal;
+  color: rgb(51,51,51);
+}
+
+.bigfont {
+  font-size: 110%;
+}
+
+#wrapboard {
+  display: flex;
+}
+
+#scoreboard {
+  background-color: whitesmoke;
+  padding: 20px 40px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  width: auto;
+  display: inline-block;
+  margin: 0 auto 2rem;
+}
+
+#wrapboard #scoreboard p {
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+#checklist th {
+  text-align: left;
+}
+
+#checklist td:first-child,
+.question-mark,
+.checkmark {
+  font-family: "Lucida Grande";
+  font-weight: bold;
+  color: #d8b400;
+  text-align: center;
+}
+
+#checklist td.done,
+.checkmark {
+  color: #4caf50
+}
+
+#checklist tbody tr:hover {
+  background-color: #bbd6fb;
+  color: #0068c2;
+}
+
+#checklist tbody tr[data-href]:hover {
+  cursor: pointer;
+}
+
+#content-block table#checklist {
+  margin-bottom: 4rem;
+}
+
+#footer-block {
+  background: none;
+  color: black;
+  text-align: left;
+  border-top: #888 1px solid;
+  line-height: normal;
+  padding: 1rem;
+}
+
+#footer-block a {
+  color: #5DA9E9;
+}
+
+#footer-block div #lurch-footer {
+  text-align: center;
+}
+
+#footer-block div #facebook-footer {
+  text-align: right;
+}
+
+#more-contact-info {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+
+/* a neat box-shadow */
+/* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */

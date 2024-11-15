@@ -1,0 +1,818 @@
+/*
+Theme Name: Monks
+Description: The theme for monks.scranton.edu
+Author: Ken Monks
+*/
+
+/* Reset CSS */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,table,caption,tbody,tfoot,thead,tr,th,td,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,ol,ul,li,fieldset,form,label,legend,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+
+/* removed to enable bootstrap tables*/
+
+/* Basics */
+body {
+	font-family:'Open Sans',Cabin,sans-serif;
+	font-size:16px;
+	font-weight:400;
+	color:#333
+	}
+
+a, a:hover, a:active, a:visited, a:focus { text-decoration:none }
+a, a:visited { color:#428bca }
+a:hover, a:active { color:#025D8C }
+
+p, ul, ol, blockquote {
+	line-height:1.5;
+	margin-bottom:1.5rem
+	}
+
+em, i {
+	font-style:italic;
+	}
+
+strong { font-weight:700 }
+
+samp, tt { font-family:Courier, monospace; font-size:1.15em }	
+
+table { margin-bottom:1.5rem }
+.table { border-bottom:1px solid #DDD }	
+
+/* colors
+
+   * Main body font color is #333
+   * #428BCA (light blue) is the highlight color
+   * #025D8C (darker blue) is the accent color
+   * bottom borders are sometimes #CCC
+
+*/
+#footer-block h3, .accent-color-wrap label,
+#header-block a:hover h2, #header-block a:hover h3 {
+	color:#025D8C; 
+	}
+.accent-border {
+	border:4px solid #025D8C
+	}
+	
+/* header */
+#header-block {
+	padding:2rem 0 0;
+	background:#FFF;
+	border-bottom:1px solid #EEE;
+	}
+#header-block a {
+	color:#333;
+	}
+#header-block a.navbar-brand {
+	display:block;
+	height:7rem;
+	padding: 12px 15px;
+	}
+#header-block a:hover {
+	text-decoration:none
+	}
+#top-logo {
+	display:inline-block;
+	/* padding-top:52px; /* 44px + .5rem */
+	background-size:160px 44px;
+	text-align:center
+	}
+#top-logo h2 {
+	font-size:2rem;
+	font-weight:700;
+	text-transform:uppercase;
+	letter-spacing:4px;
+	margin-bottom:.8rem;
+	}
+#top-logo h3 {
+	font-size:.875rem;
+	font-weight:700;
+	text-transform:uppercase;
+	letter-spacing:2px;
+	margin-bottom:.25rem;
+	}
+#top-logo h4 {
+	font-size:1rem;
+	font-weight:400;
+	letter-spacing:1px;
+	color:#666;
+	}
+#top-nav {
+	font-size:1rem;
+	text-transform:none;
+	}
+#top-nav .navbar-nav {
+	float:right;
+	margin-top:4.5rem
+	}
+
+/************************/
+/* content block  
+
+   This is where we will define the major tools needed for the vast majority
+   of things I need for formatting.
+
+   For the main tags I have defaults, but then add optionals classes to modify
+   them in common ways.  These options can be added either by 
+   (a) adding that class directly to the tag
+   (b) wrapping the tag inside a div or other wrapper that has that option set
+
+   in the latter case we only have the option apply to immediate children.
+
+   The exception is for supressing bullets, which we make a special class for
+   when we want all ul's inside a given div to suppress bullets.
+
+*/
+
+/* top and bottom margin for the entire content region */
+#content-block { padding:3rem 0 }
+
+/* anchors */
+#content-block a:hover { background-color:#f7f7ff }
+
+/* Headers 
+
+   For emphasis headers use uniform spacing centered vertically proportional
+   to the font size.
+*/
+#content-block h1, #content-block h2, #content-block h3,
+#content-block h4, #content-block h5, #content-block h6 
+                  {	margin:1.5em 0 1.5em 0; color:#025D8C }
+#content-block h1 { font-size:2.00rem;  font-weight:300; }
+#content-block h2 { font-size:1.50rem;  font-weight:400; }
+#content-block h3 { font-size:1.33rem;  font-weight:400; }
+#content-block h4 { font-size:1.25rem;  font-weight:400; }
+#content-block h5 { font-size:1.00rem;  font-weight:550; }
+#content-block h6 { font-size:0.875rem; font-weight:600; }
+/* override theme color with a shade of black */
+#content-block div.wrap-black > h1, #content-block div.wrap-black > h2, 
+#content-block div.wrap-black > h3, #content-block div.wrap-black > h4, 
+#content-block div.wrap-black > h5, #content-block div.wrap-black > h6, 
+#content-block h1.black, #content-block h2.black, #content-block h3.black,
+#content-block h4.black, #content-block h5.black, #content-block h6.black {	color:#333 }
+
+#content-block h1.page-title { margin:0 0 3rem 0; text-align:center } 
+
+/* for section headers set a uniform spacing across the document */
+#content-block div.wrap-section > h1, #content-block div.wrap-section > h2, 
+#content-block div.wrap-section > h3, #content-block div.wrap-section > h4, 
+#content-block div.wrap-section > h5, #content-block div.wrap-section > h6,  
+#content-block h1.section, #content-block h2.section, #content-block h3.section,
+#content-block h4.section, #content-block h5.section, #content-block h6.section  
+  { margin: 2.66em 0 1.33em 0 } 
+
+#content-block blockquote {
+	font-style:italic;
+	line-height:1.5;
+	color:#666;
+	padding:0 3rem;
+	margin-bottom:1.5rem;
+	}
+
+#content-block code { 
+   color:#333;
+	 background: #f2f2f2;
+	 font-family: Courier, monospace;
+}
+
+/* lists 
+
+   by default, skip after the outermost list structure, 
+   but not after nested ones.  Also pick defaults for 
+   nested ol numbering styles.
+*/
+#content-block ul {	margin-left:1.5rem; margin-bottom:1.5rem }
+#content-block ul ul { margin-bottom:0 }
+#content-block ul ul ul { margin-bottom:0 }
+#content-block ol { list-style:decimal; margin-left:2rem; margin-bottom:1.5rem }
+#content-block ol ol, #content-block ul ol { margin-bottom:0; list-style:lower-alpha }
+#content-block ol ol ol, #content-block ul ol ol, #content-block ol ul ol, 
+#content-block ul ul ol { margin-bottom:0; list-style:lower-roman }
+
+/* by default, don't skip space between list items */
+#content-block ul li, 
+#content-block ol li { line-height:1.5; margin-bottom:0em }
+/* or as child tags of an appropriate wrapper 
+
+   Note that header tags are omitted because that is usually 
+   the behavior you want.
+*/
+#content-block div.wrap-noskip > p,   #content-block div.wrap-noskip  > ul, 
+#content-block div.wrap-noskip > ol,  #content-block ul.wrap-noskip   > li, 
+#content-block ol.wrap-noskip  > li,  #content-block dl.wrap-noskip   > dd
+  { margin-top:0; margin-bottom:0; }
+#content-block div.wrap-smallskip > p,  #content-block div.wrap-smallskip  > ul, 
+#content-block div.wrap-smallskip > ol, #content-block ul.wrap-smallskip   > li, 
+#content-block ol.wrap-smallskip  > li 
+  { margin-top:0; margin-bottom:0.5rem; }
+#content-block div.wrap-medskip > p,  #content-block div.wrap-medskip  > ul, 
+#content-block div.wrap-medskip > ol, #content-block ul.wrap-medskip   > li, 
+#content-block ol.wrap-medskip  > li, #content-block dl.wrap-medskip   > dd
+  { margin-top:0; margin-bottom:1rem; }
+#content-block div.wrap-bigskip > p,  #content-block div.wrap-bigskip  > ul, 
+#content-block div.wrap-bigskip > ol, #content-block ul.wrap-bigskip   > li, 
+#content-block ol.wrap-bigskip  > li, #content-block dl.wrap-bigskip  > dd 
+  { margin-top:0; margin-bottom:3rem; }
+/* 
+   Specify it individually in the tags themself 
+   Note: because of css 'specificity' rules, the above defined div-wrappers
+   are a higher priority than the classes below.  To get around this we also
+   define id's for this situation so we can override any wrapper that exists.
+*/
+#content-block p.noskip,  #content-block ul.noskip, #content-block ol.noskip,
+#content-block li.noskip, #content-block dl.noskip, #content-block dd.noskip, 
+#content-block blockquote.noskip, #content-block footer.noskip, 
+#content-block img.noskip, #content-block img#noskip, 
+#content-block h1.noskip, #content-block h2.noskip, #content-block h3.noskip,
+#content-block h4.noskip, #content-block h5.noskip, #content-block h6.noskip,
+#content-block p#noskip,  #content-block ul#noskip, #content-block ol#noskip,
+#content-block li#noskip, #content-block dl#noskip, #content-block dd#noskip, 
+#content-block blockquote#noskip, #content-block footer#noskip, 
+#content-block h1#noskip, #content-block h2#noskip, #content-block h3#noskip,
+#content-block h4#noskip, #content-block h5#noskip, #content-block h6#noskip,
+#content-block div.noskip, #content-block div#noskip
+  { margin-top:0; margin-bottom:0; }
+#content-block p.smallskip,  #content-block ul.smallskip, #content-block ol.smallskip,
+#content-block li.smallskip, #content-block dl.smallskip, #content-block dd.smallskip, 
+#content-block blockquote.smallskip, #content-block footer.smallskip,
+#content-block img.smallskip, #content-block img#smallskip, 
+#content-block h1.smallskip, #content-block h2.smallskip, #content-block h3.smallskip,
+#content-block h4.smallskip, #content-block h5.smallskip, #content-block h6.smallskip,
+#content-block p#smallskip,  #content-block ul#smallskip, #content-block ol#smallskip,
+#content-block li#smallskip, #content-block dl#smallskip, #content-block dd#smallskip, 
+#content-block blockquote#smallskip, #content-block footer#smallskip,
+#content-block h1#smallskip, #content-block h2#smallskip, #content-block h3#smallskip,
+#content-block h4#smallskip, #content-block h5#smallskip, #content-block h6#smallskip,
+#content-block div.smallskip, #content-block div#smallskip
+  { margin-top:0; margin-bottom:0.5em; }
+#content-block p.medskip,  #content-block ul.medskip, #content-block ol.medskip,
+#content-block li.medskip, #content-block dl.medskip, #content-block dd.medskip, 
+#content-block blockquote.medskip, #content-block footer.medskip,
+#content-block img.medskip, #content-block img#medskip, 
+#content-block h1.medskip, #content-block h2.medskip, #content-block h3.medskip,
+#content-block h4.medskip, #content-block h5.medskip, #content-block h6.medskip,
+#content-block p#medskip,  #content-block ul#medskip, #content-block ol#medskip,
+#content-block li#medskip, #content-block dl#medskip, #content-block dd#medskip, 
+#content-block blockquote#medskip, #content-block footnote#medskip,
+#content-block h1#medskip, #content-block h2#medskip, #content-block h3#medskip,
+#content-block h4#medskip, #content-block h5#medskip, #content-block h6#medskip,
+#content-block div.medskip, #content-block div#medskip
+  { margin-top:0; margin-bottom:1.5em; }
+#content-block p.bigskip,  #content-block ul.bigskip, #content-block ol.bigskip,
+#content-block li.bigskip, #content-block dl.bigskip, #content-block dd.bigskip, 
+#content-block blockquote.bigskip, #content-block footer.bigskip,
+#content-block img.bigskip, #content-block img#bigskip, 
+#content-block h1.bigskip, #content-block h2.bigskip, #content-block h3.bigskip,
+#content-block h4.bigskip, #content-block h5.bigskip, #content-block h6.bigskip,
+#content-block p#bigskip,  #content-block ul#bigskip, #content-block ol#bigskip,
+#content-block li#bigskip, #content-block dl#bigskip, #content-block dd#bigskip, 
+#content-block blockquote#bigskip, #content-block footer#bigskip,
+#content-block h1#bigskip, #content-block h2#bigskip, #content-block h3#bigskip,
+#content-block h4#bigskip, #content-block h5#bigskip, #content-block h6#bigskip,
+#content-block div.bigskip, #content-block div#bigskip
+  { margin-top:0; margin-bottom:3em; }
+
+/* specify the bullet style */
+
+/* wrappers for all lists contained in them (child lists only) */
+#content-block div.wrap-none   > ul { list-style:none }
+#content-block div.wrap-disc   > ul { list-style:disc }
+#content-block div.wrap-circle > ul { list-style:circle }
+#content-block div.wrap-square > ul { list-style:square }
+#content-block div.wrap-dash   > ul { list-style:'– ' }
+/* for individual lists */
+#content-block ul.none { list-style:none }
+#content-block ul.disc { list-style:disc }
+#content-block ul.circle { list-style:circle }
+#content-block ul.square { list-style:square }
+#content-block ul.dash { list-style:'– ' }
+/* for individual list items */
+#content-block li.none { list-style:none }
+#content-block li.disc { list-style:disc }
+#content-block li.circle { list-style:circle }
+#content-block li.square { list-style:square }
+#content-block li.dash { list-style:'– ' }
+/* for sublists */
+#content-block ul.subnone   ul { list-style:none }
+#content-block ul.subdisc   ul { list-style:disc }
+#content-block ul.subcircle ul { list-style:circle }
+#content-block ul.subsquare ul { list-style:square }
+#content-block ul.subdash   ul { list-style:'– ' }
+
+/* ol default styles */
+#content-block ol.decimal, #content-block li.decimal { list-style-type:decimal }
+#content-block ol.lower-alpha, #content-block li.lower-alpha { list-style-type:lower-alpha }
+#content-block ol.upper-alpha, #content-block li.upper-alpha { list-style-type:upper-alpha }
+#content-block ol.lower-roman, #content-block li.lower-roman { list-style-type:lower-roman }
+#content-block ol.upper-roman, #content-block li.upper-roman { list-style-type:upper-roman }
+#content-block ol.lower-greek, #content-block li.lower-greek { list-style-type:lower-greek }
+
+/* imitate LaTeX manual spacing */
+#content-block span.smallskip { display:block; clear:both; width:10%; margin-bottom:0.5em }
+#content-block span.medskip { display:block; clear:both; width:10%; margin-bottom:1.5em }
+#content-block span.bigskip { display:block; clear:both; width:10%; margin-bottom:3em }
+
+/* footnotes */
+#content-block .footnote {
+	display:block;
+	clear:both;
+	font-style:italic;
+	font-size:small;
+	margin:0 1rem 1.5rem 1.5rem;
+}
+
+/* Font Awesome Icons */
+#content-block .bullet-fa { 
+	font-size: 16pt;
+	padding-right: 1em;
+}
+
+/* colors */
+#content-block .black { color:#333 }
+#content-block .blue { color:#428bca }
+#content-block .accent { color:#025D8C }
+
+/* address */
+#content-block address { line-height:1.425 }
+
+/* Indentations */
+
+/* either via a wrapper */ 
+#content-block div.wrap-noindent > p,   #content-block div.wrap-noindent  > ul, 
+#content-block div.wrap-noindent > ol,  #content-block ul.wrap-noindent   > li, 
+#content-block ol.wrap-noindent  > li,  #content-block dl.wrap-noindent   > dd
+  { margin-left:0 }
+#content-block div.wrap-indent > p,  #content-block div.wrap-indent  > ul, 
+#content-block div.wrap-indent > ol, #content-block ul.wrap-indent   > li, 
+#content-block ol.wrap-indent  > li 
+  { margin-left:1.5rem }
+#content-block div.wrap-right-noindent > p,  #content-block div.wrap-right-noindent  > ul, 
+#content-block div.wrap-right-noindent > ol, #content-block ul.wrap-right-noindent   > li, 
+#content-block ol.wrap-right-noindent  > li, #content-block dl.wrap-right-noindent   > dd
+  { margin-right:0rem }
+#content-block div.wrap-right-indent > p,  #content-block div.wrap-right-indent  > ul, 
+#content-block div.wrap-right-indent > ol, #content-block ul.wrap-right-indent   > li, 
+#content-block ol.wrap-right-indent  > li, #content-block dl.wrap-right-indent   > dd
+  { margin-right:1.5rem }
+#content-block div.wrap-hanging > p,  #content-block div.wrap-hanging  > ul, 
+#content-block div.wrap-hanging > ol, #content-block ul.wrap-hanging   > li, 
+#content-block ol.wrap-hanging  > li, #content-block dl.wrap-hanging  > dd 
+  { margin-left:1.5rem; text-indent:-1.5rem }
+/* 
+   Or specify it individually in the tags themself
+
+   Note: because of css 'specificity' rules, the above defined div-wrappers
+   are a higher priority than the classes below.  To get around this we also
+   define id's for this situation so we can override any wrapper that exists.
+*/
+#content-block p.noindent,  #content-block ul.noindent, #content-block ol.noindent,
+#content-block li.noindent, #content-block dl.noindent, #content-block dd.noindent, 
+#content-block blockquote.noindent, #content-block footer.noindent,
+#content-block h1.noindent, #content-block h2.noindent, #content-block h3.noindent,
+#content-block h4.noindent, #content-block h5.noindent, #content-block h6.noindent,
+#content-block p#noindent,  #content-block ul#noindent, #content-block ol#noindent,
+#content-block li#noindent, #content-block dl#noindent, #content-block dd#noindent, 
+#content-block blockquote#noindent, #content-block footer#noindent, 
+#content-block h1#noindent, #content-block h2#noindent, #content-block h3#noindent,
+#content-block h4#noindent, #content-block h5#noindent, #content-block h6#noindent
+  { margin-left:0 }
+#content-block p.indent,  #content-block ul.indent, #content-block ol.indent,
+#content-block li.indent, #content-block dl.indent, #content-block dd.indent, 
+#content-block blockquote.indent, #content-block footer.indent,
+#content-block h1.indent, #content-block h2.indent, #content-block h3.indent,
+#content-block h4.indent, #content-block h5.indent, #content-block h6.indent,
+#content-block p#indent,  #content-block ul#indent, #content-block ol#indent,
+#content-block li#indent, #content-block dl#indent, #content-block dd#indent, 
+#content-block blockquote#indent, #content-block footer#indent,
+#content-block h1#indent, #content-block h2#indent, #content-block h3#indent,
+#content-block h4#indent, #content-block h5#indent, #content-block h6#indent
+  { margin-left:1.5rem }
+#content-block p.right-noindent,  #content-block ul.right-noindent, #content-block ol.right-noindent,
+#content-block li.right-noindent, #content-block dl.right-noindent, #content-block dd.right-noindent, 
+#content-block blockquote.right-noindent, #content-block footer.right-noindent,
+#content-block h1.right-noindent, #content-block h2.right-noindent, #content-block h3.right-noindent,
+#content-block h4.right-noindent, #content-block h5.right-noindent, #content-block h6.right-noindent,
+#content-block p#right-noindent,  #content-block ul#right-noindent, #content-block ol#right-noindent,
+#content-block li#right-noindent, #content-block dl#right-noindent, #content-block dd#right-noindent, 
+#content-block blockquote#right-noindent, #content-block footnote#right-noindent,
+#content-block h1#right-noindent, #content-block h2#right-noindent, #content-block h3#right-noindent,
+#content-block h4#right-noindent, #content-block h5#right-noindent, #content-block h6#right-noindent
+  { margin-right:0rem }
+#content-block p.right-indent,  #content-block ul.right-indent, #content-block ol.right-indent,
+#content-block li.right-indent, #content-block dl.right-indent, #content-block dd.right-indent, 
+#content-block blockquote.right-indent, #content-block footer.right-indent,
+#content-block h1.right-indent, #content-block h2.right-indent, #content-block h3.right-indent,
+#content-block h4.right-indent, #content-block h5.right-indent, #content-block h6.right-indent,
+#content-block p#right-indent,  #content-block ul#right-indent, #content-block ol#right-indent,
+#content-block li#right-indent, #content-block dl#right-indent, #content-block dd#right-indent, 
+#content-block blockquote#right-indent, #content-block footnote#right-indent,
+#content-block h1#right-indent, #content-block h2#right-indent, #content-block h3#right-indent,
+#content-block h4#right-indent, #content-block h5#right-indent, #content-block h6#right-indent
+  { margin-right:1.5rem }
+#content-block p.hanging,  #content-block ul.hanging, #content-block ol.hanging,
+#content-block li.hanging, #content-block dl.hanging, #content-block dd.hanging, 
+#content-block blockquote.hanging, #content-block footer.hanging,
+#content-block h1.hanging, #content-block h2.hanging, #content-block h3.hanging,
+#content-block h4.hanging, #content-block h5.hanging, #content-block h6.hanging,
+#content-block p#hanging,  #content-block ul#hanging, #content-block ol#hanging,
+#content-block li#hanging, #content-block dl#hanging, #content-block dd#hanging, 
+#content-block blockquote#hanging, #content-block footer#hanging,
+#content-block h1#hanging, #content-block h2#hanging, #content-block h3#hanging,
+#content-block h4#hanging, #content-block h5#hanging, #content-block h6#hanging
+  { margin-left:1.5rem; text-indent:-1.5rem }
+
+
+/* booktabs 
+
+  A nice default for most of the tables I might need.
+  Features:
+  * toprule, bottomrule, and midrule are in the appropriate locations
+
+*/
+
+#content-block table.booktab { 
+  table-layout:auto;
+  margin:0;
+	border-top:2px solid #333;
+	border-bottom:2px solid #333;
+}
+#content-block table.center { margin-left:auto; margin-right:auto }
+
+#content-block table.booktab > thead { 
+  border-bottom:1px solid #333;
+}
+
+#content-block table.booktab td,
+#content-block table.booktab th { 
+  border:none;
+	padding:0.5rem 1rem;
+}
+
+#content-block table.booktab > caption { 
+  padding-bottom:0.5rem;
+	font-size:125%;
+}
+
+#content-block .centerlink { 
+  background-color:#b9def0;
+	border-radius:20px;
+}
+
+#content-block a.nohover:hover { 
+	background-image: linear-gradient(to bottom, #d9edf7 0, #b9def0 100%);
+  background-repeat: repeat-x;
+}
+
+#content-block a.button{
+ display:inline-block;
+ padding:0.35em 1.2em;
+ border:0.1em solid #000000;
+ margin:0 0.3em 0.3em 0;
+ border-radius:0.4em;
+ box-sizing: border-box;
+ text-decoration:none;
+ font-family:'Roboto',sans-serif;
+ font-weight:300;
+ color:#000000;
+ background-color:#025d8c22;
+ text-align:center;
+ transition: all 0.2s;
+}
+#content-block a.button:hover{
+ color:#FFFFFF;
+ background-color:#025d8c;
+}
+@media all and (max-width:30em){
+ #content-block a.button{
+  display:block;
+  margin:0.4em auto;
+ }
+}
+
+.newpill {
+      background-color:#4DB6AC; 
+			color:#FFFFFF;
+			font-size:8pt;
+			padding: 0.25rem 0.5rem;
+			margin-right:0.5rem;
+			border-radius:8pt;
+			font-weight:bold;
+}
+
+/* sub-footer */
+#subfooter {
+	padding:1rem 0 3rem;
+	line-height:2;
+	background:#161718; /* 2D2E30 */
+	background-image:url('img/bg-noise.png');
+	text-align:center;
+	color:#FCFCFD; /* #333; */
+	}
+#subfooter h3 {
+	font-size:.875rem;
+	font-weight:400;
+	text-transform:uppercase;
+	letter-spacing:2px;
+	color:#AAA;
+	margin-top:2rem;
+	}
+#subfooter a {
+	color:#FCFCFD
+	}
+
+/* footer */
+#footer-block {
+	padding:3rem 0 3rem;
+	line-height:2;
+	background:#111; /* 161718, F5F1E8 */
+	xbackground-image:url('img/bg-noise.png');
+	text-align:center;
+	color:#FCFCFD; /* #333; */
+	}
+#footer-block a {
+	color:#FCFCFD; /* #333; */
+	}
+#footer-block .glyphicon, .fa-facebook-square, .fa-superscript {
+	padding-right:1rem;
+	}
+#footer-block h3 {
+	font-size:1.5rem;
+	font-weight:400;
+	color:#FCFCFD
+	}
+#footer-block h4 {
+	font-size:.875rem;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	margin:2.5rem 0 .5rem
+	}
+#more-contact-info {
+	margin-top:2rem
+	}
+#more-contact-info a {
+	display:inline-block;
+	padding:.5rem 0;
+	}
+#phone-footer, #email-footer, #facebook-footer {
+	}
+#phone-footer span.glyphicon {
+	color:#51856F;
+	font-size:1.5rem;
+	}
+#email-footer span.glyphicon {
+	color:#993D46;
+	font-size:1.5rem
+	}
+#facebook-footer span.fa {
+	color:#6673C6;
+	font-size:1.5rem;
+  padding-right:0.8rem
+	}
+#copyright {
+	margin:3rem 0 1rem;
+	text-align:center;
+	color:#666;
+	}
+#copyright a {
+	color:#666;
+	}
+
+
+/* home page */
+#home {
+	margin-top:-3rem
+	}
+.banner-style {
+	padding:6rem 0;
+	overflow:hidden
+	}
+#home h2 {
+	font-size:2rem;
+	font-weight:400;
+	line-height:1.5;
+	margin-bottom:.5rem
+	}
+#home p {
+	font-size:1.125rem;
+	line-height:2
+	}
+#banner-1 {
+	background:url('img/writinghand-5.jpg') no-repeat center top;
+	webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+	color:#000
+	}
+#banner-2 img {
+	display:block;
+	margin:0 auto}
+#banner-3 {
+	color:#FFF;
+	background:url('img/russell-view_of_rocky_mountain_national_park.jpg') no-repeat center top;
+	-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+	padding-bottom:9rem;
+	}
+#banner-3 h2 {
+	color:#FFF
+	}
+#banner-3-alt {
+	color:#FFF;
+	background:url('img/mirror.png') no-repeat center top;
+	-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+	padding-bottom:9rem;
+	}
+#banner-3-alt h2 {
+	color:#FFF
+	}
+#banner-4 {
+	padding-bottom:2rem}
+#more-info {
+	text-align:center;
+	padding-bottom:0
+	}
+#more-info h2 {
+	margin-bottom:2rem;
+	color:#333
+	}
+#more-info h3 {
+	margin-bottom:1rem
+	}
+#more-info .circle-icon {
+	margin-bottom:2rem;
+	color:#FFF
+	}
+#more-info a:hover .circle-icon {
+	opacity:.9
+	}
+#more-info-about h3 {
+	color:#6673C6;
+	}
+#more-info-about .circle-icon {
+	background:#6673C6;
+	}
+#more-info-about a.call-to-action:hover {
+	color:#FFF;
+	background-color:#6673C6;
+	border-color:#6673C6;
+	transition: all 0.25s linear 0s;
+	}
+#more-info-details h3 {
+	color:#51856F
+	}
+#more-info-details span {
+	background:#51856F;
+	}
+#more-info-details a.call-to-action:hover {
+	color:#FFF;
+	background-color:#51856F;
+	border-color:#51856F;
+	transition: all 0.25s linear 0s;
+	}
+#more-info-apply h3 {
+	color:#993D46
+	}
+#more-info-apply span {
+	background:#993D46;
+	}
+#more-info-apply a.call-to-action:hover {
+	color:#FFF;
+	background-color:#993D46;
+	border-color:#993D46;
+	transition: all 0.25s linear 0s;
+	}
+#more-info a.call-to-action {
+	display:inline-block;
+	margin-bottom:4rem;
+	padding:1rem 1rem;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	color:#666;
+	border:1px solid #AAA;
+	border-radius:4px
+	}
+#more-info a:hover {
+	text-decoration:none;
+	}
+#mtn-text {
+  padding-top:3em;
+  }
+#mtn-text-alt {
+  padding:2rem 2.5rem 0.5rem;
+  margin-top:6em;
+  background-color:rgba(0,0,0,0.4);
+  border-radius:1rem;
+  }
+
+
+/* next page links */
+.next-page {
+	display:inline-block;
+	margin:1.5rem auto 4rem;
+	padding:1rem 1rem;
+	text-align:center;
+	color:#333;
+	border:1px solid #666;
+	border-radius:4px
+	}
+.next-page:hover {
+	text-decoration:none;
+	color:#FFF;
+	background-color:#025D8C;
+	border-color:#025D8C;
+	transition: all 0.25s linear 0s;
+	}
+
+/* Styling the logo inline */
+.proveitmath, .proveitmathacademy {
+  font-weight:600;
+  color:#111
+ }
+
+/* footnotes */
+#fn1 {
+	padding:1rem 0;
+	border-top:1px solid #AAA;
+	border-bottom:1px solid #AAA;
+	font-size:.75rem;
+	color:#666;
+	}
+
+/* justify text in some places */
+#location p, #eligibility p, #dates-and-location p, #schedule #daytable, #instructors p {
+	text-align:justify
+	}
+
+/* footer separator */
+.mountains {
+	position:relative;
+	}
+.mountains::before {
+	position: absolute;
+	content: '';
+	left: 50%;
+	width: 24px;
+	height: 24px;
+	-webkit-transform: translateX(-50%) rotate(45deg);
+	transform: translateX(-50%) rotate(45deg);
+	top: -12px;
+	background: #111;
+	box-shadow: -24px 24px 0 #111, 24px -24px 0 #111;
+}
+
+@media (min-width:768px){
+.navbar-nav {float:right;}
+}
+
+@media print {
+  #subfooter,#footer-block,.next-page {display:none}
+  }
+
+/* out of service message */
+#out-of-service {
+  padding: 2rem 0 1rem;
+  background: #E4F3F7;
+  border-bottom: 1px solid #EEE;
+  
+	}
+#out-of-service p {
+  font-style: italic;
+  color:#000
+	}
+
+/* testimonials */
+
+.testimonial {
+    font-size: 1em;
+    font-style: italic;
+    margin-bottom: .3em;
+    padding-left: 2.5rem;
+    line-height: 150%;
+    text-indent: -1.4rem;
+    text-align: justify;
+}
+.testimonial:before {
+    content: "\201C";
+    color: #C2E4EE;
+    font-family: serif;
+    font-weight: bold;
+    font-size: 4rem;
+    display: inline-block;
+    padding-right: 0.2em;
+    position: relative;
+    top: 1rem;
+}
+
+h1.testimonial-header {
+  margin-bottom:1em;  
+}
+
+.test-img {
+  max-width:100%; 
+  height:auto;
+  margin-top:1.5rem;
+  margin-bottom:1rem
+}
+
+.autor:before{
+	content:"\2014\0020"
+	}
+.autor{
+	text-align:right !important		
+	}

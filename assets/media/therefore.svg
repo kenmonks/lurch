@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 100 100">
+  <!-- Top dot -->
+  <circle cx="50" cy="15" r="10" />
+  <!-- Bottom left dot -->
+  <circle cx="15" cy="76" r="10" />
+  <!-- Bottom right dot -->
+  <circle cx="85" cy="76" r="10" />
+</svg>
