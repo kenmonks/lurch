@@ -15,6 +15,8 @@ html {
 /* the left nav column */
 #leftnav {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   top: 0;
   left: 0;
   width: 228px;
@@ -23,7 +25,46 @@ html {
   color: white;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: hidden;
+}
+
+#leftnav #contact {
+  position: relative;
+  margin-top: auto;
+  /* margin-bottom: auto; */
+  padding-top: 0;
+}
+  
+#leftnav #contact a, #leftnav #contact a:visited {
+  color: #CCC;
+  line-height: 1.5;
+}
+
+
+#leftnav #contact a,
+#leftnav #contact a:visited
+ {
+  font-family: inherit; /* monospace, Courier; */
+  color: #DDD;
+  margin-top: 0;
+  margin-left: auto;
+  line-height: 1.5;
+  /* font-size: smaller; */
+}
+
+#leftnav #contact div {
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: left;
+  margin: 0;
+  padding: 1px 5px;
+  border-radius: 1px;
+}
+
+#leftnav #contact div:hover,
+#leftnav #contact div a:hover {
+  background-color: #bbd6fb;
+  color: #0068c2;
 }
 
 /* flex column for content-block and footer */
@@ -89,25 +130,6 @@ dd {
   line-height: 1.42857143;
 }
 
-#leftnav #contact a,
-#leftnav #contact a:visited
- {
-  font-family: monospace, Courier;
-  color: #e7f3fd;
-  margin-top: 0;
-  margin-left: auto;
-  line-height: 1.25;
-  font-size: smaller;
-}
-
-#leftnav #contact div {
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: left;
-  margin: 0;
-  padding: 0;
-}
-
 /* The page title box.  Usually has an h1 for the title and h2 for the subtitle. */
 div.title-box {
   padding-bottom: 32px;
@@ -137,6 +159,7 @@ div.title-box {
 
 #leftnav ul {
   margin-top: 1rem;
+  margin-bottom: 20px;
   border-top: #bbd6fb 1px solid;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -146,6 +169,7 @@ div.title-box {
 #leftnav li {
   display: block;
   padding: 5px 5px;
+  border-radius: 1px;
 }
 
 #leftnav a,
