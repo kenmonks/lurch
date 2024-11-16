@@ -127,7 +127,9 @@ table { margin-bottom:1.5rem }
 #content-block { padding:3rem 0 }
 
 /* anchors */
-#content-block a:hover { background-color:#f7f7ff }
+#content-block a:hover { 
+  background-color: #def0ff/* was #f7f7ff */
+}
 
 /* Headers 
 

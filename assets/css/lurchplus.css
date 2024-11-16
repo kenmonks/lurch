@@ -227,6 +227,10 @@ div.blue-box {
   border-radius: 12pt;
 }
 
+#content-block div.blue-box a:hover {
+  background-color: #def0ff
+}
+
 .strong-tags li a:first-of-type {
   font-weight: bold;
 }
