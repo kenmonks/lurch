@@ -476,27 +476,25 @@ const resetComputedAttributes = doc => {
  * Mark Declared Symbols
  * 
  * Mark explicitly declared symbols `s, throughout an LC by setting
- * `s.constant=true`.  The document containing the target must be specified to 
- * fetch the Declares.
+ * `s.constant=true`.  Symbols consisting of a string of digits are automatically
+ * marked as constants.
  * 
- * TODO: Maybe upgrade to just compute doc from target.root()
- * 
- * @param {LurchDocument} doc - The document containing the expression
- * @param {LurchDocument} [target=doc] - The target 
+ * @param {LurchDocument} [target] - The target 
  */
-const markDeclaredSymbols = ( doc, target=doc ) => {
-  // fetch all of the declarations
-  let Declares = doc.getDeclares()
-  // fetch all of the symbols
+const markDeclaredSymbols = ( target ) => {
+  // get the document
+  const doc = target.root()
+  // if the text of the constants is cached in an array in doc.constants, fetch
+  // it, otherwise compute it
+  if (!doc.constants) { 
+    doc.constants = new Set(doc.getDeclares().map(x=>x.children().map(kid=>kid.text())).flat())
+  }
+  // fetch all of the symbols in the target
   let symbols = target.descendantsSatisfying( x => x instanceof LurchSymbol )
   // for each one, see if it is in the scope of any Declare declaration of that symbol
   symbols.forEach( s => {
-      if (Declares.some( d => 
-         d.symbols().map(x=>x.text()).includes(s.text())
-      ))
-      s.constant = true
-    }
-  )
+      if ( /^\d+$/.test(s.text()) || doc.constants.has(s.text())) s.constant = true
+  })
   return target
 }
 
