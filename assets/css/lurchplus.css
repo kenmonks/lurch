@@ -28,6 +28,36 @@ html {
   overflow-y: hidden;
 }
 
+#leftnav ul {
+  margin-top: 1rem;
+  margin-bottom: 20px;
+  border-top: #bbd6fb 1px solid;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: #bbd6fb 1px solid;
+}
+
+#leftnav li {
+  display: block;
+  padding: 5px 5px;
+  border-radius: 1px;
+}
+
+#leftnav a,
+#leftnav a:visited {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+  color: #5DA9E9;
+}
+
+#leftnav li:hover,
+#leftnav li:hover a {
+  background-color: #bbd6fb;
+  color: #0068c2;
+}
+
 #leftnav #contact {
   position: relative;
   margin-top: auto;
@@ -38,6 +68,7 @@ html {
 #leftnav #contact a, #leftnav #contact a:visited {
   color: #CCC;
   line-height: 1.5;
+  display: inline;
 }
 
 
@@ -49,6 +80,7 @@ html {
   margin-top: 0;
   margin-left: auto;
   line-height: 1.5;
+  transition: border-color 0.3s ease;
   /* font-size: smaller; */
 }
 
@@ -58,13 +90,13 @@ html {
   text-align: left;
   margin: 0;
   padding: 1px 5px;
-  border-radius: 1px;
+  /* border-radius: 1px; */
 }
 
-#leftnav #contact div:hover,
-#leftnav #contact div a:hover {
-  background-color: #bbd6fb;
-  color: #0068c2;
+#leftnav #contact a:hover {
+  border-bottom:1px dotted #DDD;
+  transition: border-color 0.3s ease;
+
 }
 
 /* flex column for content-block and footer */
@@ -155,36 +187,6 @@ div.title-box {
 
 #content-block .thmlist strong {
   padding-right: 0.75rem;
-}
-
-#leftnav ul {
-  margin-top: 1rem;
-  margin-bottom: 20px;
-  border-top: #bbd6fb 1px solid;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: #bbd6fb 1px solid;
-}
-
-#leftnav li {
-  display: block;
-  padding: 5px 5px;
-  border-radius: 1px;
-}
-
-#leftnav a,
-#leftnav a:visited {
-  display: block;
-  width: 100%;
-  text-decoration: none;
-  box-sizing: border-box;
-  color: #5DA9E9;
-}
-
-#leftnav li:hover,
-#leftnav li:hover a {
-  background-color: #bbd6fb;
-  color: #0068c2;
 }
 
 .haiku {
