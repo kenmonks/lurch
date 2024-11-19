@@ -1,4 +1,5 @@
 // This file is only for local debugging and benchmarking use, and so is commented out.
+// The uncommented version is saved in my lurch-local repository
 
 ////////////////////////////////////////////////////////////////////////////
 //  Acid Tests
