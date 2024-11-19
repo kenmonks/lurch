@@ -24,7 +24,7 @@
 import { Atom } from './atoms.js'
 import { represent } from './notation.js'
 import { appSettings } from './settings-install.js'
-import { Dialog, TextInputItem, LongTextInputItem } from './dialog.js'
+import { Dialog, TextInputItem, LongTextInputItem, HTMLItem } from './dialog.js'
 import { MathItem } from './math-live.js'
 import { escapeLatex } from './utilities.js'
 
@@ -72,6 +72,16 @@ export class ExpositoryMath extends Atom {
         const textSelector = mode == 'Advanced' 
             ? 'textarea[type="text"]'
             : 'input[type="text"]'
+        // const mathjaxPreview = new HTMLItem('<div id="mathjaxPreview"></div>')
+        // dialog.addItem( mathjaxPreview )
+        // mathjaxPreview.onShow = () => {
+        //   const jaxinthebox = dialog.querySelector( '#mathjaxPreview' )
+        //   jaxinthebox.innerHTML = `$$${dialog.get( 'latex' )}$$`
+        //   // set MathJax rendering to svg in the dialog to avoid conflict with 
+        //   // standard TinyMCE .tox css on dialogs for chtml
+        //   MathJax.typeset()
+        // }
+
         const mathLivePreview = new MathItem( 'preview',
             mode == 'Advanced' ? '' : 'Math editor' )
         mathLivePreview.finishSetup = () => {
@@ -83,6 +93,7 @@ export class ExpositoryMath extends Atom {
             mathLivePreview.setValue( latex )
         }
         dialog.addItem( mathLivePreview )
+
         // initialize dialog with data from the atom
         dialog.setInitialData( { latex } )
         dialog.setDefaultFocus( 'latex' )
@@ -90,8 +101,13 @@ export class ExpositoryMath extends Atom {
         const empty = () => dialog.get( 'latex' ).trim() == ''
         // if they edit the Lurch notation or latex, keep them in sync
         dialog.onChange = ( _, component ) => {
-            if ( component.name == 'latex' )
+            if ( component.name == 'latex' ) {
                 mathLivePreview.setValue( dialog.get( 'latex' ) )
+              // get the dom element and render it on load
+              // const jaxinthebox = dialog.querySelector( '#mathjaxPreview' )
+              // jaxinthebox.innerHTML = `$$${dialog.get( 'latex' )}$$`
+              // MathJax.typeset()
+            }
             if ( component.name == 'preview' )
                 dialog.querySelector( textSelector ).value =
                     mathLivePreview.mathLiveEditor.value
