@@ -4,16 +4,12 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:2999/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/student.html?load=' + thisURL )
                 </script>
             </div>
         
-            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"minimal"</div><div data-category="settings" data-key="instantiateEverything" data-value-type="json">false</div></div>
-            <div id="document"><div>
-<div>
-<div>
-<div>
-<div style="text-align: left;">
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="settings" data-key="instantiateEverything" data-value-type="json">false</div></div>
+            <div id="document"><div style="text-align: left;">
 <h1>Proofs in Lurch for Math 299</h1>
 <p>Lurch was used in Math 299: <em>Introduction to Mathematical Proof</em> at the University of Scranton during the Spring 2024 Semester.&nbsp; It is a four credit undergraduate course for math and math education majors that is usually taken in the Spring of their sophomore year and is a prerequisite for many of our junior and senior level undergraduate courses in pure mathematics.</p>
 <p>This worksheet is designed to walk you through the tools available in Lurch for doing proofs.&nbsp; Not all tools are required for all proofs and some are more advanced than others, but we list them all here.</p>
@@ -385,10 +381,10 @@
 <h3>B. Equations Rule</h3>
 <div>
 <ul>
-<li style="text-align: left;">Lurch provides a special built-in validation tool for dealing with proofs involving lengthy transitive chains of equation such as</li>
+<li style="text-align: left;">Lurch provides a special built-in validation tool for dealing with proofs involving lengthy transitive chains of equations.</li>
+<li style="text-align: left;">Inserting a line break with Shift+Enter before or after any = in the input formats the chain with the equations aligned vertically, otherwise it is formatted horizontally.&nbsp; Compare the input of these two expressions by clicking on them.</li>
 </ul>
-<p style="text-align: center;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\begin{align} a &amp;= b \\\\ &amp;= c \\\\ &amp;= d \\end{align}&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mtable"><span class="col-align-r"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__mathit">a</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="col-align-l"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">b</span></span></span><span style="top: -3.01em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">c</span></span></span><span style="top: -1.51em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span></span></span></span></span></span></p>
-<p style="text-align: left; padding-left: 40px;"><br>(entered as a=b=c=d).</p>
+<p style="text-align: center;"><span class="lurch-atom" style="font-size: var(--base-font-size);" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;a=b=c=d&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">a</span><span class="ML__cmr">=</span><span class="ML__mathit">b</span><span class="ML__cmr">=</span><span class="ML__mathit">c</span><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span></span><span style="font-size: var(--base-font-size);">&nbsp; &nbsp; &nbsp;versus&nbsp; &nbsp; &nbsp;</span><span class="lurch-atom" style="font-size: var(--base-font-size);" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;a = b\n  = c\n  = d&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mtable"><span class="col-align-r"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__mathit">a</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="col-align-l"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">b</span></span></span><span style="top: -3.01em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">c</span></span></span><span style="top: -1.51em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span></span></span></span></span></span></p>
 <ul>
 <li style="text-align: left;">It automates the application of the substitution and reflexive rules of equality, the derived properties of symmetry and transitivity, and checks each pair in the chain for both direct equality, and equality via a single substitution.</li>
 <li style="text-align: left;">The Equations Rule is only available if you have a Rule environment in your document or its context.&nbsp; (It's usually in the context.)</li>
@@ -461,7 +457,7 @@
 <ul>
 <li>This rule is not guaranteed to be robust in the sense that the user may be able to exploit aspects of the CAS to derive contradictions, e.g., it says that this is valid</li>
 </ul>
-<p style="text-align: center;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;z/z=1&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mfrac"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.94em;"><span class="ML__center" style="top: -2.31em;"><span style="height: 0.44em; display: inline-block;"><span class="ML__mathit" style="margin-right: 0.05em;">z</span></span></span><span class="ML__center" style="top: -3.5em;"><span style="height: 0.44em; display: inline-block;"><span class="ML__mathit" style="margin-right: 0.05em;">z</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="ML__cmr">=</span><span class="ML__cmr">1</span></span></span></span></span> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;by algebra&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">by algebra</span></span></span></span></span></p>
+<p style="text-align: center;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;z/z=1&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mfrac"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.94em;"><span class="ML__center" style="top: -2.31em;"><span style="height: 0.44em; display: inline-block;"><span class="ML__mathit" style="margin-right: 0.05em;">z</span></span></span><span class="ML__center" style="top: -3.5em;"><span style="height: 0.44em; display: inline-block;"><span class="ML__mathit" style="margin-right: 0.05em;">z</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="ML__cmr">=</span><span class="ML__cmr">1</span></span></span></span></span> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;by algebra&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text"> by algebra</span></span></span></span></span></p>
 <p style="padding-left: 40px;">&nbsp;without checking that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;z&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.05em;">z</span></span></span></span></span> is nonzero.</p>
 <hr>
 <p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
@@ -490,10 +486,6 @@
 </div>
 <hr>
 <p>&nbsp;</p>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div></div>

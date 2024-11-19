@@ -187,7 +187,9 @@
     } 
     return (tex[s]) ? tex[s] : s
   }
-  // convert equations with more than two arguments to a transitive chain
+  // Convert equations with more than two arguments to a transitive chain. 
+  // This is only called if the user included a newline after or before one 
+  // of the equal signs
   const texEquation = a => {
     if (a.length === 2) return a.join('=')
     let ans = `\\begin{align*}\n  ${a[0]} &= ${a[1]}`
@@ -442,7 +444,7 @@
   // Now proceed with the set bracket replacements
   if (options.enableSets) 
     input = input.replace(/{/g,'｛').replace(/}/g,'｝')  
-  // uncomment the following for debugging
+  // set optios.debug to true to enable the following for debugging
   if (options.debug) say(input)
 }
 
@@ -680,8 +682,10 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                  { return `${a}\\neq ${b}` }
   Relation   = a:(Binding/RelArg)|2..,_'~'_|       
                 { return a.join('\\sim ')  }             
-  Equation   = a:(Binding/RelArg)|2..,_'='_|       
-                { return texEquation(a) }
+  Equation   = a:((Binding/RelArg)|2..,_s_'='_s_| / (Binding/RelArg)|1..1|) (_n_'='_ / _'='_n_)
+               b:( (Binding/RelArg)|2..,_'='_| / (Binding/RelArg)|1..1| ) 
+               { return texEquation([...a,...b]) } /
+               a:(Binding/RelArg)|2..,_'='_| { return a.join('=') }
   Loves      = a:RelArg _ b:('loves'/'love')_x c:RelArg
                 { return `${a}${txt(' '+b)}${c}` }
   Fears      = a:RelArg _ b:('fears'/'fear')_x c:RelArg
@@ -1013,5 +1017,7 @@ _x = !alphanum _ { return undefined }
 // commas, periods, and spaces
 comma  =  _ ',' _
 period =  '.'
-__  = [ \t\n\r]+
-_   = [ \t\n\r]*
+_n_ = _s_'\n'_   // a string of whitespace that must contain at least one \n
+_s_ = [ \t]*     // a string of spaces and tabs of any length (even zero)
+__  = [ \t\n\r]+ // a string of whitespace of positive length
+_   = [ \t\n\r]* // a string of whitespace of any length (even zero)

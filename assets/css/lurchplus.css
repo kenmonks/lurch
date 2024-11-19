@@ -96,7 +96,6 @@ html {
 #leftnav #contact a:hover {
   border-bottom:1px dotted #DDD;
   transition: border-color 0.3s ease;
-
 }
 
 /* flex column for content-block and footer */
