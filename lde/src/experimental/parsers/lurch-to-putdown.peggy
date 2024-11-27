@@ -86,17 +86,6 @@
     if ( b.length==1 ) return `(${b[0][0]} ${a} ${b[0][1]} )`
     return `(trans_chain ${a} ${b.flat().join(' ') } )`
   }
-  
-  // const lispPrefix = (op,args) => {
-  //   if (!Array.isArray(args)) { return `(${op} ${args})` }
-  //   else if (!args.every(Array.isArray)) { 
-  //     return `(${op} ${args.join(' ')})` 
-  //   } else {
-  //     return args.reduce( (ans,group) => { 
-  //       return (group.length) ? `(${ans} ${group.join(' ')})` : `(${ans})`  
-  //     } , op )
-  //   }
-  // }
 
   // convert signed sums to lisp
   const lispSum = (first,rest) => {
@@ -518,8 +507,7 @@ Prop = Iff
 // Relations
 //
 Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf / 
-            Divides / Chain / Leq / LessThan / Relation / Equation / NotEqual / 
-            Loves / Fears / Is
+            Divides / Chain / Relation / NotEqual / Loves / Fears / Is
 
   Maps       = a:RelArg _':'_ b:RelArg _'to'_x c:RelArg  
                  { return lispSeq('maps',[a,b,c]) }
@@ -546,16 +534,10 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                  { return lispBinary('|',a,b) }
   Chain      = a:(Binding/RelArg) b:( ChainOp (Binding/RelArg) )+
                  { return lispChain(a,b) }
-  Leq        = a:RelArg|2..,_'leq'_x|             
-                 { return lispSeq('≤',a) }
-  LessThan   = a:RelArg|2..,_('<'_ / 'lt'_x)|
-                 { return lispSeq('<',a) }
   NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg   
                  { return `(¬ ${lispBinary('=',a,b)})` }
   Relation   = a:(Binding/RelArg)|2..,_'~'_|       
                 { return lispSeq('~',a) }             
-  Equation   = a:(Binding/RelArg)|2..,_'='_|       
-                { return lispSeq('=',a) }
   Loves      = a:RelArg _('loves'/'love')_x b:RelArg
                 { return lispBinary('loves',a,b) }
   Fears      = a:RelArg _('fears'/'fear')_x b:RelArg

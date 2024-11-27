@@ -199,17 +199,6 @@
     return ans
   }
 
-  // Convert equations with more than two arguments to a transitive chain.
-  // This is only called if the user included a newline after or before one
-  // of the equal signs
-  const texEquation = a => {
-    if (a.length === 2) return a.join('=')
-    let ans = `\\begin{align*}\n  ${a[0]} &= ${a[1]}`
-    a.slice(2).forEach( eq => ans += ` \\\\\n    &= ${eq}`)
-    ans += '\n\\end{align*}'
-    return ans
-  }
-
   // convert prefix function application to lisp
   const texPrefix = (op,args) => {
       // write(op)
@@ -660,8 +649,7 @@ Prop = Iff
 // Relations
 //
 Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
-            Divides / Chain / Leq / LessThan / Relation / Equation / NotEqual /
-            Loves / Fears / Is
+            Divides / Chain / Relation / NotEqual / Loves / Fears / Is
 
   Maps       = a:RelArg _':'_ b:RelArg _'to'_x c:RelArg
                  { return `${a}\\colon ${b}\\to ${c}` }
@@ -689,26 +677,13 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
   Chain      = a:(Binding/RelArg) b:( sChainOp (Binding/RelArg) )*
                                   c:( nChainOp (Binding/RelArg) )
                                   d:( _ @ChainOp _ @(Binding/RelArg) )*
-                 { console.log(a)
-                   console.log(b)
-                   console.log(c)
-                   console.log(d)
-                   console.log([...b,c,...d])
-                   return texChain(a,[...b,c,...d]) } /
+                 { return texChain(a,[...b,c,...d]) } /
                a:(Binding/RelArg) b:( _ @ChainOp _ @(Binding/RelArg) )+
                  { return a+b.flat().join('')}
-  Leq        = a:RelArg|2..,_'leq'_x|
-                 { return a.join('\\leq ') }
-  LessThan   = a:RelArg|2..,_('<'_ / 'lt'_x)|
-                 { return a.join('\\lt ')  }
   NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg
                  { return `${a}\\neq ${b}` }
   Relation   = a:(Binding/RelArg)|2..,_'~'_|
                 { return a.join('\\sim ')  }
-  Equation   = a:((Binding/RelArg)|2..,_s_'='_s_| / (Binding/RelArg)|1..1|) (_n_'='_ / _'='_n_)
-               b:( (Binding/RelArg)|2..,_'='_| / (Binding/RelArg)|1..1| )
-               { return texEquation([...a,...b]) } /
-               a:(Binding/RelArg)|2..,_'='_| { return a.join('=') }
   Loves      = a:RelArg _ b:('loves'/'love')_x c:RelArg
                 { return `${a}${txt(' '+b)}${c}` }
   Fears      = a:RelArg _ b:('fears'/'fear')_x c:RelArg
