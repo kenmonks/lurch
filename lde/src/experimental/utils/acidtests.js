@@ -10,8 +10,8 @@ const verbose = true
 // Note that you can specify the start and end student files for smaller tests
 const startTest = LurchOptions.startStudentTest
 const endTest = LurchOptions.endStudentTest
-// const startTest = 21
-// const endTest = 21
+// const startTest = 1
+// const endTest = 10
 
 // declare the acide array
 acid=[]
@@ -33,7 +33,7 @@ const loadtest = (name, folder='acid tests', extension='lurch',
     acid.push(xPen(`Error loading acid test: ${name}`))
   }
   if ( showFile ) console.log(attributePen(
-    `${msToTime(Date.now()-lasttime)} (${msToTime(Date.now()-start)} total)`))
+    `  ${msToTime(Date.now()-lasttime)} (${msToTime(Date.now()-start)} total)`))
 }
 
 // compute the final feedback result for a transitive chain of = in the case

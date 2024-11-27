@@ -113,9 +113,7 @@ const msToTime = ms => {
   const seconds = Math.floor((ms % (1000 * 60))) / 1000
   const Hours = (hours>0) ? `${hours} hr ` : ''
   const Minutes = (minutes>0) ? `${minutes} min ` : ''
-  const Seconds = `${(seconds>10) ? Math.round(seconds) :
-                     (seconds>1)  ? seconds.toFixed(1)  :
-                        seconds.toFixed(3)} sec`
+  const Seconds = `${(minutes>0) ? Math.round(seconds) : seconds.toFixed(3)} sec`
   return Hours+Minutes+Seconds
 }
 
