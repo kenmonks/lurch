@@ -352,10 +352,6 @@ global.loadDoc = ( name, folder='./', extension=LurchFileExtension,
     doc = loadStr( name, folder, extension )
   }
   doc = lc(doc)
-  // For backwards compatibility convert any legacy equation transitive chains
-  // to the new style
-  // TODO: just upgrade the student files and resave them
-  upgradeChains(doc)
   interpret(doc)
   validate(doc)
   return doc

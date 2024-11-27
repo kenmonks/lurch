@@ -835,7 +835,9 @@ const instantiateTransitives = (doc,rule) => {
     if (op.text()==='=') {
       // insert its symmetric equivalence (done after inserting transitives to
       // the whole document) 
-      insertSymmetricEquivalences( conc , rule )
+
+      // The following is done afterwards anyway, so perhaps we don't need it here
+      // insertSymmetricEquivalences( conc , rule )
   
       // and Consider its reverse
       insertInstantiation( reverseEquation(conc) , rule)
@@ -955,6 +957,7 @@ const upgradeChains = doc => {
     eq2chain(eq).insertAfter(eq)
     eq.remove()
   })
+  return doc
 }
 
 /**
