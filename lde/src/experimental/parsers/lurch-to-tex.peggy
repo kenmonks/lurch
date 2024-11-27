@@ -12,7 +12,7 @@
 // represent one half. We do not have an Integer or Rational constant type for
 // this reason.
 //
-// To make the parser more robust, all symbols can only consist of upper and 
+// To make the parser more robust, all symbols can only consist of upper and
 // lower case letters A-Z and a-z and digits 0-9, but cannot start with a digit.
 //
 // To save the resulting parser to a standalone .js file use:
@@ -23,12 +23,12 @@
 
   /////////////////////////////////////////////////////////////////
   // Peggy-specific utilities
-  
+
   // It is essential to understand how peggy parses a rule into strings and
   // nested so that these can be processed appropriately.  We list here some
-  // notes for quick reference.  Let A, B, C ... denote rule names and 
+  // notes for quick reference.  Let A, B, C ... denote rule names and
   // A',B',.. the result of parsing those.
-  // 
+  //
   // Rule Form                 Returns
   // A                         A'
   // (A)                       A'
@@ -39,13 +39,13 @@
   // A* or A+                  [A',A',...]
   // A|m..n,separator|         [A',A',...]
   // !anything or &anything    undefined
-  // A?                        null or A' 
-  
+  // A?                        null or A'
+
   // Since we are returning a string with this parser, no matter how nested and
   // convoluted an array might be, we always want to ignore undefined and empty
   // arrays that peggy creates when interpreting the rule.  Here we remove both
   // undefined terms and empty arrays that appear in array A.
-  const clean = A => { 
+  const clean = A => {
     return A.filter(x=>x!==undefined && !(Array.isArray(x) && x.length===0))
              .map( c => { return (Array.isArray(c)) ? clean(c) : c } )
   }
@@ -54,7 +54,7 @@
   // x. If it has two elements, x and y, just return `x and y`.  If it has
   // elements x1, x2, ..., xn for n>2 return `x1, x2, ..., x_{n-1}, and x_n`.
   const sequence = s => {
-    const a = s.map(texsymbol)  
+    const a = s.map(texsymbol)
     if (a.length>2) {
       return a.slice(0,-1).join('\\text{, }')+'\\text{, and }'+a[a.length-1]
     } else if (a.length === 2) {
@@ -71,14 +71,14 @@
   const texUnary = (op,arg) => {
     return (op) ? `${op}${arg}` : arg
   }
-  
+
   // join a tex sequence with an operator
   const texJoin = (op,args) => {
     if (args.length===1) return args.join(op)
     return args.join(` ${op} `)
   }
 
-  // apply a right associative binary operator chain 
+  // apply a right associative binary operator chain
   const texRightAssoc = (op,args) => {
     return args.reverse().slice(1).reduce(
       (ans,x)=>{ return `${x}${op}{${ans}}`},args[0])
@@ -95,7 +95,7 @@
 
   // convert summations to tex
   const summation = (f,k,a,b) => {
-    a = a || 0 
+    a = a || 0
     return `\\displaystyle\\sum_{${k}=${a}}^{${b}} ${f}`
   }
 
@@ -126,16 +126,16 @@
       // if it starts with / put the latest in the numerator
       // and next in the denominaator
       if (next.startsWith('/')) {
-        latest = 
+        latest =
         `\\frac{${nopar(latest)}}{${nopar(next.substring(1))}}`
-      // otherwise the next term is not a reciprocal, so append and update latest  
+      // otherwise the next term is not a reciprocal, so append and update latest
       } else {
-        // in more elementary courses we might want to use the following to 
-        // have concatenation for products, e.g. in polynomials, but for 
-        // Math 299 it is not useful for things like n⋅0 in the Peano Axioms 
+        // in more elementary courses we might want to use the following to
+        // have concatenation for products, e.g. in polynomials, but for
+        // Math 299 it is not useful for things like n⋅0 in the Peano Axioms
         //
-        // ans += (ans.length>0 && /\d$/.test(ans) && /^\d/.test(latest)) 
-        //        ? `\\cdot ${latest}` 
+        // ans += (ans.length>0 && /\d$/.test(ans) && /^\d/.test(latest))
+        //        ? `\\cdot ${latest}`
         //        : latest
         ans += (ans.length>0) ? `\\cdot ${latest}` : latest
         latest = next
@@ -145,7 +145,7 @@
     ans += (ans.length>0) ? `\\cdot ${latest}` : latest
     return ans
   }
-  // instead of making a separate parsing class for each symbol we want 
+  // instead of making a separate parsing class for each symbol we want
   // to convert to tex, we just remap them here
   const texsymbol = s => {
     const tex = {
@@ -162,7 +162,7 @@
       kappa   : '\\kappa'   , chi      : '\\chi'       , lambda     : '\\lambda'     ,
       Lambda  : '\\Lambda'  , psi      : '\\psi'       , Psi        : '\\Psi'        ,
       mu      : '\\mu'      , omega    : '\\omega'     , Omega      : '\\Omega'      ,
-      NN      : '\\mathbb{N}'   , ZZ   : '\\mathbb{Z}' , QQ         : '\\mathbb{Q}'  , 
+      NN      : '\\mathbb{N}'   , ZZ   : '\\mathbb{Z}' , QQ         : '\\mathbb{Q}'  ,
       RR      : '\\mathbb{R}'   , CC   : '\\mathbb{C}' , or         : '\\text{or}'   ,
       OO      : '\\mathbb{O}'   , II   : '\\mathbb{I}' , smiley     : '😀'           ,
       implies : '\\Rightarrow'  , and  : '\\text{and}' , not        : '\\neg'        ,
@@ -175,34 +175,46 @@
       circ    : '\\circ'    , comp     : '\\circ'      , inv        : '\\text{inv}'  ,
       Fib     : 'F'         , by       : '\\text{ by }' , pie       : '🥧'           ,
       basket  : '🧺'        , tree     : '🌳'           , apple      : '🍎'           ,
-      cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       , 
+      cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       ,
       infty   : '\\infty'   , infinity : '\\infty'     ,
-      iff                 : '\\Leftrightarrow'             ,   
+      iff                 : '\\Leftrightarrow'             ,
       contradiction       : '\\rightarrow\\leftarrow'      ,
       equivalenceRelation : '\\text{equivalence relation}' ,
       strictPartialOrder  : '\\text{strict partial order}' ,
       partialOrder        : '\\text{partial order}'        ,
       totalOrder          : '\\text{total order}'          ,
       topSpace            : '\\text{topological space}'
-    } 
+    }
     return (tex[s]) ? tex[s] : s
   }
-  // Convert equations with more than two arguments to a transitive chain. 
-  // This is only called if the user included a newline after or before one 
+
+  // Convert chains with more than two operators to a transitive chain.
+  // This is only called if the user included a newline after or before one
+  // of the chain operators
+  const texChain = (a,x) => {
+    if (x.length === 1) { return a+x.flat().join('') }
+    let ans = `\\begin{align*}\n  ${a} &${x[0].join('')}`
+    x.slice(1).forEach( row => ans += ` \\\\\n    &${row.join('')}`)
+    ans += '\n\\end{align*}'
+    return ans
+  }
+
+  // Convert equations with more than two arguments to a transitive chain.
+  // This is only called if the user included a newline after or before one
   // of the equal signs
   const texEquation = a => {
     if (a.length === 2) return a.join('=')
     let ans = `\\begin{align*}\n  ${a[0]} &= ${a[1]}`
     a.slice(2).forEach( eq => ans += ` \\\\\n    &= ${eq}`)
     ans += '\n\\end{align*}'
-    return ans 
+    return ans
   }
 
   // convert prefix function application to lisp
   const texPrefix = (op,args) => {
       // write(op)
       // write(args)
-      return op + args.map( s => 
+      return op + args.map( s =>
           (s[0]) ?  `_{${s[3]}}`
                  :  `\\left(${s[3]}\\right)`
       ).join('')
@@ -233,11 +245,11 @@
   // convert prefix function application to lisp
   const lispPrefix = (op,args) => {
     if (!Array.isArray(args)) { return `(${op} ${args})` }
-    else if (!args.every(Array.isArray)) { 
-      return `(${op} ${args.join(' ')})` 
+    else if (!args.every(Array.isArray)) {
+      return `(${op} ${args.join(' ')})`
     } else {
-      return args.reduce( (ans,group) => { 
-        return (group.length) ? `(${ans} ${group.join(' ')})` : `(${ans})`  
+      return args.reduce( (ans,group) => {
+        return (group.length) ? `(${ans} ${group.join(' ')})` : `(${ans})`
       } , op )
     }
   }
@@ -258,27 +270,27 @@
   // Parser specific utilities
 
   // replace tabs with a space
-  const replaceTabs = s => s.replace(/\t/g,' ') 
+  const replaceTabs = s => s.replace(/\t/g,' ')
 
   // pad commas so they become shorthands
-  const padCommas = s => s.replace(/,/g,' , ') 
+  const padCommas = s => s.replace(/,/g,' , ')
 
   // pad colons so they become shorthands
-  const padColons = s => s.replace(/:/g,': ') 
+  const padColons = s => s.replace(/:/g,': ')
 
   // shrink consecutive spaces to a single space
-  const shrink = s => s.replace(/ ( +)/g,' ') 
-  
+  const shrink = s => s.replace(/ ( +)/g,' ')
+
   // Replace reserved phrases with Symbols.  These should be replaced in order
   // so longer phrases are replaced before subphrases. We shrink the string
   // before doing these substitutions in case someone has, e.g. 'partial    order'
   // with extra spaces.  We also replace some standard words with unicode characters
   // so they are easy to prevent being interpreted as Symbols.
   const Phrases = [
-    [ '→←'                     , 'contradiction'          ] , 
-    [ '∃!'                     , 'existsUnique'           ] , 
-    [ 'exists unique'          , 'existsUnique'           ] , 
-    [ 'exists!'                , 'existsUnique'           ] , 
+    [ '→←'                     , 'contradiction'          ] ,
+    [ '∃!'                     , 'existsUnique'           ] ,
+    [ 'exists unique'          , 'existsUnique'           ] ,
+    [ 'exists!'                , 'existsUnique'           ] ,
     [ 'equivalence relation'   , 'equivalenceRelation'    ] ,
     [ 'strict partial order'   , 'strictPartialOrder'     ] ,
     [ 'partial order'          , 'partialOrder'           ] ,
@@ -289,19 +301,19 @@
     [ 'for every'              , 'forall'                 ] ,
     [ 'there exists'           , 'exists'                 ] ,
     [ '(?<![a-zA-Z0-9])pair\\('    , 'tuple('             ] ,
-    [ '(?<![a-zA-Z0-9])triple\\('  , 'tuple('             ] 
+    [ '(?<![a-zA-Z0-9])triple\\('  , 'tuple('             ]
   ]
-  
+
   const UnicodeNames = {
     '⋅' : '*'          ,  '≤' : 'leq'       , '¬' : 'not'    , '→' : 'to'        ,
-    '←' : 'from'       ,  '⇒' : 'implies'   , '⇔' : 'iff'    , '∩' : 'intersect' ,   
-    '∪' : 'union'      ,  '×' : 'cross'     , '∈' : 'in'     , '⊆' : 'subset'    ,    
+    '←' : 'from'       ,  '⇒' : 'implies'   , '⇔' : 'iff'    , '∩' : 'intersect' ,
+    '∪' : 'union'      ,  '×' : 'cross'     , '∈' : 'in'     , '⊆' : 'subset'    ,
     '∖' : 'setminus'   ,  '∘' : 'circ'      , '∧' : 'wedge'  , '∨' : 'vee'       ,
     '≡' : 'equiv'      ,  '↦' : 'mapsto'    , '≈' : 'approx' , '∀' : 'forall'    ,
     '∃' : 'exists'     ,  '⟨' : 'langle'    , '⟩' : 'rangle' , '➤' : 'comment'   ,
-    '°' : 'complement' ,  '≅' : 'cong'      , '\\': ' '      , '!' : 'factorial' 
+    '°' : 'complement' ,  '≅' : 'cong'      , '\\': ' '      , '!' : 'factorial'
   }
-  
+
   const internalNames = {
     'equiv'     : '≡' , 'forall'   : '∀'  , 'exists' : '∃'  , 'existsUnique' : '∃!'    ,
     'iff'       : '⇔' , 'implies'  : '⇒'  , 'vee'    : 'or' , 'wedge'        : 'and'   ,
@@ -322,13 +334,13 @@
 
   // replace phrases first
   const replacePhrases = s => {
-    Phrases.forEach( p => { 
+    Phrases.forEach( p => {
       const regex = new RegExp(p[0],'g')
-      s = s.replace(regex,` ${p[1]} ` )  
+      s = s.replace(regex,` ${p[1]} ` )
     } )
     return shrink(s)
   }
-  
+
   // then remove the unicodes
   const replaceUnicode = s => {
     // first, replace toxic unicode chars with their ascii synonym
@@ -340,7 +352,7 @@
          .replace(/𝒫/g  , ' powerset' ) // usually used as a function so no following space
     // now replace the given unicode characters that do not appear in strings or
     // putdown
-    const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'      
+    const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'
     const regex = new RegExp(`(?<!«[^«»]*)(?<!^[^"]*"[^"]*)${chars}(?![^«»]*»)`,'mg')
     const ans = shrink(s.replace(regex, c => { return ` ${UnicodeNames[c]} ` } ) )
     return ans
@@ -354,7 +366,7 @@
     }
     return true
   }
-  
+
   // for debugging, echo a string with line numbers
   const say = s => {
     const lines = s.split('\n')
@@ -368,8 +380,8 @@
 }}
 
 // Preprocess the input string
-{ 
-  
+{
+
   // Comments
   //
   // Comments are defined to start at // and continue to the end of the line.
@@ -379,7 +391,7 @@
   // Look for lines containing only a ➤ and whitespace, and replace them
   // with (➤ " ") to act as a line break in the output in Lode
   input = input.replace(/^([ \t]*)➤[ \t]*$/mg, '$1➤ " " \n')
-  
+
   // Tabs and Spaces
   //
   // replace tabs with a space
@@ -397,7 +409,7 @@
   input = replacePhrases(input)
   // replace unicode characters with ascii symbols
   input = replaceUnicode(input)
-  
+
   // Relations
   //
   // In order to use ~ and ≈ as both infix operations AND sets (and talk about
@@ -405,19 +417,19 @@
   // respectively.
   input = input.replace(/'~'/g, '(~)')
   input = input.replace(/'≈'/g, '(approx)')
-  
+
   // Optional Given Colons
   //
   // Lets used to require a colon e.g. ':Let' but we no longer require it, so
   // for backwards compatibility, remove it if its there.  If someone puts it
   // there, no big deal.
-  input = input.replace(/:([Ll]et )/g, '$1') 
-  
+  input = input.replace(/:([Ll]et )/g, '$1')
+
   // Division '/' to product ' cdot /'
   //
   // Replace all '/' with ' cdot /'
   input = input.replace(/(?<!«[^«»]*)\/(?![^«»]*»)/g,' cdot /')
-  
+
   // Remove any double spaces that were created
   input = shrink(input)
 
@@ -432,18 +444,18 @@
   //  1. There is a parser option `options.enableSets` which is a boolean.
   //  2. If true, then every set bracket { or } in the input is replaced by the
   //     unicode `Fullwidth Curly Brackets`｛  ｝which are then parsed
-  //     differently. 
+  //     differently.
   //  3. In the UI for students entering expressions, this option is enabled.
   //  4. In Lode and the testing suite it is disabled, but in that case the
   //     unicode curly brackets can be entered directly with a keyboard shortcut
   //     to make test proofs involving sets.
-  //  5. One challenge is that we want to allow set brackets for rule labels and 
+  //  5. One challenge is that we want to allow set brackets for rule labels and
   //     citations even when enableSets is true. To handle that situation we replace
   //     set brackets with ordinary parentheses first, in that case.
   input = input.replace(/(\b(label|by)\s*)\{([^{}]+)\}/g,'$2($3)')
   // Now proceed with the set bracket replacements
-  if (options.enableSets) 
-    input = input.replace(/{/g,'｛').replace(/}/g,'｝')  
+  if (options.enableSets)
+    input = input.replace(/{/g,'｛').replace(/}/g,'｝')
   // set optios.debug to true to enable the following for debugging
   if (options.debug) say(input)
 }
@@ -453,10 +465,10 @@
 //
 // The philosophy behind this parser design is as follows.  Peggy parsing only
 // can implement precedence by testing all of the lower precedent rules before
-// the higher ones. 
+// the higher ones.
 //
 // * For space sparated sequences of LCs and environments things are rather
-//   straightforward.  Expressions are more nuanced.  
+//   straightforward.  Expressions are more nuanced.
 // * Meta content like comments and «» escaped raw putdown are easily handled
 //   right up front as they are nevey part of other expressions.
 // * Declarations are also not considered to be Expressions here, because we do
@@ -474,17 +486,17 @@
 //   in precedence.  The order we define here is roughly as follows from lowest
 //   to highest.
 //
-//     - Quantified  
-//     - Binding    
-//     - Prop       
-//     - Relations  
-//     - Set        
-//     - Prefix     
-//     - Algebraic  
-//     - Atomic     
+//     - Quantified
+//     - Binding
+//     - Prop
+//     - Relations
+//     - Set
+//     - Prefix
+//     - Algebraic
+//     - Atomic
 //
 // The start rule for a Peggy grammar is the first rule.  For us, it's a
-// sequence of LCs. 
+// sequence of LCs.
 //
 // (this consumes all of the inter-LC spaces)
 LCs "LC" = _ a:(LC)|..,__| _  { return a.join(' ') }
@@ -498,9 +510,9 @@ LCs "LC" = _ a:(LC)|..,__| _  { return a.join(' ') }
 // A single LC
 LC = Meta / Given / Environment / Declaration / Expression
   // Things it searches for and replaces up front
-  Meta = Putdown / Comment / StringLiteral / Label / Ref / Shorthand 
+  Meta = Putdown / Comment / StringLiteral / Label / Ref / Shorthand
   // Declarations
-  Declaration = Declare / ForSome / Let 
+  Declaration = Declare / ForSome / Let
   // Expressions
   Expression =  Quantified / Binding / Prop / PropArg
     // higher precedence than Prop ops for use in Props
@@ -512,28 +524,28 @@ LC = Meta / Given / Environment / Declaration / Expression
   // It is often useful to have a sequence of one or more expressions separated
   // by commas
   ExpressionSeq = a:Expression|..,comma| { return a.join(',') }
-    
+
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
 // Meta
 //
 // Unprocessed putdown notation (cannot include // comments)
-Putdown = '«' @$([^»]*) '»'  
+Putdown = '«' @$([^»]*) '»'
 // Insert a comment that gets echoed in Lode
-Comment = ( '%' / 'Comment'i ) __ a:StringLiteral 
+Comment = ( '%' / 'Comment'i ) __ a:StringLiteral
             { return a.replace(/"([^"]*)"/,"\\text{``$1''}") }
-  
+
 // A string literal is anything enclosed in double quotes
 // Currently only used for comments
-StringLiteral = $('"' [^"]* '"') 
+StringLiteral = $('"' [^"]* '"')
 // Labels
-Label = 'label'i _ [(\[{"] _ a:([^)\]}"]+) _ [)\]}"] 
+Label = 'label'i _ [(\[{"] _ a:([^)\]}"]+) _ [)\]}"]
   { return `\\text{\\textcolor{grey}{${a.join('')}}}` }
 // Refs - generalization of LaTeX \ref{} command (including that syntax)
-Ref = a:RefLabel _ [(\[{"] _ b:([^)\]}"]+) _ [)\]}"] 
+Ref = a:RefLabel _ [(\[{"] _ b:([^)\]}"]+) _ [)\]}"]
       { return `\\text{\\textcolor{grey}{ ${a} ${b.join('')}}}` }
-  RefLabel = $('ref'i/'by'i) // TODO: move 'since' and 'because' here  
+  RefLabel = $('ref'i/'by'i) // TODO: move 'since' and 'because' here
 // Shorthands are special symbols which are not allowed to be part
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
@@ -542,7 +554,7 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma
   // Shorthands
   Equiv   = 'equiv'i { return '~\\equiv~' }
   BIH     = $('since'i / 'because'i / 'recall'i)
-  Ruleset = $(('rules'i / 'axioms'i / 'definitions'i) ':'?) 
+  Ruleset = $(('rules'i / 'axioms'i / 'definitions'i) ':'?)
   Rule    = $(('rule'i / 'axiom'i / 'definition'i) ':'?)
   Thm     = $(('theorem'i / 'thm'i / 'lemma'i / 'corollary'i) ':'?)
   Proof   = $('proof'i ':'?)
@@ -556,13 +568,13 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma
 // A Given label that is not part of a longer symbol or followed by another :
 // character, separated from either an Environment or Expession sequence by
 // optional spaces.
-// Given = a:GivenLabel b:Environment { 
+// Given = a:GivenLabel b:Environment {
 //           return (/^\s*:\s*$/.test(a)) ? b : `${txt(a)} ${b}` } /
 //         a:GivenLabel b:Expression|1..,comma| { return `${txt(a)} ${sequence(b)}` }
 Given = a:GivenLabel _ b:Expression|1..,comma| !comma
                      { return `${txt(a)} ${sequence(b)}` } /
         a:GivenLabel { return `${txt(a) }`}
-  GivenLabel = $':' / $(('assume'i / 'given'i / 'suppose'i / 
+  GivenLabel = $':' / $(('assume'i / 'given'i / 'suppose'i /
                          'if'i / 'from'i / 'define'i ) !alphanum)
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -578,26 +590,26 @@ Declare = a:'declare'i __ b:DeclareSeq { return `${txt(a)} ${b}` }
 // ForSome declaration (always a claim)
 ForSome = body:Expression __ 'for'i __ 'some'i __ a:Symbol __ 'in'i __ b:Expression
             { return `${body}\\text{ for some }${a}\\in ${b}` } /
-          body:Expression __ 'for' __ 'some' __ a:SymbolSeq 
+          body:Expression __ 'for' __ 'some' __ a:SymbolSeq
             { return `${body}\\text{ for some }${a}` }
-// the 'given' colon is optional since these are always 'given'. We also 
-// allow the special shortand `Let x∈A` since it is so common.            
-Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression 
+// the 'given' colon is optional since these are always 'given'. We also
+// allow the special shortand `Let x∈A` since it is so common.
+Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression
           { return `${txt(a)}${b}\\in ${c}` } /
-      a:'Let'i __ b:SymbolSeq __ 'be' __ 'such' __ 'that' // __ c:Expression 
+      a:'Let'i __ b:SymbolSeq __ 'be' __ 'such' __ 'that' // __ c:Expression
           { return `${txt(a)}${b}\\text{ be such that }` } /
       a:'Let'i __ b:SymbolSeq __ 'such'i __ 'that'i // __ c:Expression
           { return `${txt(a)}${b}\\text{ such that }` }    /
       a:'Let'i __ b:SymbolSeq { return `${txt(a)}${b}`       }
   // Comma separated symbols, numbers, and reserved words
-  DeclareSeq = a:('cdot /' / Symbol / Number / ReservedWord)|1..,comma| 
+  DeclareSeq = a:('cdot /' / Symbol / Number / ReservedWord)|1..,comma|
                 {return sequence(a.map(x=>(x=='cdot /'?'/':x))) }
   // We allow Reserved Words and Numbers to be declared by a Declare, but not
   // by a Let or ForSome.
   SymbolSeq  = a:(Symbol)|1..,comma| { return sequence(a) }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Expressions 
+// Expressions
 //
 // The trick here is that we want long, complex, compound expressions to be
 // matched before simpler, more atomic ones. We basically have three current
@@ -617,73 +629,84 @@ Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression
 // quantified binding expressions
 Quantified = 'forall' _x b:Binding           { return `\\forall ${b}`  } /
              'exists' _x b:Binding           { return `\\exists ${b}`  } /
-             'existsUnique' _x b:Binding     { return `\\exists! ${b}` } 
+             'existsUnique' _x b:Binding     { return `\\exists! ${b}` }
 // binding expressions / anonymous maps
-Binding = a:Symbol period _ b:Expression 
+Binding = a:Symbol period _ b:Expression
           { return `${a}.\\, ${b}` } /
-  a:Symbol _'mapsto'_x b:Expression 
+  a:Symbol _'mapsto'_x b:Expression
           { return `${a}\\mapsto ${b}` }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Propositional expressions
 //
-// We want a strict precedence of operations here, so lower precedence items 
+// We want a strict precedence of operations here, so lower precedence items
 // should only permit higher precedence arguments.
 // Thus we only need Prop to point to Iff because the higher precedent ones feed
-// into that, and they use BelowProp and higher precendent Prop's as arguments. 
+// into that, and they use BelowProp and higher precendent Prop's as arguments.
 Prop = Iff
 
-  Iff     = a:(Implies/PropArg)|1..,_'iff'_x|        
+  Iff     = a:(Implies/PropArg)|1..,_'iff'_x|
               { return a.join('\\Leftrightarrow ')  }
-  Implies = a:(Or/And/PropArg)|1..,_'implies'_x|     
+  Implies = a:(Or/And/PropArg)|1..,_'implies'_x|
               { return a.join('\\Rightarrow ')      }
-  Or      = a:(And/PropArg)|1..,_('or'/'vee')_x|     
+  Or      = a:(And/PropArg)|1..,_('or'/'vee')_x|
               { return a.join('\\text{ or }')       }
-  And     = a:(Not/PropArg)|1..,_('and'/'wedge')_x|  
+  And     = a:(Not/PropArg)|1..,_('and'/'wedge')_x|
               { return a.join('\\text{ and }')      }
-  Not     = _'not'_x b:PropArg                       
+  Not     = _'not'_x b:PropArg
               { return '\\text{not } '+b                   }
-  
+
 ///////////////////////////////////////////////////////////////////////////////
 // Relations
 //
-Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf / 
-            Divides / Leq / LessThan / Relation / Equation / NotEqual / 
+Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
+            Divides / Chain / Leq / LessThan / Relation / Equation / NotEqual /
             Loves / Fears / Is
 
-  Maps       = a:RelArg _':'_ b:RelArg _'to'_x c:RelArg  
+  Maps       = a:RelArg _':'_ b:RelArg _'to'_x c:RelArg
                  { return `${a}\\colon ${b}\\to ${c}` }
-  Partition  = a:(Binding/RelArg) _'is' __ 'a' __ 'partition' __ 'of' __ 
+  Partition  = a:(Binding/RelArg) _'is' __ 'a' __ 'partition' __ 'of' __
                b:(Binding/RelArg)
                  { return `${a}\\text{ is a partition of }${b}` } /
-               a:(Binding/RelArg) _'is' __ 'a' __ 'relation' __ 'on' __ 
+               a:(Binding/RelArg) _'is' __ 'a' __ 'relation' __ 'on' __
                b:(Binding/RelArg)
-                 { return `${a}\\text{ is a relation on} ${b}` } 
+                 { return `${a}\\text{ is a relation on} ${b}` }
 
-  Congruent  = a:(Binding/RelArg) _'cong'_x b:(Binding/RelArg) _'mod'i_x 
+  Congruent  = a:(Binding/RelArg) _'cong'_x b:(Binding/RelArg) _'mod'i_x
                c:(Binding/RelArg)
                  { return `${a}\\underset{${c}}{\\equiv}${b}` } /
-               a:(Binding/RelArg) _'cong mod'i_x c:(Binding/RelArg) _'to'_x 
+               a:(Binding/RelArg) _'cong mod'i_x c:(Binding/RelArg) _'to'_x
                b:(Binding/RelArg)
-                 { return `${a}\\underset{${c}}{\\equiv}${b}` } 
-  Subset     = a:RelArg|2..,_('subset'/'subseteq')_x|  
+                 { return `${a}\\underset{${c}}{\\equiv}${b}` }
+  Subset     = a:RelArg|2..,_('subset'/'subseteq')_x|
                  { return a.join('\\subseteq ') }
-  NotEltOf   = a:RelArg _'notin'_x b:RelArg        
+  NotEltOf   = a:RelArg _'notin'_x b:RelArg
                  { return `${a}\\notin ${b}` }
-  ElementOf  = a:RelArg _'in'_x b:RelArg           
+  ElementOf  = a:RelArg _'in'_x b:RelArg
                  { return `${a}\\in ${b}`  }
-  Divides    = a:RelArg _('|'_ / 'divides'_x) b:RelArg      
-                 { return `${a}\\mid ${b}` }  
-  Leq        = a:RelArg|2..,_'leq'_x|             
+  Divides    = a:RelArg _('|'_ / 'divides'_x) b:RelArg
+                 { return `${a}\\mid ${b}` }
+  Chain      = a:(Binding/RelArg) b:( sChainOp (Binding/RelArg) )*
+                                  c:( nChainOp (Binding/RelArg) )
+                                  d:( _ @ChainOp _ @(Binding/RelArg) )*
+                 { console.log(a)
+                   console.log(b)
+                   console.log(c)
+                   console.log(d)
+                   console.log([...b,c,...d])
+                   return texChain(a,[...b,c,...d]) } /
+               a:(Binding/RelArg) b:( _ @ChainOp _ @(Binding/RelArg) )+
+                 { return a+b.flat().join('')}
+  Leq        = a:RelArg|2..,_'leq'_x|
                  { return a.join('\\leq ') }
   LessThan   = a:RelArg|2..,_('<'_ / 'lt'_x)|
                  { return a.join('\\lt ')  }
-  NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg   
+  NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg
                  { return `${a}\\neq ${b}` }
-  Relation   = a:(Binding/RelArg)|2..,_'~'_|       
-                { return a.join('\\sim ')  }             
+  Relation   = a:(Binding/RelArg)|2..,_'~'_|
+                { return a.join('\\sim ')  }
   Equation   = a:((Binding/RelArg)|2..,_s_'='_s_| / (Binding/RelArg)|1..1|) (_n_'='_ / _'='_n_)
-               b:( (Binding/RelArg)|2..,_'='_| / (Binding/RelArg)|1..1| ) 
+               b:( (Binding/RelArg)|2..,_'='_| / (Binding/RelArg)|1..1| )
                { return texEquation([...a,...b]) } /
                a:(Binding/RelArg)|2..,_'='_| { return a.join('=') }
   Loves      = a:RelArg _ b:('loves'/'love')_x c:RelArg
@@ -694,17 +717,17 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                              'is' __ 'not' __ 'a'__   /
                              'is' __ 'not' __         /
                              'are'__ 'not' __ ) c:RelArg
-                { return (b.length==6) 
+                { return (b.length==6)
                   ? `${a}\\text{ ${b[0]} not ${b[2]} }${c}`
                   : `${a}\\text{ ${b[0]} not }${c}` } /
                a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __/'are'__) c:RelArg
-                { return (b.length==4) 
+                { return (b.length==4)
                   ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
                   : `${a}\\text{ ${b[0]} }${c}` }
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Sets 
+// Sets
 //
 // We imitate Algebraic operator precendence as much as possible and rank from
 // lowest to highest: set difference < set product < ∪ and ∩ (tied) <
@@ -712,47 +735,47 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
 // point to the first one. Algebraic bubbles up from Composition.
 Set = RelativeComp
 
-  RelativeComp  = a:CartProd|1..,_'setminus'_x| 
-                    { return a.join('\\setminus ') }  
-  CartProd      = a:Union|1..,_('times'/'cross')_x| 
+  RelativeComp  = a:CartProd|1..,_'setminus'_x|
+                    { return a.join('\\setminus ') }
+  CartProd      = a:Union|1..,_('times'/'cross')_x|
                     { return a.join('\\times ') }
-  Union         = a:Intersection|1..,_('cup'/'union')_x| 
+  Union         = a:Intersection|1..,_('cup'/'union')_x|
                     { return a.join('\\cup ') }
   // Moved Complement below so ticks can be used for both complement and
   // derivatives and other operations as needed.
   //
-  // Intersection  = a:(Complement/Composition)|1..,_('cap'/'intersect')_x| 
-  Intersection  = a:(Composition)|1..,_('cap'/'intersect')_x| 
-                    { return a.join('\\cap ') }               
+  // Intersection  = a:(Complement/Composition)|1..,_('cap'/'intersect')_x|
+  Intersection  = a:(Composition)|1..,_('cap'/'intersect')_x|
+                    { return a.join('\\cap ') }
   // Complement    = a:Algebraic _('\''/'complement')!alphanum
   //                   { return `{${a}}'` }
-  Composition   = a:Algebraic|1..,_('circ'/'comp')_x| 
+  Composition   = a:Algebraic|1..,_('circ'/'comp')_x|
                     { return a.join('\\circ ') }
-  
+
   // We imitate Summation to implement both IndexedUnion and IndexedIntersection
   // and give it roughly the same precedence
-  BigUnionName = 'Union'/'Cup'/'bigcup'i 
+  BigUnionName = 'Union'/'Cup'/'bigcup'i
   IndexedUnion = BigUnionName __ k:Symbol __ 'in'_x a:Set __ 'of' __ f:Set
-                  { return union(f,k,a) }  / 
+                  { return union(f,k,a) }  /
 
-                 BigUnionName __ ('of'i __)? f:Set 
+                 BigUnionName __ ('of'i __)? f:Set
                  __ 'for'i__ k:Symbol _ 'in'_x a:Set
                      { return union(f,k,a) }  /
 
-                 BigUnionName '(' _ f:Set comma 
+                 BigUnionName '(' _ f:Set comma
                  k:Symbol comma  a:Set _ ')'
-                     { return summation(f,k,a) }              
+                     { return summation(f,k,a) }
 
-  BigIntersectName = 'Intersect'/'Cap'/'bigcap'i 
+  BigIntersectName = 'Intersect'/'Cap'/'bigcap'i
   IndexedIntersect = BigIntersectName __ k:Symbol __ 'in'_x a:Set __ 'of' __ f:Set
-                         { return intersect(f,k,a) }  / 
+                         { return intersect(f,k,a) }  /
 
-                     BigIntersectName __ ('of'i __)? f:Set 
+                     BigIntersectName __ ('of'i __)? f:Set
                      __ 'for'i__ k:Symbol _ 'in'_x a:Set
                          { return intersect(f,k,a) }  /
-    
+
                      BigIntersectName '(' _ f:Set comma k:Symbol comma  a:Set _ ')'
-                         { return intersect(f,k,a) }              
+                         { return intersect(f,k,a) }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Algebraic Expressions
@@ -767,13 +790,13 @@ Set = RelativeComp
 // that inherits the ones below it (but Choose does not). Atomic is passed up
 // the chain from Exp.
 Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
-  
+
   // we make this lower precedence that sums so e.g. 'n+1 choose k' can be
   // entered without parentheses
-  Choose    = a:(Sum / Product) _'choose'_x b:(Sum / Product) 
+  Choose    = a:(Sum / Product) _'choose'_x b:(Sum / Product)
                 { return `\\binom{${nopar(a)}}{${nopar(b)}}` }
 
-  Sum       = a:(Summation / Product) _ b:(_ [-+] _ (Summation / Product))+ 
+  Sum       = a:(Summation / Product) _ b:(_ [-+] _ (Summation / Product))+
                 { return texSum(a,b) }
 
   // this is one of the more complex symbols so we support multiple ways of
@@ -782,30 +805,30 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
   // precedence than addition but lower than multiplication.  That way e.g. 'sum
   // k to n of f(k) + sum k to n of g(k)' will be the sum of the two summations,
   // rather than a single summation where the second one is part of the summands
-  // of the first. 
+  // of the first.
   Summation = 'sum'i __ k:Symbol __ a:('from' __ @Product __)? 'to'i __ b:Product
               __ ('of'i __)? f:Product
-                  { return summation(f,k,a,b) }  /  
+                  { return summation(f,k,a,b) }  /
 
               'sum'i __ k:Symbol _ '=' _ a:Product __ 'to'i __ b:Product
               __ ('of'i __)? f:Product
-                  { return summation(f,k,a,b) }  /  
+                  { return summation(f,k,a,b) }  /
 
-              'sum'i __ ('of'i __)? f:Product __ 
-              ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)? 
+              'sum'i __ ('of'i __)? f:Product __
+              ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)?
               a:('from' __ @Product __)? 'to'i __ b:Product
-                  { return summation(f,k,a,b) }  /  
+                  { return summation(f,k,a,b) }  /
 
-              'sum'i '(' _ f:Product comma 
+              'sum'i '(' _ f:Product comma
                            k:Symbol comma a:(@Product comma)? b:Product _ ')'
-                  { return summation(f,k,a,b) }  
+                  { return summation(f,k,a,b) }
 
     Product   = a:(Denom/Negated/ExpArgs)
-                |1..,(_'⋅'_/_'cdot'_x/_'*'_)| 
+                |1..,(_'⋅'_/_'cdot'_x/_'*'_)|
                 { return texProduct(a) }
-    Denom     = '/' _ a:ExpArgs 
-                  { return '/'+a }    
-    Negated   = '-' _ a:ExpArgs 
+    Denom     = '/' _ a:ExpArgs
+                  { return '/'+a }
+    Negated   = '-' _ a:ExpArgs
                   { return '-'+a }
 
     // Exp and higher precedence args
@@ -814,7 +837,7 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
     // The choice of precedence of Function application vs Exp is tricky.
     // Consider e.g. 2^cos(x), f^2(x), 2^f(x), f^(-1)(x), and the nightmare
     // expressions like sin^2(x) vs sin(x)^2. What is the natural way to parse
-    // each of those? 
+    // each of those?
     //
     // The main use case in the intro to proof course is for inverse functions.
     // For this reason we choose to make exponentiation higher precedence than
@@ -822,7 +845,7 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
     // choice of precedence we most likely would want to type the above
     // expressions as: 2^(cos(x)), f^2(x), 2^(f(x)), f^(-1)(x), and either
     // define a rule that says sin^2(x)=sin(x)^2, or just don't ever use
-    // sin^2(x) at all for input. 
+    // sin^2(x) at all for input.
     //
     // For a similar reason, Factorials are lower precedence than exponentials
     // so that e.g. 2^n! parses as (2^n)! instead of 2^(n!). And since f(n)!
@@ -832,11 +855,11 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
     // So the precedence from lowest to highest is
     //
     //                   Factorial < Prefix < Exp
-    
+
     Factorial = a:(Multinomial / Prefix / Exp / Atomic) _'factorial'!alphanum
                   {  return a+'!' }
 
-    // even though we originally defined this for set complement, if we move it's 
+    // even though we originally defined this for set complement, if we move it's
     // precedence here we can also use it for derivatives or other operators.
 
     Complement = a:(Prefix / Exp / Atomic) _('\''/'complement')!alphanum
@@ -858,7 +881,7 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
 
 // Reserved prefixes
 // Multinomial coefficients
-Multinomial = 'multinomial('i _ a:Expression comma b:Expression _')' 
+Multinomial = 'multinomial('i _ a:Expression comma b:Expression _')'
             { return `\\left(${a},${b}\\right)` }
 
 // For convenience we define special Symbols beginning with '@' so that @P(k)
@@ -886,49 +909,49 @@ Prefix =  // LDE EFA's first
           // But the EFA's only appear in rules and standard math convention is
           // that it is understood.  However, we can make it more distinctive by
           // making the function name in mathcal or some other font.
-          '@' a:[a-z]i b:( '('_ @ExpressionSeq _')' )+ 
+          '@' a:[a-z]i b:( '('_ @ExpressionSeq _')' )+
             { return `\\mathcal{${a}}\\left(${b}\\right)` } /
           // allow 'set' to be case insensitive, check for setbuilder before
           // finite sets
-          'set('i _ a:Symbol _ ':' _ b:Expression _')'  
+          'set('i _ a:Symbol _ ':' _ b:Expression _')'
             { return `\\left\\{\\,${a}:\\,${b}\\right\\}` } /
           // allow 'set' to be case insensitive
-          'set('i _ a:ExpressionSeq _ ')'  
+          'set('i _ a:ExpressionSeq _ ')'
             { return `\\left\\{\\,${a}\\,\\right\\}` } /
           // allow 'paren' to wrap an expression in visual parens with no
           // meaning change
-          'paren('i _ b:Expression _')'  
+          'paren('i _ b:Expression _')'
             { return `\\left(${b}\\right)` } /
           // format sqrt appropriately
-          'sqrt('i _ a:ExpressionSeq _ ')'  
+          'sqrt('i _ a:ExpressionSeq _ ')'
             { return `\\sqrt{${a}}` } /
           // allow 'class' to be case insensitive (one or two args)
           'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
-          'class('i _ a:Expression comma b:Expression')'  
+          'class('i _ a:Expression comma b:Expression')'
             { return `\\left[${a}\\right]_{${b}}` } /
           // allow 'tuple' to be case insensitive and format it appropriately
-          'tuple('i _ b:ExpressionSeq _ ')'  
-            { return `\\left\\langle\\,${b}\\,\\right\\rangle` } /  
-          // then the rest 
-          a:(Exp / Symbol / Parenthesized) 
+          'tuple('i _ b:ExpressionSeq _ ')'
+            { return `\\left\\langle\\,${b}\\,\\right\\rangle` } /
+          // then the rest
+          a:(Exp / Symbol / Parenthesized)
           b:( '_'? '('_ ExpressionSeq _')' )+ { return texPrefix(a,b) }
-  
+
     // If we made it to here, we are at the bottom of the food chain for
     // compound expressions, so it's ok to return a symbol or other atomic at
     // this point. Exp also passes Prefix, Inverse and Factorial up to Product,
     // Denom, and Negated.
-    Exp = a:Atomic _'^'_ b:(Atomic / '-') 
-            { return `{${a}}^{${nopar(b)}}` } 
+    Exp = a:Atomic _'^'_ b:(Atomic / '-')
+            { return `{${a}}^{${nopar(b)}}` }
 
     // An arbitrary high precedence infix operator
-    Star = a:Atomic|1..,(_'★'_/_'star'_x)| 
+    Star = a:Atomic|1..,(_'★'_/_'star'_x)|
                 { return texJoin('\\star ',a) }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Atomic Expressions
 //
 // morally atomic expressions (do not require parentheses)
-Atomic = Parenthesized / // EquivalenceClass 
+Atomic = Parenthesized / // EquivalenceClass
          Matrix / Tuple / SetBracketed / Symbol / Number
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -937,24 +960,24 @@ Atomic = Parenthesized / // EquivalenceClass
 
 // equivalence class - if the optional relation is missing from an equivalence
 //                     class we use '~'
-// EquivalenceClass = 
+// EquivalenceClass =
 //   '[' a:( @Expression ) ']'                   { return `\\left[${a}\\right]` } /
 //   '[' a:Expression comma b:Symbol ']'    { return `\\left[${a}\\right]_${b}` } /
 //   '[' a:Expression comma b:'~' ']'    { return `\\left[${a}\\right]_{\\sim}` }
 // matrices - semantically they are just tuples of tuples, but we format them in 2d
-Matrix = '['_ a:Tuple|..,comma| _']' !alphanum 
+Matrix = '['_ a:Tuple|..,comma| _']' !alphanum
          { return `\\left[\\begin{matrix}\n ${
             a.map( s =>
               s.replace(/,/g, ' & ')
                .replace(/\\left\\langle{|}\\right\\rangle/g,''))
              .join(' \\\\\n ')}\n\\end{matrix}\\right]` }
 // tuples
-Tuple = '['_ a:ExpressionSeq _']'!alphanum 
+Tuple = '['_ a:ExpressionSeq _']'!alphanum
         { return `\\left\\langle{${a}}\\right\\rangle` } /
         'langle'_x a:ExpressionSeq _'rangle'!alphanum
         { return `\\left\\langle{${a}}\\right\\rangle` }
 // sets
-SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝' 
+SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
                  { return `\\left\\{\\,${a}:\\,${b}\\right\\}` } /
                '｛'_ a:ExpressionSeq _'｝'
                  { return `\\left\\{\\,${a}\\,\\right\\}` }
@@ -966,7 +989,7 @@ Parenthesized = '(' _ a:(Choose/Multinomial/Prefix) _ ')' { return a  } /
                 return (a === '\\sim') ? a : `\\left(${a}\\right)` }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Numbers 
+// Numbers
 // (negatives and fractions are compound)
 Number  = Decimal / Natural
 Decimal = $( Natural '.' [0-9]+ )
@@ -981,8 +1004,8 @@ Natural = $( [1-9][0-9]* / '0' )
 //
 // For clarity in reading the putdown output we rename some special frequently used
 // symbols.
-Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { return texsymbol(a) } / 
-  !(ReservedWord !alphanum) a:([a-z]i alphanum* ) 
+Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { return texsymbol(a) } /
+  !(ReservedWord !alphanum) a:([a-z]i alphanum* )
   { let b = texsymbol(a[0]+a[1].join(''))
     return (b.length>1 && !b.startsWith('\\')) ? `\\text{${b}}` : b }
 
@@ -992,11 +1015,18 @@ Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { re
 // followed by an alphanum, so not part of a longer symbol, or things that
 // aren't symbols that we still want to declare as constants.
 ReservedWord  = $(
-    'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' /
+    'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' / 'lt' /
     'not' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
     'cross' / 'subset' / 'setminus'i / 'circ' / 'wedge' / 'vee' /
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' /
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / '^')
+
+// To check for newlines in the chain input we need flavors of the chain operators
+nChainOp = _n_ @ChainOp _ / _ @ChainOp _n_     // must have a \n on one side or the other
+sChainOp = _s_ @ChainOp _s_                    // cannot have a newline on either side
+ChainOp  = ( '='        { return '='} /        // can have any whitespace on either side
+             'leq'      { return '\\leq ' } / 
+             ('lt'/'<') { return '\\lt ' } )
 
 ///////////////////////////////////////////////////////////////////////////////
 // punctuation and character classes
@@ -1010,7 +1040,7 @@ alphanum = [a-z0-9]i
 // We might need to consume the space, but if there is no space there we need to
 // ensure that there isn't an alphanumeric character immediately following the
 // reserved word.  So we first check for that before consuming the space in case
-// it is the space that statisfies that condition. Then we just return undefined so 
+// it is the space that statisfies that condition. Then we just return undefined so
 // it will be cleaned out of in the result.
 _x = !alphanum _ { return undefined }
 

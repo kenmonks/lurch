@@ -200,6 +200,24 @@ LogicConcept.prototype.isAnEquation = function ( ) {
           this.numChildren()>2
 }
 
+/**
+ * A Chain is an outermost Application whose operation is the Symbol whose
+ * .text() is 'trans_chain'.  The intended use is with transitive chains of =,
+ * ≤, and <, and the trans_chain symbol will be invisible to them. We don't
+ * check the number and types of arguments since the assumption is that will
+ * only be created by parsing a user input transitive chain. 
+ *
+ * @memberof Extensions
+ * @returns {boolean}
+ */
+LogicConcept.prototype.isAChain = function ( ) {
+  return (this instanceof Application) && 
+          this.isOutermost() && 
+          this.child(0) instanceof LurchSymbol && 
+          this.child(0).text()==='trans_chain'
+}
+
+
 /** 
  * Matching syntactic sugar to isAnEquation for Declarations. 
  * 
@@ -278,6 +296,19 @@ LogicConcept.prototype.statements = function () {
 LogicConcept.prototype.equations = function ( conclusionsOnly = false ) {
   return [...this.descendantsSatisfyingIterator( 
     x => x.isAnEquation() && (!conclusionsOnly || x.isAConclusionIn()) ,
+    x => x.isA('Declare') || x.isA('Rule') || x.isA('Part') || x.isA('Inst') )]
+}
+
+/**
+ * Compute the array of all chains in this LC.  If the first argument is
+ * true, only return those that are inferences.
+ * 
+ * @memberof Extensions
+ * @param {boolean} conclusionsOnly - if true, only return inferences
+ */
+LogicConcept.prototype.chains = function ( conclusionsOnly = false ) {
+  return [...this.descendantsSatisfyingIterator( 
+    x => x.isAChain() && (!conclusionsOnly || x.isAConclusionIn()) ,
     x => x.isA('Declare') || x.isA('Rule') || x.isA('Part') || x.isA('Inst') )]
 }
 

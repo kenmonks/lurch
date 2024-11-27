@@ -80,6 +80,13 @@
       return args.reduce( (ans,expr) => { return `(${ans} ${expr})` } , op )
   }
   
+  // convert a transitive chain to the correct putdown
+  const lispChain = (a,b) => {
+    // just an ordinary equation or inequality
+    if ( b.length==1 ) return `(${b[0][0]} ${a} ${b[0][1]} )`
+    return `(trans_chain ${a} ${b.flat().join(' ') } )`
+  }
+  
   // const lispPrefix = (op,args) => {
   //   if (!Array.isArray(args)) { return `(${op} ${args})` }
   //   else if (!args.every(Array.isArray)) { 
@@ -511,7 +518,7 @@ Prop = Iff
 // Relations
 //
 Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf / 
-            Divides / Leq / LessThan / Relation / Equation / NotEqual / 
+            Divides / Chain / Leq / LessThan / Relation / Equation / NotEqual / 
             Loves / Fears / Is
 
   Maps       = a:RelArg _':'_ b:RelArg _'to'_x c:RelArg  
@@ -536,7 +543,9 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
   ElementOf  = a:RelArg _'in'_x b:RelArg           
                  { return lispBinary('∈',a,b) }
   Divides    = a:RelArg _('|'_ / 'divides'_x) b:RelArg      
-                 { return lispBinary('|',a,b) }  
+                 { return lispBinary('|',a,b) }
+  Chain      = a:(Binding/RelArg) b:( ChainOp (Binding/RelArg) )+
+                 { return lispChain(a,b) }
   Leq        = a:RelArg|2..,_'leq'_x|             
                  { return lispSeq('≤',a) }
   LessThan   = a:RelArg|2..,_('<'_ / 'lt'_x)|
@@ -829,6 +838,8 @@ ReservedWord  = $(
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / 
     'sum'i / 'to' / 'of' / 'from' / 'as' / 'for' / '^' / 'division')
 
+ChainOp = _ @( @'='_ / 'leq'_x { return '≤'} / 'lt'_x { return '<' } / @'<'_)
+
 ///////////////////////////////////////////////////////////////////////////////
 // punctuation and character classes
 
@@ -848,5 +859,5 @@ _x = !alphanum _ { return undefined }
 // commas, periods, and spaces
 comma  =  _ ',' _
 period =  '.'
-__  = [ \t\n\r]+
-_   = [ \t\n\r]*
+__  = [ \t\n\r]+ // a string of whitespace of positive length
+_   = [ \t\n\r]* // a string of whitespace of any length (even zero)

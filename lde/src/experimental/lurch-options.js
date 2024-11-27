@@ -18,6 +18,7 @@
  *   * `avoidLoneEFAs` - the same thing for lone EFAs        
  *   * `avoidLoneElementOfs` - the same thing for lone x∈A's where A is a
  *      metavariable        
+ *   * `processChains` - process chains and equations iff this is true  
  *   * `processEquations` - process equations iff this is true  
  *   * `processCases`- process the cases tool iff this is true 
  *   * `autoCases` - similar to avoidLoneMetavars=false. If true, then identify
@@ -46,6 +47,7 @@ export const LurchOptions = {
   avoidLoneMetavars: true ,
   avoidLoneEFAs: true ,    
   avoidLoneElementOfs: true ,    
+  processChains: true ,    
   processEquations: true ,    
   processCases: true ,    
   autoCases: false ,

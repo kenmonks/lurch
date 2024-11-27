@@ -10,8 +10,8 @@ const verbose = true
 // Note that you can specify the start and end student files for smaller tests
 const startTest = LurchOptions.startStudentTest
 const endTest = LurchOptions.endStudentTest
-// const startTest = 10
-// const endTest = 12
+// const startTest = 21
+// const endTest = 21
 
 // declare the acide array
 acid=[]
@@ -34,6 +34,25 @@ const loadtest = (name, folder='acid tests', extension='lurch',
   }
   if ( showFile ) console.log(attributePen(
     `${msToTime(Date.now()-lasttime)} (${msToTime(Date.now()-start)} total)`))
+}
+
+// compute the final feedback result for a transitive chain of = in the case
+// where it has an _id
+const getChainResult = chain => {
+  const id = chain.getAttribute('_id')
+  // for now we only need this for the case where a chain has an ID from web files
+  if (!id) return  
+  const someHas = result => {
+    return chain.root().some( eq => eq.getAttribute('_id')==id &&
+                         Validation.result(eq) &&
+                         Validation.result(eq).result==result)
+  }
+  // check the results in order
+  if (someHas('invalid')) return 'invalid'
+  if (someHas('indeterminate')) return 'indeterminate'
+  if (someHas('valid')) return 'valid'
+  // return nothing if none of these hold
+  return 
 }
 
 // compute the final feedback result for a transitive chain of = in the case
@@ -138,10 +157,10 @@ acid.forEach( (T,k) => {
         (s.badBIH && s.ExpectedResult == 'invalid') ) ) ||
         // handle the redeclared variable case
         (s.getAttribute('scope errors')?.redeclared && s.ExpectedResult=='invalid') ||
-        // handle the transitive chain equations case - see if some equation derived
+        // handle the transitive chain case - see if some equation derived
         // from the transitive chain has the matching validation result, and nothing 
         // has a worse result
-        (s.isAnEquation() && getEquationResult(s)==s.ExpectedResult)
+        (s.isAChain() && getChainResult(s)==s.ExpectedResult)
         // TODO: there is an edge case where the document has a bad variable
         // declaration inside a Rule environment, but we currently do not check for that.
       ) {

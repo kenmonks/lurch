@@ -237,10 +237,16 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   ///////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////////////
+  // Chains
+  //
+  // Rule: { ChainsRule }
+  profile(()=>processChains(doc),'process Equations')
+
+  ///////////////////////////////////
   // Equations
   //
   // Rule: { EquationsRule }
-  profile(()=>processEquations(doc),'process Equations')
+  // profile(()=>processEquations(doc),'process Equations')
 
   ///////////////////////////////////
   // Arithmetic
@@ -522,6 +528,133 @@ const matchGivens = (a, b) => {
 }
 
 /**
+ * Check if the doc contains the Rule `:{ ChainsRule }` (or `:{ EquationsRule }
+ * for backwards compatibility).  If not, just split the chains.  
+ *
+ * Otherwise after splitting get the diffs of all equations (whether or not from
+ * chains), and add the instantiation `:{ :x=y f(x)=f(y) }` after the above
+ * `Rule`. For an arbitrary equation `A=B` the values of `x,y` are computed with
+ * `diff(A,B)`. Note that this assumes `=` is reflexive, because the normal way
+ * to say this would be to say that `A=A` by reflexive and then `:{ :x=y :A=A
+ * A=B }` by substitution. 
+ *
+ * For each equation e.g. `a=b≤c=d<e` that is split, also include the
+ * instantiation `:{ :a=b :b≤c :c=d :d<e a=d }` after the above rule.  This
+ * assumes transitivity of the chain operators in the obvious manner.
+ *
+ * Finally, to assume symmetry we allow both `x=y` and `y=x` versions of all
+ * equations. So including the Chains Rule is assuming reflexive, symmetric,
+ * transitive, and substitution properties for equality.
+ *
+ */
+
+// TODO: 
+// * generalize this to other reflexive operators with a special kind of
+//   Declare, e.g. Reflexive = ≤ ⊆ ⇔
+// * make it more efficient.  For example, don't process reflexive equations,
+//   carefully check exactly when you need to insert symmetry or a Consider
+//   rather than brute force blanketing everything.  Do we need all of the
+//   symmetric equivalences?  Is there a cleaner more efficient way to
+//   accomplish the same thing?
+const processChains = doc => {
+  // check options 
+  if (!LurchOptions.processChains) return
+
+  // split chains. This also marks all conclusion equations, including
+  // those split from chains, with .equation=true
+  splitChains(doc)
+
+  // check if the ChainsRule is around, if not, we're done
+  const rule=doc.find(
+    x=>(x.isA('Rule') || x.isA('Inst')) && x.numChildren()==1 && 
+       x.child(0) instanceof LurchSymbol && 
+       (x.child(0).text()==='EquationsRule' || x.child(0).text()==='ChainsRule'),
+    x=>!(x.isA('Rule') || x===doc))
+  // if there is no Chains Rule loaded we are done
+  if (!rule) return
+
+  // Add the transitivity conclusion for every chain.  This assumes transitivity, of course.
+  instantiateTransitives(doc,rule)
+
+  // First, we add symmetric equivalences.  For these we don't restrict to just
+  // conclusion equations.  This way it knows every equation is symmetric.
+  doc.equations().forEach( eq => insertSymmetricEquivalences( eq , rule ))
+
+  // the Chains Rule has been found, so get all of the .equations that are
+  // conclusions or produced from a conclusion chain by splitChains
+  const eqs=[...doc.descendantsSatisfyingIterator(
+    x => x.equation , 
+    x => x instanceof Application && !x.isOutermost())]
+  
+  // for each equation, A=B,
+  eqs.forEach( eq => {
+
+    // get the LHS and RHS
+    const A = eq.child(1).copy(), B=eq.child(2).copy()
+    // get the diff.  The optional third argument tells it to check for the
+    // smallest single substutition that will work.  Thus, for now, the user
+    // must only do one substitution at a time.
+    //
+    // TODO: consider generalizing or upgrading
+    const delta = diff(A,B,true)
+    // for now we only allow a single substutition at a time, so check if
+    // there's a diff, and that it is not vacuous (e.g., the equation isn't x=x).
+    // The argument 'true' to diff above guarantees there will only be one diff,
+    // if any. 
+    //
+    // TODO: maybe generalize later
+    if (delta && delta[0].length>0) {
+      // the substititution might also be for a common ancestor of the diff
+      // locations, so we consider them all
+      const n = delta[0].length
+      for (let i=1;i<=n;i++) {
+        // get x,y such that replacing x with y in A produces B
+        let x = A.child(...(delta[0].slice(0,i))).copy(), 
+            y = B.child(...(delta[0].slice(0,i))).copy()
+        // construct the instantiation :{ :x=y A=B }
+        
+        // build it
+        let inst = new Environment( 
+          new Application( new LurchSymbol('=') , x , y).asA('given') , 
+          new Application( new LurchSymbol('=') , A.copy() , B.copy() ) 
+        )
+        // and insert it
+        insertInstantiation( inst , rule , eq )
+        
+        // additionally add x=y to the list of things that should be considered
+        // as user propositions for further instantiation when prop validating.
+        const x_eq_y = inst.child(0).copy()
+        
+        // and insert it
+        insertInstantiation( x_eq_y , rule , eq )
+        
+        // Also make the reverse diff equation as a Consider to impose symmetry
+        // const y_eq_x = new Application(new LurchSymbol('='),y.copy(),x.copy())
+        const y_eq_x = reverseEquation(x_eq_y)
+        
+        // and insert it
+        insertInstantiation( y_eq_x , rule , eq )
+
+        // and insert the symmetric equivalences for them (only need to do it for
+        // one of them)
+        insertSymmetricEquivalences( x_eq_y , rule )
+      }
+    // and in the case where there's no substitution possible, also add the
+    // reverse of the equation to impose symmetry (its symmetric equivalences are inserted above)
+    } else {
+      // Make the reverse equation as a Consider
+      // const y_eq_x = new Application(new LurchSymbol('=') , B.copy() , A.copy())
+      const y_eq_x = reverseEquation(eq)
+      
+      // and insert it
+      insertInstantiation( y_eq_x , rule , eq )
+    } 
+
+  })
+}
+
+
+/**
  * Check if the doc contains the Rule `:{ EquationsRule }`.  If not, just split
  * the equation chains.  
  * 
@@ -536,15 +669,15 @@ const matchGivens = (a, b) => {
  * equality.
  * 
  * Finally, to assume symmetry we allow both `x=y` and `y=x` versions of the above
- * rules. So including the Transitive Chain Rule is assuming reflexive,
+ * rules. So including the Equations Rule is assuming reflexive,
  * symmetric, transitive, and substitution properties for equality.
  * 
  */
 // TODO: 
-// * generalize this to other reflexive operators with a special kind of
-//   Declare, e.g. Reflexive = ≤ ⊆ ⇔
 // * generalize this to transitive chains of operators, e.g. a = b < c = d ≤ e
 //   implies that a<e
+// * generalize this to other reflexive operators with a special kind of
+//   Declare, e.g. Reflexive = ≤ ⊆ ⇔
 // * make it more efficient.  For example, don't process reflexive equations,
 //   carefully check exactly when you need to insert symmetry or a Consider
 //   rather than brute force blanketing everything.  Do we need all of the
@@ -648,56 +781,122 @@ const processEquations = doc => {
 /**
  * Transitivity Instantiations
  * 
- * Go through and fetch all of the user's equations (i.e., only equations that
+ * Go through and fetch all of the user's chains (i.e., only chains that
  * are conclusions) which have more than two arguments and create and insert
- * them after the EquationsRule rule.  For example, `a=b=c=d=e` would produce
- * and insert the instantiation `:{ :a=b :b=c :c=d :d=e a=e }`
+ * them after the ChainsRule rule.  For example, `a=b<c=d≤e` would produce
+ * and insert the instantiation `:{ :a=b :b<c :c=d :d=e a<e }`
  * 
- * This is a helper utility called by `processEquations()`.
+ * This is a helper utility called by `processChains()`.
  */
 const instantiateTransitives = (doc,rule) => {
   // fetch the conclusion equations (argument = true)
-  doc.equations(true).forEach( eq => {
+  doc.chains(true).forEach( eq => {
     
-    // let n be the number of arguments to =
+    // let n be the number of arguments to `trans_chain`
     let n = eq.numChildren()
+    // collect the set of operators to know what the transitive chain conclusion
+    // should be
+    let ops =new Set('=')
 
-    // if there are more than two args, create the relevant instantiation
-    if (n>3) { 
+    // create the relevant instantiation.  Even with only 4 args we want to
+    // remove the `trans_chain` head
 
-      // build it
-      const inst = new Environment()
-      for (let k=1;k<n-1;k++) {
-        let newpair = eq.slice(k,k+2)
-        newpair.unshiftChild( eq.child(0).copy() )
-        inst.pushChild(newpair.asA('given'))
-      }
-      inst.pushChild(
-        new Application(
-          eq.child(0).copy(), 
-          eq.child(1).copy(),
-          eq.lastChild().copy()
-        )
+    // build it
+    const inst = new Environment()
+    for (let k=1;k<n-2;k+=2) {
+      let newtrio = eq.slice(k,k+3)
+      newtrio.unshiftChild( eq.child(k+1).copy() )
+      newtrio.removeChild(2)
+      ops.add(eq.child(k+1).text())
+      inst.pushChild(newtrio.asA('given'))
+    }
+    // find the correct operation
+    const op = new LurchSymbol((ops.has('<'))?'<':(ops.has('leq'))?'leq':'=')
+    
+    // construct and add the conclusion
+    inst.pushChild(
+      new Application(
+        op, 
+        eq.child(1).copy(),
+        eq.lastChild().copy()
       )
-      
-      // and insert it
-      insertInstantiation( inst, rule, eq )
-
-      // We also want the conclusion of that instantiation to be a Consider so
-      // it can instantiate other rules as if the user had stated it explicitly
-      // (since they stated it implicitly by constructing this transitive chain
-      // in the first place).  Note that insertInstantiation() automatically
-      // marks it as a Consider because it's an equation, not an environment.
-      const conc = inst.lastChild().copy()
-      insertInstantiation( conc , rule , eq )
-      // and insert its symmetric equivalence
+    )
+    
+    // and insert it
+    insertInstantiation( inst, rule, eq )
+    // We also want the conclusion of that instantiation to be a Consider so
+    // it can instantiate other rules as if the user had stated it explicitly
+    // (since they stated it implicitly by constructing this transitive chain
+    // in the first place).  Note that insertInstantiation() automatically
+    // marks it as a Consider because it's an expression, not an environment.
+    const conc = inst.lastChild().copy()
+    insertInstantiation( conc , rule , eq )
+    // finally, if it is an equation
+    if (op.text()==='=') {
+      // insert its symmetric equivalence (done after inserting transitives to
+      // the whole document) 
       insertSymmetricEquivalences( conc , rule )
+  
       // and Consider its reverse
       insertInstantiation( reverseEquation(conc) , rule)
-
     }
   })
 }
+
+
+// /**
+//  * Transitivity Instantiations
+//  * 
+//  * Go through and fetch all of the user's equations (i.e., only equations that
+//  * are conclusions) which have more than two arguments and create and insert
+//  * them after the EquationsRule rule.  For example, `a=b=c=d=e` would produce
+//  * and insert the instantiation `:{ :a=b :b=c :c=d :d=e a=e }`
+//  * 
+//  * This is a helper utility called by `processEquations()`.
+//  */
+// const instantiateTransitives = (doc,rule) => {
+//   // fetch the conclusion equations (argument = true)
+//   doc.equations(true).forEach( eq => {
+    
+//     // let n be the number of arguments to =
+//     let n = eq.numChildren()
+
+//     // if there are more than two args, create the relevant instantiation
+//     if (n>3) { 
+
+//       // build it
+//       const inst = new Environment()
+//       for (let k=1;k<n-1;k++) {
+//         let newpair = eq.slice(k,k+2)
+//         newpair.unshiftChild( eq.child(0).copy() )
+//         inst.pushChild(newpair.asA('given'))
+//       }
+//       inst.pushChild(
+//         new Application(
+//           eq.child(0).copy(), 
+//           eq.child(1).copy(),
+//           eq.lastChild().copy()
+//         )
+//       )
+      
+//       // and insert it
+//       insertInstantiation( inst, rule, eq )
+
+//       // We also want the conclusion of that instantiation to be a Consider so
+//       // it can instantiate other rules as if the user had stated it explicitly
+//       // (since they stated it implicitly by constructing this transitive chain
+//       // in the first place).  Note that insertInstantiation() automatically
+//       // marks it as a Consider because it's an equation, not an environment.
+//       const conc = inst.lastChild().copy()
+//       insertInstantiation( conc , rule , eq )
+//       // and insert its symmetric equivalence
+//       insertSymmetricEquivalences( conc , rule )
+//       // and Consider its reverse
+//       insertInstantiation( reverseEquation(conc) , rule)
+
+//     }
+//   })
+// }
 
 
 /**
@@ -746,6 +945,61 @@ const copyEquation = eq => {
   )
 }
 
+/**
+ * Upgrade any equation chains that appear in an LC to the new transitive chain format.
+ */
+const upgradeChains = doc => {
+  // loop through all of the equations and replace each one with the upgraded
+  // form.
+  doc.equations().filter(x=>x.numChildren()>3).forEach( eq => {
+    eq2chain(eq).insertAfter(eq)
+    eq.remove()
+  })
+}
+
+/**
+ * Convert an n-ary = equation LC to transitive chain form.  This assumes eq has
+ * the form (= a₁ ... aₙ) with n>2. If it's an ordinary equation it's returns undefined. 
+ */
+const eq2chain = eq => {
+  const ans = eq.slice(1)
+  ans.children().forEach( kid => {
+    new LurchSymbol('=').insertAfter(kid)
+  })
+  ans.unshiftChild(new LurchSymbol('trans_chain'))
+  ans.popChild()
+  return ans
+}
+
+/**
+ * Go through and fetch all of the user's chains (i.e., only chains that are
+ * conclusions).  Split them into binary pairs and insert them in the document.
+ */
+const splitChains = doc => {
+  // any user equations that aren't chains should be marked as such
+  doc.equations(true).forEach(x=>x.equation=true)
+  // fetch the conclusion equations (argument = true)
+  doc.chains(true).forEach( eq => {
+    // let n be the number of arguments to =. Since it should be created by
+    // parsing a user's transitive chain it should have an even number of
+    // arguments to tran_chain,
+    let n = eq.numChildren()
+    let last = eq
+    for (let k=1;k<n-2;k+=2) {
+      // instead of building a new equation from a pair of arguments, we copy
+      // the original equation and delete children that are not needed in order
+      // to preserve any LC attributes that might be stored on the original
+      // equation.  Note .slice for LCs makes an LC copy, not a 'shallow' copy.
+      let newtrio = eq.slice(k,k+3)
+      newtrio.unshiftChild(eq.child(k+1).copy())
+      newtrio.removeChild(2)
+      if (newtrio.isAnEquation()) newtrio.equation = true 
+      newtrio.insertAfter(last)
+      last=newtrio
+    }
+    eq.ignore = true
+  })
+}
 
 /**
  * Go through and fetch all of the user's equations (i.e., only equations that
@@ -1928,9 +2182,11 @@ const Benchmark = function (f, name) {
 }
 
 export default {
-  validate, getUserPropositions, instantiate, markDeclarationContexts,
-  processBIHs, processEquations, splitEquations, processDomains, diff,
-  cacheFormulaDomainInfo, Benchmark, getCaselikeRules, LurchOptions, Stats,
-  matchPropositions, LogicConcept, Formula, Scoping, Validation
+  validate, getUserPropositions, instantiate, insertInstantiation, 
+  insertSymmetricEquivalences, reverseEquation, markDeclarationContexts, processBIHs, 
+  processChains, processEquations, upgradeChains, eq2chain, splitChains, 
+  splitEquations, processDomains, diff, cacheFormulaDomainInfo, Benchmark, 
+  getCaselikeRules, LurchOptions, Stats, matchPropositions, LogicConcept, 
+  Formula, Scoping, Validation
 }
 ///////////////////////////////////////////////////////////////////////////////

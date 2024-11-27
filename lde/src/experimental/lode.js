@@ -345,13 +345,17 @@ global.loadDoc = ( name, folder='./', extension=LurchFileExtension,
     // load the specified file with recursive substitutions for imported libs
     doc = `{${loadDocStr( name, folder, extension )}}`
     // convert it to putdown
-    doc = parse(doc) 
+    doc = parse(doc)    
   } else {
     // otherwise it's putdown, most likely from exported document code from the UI
     // do just load the file directly
     doc = loadStr( name, folder, extension )
   }
   doc = lc(doc)
+  // For backwards compatibility convert any legacy equation transitive chains
+  // to the new style
+  // TODO: just upgrade the student files and resave them
+  upgradeChains(doc)
   interpret(doc)
   validate(doc)
   return doc
