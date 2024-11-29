@@ -833,13 +833,7 @@ const instantiateTransitives = (doc,rule) => {
     insertInstantiation( conc , rule , eq )
     // finally, if it is an equation
     if (op.text()==='=') {
-      // insert its symmetric equivalence (done after inserting transitives to
-      // the whole document) 
-
-      // The following is done afterwards anyway, so perhaps we don't need it here
-      // insertSymmetricEquivalences( conc , rule )
-  
-      // and Consider its reverse
+      // Consider its reverse
       insertInstantiation( reverseEquation(conc) , rule)
     }
   })
