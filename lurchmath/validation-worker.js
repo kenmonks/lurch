@@ -99,6 +99,11 @@ const getValidationResults = LC => {
     // Final result is the prop validation result, if any
     const propResult = LDE.Validation.result( LC )
     if ( propResult )
+        // as a temporary hack we change the result of a preemie from 'invalid'
+        // to 'indeterminate' because that's more accurate.  But we only do this
+        // for the UI since the test files would have to be regenerated if we
+        // make it return that in the first place.
+        if (propResult.reason==='preemie') propResult.result='indeterminate' 
         results.push( { type : 'propositional', ...propResult } )
     return results
 }
