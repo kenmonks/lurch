@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -1277,10 +1277,11 @@
 <p style="text-align: center;"><span style="font-size: 14pt;">(and I'm on sabbatical!)</span></p>
 <p style="text-align: center;">&nbsp;</p>
 <ul>
-<li>20 Lurch assignments</li>
-<li>700 proofs</li>
-<li>Graded in 4 minutes&nbsp;</li>
+<li style="font-size: 14pt;"><span style="font-size: 14pt;">20 Lurch assignments</span></li>
+<li style="font-size: 14pt;"><span style="font-size: 14pt;">700 proofs</span></li>
+<li style="font-size: 14pt;"><span style="font-size: 14pt;">graded in 4 minutes&nbsp;</span></li>
 </ul>
+<p style="text-align: center;">&nbsp;</p>
 <p style="text-align: center;">&nbsp;</p>
 <hr>
 <div>&nbsp;</div>
@@ -1381,7 +1382,7 @@
 <p><strong>Axiom of Induction</strong></p>
 <p style="text-align: center;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;  \\mathcal{P}(0)\\wedge\n  (\\forall k.\\mathcal{P}(k)\n    \\Rightarrow\n    \\mathcal{P}(k+1))\n  \\Rightarrow\n\\forall n.\\mathcal{P}(n)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(0)</span><span class="ML__cmr">&and;</span><span class="ML__cmr">(&forall;</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">.</span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">)</span><span class="ML__cmr">&rArr;</span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit" style="margin-right: 0.04em;">k</span><span class="ML__cmr">+</span><span class="ML__cmr">1))</span><span class="ML__cmr">&rArr;</span><span class="ML__cmr">&forall;</span><span class="ML__mathit">n</span><span class="ML__cmr">.</span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__cmr">(</span><span class="ML__mathit">n</span><span class="ML__cmr">)</span></span></span></span></span></p>
 </div>
-<p>But using our equivalences above we can write it more naturally as</p>
+<p>But using our equivalences we can write it more naturally as</p>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Axiom of Induction</strong></p>
 <div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
