@@ -1,900 +1,965 @@
-<!DOCTYPE html>
-<html lang='en'>
+<!-- @format -->
 
-<head>
-  <title>100 Theorems!</title>
-    <meta charset='utf-8' />
-  <meta name='description'
-      content='This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content.' />
-  <meta name='keywords'
-    content='Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <link rel='shortcut icon' href='../assets/media/favicon-L+.svg' />
-  
-  <link
-    href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
-    rel="stylesheet" type="text/css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
-    rel="stylesheet">
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>100 Theorems!</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
 
-  <link rel='stylesheet' href='../assets/css/monks.css'>
-  <link rel='stylesheet' href='../assets/css/lurchplus.css'>
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
 
-  <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+    <link rel="stylesheet" href="../assets/css/monks.css" />
+    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
 
-</head>
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
 
-<body>
-  
-  <!-- left nav is positioned absolute so it doesn't scroll -->
-  <div id='leftnav'>
-    <img src='../assets/media/lurchlogo.png' 
-      style='margin: 0px; border-radius: 5px; display: block'
-      width='100%' />
-    <ul>
-      <li><a href='/' target='_self'>Home</a></li>
-      <li><a href='#status' >100 Theorem Checklist</a></li></ul>
-    <div id="contact">
-      <div>
-        <a href="mailto:monks@scranton.edu">Ken Monks</a>
-      </div>
-      <div>
-        <a href="https://monks.scranton.edu"
-          target="_blank">monks.scranton.edu</a>
-      </div>
-      <div>
-        <a href="https://proveitmath.org"
-          target="_blank">proveitmath.org</a>
-      </div>
-    </div>
-  </div>
+  <body>
+    <div id="leftnav">
+      <img
+        src="../assets/media/lurchlogo.png"
+        style="margin: 0px; border-radius: 5px; display: block"
+        width="100%" />
 
-  <!-- flex column for content-block and footer-block -->
-  <div id='wrap'>
+      <ul>
+        <li><a href="/" target="_self">Home</a></li>
+        <li><a href="#status">100 Theorem Checklist</a></li>
+      </ul>
 
-    <div id='content-block'>
-      <div class="title-box">
-<h1>100 Theorems in Lurch</h1>
-</div>
-<p>Freek Wiedijk maintains <a href="https://www.cs.ru.nl/~freek/100/">a list</a> tracking
-progress of theorem provers formalizing 100 classic theorems in mathematics. On
-this page we collect all of the proofs on that list that we have formalized in
-Lurch to date.</p>
-<p>Since Lurch supports proofs in <em>any</em> context, deciding what actually
-constitutes a formalization of one of the proofs is not obvious. For example,
-one can simply add each of the 100 theorems to the context of a Lurch document
-as a rule and they will all be 'proven' trivially.</p>
-<p>To address this, we self-impose our own standard for what qualifies. Consistent
-with Lurch's philosophy, we consider a theorem to be proved by Lurch if the
-proof contains, at minimum, the level of detail you might find for the proof of
-that theorem in a textbook, spotting all of the other details as part of the
-context. Citing a proof of the theorem in a textbook or other valid source can
-certify that this criteria has been met.</p>
-<h2 id="status">100 Theorem Checklist</h2>
-<p>The following table is reproduced from
-<a href="http://web.archive.org/web/20080105074243/http://personal.stevens.edu/~nkahl/Top100Theorems.html">here</a>
-(if there is a newer version of that page let me know). A green check mark
-(<span class="checkmark">✔︎</span>) in the first column indicates that Lurch has proved the
-theorem listed, while a yellow question mark (<span class="question-mark">?</span>)
-indicates that it has not.</p>
-<p>Click on a completed theorem to open its proof in Lurch.</p>
-<div id="wrapboard">
-<div id="scoreboard">
-<p>Status: <span class="checkmark">✔︎</span> 1 proof verified, <span class="question-mark">?</span> 99 unverified</p>
-</div>
-</div>
-<!-- The Checklist Table -->
-<table class="booktab" id="checklist">
-  <thead>
-    <tr>
-      <th>Done</th>
-      <th>#</th>
-      <th>Theorem</th>
-      <th>Author</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr data-href="/student.html?load=math/examples/100/Thm 001.lurch">
-      <td class="done">✔︎</td>
-      <td>1</td>
-      <td>The Irrationality of the Square Root of 2</td>
-      <td>Pythagoras and his school</td>
-      <td>500 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>2</td>
-      <td>Fundamental Theorem of Algebra</td>
-      <td>Karl Frederich Gauss</td>
-      <td>1799</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>3</td>
-      <td>The Denumerability of the Rational Numbers</td>
-      <td>Georg Cantor</td>
-      <td>1867</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>4</td>
-      <td>Pythagorean Theorem</td>
-      <td>Pythagoras and his school</td>
-      <td>500 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>5</td>
-      <td>Prime Number Theorem</td>
-      <td>
-        <div>Jacques Hadamard and Charles-Jean de la Vallee Poussin
-          (separately)
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
         </div>
-      </td>
-      <td>1896</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>6</td>
-      <td>Godel’s Incompleteness Theorem</td>
-      <td>Kurt Godel</td>
-      <td>1931</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>7</td>
-      <td>Law of Quadratic Reciprocity</td>
-      <td>Karl Frederich Gauss</td>
-      <td>1801</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>8</td>
-      <td>The Impossibility of Trisecting the Angle and Doubling the
-        Cube</td>
-      <td>Pierre Wantzel</td>
-      <td>1837</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>9</td>
-      <td>The Area of a Circle</td>
-      <td>Archimedes</td>
-      <td>225 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>10</td>
-      <td>Euler’s Generalization of Fermat’s Little
-        Theorem<br>(Fermat’s Little
-        Theorem)</td>
-      <td>Leonhard Euler<br>(Pierre de Fermat)</td>
-      <td>1760<br>(1640)</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>11</td>
-      <td>The Infinitude of Primes</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>12</td>
-      <td>The Independence of the Parallel Postulate</td>
-      <td>Karl Frederich Gauss, Janos Bolyai, Nikolai Lobachevsky,
-        G.F. Bernhard
-        Riemann collectively</td>
-      <td>1870-1880</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>13</td>
-      <td>Polyhedron Formula</td>
-      <td>Leonhard Euler</td>
-      <td>1751</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>14</td>
-      <td>Euler’s Summation of 1 + (1/2)^2 + (1/3)^2 + ….</td>
-      <td>Leonhard Euler</td>
-      <td>1734</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>15</td>
-      <td>Fundamental Theorem of Integral Calculus</td>
-      <td>Gottfried Wilhelm von Leibniz</td>
-      <td>1686</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>16</td>
-      <td>Insolvability of General Higher Degree Equations</td>
-      <td>Niels Henrik Abel</td>
-      <td>1824</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>17</td>
-      <td>DeMoivre’s Theorem</td>
-      <td>Abraham DeMoivre</td>
-      <td>1730</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>18</td>
-      <td>Liouville’s Theorem and the Construction of Trancendental
-        Numbers</td>
-      <td>Joseph Liouville</td>
-      <td>1844</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>19</td>
-      <td>Four Squares Theorem</td>
-      <td>Joseph-Louis Lagrange</td>
-      <td>1770</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>20</td>
-      <td>All Primes Equal the Sum of Two Squares</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>21</td>
-      <td>Green’s Theorem</td>
-      <td>George Green</td>
-      <td>1828</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>22</td>
-      <td>The Non-Denumerability of the Continuum</td>
-      <td>Georg Cantor</td>
-      <td>1874</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>23</td>
-      <td>Formula for Pythagorean Triples</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>24</td>
-      <td>The Undecidability of the Coninuum Hypothesis</td>
-      <td>Paul Cohen</td>
-      <td>1963</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>25</td>
-      <td>Schroeder-Bernstein Theorem</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>26</td>
-      <td>Leibnitz’s Series for Pi</td>
-      <td>Gottfried Wilhelm von Leibniz</td>
-      <td>1674</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>27</td>
-      <td>Sum of the Angles of a Triangle</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>28</td>
-      <td>Pascal’s Hexagon Theorem</td>
-      <td>Blaise Pascal</td>
-      <td>1640</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>29</td>
-      <td>Feuerbach’s Theorem</td>
-      <td>Karl Wilhelm Feuerbach</td>
-      <td>1822</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>30</td>
-      <td>The Ballot Problem</td>
-      <td>J.L.F. Bertrand</td>
-      <td>1887</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>31</td>
-      <td>Ramsey’s Theorem</td>
-      <td>F.P. Ramsey</td>
-      <td>1930</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>32</td>
-      <td>The Four Color Problem</td>
-      <td>Kenneth Appel and Wolfgang Haken</td>
-      <td>1976</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>33</td>
-      <td>Fermat’s Last Theorem</td>
-      <td>Andrew Wiles</td>
-      <td>1993</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>34</td>
-      <td>Divergence of the Harmonic Series</td>
-      <td>Nicole Oresme</td>
-      <td>1350</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>35</td>
-      <td>Taylor’s Theorem</td>
-      <td>Brook Taylor</td>
-      <td>1715</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>36</td>
-      <td>Brouwer Fixed Point Theorem</td>
-      <td>L.E.J. Brouwer</td>
-      <td>1910</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>37</td>
-      <td>The Solution of a Cubic</td>
-      <td>Scipione Del Ferro</td>
-      <td>1500</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>38</td>
-      <td>Arithmetic Mean/Geometric Mean<br />(Proof by Backward
-        Induction)<br />(Polya Proof)</td>
-      <td><br />Augustin-Louis Cauchy<br />George Polya</td>
-      <td><br />?<br />?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>39</td>
-      <td>Solutions to Pell’s Equation</td>
-      <td>Leonhard Euler</td>
-      <td>1759</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>40</td>
-      <td>Minkowski’s Fundamental Theorem</td>
-      <td>Hermann Minkowski</td>
-      <td>1896</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>41</td>
-      <td>Puiseux’s Theorem</td>
-      <td>Victor Puiseux (based on a discovery of Isaac Newton of
-        1671)</td>
-      <td>1850</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>42</td>
-      <td>Sum of the Reciprocals of the Triangular Numbers</td>
-      <td>Gottfried Wilhelm von Leibniz</td>
-      <td>1672</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>43</td>
-      <td>The Isoperimetric Theorem</td>
-      <td>Jacob Steiner</td>
-      <td>1838</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>44</td>
-      <td>The Binomial Theorem</td>
-      <td>Isaac Newton</td>
-      <td>1665</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>45</td>
-      <td>The Partition Theorem</td>
-      <td>Leonhard Euler</td>
-      <td>1740</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>46</td>
-      <td>The Solution of the General Quartic Equation</td>
-      <td>Lodovico Ferrari</td>
-      <td>1545</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>47</td>
-      <td>The Central Limit Theorem</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>48</td>
-      <td>Dirichlet’s Theorem</td>
-      <td>Peter Lejune Dirichlet</td>
-      <td>1837</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>49</td>
-      <td>The Cayley-Hamilton Thoerem</td>
-      <td>Arthur Cayley</td>
-      <td>1858</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>50</td>
-      <td>The Number of Platonic Solids</td>
-      <td>Theaetetus</td>
-      <td>400 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>51</td>
-      <td>Wilson’s Theorem</td>
-      <td>Joseph-Louis Lagrange</td>
-      <td>1773</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>52</td>
-      <td>The Number of Subsets of a Set</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>53</td>
-      <td>Pi is Trancendental</td>
-      <td>Ferdinand Lindemann</td>
-      <td>1882</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>54</td>
-      <td>Konigsberg Bridges Problem</td>
-      <td>Leonhard Euler</td>
-      <td>1736</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>55</td>
-      <td>Product of Segments of Chords</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>56</td>
-      <td>The Hermite-Lindemann Transcendence Theorem</td>
-      <td>Ferdinand Lindemann</td>
-      <td>1882</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>57</td>
-      <td>Heron’s Formula</td>
-      <td>Heron of Alexandria</td>
-      <td>75</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>58</td>
-      <td>Formula for the Number of Combinations</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>59</td>
-      <td>The Laws of Large Numbers</td>
-      <td>&lt;many&gt;</td>
-      <td>&lt;many&gt;</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>60</td>
-      <td>Bezout’s Theorem</td>
-      <td>Etienne Bezout</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>61</td>
-      <td>Theorem of Ceva</td>
-      <td>Giovanni Ceva</td>
-      <td>1678</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>62</td>
-      <td>Fair Games Theorem</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>63</td>
-      <td>Cantor’s Theorem</td>
-      <td>Georg Cantor</td>
-      <td>1891</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>64</td>
-      <td>L’Hopital’s Rule</td>
-      <td>John Bernoulli</td>
-      <td>1696?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>65</td>
-      <td>Isosceles Triangle Theorem</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>66</td>
-      <td>Sum of a Geometric Series</td>
-      <td>Archimedes</td>
-      <td>260 B.C.?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>67</td>
-      <td>e is Transcendental</td>
-      <td>Charles Hermite</td>
-      <td>1873</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>68</td>
-      <td>Sum of an arithmetic series</td>
-      <td>Babylonians</td>
-      <td>1700 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>69</td>
-      <td>Greatest Common Divisor Algorithm</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>70</td>
-      <td>The Perfect Number Theorem</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>71</td>
-      <td>Order of a Subgroup</td>
-      <td>Joseph-Louis Lagrange</td>
-      <td>1802</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>72</td>
-      <td>Sylow’s Theorem</td>
-      <td>Ludwig Sylow</td>
-      <td>1870</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>73</td>
-      <td>Ascending or Descending Sequences</td>
-      <td>Paul Erdos and G. Szekeres</td>
-      <td>1935</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>74</td>
-      <td>The Principle of Mathematical Induction</td>
-      <td>Levi ben Gerson</td>
-      <td>1321</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>75</td>
-      <td>The Mean Value Theorem</td>
-      <td>Augustine-Louis Cauchy</td>
-      <td>1823</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>76</td>
-      <td>Fourier Series</td>
-      <td>Joseph Fourier</td>
-      <td>1811</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>77</td>
-      <td>Sum of kth powers</td>
-      <td>Jakob Bernouilli</td>
-      <td>1713</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>78</td>
-      <td>The Cauchy-Schwarz Inequality</td>
-      <td>Augustine-Louis Cauchy</td>
-      <td>1814?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>79</td>
-      <td>The Intermediate Value Theorem</td>
-      <td>Augustine-Louis Cauchy</td>
-      <td>1821</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>80</td>
-      <td>The Fundamental Theorem of Arithmetic</td>
-      <td>Euclid</td>
-      <td>300 B.C.</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>81</td>
-      <td>Divergence of the Prime Reciprocal Series</td>
-      <td>Leonhard Euler</td>
-      <td>1734?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>82</td>
-      <td>Dissection of Cubes (J.E. Littlewood’s ‘elegant’ proof)</td>
-      <td>R.L. Brooks</td>
-      <td>1940</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>83</td>
-      <td>The Friendship Theorem</td>
-      <td>Paul Erdos, Alfred Renyi, Vera Sos</td>
-      <td>1966</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>84</td>
-      <td>Morley’s Theorem</td>
-      <td>Frank Morley</td>
-      <td>1899</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>85</td>
-      <td>Divisibility by 3 Rule</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>86</td>
-      <td>Lebesgue Measure and Integration</td>
-      <td>Henri Lebesgue</td>
-      <td>1902</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>87</td>
-      <td>Desargues’s Theorem</td>
-      <td>Gerard Desargues</td>
-      <td>1650</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>88</td>
-      <td>Derangements Formula</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>89</td>
-      <td>The Factor and Remainder Theorems</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>90</td>
-      <td>Stirling’s Formula</td>
-      <td>James Stirling</td>
-      <td>1730</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>91</td>
-      <td>The Triangle Inequality</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>92</td>
-      <td>Pick’s Theorem</td>
-      <td>George Pick</td>
-      <td>1899</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>93</td>
-      <td>The Birthday Problem</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>94</td>
-      <td>The Law of Cosines</td>
-      <td>Francois Viete</td>
-      <td>1579</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>95</td>
-      <td>Ptolemy’s Theorem</td>
-      <td>Ptolemy</td>
-      <td>120?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>96</td>
-      <td>Principle of Inclusion/Exclusion</td>
-      <td>?</td>
-      <td>?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>97</td>
-      <td>Cramer’s Rule</td>
-      <td>Gabriel Cramer</td>
-      <td>1750</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>98</td>
-      <td>Bertrand’s Postulate</td>
-      <td>J.L.F. Bertrand</td>
-      <td>1860?</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>99</td>
-      <td>Buffon Needle Problem</td>
-      <td>Comte de Buffon</td>
-      <td>1733</td>
-    </tr>
-    <tr>
-      <td>?</td>
-      <td>100</td>
-      <td>Descartes Rule of Signs</td>
-      <td>Rene Descartes</td>
-      <td>1637</td>
-    </tr>
-  </tbody>
-</table>
-
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank">
+            monks.scranton.edu
+          </a>
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
+      </div>
     </div>
 
-    <div id='footer-block'>
-              <footer>
-          <div class='container'>
-            <div class='row'>
-              <div class='col-xs-12'>
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1>100 Theorems in Lurch</h1>
+        </div>
+        <p>
+          Freek Wiedijk maintains
+          <a href="https://www.cs.ru.nl/~freek/100/">a list</a>
+          tracking progress of theorem provers formalizing 100 classic theorems
+          in mathematics. On this page we collect all of the proofs on that list
+          that we have formalized in Lurch to date.
+        </p>
+        <p>
+          Since Lurch supports proofs in
+          <em>any</em>
+          context, deciding what actually constitutes a formalization of one of
+          the proofs is not obvious. For example, one can simply add each of the
+          100 theorems to the context of a Lurch document as a rule and they
+          will all be 'proven' trivially.
+        </p>
+        <p>
+          To address this, we self-impose our own standard for what qualifies.
+          Consistent with Lurch's philosophy, we consider a theorem to be proved
+          by Lurch if the proof contains, at minimum, the level of detail you
+          might find for the proof of that theorem in a textbook, spotting all
+          of the other details as part of the context. Citing a proof of the
+          theorem in a textbook or other valid source can certify that this
+          criteria has been met.
+        </p>
+        <h2 id="status">100 Theorem Checklist</h2>
+        <p>
+          The following table is reproduced from
+          <a
+            href="http://web.archive.org/web/20080105074243/http://personal.stevens.edu/~nkahl/Top100Theorems.html">
+            here
+          </a>
+          (if there is a newer version of that page let me know). A green check
+          mark (
+          <span class="checkmark">✔︎</span>
+          ) in the first column indicates that Lurch has proved the theorem
+          listed, while a yellow question mark (
+          <span class="question-mark">?</span>
+          ) indicates that it has not.
+        </p>
+        <p>Click on a completed theorem to open its proof in Lurch.</p>
+        <div id="wrapboard">
+          <div id="scoreboard">
+            <p>
+              Status:
+              <span class="checkmark">✔︎</span>
+              1 proof verified,
+              <span class="question-mark">?</span>
+              99 unverified
+            </p>
+          </div>
+        </div>
+        <!-- The Checklist Table -->
+        <table class="booktab" id="checklist">
+          <thead>
+            <tr>
+              <th>Done</th>
+              <th>#</th>
+              <th>Theorem</th>
+              <th>Author</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-href="/student.html?load=math/examples/100/Thm 001.lurch">
+              <td class="done">✔︎</td>
+              <td>1</td>
+              <td>The Irrationality of the Square Root of 2</td>
+              <td>Pythagoras and his school</td>
+              <td>500 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>2</td>
+              <td>Fundamental Theorem of Algebra</td>
+              <td>Karl Frederich Gauss</td>
+              <td>1799</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>3</td>
+              <td>The Denumerability of the Rational Numbers</td>
+              <td>Georg Cantor</td>
+              <td>1867</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>4</td>
+              <td>Pythagorean Theorem</td>
+              <td>Pythagoras and his school</td>
+              <td>500 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>5</td>
+              <td>Prime Number Theorem</td>
+              <td>
+                <div>
+                  Jacques Hadamard and Charles-Jean de la Vallee Poussin
+                  (separately)
+                </div>
+              </td>
+              <td>1896</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>6</td>
+              <td>Godel’s Incompleteness Theorem</td>
+              <td>Kurt Godel</td>
+              <td>1931</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>7</td>
+              <td>Law of Quadratic Reciprocity</td>
+              <td>Karl Frederich Gauss</td>
+              <td>1801</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>8</td>
+              <td>
+                The Impossibility of Trisecting the Angle and Doubling the Cube
+              </td>
+              <td>Pierre Wantzel</td>
+              <td>1837</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>9</td>
+              <td>The Area of a Circle</td>
+              <td>Archimedes</td>
+              <td>225 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>10</td>
+              <td>
+                Euler’s Generalization of Fermat’s Little Theorem
+                <br />
+                (Fermat’s Little Theorem)
+              </td>
+              <td>
+                Leonhard Euler
+                <br />
+                (Pierre de Fermat)
+              </td>
+              <td>
+                1760
+                <br />
+                (1640)
+              </td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>11</td>
+              <td>The Infinitude of Primes</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>12</td>
+              <td>The Independence of the Parallel Postulate</td>
+              <td>
+                Karl Frederich Gauss, Janos Bolyai, Nikolai Lobachevsky, G.F.
+                Bernhard Riemann collectively
+              </td>
+              <td>1870-1880</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>13</td>
+              <td>Polyhedron Formula</td>
+              <td>Leonhard Euler</td>
+              <td>1751</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>14</td>
+              <td>Euler’s Summation of 1 + (1/2)^2 + (1/3)^2 + ….</td>
+              <td>Leonhard Euler</td>
+              <td>1734</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>15</td>
+              <td>Fundamental Theorem of Integral Calculus</td>
+              <td>Gottfried Wilhelm von Leibniz</td>
+              <td>1686</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>16</td>
+              <td>Insolvability of General Higher Degree Equations</td>
+              <td>Niels Henrik Abel</td>
+              <td>1824</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>17</td>
+              <td>DeMoivre’s Theorem</td>
+              <td>Abraham DeMoivre</td>
+              <td>1730</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>18</td>
+              <td>
+                Liouville’s Theorem and the Construction of Trancendental
+                Numbers
+              </td>
+              <td>Joseph Liouville</td>
+              <td>1844</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>19</td>
+              <td>Four Squares Theorem</td>
+              <td>Joseph-Louis Lagrange</td>
+              <td>1770</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>20</td>
+              <td>All Primes Equal the Sum of Two Squares</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>21</td>
+              <td>Green’s Theorem</td>
+              <td>George Green</td>
+              <td>1828</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>22</td>
+              <td>The Non-Denumerability of the Continuum</td>
+              <td>Georg Cantor</td>
+              <td>1874</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>23</td>
+              <td>Formula for Pythagorean Triples</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>24</td>
+              <td>The Undecidability of the Coninuum Hypothesis</td>
+              <td>Paul Cohen</td>
+              <td>1963</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>25</td>
+              <td>Schroeder-Bernstein Theorem</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>26</td>
+              <td>Leibnitz’s Series for Pi</td>
+              <td>Gottfried Wilhelm von Leibniz</td>
+              <td>1674</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>27</td>
+              <td>Sum of the Angles of a Triangle</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>28</td>
+              <td>Pascal’s Hexagon Theorem</td>
+              <td>Blaise Pascal</td>
+              <td>1640</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>29</td>
+              <td>Feuerbach’s Theorem</td>
+              <td>Karl Wilhelm Feuerbach</td>
+              <td>1822</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>30</td>
+              <td>The Ballot Problem</td>
+              <td>J.L.F. Bertrand</td>
+              <td>1887</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>31</td>
+              <td>Ramsey’s Theorem</td>
+              <td>F.P. Ramsey</td>
+              <td>1930</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>32</td>
+              <td>The Four Color Problem</td>
+              <td>Kenneth Appel and Wolfgang Haken</td>
+              <td>1976</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>33</td>
+              <td>Fermat’s Last Theorem</td>
+              <td>Andrew Wiles</td>
+              <td>1993</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>34</td>
+              <td>Divergence of the Harmonic Series</td>
+              <td>Nicole Oresme</td>
+              <td>1350</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>35</td>
+              <td>Taylor’s Theorem</td>
+              <td>Brook Taylor</td>
+              <td>1715</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>36</td>
+              <td>Brouwer Fixed Point Theorem</td>
+              <td>L.E.J. Brouwer</td>
+              <td>1910</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>37</td>
+              <td>The Solution of a Cubic</td>
+              <td>Scipione Del Ferro</td>
+              <td>1500</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>38</td>
+              <td>
+                Arithmetic Mean/Geometric Mean
+                <br />
+                (Proof by Backward Induction)
+                <br />
+                (Polya Proof)
+              </td>
+              <td>
+                <br />
+                Augustin-Louis Cauchy
+                <br />
+                George Polya
+              </td>
+              <td>
+                <br />
+                ?
+                <br />
+                ?
+              </td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>39</td>
+              <td>Solutions to Pell’s Equation</td>
+              <td>Leonhard Euler</td>
+              <td>1759</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>40</td>
+              <td>Minkowski’s Fundamental Theorem</td>
+              <td>Hermann Minkowski</td>
+              <td>1896</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>41</td>
+              <td>Puiseux’s Theorem</td>
+              <td>
+                Victor Puiseux (based on a discovery of Isaac Newton of 1671)
+              </td>
+              <td>1850</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>42</td>
+              <td>Sum of the Reciprocals of the Triangular Numbers</td>
+              <td>Gottfried Wilhelm von Leibniz</td>
+              <td>1672</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>43</td>
+              <td>The Isoperimetric Theorem</td>
+              <td>Jacob Steiner</td>
+              <td>1838</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>44</td>
+              <td>The Binomial Theorem</td>
+              <td>Isaac Newton</td>
+              <td>1665</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>45</td>
+              <td>The Partition Theorem</td>
+              <td>Leonhard Euler</td>
+              <td>1740</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>46</td>
+              <td>The Solution of the General Quartic Equation</td>
+              <td>Lodovico Ferrari</td>
+              <td>1545</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>47</td>
+              <td>The Central Limit Theorem</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>48</td>
+              <td>Dirichlet’s Theorem</td>
+              <td>Peter Lejune Dirichlet</td>
+              <td>1837</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>49</td>
+              <td>The Cayley-Hamilton Thoerem</td>
+              <td>Arthur Cayley</td>
+              <td>1858</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>50</td>
+              <td>The Number of Platonic Solids</td>
+              <td>Theaetetus</td>
+              <td>400 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>51</td>
+              <td>Wilson’s Theorem</td>
+              <td>Joseph-Louis Lagrange</td>
+              <td>1773</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>52</td>
+              <td>The Number of Subsets of a Set</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>53</td>
+              <td>Pi is Trancendental</td>
+              <td>Ferdinand Lindemann</td>
+              <td>1882</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>54</td>
+              <td>Konigsberg Bridges Problem</td>
+              <td>Leonhard Euler</td>
+              <td>1736</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>55</td>
+              <td>Product of Segments of Chords</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>56</td>
+              <td>The Hermite-Lindemann Transcendence Theorem</td>
+              <td>Ferdinand Lindemann</td>
+              <td>1882</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>57</td>
+              <td>Heron’s Formula</td>
+              <td>Heron of Alexandria</td>
+              <td>75</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>58</td>
+              <td>Formula for the Number of Combinations</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>59</td>
+              <td>The Laws of Large Numbers</td>
+              <td>&lt;many&gt;</td>
+              <td>&lt;many&gt;</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>60</td>
+              <td>Bezout’s Theorem</td>
+              <td>Etienne Bezout</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>61</td>
+              <td>Theorem of Ceva</td>
+              <td>Giovanni Ceva</td>
+              <td>1678</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>62</td>
+              <td>Fair Games Theorem</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>63</td>
+              <td>Cantor’s Theorem</td>
+              <td>Georg Cantor</td>
+              <td>1891</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>64</td>
+              <td>L’Hopital’s Rule</td>
+              <td>John Bernoulli</td>
+              <td>1696?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>65</td>
+              <td>Isosceles Triangle Theorem</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>66</td>
+              <td>Sum of a Geometric Series</td>
+              <td>Archimedes</td>
+              <td>260 B.C.?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>67</td>
+              <td>e is Transcendental</td>
+              <td>Charles Hermite</td>
+              <td>1873</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>68</td>
+              <td>Sum of an arithmetic series</td>
+              <td>Babylonians</td>
+              <td>1700 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>69</td>
+              <td>Greatest Common Divisor Algorithm</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>70</td>
+              <td>The Perfect Number Theorem</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>71</td>
+              <td>Order of a Subgroup</td>
+              <td>Joseph-Louis Lagrange</td>
+              <td>1802</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>72</td>
+              <td>Sylow’s Theorem</td>
+              <td>Ludwig Sylow</td>
+              <td>1870</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>73</td>
+              <td>Ascending or Descending Sequences</td>
+              <td>Paul Erdos and G. Szekeres</td>
+              <td>1935</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>74</td>
+              <td>The Principle of Mathematical Induction</td>
+              <td>Levi ben Gerson</td>
+              <td>1321</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>75</td>
+              <td>The Mean Value Theorem</td>
+              <td>Augustine-Louis Cauchy</td>
+              <td>1823</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>76</td>
+              <td>Fourier Series</td>
+              <td>Joseph Fourier</td>
+              <td>1811</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>77</td>
+              <td>Sum of kth powers</td>
+              <td>Jakob Bernouilli</td>
+              <td>1713</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>78</td>
+              <td>The Cauchy-Schwarz Inequality</td>
+              <td>Augustine-Louis Cauchy</td>
+              <td>1814?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>79</td>
+              <td>The Intermediate Value Theorem</td>
+              <td>Augustine-Louis Cauchy</td>
+              <td>1821</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>80</td>
+              <td>The Fundamental Theorem of Arithmetic</td>
+              <td>Euclid</td>
+              <td>300 B.C.</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>81</td>
+              <td>Divergence of the Prime Reciprocal Series</td>
+              <td>Leonhard Euler</td>
+              <td>1734?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>82</td>
+              <td>Dissection of Cubes (J.E. Littlewood’s ‘elegant’ proof)</td>
+              <td>R.L. Brooks</td>
+              <td>1940</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>83</td>
+              <td>The Friendship Theorem</td>
+              <td>Paul Erdos, Alfred Renyi, Vera Sos</td>
+              <td>1966</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>84</td>
+              <td>Morley’s Theorem</td>
+              <td>Frank Morley</td>
+              <td>1899</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>85</td>
+              <td>Divisibility by 3 Rule</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>86</td>
+              <td>Lebesgue Measure and Integration</td>
+              <td>Henri Lebesgue</td>
+              <td>1902</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>87</td>
+              <td>Desargues’s Theorem</td>
+              <td>Gerard Desargues</td>
+              <td>1650</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>88</td>
+              <td>Derangements Formula</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>89</td>
+              <td>The Factor and Remainder Theorems</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>90</td>
+              <td>Stirling’s Formula</td>
+              <td>James Stirling</td>
+              <td>1730</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>91</td>
+              <td>The Triangle Inequality</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>92</td>
+              <td>Pick’s Theorem</td>
+              <td>George Pick</td>
+              <td>1899</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>93</td>
+              <td>The Birthday Problem</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>94</td>
+              <td>The Law of Cosines</td>
+              <td>Francois Viete</td>
+              <td>1579</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>95</td>
+              <td>Ptolemy’s Theorem</td>
+              <td>Ptolemy</td>
+              <td>120?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>96</td>
+              <td>Principle of Inclusion/Exclusion</td>
+              <td>?</td>
+              <td>?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>97</td>
+              <td>Cramer’s Rule</td>
+              <td>Gabriel Cramer</td>
+              <td>1750</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>98</td>
+              <td>Bertrand’s Postulate</td>
+              <td>J.L.F. Bertrand</td>
+              <td>1860?</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>99</td>
+              <td>Buffon Needle Problem</td>
+              <td>Comte de Buffon</td>
+              <td>1733</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>100</td>
+              <td>Descartes Rule of Signs</td>
+              <td>Rene Descartes</td>
+              <td>1637</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
                 <h3>
-                  <a href='http://monks.scranton.edu/' target='_blank'>Dr. Kenneth
-                    G. Monks</a>
+                  <a href="http://monks.scranton.edu/" target="_blank">
+                    Dr. Kenneth G. Monks
+                  </a>
                 </h3>
-                Department of Mathematics<br />
-                University of Scranton<br />
+                Department of Mathematics
+                <br />
+                University of Scranton
+                <br />
                 Scranton, PA 18510
               </div>
             </div>
-            <div class='row' id='more-contact-info'>
-              <div class='col-xs-12 col-md-4' id='email-footer'>
-                <img src='../assets/media/envelope.svg'
-                  style='vertical-align: middle; padding-right: 0.2em;' />
-                <a href='mailto:monks@scranton.edu'
-                  target='_blank'>monks@scranton.edu</a>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="../assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank">
+                  monks@scranton.edu
+                </a>
               </div>
-              <div class='col-xs-12 col-md-4 center' id='lurch-footer'>
-                <span class='checkmark' style='padding-right:0.2em'>✓</span>
-                <a href='http://lurch.plus'>lurch.plus</a>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
               </div>
-              <div class='col-xs-12 col-md-4' id='proveit-footer'>
-                <img src='../assets/media/therefore.svg' 
-                  style='vertical-align: middle; padding-right: 0.2em; height: 0.8em' />
-                <a href='https://proveitmath.org' target='_blank'>Prove
-                  it!&nbsp;Math Academy</a>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="../assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank">
+                  Prove it!&nbsp;Math Academy
+                </a>
               </div>
             </div>
             <!-- row -->
-            <div id='copyright'>
-              Copyright &copy; Kenneth G. Monks
-            </div>  
+            <div id="copyright">Copyright &copy; Kenneth G. Monks</div>
           </div>
         </footer>
+      </div>
     </div>
 
-  </div>
-
-  <script src='../assets/js/utils.js'></script>
-<script>
-  document.addEventListener('click', (event) => {
-    const link = event.target.closest('a') // Check if the clicked element is an anchor
-    if (link && !link.hasAttribute('target') && 
-        !link.getAttribute('href')?.startsWith('#')) {
-      event.preventDefault() // Prevent default behavior
-      window.open(link.href, '_blank') // Open link in a new tab
-    }
-  })
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const rows = document.querySelectorAll('tr[data-href]'); // Select only rows with data-href
-    rows.forEach(row => {
-      row.addEventListener('click', function () {
-        const url = this.getAttribute('data-href');
-        if (url) {
-          openLurch(url)
-          // window.location.href = url; // Navigate to the URL
+    <script src="../assets/js/utils.js"></script>
+    <script>
+      document.addEventListener('click', event => {
+        const link = event.target.closest('a') // Check if the clicked element is an anchor
+        if (
+          link &&
+          !link.hasAttribute('target') &&
+          !link.getAttribute('href')?.startsWith('#')
+        ) {
+          event.preventDefault() // Prevent default behavior
+          window.open(link.href, '_blank') // Open link in a new tab
         }
       })
-    })
-  })
-</script>
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const rows = document.querySelectorAll('tr[data-href]') // Select only rows with data-href
+        rows.forEach(row => {
+          row.addEventListener('click', function () {
+            const url = this.getAttribute('data-href')
+            if (url) {
+              openLurch(url)
+              // window.location.href = url; // Navigate to the URL
+            }
+          })
+        })
+      })
+    </script>
 
     <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [
-          ["$", "$"]
-        ],
-        processEscapes: true
-      },
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
-    id="MathJax-script"></script>
-
-
-</body>
-
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          processEscapes: true
+        }
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
 </html>

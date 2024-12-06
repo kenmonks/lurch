@@ -1,667 +1,1559 @@
-<!DOCTYPE html>
-<html lang='en'>
+<!-- @format -->
 
-<head>
-  <title>Lurch Plus!</title>
-    <meta charset='utf-8' />
-  <meta name='description'
-      content='This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content.' />
-  <meta name='keywords'
-    content='Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML' />
-  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  <link rel='shortcut icon' href='./assets/media/favicon-L+.svg' />
-  
-  <link
-    href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
-    rel="stylesheet" type="text/css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
-    rel="stylesheet">
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Lurch Plus!</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/media/favicon-L+.svg" />
 
-  <link rel='stylesheet' href='./assets/css/monks.css'>
-  <link rel='stylesheet' href='./assets/css/lurchplus.css'>
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
 
-  <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+    <link rel="stylesheet" href="./assets/css/monks.css" />
+    <link rel="stylesheet" href="./assets/css/lurchplus.css" />
 
-</head>
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
 
-<body>
-  
-  <!-- left nav is positioned absolute so it doesn't scroll -->
-  <div id='leftnav'>
-    <img src='./assets/media/lurchlogo.png' 
-      style='margin: 0px; border-radius: 5px; display: block'
-      width='100%' />
-    <ul>
-      <li><a href='#' >Home</a></li>
-      <li><a href='#documentation' >Documentation</a></li>
-      <li><a href='/100' target='_self'>100 Theorem Challenge</a></li>
-      <li><a href='#libraries' >Rule Libraries</a></li>
-      <li><a href='#contexts' >Other Contexts</a></li>
-      <li><a href='#assignments' >Example Assignments</a></li>
-      <li><a href='#lurchforstudents' >Lurch for Students</a></li>
-      <li><a href='#lurchforinstructors' >Lurch for Instructors</a></li>
-      <li><a href='#talkslides' >Talk Slides</a></li>
-      <li><a href='#getlurch' >Get Lurch!</a></li></ul>
-    <div id="contact">
-      <div>
-        <a href="mailto:monks@scranton.edu">Ken Monks</a>
-      </div>
-      <div>
-        <a href="https://monks.scranton.edu"
-          target="_blank">monks.scranton.edu</a>
-      </div>
-      <div>
-        <a href="https://proveitmath.org"
-          target="_blank">proveitmath.org</a>
+  <body>
+    <div id="leftnav">
+      <img
+        src="./assets/media/lurchlogo.png"
+        style="margin: 0px; border-radius: 5px; display: block"
+        width="100%" />
+
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+        <li><a href="/100" target="_self">100 Theorem Challenge</a></li>
+        <li><a href="#libraries">Rule Libraries</a></li>
+        <li><a href="#contexts">Other Contexts</a></li>
+        <li><a href="#assignments">Example Assignments</a></li>
+        <li><a href="#lurchforstudents">Lurch for Students</a></li>
+        <li><a href="#lurchforinstructors">Lurch for Instructors</a></li>
+        <li><a href="#talkslides">Talk Slides</a></li>
+        <li><a href="#getlurch">Get Lurch!</a></li>
+        <li><a href="/about">About Lurch</a></li>
+      </ul>
+
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank">
+            monks.scranton.edu
+          </a>
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- flex column for content-block and footer-block -->
-  <div id='wrap'>
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1>Proof Verification with Lurch</h1>
+          <h2>Building the bridge to higher mathematics</h2>
+        </div>
+        <div class="haiku">
+          <p>
+            Is my proof correct?
+            <br />
+            Lurch says it is not convinced.
+            <br />
+            I need to say more.
+          </p>
+          <p class="attribution">Anonymous, 2024</p>
+        </div>
+        <p>
+          Lurch is a math editor that can check your proofs (coauthored with
+          Nathan Carter). It was used successfully in my four credit
+          undergraduate bridge course for math and math education majors.
+          Instructors who would like to create their own Lurch course materials
+          using the rule libraries and content from my course can find updated
+          and improved supporting materials below and on this site.
+        </p>
+        <!-- ----------------------------------------------------- -->
+        <div id="video-container">
+          <video autoplay muted loop>
+            <source src="./assets/media/splash.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- ----------------------------------------------------- -->
+        <h2 id="documentation">Documentation and Examples</h2>
+        <ul class="disc strong-tags dash-after">
+          <li>
+            <strong>Introductory Worksheets</strong>
+            <ul>
+              <li>
+                <a href="/student.html?load=help/quick-start-guide.lurch">
+                  1. Quick Start Guide
+                </a>
+                how to use the student version of Lurch
+              </li>
+              <li>
+                <a href="/student.html?load=help/proofs-worksheet.lurch">
+                  2. Doing Proofs in Lurch
+                </a>
+                introduction to proofs in Lurch (
+                <a href="/student.html?load=help/proofs-worksheet-solns.lurch">
+                  solutions
+                </a>
+                )
+              </li>
+              <li>
+                <a
+                  href="/instructor.html?load=help/instructors-worksheet.lurch">
+                  3. Lurch for instructors
+                </a>
+                additional features of Lurch for instructor
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Examples</strong>
+            – a few proofs done in Lurch using the topics defined below.
+            <ul class="circle">
+              <li>
+                <a href="/student.html?load=help/example-proofs.lurch">
+                  Example Proofs
+                </a>
+                a sample of some proofs in Lurch using a variety of topics and
+                styles.
+              </li>
+              <li>
+                <a
+                  href="/student.html?load=math/examples/Mar%2026%20-%20in%20class.lurch">
+                  Double induction
+                </a>
+                a proof of a binomial coefficient identity done in class using
+                double induction (and the recursive definition of binomial
+                coefficients given in the course). Colored fonts are used to
+                help keep track of which induction is which.
+              </li>
+              <li>
+                <a
+                  href="/student.html?load=math/examples/Topo-logical%20-%20soln.lurch">
+                  Topo-logical
+                </a>
+                a proof that the composition of continuous functions is
+                continuous in Topology.
+                <br />
+                (spoiler alert: this is the solution to part D of the Final Exam
+                below)
+              </li>
+              <li>
+                <a href="/100">100 Famous Theorems Challenge!</a>
+                Lurch's status in verifying the proofs of theorems on the 100
+                famous theorems challenge list. Game on!
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Final Exam!</strong>
+            – try your hand at the Math 299 Final Exam from Spring 2024 (four
+            parts)
+            <ul>
+              <li class="nodash">
+                <a
+                  href="/student.html?load=math/examples/A.%20The%20Logic%20of%20Love.lurch">
+                  A. The Logic of Love
+                </a>
+              </li>
+              <li class="nodash">
+                <a
+                  href="/student.html?load=math/examples/B.%20Nostalgia%20for%20Calculus.lurch">
+                  B. Nostalgia for Calculus
+                </a>
+              </li>
+              <li class="nodash">
+                <a
+                  href="/student.html?load=math/examples/C.%20Putnam%20Practice.lurch">
+                  C. Putnam Practice
+                </a>
+              </li>
+              <li class="nodash">
+                <a
+                  href="/student.html?load=math/examples/D.%20Topo-logical.lurch">
+                  D. Topo-logical
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Lurch Deductive Engine</strong>
+            – the nitty gritty details under the hood of the validation
+            algorithm used by the Lurch Deductive Engine for developers (not up
+            to date, but mostly correct)
+            <ul class="circle">
+              <li>
+                <a href="/instructor.html?load=help/theory.lurch">
+                  Validation in Lurch
+                </a>
+                introduction to the Global $n$-compact validation algorithm used
+                in this version of Lurch.
+              </li>
+              <li>
+                <a href="lde/src/experimental/docs">
+                  Validation Algorithm API docs
+                </a>
+                the source code documentation for the Global $n$-compact
+                algorithm and supporting infrastructure
+              </li>
+              <li>
+                <a href="lde/docs">Core API docs</a>
+                the LC data structure, putdown notation, Matching package, and
+                other core utilties
+              </li>
+              <li>
+                <a href="https://github.com/kenmonks/lurch">
+                  Source Code on GitHub
+                </a>
+                the source code and content of this repository on GitHub
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="lde/src/experimental/parsers/lurch-parser-docs.html">
+              Lurch Syntax
+            </a>
+            a quick reference showing how to type various math expressions in
+            Lurch
+          </li>
+          <li>
+            <a href="https://monks.scranton.edu/math299">Math 299 Home Page</a>
+            for my Introduction to Mathematical Proof course at the University
+            of Scranton, Spring 2024.
+          </li>
+        </ul>
+        <div class="">
+          <!-- ----------------------------------------------------- -->
+          <h2 id="libraries">Math 299 Lurch Rule Libraries</h2>
+          <div class="blue-box">
+            <p>
+              <strong class="bigfont">Cumulative Topics</strong>
+              – each link one opens a blank Lurch document whose context
+              consists of the rules for that topic, and those from the topics
+              above it. The Theorem numbers refer to exercises in the draft of
+              the
+              <a
+                href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf">
+                course lecture notes
+              </a>
+              .
+            </p>
+            <dl>
+              <dt>
+                <a href="/student.html?load=math/Prop.lurch">
+                  Propositional Logic
+                </a>
+              </dt>
+              <dd>
+                defines
+                <code>and</code>
+                ,
+                <code>or</code>
+                ,
+                <code>not</code>
+                ,
+                <code>implies</code>
+                ,
+                <code>iff</code>
+                , and
+                <code>contradiction</code>
+                (
+                <a href="/instructor.html?load=math/Prop-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Pred.lurch">
+                  Predicate Logic with Equality
+                </a>
+              </dt>
+              <dd>
+                defines
+                <code>forall</code>
+                $\left(\forall\right)$,
+                <code>exists</code>
+                $\left(\exists\right)$,
+                <code>equality</code>
+                $\left(=\right)$,
+                <code>unique existence</code>
+                $\left(\exists!\right)$ (
+                <a href="/instructor.html?load=math/Pred-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Logic-theorems.lurch">
+                  Logic Theorems
+                </a>
+              </dt>
+              <dd>
+                provides some common theorems from Logic (
+                <a href="/instructor.html?load=math/Logic-theorems-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Peano.lurch">
+                  Natural Numbers
+                </a>
+              </dt>
+              <dd>
+                the Peano Axioms for the Natural Numbers (
+                <a href="/instructor.html?load=math/Peano-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Number-theory.lurch">
+                  Number Theory Definitions
+                </a>
+              </dt>
+              <dd>
+                defines,
+                <code>less than</code>
+                $\left(\lt\right)$,
+                <code>divides</code>
+                $\left(\mid\right)$,
+                <code>prime</code>
+                ,
+                <code>even</code>
+                ,
+                <code>odd</code>
+                (
+                <a href="/instructor.html?load=math/Number-theory-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Equations.lurch">Equations</a>
+              </dt>
+              <dd>
+                defines a single ‘rule’ that enables Lurch to validate
+                transitive chains of equalities without needing substitution,
+                reflexivity, symmetry, or transitivity (
+                <a href="/instructor.html?load=math/Equations-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Number-theory-theorems.lurch">
+                  Number Theory Theorems
+                </a>
+              </dt>
+              <dd>
+                provides some useful theorems from Number Theory that are
+                provable from the Peano Axioms (
+                <a
+                  href="/instructor.html?load=math/Number-theory-theorems-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Sequences.lurch">
+                  Sequences and Recursion
+                </a>
+              </dt>
+              <dd>
+                defines
+                <code>summation</code>
+                $\left(\sum\right)$,
+                <code>Fibonnaci numbers</code>
+                $\left(F_n\right)$,
+                <code>factorial</code>
+                $\left(!\right)$,
+                <code>multinomial coefficients</code>
+                $\binom{n}{k}$,
+                <code>binomial coefficients</code>
+                ,
+                <code>exponentiation</code>
+                $\left(z^n\right)$ (
+                <a href="/instructor.html?load=math/Sequences-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Reals.lurch">Real Numbers</a>
+              </dt>
+              <dd>
+                defines the field axioms for the Real Numbers (
+                <a href="/instructor.html?load=math/Reals-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Sets.lurch">Set Theory</a>
+              </dt>
+              <dd>
+                defines
+                <code>in</code>
+                $\left(\in\right)$,
+                <code>subset</code>
+                $\left(\subseteq\right)$,
+                <code>intersection</code>
+                $\left(\cap\right)$,
+                <code>union</code>
+                $\left(\cup\right)$,
+                <code>complement</code>
+                $\left(‘\right)$,
+                <code>set difference</code>
+                $\left(\setminus\right)$,
+                <code>powerset</code>
+                $\left(\mathscr{P}\right)$,
+                <code>Cartesian product</code>
+                $\left(\times\right)$,
+                <code>finite set</code>
+                $\left({ \ldots }\right)$,
+                <code>tuple</code>
+                $\langle\ldots\rangle$,
+                <code>Indexed Union</code>
+                $\left(\bigcup\right)$,
+                <code>Indexed Intersection</code>
+                $\left(\bigcap\right)$,
+                <code>Set Builder notation</code>
+                $\left({ z :\ldots}\right)$ (
+                <a href="/instructor.html?load=math/Sets-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Functions.lurch">Functions</a>
+              </dt>
+              <dd>
+                defines
+                <code>maps</code>
+                $\left(f\colon A \to B\right)$,
+                <code>function application</code>
+                $\left(f(x)\right)$,
+                <code>maps to</code>
+                $\left(\mapsto\right)$,
+                <code>image</code>
+                $\left(f(U)\right)$,
+                <code>identity map</code>
+                $\left(\text{id}_A\right)$
+                <code>inverse image</code>
+                $\left(f^\text{inv}(U)\right)$,
+                <code>composition</code>
+                $\left(\circ\right)$,
+                <code>inverse function</code>
+                $\left(f^{-1}\right)$,
+                <code>injective</code>
+                ,
+                <code>surjective</code>
+                ,
+                <code>bijective</code>
+                (
+                <a href="/instructor.html?load=math/Functions-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Relations.lurch">Relations</a>
+              </dt>
+              <dd>
+                defines
+                <code>reflexive</code>
+                ,
+                <code>symmetric</code>
+                ,
+                <code>transitive</code>
+                ,
+                <code>irreflexive</code>
+                ,
+                <code>antisymmetric</code>
+                ,
+                <code>total</code>
+                ,
+                <code>partial order</code>
+                ,
+                <code>strict partial order</code>
+                ,
+                <code>total order</code>
+                ,
+                <code>equivalence relation</code>
+                ,
+                <code>partition</code>
+                ,
+                <code>equivalence class</code>
+                $[a]$ (
+                <a href="/instructor.html?load=math/Relations-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+            </dl>
+          </div>
+          <!-- blue-box -->
+          <!-- ----------------------------------------------------- -->
+          <h2 id="contexts">Other Useful Contexts</h2>
+          <div class="blue-box">
+            <p>
+              <strong>Additional Rules.</strong>
+              The following rules can be optionally added by the instructor to
+              any context above in a particular document. Currently, only one of
+              the three Arithmetic rules can be used in a single document.
+            </p>
+            <dl>
+              <dt>
+                <a href="/student.html?load=math/Arithmetic-naturals.lurch">
+                  Arithmetic in the Natural Numbers
+                </a>
+              </dt>
+              <dd>
+                Allows the user to say
+                <code>'by</code>
+                <code>arithmetic'</code>
+                after an expression to try to justify it using a CAS. The
+                expression can only contain natural number constants (e.g. $0$,
+                $1$, $2$, etc) the operators $+$, $\cdot$, and $\text{^}$, and
+                the relations $=$, $\leq$, and $\lt$. (
+                <a
+                  href="/instructor.html?load=math/Arithmetic-naturals-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Arithmetic-integers.lurch">
+                  Arithmetic in the Integers
+                </a>
+              </dt>
+              <dd>
+                Allows the user to say
+                <code>'by</code>
+                <code>arithmetic'</code>
+                after an expression to try to justify it using a CAS. The
+                expression can only contain natural number constants (e.g. $0$,
+                $1$, $2$, etc) the operators $+$, $\cdot$, $\text{^}$, and $-$
+                and the relations $=$, $\leq$, and $\lt$. Exponents cannot be
+                negative. (
+                <a
+                  href="/instructor.html?load=math/Arithmetic-integers-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Arithmetic-rationals.lurch">
+                  Arithmetic in the Rationals
+                </a>
+              </dt>
+              <dd>
+                Allows the user to say
+                <code>'by</code>
+                <code>arithmetic'</code>
+                after an expression to try to justify it using a CAS. The
+                expression can only contain natural number constants (e.g. $0$,
+                $1$, $2$, etc) the operators $+$, $\cdot$, $\text{^}$, $-$, and
+                $/$, and the relations $=$, $\leq$, and $\lt$. Exponents must be
+                integers and you cannot divide by zero. (
+                <a
+                  href="/instructor.html?load=math/Arithmetic-rationals-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Algebra.lurch">Algebra</a>
+              </dt>
+              <dd>
+                Allows the user to say
+                <code>'by</code>
+                <code>algebra'</code>
+                after an expression to try to justify it using a CAS. There are
+                no restrictions on what the expression can contain, so use at
+                your own discretion. The identity is evaluated using
+                <a href="http://algebrite.org">Algebrite</a>
+                . (
+                <a href="/instructor.html?load=math/Algebra-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+            </dl>
+            <p>
+              <strong>Useful Cumulative Contexts.</strong>
+              These contexts combine some proper subsets of the cumulative Math
+              299 contexts listed above.
+            </p>
+            <dl>
+              <dt>
+                <a href="/student.html?load=math/Equations-Logic.lurch">
+                  Equations and Logic Only
+                </a>
+              </dt>
+              <dd>
+                Equations, Logic Theorems, Predicate Logic, Propositional Logic.
+                (
+                <a
+                  href="/instructor.html?load=math/Equations-Logic-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Sets-Equations-Logic.lurch">
+                  Sets, Equations, and Logic
+                </a>
+              </dt>
+              <dd>
+                Set Theory, Equations, Logic Theorems, Predicate Logic,
+                Propositional Logic. This does not include Set Theory Theorems.
+                (
+                <a
+                  href="/instructor.html?load=math/Sets-Equations-Logic-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a
+                  href="/student.html?load=math/Functions-Sets-Equations-Logic.lurch">
+                  Functions, Sets, Equations, and Logic
+                </a>
+              </dt>
+              <dd>
+                Functions, Set Theory Theorems, Set Theory, Equations, Logic
+                Theorems, Predicate Logic, Propositional Logic. (
+                <a
+                  href="/instructor.html?load=math/Functions-Sets-Equations-Logic-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+              <dt>
+                <a href="/student.html?load=math/Topology.lurch">Topology</a>
+              </dt>
+              <dd>
+                Defines
+                <code>topological space</code>
+                ,
+                <code>open</code>
+                ,
+                <code>closed</code>
+                , and
+                <code>continuous</code>
+                (in a toplogical space). Includes the Functions library above. (
+                <a href="/instructor.html?load=math/Topology-Rules.lurch">
+                  view rules
+                </a>
+                )
+              </dd>
+            </dl>
+          </div>
+          <!-- blue-box -->
+          <!-- ----------------------------------------------------- -->
+          <h2 id="assignments">Example Assignments</h2>
+          <p class="smallskip">
+            <strong class="bigfont">Math 299 Spring 2024 Assignments</strong>
+            – each link one opens a Lurch document containing a homework
+            assignment from the course. Note that Lurch was under development
+            during this semester so that some assignments are not good examples
+            of what can be done today if these were rewritten to take advantage
+            of some of the new features. We are in the process of updating them.
+            I also intend to revise the entire syllabus in like of having Lurch
+            available to spend less time on formal logic and more time on the
+            later topics in the course (and perhaps add a few new ones).
+          </p>
+          <p class="medskip">
+            The theorem numbers for the assigned problems below refer to the
+            following course lecture notes. These are not fully updated to be
+            consistent with the libraries used in the assignments below and may
+            be revised frequently.
+          </p>
+          <p>
+            <a
+              href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf"
+              class="button medskip"
+              rel="noopener noreferrer">
+              Lecture Notes
+            </a>
+          </p>
+          <div class="blue-box thmlist">
+            <dl>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-06.lurch">
+                  Assignment #06
+                </a>
+                Propositional logic
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem (Iff is stronger):</strong>
+                    $(P\Leftrightarrow Q)\Rightarrow(Q\Rightarrow P)$
+                  </li>
+                  <li>
+                    <strong>Theorem (the other way around):</strong>
+                    $\neg(\neg A)\Rightarrow A$
+                  </li>
+                  <li>
+                    <strong>Theorem (Modus Tollens):</strong>
+                    $(S \Rightarrow T)\text{ and } \neg T \Rightarrow \neg S$
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem (atomic statements don't have to be variables):
+                    </strong>
+                    $0 \lt x\text{ or }x\lt 10 \Rightarrow x\lt 10\text{ or }
+                    0\lt x$
+                  </li>
+                  <li>
+                    <strong>Theorem (excluded middle):</strong>
+                    $K\text{ or } \neg K$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-07.lurch">
+                  Assignment #07
+                </a>
+                Propositional logic
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem (implies is transitive):</strong>
+                    $((P\Rightarrow Q)\text{ and }(Q \Rightarrow R)) \Rightarrow
+                    (P \Rightarrow R)$
+                  </li>
+                  <li>
+                    <strong>Theorem (alternate or-):</strong>
+                    $(S\text{ or } T)\text{ and } \neg S \Rightarrow T$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-08.lurch">
+                  Assignment #08
+                </a>
+                Predicate logic with Equality
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem (alpha equivalence warm up):</strong>
+                    $(\forall x.P(x)) \Rightarrow (\forall y.P(y))$
+                  </li>
+                  <li>
+                    <strong>Theorem (same thing but for exists):</strong>
+                    $(\exists x.P(x)) \Rightarrow (\exists y.P(y))$
+                  </li>
+                  <li>
+                    <strong>Theorem (commuting quantifiers):</strong>
+                    $(\forall x.\forall y.x\text{ loves }y) \Rightarrow (\forall
+                    y.\forall x.x\text{ loves }y)$
+                  </li>
+                  <li>
+                    <strong>Theorem (same thing for exists):</strong>
+                    $(\exists x.\exists y.x\text{ loves }y) \Rightarrow (\exists
+                    y.\exists x.x\text{ loves }y)$
+                  </li>
+                  <li>
+                    <strong>Theorem (DeMorgan):</strong>
+                    $\neg (S\text{ and }T) \Rightarrow \neg S\text{ or } \neg T$
+                  </li>
+                  <li>
+                    <strong>Theorem (DeMorgan):</strong>
+                    $\neg (\forall x.R(x)) \Rightarrow (\exists x.\neg R(x))$
+                  </li>
+                  <li>
+                    <strong>Theorem ($=$ is transitive):</strong>
+                    $x=y\text{ and }y=z \Rightarrow x=z$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-09.lurch">
+                  Assignment #09
+                </a>
+                Logic theorems
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 5.10 (some are the same):</strong>
+                    $(\forall x.\forall y.P(x,y)) \Rightarrow (\forall
+                    z.P(z,z))$
+                  </li>
+                  <li>
+                    <strong>Theorem 5.16 (excluded middle):</strong>
+                    $(\forall x.Q(x))\text{ or } (\exists x.\neg Q(x))$
+                  </li>
+                  <li>
+                    <strong>Theorem 4.22 (alternate $\Rightarrow$):</strong>
+                    $(R \Rightarrow S) \Rightarrow \neg R\text{ or }S$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-10.lurch">
+                  Assignment #10
+                </a>
+                Logic review
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem (ex falso quodlibet):</strong>
+                    If Dracula fears Alice and Dracula does not fear Alice then
+                    Bob loves Alice.
+                  </li>
+                  <li>
+                    <strong>Theorem 4.29 (the most beautiful?):</strong>
+                    $S \Rightarrow (S \Leftrightarrow S\text{ or }(\neg S \text{
+                    and } S))$
+                  </li>
+                  <li>
+                    <strong>Theorem 4.25 (shunting):</strong>
+                    $((P \text{ and } Q) \Rightarrow R) \Leftrightarrow (P
+                    \Rightarrow (Q \Rightarrow R))$
+                  </li>
+                  <li>
+                    <strong>Theorem 5.21 (avoiding vacuous domains):</strong>
+                    $(\exists x. x = x)\text{ and }(\forall y. T(y)) \Rightarrow
+                    (\exists z. T(z))$
+                  </li>
+                  <li>
+                    <strong>Theorem 5.5 (distributivity):</strong>
+                    $(\exists x. A(x) \Rightarrow B(x)) \Leftrightarrow (\forall
+                    y. A(y)) \Rightarrow (\exists z. B(z))$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-11.lurch">
+                  Assignment #11
+                </a>
+                Logic review
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem (Pierce's Law):</strong>
+                    $((S \Rightarrow T) \Rightarrow S) \Rightarrow S$
+                  </li>
+                  <li>
+                    <strong>Theorem (quantifier fun):</strong>
+                    $(\forall x.\exists y.\forall z.A(x,y,z)) \Rightarrow
+                    (\forall z.\forall x.\exists y.A(x,y,z))$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-12.lurch">
+                  Assignment #12
+                </a>
+                Peano arithmetic and Induction
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>
+                      Theorem 7.3 (no number is it's own successor):
+                    </strong>
+                    $n\neq\sigma(n)$
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem 7.4 (alternate definition of $\sigma$):
+                    </strong>
+                    $\sigma(n)=n+1$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.5 (associativity of addition):</strong>
+                    $(m+n)+p=m+(n+p)$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.6 (additive identity, part 2):</strong>
+                    $0+n=n$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.7 (commutativity of adding $1$):</strong>
+                    $1+n=n+1$
+                  </li>
+                  <li>
+                    <strong>Theorem 7.8 (commutativity of addition):</strong>
+                    $m+n=n+m$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-13.lurch">
+                  Assignment #13
+                </a>
+                Peano arithmetic and Induction
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 7.11 (left multiplication by zero):</strong>
+                    $0\cdot m=0$
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem 7.19 (nonzero naturals are positive):
+                    </strong>
+                    <ul>
+                      <li>(a) $0\leq n$</li>
+                      <li>(b) $0\lt n \Leftrightarrow n\neq 0$</li>
+                    </ul>
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-14.lurch">
+                  Assignment #14
+                </a>
+                Sequences, Recursion, and Induction
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 8.3(a) (a useful identity):</strong>
+                    $n^2=n\cdot n$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.3(b) (useful identity):</strong>
+                    $2\cdot n=n+n$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.2(b) (power law):</strong>
+                    $z^m\cdot z^n=z^{m+n}$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.2(c) (power law):</strong>
+                    $(z^m)^n=z^{m\cdot n}$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.4 (quadratic beats linear):</strong>
+                    If $a+b\leq n$ then $a\cdot n+b\leq n^2$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-15.lurch">
+                  Assignment #15
+                </a>
+                Sequences, Recursion, and Induction
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 8.7 (Fib fun):</strong>
+                    $F_{n+3}+F_n=2\cdot F_{n+2}$
+                  </li>
+                  <li>
+                    <strong>Theorem 8.5(b) (basic sum property):</strong>
+                    $\displaystyle \sum_{i=0}^n s\cdot a_i = s\cdot \sum_{i=0}^n
+                    a_i$
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem 8.11 (closed formula for binomial coefficients):
+                    </strong>
+                    $\displaystyle(m!\cdot n!)\cdot \binom{n+m}{m}=(n+m)!$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-16.lurch">
+                  Assignment #16
+                </a>
+                Real numbers and Field axioms
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 9.3 (cancellation for addition):</strong>
+                    If $x+z=y+z$ then $x=y$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.2(b) (signed product):</strong>
+                    $(-1)\cdot(-1)=1$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.2(c) (harder than it looks):</strong>
+                    $0\lt 1$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.2(d) (not mod 2):</strong>
+                    $-1\neq 1$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-17.lurch">
+                  Assignment #17
+                </a>
+                Real numbers and Field axioms
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>
+                      Theorem 9.4 (cancellation for multiplication):
+                    </strong>
+                    If $\neq 0$ and $z\cdot x=z\cdot y$ then $x=y$.
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem 9.6 (multiplicative inverses are unique):
+                    </strong>
+                    If $z\cdot x=1$ and $z\cdot y=1$ then $x=y$.
+                  </li>
+                  <li>
+                    <strong>Theorem 9.10 (alternate additive inverse):</strong>
+                    $-x=-1\cdot x$
+                  </li>
+                  <li>
+                    <strong>Theorem 9.18 (adding inequalities):</strong>
+                    If $w\lt y$ and $x\lt z$ then $w+x\lt y+z$.
+                  </li>
+                  <li>
+                    <strong>Theorem 9.23 (scaling by a negative):</strong>
+                    If $z\lt 0$ and $x\lt y$ then $z\cdot y\lt z\cdot x$.
+                  </li>
+                  <li>
+                    <strong>Theorem (between):</strong>
+                    There exists a real number strictly between 0 and 1, i.e.,
+                    $\exists r.0\lt r \text{ and }r\lt 1$.
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-18.lurch">
+                  Assignment #18
+                </a>
+                Elementary Set Theory
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 10.5 (double negative):</strong>
+                    $\left(A'\right)'=A$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.32 (always in the power set):</strong>
+                    $\{~~\}\in \mathscr{P}(A)$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.34. (power sets of subsets):</strong>
+                    If $A\subseteq B$ then
+                    $\mathscr{P}(A)\subset\mathscr{P}(B)$.
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem 10.38 (relative complement is not associative):
+                    </strong>
+                    If $x\in A$, $x\in B$, and $x\in C$ then $(A\setminus
+                    B)\setminus C\neq A\setminus (B\setminus C)$.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.7 (a set of sets):</strong>
+                    $\{\,1,2\,\}\in\left\{\,Y:\{\,1\,\}\subseteq Y\right\}$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-19.lurch">
+                  Assignment #19
+                </a>
+                Elementary Set Theory
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 10.23(b) (∩ distributes over ∪):</strong>
+                    $A \cap (B \cup C) \subseteq (A \cap B) \cup (A \cap C)$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.37 (subsets are contagious):</strong>
+                    If $A \subseteq C$ and $B\subseteq D$ then $A\times B\subset
+                    C\times D$.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.31 (not a subset):</strong>
+                    $A \nsubseteq B$ if and only if $\exists x.x \in A \cap B'$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.27 (Baby DeMorgan):</strong>
+                    $A \setminus (B \cap C) = (A \setminus B) \cup (A \setminus
+                    C)$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.29 (Papa DeMorgan):</strong>
+                    $\displaystyle\left(\bigcap_{i \in I} A_i\right)' =
+                    \bigcup_{j\in I} A_j'$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-20.lurch">
+                  Assignment #20
+                </a>
+                Functions and Composition
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 10.41 (composition is associative):</strong>
+                    If $h\colon A \to B$, $g\colon B \to C$, $f\colon C \to D$
+                    then $$f\circ(g\circ h)=(f\circ g)\circ h.$$
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem 10.53 (a) (identity maps are injective):
+                    </strong>
+                    The map $\mathrm{id}_A$ is injective.
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem 10.53 (b) (identity maps are surjective):
+                    </strong>
+                    The map $\mathrm{id}_A$ is surjective.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.46 (image of subsets):</strong>
+                    If $f\colon A \to B$, $S \subseteq T$, and $T \subseteq A$
+                    then $f(S)\subseteq f(T)$.
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-21.lurch">
+                  Assignment #21
+                </a>
+                Functions and Composition
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 10.43 (a linear bijection):</strong>
+                    If $f\colon \mathbb{R} \to \mathbb{R}$ and $\forall
+                    x.f(x)=3\cdot x+1$ then $f$ is bijective.
+                  </li>
+                  <li>
+                    <strong>
+                      Theorem (inverse images respect intersection):
+                    </strong>
+                    If $f\colon A \to B$, $S \subseteq B$, $T \subseteq B$ then
+                    $$f^\mathrm{inv}(S \cap T)=f^\mathrm{inv}(S) \cap
+                    f^\mathrm{inv}(T)$$
+                  </li>
+                  <li>
+                    <strong>Theorem (inverse functions are bijective):</strong>
+                    If $f\colon A \to B$ and $f$ is bijective then $f^{-1}$ is
+                    bijective.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.52 (inverse of a composition):</strong>
+                    If $f\colon A \to B$, $g\colon B \to C$, $f$ is bijective,
+                    and $g$ is bijective then $$(g \circ f)^{-1} = f^{-1} \circ
+                    g^{-1}$$
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-22.lurch">
+                  Assignment #22
+                </a>
+                Equivalence relations and Partial Orders
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem (integer associates)</strong>
+                    Define $\sim$ to be the relation on $\mathbb{Z}$ such that
+                    for all $x,y\in \mathbb{Z}$, $$x\sim y\text{ if and only if
+                    }y=x\text{ or }y=−x$$ Then $\sim$ is an equivalence
+                    relation.
+                  </li>
+                  <li>
+                    <strong>Theorem ($\subseteq$ is a partial order)</strong>
+                    Let $A$ be a set and suppose $\sim$ is a relation on
+                    $\mathscr{P}(A)$ such that for all $S,T\in\mathscr{P}(A)$
+                    $$S\sim T\text{ if and only if }S\subseteq T$$ Then $\sim$
+                    is a partial order.
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-23.lurch">
+                  Assignment #23
+                </a>
+                Equivalence relations and Partial Orders
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 10.65</strong>
+                    Congruence mod $m$ is an equivalence relation on the set of
+                    integers.
+                  </li>
+                  <li>
+                    <strong>Theorem 10.66 (class representatives):</strong>
+                    Every integer $a$ is congruent mod $m$ to a unique natural
+                    number that is less than $m$, i.e., $\exists r.a
+                    \underset{m}{\equiv}r\text{ and }0\leq r\text{ and }r\lt m$
+                    and if $a \underset{m}{\equiv} s$, $0\leq s$, and $s\lt m$
+                    and $a \underset{m}{\equiv} t$, $0\leq t$, and $t\lt m$ then
+                    $s=t$.
+                  </li>
+                </ol>
+              </dd>
+              <dt>
+                <a href="/student.html?load=assignments/assignment-24.lurch">
+                  Assignment #24
+                </a>
+                Modular arithmetic
+              </dt>
+              <dd>
+                <ol>
+                  <li>
+                    <strong>Theorem 10.68 (modular addition):</strong>
+                    For any integers $a,b,c,d$, if $a \underset{m}{\equiv} b$
+                    and $c \underset{m}{\equiv} d$ then $a+c
+                    \underset{m}{\equiv} b+d$
+                  </li>
+                  <li>
+                    <strong>Theorem 10.69 (modular multiplication):</strong>
+                    For any integers $a,b,c,d$, if $a \underset{m}{\equiv} b$
+                    and $c \underset{m}{\equiv} d$ then $a\cdot c
+                    \underset{m}{\equiv} b\cdot d$
+                  </li>
+                </ol>
+              </dd>
+            </dl>
+          </div>
+          <!-- blue-box -->
+          <!-- ----------------------------------------------------- -->
+          <h2 id="lurchforstudents">Lurch for Students</h2>
+          <p>
+            <a
+              href=""
+              class="button"
+              onclick="openLurch('student.html'); return false;">
+              Lurch
+            </a>
+            – This button will open a blank document with no rules or background
+            material in the student version of Lurch. The only difference is
+            that the student version does not have the Table or Instructor
+            menus, and it will open in a restricted window useful for testing.
+          </p>
+          <h2 id="lurchforinstructors">Lurch for Instructors</h2>
+          <p>
+            <a
+              href=""
+              class="button"
+              onclick="window.open('instructor.html','target=_blank'); return false;">
+              Lurch
+            </a>
+            – This button will open a blank document with no rules or background
+            material in the instructor version of Lurch.
+          </p>
+          <h2 id="talkslides">Talk slides</h2>
+          <p>
+            Those of you who have attended my talks on Lurch can find my
+            'slides' from those talks here.
+          </p>
+          <ul class="disc subcircle">
+            <li>
+              Concordia University, CICM workshop (Aug 5, 2024) (3hr)
+              <ul>
+                <li>
+                  <a href="/student.html?load=help/talks/cicm/cicm.lurch">
+                    Lurch tutorial workshop - part 1
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/instructor.html?load=help/talks/cicm/cicm-part-2.lurch">
+                    Lurch tutorial workshop - part 2
+                  </a>
+                </li>
+                <li>
+                  <a href="/student.html?load=help/talks/cicm/cicm-soln.lurch">
+                    Lurch tutorial workshop - solution to part 1
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              Colorado State University, Rocky Mountain Algebraic Combinatorics
+              Seminar, (Aug 30, 2024)
+              <ul>
+                <li>
+                  <a href="/student.html?load=help/talks/csu/intro.lurch">
+                    Proof Verification with Lurch
+                  </a>
+                  (50 min)
+                </li>
+                <li>
+                  <a href="/student.html?load=help/theory.lurch">
+                    (Meta) True about Everything
+                  </a>
+                  (50 min)
+                </li>
+              </ul>
+            </li>
+            <li>
+              University of Wyoming, Fisk Speaker Series (Sep 12, 2024)
+              <ul>
+                <li>
+                  <a href="/student.html?load=help/talks/uw/intro-theory.lurch">
+                    Proof Verification with Lurch
+                  </a>
+                  (50 min)
+                </li>
+              </ul>
+            </li>
+            <li>
+              Lehigh University, Math Department Colloquim (Oct 9, 2024)
+              <ul>
+                <li>
+                  <a
+                    href="/student.html?load=help/talks/lehigh/intro-theory.lurch">
+                    Proof Verification with Lurch
+                  </a>
+                  (50 min)
+                </li>
+              </ul>
+            </li>
+            <li>
+              University of Scranton, Math Seminar talk (Oct 11, 2024)
+              <ul>
+                <li>
+                  <a
+                    href="/student.html?load=help/talks/scranton/intro-no-theory.lurch">
+                    Proof Verification with Lurch
+                  </a>
+                  (50 min)
+                </li>
+              </ul>
+            </li>
+            <li>
+              Math Association of America, EPaDel section regional meeting (Nov
+              2, 2024)
+              <ul>
+                <li>
+                  <a
+                    href="/student.html?load=help/talks/epadel/short-intro.lurch">
+                    Proof Verification with Lurch
+                  </a>
+                  (20 min)
+                </li>
+              </ul>
+            </li>
+            <li>
+              Penn State University, (Nov 12, 2024)
+              <ul>
+                <li>
+                  <a
+                    href="/student.html?load=help/talks/psu/intro-no-theory-top.lurch">
+                    Proof Verification with Lurch
+                  </a>
+                  (50 min)
+                </li>
+              </ul>
+            </li>
+            <li>
+              Canadian Math Society Winter Meeting (Dec 1, 2024)
+              <ul>
+                <li>
+                  <a
+                    href="/student.html?load=help/talks/cms/intro-no-theory-top.lurch">
+                    Proof Verification with Lurch
+                  </a>
+                  (20 min)
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <h2 id="getlurch">Get Lurch!</h2>
+          <p>
+            Instructors who would like to customize their own copy of this site
+            for use in their own courses can do that easily by forking this
+            repository on GitHub.
+          </p>
+          <ol>
+            <li>
+              <a href="https://github.com/login">
+                Sign in to your account on Github
+              </a>
+              (or create a free account).
+            </li>
+            <li>
+              Return to this page and go to
+              <a href="https://github.com/kenmonks/lurch/fork">
+                github.com/kenmonks/lurch/fork
+              </a>
+              (you can just click that link) and choose your account from the
+              &quot;Owner&quot; dropdown. You can also optionally change the
+              repository name. Then click &quot;Create fork&quot;.
+            </li>
+            <li>
+              Go to here
+              <code>https://github.com/</code>
+              <em class="greyback">your_account</em>
+              <code>/</code>
+              <em class="greyback">your_sitename</em>
+              /
+              <code>settings/pages</code>
+              where
+              <em class="greyback">your_account</em>
+              is your GitHub account name and
+              <em class="greyback">your_sitename</em>
+              is the name you chose for your site in the previous step.
+            </li>
+            <li>
+              Tell it to deploy from a branch, and select the branch
+              <code>main</code>
+              with the default
+              <code>/(root)</code>
+              folder. Then click the &quot;Save&quot; button.
+            </li>
+            <li>
+              After a minute or so you should be able to access your site at
+              <code>https://</code>
+              <em class="greyback">your_account</em>
+              <code>.github.io/</code>
+              <em class="greyback">your_sitename</em>
+              .
+            </li>
+          </ol>
+          <p>
+            You can then replace the
+            <code>index.html</code>
+            file and other content with whatever you want to customize the site
+            for use in your course. You will also be able to pull bug fixes and
+            new features from my site in the future. Your students can click
+            links on your site to open any Lurch files or other content you save
+            in your repository.
+          </p>
+        </div>
+      </div>
 
-    <div id='content-block'>
-      <div class="title-box">
-<h1>Proof Verification with Lurch</h1>
-<h2>Building the bridge to higher mathematics</h2>
-</div>
-<div class="haiku">
-<p>Is my proof correct?<br />
-Lurch says it is not convinced.<br />
-I need to say more.</p>
-<p class="attribution">Anonymous, 2024</p>
-</div>
-<p>Lurch is a math editor that can check your proofs (coauthored with
-Nathan Carter). It was used successfully in my four credit
-undergraduate bridge course for math and math education majors.
-Instructors who would like to create their own Lurch course
-materials using the rule libraries and content from my course can
-find updated and improved supporting materials below and on this
-site.</p>
-<!-- ----------------------------------------------------- -->
-<div id="video-container">
-  <video autoplay muted loop>
-    <source src='./assets/media/splash.mp4' type='video/mp4' />
-    Your browser does not support the video tag.
-  </video>
-</div>
-<!-- ----------------------------------------------------- -->
-<h2 id="documentation">Documentation and Examples</h2>
-<ul class="disc strong-tags dash-after">
-<li><strong>Introductory Worksheets</strong>
-<ul>
-<li><a href="/student.html?load=help/quick-start-guide.lurch">1. Quick Start Guide</a> how to use the student version of Lurch</li>
-<li><a href="/student.html?load=help/proofs-worksheet.lurch">2. Doing Proofs in Lurch</a> introduction to proofs in Lurch
-(<a href="/student.html?load=help/proofs-worksheet-solns.lurch">solutions</a>)</li>
-<li><a href="/instructor.html?load=help/instructors-worksheet.lurch">3. Lurch for instructors</a> additional features of Lurch for instructor</li>
-</ul>
-</li>
-<li><strong>Examples</strong> – a few proofs done in Lurch using the topics defined below.
-<ul class="circle">
-<li><a href="/student.html?load=help/example-proofs.lurch">Example Proofs</a> a sample of some proofs in Lurch using a variety of topics and styles.</li>
-<li><a href="/student.html?load=math/examples/Mar%2026%20-%20in%20class.lurch">Double induction</a> a proof of a binomial coefficient identity done in class using double induction (and the recursive definition of binomial coefficients given in the course). Colored fonts are used to help keep track of which induction is which.</li>
-<li><a href="/student.html?load=math/examples/Topo-logical%20-%20soln.lurch">Topo-logical</a> a proof that the composition of continuous functions is continuous in Topology.<br/> (spoiler alert: this is the solution to part D of the Final Exam below)</li>
-<li><a href="/100">100 Famous Theorems Challenge!</a> Lurch's status in verifying the proofs of theorems on the 100 famous theorems challenge list. Game on!</li>
-</ul>
-</li>
-<li><strong>Final Exam!</strong> – try your hand at the Math 299 Final Exam from Spring 2024 (four parts)
-<ul>
-<li class="nodash"><a href="/student.html?load=math/examples/A.%20The%20Logic%20of%20Love.lurch">A. The Logic of Love</a></li>
-<li class="nodash"><a href="/student.html?load=math/examples/B.%20Nostalgia%20for%20Calculus.lurch">B. Nostalgia for Calculus</a></li>
-<li class="nodash"><a href="/student.html?load=math/examples/C.%20Putnam%20Practice.lurch">C. Putnam Practice</a></li>
-<li class="nodash"><a href="/student.html?load=math/examples/D.%20Topo-logical.lurch">D. Topo-logical</a></li>
-</ul>
-</li>
-<li><strong>Lurch Deductive Engine</strong> – the nitty gritty details under the hood of the validation algorithm used by the Lurch Deductive Engine for developers (not up to date, but mostly correct)
-<ul class="circle">
-<li><a href="/instructor.html?load=help/theory.lurch">Validation in Lurch</a> introduction to the Global $n$-compact validation algorithm used in this version of Lurch.</li>
-<li><a href="lde/src/experimental/docs">Validation Algorithm API docs</a> the source code documentation for the Global $n$-compact algorithm and supporting infrastructure</li>
-<li><a href="lde/docs">Core API docs</a> the LC data structure, putdown notation, Matching package, and other core utilties</li>
-<li><a href="https://github.com/kenmonks/lurch">Source Code on GitHub</a> the source code and content of this repository on GitHub</li>
-</ul>
-</li>
-<li><a href="lde/src/experimental/parsers/lurch-parser-docs.html">Lurch Syntax</a> a quick reference showing how to type various math expressions in Lurch</li>
-<li><a href="https://monks.scranton.edu/math299">Math 299 Home Page</a> for my Introduction to Mathematical Proof course at the University of Scranton, Spring 2024.</li>
-</ul>
-<div class="">
-<!-- ----------------------------------------------------- -->
-<h2 id="libraries">Math 299 Lurch Rule Libraries</h2>
-<div class="blue-box">
-<p><strong class="bigfont">Cumulative Topics</strong> – each link one opens a blank Lurch
-document whose context consists of the rules for that topic, and those from the
-topics above it. The Theorem numbers refer to exercises in the draft of the
-<a href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf">course lecture notes</a>.</p>
-<dl>
-<dt><a href="/student.html?load=math/Prop.lurch">Propositional Logic</a></dt>
-<dd>defines <code>and</code>, <code>or</code>, <code>not</code>, <code>implies</code>, <code>iff</code>, and <code>contradiction</code>
-(<a href="/instructor.html?load=math/Prop-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Pred.lurch">Predicate Logic with Equality</a></dt>
-<dd>defines <code>forall</code> $\left(\forall\right)$, <code>exists</code> $\left(\exists\right)$, <code>equality</code> $\left(=\right)$,
-<code>unique existence</code> $\left(\exists!\right)$
-(<a href="/instructor.html?load=math/Pred-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Logic-theorems.lurch">Logic Theorems</a></dt>
-<dd>provides some common theorems from Logic
-(<a href="/instructor.html?load=math/Logic-theorems-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Peano.lurch">Natural Numbers</a></dt>
-<dd>the Peano Axioms for the Natural Numbers
-(<a href="/instructor.html?load=math/Peano-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Number-theory.lurch">Number Theory Definitions</a></dt>
-<dd>defines, <code>less than</code> $\left(\lt\right)$, <code>divides</code> $\left(\mid\right)$,
-<code>prime</code>, <code>even</code>, <code>odd</code>
-(<a href="/instructor.html?load=math/Number-theory-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Equations.lurch">Equations</a></dt>
-<dd>defines a single ‘rule’ that enables Lurch to validate
-transitive chains of equalities without needing substitution, reflexivity,
-symmetry, or transitivity
-(<a href="/instructor.html?load=math/Equations-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Number-theory-theorems.lurch">Number Theory Theorems</a></dt>
-<dd>provides some useful theorems from Number Theory that are provable from
-the Peano Axioms
-(<a href="/instructor.html?load=math/Number-theory-theorems-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Sequences.lurch">Sequences and Recursion</a></dt>
-<dd>defines <code>summation</code> $\left(\sum\right)$, <code>Fibonnaci numbers</code> $\left(F_n\right)$,
-<code>factorial</code> $\left(!\right)$, <code>multinomial coefficients</code> $\binom{n}{k}$,
-<code>binomial coefficients</code>, <code>exponentiation</code> $\left(z^n\right)$
-(<a href="/instructor.html?load=math/Sequences-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Reals.lurch">Real Numbers</a></dt>
-<dd>defines the field axioms for the Real Numbers
-(<a href="/instructor.html?load=math/Reals-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Sets.lurch">Set Theory</a></dt>
-<dd>defines <code>in</code> $\left(\in\right)$, <code>subset</code> $\left(\subseteq\right)$,
-<code>intersection</code> $\left(\cap\right)$, <code>union</code> $\left(\cup\right)$,
-<code>complement</code> $\left(‘\right)$, <code>set difference</code> $\left(\setminus\right)$,
-<code>powerset</code> $\left(\mathscr{P}\right)$, <code>Cartesian product</code> $\left(\times\right)$,
-<code>finite set</code> $\left({ \ldots }\right)$, <code>tuple</code> $\langle\ldots\rangle$,
-<code>Indexed Union</code> $\left(\bigcup\right)$, <code>Indexed Intersection</code> $\left(\bigcap\right)$,
-<code>Set Builder notation</code> $\left({ z :\ldots}\right)$
-(<a href="/instructor.html?load=math/Sets-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Functions.lurch">Functions</a></dt>
-<dd>defines <code>maps</code> $\left(f\colon A \to B\right)$, <code>function application</code> $\left(f(x)\right)$,
-<code>maps to</code> $\left(\mapsto\right)$, <code>image</code> $\left(f(U)\right)$,
-<code>identity map</code> $\left(\text{id}_A\right)$ <code>inverse image</code> $\left(f^\text{inv}(U)\right)$,
-<code>composition</code> $\left(\circ\right)$, <code>inverse function</code> $\left(f^{-1}\right)$,
-<code>injective</code>, <code>surjective</code>, <code>bijective</code>
-(<a href="/instructor.html?load=math/Functions-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Relations.lurch">Relations</a></dt>
-<dd>defines <code>reflexive</code>, <code>symmetric</code>, <code>transitive</code>, <code>irreflexive</code>,
-<code>antisymmetric</code>, <code>total</code>, <code>partial order</code>, <code>strict partial order</code>,
-<code>total order</code>, <code>equivalence relation</code>, <code>partition</code>, <code>equivalence class</code> $[a]$
-(<a href="/instructor.html?load=math/Relations-Rules.lurch">view rules</a>)</dd>
-</dl>
-</div>
-<!-- blue-box -->
-<!-- ----------------------------------------------------- -->
-<h2 id="contexts">Other Useful Contexts</h2>
-<div class="blue-box">
-<p><strong>Additional Rules.</strong> The following rules can be optionally added by the
-instructor to any context above in a particular document. Currently, only one of
-the three Arithmetic rules can be used in a single document.</p>
-<dl>
-<dt><a href="/student.html?load=math/Arithmetic-naturals.lurch">Arithmetic in the Natural Numbers</a></dt>
-<dd>Allows the user to say <code>'by</code> <code>arithmetic'</code> after an expression to try to
-justify it using a CAS. The expression can only contain natural number
-constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$, and
-$\text{^}$, and the relations $=$, $\leq$, and $\lt$.
-(<a href="/instructor.html?load=math/Arithmetic-naturals-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Arithmetic-integers.lurch">Arithmetic in the Integers</a></dt>
-<dd>Allows the user to say <code>'by</code> <code>arithmetic'</code> after an expression to try to
-justify it using a CAS. The expression can only contain natural number
-constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$, $\text{^}$,
-and $-$ and the relations $=$, $\leq$, and $\lt$. Exponents cannot be
-negative.
-(<a href="/instructor.html?load=math/Arithmetic-integers-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Arithmetic-rationals.lurch">Arithmetic in the Rationals</a></dt>
-<dd>Allows the user to say <code>'by</code> <code>arithmetic'</code> after an expression to try to
-justify it using a CAS. The expression can only contain natural number
-constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$, $\text{^}$,
-$-$, and $/$, and the relations $=$, $\leq$, and $\lt$. Exponents must be
-integers and you cannot divide by zero.
-(<a href="/instructor.html?load=math/Arithmetic-rationals-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Algebra.lurch">Algebra</a></dt>
-<dd>Allows the user to say <code>'by</code> <code>algebra'</code> after an expression to try to justify
-it using a CAS. There are no restrictions on what the expression can contain,
-so use at your own discretion. The identity is evaluated using
-<a href="http://algebrite.org">Algebrite</a>.
-(<a href="/instructor.html?load=math/Algebra-Rules.lurch">view rules</a>)</dd>
-</dl>
-<p><strong>Useful Cumulative Contexts.</strong> These contexts combine some proper subsets
-of the cumulative Math 299 contexts listed above.</p>
-<dl>
-<dt><a href="/student.html?load=math/Equations-Logic.lurch">Equations and Logic Only</a></dt>
-<dd>Equations, Logic Theorems, Predicate Logic, Propositional Logic.
-(<a href="/instructor.html?load=math/Equations-Logic-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Sets-Equations-Logic.lurch">Sets, Equations, and Logic</a></dt>
-<dd>Set Theory, Equations, Logic Theorems, Predicate Logic, Propositional Logic.
-This does not include Set Theory Theorems.
-(<a href="/instructor.html?load=math/Sets-Equations-Logic-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Functions-Sets-Equations-Logic.lurch">Functions, Sets, Equations, and Logic</a></dt>
-<dd>Functions, Set Theory Theorems, Set Theory, Equations, Logic Theorems,
-Predicate Logic, Propositional Logic.
-(<a href="/instructor.html?load=math/Functions-Sets-Equations-Logic-Rules.lurch">view rules</a>)</dd>
-<dt><a href="/student.html?load=math/Topology.lurch">Topology</a></dt>
-<dd>Defines <code>topological space</code>, <code>open</code>, <code>closed</code>, and <code>continuous</code> (in a
-toplogical space). Includes the Functions library above.
-(<a href="/instructor.html?load=math/Topology-Rules.lurch">view rules</a>)</dd>
-</dl>
-</div>
-<!-- blue-box -->
-<!-- ----------------------------------------------------- -->
-<h2 id="assignments">Example Assignments</h2>
-<p class="smallskip"><strong class="bigfont">Math 299 Spring 2024 Assignments</strong> – each link one opens a
-Lurch document containing a homework assignment from the course. Note that Lurch
-was under development during this semester so that some assignments are not good
-examples of what can be done today if these were rewritten to take advantage of
-some of the new features. We are in the process of updating them. I also intend
-to revise the entire syllabus in like of having Lurch available to spend less
-time on formal logic and more time on the later topics in the course (and
-perhaps add a few new ones).</p>
-<p class="medskip">The theorem numbers for the assigned problems below refer to the following
-course lecture notes. These are not fully updated to be consistent with the
-libraries used in the assignments below and may be revised frequently.</p>
-<p><a href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf" class="button medskip" rel="noopener noreferrer">Lecture Notes</a></p>
-<div class="blue-box thmlist">
-<dl>
-<dt><a href="/student.html?load=assignments/assignment-06.lurch">Assignment #06</a> Propositional logic</dt>
-<dd>
-<ol>
-<li><strong>Theorem (Iff is stronger):</strong> $(P\Leftrightarrow Q)\Rightarrow(Q\Rightarrow P)$</li>
-<li><strong>Theorem (the other way around):</strong> $\neg(\neg A)\Rightarrow A$</li>
-<li><strong>Theorem (Modus Tollens):</strong> $(S \Rightarrow T)\text{ and } \neg T \Rightarrow \neg S$</li>
-<li><strong>Theorem (atomic statements don't have to be variables):</strong> $0 \lt x\text{ or }x\lt 10 \Rightarrow x\lt 10\text{ or } 0\lt x$</li>
-<li><strong>Theorem (excluded middle):</strong> $K\text{ or } \neg K$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-07.lurch">Assignment #07</a> Propositional logic</dt>
-<dd>
-<ol>
-<li><strong>Theorem (implies is transitive):</strong>
-$((P\Rightarrow Q)\text{ and }(Q \Rightarrow R)) \Rightarrow (P \Rightarrow R)$</li>
-<li><strong>Theorem (alternate or-):</strong> $(S\text{ or } T)\text{ and } \neg S \Rightarrow T$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-08.lurch">Assignment #08</a> Predicate logic with Equality</dt>
-<dd>
-<ol>
-<li><strong>Theorem (alpha equivalence warm up):</strong> $(\forall x.P(x)) \Rightarrow (\forall y.P(y))$</li>
-<li><strong>Theorem (same thing but for exists):</strong> $(\exists x.P(x)) \Rightarrow (\exists y.P(y))$</li>
-<li><strong>Theorem (commuting quantifiers):</strong> $(\forall x.\forall y.x\text{ loves }y) \Rightarrow (\forall y.\forall x.x\text{ loves }y)$</li>
-<li><strong>Theorem (same thing for exists):</strong> $(\exists x.\exists y.x\text{ loves }y) \Rightarrow (\exists y.\exists x.x\text{ loves }y)$</li>
-<li><strong>Theorem (DeMorgan):</strong> $\neg (S\text{ and }T) \Rightarrow \neg S\text{ or } \neg T$</li>
-<li><strong>Theorem (DeMorgan):</strong> $\neg (\forall x.R(x)) \Rightarrow (\exists x.\neg R(x))$</li>
-<li><strong>Theorem ($=$ is transitive):</strong> $x=y\text{ and }y=z \Rightarrow x=z$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-09.lurch">Assignment #09</a> Logic theorems</dt>
-<dd>
-<ol>
-<li><strong>Theorem 5.10 (some are the same):</strong> $(\forall x.\forall y.P(x,y))
-\Rightarrow (\forall z.P(z,z))$</li>
-<li><strong>Theorem 5.16 (excluded middle):</strong> $(\forall x.Q(x))\text{ or } (\exists x.\neg Q(x))$</li>
-<li><strong>Theorem 4.22 (alternate $\Rightarrow$):</strong>
-$(R \Rightarrow S) \Rightarrow \neg R\text{ or }S$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-10.lurch">Assignment #10</a> Logic review</dt>
-<dd>
-<ol>
-<li><strong>Theorem (ex falso quodlibet):</strong> If Dracula fears Alice and Dracula does not
-fear Alice then Bob loves Alice.</li>
-<li><strong>Theorem 4.29 (the most beautiful?):</strong>
-$S \Rightarrow (S \Leftrightarrow S\text{ or }(\neg S \text{ and } S))$</li>
-<li><strong>Theorem 4.25 (shunting):</strong>
-$((P \text{ and } Q) \Rightarrow R) \Leftrightarrow (P \Rightarrow (Q \Rightarrow R))$</li>
-<li><strong>Theorem 5.21 (avoiding vacuous domains):</strong>
-$(\exists x. x = x)\text{ and }(\forall y. T(y)) \Rightarrow (\exists z. T(z))$</li>
-<li><strong>Theorem 5.5 (distributivity):</strong>
-$(\exists x. A(x) \Rightarrow B(x)) \Leftrightarrow (\forall y. A(y))
-\Rightarrow (\exists z. B(z))$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-11.lurch">Assignment #11</a> Logic review</dt>
-<dd>
-<ol>
-<li><strong>Theorem (Pierce's Law):</strong> $((S \Rightarrow T) \Rightarrow S) \Rightarrow S$</li>
-<li><strong>Theorem (quantifier fun):</strong>
-$(\forall x.\exists y.\forall z.A(x,y,z)) \Rightarrow
-(\forall z.\forall x.\exists y.A(x,y,z))$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-12.lurch">Assignment #12</a> Peano arithmetic and Induction</dt>
-<dd>
-<ol>
-<li><strong>Theorem 7.3 (no number is it's own successor):</strong> $n\neq\sigma(n)$</li>
-<li><strong>Theorem 7.4 (alternate definition of $\sigma$):</strong> $\sigma(n)=n+1$</li>
-<li><strong>Theorem 7.5 (associativity of addition):</strong> $(m+n)+p=m+(n+p)$</li>
-<li><strong>Theorem 7.6 (additive identity, part 2):</strong> $0+n=n$</li>
-<li><strong>Theorem 7.7 (commutativity of adding $1$):</strong> $1+n=n+1$</li>
-<li><strong>Theorem 7.8 (commutativity of addition):</strong> $m+n=n+m$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-13.lurch">Assignment #13</a> Peano arithmetic and Induction</dt>
-<dd>
-<ol>
-<li><strong>Theorem 7.11 (left multiplication by zero):</strong> $0\cdot m=0$</li>
-<li><strong>Theorem 7.19 (nonzero naturals are positive):</strong>
-<ul>
-<li>(a) $0\leq n$</li>
-<li>(b) $0\lt n \Leftrightarrow n\neq 0$</li>
-</ul>
-</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-14.lurch">Assignment #14</a> Sequences, Recursion, and Induction</dt>
-<dd>
-<ol>
-<li><strong>Theorem 8.3(a) (a useful identity):</strong> $n^2=n\cdot n$</li>
-<li><strong>Theorem 8.3(b) (useful identity):</strong>  $2\cdot n=n+n$</li>
-<li><strong>Theorem 8.2(b) (power law):</strong>  $z^m\cdot z^n=z^{m+n}$</li>
-<li><strong>Theorem 8.2(c) (power law):</strong> $(z^m)^n=z^{m\cdot n}$</li>
-<li><strong>Theorem 8.4 (quadratic beats linear):</strong> If $a+b\leq n$ then $a\cdot n+b\leq n^2$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-15.lurch">Assignment #15</a> Sequences, Recursion, and Induction</dt>
-<dd>
-<ol>
-<li><strong>Theorem 8.7 (Fib fun):</strong> $F_{n+3}+F_n=2\cdot F_{n+2}$</li>
-<li><strong>Theorem 8.5(b) (basic sum property):</strong>
-$\displaystyle \sum_{i=0}^n s\cdot a_i = s\cdot \sum_{i=0}^n a_i$</li>
-<li><strong>Theorem 8.11 (closed formula for binomial coefficients):</strong>
-$\displaystyle(m!\cdot n!)\cdot \binom{n+m}{m}=(n+m)!$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-16.lurch">Assignment #16</a> Real numbers and Field axioms</dt>
-<dd>
-<ol>
-<li><strong>Theorem 9.3 (cancellation for addition):</strong> If $x+z=y+z$ then $x=y$</li>
-<li><strong>Theorem 9.2(b) (signed product):</strong> $(-1)\cdot(-1)=1$</li>
-<li><strong>Theorem 9.2(c) (harder than it looks):</strong> $0\lt 1$</li>
-<li><strong>Theorem 9.2(d) (not mod 2):</strong>  $-1\neq 1$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-17.lurch">Assignment #17</a> Real numbers and Field axioms</dt>
-<dd>
-<ol>
-<li><strong>Theorem 9.4 (cancellation for multiplication):</strong>
-If $\neq 0$ and $z\cdot x=z\cdot y$ then $x=y$.</li>
-<li><strong>Theorem 9.6 (multiplicative inverses are unique):</strong>
-If $z\cdot x=1$ and $z\cdot y=1$ then $x=y$.</li>
-<li><strong>Theorem 9.10 (alternate additive inverse):</strong> $-x=-1\cdot x$</li>
-<li><strong>Theorem 9.18 (adding inequalities):</strong> If $w\lt y$ and $x\lt z$ then $w+x\lt y+z$.</li>
-<li><strong>Theorem 9.23 (scaling by a negative):</strong> If $z\lt 0$ and $x\lt y$ then $z\cdot y\lt z\cdot x$.</li>
-<li><strong>Theorem (between):</strong>  There exists a real number strictly between 0 and 1,
-i.e., $\exists r.0\lt r \text{ and }r\lt 1$.</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-18.lurch">Assignment #18</a> Elementary Set Theory</dt>
-<dd>
-<ol>
-<li><strong>Theorem 10.5 (double negative):</strong> $\left(A'\right)'=A$</li>
-<li><strong>Theorem 10.32 (always in the power set):</strong> $\{~~\}\in \mathscr{P}(A)$</li>
-<li><strong>Theorem 10.34. (power sets of subsets):</strong>
-If $A\subseteq B$ then $\mathscr{P}(A)\subset\mathscr{P}(B)$.</li>
-<li><strong>Theorem 10.38 (relative complement is not associative):</strong>
-If $x\in A$, $x\in B$, and $x\in C$ then $(A\setminus B)\setminus C\neq A\setminus (B\setminus C)$.</li>
-<li><strong>Theorem 10.7 (a set of sets):</strong>
-$\{\,1,2\,\}\in\left\{\,Y:\{\,1\,\}\subseteq Y\right\}$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-19.lurch">Assignment #19</a> Elementary Set Theory</dt>
-<dd>
-<ol>
-<li><strong>Theorem 10.23(b) (∩ distributes over ∪):</strong>
-$A \cap (B \cup C) \subseteq (A \cap B) \cup (A \cap C)$</li>
-<li><strong>Theorem 10.37 (subsets are contagious):</strong>
-If $A \subseteq C$ and $B\subseteq D$ then $A\times B\subset C\times D$.</li>
-<li><strong>Theorem 10.31 (not a subset):</strong>
-$A \nsubseteq B$ if and only if $\exists x.x \in A \cap B'$</li>
-<li><strong>Theorem 10.27 (Baby DeMorgan):</strong>
-$A \setminus (B \cap C) = (A \setminus B) \cup (A \setminus C)$</li>
-<li><strong>Theorem 10.29 (Papa DeMorgan):</strong>
-$\displaystyle\left(\bigcap_{i \in I} A_i\right)' = \bigcup_{j\in I} A_j'$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-20.lurch">Assignment #20</a> Functions and Composition</dt>
-<dd>
-<ol>
-<li><strong>Theorem 10.41 (composition is associative):</strong>
-If $h\colon A \to B$, $g\colon B \to C$, $f\colon C \to D$
-then $$f\circ(g\circ h)=(f\circ g)\circ h.$$</li>
-<li><strong>Theorem 10.53 (a) (identity maps are injective):</strong>
-The map $\mathrm{id}_A$ is injective.</li>
-<li><strong>Theorem 10.53 (b) (identity maps are surjective):</strong>
-The map $\mathrm{id}_A$ is surjective.</li>
-<li><strong>Theorem 10.46 (image of subsets):</strong>
-If $f\colon A \to B$, $S \subseteq T$, and $T \subseteq A$ then $f(S)\subseteq f(T)$.</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-21.lurch">Assignment #21</a> Functions and Composition</dt>
-<dd>
-<ol>
-<li><strong>Theorem 10.43 (a linear bijection):</strong>
-If $f\colon \mathbb{R} \to \mathbb{R}$ and $\forall x.f(x)=3\cdot x+1$
-then $f$ is bijective.</li>
-<li><strong>Theorem (inverse images respect intersection):</strong>
-If $f\colon A \to B$, $S \subseteq B$, $T \subseteq B$
-then $$f^\mathrm{inv}(S \cap T)=f^\mathrm{inv}(S) \cap f^\mathrm{inv}(T)$$</li>
-<li><strong>Theorem (inverse functions are bijective):</strong>
-If $f\colon A \to B$ and $f$ is bijective then $f^{-1}$ is bijective.</li>
-<li><strong>Theorem 10.52 (inverse of a composition):</strong>
-If $f\colon A \to B$, $g\colon B \to C$, $f$ is bijective, and $g$ is bijective
-then $$(g \circ f)^{-1} = f^{-1} \circ g^{-1}$$</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-22.lurch">Assignment #22</a> Equivalence relations and Partial Orders</dt>
-<dd>
-<ol>
-<li><strong>Theorem (integer associates)</strong> Define $\sim$
-to be the relation on $\mathbb{Z}$ such that for all
-$x,y\in \mathbb{Z}$,
-$$x\sim y\text{ if and only if }y=x\text{ or }y=−x$$
-Then $\sim$ is an equivalence relation.</li>
-<li><strong>Theorem ($\subseteq$ is a partial order)</strong>
-Let $A$ be a set and suppose $\sim$ is a relation on $\mathscr{P}(A)$
-such that for all $S,T\in\mathscr{P}(A)$
-$$S\sim T\text{ if and only if }S\subseteq T$$
-Then $\sim$ is a partial order.</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-23.lurch">Assignment #23</a> Equivalence relations and Partial Orders</dt>
-<dd>
-<ol>
-<li><strong>Theorem 10.65</strong> Congruence mod $m$ is an equivalence relation on the set of integers.</li>
-<li><strong>Theorem 10.66 (class representatives):</strong>
-Every integer $a$ is congruent mod $m$ to a unique natural number that
-is less than $m$, i.e., $\exists r.a \underset{m}{\equiv}r\text{ and }0\leq
-r\text{ and }r\lt m$ and if $a \underset{m}{\equiv} s$, $0\leq s$, and $s\lt
-m$ and $a \underset{m}{\equiv} t$, $0\leq t$, and $t\lt m$
-then $s=t$.</li>
-</ol>
-</dd>
-<dt><a href="/student.html?load=assignments/assignment-24.lurch">Assignment #24</a> Modular arithmetic</dt>
-<dd>
-<ol>
-<li><strong>Theorem 10.68 (modular addition):</strong>
-For any integers $a,b,c,d$, if $a \underset{m}{\equiv} b$ and $c
-\underset{m}{\equiv} d$ then $a+c \underset{m}{\equiv}
-b+d$</li>
-<li><strong>Theorem 10.69 (modular multiplication):</strong>
-For any integers $a,b,c,d$, if $a \underset{m}{\equiv} b$
-and $c \underset{m}{\equiv} d$ then $a\cdot c \underset{m}{\equiv} b\cdot d$</li>
-</ol>
-</dd>
-</dl>
-</div>
-<!-- blue-box -->
-<!-- ----------------------------------------------------- -->
-<h2 id="lurchforstudents">Lurch for Students</h2>
-<p><a href="" class="button" 
-  onclick="openLurch('student.html'); return false;">Lurch</a> –
-This button will open a blank document with no rules or background material
-in the student version of Lurch. The only difference is that the student
-version does not have the Table or Instructor menus, and it will open in a
-restricted window useful for testing.</p>
-<h2 id="lurchforinstructors">Lurch for Instructors</h2>
-<p><a href="" class="button"
-  onclick="window.open('instructor.html','target=_blank'); return false;">
-Lurch</a> – This button will open a blank document with no rules or
-background material in the instructor version of Lurch.</p>
-<h2 id="talkslides">Talk slides</h2>
-<p>Those of you who have attended my talks on Lurch can find my 'slides' from those talks here.</p>
-<ul class="disc subcircle">
-<li>Concordia University, CICM workshop (Aug 5, 2024) (3hr)
-<ul>
-<li><a href="/student.html?load=help/talks/cicm/cicm.lurch">Lurch tutorial workshop - part 1</a></li>
-<li><a href="/instructor.html?load=help/talks/cicm/cicm-part-2.lurch">Lurch tutorial workshop - part 2</a></li>
-<li><a href="/student.html?load=help/talks/cicm/cicm-soln.lurch">Lurch tutorial workshop - solution to part 1</a></li>
-</ul>
-</li>
-<li>Colorado State University, Rocky Mountain Algebraic Combinatorics Seminar, (Aug 30, 2024)
-<ul>
-<li><a href="/student.html?load=help/talks/csu/intro.lurch">Proof Verification with Lurch</a> (50 min)</li>
-<li><a href="/student.html?load=help/theory.lurch">(Meta) True about Everything</a> (50 min)</li>
-</ul>
-</li>
-<li>University of Wyoming, Fisk Speaker Series (Sep 12, 2024)
-<ul>
-<li><a href="/student.html?load=help/talks/uw/intro-theory.lurch">Proof Verification with Lurch</a> (50 min)</li>
-</ul>
-</li>
-<li>Lehigh University, Math Department Colloquim (Oct 9, 2024)
-<ul>
-<li><a href="/student.html?load=help/talks/lehigh/intro-theory.lurch">Proof Verification with Lurch</a> (50 min)</li>
-</ul>
-</li>
-<li>University of Scranton, Math Seminar talk (Oct 11, 2024)
-<ul>
-<li><a href="/student.html?load=help/talks/scranton/intro-no-theory.lurch">Proof Verification with Lurch</a> (50 min)</li>
-</ul>
-</li>
-<li>Math Association of America, EPaDel section regional meeting (Nov 2, 2024)
-<ul>
-<li><a href="/student.html?load=help/talks/epadel/short-intro.lurch">Proof Verification with Lurch</a> (20 min)</li>
-</ul>
-</li>
-<li>Penn State University, (Nov 12, 2024)
-<ul>
-<li><a href="/student.html?load=help/talks/psu/intro-no-theory-top.lurch">Proof Verification with Lurch</a> (50 min)</li>
-</ul>
-</li>
-<li>Canadian Math Society Winter Meeting (Dec 1, 2024)
-<ul>
-<li><a href="/student.html?load=help/talks/cms/intro-no-theory-top.lurch">Proof Verification with Lurch</a> (20 min)</li>
-</ul>
-</li>
-</ul>
-<h2 id="getlurch">Get Lurch!</h2>
-<p>Instructors who would like to customize their own copy of this site for use in their own
-courses can do that easily by forking this repository on GitHub.</p>
-<ol>
-<li><a href="https://github.com/login">Sign in to your account on Github</a> (or create a free account).</li>
-<li>Go to
-<a href="https://github.com/kenmonks/lurch/fork">github.com/kenmonks/lurch/fork</a>
-and choose your account from the &quot;Owner&quot; dropdown. You can also optionally
-change the repository name. Then click &quot;Create fork&quot;.</li>
-<li>Go to
-<code>https://github.com/</code><em class="greyback">your_account</em><code>/</code><em class="greyback">your_sitename</em>/<code>settings/pages</code>
-where <em class="greyback">your_account</em> is your GitHub account name and
-<em class="greyback">your_sitename</em> is the name you chose for your site in the
-previous step.</li>
-<li>Tell it to deploy from a branch, and select the branch
-<code>main</code> with the default <code>/(root)</code> folder. Then
-click the &quot;Save&quot; button.</li>
-<li>After a minute or so you should be able to access your site at
-<code>https://</code><em class="greyback">your_account</em><code>.github.io/</code><em class="greyback">your_sitename</em>.</li>
-</ol>
-<p>You can then replace the <code>index.html</code> file and other content with
-whatever you want to customize the site for use in your course. You will also be
-able to pull bug fixes and new features from my site in the future.  Your students can click links on your site to open any Lurch files or other content you save in your repository.</p>
-</div>
-
-    </div>
-
-    <div id='footer-block'>
-              <footer>
-          <div class='container'>
-            <div class='row'>
-              <div class='col-xs-12'>
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
                 <h3>
-                  <a href='http://monks.scranton.edu/' target='_blank'>Dr. Kenneth
-                    G. Monks</a>
+                  <a href="http://monks.scranton.edu/" target="_blank">
+                    Dr. Kenneth G. Monks
+                  </a>
                 </h3>
-                Department of Mathematics<br />
-                University of Scranton<br />
+                Department of Mathematics
+                <br />
+                University of Scranton
+                <br />
                 Scranton, PA 18510
               </div>
             </div>
-            <div class='row' id='more-contact-info'>
-              <div class='col-xs-12 col-md-4' id='email-footer'>
-                <img src='./assets/media/envelope.svg'
-                  style='vertical-align: middle; padding-right: 0.2em;' />
-                <a href='mailto:monks@scranton.edu'
-                  target='_blank'>monks@scranton.edu</a>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="./assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank">
+                  monks@scranton.edu
+                </a>
               </div>
-              <div class='col-xs-12 col-md-4 center' id='lurch-footer'>
-                <span class='checkmark' style='padding-right:0.2em'>✓</span>
-                <a href='http://lurch.plus'>lurch.plus</a>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
               </div>
-              <div class='col-xs-12 col-md-4' id='proveit-footer'>
-                <img src='./assets/media/therefore.svg' 
-                  style='vertical-align: middle; padding-right: 0.2em; height: 0.8em' />
-                <a href='https://proveitmath.org' target='_blank'>Prove
-                  it!&nbsp;Math Academy</a>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="./assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank">
+                  Prove it!&nbsp;Math Academy
+                </a>
               </div>
             </div>
             <!-- row -->
-            <div id='copyright'>
-              Copyright &copy; Kenneth G. Monks
-            </div>  
+            <div id="copyright">Copyright &copy; Kenneth G. Monks</div>
           </div>
         </footer>
+      </div>
     </div>
 
-  </div>
-
-  <script src='./assets/js/utils.js'></script>
-<script>
-  document.addEventListener('click', (event) => {
-    const link = event.target.closest('a') // Check if the clicked element is an anchor
-    if (link && !link.hasAttribute('target') && 
-        !link.getAttribute('href')?.startsWith('#')) {
-      event.preventDefault() // Prevent default behavior
-      window.open(link.href, '_blank') // Open link in a new tab
-    }
-  })
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const rows = document.querySelectorAll('tr[data-href]'); // Select only rows with data-href
-    rows.forEach(row => {
-      row.addEventListener('click', function () {
-        const url = this.getAttribute('data-href');
-        if (url) {
-          openLurch(url)
-          // window.location.href = url; // Navigate to the URL
+    <script src="./assets/js/utils.js"></script>
+    <script>
+      document.addEventListener('click', event => {
+        const link = event.target.closest('a') // Check if the clicked element is an anchor
+        if (
+          link &&
+          !link.hasAttribute('target') &&
+          !link.getAttribute('href')?.startsWith('#')
+        ) {
+          event.preventDefault() // Prevent default behavior
+          window.open(link.href, '_blank') // Open link in a new tab
         }
       })
-    })
-  })
-</script>
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const rows = document.querySelectorAll('tr[data-href]') // Select only rows with data-href
+        rows.forEach(row => {
+          row.addEventListener('click', function () {
+            const url = this.getAttribute('data-href')
+            if (url) {
+              openLurch(url)
+              // window.location.href = url; // Navigate to the URL
+            }
+          })
+        })
+      })
+    </script>
 
     <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [
-          ["$", "$"]
-        ],
-        processEscapes: true
-      },
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
-    id="MathJax-script"></script>
-
-
-</body>
-
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          processEscapes: true
+        }
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
 </html>
