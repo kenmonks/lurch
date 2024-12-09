@@ -38,15 +38,29 @@
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#documentation">Documentation</a></li>
-        <li><a href="./100" target="_self">100 Theorem Challenge</a></li>
-        <li><a href="#libraries">Rule Libraries</a></li>
-        <li><a href="#contexts">Other Contexts</a></li>
-        <li><a href="#assignments">Example Assignments</a></li>
-        <li><a href="#lurchforstudents">Lurch for Students</a></li>
-        <li><a href="#lurchforinstructors">Lurch for Instructors</a></li>
+        <li><a href="/100" target="_self">100 Theorem Challenge</a></li>
+        <li>
+          <span class="has-submenu" onclick="toggleMenu(this)">
+            Math 299 Content
+          </span>
+          <ul class="submenu hidden">
+            <li><a href="#libraries">Rule Libraries</a></li>
+            <li><a href="#contexts">Other Contexts</a></li>
+            <li><a href="#assignments">Example Assignments</a></li>
+          </ul>
+        </li>
+        <li>
+          <span class="has-submenu" onclick="toggleMenu(this)">
+            Blank Lurch
+          </span>
+          <ul class="submenu hidden">
+            <li><a href="#lurchforstudents">Lurch for Students</a></li>
+            <li><a href="#lurchforinstructors">Lurch for Instructors</a></li>
+          </ul>
+        </li>
         <li><a href="#talkslides">Talk Slides</a></li>
         <li><a href="#getlurch">Get Lurch!</a></li>
-        <li><a href="./about" target="_self">About Lurch</a></li>
+        <li><a href="/about">About Lurch</a></li>
       </ul>
 
       <div id="contact">
@@ -82,12 +96,12 @@
           <p class="attribution">Anonymous, 2024</p>
         </div>
         <p>
-          Lurch is an open source math editor that can check your proofs. It was
-          used successfully in my four credit undergraduate bridge course for
-          math and math education majors. Instructors who would like to create
-          their own Lurch course materials using the rule libraries and content
-          from my course can find updated and improved supporting materials
-          below and on this site.
+          Lurch is a math editor that can check your proofs (coauthored with
+          Nathan Carter). It was used successfully in my four credit
+          undergraduate bridge course for math and math education majors.
+          Instructors who would like to create their own Lurch course materials
+          using the rule libraries and content from my course can find updated
+          and improved supporting materials below and on this site.
         </p>
         <!-- ----------------------------------------------------- -->
         <div id="video-container">
@@ -160,7 +174,7 @@
                 below)
               </li>
               <li>
-                <a href="./100">100 Famous Theorems Challenge!</a>
+                <a href="/100">100 Famous Theorems Challenge!</a>
                 Lurch's status in verifying the proofs of theorems on the 100
                 famous theorems challenge list. Game on!
               </li>
@@ -211,7 +225,7 @@
                 in this version of Lurch.
               </li>
               <li>
-                <a href="./lde/src/experimental/docs">
+                <a href="lde/src/experimental/docs">
                   Validation Algorithm API docs
                 </a>
                 the source code documentation for the Global $n$-compact
@@ -231,7 +245,7 @@
             </ul>
           </li>
           <li>
-            <a href="./lde/src/experimental/parsers/lurch-parser-docs.html">
+            <a href="lde/src/experimental/parsers/lurch-parser-docs.html">
               Lurch Syntax
             </a>
             a quick reference showing how to type various math expressions in
@@ -253,10 +267,7 @@
               consists of the rules for that topic, and those from the topics
               above it. The Theorem numbers refer to exercises in the draft of
               the
-              <a
-                href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf">
-                course lecture notes
-              </a>
+              <a href="">course lecture notes</a>
               .
             </p>
             <dl>
@@ -694,10 +705,7 @@
             be revised frequently.
           </p>
           <p>
-            <a
-              href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf"
-              class="button medskip"
-              rel="noopener noreferrer">
+            <a href="" class="button medskip" rel="noopener noreferrer">
               Lecture Notes
             </a>
           </p>
@@ -1265,7 +1273,7 @@
             <a
               href=""
               class="button"
-              onclick="openLurch('./student.html'); return false;">
+              onclick="openLurch('student.html'); return false;">
               Lurch
             </a>
             – This button will open a blank document with no rules or background
@@ -1278,7 +1286,7 @@
             <a
               href=""
               class="button"
-              onclick="window.open('./instructor.html','target=_blank'); return false;">
+              onclick="window.open('instructor.html','target=_blank'); return false;">
               Lurch
             </a>
             – This button will open a blank document with no rules or background
@@ -1417,16 +1425,16 @@
               (or create a free account).
             </li>
             <li>
-              Return to this page and go to
+              Go to
               <a href="https://github.com/kenmonks/lurch/fork">
                 github.com/kenmonks/lurch/fork
               </a>
-              (you can just click that link) and choose your account from the
-              &quot;Owner&quot; dropdown. You can also optionally change the
-              repository name. Then click &quot;Create fork&quot;.
+              and choose your account from the &quot;Owner&quot; dropdown. You
+              can also optionally change the repository name. Then click
+              &quot;Create fork&quot;.
             </li>
             <li>
-              Go to here
+              Go to
               <code>https://github.com/</code>
               <em class="greyback">your_account</em>
               <code>/</code>

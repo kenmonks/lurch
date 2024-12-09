@@ -26,6 +26,7 @@ html {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: hidden;
+  font-size: smaller;
 }
 
 #leftnav ul {
@@ -37,9 +38,26 @@ html {
   border-bottom: #bbd6fb 1px solid;
 }
 
+#leftnav ul ul {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+#leftnav .has-submenu {
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
 #leftnav li {
   display: block;
   padding: 5px 5px;
+  border-radius: 1px;
+}
+
+#leftnav li li {
+  display: block;
+  padding: 5px 15px;
   border-radius: 1px;
 }
 
@@ -52,8 +70,8 @@ html {
   color: #5DA9E9;
 }
 
-#leftnav li:hover,
-#leftnav li:hover a {
+#leftnav li:not(:has(ul)):hover,
+#leftnav li:not(:has(ul)):hover a {
   background-color: #bbd6fb;
   color: #0068c2;
 }
@@ -70,7 +88,6 @@ html {
   line-height: 1.5;
   display: inline;
 }
-
 
 #leftnav #contact a,
 #leftnav #contact a:visited
