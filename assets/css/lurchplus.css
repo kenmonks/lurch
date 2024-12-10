@@ -12,14 +12,25 @@ html {
   scroll-behavior: smooth
 }
 
+/* 
+ * The body has a left nav and a right column containing the content and the
+ * footer 
+*/
+body {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
 /* the left nav column */
 #leftnav {
   position: fixed;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   top: 0;
   left: 0;
-  width: 228px;
+  width: fit-content;
   height: 100%;
   background-color: #101B27;
   color: white;
@@ -57,8 +68,13 @@ html {
 
 #leftnav li li {
   display: block;
-  padding: 5px 15px;
+  padding: 5px 5px 5px 10px;
   border-radius: 1px;
+}
+
+#leftnav li li a:before {
+  content: '\2013';
+  margin-right: 5px;
 }
 
 #leftnav a,
@@ -119,6 +135,7 @@ html {
 #wrap {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   width: fit-content;
   max-width: 870px;
   margin-left: 229px;

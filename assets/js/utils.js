@@ -18,38 +18,18 @@ const openLurch = url => {
   window.open(url, '_blank', features)
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   // Get the left nav UL element
-//   const navList = document.getElementById("anchor-links");
+// allow #leftnav to adjust width to fit content without overlapping #wrap
+const adjustWrapPosition = () => {
+  const leftNav = document.getElementById("leftnav")
+  const wrap = document.getElementById("wrap")
 
-//   // Find all span elements with id attributes that start with "nav-"
-//   const navItems = document.querySelectorAll("span[id^='nav-']");
+  // Get the width of #leftnav
+  const leftNavWidth = leftNav.offsetWidth
+  wrap.style.marginLeft = `${leftNavWidth}px` // Adjust padding as needed
+}
 
-//   navItems.forEach(function (item) {
-//     const id = item.id;              // Get the id attribute (e.g., "nav-intro")
-//     const label = item.dataset.label; // Get the data-label attribute
+// Call the function on load
+window.addEventListener("load", adjustWrapPosition)
 
-//     // Create an LI element for each anchor
-//     const listItem = document.createElement("li");
-
-//     // Create the anchor link
-//     const link = document.createElement("a");
-//     link.href = `#${id}`;
-//     link.textContent = label;        // Set the text from the data-label attribute
-
-//     // Append the link to the list item, and the list item to the nav
-//     listItem.appendChild(link);
-//     navList.appendChild(listItem);
-//   });
-// });
-
-// window.onload = function () {
-//   document.querySelectorAll('#leftnav li a').forEach(anchor => {
-//     anchor.addEventListener('click', function (e) {
-//       e.preventDefault()
-//       const targetId = this.getAttribute('href').substring(1)
-//       document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' })
-//     })
-//   })
-// }
-
+// Call the function on resize to handle dynamic changes
+window.addEventListener("resize", adjustWrapPosition)
