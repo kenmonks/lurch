@@ -99,7 +99,12 @@ const getValidationResults = LC => {
     // Final result is the prop validation result, if any
     const propResult = LDE.Validation.result( LC )
     if ( propResult )
-        results.push( { type : 'propositional', ...propResult } )
+        if (propResult.reason=='preemie') {
+          results.push( { type : 'propositional', result: 'indeterminate', reason: 'preemie' } )
+        } else {  
+          results.push( { type : 'propositional', ...propResult } )
+        }
+    console.log(results)    
     return results
 }
 
