@@ -148,20 +148,6 @@ body {
   flex: 1;
 }
 
-/* .container {
-  margin-left: 221px;
-  margin-right: auto;
-  padding-left: 20px;
-  padding-right: 10px;
-  max-width: 870px;
-} */
-
-/* .container .navbar-header {
-  width: 100%;
-  display: flex;
-  justify-content: left;
-} */
-
 .greyback {
   background-color: #F2F2F2;
 }
@@ -255,6 +241,17 @@ div.title-box {
   height: auto;
 }
 
+.large {
+  font-size: large
+}
+
+.complement {
+  color: peru;
+}
+
+#content-block ul#topfeatures {
+  margin-left: 3rem;
+}
 div.blue-box {
   background-color: #e7f3fd;
   padding: 1rem 1rem 0.25rem 1rem;
