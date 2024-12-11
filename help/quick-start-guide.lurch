@@ -8,7 +8,7 @@
                 </script>
             </div>
         
-            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="main" data-key="header" data-value-type="html">(Peek-a-boo!&nbsp; I was hiding in the header.)<div class="lurch-atom" contenteditable="false" data-metadata_type="&quot;dependency&quot;" data-metadata_description="&quot;none&quot;" data-metadata_filename="&quot;help/context.lurch&quot;" data-metadata_source="&quot;the web&quot;" data-metadata_auto-refresh="true" style="border: 1px solid gray; padding: 0px 1em;"><div class="lurch-atom-metadata" style="display: none;"><div data-key="content">
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"minimal"</div><div data-category="main" data-key="header" data-value-type="html">(Peek-a-boo!&nbsp; I was hiding in the header.)<div class="lurch-atom" contenteditable="false" data-metadata_type="&quot;dependency&quot;" data-metadata_description="&quot;none&quot;" data-metadata_filename="&quot;help/context.lurch&quot;" data-metadata_source="&quot;the web&quot;" data-metadata_auto-refresh="true" style="border: 1px solid gray; padding: 0px 1em;"><div class="lurch-atom-metadata" style="display: none;"><div data-key="content">
             <div id="loadlink">
                 <p><a>Open this file in the Lurch web app</a></p>
                 
