@@ -55,6 +55,7 @@
 <li style="text-align: left;"><span class="s1">Pressing<code>SHIFT+ENTER</code>in the expression dialog will insert a line break.</span></li>
 <li style="text-align: left;"><span class="s1">Clicking on a math expression that is in the document lets you edit it and see how it was entered. See the<code>Lurch Math Reference</code>from the<code>Help</code>menu for additional examples.</span></li>
 <li style="text-align: left;">Pressing the dollar sign (<span class="s1">$) character lets you enter a purely expository math expression in LaTeX. Lurch will ignore such expressions when validating your document.</span></li>
+<li style="text-align: left;"><span class="s1">An expression is treated as a single character in the document as far as moving the cursor with the arrow keys is concerned.</span></li>
 <li style="text-align: left;">Environments can be entered quickly by pressing the backslash (\) key.</li>
 </ul>
 <h2 style="text-align: left;">Lurch Insights</h2>
