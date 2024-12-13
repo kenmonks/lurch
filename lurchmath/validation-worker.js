@@ -103,8 +103,7 @@ const getValidationResults = LC => {
           results.push( { type : 'propositional', result: 'indeterminate', reason: 'preemie' } )
         } else {  
           results.push( { type : 'propositional', ...propResult } )
-        }
-    console.log(results)    
+        } 
     return results
 }
 
