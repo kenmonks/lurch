@@ -36,13 +36,13 @@ if ( typeof( localStorage ) !== 'undefined' ) appSettings.load()
  */
 export const install = editor => {
     editor.ui.registry.addMenuItem( 'docsettings', {
-        text : 'Edit document settings',
+        text : 'Document settings',
         icon : 'settings',
         tooltip : 'Edit document settings',
         onAction : () => {
             // Create settings instance and LurchDocument instance
             const settings = new Settings( 'Document settings',
-                LurchDocument.settingsMetadata )
+                LurchDocument.shortSettingsMetadata )
             const LDoc = new LurchDocument( editor )
             // Load document settings into it
             const allowedKeys = settings.keys()
@@ -79,7 +79,9 @@ export const install = editor => {
  * @param {string} key - the name of the setting to look up
  */
 export const lookup = ( editor, key ) => {
-    // Create all the objects we need to use for lookup
+    // Create all the objects we need to use for lookup. We usethe full
+    // settingsMetadata for this since the settings themselves might be needed
+    // elsewhere even if we don't let the user edit them.
     const settings = new Settings( 'Document settings',
         LurchDocument.settingsMetadata )
     const metadata = settings.metadata.metadataFor( key )

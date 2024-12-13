@@ -227,7 +227,7 @@ export const install = editor => {
     // dependencies) in the header.  This list of dependencies never leaves the
     // header, so this is the only way to edit it.
     editor.ui.registry.addMenuItem( 'editdependencyurls', {
-        text : 'Edit background material',
+        text : 'Add or remove context',
         tooltip : 'Edit the list of documents on which this one depends',
         icon : 'edit-block',
         onAction : () => {
@@ -241,7 +241,7 @@ export const install = editor => {
                     }
                 } )
             // Create the dialog, but do not populate it with dependencies yet.
-            const dialog = new Dialog( 'Edit background material', editor )
+            const dialog = new Dialog( 'Add or remove context documents', editor )
             dialog.json.size = 'medium'
             const listItem = new ListItem( 'dependencies' )
             listItem.setSelectable()
