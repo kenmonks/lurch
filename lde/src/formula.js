@@ -25,6 +25,7 @@ import { Expression } from './expression.js'
 import { Environment } from './environment.js'
 import { Symbol as LurchSymbol } from './symbol.js'
 import Matching from './matching.js'
+import Parsing from './experimental/parsing.js'
 
 /**
  * A {@link LogicConcept LogicConcept} can be converted into a formula by
@@ -69,8 +70,10 @@ const from = (LC, inPlace=false) => {
     ).map( be => be.boundSymbolNames() ).flat() )
     // make a copy and change all of its undeclared symbols into metavariables
     const result = (inPlace) ? LC : LC.copy()
+    // in addition to these, we also have to avoid natural number constants
     result.descendantsSatisfying( d => d instanceof LurchSymbol )
           .filter( s => !declared.has( s.text() ) && !bound.has( s.text() )
+                                                  && !Parsing.isNaturalNumber( s )
                                                   && s.isFree() )
           .forEach( s => s.makeIntoA( Matching.metavariable ) )
     // return it
