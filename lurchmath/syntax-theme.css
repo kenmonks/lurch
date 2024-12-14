@@ -88,6 +88,11 @@
   --recall-color: #efe9f1;
   /* inline semantic math expression font color */
   --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
+  /* inline semantic math expression font color */
+  --code-bg-color: #ecf0f1; /* matches TinyMCE light gray */
+  /* base font size */
+  /* inline semantic math expression font color */
+  --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
   /* base font size */
   --base-font-size: 11pt;
   /* subproof indentation */
@@ -475,10 +480,11 @@ the MathLive rendering spills outside the atom we want to shade that as well */
    and less padding. */
 code {
   font-size: 0.95em;
-  padding: 0.2em 0.3em;
+  padding: 2px 3px;
   border-radius: 4px;
   /* font-family: 'Roboto Mono', 'Anonymous Pro', 'PT Mono', 'Oxygen monospace', monospace; */
   font-family: "Anonymous Pro", "PT Mono", "Oxygen monospace", monospace;
+  background-color: var(--code-bg-color);
 }
 
 /***********************************************************************/
