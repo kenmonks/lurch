@@ -149,9 +149,7 @@
     [ 'for all'                , 'forall'                 ] ,
     [ 'for each'               , 'forall'                 ] ,
     [ 'for every'              , 'forall'                 ] ,
-    [ 'there exists'           , 'exists'                 ] ,
-    [ '(?<![a-zA-Z0-9])pair\\('    , 'tuple('  ] ,
-    [ '(?<![a-zA-Z0-9])triple\\('  , 'tuple('  ] 
+    [ 'there exists'           , 'exists'                 ] 
   ]
   
   const UnicodeNames = {

@@ -360,6 +360,9 @@ const numericToCAS = e => {
  *     compatibility) and replace that with the symbol "LDE EFA" (which then
  *     will still print as '𝜆' but it's what is needed under the hood).
  *
+ *   * Scan for occurrences of the symbols `pair`and `triple`, and replace them
+ *     with the symbol "tuple". 
+ *
  *   * Scan for occurrences of the symbol `then`. They are intended to be a
  *     shorthand way to enter an If-then environment inline without using a
  *     shell. The 'then' should be between given siblings and one or more claim
@@ -367,11 +370,10 @@ const numericToCAS = e => {
  *     A,B,C then D,E,F` will then be converted to the environment `{ :A :B :C D
  *     E F }`.  These cannot be nested.  This is useful for both inserting
  *     If-then environments inline, and also for using them as the body of a
- *     declaration.  Thus, for example you can say e.g. 
- *     `If A,B,C then D,E,F for some c` or 
- *     `Let x be such that if A,B,C then D,E,F`
- *     If you just want a conjunction you can also do `D,E,F for some c` or
- *     `Let x be such that D,E,F `
+ *     declaration.  Thus, for example you can say e.g. `If A,B,C then D,E,F for
+ *     some c` or `Let x be such that if A,B,C then D,E,F` If you just want a
+ *     conjunction you can also do `D,E,F for some c` or `Let x be such that
+ *     D,E,F `
  *
  * The Rule will then be replaced by the expanded version and the `≡` symbols
  *     removed, following the cyclic TFAE style of implications.  For example,
@@ -613,6 +615,12 @@ export const processShorthands = L => {
   } )  
   processSymbol( '@' , m => { 
     m.replaceWith(new LurchSymbol('LDE EFA'))
+  } )
+  processSymbol( 'pair' , m => { 
+    m.replaceWith(new LurchSymbol('tuple'))
+  } )
+  processSymbol( 'triple' , m => { 
+    m.replaceWith(new LurchSymbol('tuple'))
   } )
   
   // Expand equivalences
