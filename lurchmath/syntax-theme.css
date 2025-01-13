@@ -82,6 +82,8 @@
   --atom-color: white;
   /* rule shell background color */
   --rule-color: #e7f3fd;
+  /* premise shell background color */
+  --premise-color: #fff6e9;
   /* theorem shell background color */
   --theorem-color: #f5f5f5;
   /* recall shell background color */
@@ -391,7 +393,7 @@ body.shell-style-boxed
 /* Premises */
 body.shell-style-boxed {
   [data-metadata_type*="premise"] {
-    background-color: #fff6e9;
+    background-color: var(--premise-color);
   }
 }
 /* Theorems */

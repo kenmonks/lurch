@@ -1,0 +1,404 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Teaching with Lurch!</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/monks.css" />
+    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body>
+    <div id="leftnav">
+      <img
+        src="../assets/media/lurchlogo.png"
+        style="margin: 0px; border-radius: 5px; display: block"
+        width="190px" />
+
+      <ul>
+        <li
+          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
+        >
+        <li><a href="../getlurch">Get Lurch!</a></li>
+        <li
+          ><span class="has-submenu"
+            ><i class="fa-solid fa-caret-right"></i>Teaching with Lurch</span
+          >
+          <ul class="submenu hidden">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#distribute">Distribute an assignment</a></li>
+            <li><a href="#create">Create an assignment</a></li>
+            <li><a href="#context">Create a context</a></li>
+            <li><a href="#grade">Grade an assignment</a></li>
+          </ul></li
+        >
+        <li><a href="../theory">Documentation and Theory</a></li>
+        <li><a href="../talks">Lurch Talk Slides</a></li>
+        <li><a href="../100">100 Theorem Challenge!</a></li>
+        <li><a href="../about">About Lurch</a></li>
+      </ul>
+
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank"
+            >monks.scranton.edu</a
+          >
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1>Teaching with Lurch!</h1>
+          <h2>Creating, Distributing, and Grading Course Materials</h2>
+        </div>
+        <p
+          >Lurch is designed to be easy for instructors to use and customize for
+          teaching. You can use existing content, customize it to fit your
+          needs, or create new content from scratch. The choice is yours! Let’s
+          walk through how to distribute, collect, grade, and create assignments
+          using Lurch. This guide assumes you have read the materials in the
+          <a href="../index.html#start">Start Lurching</a> section.</p
+        >
+        <h2 id="overview">Overview and Background</h2>
+        <h3>Content, Static Contexts, and Dynamic Contexts</h3>
+        <p
+          >We begin with a brief overview of a few somewhat technical aspects of
+          Lurch that clarify the detailed instructions for teaching with Lurch
+          below. If you are eager to get to the good stuff, feel free to skip
+          ahead.</p
+        >
+        <p class="smallskip"
+          >Every Lurch document has two parts:
+          <em class="term">content</em> (always visible in the editor) and
+          <em class="term">context</em> (visible only via the
+          <strong>Show/Hide context</strong> menu). You can create both directly
+          in Lurch as Lurch documents. To add context to a document, use
+          <strong>Instructor &gt; Add or remove context</strong>. Contexts can
+          be added either <em class="term">statically</em> or
+          <em class="term">dynamically</em>.</p
+        >
+        <ul class="disc">
+          <li
+            ><strong>Static contexts</strong> are stored in the document when
+            first added and do not refresh when reopening the document after
+            that.</li
+          >
+          <li
+            ><strong>Dynamic contexts</strong> reload every time the file is
+            opened, ensuring the latest version is used.</li
+          >
+        </ul>
+        <div class="example-box">
+          <h3>Example</h3>
+          <ol>
+            <li
+              >Click on
+              <a href="../instructor.html?load=assignments/assignment-18.lurch"
+                ><strong>Assignment #18</strong></a
+              >
+              from the
+              <a href="../index.html#assignments">example assignments</a>.</li
+            >
+            <li
+              >The <em>content</em>}{.term} is everything visible in the editor,
+              from the <code>Name</code> prompt to the end of the proof
+              problems.</li
+            >
+            <li
+              >To see the <em class="term">context</em>, use
+              <strong>Instructor &gt; Show/hide context</strong>.</li
+            >
+            <li
+              >Check where the context file is stored using
+              <strong>Instructor &gt; Add or remove context</strong>. In this
+              example, the context is dynamically loaded from
+              <code>Sets-Rules.lurch</code> in the <code>math</code> subfolder
+              on this site.</li
+            >
+          </ol>
+        </div>
+        <h3>One Site for All, All from One Site</h3>
+        <p
+          >A
+          <a
+            href="https://en.wikipedia.org/wiki/Same-origin_policy"
+            target="_blank"
+            >security restriction</a
+          >
+          imposed on web browsers and sites affects how Lurch handles context
+          files:</p
+        >
+        <div class="note-box">
+          <p
+            ><strong>Important:</strong>
+            <em
+              >Context files must reside on the same site as the Lurch app
+              accessing them.</em
+            ></p
+          >
+        </div>
+        <p class="noskip"
+          >This means you can use any Lurch app to open any
+          <code>.lurch</code> file on your computer, but:</p
+        >
+        <ul class="disc">
+          <li
+            >Any dynamic context file it requires must reside on the same site
+            as the Lurch app you are using.</li
+          >
+          <li
+            >If you want to add any context file (static or dynamic) to your
+            document, the context file must also reside on the same site as the
+            Lurch app you are using when you add it.</li
+          >
+        </ul>
+        <h3>Common Scenarios for Teaching</h3>
+        <ul class="disc">
+          <li
+            ><strong>Use existing assignments</strong> – Just share a link (<a
+              href="../index.html#assignments"
+              >like these</a
+            >) with students.</li
+          >
+          <li
+            ><strong>Create assignments using existing contexts</strong> – Use
+            static contexts or include context material directly in the document
+            content. Students can open your file with any copy of Lurch. You do
+            not need your own site.</li
+          >
+          <li
+            ><strong>Create assignment contexts</strong> – Host
+            <a href="../getlurch">your own Lurch site</a>, upload your context
+            and assignment files there, and use dynamic contexts. Students can
+            open the assignment file using the Lurch app from your site.</li
+          >
+        </ul>
+        <p
+          >Now let’s look at how to distribute, create, and grade assignments in
+          detail.</p
+        >
+        <h2 id="distribute">Distribute an Assignment</h2>
+        <p
+          >Lurch is a web app, so distributing assignments is as easy as sharing
+          a link. Post the link wherever you prefer – your website, LMS, or by
+          email. When students click it, the assignment opens in Lurch, ready to
+          go. Try clicking one of the
+          <a href="../index.html#assignments">sample assignment</a> links to see
+          how it works.</p
+        >
+        <h2 id="create">Create an Assignment</h2>
+        <p class="smallskip"
+          >To create or modify assignments using existing contexts, you don't
+          need your own site.</p
+        >
+        <ol>
+          <li
+            >Open Lurch in instructor mode from the site where the contexts are
+            located.</li
+          >
+          <li>Use <strong>File &gt; New</strong> to start a new document.</li>
+          <li
+            >Select the context(s) you need from the
+            <a href="../index.html#course">list of contexts</a> on that
+            site.</li
+          >
+          <li
+            >Go to <strong>Instructor &gt; Add or remove context</strong> and
+            add the desired contexts <em>statically</em>.</li
+          >
+          <li
+            >Type your assignment and save the file to your computer or
+            site.</li
+          >
+          <li>Share the file or a link to it with students.</li>
+          <li
+            >Students can open it using <strong>File &gt; Open</strong> in the
+            student version of any copy of Lurch.</li
+          >
+        </ol>
+        <h2 id="context">Create a Context</h2>
+        <p class="smallskip"
+          >To use your own contexts, you need a Lurch site (<a
+            href="../getlurch"
+            >get one here</a
+          >).</p
+        >
+        <ol>
+          <li>Open a new document in Lurch and type your context.</li>
+          <li
+            >Save the context to a file and upload it to your Lurch site. For
+            example, you can put it in the <code>/math</code> folder like this
+            site does.</li
+          >
+          <li
+            >Open a new document using the
+            <a href="../instructor.html" target="_blank"
+              >instructor version of Lurch</a
+            >
+            from your site.</li
+          >
+          <li
+            >Type your assignent content, and add the file you uploaded in step
+            #2 as a dynamic context as
+            <span class="greyback"
+              ><code>math/</code><em>your-context-filename</em></span
+            >.</li
+          >
+          <li
+            >Save your assignment document and upload your file to your site.
+            For example, you can put it in the <code>/assignments</code> folder
+            like this site does.</li
+          >
+          <li
+            >Share the link
+            <span class="greyback"
+              ><code>https://</code><em>your_account</em><code>.github.io/</code
+              ><em>your_sitename</em><code>/assignments/</code
+              ><em>your_filename</em></span
+            >
+            with your students.</li
+          >
+          <li
+            >Students click the link, complete the assignment, and send their
+            work back to you.</li
+          >
+        </ol>
+        <h2 id="grade">Grade an Assignment</h2>
+        <p class="smallskip">To grade an assignment:</p>
+        <ol>
+          <li
+            >Open the instructor version of Lurch from whatever site you used to
+            create the assignment.</li
+          >
+          <li>Open the student’s file.</li>
+          <li
+            >Grade the assignment. You might find
+            <strong>Instructor &gt; Grading pen</strong> to be useful for giving
+            feedback.</li
+          >
+          <li>Save the graded file to your computer.</li>
+          <li>Return the graded file to the student.</li>
+          <li
+            >Instruct students to open the graded file using the student version
+            of Lurch from the site used to create the original file.</li
+          >
+        </ol>
+        <h2>Instructor Utilities</h2>
+        <p
+          >For bulk grading, consider
+          <a href="../getlurch/index.html#computer">installing Lurch locally</a>
+          and using
+          <a
+            href="https://github.com/kenmonks/lurch/blob/main/lurchmath/grading-tools/toc.js"
+            target="_blank"
+            >toc.js</a
+          >. It generates a table of contents for student files, streamlining
+          access. It might require some modification for your particular setup.
+          If you need help with this utility,
+          <a href="mailto:ken.monks@gmail.com" target="_blank">contact me</a> or
+          check the
+          <a
+            href="https://github.com/kenmonks/lurch/blob/main/lurchmath/grading-tools/toc.js"
+            target="_blank"
+            >source code</a
+          >.</p
+        >
+      </div>
+
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <h3>
+                  <a href="http://monks.scranton.edu/" target="_blank"
+                    >Dr. Kenneth G. Monks</a
+                  >
+                </h3>
+                Department of Mathematics<br />
+                University of Scranton<br />
+                Scranton, PA 18510
+              </div>
+            </div>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="../assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank"
+                  >monks@scranton.edu</a
+                >
+              </div>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
+              </div>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="../assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank"
+                  >Prove it!&nbsp;Math Academy</a
+                >
+              </div>
+            </div>
+            <!-- row -->
+            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          processEscapes: true
+        }
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

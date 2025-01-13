@@ -18,18 +18,41 @@ const openLurch = url => {
   window.open(url, '_blank', features)
 }
 
-// allow #leftnav to adjust width to fit content without overlapping #wrap
-const adjustWrapPosition = () => {
-  const leftNav = document.getElementById("leftnav")
-  const wrap = document.getElementById("wrap")
+// open .lurch url's in a separate tab
+document.addEventListener('click', (event) => {
+ const link = event.target.closest('a') // Check if the clicked element is an anchor
+ if (link && !link.hasAttribute('target') && 
+     link.getAttribute('href')?.endsWith('.lurch')) {
+   event.preventDefault() // Prevent default behavior
+   window.open(link.href, '_blank') // Open link in a new tab
+ }
+})
 
-  // Get the width of #leftnav
-  const leftNavWidth = leftNav.offsetWidth
-  wrap.style.marginLeft = `${leftNavWidth}px` // Adjust padding as needed
-}
+// enable clicking on the completed rows in the 100 theorem table
+document.addEventListener('DOMContentLoaded', function () {
+  const rows = document.querySelectorAll('tr[data-href]'); // Select only rows with data-href
+  rows.forEach(row => {
+    row.addEventListener('click', function () {
+      const url = this.getAttribute('data-href');
+      if (url) {
+        openLurch(url)
+        // window.location.href = url; // Navigate to the URL
+      }
+    })
+  })
+})
 
-// Call the function on load
-window.addEventListener("load", adjustWrapPosition)
+// make submenus collapsible
+document.querySelectorAll('.has-submenu').forEach(item => {
+  item.addEventListener('click', () => {
+    const submenu = item.nextElementSibling;
+    const icon = item.querySelector('i');
 
-// Call the function on resize to handle dynamic changes
-window.addEventListener("resize", adjustWrapPosition)
+    // Toggle submenu visibility
+    submenu.classList.toggle('hidden');
+
+    // Toggle icon class
+    icon.classList.toggle('fa-caret-down');
+    icon.classList.toggle('fa-caret-right');
+  });
+});

@@ -526,7 +526,6 @@ table { margin-bottom:1.5rem }
 	padding:3rem 0 3rem;
 	line-height:2;
 	background:#111; /* 161718, F5F1E8 */
-	xbackground-image:url('img/bg-noise.png');
 	text-align:center;
 	color:#FCFCFD; /* #333; */
 	}
@@ -553,8 +552,6 @@ table { margin-bottom:1.5rem }
 #more-contact-info a {
 	display:inline-block;
 	padding:.5rem 0;
-	}
-#phone-footer, #email-footer, #facebook-footer {
 	}
 #phone-footer span.glyphicon {
 	color:#51856F;
@@ -599,7 +596,7 @@ table { margin-bottom:1.5rem }
 	}
 #banner-1 {
 	background:url('img/writinghand-5.jpg') no-repeat center top;
-	webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+  background-size: cover;
 	color:#000
 	}
 #banner-2 img {

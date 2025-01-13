@@ -13,6 +13,12 @@
       content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
 
     <link
       href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
@@ -36,8 +42,22 @@
         width="190px" />
 
       <ul>
-        <li><a href="../" target="_self">Home</a></li>
-        <li><a href="#status">100 Theorem Checklist</a></li>
+        <li
+          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
+        >
+        <li><a href="../getlurch">Get Lurch!</a></li>
+        <li><a href="../teaching">Teaching with Lurch</a></li>
+        <li><a href="../theory">Documentation and Theory</a></li>
+        <li><a href="../talks">Lurch Talk Slides</a></li>
+        <li
+          ><span class="has-submenu"
+            ><i class="fa-solid fa-caret-right"></i>100 Theorem Challenge!</span
+          >
+          <ul class="submenu hidden">
+            <li><a href="#status">100 Theorem Checklist</a></li>
+          </ul></li
+        >
+        <li><a href="../about">About Lurch</a></li>
       </ul>
 
       <div id="contact">
@@ -45,9 +65,9 @@
           <a href="mailto:monks@scranton.edu">Ken Monks</a>
         </div>
         <div>
-          <a href="https://monks.scranton.edu" target="_blank">
-            monks.scranton.edu
-          </a>
+          <a href="https://monks.scranton.edu" target="_blank"
+            >monks.scranton.edu</a
+          >
         </div>
         <div>
           <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
@@ -61,55 +81,49 @@
         <div class="title-box">
           <h1>100 Theorems in Lurch</h1>
         </div>
-        <p>
-          Freek Wiedijk maintains
-          <a href="https://www.cs.ru.nl/~freek/100/">a list</a>
+        <p
+          >Freek Wiedijk maintains
+          <a href="https://www.cs.ru.nl/~freek/100/" target="_blank">a list</a>
           tracking progress of theorem provers formalizing 100 classic theorems
           in mathematics. On this page we collect all of the proofs on that list
-          that we have formalized in Lurch to date.
-        </p>
-        <p>
-          Since Lurch supports proofs in
-          <em>any</em>
-          context, deciding what actually constitutes a formalization of one of
-          the proofs is not obvious. For example, one can simply add each of the
-          100 theorems to the context of a Lurch document as rules and they will
-          all be 'proven' trivially.
-        </p>
-        <p>
-          To address this, we self-impose our own standard for what qualifies.
+          that we have formalized in Lurch to date.</p
+        >
+        <p
+          >Since Lurch supports proofs in <em>any</em> context, deciding what
+          actually constitutes a formalization of one of the proofs is not
+          obvious. For example, one can simply add each of the 100 theorems to
+          the context of a Lurch document as rules and they will all be 'proven'
+          trivially.</p
+        >
+        <p
+          >To address this, we self-impose our own standard for what qualifies.
           Consistent with Lurch's philosophy, we consider a theorem to be proved
           by Lurch if the proof contains, at minimum, the level of detail you
           might find for the proof of that theorem in a textbook, spotting all
           of the other details as part of the context. Citing a proof of the
           theorem in a textbook or other valid source can certify that this
-          criteria has been met.
-        </p>
+          criteria has been met.</p
+        >
         <h2 id="status">100 Theorem Checklist</h2>
-        <p>
-          The following table is reproduced from
+        <p
+          >The following table is reproduced from
           <a
-            href="http://web.archive.org/web/20080105074243/http://personal.stevens.edu/~nkahl/Top100Theorems.html">
-            here
-          </a>
+            href="http://web.archive.org/web/20080105074243/http://personal.stevens.edu/~nkahl/Top100Theorems.html"
+            >here</a
+          >
           (if there is a newer version of that page let me know). A green check
-          mark (
-          <span class="checkmark">✔︎</span>
-          ) in the first column indicates that Lurch has proved the theorem
-          listed, while a yellow question mark (
-          <span class="question-mark">?</span>
-          ) indicates that it has not.
-        </p>
+          mark (<span class="checkmark">✔︎</span>) in the first column
+          indicates that Lurch has proved the theorem listed, while a yellow
+          question mark (<span class="question-mark">?</span>) indicates that it
+          has not.</p
+        >
         <p>Click on a completed theorem to open its proof in Lurch.</p>
         <div id="wrapboard">
           <div id="scoreboard">
-            <p>
-              Status:
-              <span class="checkmark">✔︎</span>
-              1 proof verified,
-              <span class="question-mark">?</span>
-              99 unverified
-            </p>
+            <p
+              >Status: <span class="checkmark">✔︎</span> 1 proof verified,
+              <span class="question-mark">?</span> 99 unverified</p
+            >
           </div>
         </div>
         <!-- The Checklist Table -->
@@ -158,8 +172,8 @@
               <td>5</td>
               <td>Prime Number Theorem</td>
               <td>
-                <div>
-                  Jacques Hadamard and Charles-Jean de la Vallee Poussin
+                <div
+                  >Jacques Hadamard and Charles-Jean de la Vallee Poussin
                   (separately)
                 </div>
               </td>
@@ -182,9 +196,10 @@
             <tr>
               <td>?</td>
               <td>8</td>
-              <td>
-                The Impossibility of Trisecting the Angle and Doubling the Cube
-              </td>
+              <td
+                >The Impossibility of Trisecting the Angle and Doubling the
+                Cube</td
+              >
               <td>Pierre Wantzel</td>
               <td>1837</td>
             </tr>
@@ -198,21 +213,12 @@
             <tr>
               <td>?</td>
               <td>10</td>
-              <td>
-                Euler’s Generalization of Fermat’s Little Theorem
-                <br />
-                (Fermat’s Little Theorem)
-              </td>
-              <td>
-                Leonhard Euler
-                <br />
-                (Pierre de Fermat)
-              </td>
-              <td>
-                1760
-                <br />
-                (1640)
-              </td>
+              <td
+                >Euler’s Generalization of Fermat’s Little Theorem<br />(Fermat’s
+                Little Theorem)</td
+              >
+              <td>Leonhard Euler<br />(Pierre de Fermat)</td>
+              <td>1760<br />(1640)</td>
             </tr>
             <tr>
               <td>?</td>
@@ -225,10 +231,10 @@
               <td>?</td>
               <td>12</td>
               <td>The Independence of the Parallel Postulate</td>
-              <td>
-                Karl Frederich Gauss, Janos Bolyai, Nikolai Lobachevsky, G.F.
-                Bernhard Riemann collectively
-              </td>
+              <td
+                >Karl Frederich Gauss, Janos Bolyai, Nikolai Lobachevsky, G.F.
+                Bernhard Riemann collectively</td
+              >
               <td>1870-1880</td>
             </tr>
             <tr>
@@ -269,10 +275,10 @@
             <tr>
               <td>?</td>
               <td>18</td>
-              <td>
-                Liouville’s Theorem and the Construction of Trancendental
-                Numbers
-              </td>
+              <td
+                >Liouville’s Theorem and the Construction of Trancendental
+                Numbers</td
+              >
               <td>Joseph Liouville</td>
               <td>1844</td>
             </tr>
@@ -412,25 +418,12 @@
             <tr>
               <td>?</td>
               <td>38</td>
-              <td>
-                Arithmetic Mean/Geometric Mean
-                <br />
-                (Proof by Backward Induction)
-                <br />
-                (Polya Proof)
-              </td>
-              <td>
-                <br />
-                Augustin-Louis Cauchy
-                <br />
-                George Polya
-              </td>
-              <td>
-                <br />
-                ?
-                <br />
-                ?
-              </td>
+              <td
+                >Arithmetic Mean/Geometric Mean<br />(Proof by Backward
+                Induction)<br />(Polya Proof)</td
+              >
+              <td><br />Augustin-Louis Cauchy<br />George Polya</td>
+              <td><br />?<br />?</td>
             </tr>
             <tr>
               <td>?</td>
@@ -450,9 +443,10 @@
               <td>?</td>
               <td>41</td>
               <td>Puiseux’s Theorem</td>
-              <td>
-                Victor Puiseux (based on a discovery of Isaac Newton of 1671)
-              </td>
+              <td
+                >Victor Puiseux (based on a discovery of Isaac Newton of
+                1671)</td
+              >
               <td>1850</td>
             </tr>
             <tr>
@@ -507,7 +501,7 @@
             <tr>
               <td>?</td>
               <td>49</td>
-              <td>The Cayley-Hamilton Thoerem</td>
+              <td>The Cayley-Hamilton Theorem</td>
               <td>Arthur Cayley</td>
               <td>1858</td>
             </tr>
@@ -878,14 +872,12 @@
             <div class="row">
               <div class="col-xs-12">
                 <h3>
-                  <a href="http://monks.scranton.edu/" target="_blank">
-                    Dr. Kenneth G. Monks
-                  </a>
+                  <a href="http://monks.scranton.edu/" target="_blank"
+                    >Dr. Kenneth G. Monks</a
+                  >
                 </h3>
-                Department of Mathematics
-                <br />
-                University of Scranton
-                <br />
+                Department of Mathematics<br />
+                University of Scranton<br />
                 Scranton, PA 18510
               </div>
             </div>
@@ -894,9 +886,9 @@
                 <img
                   src="../assets/media/envelope.svg"
                   style="vertical-align: middle; padding-right: 0.2em" />
-                <a href="mailto:monks@scranton.edu" target="_blank">
-                  monks@scranton.edu
-                </a>
+                <a href="mailto:monks@scranton.edu" target="_blank"
+                  >monks@scranton.edu</a
+                >
               </div>
               <div class="col-xs-12 col-md-4 center" id="lurch-footer">
                 <span class="checkmark" style="padding-right: 0.2em">✓</span>
@@ -910,47 +902,19 @@
                     padding-right: 0.2em;
                     height: 0.8em;
                   " />
-                <a href="https://proveitmath.org" target="_blank">
-                  Prove it!&nbsp;Math Academy
-                </a>
+                <a href="https://proveitmath.org" target="_blank"
+                  >Prove it!&nbsp;Math Academy</a
+                >
               </div>
             </div>
             <!-- row -->
-            <div id="copyright">Copyright &copy; Kenneth G. Monks</div>
+            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
           </div>
         </footer>
       </div>
     </div>
 
     <script src="../assets/js/utils.js"></script>
-    <script>
-      document.addEventListener('click', event => {
-        const link = event.target.closest('a') // Check if the clicked element is an anchor
-        if (
-          link &&
-          !link.hasAttribute('target') &&
-          !link.getAttribute('href')?.startsWith('#')
-        ) {
-          event.preventDefault() // Prevent default behavior
-          window.open(link.href, '_blank') // Open link in a new tab
-        }
-      })
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const rows = document.querySelectorAll('tr[data-href]') // Select only rows with data-href
-        rows.forEach(row => {
-          row.addEventListener('click', function () {
-            const url = this.getAttribute('data-href')
-            if (url) {
-              openLurch(url)
-              // window.location.href = url; // Navigate to the URL
-            }
-          })
-        })
-      })
-    </script>
-
     <script>
       window.MathJax = {
         tex: {

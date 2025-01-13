@@ -545,7 +545,7 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                           'is' __ 'not' __         /
                           'are'__ 'not' __ ) b:RelArg
                 { return `(¬ ${lispBinary('is',a,b)})` } /
-               a:RelArg _('is' __ 'an' __/'is' __ 'a'__/'is'__/'are'__) b:RelArg
+               a:RelArg _('is' __ 'an' __/'is' __ 'a'__/'is' __ 'the'__/'is'__/'are'__) b:RelArg
                 { return lispBinary('is',a,b) }
 
 

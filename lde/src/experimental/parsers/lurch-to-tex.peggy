@@ -695,7 +695,7 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                 { return (b.length==6)
                   ? `${a}\\text{ ${b[0]} not ${b[2]} }${c}`
                   : `${a}\\text{ ${b[0]} not }${c}` } /
-               a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __/'are'__) c:RelArg
+               a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __ 'the'__/'is' __/'are'__) c:RelArg
                 { return (b.length==4)
                   ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
                   : `${a}\\text{ ${b[0]} }${c}` }

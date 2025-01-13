@@ -1,0 +1,587 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>How Does It Work?</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/monks.css" />
+    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body>
+    <div id="leftnav">
+      <img
+        src="../assets/media/lurchlogo.png"
+        style="margin: 0px; border-radius: 5px; display: block"
+        width="190px" />
+
+      <ul>
+        <li
+          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
+        >
+        <li><a href="../getlurch">Get Lurch!</a></li>
+        <li><a href="../teaching">Teaching with Lurch</a></li>
+        <li
+          ><span class="has-submenu"
+            ><i class="fa-solid fa-caret-right"></i>Documentation and
+            Theory</span
+          >
+          <ul class="submenu hidden">
+            <li><a href="#math">for mathematicians</a></li>
+            <li><a href="#logic">for logicians</a></li>
+            <li><a href="#compsci">for computer scientists</a></li>
+          </ul></li
+        >
+        <li><a href="../talks">Lurch Talk Slides</a></li>
+        <li><a href="../100">100 Theorem Challenge!</a></li>
+        <li><a href="../about">About Lurch</a></li>
+      </ul>
+
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank"
+            >monks.scranton.edu</a
+          >
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1 id="intro">Lurch Design and Theory$^*$</h1>
+          <h2>How Lurch works its magic</h2>
+        </div>
+        <h2>Introduction</h2>
+        <p
+          >You can use Lurch to check proofs without understanding
+          <em>how</em> it is able to do so. For those of you who want to
+          understand Lurch at a deeper level (or are just curious), here is a
+          very brief high-level overview of how it works.$^{**}$</p
+        >
+        <p
+          >We answer the question &quot;How does it work?&quot; from three
+          different perspectives: for mathematicians, logicians, and computer
+          scientists.</p
+        >
+        <p
+          >In what follows we assume you have already read and understand the
+          material in the
+          <a href="../index.html#start">Quick Start Guides</a> and
+          <a href="../student.html?load=../help/proofs-worksheet.lurch"
+            >Writing Proofs worksheet</a
+          >.</p
+        >
+        <h2 id="math">Lurch Theory for Mathematicians</h2>
+        <p
+          >If you look at the example proofs in Lurch, one striking feature you
+          may notice is that it does not require that you to justify your claims
+          with reasons or explain how you came to any particular conclusion. So
+          how does it determine if your proof is valid?</p
+        >
+        <p
+          >In simple terms, it begins by considering each statement in your
+          document one at a time and asking &quot;What do we know about this
+          statement?&quot;. To answer that question it looks at every
+          definition, theorem, axiom, rule, and formula in the context or
+          document content and checks each one to see if it has anything to say
+          about the particular statement. Whenever it does, it adds the relevant
+          fact to the list of known information. Finally, when all such facts
+          have been determined and collected, it checks if your conclusions
+          follow from the list of known facts.</p
+        >
+        <div class="example-box">
+          <h3>Example</h3>
+          <p
+            >Suppose a Lurch document contains only the following (and no
+            context).</p
+          >
+          <div class="Subproof">
+            <p><strong>Gina's Coffee Shop Analysis</strong> <br /><br /></p>
+            <p
+              ><span class="m">Declare is, loves</span> to be constants, and
+              suppose the following is true for any $x, y, z$.</p
+            >
+            <div class="Rule">
+              <p
+                ><strong>Trivia:</strong>
+                <span class="m">If $x$ is $y$,</span> and
+                <span class="m">$z$ loves $y$</span> then
+                <span class="m">$z$ loves $x$</span></p
+              >
+            </div>
+            <p
+              >Now let's <span class="m">assume Gina loves chocolate,</span> and
+              <span class="m">mocha is chocolate</span>. It immediately follows
+              that <span class="m">Gina loves mocha</span> and
+              <span class="m">mocha is chocolate</span>.</p
+            >
+          </div>
+          <p
+            >Lurch will exhaustively determine all of the facts it can obtain
+            from the rule that involve the three statements
+            <span class="m">Gina loves chocolate</span>,
+            <span class="m">mocha is chocolate</span>, and
+            <span class="m">Gina loves mocha</span>, and replaces the rule with
+            the facts it finds to obtain:</p
+          >
+          <div class="Subproof">
+            <p><strong>Gina's Coffee Shop Analysis</strong> <br /><br /></p>
+            <p
+              ><span class="m">Declare is, loves</span> to be constants. <br
+            /></p>
+            <div class="Premise">
+              <p
+                ><strong>Trivia Fact 1:</strong>
+                <span class="m">If chocolate is chocolate,</span> and
+                <span class="m">Gina loves chocolate</span> then
+                <span class="m">Gina loves chocolate</span></p
+              >
+            </div>
+            <div class="Premise">
+              <p
+                ><strong>Trivia Fact 2:</strong>
+                <span class="m">If chocolate is mocha,</span> and
+                <span class="m">Gina loves mocha</span> then
+                <span class="m">Gina loves chocolate</span></p
+              >
+            </div>
+            <div class="Premise">
+              <p
+                ><strong>Trivia Fact 3:</strong>
+                <span class="m">If mocha is chocolate,</span> and
+                <span class="m">Gina loves chocolate</span> then
+                <span class="m">Gina loves mocha</span></p
+              >
+            </div>
+            <div class="Premise">
+              <p
+                ><strong>Trivia Fact 4:</strong>
+                <span class="m">If mocha is mocha,</span> and
+                <span class="m">Gina loves mocha</span> then
+                <span class="m">Gina loves mocha</span></p
+              >
+            </div>
+            <p
+              >Now let's <span class="m">assume Gina loves chocolate,</span> and
+              <span class="m">mocha is chocolate</span>. It immediately follows
+              that <span class="m">Gina loves mocha</span> and
+              <span class="m">mocha is chocolate</span>.</p
+            >
+          </div>
+          <p>(Admittedly, not all facts it finds are useful!)</p>
+          <p
+            >Finally, Lurch marks the document and its claims as valid, as all
+            of the claims logically follow from the assumptions and the facts it
+            discovered.</p
+          >
+        </div>
+        <p
+          >To convince Lurch, a proof must include sufficient detail to validate
+          each claim. In practice, the only way to convince Lurch that a
+          non-trivial proof correct is if you already know why you are entering
+          each statement. If students only consider one rule at a time to
+          motivate each claim in their proof, then Lurch will find the relevant
+          facts and judge the proof to be valid. But if they skip steps (or have
+          an incorrect proof) Lurch will not be convinced by their argument
+          until they provide more detail and/or correct their mistakes. In this
+          way, students are trained by Lurch to have a justification for every
+          step without explicitly requiring them to do so (just like most proofs
+          in textbooks).</p
+        >
+        <h2 id="logic">Lurch Theory for Logicians</h2>
+        <p
+          >The goal of Lurch is to be as natural, easy to use, and customizable
+          as possible. Existing proof verification methods and foundations
+          mathematics in the literature (e.g., Formal Axiom Systems, ZFC, Type
+          Theory, Category Theory) are not particularly well-suited for that
+          purpose. This motivates a different approach that is used by Lurch,
+          which we now briefly explain.</p
+        >
+        <h3>A Magic Trick</h3>
+        <p
+          >Think of a topic. Any topic. Don't tell me what it is. Don't even
+          tell me what you think the word '<em>topic</em>' means. The only
+          requirement is that your topic must have theorems. In fact, don't tell
+          me what you think a '<em>theorem</em>' is. Without knowing what your
+          topic is, or what you think a theorem is, I will now tell you a true
+          fact about the theorems of your topic:</p
+        >
+        <blockquote>
+          <p
+            >Either <span class="greyback">Gina loves mocha</span> is a theorem
+            of your topic, or <span class="greyback">Gina loves mocha</span> is
+            not a theorem of your topic.</p
+          >
+        </blockquote>
+        <p
+          >This is true about your topic because it's a tautology, and thus true
+          by definition. In general, any propositional tautology whose atomic
+          propositions are of the form '$t_0$ is a theorem of your topic',
+          '$t_1$ is a theorem of your topic', '$t_2$ is a theorem of your
+          topic', $\ldots$ '$t_n$ is a theorem of your topic' will be true about
+          the theorems in whatever topic you might be considering.</p
+        >
+        <h3>How does this help?</h3>
+        <ul class="disc">
+          <li
+            ><strong>No Formal Language</strong> – Modern Foundations of
+            Mathematics like ZFC, Type Theory, Category Theory, frequently begin
+            by defining a language - the set of syntactically valid statements
+            in the mathematical topic that they are trying to formalize. 
+            Lurch's foundation does not make any such restriction. You can
+            define and say whatever you want.</li
+          >
+          <li
+            ><strong>No Context</strong> ‐ Lurch does not assume any
+            mathematical or logical rules by default, so instructors and users
+            are free to define their own from scratch. Proofs in undergraduate
+            math textbooks rarely used formal operators like $\Rightarrow$,
+            $\wedge$, $\forall$, or $\exists$. Lurch can validate such proofs
+            because it also does not require them (or any other formal
+            operator).</li
+          >
+          <li
+            ><strong>Propositional Form</strong> – Lurch converts your entire
+            document (context, assumptions, theorems and proofs ... all of your
+            meaningful content) to a single proposition, and checks if that
+            proposition is a tautology. You do not have to learn any
+            Lurch-specific rules or reasoning. Yet doing proofs in Lurch 'feels'
+            very natural, as illustrated by the following example.</li
+          >
+        </ul>
+        <div class="example-box">
+          <h3>Example</h3>
+          <p class="noskip"
+            >Suppose we have the following Lurch document with no additional
+            context or content.</p
+          >
+          <div class="Proof">
+            <p
+              ><span class="m">Suppose mocha is chocolate</span>.  Additionally,
+              assume the following Fun Fact:</p
+            >
+            <div class="Premise">
+              <p
+                ><strong>Trivia:</strong> <span class="m"
+                  >If mocha is chocolate</span
+                >
+                then <span class="m">Gina loves mocha</span>.</p
+              >
+            </div>
+            <p
+              >Then we can conclude that
+              <span class="m">Gina loves mocha</span> and also that
+              <span class="m">mocha is chocolate</span>.</p
+            >
+          </div>
+          <p
+            >Let $P=$ 'mocha is chocolate' and $Q=$ 'Gina loves mocha'. Then
+            this document has propositional form $(\neg P \vee (\neg( \neg P
+            \vee Q ) \vee (Q \wedge P)) )^*$ which is a tautology. So Lurch
+            indicates that the document is valid.</p
+          >
+          <p
+            ><span class="small"
+              >$^*$Equivalently $(P\text{ and } (P \Rightarrow Q )) \Rightarrow
+              (Q \text{ and } P)$</span
+            ></p
+          >
+        </div>
+        <ul class="disc">
+          <li>
+            <p
+              ><strong>(Meta-)True about Everything</strong> – As the magic
+              trick above illustrates, the proposition that Lurch actually
+              evaluates is true about whatever topic or model you might be
+              considering. This has some nice implications for context design
+              and development.<br /><br
+            /></p>
+            <p
+              >Recall that any theorem in Neutral Geometry is true about both
+              the Euclidean plane and the hyperbolic plane. Neither Euclid's
+              parallel postulate $E$ nor its negation $\neg E$ can be proven in
+              Neutral geometry, and either one can be added as an additional
+              axiom without introducing a contradiction. Goedel's Theorem
+              generalizes this situation by showing that for any sufficiently
+              complicated consistent formal system there will always be a
+              statement, $G$, such that neither $G$ nor $\neg G$ can be proven
+              using that system, and either can be added to the system without
+              introducing a contradiction.<br /><br
+            /></p>
+            <p
+              >From the perspective of the foundation used by Lurch, these
+              results simply say that we can always extend our context to prove
+              results about things that are independent of the context (unless
+              the context allows you to prove everything - the Lurch flavor of
+              'inconsistent'). This is due to the fact that Lurch does not
+              restrict to a particular formal language or assume any context by
+              default. It allows you to start with any context, spotting
+              whatever high level facts you like, as an alternative to requiring
+              that every proof be built up from very low-level axioms.<br /><br
+            /></p>
+            <p>To illustrate this, consider the following example.</p>
+          </li>
+        </ul>
+        <div class="example-box">
+          <h3>Example</h3>
+          <p class="noskip"
+            >Suppose we have a Lurch document with only these three rules (and
+            the definition of $=$ via the
+            <a href="../student.html?load=../help/proofs-worksheet.lurch"
+              >Equations Rule</a
+            >), and we
+            <span class="m">declare $+,\cdot,=,0,\text{is},$</span> and
+            <span class="m">$\text{linear}$</span> to be constants.</p
+          >
+          <div class="Rule">
+            <p
+              ><strong class="quad">Additive Identity (one sided):</strong>
+              <span class="m">$x+0=x$</span></p
+            >
+          </div>
+          <div class="Rule">
+            <p
+              ><strong class="quad">Multiplication by Zero (one sided):</strong>
+              <span class="m">$0\cdot x=0$</span></p
+            >
+          </div>
+          <div class="Rule">
+            <p
+              ><strong class="quad">Definition of Linear:</strong>
+              <span class="m">If $f$ is linear</span> then
+              <span class="m"
+                >$f(a\cdot x+b\cdot y)=a\cdot f(x)+b\cdot f(y)$</span
+              >.</p
+            >
+          </div>
+          <p
+            >Whatever topic you might be considering, in this context the
+            following proof and theorem will be valid.</p
+          >
+          <div class="Theorem">
+            <p
+              ><strong>Theorem (linear maps preserve zero):</strong>
+              <span class="m">If $g$ is linear</span> then
+              <span class="m">$g(0)=0$</span>.</p
+            >
+          </div>
+          <div class="Proof">
+            <p><strong>Proof:</strong></p>
+            <p><span class="m">Assume $g$ is linear</span>. Then</p>
+            <p class="m"
+              >$$ \begin{aligned} g(0) &amp;= g(0+0) \\ &amp;= g(0\cdot 0+0) \\
+              &amp;= g(0\cdot 0+0\cdot 0) \\ &amp;= 0\cdot g(0)+0\cdot g(0) \\
+              &amp;= 0\cdot g(0)+0 \\ &amp;= 0\cdot g(0) \\ &amp;= 0
+              \end{aligned} $$</p
+            >
+            <p>So <span class="m">g(0)=0</span> as desired.</p>
+            <p>$\square$</p>
+          </div>
+          <p
+            >Notice that this context does not define addition, multiplication,
+            zero, the natural numbers, what a function is, or specify anything
+            about whether $a,b,x,y$ are scalars, vectors, matrices, elements of
+            a field, or a ring, or whether addition or multiplication are
+            commutative. We have not specified any additional axioms about the
+            natural numbers, set theory, rings, groups, or rules of logic.</p
+          >
+          <p
+            >This illustrates how Lurch allows us to create assignments that ask
+            students to prove theorems with short proofs that focus on the main
+            ideas by spotting them high-level definitions and theorems in the
+            context, rather than forcing them to prove everything from the
+            ground up from first principles in an axiomatic system. But there is
+            nothing to prevent you from doing that as well!</p
+          >
+        </div>
+        <h2 id="compsci">Lurch Theory for Computer Scientists</h2>
+        <h3>Validation</h3>
+        <p
+          >Under the hood, Lurch validates your proof using what we call the
+          <em>Global $n$-compact</em> algorithm. A brief overview of the
+          algorithm is given in the talk slides in the first link. A more
+          detailed description, the API documentation, and source code links are
+          after that.</p
+        >
+        <p class="smallskip"></p>
+        <ul class="disc strong-tags dash-after bigskip">
+          <li
+            ><a href="../instructor.html?load=help/theory.lurch"
+              >Validation in Lurch</a
+            >
+            an introduction to the Global $n$-compact validation algorithm used
+            in this version of Lurch (talk slides).</li
+          >
+          <li
+            ><a href="../lde/src/experimental/docs" target="_blank"
+              >Validation Algorithm API docs</a
+            >
+            the source code documentation for the Global $n$-compact algorithm
+            and supporting infrastructure.</li
+          >
+          <li
+            ><a href="../lde/docs" target="_blank">Core API docs</a> the LC data
+            structure, putdown notation, matching package, and other core
+            utilties.</li
+          >
+          <li
+            ><a href="https://github.com/kenmonks/lurch" target="_blank"
+              >Official Lurch Source Code on GitHub</a
+            >
+            the source code and content of this repository on GitHub.</li
+          >
+        </ul>
+        <h3>Parsing</h3>
+        <p class="smallskip"
+          >The Lurch web interface use two parsers written using
+          <a href="https://peggyjs.org" target="_blank">Peggy</a>. One converts
+          the user's input for meaningful expressions into the internal data
+          structure used by the validation algorithm. The other converts it to
+          the $\LaTeX$ source needed to render mathematics in the document.</p
+        >
+        <ul class="disc strong-tags dash-after bigskip">
+          <li
+            ><a
+              href="../lde/src/experimental/parsers/lurch-parser-docs.html"
+              target="_blank"
+              >Lurch Syntax</a
+            >
+            a quick reference showing how to type various math expressions in
+            Lurch.</li
+          >
+          <li
+            ><a
+              href="https://github.com/kenmonks/lurch/blob/main/lde/src/experimental/parsers/lurch-to-tex.peggy"
+              target="_blank"
+              >Peggy LaTeX Parser Grammar</a
+            >
+            this is the full peggy source code for the tex parser.</li
+          >
+          <li
+            ><a
+              href="https://github.com/kenmonks/lurch/blob/main/lde/src/experimental/parsers/lurch-to-putdown.peggy"
+              target="_blank"
+              >Peggy Putdown Parser Grammar</a
+            >
+            this is corresponding peggy source code for the putdown parser.</li
+          >
+        </ul>
+        <div class="note-box small">
+          <p
+            >$^*$Most of the original ideas and designs discussed on this page
+            were motivated by the desire to make Lurch as natural and user
+            friendly as possible. Existing proof verification methods and
+            foundations mathematics in the literature (e.g., Formal Logic
+            Systems, ZFC, Type Theory, Category Theory) are not well-suited for
+            that purpose. Some aspects of the design are still a work in
+            progress and subject to modification. I intend to write up the
+            details in a research paper once the dust settles. In the meantime,
+            if you have questions or would like to discuss these ideas further,
+            feel free to <a href="matilto:ken.monks@gmail.com">contact me</a>.
+            <br /><br
+          /></p>
+          <p
+            >$^{**}$It is not necessary to understand anything on this page in
+            order to use Lurch. It is just how I think about it. I find that
+            having some deeper way of thinking about it can be helpful when
+            creating your own contexts and assignments.</p
+          >
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <h3>
+                  <a href="http://monks.scranton.edu/" target="_blank"
+                    >Dr. Kenneth G. Monks</a
+                  >
+                </h3>
+                Department of Mathematics<br />
+                University of Scranton<br />
+                Scranton, PA 18510
+              </div>
+            </div>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="../assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank"
+                  >monks@scranton.edu</a
+                >
+              </div>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
+              </div>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="../assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank"
+                  >Prove it!&nbsp;Math Academy</a
+                >
+              </div>
+            </div>
+            <!-- row -->
+            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          processEscapes: true
+        }
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://127.0.0.1:5500/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -472,6 +472,7 @@
 <hr>
 <p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
 <p>We can prove the 'product of evens theorem' in the previous Example with a much shorter proof if we are allowed to use the Algebra Rule.</p>
+<p><em>To see this, delete the proof box (not just its contents, but the Proof environment box itself) so that this proof becomes the proof box immediately following the Theorem, and reprove the theorem with a much shorter proof using the Algebra Rule.</em></p>
 <div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
 <p><strong>Proof:</strong></p>
 <p>&nbsp;</p>

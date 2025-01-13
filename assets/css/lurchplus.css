@@ -4,6 +4,83 @@
  *  It overrides and extends the css from monks.scranton.edu.
  */
 
+/* import the Lurch editor fonts */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+/* Define site CSS variables */
+:root {
+  /* standard background color */
+  --page-background-color:white;
+  /* standard font color */
+  --black-font:#333;
+  /* theme blue */
+  --theme-color: #428bca;
+  /* accent blue */
+  --accent-color: #025D8C; 
+  /* nav link color */
+  --nav-link-color: #5DA9E9;
+  /* submenu header color */
+  --nav-plain-color: #ddd;
+  /* note label font color */
+  --note-label-color: #c71585;
+  /* the gap after the content blocks p, ol, ul, etc. */
+  --block-skip: 1rem;
+
+  /* Lurch editor syntax theme variables */
+
+  /* hovered atom background color */
+  --hover-color: #bbd6fb; /* rgb(187,214,251); #B9D9F2*/
+  /* semantic hovered atom background color */
+  --semantic-hover-color: #f2f8ff;/* blues:#f0f7ff; #ebf3ff; yellows: #fff9dc;  #fffce9; */
+  /* selected atom backround color */
+  --selected-color: #a1c6f5;
+  /* borders and titles of shells color */
+  --border-color: #b4d7ff;
+  /* marginal annotation of shell types */
+  --margin-color:  #b4d7ff; /* transparent; */
+  /* left border of shells in semantic view */
+  --left-border-color: #b4d7ff;
+  /* green checkmark color */
+  --check-color: #4caf50;
+  /* question mark feedback icon color */
+  --questionmark-color: #d8b400; /* or white if background used */
+  /* question mark feedback icon background color */
+  --questionmark-background-color: chocolate;
+  /* red X feedback icon color */
+  --x-color: red;
+  /* exclamation point error feedback icon color */
+  --error-color: red;
+  /* default shell background color */
+  --atom-color: white;
+  /* rule shell background color */
+  --rule-color: #e7f3fd;
+  /* premise shell background color */
+  --premise-color: #fff6e9;
+  /* theorem shell background color */
+  --theorem-color: #f5f5f5;
+  /* recall shell background color */
+  --recall-color: #efe9f1;
+  /* inline semantic math expression font color */
+  --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
+  /* inline semantic math expression font color */
+  --code-bg-color: #ecf0f1; /* matches TinyMCE light gray */
+  /* base font size */
+  /* inline semantic math expression font color */
+  --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
+  /* base font size */
+  --base-font-size: 11pt;
+  /* subproof indentation */
+  --indentation: 0.75rem;
+  /* paragraph top margins inside of unindented shells */
+  --p-gap: 0.75rem;
+  /* top margin for shells inside of other shells */
+  --nested-mar: 0.25rem;
+  /* top margin for shells inside of other shells */
+  --nested-pad: 0.25rem;
+  /* paragraph top margins inside of unindented shells */
+  --line-height: 1.2 /* 1.15; */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -30,7 +107,8 @@ body {
   flex-shrink: 0;
   top: 0;
   left: 0;
-  width: fit-content;
+  width: 250px;
+  /* word-wrap: break-word; */
   height: 100%;
   background-color: #101B27;
   color: white;
@@ -57,24 +135,50 @@ body {
 
 #leftnav .has-submenu {
   display: inline-block;
-  padding-bottom: 5px;
+  color: var(--nav-plain-color);
+  padding: 5px 5px;
 }
 
-#leftnav li {
-  display: block;
+#leftnav ul.hidden {
+    display: none;
+}
+
+/* allow the caret icon to be positioned absolutely relative to this */
+#leftnav li:has(.has-submenu) {
+  position: relative; 
+}
+/* The caret icon to toggle the submenus */
+#leftnav .has-submenu i:not(.prefix) {
+  position: absolute;
+  left: -10px;
+  top: 9px;
+}
+
+#leftnav li:not(:has(.has-submenu)) {
   padding: 5px 5px;
   border-radius: 1px;
 }
 
-#leftnav li li {
-  display: block;
-  padding: 5px 5px 5px 10px;
+#leftnav li:has(.has-submenu) li {
+  display: flex;
+  align-items: flex-start;
+  /* display: block; */
+  padding: 5px 5px 5px 15px;
   border-radius: 1px;
 }
 
-#leftnav li li a:before {
+#leftnav li li a {
+  display: block;
+  max-width: 100%;     
+  word-wrap: break-word;
+  white-space: normal; 
+}
+
+#leftnav li li:before {
   content: '\2013';
   margin-right: 5px;
+  flex-shrink: 0;
+  color: var(--nav-link-color);
 }
 
 #leftnav a,
@@ -83,7 +187,7 @@ body {
   width: 100%;
   text-decoration: none;
   box-sizing: border-box;
-  color: #5DA9E9;
+  color: var(--nav-link-color);
 }
 
 #leftnav li:not(:has(ul)):hover,
@@ -109,7 +213,7 @@ body {
 #leftnav #contact a:visited
  {
   font-family: inherit; /* monospace, Courier; */
-  color: #DDD;
+  color: var(--nav-plain-color);
   margin-top: 0;
   margin-left: auto;
   line-height: 1.5;
@@ -127,8 +231,13 @@ body {
 }
 
 #leftnav #contact a:hover {
-  border-bottom:1px dotted #DDD;
+  border-bottom:1px dotted var(--nav-plain-color);
   transition: border-color 0.3s ease;
+}
+
+/* add a little padding to the right of an icon in menus */
+#leftnav .fa-solid, .fas {
+  padding-right: 6px;
 }
 
 /* flex column for content-block and footer */
@@ -138,7 +247,7 @@ body {
   flex-grow: 1;
   width: fit-content;
   max-width: 870px;
-  margin-left: 229px;
+  margin-left: 250px;
   margin-right: auto;
   padding-left: 20px;
   padding-right: 10px;
@@ -148,12 +257,35 @@ body {
   flex: 1;
 }
 
+/* Utilities */
 .greyback {
   background-color: #F2F2F2;
 }
 
+.quad {
+  padding-right: 1rem;
+}
+
+.qquad {
+  padding-right: 2rem;
+}
+
 #content-block code {
   font-size: 110%;
+}
+
+#content-block p:not(#content-block > p, .example-box > p:not(:last-child)), 
+#content-block ol:not(#content-block > ol, .example-box > ol:not(:last-child)), 
+#content-block ul:not(#content-block > ul, .example-box > ul:not(:last-child)), 
+#content-block blockquote:not(#content-block > blockquote, .example-box > blockquote:not(:last-child)) {
+  margin-bottom: 0;
+}
+
+#content-block .example-box > p:not(.noskip), 
+#content-block .example-box > ol:not(.noskip),
+#content-block .example-box > ul:not(.noskip),
+#content-block .example-box > blockquote:not(.noskip) {
+    margin-bottom: 1rem;
 }
 
 #content-block .blue-box code {
@@ -198,10 +330,32 @@ div.title-box {
   font-weight: normal;
 }
 
+#content-block div.flexrow {
+  margin: 3rem 0 3rem 0;
+}
+
+div.subtitle-box {
+  margin-bottom: 1.75rem;
+}  
+
+#content-block div.subtitle-box h2 {
+  margin: 2rem 0 1rem 0;
+}  
+
+#content-block div.subtitle-box h4 {
+  margin: 1rem 0;
+}  
+
 /* the h2 elements pointed to by the nav menu */
 #content-block h2 {
   margin: 2em 0 1em;
   font-weight: bold;
+}
+
+#content-block h3 {
+  margin: 1.5rem 0 1rem;
+  font-weight: 400;
+  font-size: 1.33rem;
 }
 
 #content-block .thmlist strong {
@@ -245,13 +399,30 @@ div.title-box {
   font-size: large
 }
 
+.bigfont {
+  font-size: 110%;
+}
+
+.small {
+  font-size: small;
+}
+
 .complement {
   color: peru;
 }
 
-#content-block ul#topfeatures {
-  margin-left: 3rem;
+.note-color {
+  color: var(--note-label-color)
 }
+
+.term {
+  color: blueviolet;
+}
+
+/* #content-block ul#topfeatures {
+   margin-left: 3rem; 
+} */
+
 div.blue-box {
   background-color: #e7f3fd;
   padding: 1rem 1rem 0.25rem 1rem;
@@ -259,22 +430,63 @@ div.blue-box {
   border-radius: 12pt;
 }
 
+#content-block .example-box {
+  border-left: 10px solid var(--nav-link-color);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+#content-block .note-box {
+  margin: 1rem auto;
+  width: fit-content;
+  padding: 0.5rem 0.7rem;
+  background-color: antiquewhite;
+  border-radius: 10px;
+}
+
+#content-block .example-box h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+div.flexrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+/* div.buttondiv {
+  background-color: #bbd6fb;
+} */
+
 #content-block div.blue-box a:hover {
   background-color: #def0ff
+}
+
+#content-block li span.list-head {
+  display: inline-block;
+  font-size: large;
+  color: var(--accent-color);
+  padding: 0.5rem 0;
 }
 
 .strong-tags li a:first-of-type {
   font-weight: bold;
 }
 
+.large-tags li a:first-of-type {
+  font-size: large;
+}
+
 .strong-tags.dash-after li:not(.nodash) > a:first-of-type::after {
   content: ' \2013';
   font-weight: normal;
   color: rgb(51,51,51);
-}
-
-.bigfont {
-  font-size: 110%;
 }
 
 #wrapboard {
@@ -339,7 +551,7 @@ div.blue-box {
 }
 
 #footer-block a {
-  color: #5DA9E9;
+  color: var(--nav-link-color);
 }
 
 #footer-block div #lurch-footer {
@@ -354,6 +566,75 @@ div.blue-box {
   display: flex;
   justify-content: space-between; 
   align-items: center;
+}
+
+/* 
+ * Lurch Editor styles
+ */
+
+#content-block, #content-block .example-box {
+
+  /* Spacing */
+
+  /* remove left padding and margins for paragraphs and list items inside shells
+   * as those are handled by the shells themselves 
+   */
+  .Rule, .Premise, .Theorem, .Subproof, .Proof {
+    p,li {
+      margin: 0;
+      padding: 0;
+      line-height: var(--line-height);
+    }
+  }
+
+  .Proof {
+    margin-bottom: 0; 
+    padding-bottom: 0.25rem; 
+  }
+  /* nested subproofs and premises */
+  .Rule, .Theorem, .Premise, .Subproof, .Proof { 
+    .Subproof, .Premise {
+      margin: var(--nested-mar) 0;
+      padding: var(--nested-pad) 0 var(--nested-pad) var(--indentation);
+    }
+  }
+  /* we allow .m as a shorthand for .meaningful since it is used so frequently */
+  .meaningful, .m {
+    color: var(--math-color);
+  }
+
+  /* Environment boxes */
+  .Rule, .Theorem, .Premise, .Subproof, .Proof {
+    font-family: "Roboto", "Arial", Helvetica, sans-serif;
+    color: var(--black-font);
+    padding: 0.5rem var(--indentation);
+    margin: var(--p-gap) 0;  
+    border-bottom: 1px solid var(--left-border-color);
+    border-left: 1px solid var(--left-border-color);
+    border-top: 0.5px solid var(--left-border-color);
+    border-right: 0.5px solid var(--left-border-color);
+    border-radius: 6pt;
+    box-shadow: -6pt 4pt 5pt -3pt var(--left-border-color);
+  }
+  
+  /* environment background colors */
+  .Rule {
+    background-color: var(--rule-color);
+  }
+  .Theorem {
+    background-color: var(--theorem-color);
+  }
+  .Premise {
+    background-color: var(--premise-color);
+  }
+  .Subproof, .Proof {
+    background-color: var(--page-background-color);
+  }
+  
+  /* indent nested subproofs and premises */
+  .Subproof, .Premise {
+    padding-left: var(--indentation);
+  }
 }
 
 /* a neat box-shadow */
