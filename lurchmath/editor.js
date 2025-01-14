@@ -318,7 +318,7 @@ window.Lurch = {
                     editor.ui.registry.addMenuItem( 'redpen', {
                         text : 'Grading pen',
                         tooltip : 'Enable grading pen style',
-                        shortcut : 'meta+shift+G',
+                        shortcut : 'meta+Shift+G',
                         icon : 'highlight-bg-color',
                         onAction : () => {
                             editor.execCommand( 'Italic' )

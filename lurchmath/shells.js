@@ -547,7 +547,7 @@ export const install = editor => {
     editor.ui.registry.addMenuItem( 'togglemeaning', {
         text : 'Show/Hide meaning',
         tooltip : 'Toggle between meaning and presentation views of the document',
-        shortcut : 'alt+0',
+        shortcut : 'Alt+0',
         icon: 'preview',
         onAction : () => {
             const current = lookup( editor, 'shell style' )
