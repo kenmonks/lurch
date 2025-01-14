@@ -421,7 +421,7 @@ span.lurch-atom:hover {
 }
 /* For minimal view highlight everything inside the innermost hovered shell */
 body.shell-style-minimal {
-  /* atoms which are hovered, but do not contain any hovered atom (by DeMorgan's Law)
+  /* atoms which are hovered, but do not contain any hovered atom (by De Morgan's Law)
      note that these also include hovered inline atoms */
   :not(:not(.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover)),
   /* and also all atoms which are contained in a hovered shell which does not
@@ -433,7 +433,7 @@ body.shell-style-minimal {
 }
 /* but for semantic view, only highlight the hovered shell and its inline atoms */
 body.shell-style-boxed {
-  /* atoms which are hovered, but do not contain any hovered atom (by DeMorgan's Law) */
+  /* atoms which are hovered, but do not contain any hovered atom (by De Morgan's Law) */
   :not(:not(div.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover)),
   /* and also inline atoms which ...  */
   :not(
