@@ -929,7 +929,7 @@ export const install = editor => {
         text : 'New',
         icon : 'new-document',
         tooltip : 'New document',
-        shortcut : 'alt+N',
+        shortcut : 'Alt+N',
         onAction : () => ensureWorkIsSaved( editor ).then( saved => {
             if ( saved ) new LurchDocument( editor ).newDocument()
         } )
@@ -937,7 +937,7 @@ export const install = editor => {
     editor.ui.registry.addMenuItem( 'opendocument', {
         text : 'Open',
         tooltip : 'Open file',
-        shortcut : 'alt+O',
+        shortcut : 'Alt+O',
         onAction : () => ensureWorkIsSaved( editor ).then( saved => {
             if ( saved ) FileSystem.openFile( editor )
         } )
@@ -945,7 +945,7 @@ export const install = editor => {
     editor.ui.registry.addMenuItem( 'savedocument', {
         text : 'Save',
         tooltip : 'Save document',
-        shortcut: 'alt+S',
+        shortcut: 'Alt+S',
         onAction : () => {
             // Get all the document's information
             const doc = new LurchDocument( editor )
@@ -982,7 +982,7 @@ export const install = editor => {
     editor.ui.registry.addMenuItem( 'savedocumentas', {
         text : 'Save as',
         tooltip : 'Save file as',
-        shortcut : 'alt+shift+S',
+        shortcut : 'Alt+Shift+S',
         onAction : () => FileSystem.saveFileAs( editor )
     } )
     editor.ui.registry.addMenuItem( 'deletesaved', {
