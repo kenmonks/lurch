@@ -289,7 +289,7 @@
 <p>&nbsp;<em>Conclude&nbsp;</em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A subset B&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&sube;</span><span class="ML__mathit" style="margin-right: 0.06em;">B</span></span></span></span></span></p>
 </div>
 <ul>
-<li style="font-style: italic;"><em>Notice we have not define the quantifier </em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\forall&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&forall;</span></span></span></span></span><em>, nor used it in this definition.</em></li>
+<li style="font-style: italic;"><em>Notice we have not defined the quantifier </em><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\forall&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&forall;</span></span></span></span></span><em>, nor used it in this definition.</em></li>
 </ul>
 <p>Let's put it to work.</p>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
