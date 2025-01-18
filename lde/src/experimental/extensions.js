@@ -884,11 +884,11 @@ LogicConcept.prototype.attributes = function ( ) {
  
 //  A utilty function to inspect the contents of an LC in the console in a nice
 // format. 
-LogicConcept.prototype.inspect = function(x) { 
-  console.log(util.inspect(x , depth = 1) , 
-  { customInspect: false , showHidden: false , depth: depth , colors: true } ) 
-}
-LogicConcept.prototype.inspect = function(...args) { inspect(this,...args) }
+// LogicConcept.prototype.inspect = function(x) { 
+//   console.log(util.inspect(x , depth = 1) , 
+//   { customInspect: false , showHidden: false , depth: depth , colors: true } ) 
+// }
+// LogicConcept.prototype.inspect = function(...args) { inspect(this,...args) }
 
 // Check if this LC is a Lurch symbol whose text matches the regular expression
 // formed by the string argument s

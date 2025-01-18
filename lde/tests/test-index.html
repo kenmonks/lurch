@@ -23,9 +23,15 @@
       mocha.setup( {
         ui: 'bdd',
         fullTrace: true,
-        timeout: 5000
+        timeout: 5000,
+        // avoid puppeteer error of global leak
+        globals: ['puppeteer___ariaQuerySelector',
+                  'puppeteer___ariaQuerySelectorAll',
+                  '__ariaQuerySelector', 
+                  '__ariaQuerySelectorAll'] 
       } );
       window.expect = chai.expect;
+      // if that stops working in a future version, comment out the next line 
       mocha.checkLeaks();
     </script>
     <script type="module" src="utilities-test.js"></script>

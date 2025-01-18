@@ -23,8 +23,9 @@ describe( 'Formulas', () => {
         let target   // the LC we will convert to a formula
         let formula  // the copy of the target that is a formula
 
-        // Consider a single expression with nothing declared;
-        // every symbol in it should become a metavariable.
+        // Consider a single expression with nothing declared; every symbol in
+        // it should become a metavariable except for strings of digits, which
+        // are auto-declared as constants.
         context = LogicConcept.fromPutdown( ` {
             (this is irrelevant because it is not a declaration)
             (+ 3 (* -1 k))  // <-- target
@@ -41,12 +42,13 @@ describe( 'Formulas', () => {
             .equals( false )
         expect( target.child( 2, 2 ).isA( Matching.metavariable ) )
             .equals( false )
-        // But if we make a formula, everything becomes a metavariable:
+        // But if we make a formula, everything becomes a metavariable except 3:
         formula = Formula.from( target )
         expect( formula.child( 0 ).isA( Matching.metavariable ) )
             .equals( true )
+        // 3 is auto-declared    
         expect( formula.child( 1 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 2, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 2, 1 ).isA( Matching.metavariable ) )
@@ -58,8 +60,9 @@ describe( 'Formulas', () => {
         expect( formula ).equals( target )   
         expect( formula.child( 0 ).isA( Matching.metavariable ) )
             .equals( true )
+        // 3 is auto-declared    
         expect( formula.child( 1 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 2, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 2, 1 ).isA( Matching.metavariable ) )
@@ -111,8 +114,8 @@ describe( 'Formulas', () => {
         expect( formula.child( 2, 2 ).isA( Matching.metavariable ) )
             .equals( false )
             
-        // Consider an environment with one symbol declared;
-        // every other symbol in it should become a metavariable.
+        // Consider an environment with one symbol declared; every other symbol
+        // in it should become a metavariable, except for strings of digits.
         context = LogicConcept.fromPutdown( ` {
             [i j k]
             { :(= i 1) (> n m) }  // <-- target
@@ -137,8 +140,9 @@ describe( 'Formulas', () => {
             .equals( true )
         expect( formula.child( 0, 1 ).isA( Matching.metavariable ) )
             .equals( false )
+        // 1 is auto-declared    
         expect( formula.child( 0, 2 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 1, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 1, 1 ).isA( Matching.metavariable ) )
@@ -152,8 +156,9 @@ describe( 'Formulas', () => {
             .equals( true )
         expect( formula.child( 0, 1 ).isA( Matching.metavariable ) )
             .equals( false )
+        // 1 is auto-declared
         expect( formula.child( 0, 2 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 1, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 1, 1 ).isA( Matching.metavariable ) )
@@ -180,14 +185,15 @@ describe( 'Formulas', () => {
             .equals( false )
         expect( target.child( 1, 2 ).isA( Matching.metavariable ) )
             .equals( false )
-        // But if we make a formula, everything except i becomes a metavar:
+        // But if we make a formula, everything except i and 1 becomes a metavar:
         formula = Formula.from( target )
         expect( formula.child( 0, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 0, 1 ).isA( Matching.metavariable ) )
             .equals( false )
+        // 1 is auto-declared
         expect( formula.child( 0, 2 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 1, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 1, 1 ).isA( Matching.metavariable ) )
@@ -201,8 +207,9 @@ describe( 'Formulas', () => {
             .equals( true )
         expect( formula.child( 0, 1 ).isA( Matching.metavariable ) )
             .equals( false )
+        // 1 is auto-declared
         expect( formula.child( 0, 2 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 1, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 1, 1 ).isA( Matching.metavariable ) )
@@ -242,8 +249,9 @@ describe( 'Formulas', () => {
             .equals( false )
         expect( formula.child( 0, 1 ).isA( Matching.metavariable ) )
             .equals( true )
+        // 1 is auto-declared    
         expect( formula.child( 0, 2 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 1, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 1, 1 ).isA( Matching.metavariable ) )
@@ -255,8 +263,9 @@ describe( 'Formulas', () => {
             .equals( false )
         expect( formula.child( 0, 1 ).isA( Matching.metavariable ) )
             .equals( true )
+        // 1 is auto-declared
         expect( formula.child( 0, 2 ).isA( Matching.metavariable ) )
-            .equals( true )
+            .equals( false )
         expect( formula.child( 1, 0 ).isA( Matching.metavariable ) )
             .equals( true )
         expect( formula.child( 1, 1 ).isA( Matching.metavariable ) )
