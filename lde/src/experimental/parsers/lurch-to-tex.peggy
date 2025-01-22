@@ -807,7 +807,7 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
                   { return '-'+a }
 
     // Exp and higher precedence args
-    ExpArgs = Complement / Factorial / Multinomial / Prefix / Exp / Star / Atomic
+    ExpArgs = Complement / Factorial / Multinomial / Floor / Ceiling / Prefix / Exp / Star / Atomic
 
     // The choice of precedence of Function application vs Exp is tricky.
     // Consider e.g. 2^cos(x), f^2(x), 2^f(x), f^(-1)(x), and the nightmare
@@ -858,6 +858,11 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
 // Multinomial coefficients
 Multinomial = 'multinomial('i _ a:Expression comma b:Expression _')'
             { return `\\left(${a},${b}\\right)` }
+// Floor and Ceiling
+Floor = 'floor('i _ a:Expression _')'
+            { return `\\left\\lfloor${a}\\right\\rfloor` }
+Ceiling = 'ceiling('i _ a:Expression _')'
+            { return `\\left\\lceil${a}\\right\\rceil` }
 
 // For convenience we define special Symbols beginning with '@' so that @P(k)
 // becomes (λ P k) and then replace λ with "LDE EFA" as a shortcut in
