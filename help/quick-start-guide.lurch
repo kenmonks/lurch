@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://127.0.0.1:5500/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -24,7 +24,7 @@
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Theorem (iconic math fact): &nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;1+1=2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">1</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span></span></span></span></span></p>
 </div>
-<p>Some documents don't have any context.&nbsp; Other documents can have hundreds of rules in their context.&nbsp; All of them appear here.&nbsp; Choosing&nbsp;<code>Show/Hide validity</code>from the math menu (or pressing its hotkey) will alternately show and hide this context.</p>
+<p>Some documents don't have any context.&nbsp; Other documents can have hundreds of rules in their context.&nbsp; All of them appear here.&nbsp; Choosing&nbsp;<code>Show/Hide context</code>from the math menu (or pressing its hotkey) will alternately show and hide this context.</p>
 <hr><hr>
 <p>&nbsp;</p></div>
         </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Filename:</td><td><tt>help/context.lurch</tt></td></tr><tr><td>Source:</td><td>the web</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div></div>
@@ -51,40 +51,40 @@
 <p style="text-align: left;">Environments are blocks that contain special regions in your document such as theorems, rules, proofs, or subproofs.</p>
 <p style="text-align: left;">Expressions contain meaningful inline content and statements such as equations, declarations, labels, or reasons.&nbsp;</p>
 <ul>
-<li style="text-align: left;"><span class="s1">Press <code>ENTER</code> (or <code>return</code>) to insert the expression in your document. Note that it will not let you press <code>ENTER</code> if what you have typed is cannot be understood by Lurch. To close the expression dialog without inserting anything, press <code>esc</code> or click outside the input box.&nbsp;</span></li>
+<li style="text-align: left;"><span class="s1">In the expression input dialog press <code>ENTER</code> (or <code>return</code>) to insert the expression in your document. Note that it will not let you press <code>ENTER</code> if what you have typed is cannot be understood by Lurch. To close the expression dialog without inserting anything, press <code>esc</code> or click outside the input box.&nbsp;</span></li>
 <li style="text-align: left;"><span class="s1">Pressing <code>SHIFT+ENTER</code> in the expression dialog will insert a line break.</span></li>
 <li style="text-align: left;"><span class="s1">Clicking on a math expression that is in the document lets you edit it and see how it was entered. See <strong>Help &gt; Lurch Math Reference</strong> for additional examples.</span></li>
 <li style="text-align: left;">Pressing the dollar sign (<code>$</code><span class="s1">) character lets you enter a purely expository math expression in LaTeX. Lurch will ignore such expressions when validating your document.</span></li>
 <li style="text-align: left;"><span class="s1">An expression is treated as a single character in the document as far as moving the cursor with the arrow keys is concerned.</span></li>
-<li style="text-align: left;">Environments can be entered quickly by pressing the backslash (<code>\</code>) key.</li>
+<li style="text-align: left;">Environments can be entered quickly by pressing the backslash (<code>\</code>) key on a blank line.</li>
 </ul>
 <h2 style="text-align: left;">Lurch Insights</h2>
 <p>Lurch can show you three types of mathematical insights about your document. They can be toggled on and off using the 'eyeball' items on the&nbsp;<strong>Math</strong> menu.&nbsp;</p>
 <ul>
-<li style="line-height: 1.5;"><span style="font-size: 14pt;"><strong>Context</strong></span> <br>The <strong>Show/hide context </strong>menu item shows you the <em>context </em>of your document - the rules, definitions, and axioms that can be used in your proof.&nbsp; The context information appears at the top of your document. It can be filtered to show you just the rules you are interested in with the search bar that appears when you view them.</li>
-<li style="line-height: 1.5;"><span style="font-size: 14pt;"><strong>Meaning</strong></span><br>The&nbsp;<strong>Show/hide meaning</strong> menu item uses syntax highlighting and formatting to show you which content is meaningful for validation (as opposed to purely expository) and marginally annotates the types of environments being used.</li>
-<li style="line-height: 1.5;"><span style="font-size: 14pt;"><strong>Validity</strong></span> <br>The <strong>Show/hide validity </strong>menu item checks your document for logical validity, and shows you what is valid, invalid, and indeterminate by annotating your document with green checks<span class="marker-checkmark">&nbsp;</span>, red x's <span class="marker-redx">&nbsp;</span> , and yellow question marks<span class="marker-questionmark">&nbsp;</span> , respectively.</li>
+<li style="line-height: 1.5;"><span style="font-size: 14pt;"><strong>Context</strong></span> <br>The <strong>Show/Hide context </strong>menu item shows you the <em>context </em>of your document - the rules, definitions, and axioms that can be used in your proof.&nbsp; The context information appears at the top of your document. It can be filtered to show you just the rules you are interested in with the search bar that appears when you view them.</li>
+<li style="line-height: 1.5;"><span style="font-size: 14pt;"><strong>Meaning</strong></span><br>The&nbsp;<strong>Show/Hide meaning</strong> menu item uses syntax highlighting and formatting to show you which content is meaningful for validation (as opposed to purely expository) and marginally annotates the types of environments being used.</li>
+<li style="line-height: 1.5;"><span style="font-size: 14pt;"><strong>Validity</strong></span> <br>The <strong>Show/Hide validity </strong>menu item checks your document for logical validity, and shows you what is valid, invalid, and indeterminate by annotating your document with green checks<span class="marker-checkmark">&nbsp;</span>, red x's <span class="marker-redx">&nbsp;</span> , and yellow question marks<span class="marker-questionmark">&nbsp;</span> , respectively.</li>
 </ul>
 <h3>Try it yourself...&nbsp;</h3>
 <h4>The Document Context&nbsp;</h4>
-<p>TRY IT: This document only has two rules in it's context - a simple fact about subsets and another about arithmetic.&nbsp; Use&nbsp;<strong>Math &gt; Show/hide context </strong>to show this document's context.</p>
+<p>TRY IT: This document only has two rules in it's context - a simple fact about subsets and another about arithmetic.&nbsp; Use&nbsp;<strong>Math &gt; Show/Hide context </strong>to show this document's context.</p>
 <p>While showing the context a search bar appears at the top that lets you show only those rules that mention whatever you specify. This is useful when there are many rules in the document's context and you want to see just the ones you are interested in. For example, if you ask it to show rules that mention 'subset' in this document it will show you just the rule that defines subset.</p>
 <p>TRY IT: Experiment with that to see how it works.</p>
 <ul>
-<li>Pressing the hotkey for the <strong>Show/hide context </strong>menu item when your cursor is in the document repeatedly, toggles the context view on and off.</li>
+<li>Repeatedly pressing the hotkey for the <strong>Show/Hide context </strong>menu item when your cursor is in the document toggles the context view on and off.</li>
 <li>If there are lots of rules in the context, use the search bar to filter what is shown so that only rules mentioning the term or phrase you type are visible.</li>
 </ul>
 <h4>The Document Meaning</h4>
-<p>TRY IT: Below is an example of a theorem and proof. Put your cursor inside the Theorem and use <strong>Math &gt; Show/hide meaning </strong>to show this document's meaning.</p>
+<p>TRY IT: Below is an example of a theorem and proof. Put your cursor inside the Theorem and use <strong>Math &gt; Show/Hide meaning </strong>to show this document's meaning.</p>
 <p>Notice that the meaningful math expressions are a different color, and there are marginal notes indicating the environment types.&nbsp;</p>
 <ul>
-<li>Pressing the hotkey for the <strong>Show/hide meaning </strong>menu item repeatedly, toggles between showing and hiding the document meaning.</li>
+<li>Repeatedly pressing the hotkey for the <strong>Show/Hide meaning </strong>menu item toggles between showing and hiding the document meaning.</li>
 <li>To move your cursor to a blank line above or below the environment it is currently inside of, use <strong>Edit &gt; Insert paragraph above</strong> and <strong>Edit &gt; Insert paragraph below, </strong>respectively.</li>
 </ul>
 <h4>Validation!!</h4>
-<p>TRY IT: Choose&nbsp;<strong>Math &gt; Show/hide validity</strong> to validate all of the claims in your document. Then look at the theorem and proof below.&nbsp;</p>
+<p>TRY IT: Choose&nbsp;<strong>Math &gt; Show/Hide validity</strong> to validate all of the claims in your document. Then look at the theorem and proof below.&nbsp;</p>
 <ul>
-<li>Pressing the hotkey for the&nbsp;<strong>Show/hide validity</strong> menu item&nbsp;repeatedly, toggles between showing and hiding validation feedback.</li>
+<li>Repeatedly pressing the hotkey for the <strong>Show/Hide validity</strong> menu item toggles between showing and hiding validation feedback.</li>
 <li>Lurch will also indicate if something is incorrect or unjustified. For example, if you delete the first meaningful expression from the proof below, the proof will no longer be marked correct.</li>
 </ul>
 <hr>

@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://127.0.0.1:5500/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -18,7 +18,7 @@
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Theorem (iconic math fact): &nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;1+1=2&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">1</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span><span class="ML__cmr">=</span><span class="ML__cmr">2</span></span></span></span></span></p>
 </div>
-<p>Some documents don't have any context.&nbsp; Other documents can have hundreds of rules in their context.&nbsp; All of them appear here.&nbsp; Choosing&nbsp;<code>Show/Hide validity</code>from the math menu (or pressing its hotkey) will alternately show and hide this context.</p>
+<p>Some documents don't have any context.&nbsp; Other documents can have hundreds of rules in their context.&nbsp; All of them appear here.&nbsp; Choosing&nbsp;<code>Show/Hide context</code>from the math menu (or pressing its hotkey) will alternately show and hide this context.</p>
 <hr><hr>
 <p>&nbsp;</p></div>
         

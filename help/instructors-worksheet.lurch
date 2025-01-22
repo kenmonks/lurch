@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://127.0.0.1:5500/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -24,15 +24,15 @@
 <p style="text-align: left; padding-left: 40px;">is valid.&nbsp; (Try it.)</p>
 <ul>
 <li>To add (or remove) a Lurch document containing axioms, definitions, theorems, rules, and other facts to another document's context use the <strong>Instructor &gt; Add or remove context</strong> menu.</li>
-<li>Add a context to this document by clicking the <strong>Instructor &gt; Add or remove context &gt; </strong><strong>Add Dynamic </strong>button and entering <code style="background-color: #f0f0f0;">help/context.lurch</code>.&nbsp;</li>
+<li>Add a context to this document by clicking the <strong>Instructor &gt; Add or remove context &gt; </strong><strong>Add dynamic </strong>button and entering <code style="background-color: #f0f0f0;">help/context.lurch</code>.&nbsp;</li>
 <li>A dynamic context will get the latest version of the context file every time you open the document.&nbsp; A static context will store the context in the document itself. Either way, the context is treated as if you had typed the entire document at the top of your document for validation purposes.&nbsp;</li>
 <li>Loading a Lurch file into the context is recursive - if the file you add loads context files of its own they will load recursively.&nbsp; No checking is done to prevent cyclic dependencies, so if you write your own context files keep that in mind.</li>
-<li>View this document's context with the <strong>Math &gt; Show/hide context </strong>menu.&nbsp;&nbsp;</li>
-<li>Revalidate the document with the <strong>Math &gt; Show/hide validity </strong>menu&nbsp;and look at the above claim.</li>
+<li>View this document's context with the <strong>Math &gt; Show/Hide context </strong>menu.&nbsp;&nbsp;</li>
+<li>Revalidate the document with the <strong>Math &gt; Show/Hide validity </strong>menu&nbsp;and look at the above claim.</li>
 </ul>
 <h3>Grading Pen</h3>
 <ul>
-<li>&nbsp;Lurch provides a convenient Grading Pen so that you can grade student homework submissions easily. <span style="color: rgb(218, 29, 12); font-family: Georgia; font-size: 1.1rem;"><em>Activating to the grading pen lets you type comments that look like this.</em></span></li>
+<li>Lurch provides a convenient Grading Pen so that you can grade student homework submissions easily.&nbsp;<span style="color: rgb(218, 29, 12); font-family: Georgia; font-size: 1.1rem;"><em>Activating to the grading pen lets you type comments that look like this.</em></span></li>
 </ul>
 <h3>Advanced Items on the Instructor Menu</h3>
 <p>The other items on the <strong>Instructor </strong>menu are rarely needed, so we briefly mention them here.</p>
