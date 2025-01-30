@@ -61,7 +61,7 @@ const recur = folder => [
     ...subfoldersIn( folder ).map( subfolder =>
         recur( path.join( folder, subfolder ) ) ).flat()
 ]
-const baseFolder = path.dirname( import.meta.url.substring( 7 ) )
+const baseFolder = import.meta.dirname // Old method: path.dirname( import.meta.url.substring( 7 ) )
 const allFilenames = recur( baseFolder )
 console.log( `Reading ${allFilenames.length} files ...` )
 
@@ -118,6 +118,11 @@ database.forEach( entry => {
 // clean up paths to be relative to baseFolder
 database.forEach( entry =>
     entry.filename = entry.filename.substring( baseFolder.length ) )
+
+// normalize paths to use forward slash
+database.forEach( entry =>
+    entry.filename = entry.filename.split( path.sep ).join( '/' )
+)
 
 // save to files as JSON and JavaScript
 console.log( 'Reading footer.js...' )
