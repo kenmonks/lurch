@@ -495,7 +495,7 @@
 <p style="padding-left: 40px;">&nbsp;without checking if <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;z&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.05em;">z</span></span></span></span></span> is nonzero.&nbsp; So use at your own risk.</p>
 <hr>
 <p><span style="color: rgb(236, 240, 241); background-color: rgb(126, 140, 141);"><strong>&nbsp;Example:&nbsp;</strong></span></p>
-<p>We can prove the 'product of evens theorem' in the previous Example with a much shorter proof if we are allowed to use the Algebra Rule.</p>
+<p>We can prove the 'product of evens theorem' in the previous example with a much shorter proof if we are allowed to use the Algebra Rule.</p>
 <div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
 <p><strong>Proof:</strong></p>
 <p>&nbsp;</p>
