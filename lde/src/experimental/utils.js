@@ -140,7 +140,7 @@ const profile = (f,name) => {
 }
 // Run any code in Lode (validate something, run the test suite, etc.) and then call
 // `benchmark(Accumulator)` to see a report.
-const benchmark = data => {
+const benchmark = (data = Accumulator) => {
   console.log(`| Function Name            | Count | Time (ms) |`);
   console.log(`|--------------------------|-------|-----------|`);
 
