@@ -1,0 +1,3541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lurch Web User Interface: FileSystem</title>
+    
+      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-default.css">
+    
+    <link type="text/css" rel="stylesheet" href="styles/styles.css">
+    
+    
+    <style>
+      :root {
+      
+      
+        --nav-width: 335px;
+      
+      }
+    </style>
+    
+</head>
+<body>
+
+<header class="layout-header">
+  
+  <h1>
+    <a href="./index.html">
+      Lurch Web User Interface
+    </a>
+  </h1>
+  <nav class="layout-nav">
+    <ul><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="AlertItem.html">AlertItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="BoolSettingMetadata.html">BoolSettingMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="BoolSettingMetadata.html#convert">convert</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="BrowserFileSystem.html">BrowserFileSystem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="BrowserFileSystem.html#delete">delete</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="BrowserFileSystem.html#has">has</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="BrowserFileSystem.html#list">list</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="BrowserFileSystem.html#read">read</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="BrowserFileSystem.html#write">write</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="ButtonItem.html">ButtonItem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="ButtonItem.html#getElement">getElement</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="CategorySettingMetadata.html">CategorySettingMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CategorySettingMetadata.html#convert">convert</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="CheckBoxItem.html">CheckBoxItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="ColorSettingMetadata.html">ColorSettingMetadata</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="DeclarationType.html">DeclarationType</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#.allInSettings">allInSettings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#.defaultTemplate">defaultTemplate</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#.existsTemplateFor">existsTemplateFor</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#.fromTemplate">fromTemplate</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#.templateToBody">templateToBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#.templateToType">templateToType</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#displayForm">displayForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#documentForm">documentForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#latexForm">latexForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#lurchNotationForm">lurchNotationForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#match">match</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DeclarationType.html#toLC">toLC</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Dialog.html">Dialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#.areYouSure">areYouSure</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#.failure">failure</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#.getTopDialogElement">getTopDialogElement</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#.meaningOfAtom">meaningOfAtom</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#.notify">notify</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#.success">success</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#addItem">addItem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#close">close</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#currentTabTitle">currentTabTitle</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#querySelector">querySelector</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#querySelectorAll">querySelectorAll</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#reload">reload</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#removeButton">removeButton</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#removeItem">removeItem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#removeTabs">removeTabs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#setButtons">setButtons</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#setDefaultFocus">setDefaultFocus</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#setInitialData">setInitialData</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#setOK">setOK</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#setTabs">setTabs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#show">show</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Dialog.html#showTab">showTab</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="DialogRow.html">DialogRow</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="DropboxFileSystem.html">DropboxFileSystem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DropboxFileSystem.html#delete">delete</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DropboxFileSystem.html#has">has</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DropboxFileSystem.html#list">list</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DropboxFileSystem.html#read">read</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="DropboxFileSystem.html#write">write</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="FileSystem.html">FileSystem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.deleteFile">deleteFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.getNamedSubclasses">getNamedSubclasses</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.getSubclass">getSubclass</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.getSubclasses">getSubclasses</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.getSubclassName">getSubclassName</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.openFile">openFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.registerSubclass">registerSubclass</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.saveFileAs">saveFileAs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.subclassesImplementing">subclassesImplementing</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#.subclassImplements">subclassImplements</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#delete">delete</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#documentSaved">documentSaved</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#fileChooserItems">fileChooserItems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#fileSaverItems">fileSaverItems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#getName">getName</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#has">has</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#implements">implements</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#list">list</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#read">read</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FileSystem.html#write">write</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="FolderContentsItem.html">FolderContentsItem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FolderContentsItem.html#getPath">getPath</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="FolderContentsItem.html#setPath">setPath</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="HTMLItem.html">HTMLItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="LabeledGroup.html">LabeledGroup</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="ListItem.html">ListItem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="ListItem.html#setSelectable">setSelectable</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="LongTextInputItem.html">LongTextInputItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="LongTextSettingMetadata.html">LongTextSettingMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LongTextSettingMetadata.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="LurchDocument.html">LurchDocument</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="LurchDocument.html#bodySettings">bodySettings</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="LurchDocument.html#settingsMetadata">settingsMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="LurchDocument.html#shortSettingsMetadata">shortSettingsMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#.documentParts">documentParts</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#.isDocumentHTML">isDocumentHTML</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#clearFileID">clearFileID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#deleteMetadata">deleteMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#getDocument">getDocument</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#getFileID">getFileID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#getMetadata">getMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#getMetadataCategories">getMetadataCategories</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#getMetadataKeys">getMetadataKeys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#newDocument">newDocument</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#setDocument">setDocument</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#setFileID">setFileID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#setMetadata">setMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LurchDocument.html#updateBodyClasses">updateBodyClasses</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Message.html">Message</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#.document">document</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#.done">done</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#.error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#.feedback">feedback</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#.makeFeedbackPresentable">makeFeedbackPresentable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#.progress">progress</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#getAllFeedback">getAllFeedback</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#is">is</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Message.html#send">send</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Atoms.Atom.html">Atom</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.allElementsIn">allElementsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.allIn">allIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.create">create</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.createElement">createElement</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.findAbove">findAbove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.from">from</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.isAtomElement">isAtomElement</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.newBlock">newBlock</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.newInline">newInline</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.registerSubclass">registerSubclass</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.simplifiedHTML">simplifiedHTML</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#.unsimplifyDOM">unsimplifyDOM</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#applyValidationMessage">applyValidationMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#contextMenu">contextMenu</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#dataChanged">dataChanged</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#edit">edit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#editThenInsert">editThenInsert</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#fillChild">fillChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#getChild">getChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#getHTML">getHTML</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#getHTMLMetadata">getHTMLMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#getHTMLMetadataKeys">getHTMLMetadataKeys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#getMetadata">getMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#getMetadataKeys">getMetadataKeys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#getValidationResults">getValidationResults</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#isEditable">isEditable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#parent">parent</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#removeChild">removeChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#removeHTMLMetadata">removeHTMLMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#removeMetadata">removeMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#setHoverText">setHoverText</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#setHTMLMetadata">setHTMLMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#setMetadata">setMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#setValidationResult">setValidationResult</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#toLatex">toLatex</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#toLCs">toLCs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#update">update</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.Atom.html#wasDeleted">wasDeleted</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-DownloadUpload.UploadItem.html">UploadItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-ExpositoryMathAtoms.ExpositoryMath.html">ExpositoryMath</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpositoryMathAtoms.ExpositoryMath.html#edit">edit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpositoryMathAtoms.ExpositoryMath.html#toEmbed">toEmbed</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpositoryMathAtoms.ExpositoryMath.html#toLatex">toLatex</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpositoryMathAtoms.ExpositoryMath.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-ExpressionAtoms.Expression.html">Expression</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpressionAtoms.Expression.html#contextMenu">contextMenu</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpressionAtoms.Expression.html#edit">edit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpressionAtoms.Expression.html#toEmbed">toEmbed</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpressionAtoms.Expression.html#toLatex">toLatex</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpressionAtoms.Expression.html#toLCs">toLCs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpressionAtoms.Expression.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-MathLive.MathItem.html">MathItem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-MathLive.MathItem.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-MathLive.MathItem.html#setFocusWhenShown">setFocusWhenShown</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-MathLive.MathItem.html#setValue">setValue</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Axiom.html">Axiom</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Corollary.html">Corollary</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Definition.html">Definition</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Lemma.html">Lemma</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Premise.html">Premise</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Preview.html">Preview</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Preview.html#imitate">imitate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Proof.html">Proof</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Recall.html">Recall</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Rule.html">Rule</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Shell.html">Shell</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#.accessibles">accessibles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#.createElement">createElement</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#.isAccessibleTo">isAccessibleTo</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#.subclassNames">subclassNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#contextMenu">contextMenu</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#edit">edit</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#editShellType">editShellType</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#finalize">finalize</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#getTitle">getTitle</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#setSubclass">setSubclass</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#setValidationResult">setValidationResult</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#toEmbed">toEmbed</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#toLatex">toLatex</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.Shell.html#toLCs">toLCs</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Subproof.html">Subproof</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="module-Shells.Theorem.html">Theorem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="NoteMetadata.html">NoteMetadata</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="OfflineFileSystem.html">OfflineFileSystem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="OfflineFileSystem.html#fileChooserItems">fileChooserItems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="OfflineFileSystem.html#fileSaverItems">fileSaverItems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="OfflineFileSystem.html#write">write</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="SelectBoxItem.html">SelectBoxItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="SettingMetadata.html">SettingMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingMetadata.html#control">control</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingMetadata.html#convert">convert</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingMetadata.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Settings.html">Settings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#has">has</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#keys">keys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#load">load</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#loadHiddenSetting">loadHiddenSetting</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#save">save</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#saveHiddenSetting">saveHiddenSetting</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#showWarning">showWarning</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Settings.html#userEdit">userEdit</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="SettingsCategoryMetadata.html">SettingsCategoryMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsCategoryMetadata.html#control">control</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsCategoryMetadata.html#defaultSettings">defaultSettings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsCategoryMetadata.html#keys">keys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsCategoryMetadata.html#metadataFor">metadataFor</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsCategoryMetadata.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="SettingsMetadata.html">SettingsMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsMetadata.html#control">control</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsMetadata.html#defaultSettings">defaultSettings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsMetadata.html#keys">keys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsMetadata.html#metadataFor">metadataFor</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SettingsMetadata.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="ShowWarningSettingMetadata.html">ShowWarningSettingMetadata</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="TextInputItem.html">TextInputItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="TextSettingMetadata.html">TextSettingMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="TextSettingMetadata.html#validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="WebFileSystem.html">WebFileSystem</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="WebFileSystem.html#fileChooserItems">fileChooserItems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="WebFileSystem.html#fileSaverItems">fileSaverItems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="WebFileSystem.html#list">list</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="WebFileSystem.html#read">read</a></span></li></ul><ul><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Atoms.html">Atoms</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Atoms.html#.className">className</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Atoms.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-AutoComplete.html">AutoComplete</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-AutoComplete.html#.addAutocompleteFunction">addAutocompleteFunction</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-AutoComplete.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Dependencies.html">Dependencies</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Dependencies.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-DocumentSettings.html">DocumentSettings</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-DocumentSettings.html#.lookup">lookup</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-DocumentSettings.html#.store">store</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-DocumentSettings.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-DownloadUpload.html">DownloadUpload</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-DownloadUpload.html#.downloadFile">downloadFile</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-EmbedListener.html">EmbedListener</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-EmbedListener.html#~install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-EmbedScript.html">EmbedScript</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Export.html">Export</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Export.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-ExpositoryMathAtoms.html">ExpositoryMathAtoms</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpositoryMathAtoms.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-ExpressionAtoms.html">ExpressionAtoms</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ExpressionAtoms.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-GoogleDriveUI.html">GoogleDriveUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUI.html#.install">install</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUI.html#~showFileOpenDialog">showFileOpenDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUI.html#~showSaveAsDialog">showSaveAsDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUI.html#~silentFileSave">silentFileSave</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-GoogleDriveUtilities.html">GoogleDriveUtilities</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUtilities.html#.listFilesFromFolder">listFilesFromFolder</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUtilities.html#.readFileFromDrive">readFileFromDrive</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUtilities.html#.showOpenFilePicker">showOpenFilePicker</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUtilities.html#.showSaveFolderPicker">showSaveFolderPicker</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUtilities.html#.updateFileInDrive">updateFileInDrive</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GoogleDriveUtilities.html#.writeNewFileToDrive">writeNewFileToDrive</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-HeaderEditor.html">HeaderEditor</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-HeaderEditor.html#.getHeader">getHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-HeaderEditor.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-ImportFromURL.html">ImportFromURL</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ImportFromURL.html#.loadFromURL">loadFromURL</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ImportFromURL.html#.openFileInNewWindow">openFileInNewWindow</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ImportFromURL.html#.autoOpenLink">autoOpenLink</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-ImportFromURL.html#.loadFromQueryString">loadFromQueryString</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-MathLive.html">MathLive</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-MathLive.html#.inputFormats">inputFormats</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-MathLive.html#.outputFormats">outputFormats</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-MathLive.html#.stylesheet">stylesheet</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-MathLive.html#.getConverter">getConverter</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Notation.html">Notation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.addParser">addParser</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.addRepresentation">addRepresentation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.markNameAsMath">markNameAsMath</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.names">names</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.parse">parse</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.putdownHTML">putdownHTML</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.represent">represent</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.syntaxTreeHTML">syntaxTreeHTML</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Notation.html#.usesMathEditor">usesMathEditor</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-SettingsInstaller.html">SettingsInstaller</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-SettingsInstaller.html#.appSettings">appSettings</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-SettingsInstaller.html#.shortAppSettings">shortAppSettings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-SettingsInstaller.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Shells.html">Shells</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Shells.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Utilities.html">Utilities</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Utilities.html#.copyHTMLToClipboard">copyHTMLToClipboard</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Utilities.html#.fullUnindent">fullUnindent</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Utilities.html#.htmlToImage">htmlToImage</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Utilities.html#.isEmbedded">isEmbedded</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Utilities.html#.isOnScreen">isOnScreen</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Utilities.html#.isValidURL">isValidURL</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.appURL">appURL</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.copyWithoutPrototype">copyWithoutPrototype</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.editorForNode">editorForNode</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.escapeHTML">escapeHTML</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.escapeLatex">escapeLatex</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.loadScript">loadScript</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.loadStylesheet">loadStylesheet</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.makeAbsoluteURL">makeAbsoluteURL</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.onlyBefore">onlyBefore</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.removeScriptTags">removeScriptTags</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.simpleHTMLTable">simpleHTMLTable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#.unescapeHTML">unescapeHTML</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Validation.html">Validation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.install">install</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-ValidationWorker.html">ValidationWorker</a></span></li></ul><ul><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="Lurch.html">Lurch</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Lurch.html#.createApp">createApp</a></span></li></ul><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="global.html#install">install</a></span></li>
+  </nav>
+</header>
+
+
+<main class="layout-main ">
+  <div class="container">
+    <p class="page-kind">Class</p>
+    <h1 class="page-title">FileSystem</h1>
+    
+
+
+
+
+<section>
+
+
+<header class="class">
+
+
+    
+        
+        <!-- <h2>FileSystem</h2> -->
+
+        
+
+        
+
+        
+            
+            <div class="class-description"><p>A FileSystem is a place where files can be saved and/or loaded.  This is
+intentionally vague, so that many different types of sources or destinations
+can be treated as filesystems, each with different features.  Examples
+include each of the following, which will be implemented as subclasses:</p>
+<ul>
+<li>A cloud storage platform such as Dropbox, which has a wide variety of
+features for listing, loading, saving, deleting, and renaming files.</li>
+<li>The browser's <code>localStorage</code> object, which can store arbitrary key-value
+pairs, and can thus be used as a simple file system with all the same
+features as a cloud storage platform, but very limited space and no
+transferability between browsers or computers.</li>
+<li>The user's hard drive, which can load and save files only with manual user
+intervention, and which does not let a web application list folder
+contents, delete files, or rename files.</li>
+<li>A web repository of files, such as a GitHub repository or simply a folder
+on a public server, which can list files and load them, but will not let
+this web application save, delete, or rename files in that web repository.</li>
+</ul>
+<p>This class therefore provides many abstract methods for the various actions
+described above (loading, saving, etc.) and is intended to be subclassed to
+implement specific file systems.</p>
+<p>We formalize here tne definition of one central concept, a &quot;file object.&quot;  It
+will be a JavaScript object with some subset of the following fields.</p>
+<ul>
+<li><code>fileSystemName</code> - the name of the file system from which the file
+originated or was last saved.  If this field is absent, then the file was
+created in the application and has not yet been saved anywhere.</li>
+<li><code>filename</code> - the name of the file in the file system, written in a way
+that is sensible for a human user to read.  For example, some cloud
+storage systems might have unique IDs for files that are not
+human-readable, but by contrast this field should be the name the user
+gave the file.  This field should be set when a file is read from a file
+system, and will be absent if and only if one of the following is true:
+<ul>
+<li>the user created the file in the application and has not yet saved it</li>
+<li>the user saved the file to a file system that does not tell the
+application the name that the user chose, such as the user's hard drive
+through a download operation</li>
+<li>the file object represents a folder, as documented below</li>
+</ul>
+</li>
+<li><code>UID</code> - a unique identifier for the file in the file system.  This is not
+necessarily a globally unique ID, but is unique within the file system
+named in the first attribute, above.  This field should not be present if
+the <code>fileSystemName</code> field is absent, because a file system gives the file
+its ID, so we cannot have this field without the other first.  Some
+file systems may be sufficiently simple that they operate using only the
+human-readable filename in the <code>filename</code> field, in which case this field
+can be omitted.</li>
+<li><code>path</code> - a string representing the path in which the file is stored.  If
+the file system does not use paths, then this may be absent.  But a file
+object can represent a folder by setting this field to a path but omitting
+the filename and UID.  Such a file object can be passed as the parameter
+to the file listing function to list the contents of a folder, or the file
+open function, to specify which folder's files the user should be choosing
+from by default.</li>
+<li><code>contents</code> - the contents of the file, as a string.  This field will be
+present if the file object is one that the application wants to save, by
+passing to a saving function, because obviously the file cannot be saved
+without its content.  Similarly, the field will be present if this file
+object is being returned from a file loading operation, since that was the
+purpose of the operation.  But this field may be absent if the file object
+is part of a directory listing, or is a parameter being passed to a file
+loading function, since the contents are either unnecessary or impossible
+in such situations.</li>
+</ul></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+
+
+
+    
+        
+
+
+
+
+
+    
+
+
+    
+    <h3 class="subtitle">Constructor</h3>
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="FileSystem">new FileSystem<span class="signature">()</span><span class="return-type-signature"></span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Construct a file system and associate it with a given TinyMCE editor.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.95">, line 95</a>
+        </li>
+    </ul>
+
+
+
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="FileSystem.html">FileSystem</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+     
+
+    
+
+    
+
+
+    
+
+    
+        <h3 class="subtitle">Methods</h3>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".deleteFile">deleteFile<span class="signature">(editor)</span><span class="return-type-signature"></span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Open a Delete File dialog, with tabs for each file system that supports
+the deletion of files, and allow the user to browse them for a file to
+delete.  If the user chooses a file and asks to delete it, attempt to do
+so, and pop up a notification indicating success or failure.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">editor</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>tinymce.Editor</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the editor over which the dialog will be
+shown (but the editor's contents to not play into this deletion
+operation)</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.openFile">openFile()</a></li>
+            
+                <li><a href="FileSystem.html#.saveFileAs">saveFileAs()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.824">, line 824</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".getNamedSubclasses">getNamedSubclasses<span class="signature">(names)</span><span class="return-type-signature"> &rarr; {Array}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Get a list of just those subclasses whose names are given, in the order
+specified.  This is useful when the app's settings request only a certain
+set of file systems to be available.</p>
+<p>If any of the names is not the name of a valid subclass, an error will be
+thrown.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">names</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Array</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the names of the subclasses to get</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.getSubclasses">getSubclasses()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Array</code>
+            
+            
+                <p>the list of subclasses with the given names</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.163">, line 163</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".getSubclass">getSubclass<span class="signature">(name)</span><span class="return-type-signature"> &rarr; {Object}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Get a FileSystem subclass by name.  For more information about
+registering subclasses, see the registerSubclass() static member.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">name</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>string</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the name of the subclass to get</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#getName">getName()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Object</code>
+            
+            
+                <p>the subclass with the given name</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.135">, line 135</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".getSubclasses">getSubclasses<span class="signature">()</span><span class="return-type-signature"> &rarr; {Array}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Get a list of all registered file systems.  For more information about
+registering subclasses, see the registerSubclass() static member.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.getSubclass">getSubclass()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Array</code>
+            
+            
+                <p>the list of all registered file systems</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.147">, line 147</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".getSubclassName">getSubclassName<span class="signature">(subclass)</span><span class="return-type-signature"> &rarr; {string}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Get the name of a given <a href="FileSystem.html">FileSystem</a> subclass, by looking it up in
+the list of registered subclasses.  For more information about
+registering subclasses, see the registerSubclass() static member.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">subclass</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the subclass to look up</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.getSubclass">getSubclass()</a></li>
+            
+                <li>getName()</li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>string</code>
+            
+            
+                <p>the name of the given subclass (or undefined if the
+given object is not a subclass that was registered)</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.185">, line 185</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".openFile">openFile<span class="signature">(editor, callback<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"></span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Open a File &gt; Open dialog over the given editor, with tabs for each
+available file system, and allow the user to browse them for a file to
+open.  If the user chooses a file and asks to open it, attempt to do so,
+and as long as it succeeds, replace the editor's current contents with
+that new document.  If anything goes wrong, show a notification to the
+user stating what went wrong.  If it succeeds, show a brief success
+notification after the file loads.</p>
+<p>An alternate use of this function is to open a file for some other
+purpose, and just pass the contents of the file to a callback, without
+actually changing teh contents of the given editor.  To use this function
+in that way, pass a callback as the second argument.  It will be called
+when the dialog closes, either with a file object or <code>null</code> if the user
+did not choose a file (e.g., canceled the dialog).</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">editor</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>tinymce.Editor</code>
+    </span>
+    
+
+            
+
+            
+                <span class="param-attributes">
+                
+
+                
+
+                
+                </span>
+            
+
+            
+
+            <div class="param-description"><p>the editor in which to open the file</p></div>
+            
+        </li>
+
+    
+
+        <li>
+            
+                <span class="param-name">callback</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>function</code>
+    </span>
+    
+
+            
+
+            
+                <span class="param-attributes">
+                
+                    &lt;optional&gt;<br>
+                
+
+                
+
+                
+                </span>
+            
+
+            
+
+            <div class="param-description"><p>the callback to call when the dialog
+closes, which can be omitted for the standard file-loading behavior</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.saveFileAs">saveFileAs()</a></li>
+            
+                <li><a href="FileSystem.html#.deleteFile">deleteFile()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.667">, line 667</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".registerSubclass">registerSubclass<span class="signature">(name, subclass)</span><span class="return-type-signature"></span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>This class tracks its collection of subclasses so that we can find a
+file system by its name, or get a list of all file systems registered.
+We may need to find a file system by name if we have a file we need to
+save into that system (which knows the name of the file system it came
+from) and we may need to get a list of all file systems to populate the
+submenus for file open, file save, etc.</p>
+<p>Example of registering a subclass:</p>
+<pre class="prettyprint source lang-js"><code>class Example extends FileSystem { ... }
+FileSystem.registerSubclass( 'Example', Example )
+</code></pre>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">name</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>string</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the name of the subclass to register</p></div>
+            
+        </li>
+
+    
+
+        <li>
+            
+                <span class="param-name">subclass</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the subclass itself</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#getName">getName()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.121">, line 121</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".saveFileAs">saveFileAs<span class="signature">(editor)</span><span class="return-type-signature"></span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Open a File &gt; Save As dialog over the given editor, with tabs for each
+available file system, and allow the user to browse them for a location
+into which to save their current file.  If the user chooses a location
+and asks to save into it, attempt to do so, and pop up a notification
+indicating success or failure.  Upon success, update the file information
+stored in the current editor about where the document has been saved,
+and notify the document that it is not dirty, using
+<a href="FileSystem.html#documentSaved">documentSaved()</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">editor</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>tinymce.Editor</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the editor whose file is to be saved</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.openFile">openFile()</a></li>
+            
+                <li><a href="FileSystem.html#.deleteFile">deleteFile()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.751">, line 751</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".subclassesImplementing">subclassesImplementing<span class="signature">(name)</span><span class="return-type-signature"> &rarr; {Array}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>The following member functions of the <a href="FileSystem.html">FileSystem</a> class are
+abstract, and thus have empty implementations in the base class: <code>read</code>,
+<code>write</code>, <code>delete</code>, <code>has</code>, and <code>list</code>.  Subclasses may choose to implement
+some of them, as documented in <a href="FileSystem.html">the class itself</a>.  You
+can get the full list of subclasses that implement a given feature by
+calling this function.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">name</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>string</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the name of the feature, from the list above</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.subclassImplements">subclassImplements()</a></li>
+            
+                <li><a href="FileSystem.html#implements">implements()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Array</code>
+            
+            
+                <p>the list of subclasses that implement the given feature</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.263">, line 263</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    <span class="method-type-signature is-static">static</span>
+    </div>
+
+    <h4 class="method-name" id=".subclassImplements">subclassImplements<span class="signature">(subclass, name)</span><span class="return-type-signature"> &rarr; {boolean}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>The following member functions of the <a href="FileSystem.html">FileSystem</a> class are
+abstract, and thus have empty implementations in the base class: <code>read</code>,
+<code>write</code>, <code>delete</code>, <code>has</code>, and <code>list</code>.  Subclasses may choose to implement
+some of them, as documented in <a href="FileSystem.html">the class itself</a>.  You
+can test whether a specific subclass implements a given feature by
+calling this function.  You can test whether a specific instance
+implements a given feature by calling <a href="FileSystem.html#implements">implements()</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">subclass</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the subclass to test</p></div>
+            
+        </li>
+
+    
+
+        <li>
+            
+                <span class="param-name">name</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>string</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the name of the feature, from the list above</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#implements">implements()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>boolean</code>
+            
+            
+                <p>whether the subclass implements the given feature</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.228">, line 228</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="delete">delete<span class="signature">(fileObject)</span><span class="return-type-signature"> &rarr; {Promise}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>This abstract method deletes a file from the file system.  It is abstract
+in the sense that the base implementation returns a promise that
+immediately rejects with an error that the method is unimplemented.
+Subclasses that provide the ability to delete files must override this
+base implementation.  Any implementation in a subclass should satisfy the
+following criteria.</p>
+<ol>
+<li>If the file object's <code>fileSystemName</code> does not match the name of this
+instance, throw an error, because the caller is asking us to delete
+a file in a different file system.  However, if the <code>fileSystemName</code>
+was omitted, then on a successful deletion, update it to the name of
+this subclass.</li>
+<li>If the client passes a file object as parameter, and it contains
+insufficient information in its <code>path</code>, <code>filename</code>, and <code>UID</code> members
+to uniquely determine a file, throw an error.  Also, if it is
+possible in the file system in question to detect at this point
+whether the file exists, and it does not, throw an error.</li>
+<li>Otherwise, delete the file from the file system and resolve to a
+(possibly updated) file object on success, or reject if an error
+occurred when attempting to delete.</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">fileObject</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>an object representing the file to delete,
+as described above, and as documented in <a href="FileSystem.html">the FileSystem class</a>)</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Promise</code>
+            
+            
+                <p>a promise that resolves or rejects as described in the
+criteria above</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.361">, line 361</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="documentSaved">documentSaved<span class="signature">(fileObject)</span><span class="return-type-signature"></span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>This static member should be called by any subclass that implements the
+<a href="FileSystem.html#write">write()</a> method, whenever a save is successful,
+because there are two responses that the system must give to any
+successful file save.</p>
+<ol>
+<li>Delete the most recent auto-save.  If we did not delete the
+auto-saved content, then on the next launch of the application, the
+user would be alerted to the fact that unsaved work existed in the
+auto-save file and could be recovered for them.  But that would be
+false, because of course, they just did save their work.</li>
+<li>Store the file object representing the file just saved, so that it
+can be stored in the <a href="LurchDocument.html">LurchDocument</a> for the editor.  If the
+user later invokes a &quot;save&quot; menu item, its event handler can use the
+stored file object as the parameter to the <a href="FileSystem.html#write">write()</a> method.</li>
+</ol>
+<p>The file object passed to this function should have enough uniquely
+identifying information in its <code>filename</code>, <code>UID</code>, and <code>path</code> members to
+satisfy the requirements of the <a href="FileSystem.html#write">write()</a> method
+for the same file system subclass.  If its <code>contents</code> member has data in
+it, that data will be ignored, so that it is not unnecessarily copied.
+No <code>fileSystemName</code> needs to be provided; each subclass will use its own.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">fileObject</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the file object representing the file that
+was just saved (and whose format is documented in the <a href="FileSystem.html">FileSystem</a> class)</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#write">write()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.635">, line 635</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="fileChooserItems">fileChooserItems<span class="signature">()</span><span class="return-type-signature"> &rarr; nullable{Array.&lt;Object>}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>When the user wants to select a file from this file system, this method
+returns a list of dialog items allowing the user to choose a file.  For
+example, if the list of files is known, the UI might be a representation
+of that list, allowing the user to click one.  Or if the file system is
+the web, from which one downloads URLs, the UI might be a text box into
+which one can type a URL.</p>
+<p>The base class implementation is to return a single file chooser item (in
+an array by itself) if the file system implements the <a href="FileSystem.html#list">list()</a> method, and undefined otherwise.</p>
+<p>Anyone reimplementing this function must ensure that, whenever the user
+interacts with the dialog items to choose a file, or change which file
+has been chosen, the event handlers in one or more of the items returned
+by this function must notify the dialog of what has changed by calling
+<code>dialog.selectFile(fileObject)</code>.  The parameter should either be a file
+object as documented at the top of <a href="FileSystem.html">this class</a>, or it
+should be omitted to indicate that no (valid) file is currently selected.
+This same function should be called during one of the items' <code>onShow()</code>
+handlers as well, to initialize which file is selected when the tab
+containing these dialog items first appears.  Failure to follow this
+convention will result in undefined behavior.</p>
+<p>If the UI this function returns is only for selecting a file, but not
+loading its contents, the file object set with <code>dialog.selectFile()</code> may
+contain just the <code>name</code> and/or <code>UID</code> fields, and need not contain the
+<code>contents</code> field.  It can be loaded later with a call to <a href="FileSystem.html#read">read()</a>.  If the UI this function returns is for loading
+a file (e.g., drag-and-drop a file from the user's computer to upload it)
+then the file object is free to include the contents as well, especially
+since they cannot be read directly from JavaScript in that example case.</p>
+<p>If the client wants the UI to browse to a specific location in the file
+system, it can pass a file object with the <code>path</code> field set to the
+location at which browsing should begin.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Array.&lt;Object></code>
+            
+            
+                <p>a list of dialog items representing this file system
+in a dialog, if the user's intent is to select a file from it</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.477">, line 477</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="fileSaverItems">fileSaverItems<span class="signature">()</span><span class="return-type-signature"> &rarr; nullable{Array.&lt;Object>}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>When the user wants to save a file to this file system, this method
+returns a list of dialog items allowing the user to choose the location
+for the save.  For example, the UI might be a list of existing files,
+together with a text blank into which you can type the filename of the
+new file to save (or fill that box by clicking the name of an existing
+file to save over it) just like many existing File-Save dialogs.</p>
+<p>The base class implementation is to return two dialog items that behave
+as in the example above, one text box and one file chooser item (in an
+array of length two) if the file system implements the <a href="FileSystem.html#list">list()</a> method, and just the text box alone if not.</p>
+<p>Anyone reimplementing this function must ensure that, whenever the user
+interacts with the dialog items to choose a save destination, the event
+handlers in one or more of the items returned by this function must
+notify the dialog of what has changed by calling
+<code>dialog.setLocation(fileObject)</code>.  The parameter should either be a file
+object as documented at the top of <a href="FileSystem.html">this class</a>, or it
+should be omitted to indicate that no (valid) destination is currently
+specified.  This same function should be called during one of the items'
+<code>onShow()</code> handlers as well, to initialize which destination is specified
+when the tab containing these dialog items first appears.  (In many
+cases, no file will be chosen initially, and you can call
+<code>dialog.setLocation()</code> with no argument.)  Failure to follow this
+convention will result in undefined behavior.</p>
+<p>Calls to <code>dialog.setLocation()</code> never need to pass a file object with a
+<code>contents</code> field, since the contents can be filled in afterwards by the
+caller, and before a call to <a href="FileSystem.html#write">write()</a>.</p>
+<p>If the client wants the UI to start out referring to a specific location
+in the file system, such as the last folder or file where the user saved
+something, it can pass a file object with the <code>filename</code> and/or <code>path</code>
+fields set to the file or folder at which browsing should begin.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Array.&lt;Object></code>
+            
+            
+                <p>a list of dialog items representing this file system
+in a dialog, if the user's intent is to save a file into it</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.543">, line 543</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="getName">getName<span class="signature">()</span><span class="return-type-signature"> &rarr; {string}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>Get the name of the class of this file system, by looking its class up in
+the list of registered subclasses.  For more information about
+registering subclasses, see the registerSubclass() static member.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.getSubclass">getSubclass()</a></li>
+            
+                <li><a href="FileSystem.html#.getSubclassName">getSubclassName()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>string</code>
+            
+            
+                <p>the name of the class of this file system (or undefined
+if this instance is a member of a subclass that was not registered)</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.201">, line 201</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="has">has<span class="signature">(fileObject)</span><span class="return-type-signature"> &rarr; {Promise}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>This abstract method answers the question of whether the file system
+contains a file with the criteria specified in the parameter.  It is
+abstract in the sense that the base implementation returns a promise that
+immediately rejects with an error that the method is unimplemented.
+Subclasses that provide the ability to read files (by implementing the
+<a href="FileSystem.html#read">read()</a> method) should also provide this method by
+overriding this base implementation.  Any implementation in a subclass
+should satisfy the following criteria.</p>
+<ol>
+<li>If the client passes a file object as parameter, and it contains
+sufficient information in its <code>path</code>, <code>filename</code>, and <code>UID</code> members
+to uniquely determine a file, then return a promise that checks
+whether the specified file exists in the file sytem and resolves to
+the result, as a boolean value.  The promise should reject only if an
+error occurs when attempting to check whether the file exists.</li>
+<li>In all other cases, throw an error.  This includes a missing
+parameter, insufficient information in the parameter, or a parameter
+whose <code>fileSystemName</code> does not match the name of this file system.</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">fileObject</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>an object representing the file being
+queried, as described above, and as documented in <a href="FileSystem.html">the FileSystem class</a>)</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#read">read()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Promise</code>
+            
+            
+                <p>a promise that resolves or rejects as described in the
+criteria above</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.394">, line 394</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="implements">implements<span class="signature">(name)</span><span class="return-type-signature"> &rarr; {boolean}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>The following member functions of the <a href="FileSystem.html">FileSystem</a> class are
+abstract, and thus have empty implementations in the base class: <code>read</code>,
+<code>write</code>, <code>delete</code>, <code>has</code>, and <code>list</code>.  Subclasses may choose to implement
+some of them, as documented in <a href="FileSystem.html">the class itself</a>.  You
+can test whether a specific instance implements a given feature by
+calling this function.  You can test whether a specific subclass
+implements a given feature by calling <a href="FileSystem.html#.subclassImplements">subclassImplements()</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">name</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>string</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>the name of the feature, from the list above</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#.subclassImplements">subclassImplements()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>boolean</code>
+            
+            
+                <p>whether the instance implements the given feature</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.246">, line 246</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="list">list<span class="signature">(fileObject<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Promise}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>This abstract method returns a promise that resolves to a list of
+objects representing all files in the file system.  It is abstract in the
+sense that the base implementation returns a promise that immediately
+rejects with an error that the method is unimplemented.  Subclasses that
+provide the ability to read files (by implementing the <a href="FileSystem.html#read">read()</a> method) should also provide this method by
+overriding this base implementation.  Any implementation in a subclass
+should satisfy the following criteria.</p>
+<ol>
+<li>If the client omits the parameter, then return a promise that gets
+the list of all files in the root of the file system and resolves to
+a JavaScript array of file objects (which are documented in <a href="FileSystem.html">the FileSystem class</a>).  The promise should reject only if
+an error occurs when attempting to get the list of files.  Note that
+a folder may contain subfolders, and those can be included in the
+list of results returned, because file objects have the capability of
+representing folders as well.  For details, see the <a href="FileSystem.html">documentation for the FileSystem class</a>.</li>
+<li>If the client passes a file object as parameter, and it contains a
+<code>path</code> member, then proceed exactly as in item 1., above, but not in
+the root of the file system, rather in the path provided.  If such a
+path does not exist, reject with an error.</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">fileObject</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+                <span class="param-attributes">
+                
+                    &lt;optional&gt;<br>
+                
+
+                
+
+                
+                </span>
+            
+
+            
+
+            <div class="param-description"><p>an object representing the path whose
+files should be listed, or if omitted, the root of the file system is
+assumed instead</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#read">read()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Promise</code>
+            
+            
+                <p>a promise that resolves or rejects as described in the
+criteria above</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.431">, line 431</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="read">read<span class="signature">(fileObject<span class="signature-attributes">opt</span>)</span><span class="return-type-signature"> &rarr; {Promise}</span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>This abstract method reads a file from the file system.  It is abstract
+in the sense that the base implementation returns a promise that
+immediately rejects with an error that the method is unimplemented.
+Subclasses that provide the ability to read files must override this base
+implementation.  Any implementation in a subclass should satisfy the
+following criteria.</p>
+<ol>
+<li>If the user passes a file object parameter (as documented in <a href="FileSystem.html">the FileSystem class</a>) with enough information in it to
+identify a file, then this method should return a promise that
+resolves to that file as soon as it can be loaded.  Specifically, the
+object to which the promise resolves should be the same object as the
+one passed in, but with its <code>contents</code> member set to the contents of
+the file, as a string.  Furthermore, the file object should have its
+file system name set to the name of the subclass in question.</li>
+<li>If the user omits the parameter, or omits its filename or UID, or
+provides an invalid file object in any other way, then this method
+should reject with an error, because the user did not specify which
+file to read.</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">fileObject</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+                <span class="param-attributes">
+                
+                    &lt;optional&gt;<br>
+                
+
+                
+
+                
+                </span>
+            
+
+            
+
+            <div class="param-description"><p>an object representing the file to read,
+as described above</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h4 class="method-heading">See</h4>
+        <ul>
+            
+                <li><a href="FileSystem.html#has">has()</a></li>
+            
+                <li><a href="FileSystem.html#list">list()</a></li>
+            
+        </ul>
+    
+
+    
+</div>
+
+
+
+    <h4 class="method-heading">Returns</h4>
+    <ul>
+    
+        <li class="method-returns">
+            
+                <code>Promise</code>
+            
+            
+                <p>a promise that resolves or rejects as described in the
+criteria above</p>
+            
+        </li>
+    
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.296">, line 296</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+            
+
+
+    <article class="method">
+
+
+
+
+    
+
+
+    
+
+    <div class="method-type">
+    
+    </div>
+
+    <h4 class="method-name" id="write">write<span class="signature">(fileObject)</span><span class="return-type-signature"></span>
+    </h4>
+
+
+
+
+
+<div class="method-description">
+    
+    <p>This abstract method saves a file to the file system.  It is abstract in
+the sense that the base implementation returns a promise that immediately
+rejects with an error that the method is unimplemented.  Subclasses that
+provide the ability to save files must override this base implementation.
+Any implementation in a subclass should satisfy the following criteria.</p>
+<ol>
+<li>If the file object's <code>fileSystemName</code> does not match the name of this
+instance, throw an error, because the caller is asking us to write in
+a place to which we have no access.  However, if the <code>fileSystemName</code>
+was omitted, then on a successful save, update it to the name of this
+subclass.</li>
+<li>If the file object's <code>contents</code> member is undefined, throw an error,
+because we have no content to write.</li>
+<li>If the file object contains insufficient information in its
+<code>filename</code>, <code>UID</code>, and <code>path</code> members to let this file system know
+where to write the content, throw an error.</li>
+<li>Save the given contents into the file system and resolve to a
+(possibly updated) file object on success, or reject if an error
+occurred when attempting to write.</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Parameters</h4>
+    
+
+<ul class="method-params">
+    
+
+        <li>
+            
+                <span class="param-name">fileObject</span>
+            
+
+            
+                
+
+
+    <span class="param-type">
+        <code>Object</code>
+    </span>
+    
+
+            
+
+            
+
+            
+
+            <div class="param-description"><p>an object representing the file to write,
+as described above, and as documented in <a href="FileSystem.html">the FileSystem class</a>)</p></div>
+            
+        </li>
+
+    
+</ul>
+
+
+
+
+
+<div class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h4 class="method-heading">Source</h4>
+    <ul>
+        <li class="method-source">
+            <a href="file-system.js.html">file-system.js</a><a href="file-system.js.html#source.327">, line 327</a>
+        </li>
+    </ul>
+
+
+
+    </article>
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+  </div>
+</main>
+
+<footer class="layout-footer">
+  <div class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
+  </div>
+</footer>
+
+
+
+<script src="scripts/prism.dev.js"></script>
+</body>
+</html>

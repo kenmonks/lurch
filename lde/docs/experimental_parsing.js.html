@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lurch Deductive Engine: experimental/parsing.js</title>
+    
+      <link type="text/css" rel="stylesheet" href="styles/vendor/prism-default.css">
+    
+    <link type="text/css" rel="stylesheet" href="styles/styles.css">
+    
+    
+    <style>
+      :root {
+      
+      
+        --nav-width: 335px;
+      
+      }
+    </style>
+    
+</head>
+<body>
+
+<header class="layout-header">
+  
+  <h1>
+    <a href="./index.html">
+      Lurch Deductive Engine
+    </a>
+  </h1>
+  <nav class="layout-nav">
+    <ul><li class="nav-heading">Tutorials</li><li class="nav-item"><a href="tutorial-Connections among LCs.html">Connections among LCs</a></li><li class="nav-item"><a href="tutorial-Constructing LCs.html">Constructing LCs</a></li><li class="nav-item"><a href="tutorial-Free and bound variables.html">Free and bound variables</a></li><li class="nav-item"><a href="tutorial-LC tree hierarchies.html">LC tree hierarchies</a></li><li class="nav-item"><a href="tutorial-Lurch Node REPL.html">Lurch Node REPL</a></li><li class="nav-item"><a href="tutorial-Methods in each LC subclass.html">Methods in each LC subclass</a></li><li class="nav-item"><a href="tutorial-Pattern matching.html">Pattern matching</a></li><li class="nav-item"><a href="tutorial-Serialization and attributes of LCs.html">Serialization and attributes of LCs</a></li></ul><ul><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Application.html">Application</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Application.html#operands">operands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Application.html#operator">operator</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Array.html">Array</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Array.html#last">last</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Array.html#without">without</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Array.html#.range">range</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Array.html#.seq">seq</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="BindingEnvironment.html">BindingEnvironment</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="BindingExpression.html">BindingExpression</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="CNFProp.html">CNFProp</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="CNFProp.html#.switchVarSymbol">switchVarSymbol</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#hasCNFform">hasCNFform</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#simplify">simplify</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#toAlgebraic">toAlgebraic</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#toArray">toArray</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#toEnglish">toEnglish</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#.fromLC">fromLC</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#.toCNF">toCNF</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNFProp.html#.toVar">toVar</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Connection.html">Connection</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Connection.html#IDs">IDs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#attr">attr</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#clearAttributes">clearAttributes</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#getAttribute">getAttribute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#getAttributeKeys">getAttributeKeys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#handleIDChange">handleIDChange</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#hasAttribute">hasAttribute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#remove">remove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#setAttribute">setAttribute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#source">source</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#target">target</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#.create">create</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#.transferConnections">transferConnections</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Connection.html#.withID">withID</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Constraint.html">Constraint</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Constraint.html#expression">expression</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Constraint.html#pattern">pattern</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#afterSubstituting">afterSubstituting</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#children">children</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#complexity">complexity</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#complexityName">complexityName</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#deBruijnDecode">deBruijnDecode</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#deBruijnEncode">deBruijnEncode</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#isAnInstantiation">isAnInstantiation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Constraint.html#toString">toString</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Declaration.html">Declaration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Declaration.html#body">body</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Declaration.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Declaration.html#removeBody">removeBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Declaration.html#setBody">setBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Declaration.html#symbols">symbols</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Environment.html">Environment</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Environment.html#conclusions">conclusions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Environment.html#inferences">inferences</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="EventTarget.html">EventTarget</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="EventTarget.html#emit">emit</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Expression.html">Expression</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Expression.html#getOutermost">getOutermost</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Expression.html#isAConclusionIn">isAConclusionIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Expression.html#isOutermost">isOutermost</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Expression.html#value">value</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="LogicConcept.html">LogicConcept</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#conditionalForm">conditionalForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#enableFeedback">enableFeedback</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#feedback">feedback</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#hasOnlyClaimAncestors">hasOnlyClaimAncestors</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#markDirty">markDirty</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#origin">origin</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#toPutdown">toPutdown</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="LogicConcept.html#.fromPutdown">fromPutdown</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Map.html">Map</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Map.html#deepCopy">deepCopy</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="MathConcept.html">MathConcept</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="MathConcept.html#IDs">IDs</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="MathConcept.html#className">className</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="MathConcept.html#subclasses">subclasses</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#ID">ID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#accessibles">accessibles</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#accessiblesIterator">accessiblesIterator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#address">address</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#allButFirstChild">allButFirstChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#allButLastChild">allButLastChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#ancestors">ancestors</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#ancestorsIterator">ancestorsIterator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#ancestorsSatisfying">ancestorsSatisfying</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#asA">asA</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#attr">attr</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#binds">binds</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#changeID">changeID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#child">child</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#children">children</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#childrenSatisfying">childrenSatisfying</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#clearAttributes">clearAttributes</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#clearIDs">clearIDs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#connectTo">connectTo</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#copyAttributesFrom">copyAttributesFrom</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#descendantsIterator">descendantsIterator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#descendantsSatisfying">descendantsSatisfying</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#feedback">feedback</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#firstChild">firstChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#freeSymbolNames">freeSymbolNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getAttribute">getAttribute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getAttributeKeys">getAttributeKeys</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getConnectionIDs">getConnectionIDs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getConnectionIDsIn">getConnectionIDsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getConnectionIDsOut">getConnectionIDsOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getConnections">getConnections</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getConnectionsIn">getConnectionsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#getConnectionsOut">getConnectionsOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#hasAncestorSatisfying">hasAncestorSatisfying</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#hasAttribute">hasAttribute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#hasChildSatisfying">hasChildSatisfying</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#hasDescendantSatisfying">hasDescendantSatisfying</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#idIsTracked">idIsTracked</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#index">index</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#indexInParent">indexInParent</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#insertChild">insertChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#interpret">interpret</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#interpretation">interpretation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isA">isA</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isAccessibleTo">isAccessibleTo</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isAtomic">isAtomic</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isDirty">isDirty</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isEarlierThan">isEarlierThan</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isFree">isFree</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isFreeToReplace">isFreeToReplace</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isInTheScopeOf">isInTheScopeOf</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#isLaterThan">isLaterThan</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#lastChild">lastChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#makeIntoA">makeIntoA</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#markDirty">markDirty</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#nextInTree">nextInTree</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#nextSibling">nextSibling</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#numChildren">numChildren</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#occursFree">occursFree</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#parent">parent</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#popChild">popChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#preOrderIterator">preOrderIterator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#preOrderTraversal">preOrderTraversal</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#previousInTree">previousInTree</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#previousSibling">previousSibling</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#pushChild">pushChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#remove">remove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#removeChild">removeChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#removeConnections">removeConnections</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#replaceFree">replaceFree</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#replaceWith">replaceWith</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#scope">scope</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#scopeIterator">scopeIterator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#setAttribute">setAttribute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#setChildren">setChildren</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#setID">setID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#shiftChild">shiftChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#toJSON">toJSON</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#toSmackdown">toSmackdown</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#toString">toString</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#trackConnections">trackConnections</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#trackIDs">trackIDs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#transferConnectionsTo">transferConnectionsTo</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#unmakeIntoA">unmakeIntoA</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#unshiftChild">unshiftChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#untrackIDs">untrackIDs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#.addSubclass">addSubclass</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#.feedback">feedback</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#.fromJSON">fromJSON</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#.fromSmackdown">fromSmackdown</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#.instanceWithID">instanceWithID</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="MathConcept.html#.typeAttributeKey">typeAttributeKey</a></span></li><li class="nav-item"><span class="nav-item-type type-event" title="event">E</span><span class="nav-item-name is-event"><a href="MathConcept.html#event:wasChanged">wasChanged</a></span></li><li class="nav-item"><span class="nav-item-type type-event" title="event">E</span><span class="nav-item-name is-event"><a href="MathConcept.html#event:wasInserted">wasInserted</a></span></li><li class="nav-item"><span class="nav-item-type type-event" title="event">E</span><span class="nav-item-name is-event"><a href="MathConcept.html#event:wasRemoved">wasRemoved</a></span></li><li class="nav-item"><span class="nav-item-type type-event" title="event">E</span><span class="nav-item-name is-event"><a href="MathConcept.html#event:willBeChanged">willBeChanged</a></span></li><li class="nav-item"><span class="nav-item-type type-event" title="event">E</span><span class="nav-item-name is-event"><a href="MathConcept.html#event:willBeInserted">willBeInserted</a></span></li><li class="nav-item"><span class="nav-item-type type-event" title="event">E</span><span class="nav-item-name is-event"><a href="MathConcept.html#event:willBeRemoved">willBeRemoved</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="NewSymbolStream.html">NewSymbolStream</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="NewSymbolStream.html#avoid">avoid</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="NewSymbolStream.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="NewSymbolStream.html#next">next</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="NewSymbolStream.html#nextN">nextN</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Problem.html">Problem</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Problem.html#length">length</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#add">add</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#afterSubstituting">afterSubstituting</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#empty">empty</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#firstSolution">firstSolution</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#isSolvable">isSolvable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#numSolutions">numSolutions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#plus">plus</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#remove">remove</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#solutions">solutions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#substitute">substitute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#toString">toString</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Problem.html#without">without</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="PropositionalForm.html">PropositionalForm</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#CNF">CNF</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#isAClassicalTautology">isAClassicalTautology</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#isAnIntuitionisticTautology">isAnIntuitionisticTautology</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#isAtomic">isAtomic</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#isConditional">isConditional</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#isConstantTrue">isConstantTrue</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#negatedCNF">negatedCNF</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#.atomic">atomic</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#.conditional">conditional</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#.constantTrue">constantTrue</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#.fromConclusion">fromConclusion</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#.fromConclusionsIn">fromConclusionsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="PropositionalForm.html#.sequent">sequent</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Sequent.html">Sequent</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Sequent.html#attributesToKeep">attributesToKeep</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Sequent.html#conclusion">conclusion</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Sequent.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Sequent.html#originalConclusion">originalConclusion</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Sequent.html#originalPremises">originalPremises</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Sequent.html#premises">premises</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Set.html">Set</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#difference">difference</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#intersection">intersection</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#isSubset">isSubset</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#isSuperset">isSuperset</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#subset">subset</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#symmetricDifference">symmetricDifference</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Set.html#union">union</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Solution.html">Solution</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#add">add</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#afterSubstituting">afterSubstituting</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#complete">complete</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#domain">domain</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#plus">plus</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#restrict">restrict</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#restricted">restricted</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#substitute">substitute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Solution.html#toString">toString</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="SourceMap.html">SourceMap</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#dataForMarker">dataForMarker</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#modified">modified</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#modifiedLineAndColumn">modifiedLineAndColumn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#modifiedPosition">modifiedPosition</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#modify">modify</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#nextMarker">nextMarker</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#nextModificationPosition">nextModificationPosition</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#source">source</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#sourceLineAndColumn">sourceLineAndColumn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#sourcePosition">sourcePosition</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#.debugCode">debugCode</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="SourceMap.html#.isMarker">isMarker</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Substitution.html">Substitution</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Substitution.html#expression">expression</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Substitution.html#metavariable">metavariable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#afterSubstituting">afterSubstituting</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#appliedTo">appliedTo</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#applyTo">applyTo</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#deBruijnDecode">deBruijnDecode</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#deBruijnEncode">deBruijnEncode</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#equals">equals</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#metavariableNames">metavariableNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#substitute">substitute</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Substitution.html#toString">toString</a></span></li><li class="nav-heading"><span class="nav-item-type type-class" title="class">C</span><span class="nav-item-name is-class"><a href="Symbol.html">Symbol</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Symbol.html#insertChild">insertChild</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Symbol.html#text">text</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Symbol.html#toString">toString</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Symbol.html#value">value</a></span></li></ul><ul><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-ExpressionFunctions.html">ExpressionFunctions</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.alphaEquivalent">alphaEquivalent</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.alphaRenamed">alphaRenamed</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.applicationEF">applicationEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.applyEF">applyEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.arityOfEF">arityOfEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.betaReduce">betaReduce</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.bodyOfEF">bodyOfEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.canBetaReduce">canBetaReduce</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.constantEF">constantEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.expressionFunction">expressionFunction</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.expressionFunctionApplication">expressionFunctionApplication</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.fullBetaReduce">fullBetaReduce</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.isAnEF">isAnEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.isAnEFA">isAnEFA</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.newEF">newEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.newEFA">newEFA</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.parametersOfEF">parametersOfEF</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-ExpressionFunctions.html#.projectionEF">projectionEF</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-GlobalValidation.html">GlobalValidation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~cacheFormulaDomainInfo">cacheFormulaDomainInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~copyEquation">copyEquation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~diff">diff</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~eq2chain">eq2chain</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~forbiddenWeeny">forbiddenWeeny</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~getCaselikeRules">getCaselikeRules</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~getUserPropositions">getUserPropositions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~insertInstantiation">insertInstantiation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~insertSymmetricEquivalences">insertSymmetricEquivalences</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~instantiate">instantiate</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~instantiateTransitives">instantiateTransitives</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~isBadInstantiation">isBadInstantiation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~matchGivens">matchGivens</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~matchPropositions">matchPropositions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~processBIHs">processBIHs</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~processCases">processCases</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~processChains">processChains</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~processDomains">processDomains</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~processEquations">processEquations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~reverseEquation">reverseEquation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~splitChains">splitChains</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~splitEquations">splitEquations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~tidyProperNames">tidyProperNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~upgradeChains">upgradeChains</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-GlobalValidation.html#~validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Interpretation.html">Interpretation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~addSystemDeclarations">addSystemDeclarations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~assignProperNames">assignProperNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~interpret">interpret</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~markDeclaredSymbols">markDeclaredSymbols</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~moveDeclaresToTop">moveDeclaresToTop</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~processBindings">processBindings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~processDeclarationBodies">processDeclarationBodies</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~processLetEnvironments">processLetEnvironments</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~processRules">processRules</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~processTheorems">processTheorems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~renameBindings">renameBindings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Interpretation.html#~replaceBindings">replaceBindings</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Lode.html">Lode</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Lode.html#~list">list</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Matching.html">Matching</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Matching.html#.allInstantiations">allInstantiations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Matching.html#.allOptionalInstantiations">allOptionalInstantiations</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Metavariables.html">Metavariables</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-Metavariables.html#.metavariable">metavariable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Metavariables.html#.containsAMetavariable">containsAMetavariable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Metavariables.html#.metavariableNamesIn">metavariableNamesIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Metavariables.html#.metavariablesIn">metavariablesIn</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Parsing.html">Parsing</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Parsing.html#.processShorthands">processShorthands</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Parsing.html#~makeParser">makeParser</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Reporting.html">Reporting</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Scoping.html">Scoping</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.addImplicitDeclaration">addImplicitDeclaration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.addScopeError">addScopeError</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.clearImplicitDeclarations">clearImplicitDeclarations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.clearScopeErrors">clearScopeErrors</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.declareGlobal">declareGlobal</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.declareInAncestor">declareInAncestor</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.declareWhenSeen">declareWhenSeen</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.doNotDeclare">doNotDeclare</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.implicitDeclarations">implicitDeclarations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.removeImplicitDeclaration">removeImplicitDeclaration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.scopeErrors">scopeErrors</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Scoping.html#.validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Utilities.html">Utilities</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~checkExtension">checkExtension</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~checkFolder">checkFolder</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~commonInitialSlice">commonInitialSlice</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~indent">indent</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~lineNum">lineNum</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~rgb2hex">rgb2hex</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~subscript">subscript</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~tab">tab</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Utilities.html#~timer">timer</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-Validation.html">Validation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.clearOptions">clearOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.clearResult">clearResult</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.functionToTool">functionToTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.getOptions">getOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.installTool">installTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.installedTool">installedTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.installedToolNames">installedToolNames</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.result">result</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.setOptions">setOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.setResult">setResult</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-Validation.html#.validate">validate</a></span></li><li class="nav-heading"><span class="nav-item-type type-module" title="module">M</span><span class="nav-item-name is-module"><a href="module-deBruijn.html">deBruijn</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-deBruijn.html#.deBruijn">deBruijn</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-deBruijn.html#.free">free</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-deBruijn.html#.isEncodedBinding">isEncodedBinding</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="module-deBruijn.html#.numberOfOccurrences">numberOfOccurrences</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-deBruijn.html#.adjustIndices">adjustIndices</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-deBruijn.html#.decodeExpression">decodeExpression</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-deBruijn.html#.decodeSymbol">decodeSymbol</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-deBruijn.html#.encodeExpression">encodeExpression</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-deBruijn.html#.encodeSymbol">encodeSymbol</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-deBruijn.html#.encodedIndices">encodedIndices</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="module-deBruijn.html#.equal">equal</a></span></li></ul><ul><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="BindingInterface.html">BindingInterface</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="BindingInterface.html#.addTo">addTo</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="BindingInterface.html#.allAreSymbols">allAreSymbols</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="BindingInterface.html#.binds">binds</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="BindingInterface.html#.body">body</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="BindingInterface.html#.boundSymbolNames">boundSymbolNames</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="BindingInterface.html#.boundSymbols">boundSymbols</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="CNF.html">CNF</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNF.html#.and">and</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNF.html#.constantFalse">constantFalse</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNF.html#.constantTrue">constantTrue</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNF.html#.isSatisfiable">isSatisfiable</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNF.html#.or">or</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="CNF.html#.proposition">proposition</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="Database.html">Database</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.filterByMetadata">filterByMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.getCode">getCode</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.getCodeWithoutIncludes">getCodeWithoutIncludes</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.getMetadata">getMetadata</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.getObject">getObject</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.getObjects">getObjects</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.keys">keys</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.keysPaths">keysPaths</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Database.html#.keysStartingWith">keysStartingWith</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="Extensions.html">Extensions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Declaration#allProps">Declaration#allProps</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Declaration#letsInScope">Declaration#letsInScope</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Declaration#lookup">Declaration#lookup</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Declaration#prop">Declaration#prop</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Environment#catalog">Environment#catalog</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Environment#cnf">Environment#cnf</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Environment#letInferences">Environment#letInferences</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Environment#scopes">Environment#scopes</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Expression#allProps">Expression#allProps</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Expression#lookup">Expression#lookup</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.Expression#prop">Expression#prop</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#Insts">LogicConcept#Insts</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#Parts">LogicConcept#Parts</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#attributes">LogicConcept#attributes</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#bindings">LogicConcept#bindings</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#chains">LogicConcept#chains</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#declarations">LogicConcept#declarations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#descendantsSatisfyingIterator">LogicConcept#descendantsSatisfyingIterator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#environments">LogicConcept#environments</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#equations">LogicConcept#equations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#find">LogicConcept#find</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#forSomes">LogicConcept#forSomes</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#formulas">LogicConcept#formulas</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#getDeclares">LogicConcept#getDeclares</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#getRules">LogicConcept#getRules</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#getTheorems">LogicConcept#getTheorems</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#insertAfter">LogicConcept#insertAfter</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#insertBefore">LogicConcept#insertBefore</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isAChain">LogicConcept#isAChain</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isAComment">LogicConcept#isAComment</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isADeclaration">LogicConcept#isADeclaration</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isALet">LogicConcept#isALet</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isALetEnvironment">LogicConcept#isALetEnvironment</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isAProposition">LogicConcept#isAProposition</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isAStatement">LogicConcept#isAStatement</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#isAnEquation">LogicConcept#isAnEquation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#letAncestors">LogicConcept#letAncestors</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#lets">LogicConcept#lets</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#mentions">LogicConcept#mentions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#negate">LogicConcept#negate</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#propositions">LogicConcept#propositions</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#results">LogicConcept#results</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#root">LogicConcept#root</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#setResult">LogicConcept#setResult</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#slice">LogicConcept#slice</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#some">LogicConcept#some</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#statements">LogicConcept#statements</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#symbols">LogicConcept#symbols</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#toAlgebraic">LogicConcept#toAlgebraic</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#toEnglish">LogicConcept#toEnglish</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#toNice">LogicConcept#toNice</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LogicConcept#toggleGiven">LogicConcept#toggleGiven</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LurchSymbol#properName">LurchSymbol#properName</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Extensions.html#.LurchSymbol#rename">LurchSymbol#rename</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="Formula.html">Formula</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="Formula.html#.cachedInstantiation">cachedInstantiation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.addCachedInstantiation">addCachedInstantiation</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.allCachedInstantiations">allCachedInstantiations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.allPossibleInstantiations">allPossibleInstantiations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.clearCachedInstantiations">clearCachedInstantiations</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.domain">domain</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.from">from</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.hasDeclarationCapture">hasDeclarationCapture</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.instantiate">instantiate</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="Formula.html#.possibleSufficientInstantiations">possibleSufficientInstantiations</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="JSON.html">JSON</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="JSON.html#.copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="JSON.html#.equals">equals</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace" title="namespace">N</span><span class="nav-item-name is-namespace"><a href="ValidationTools.html">ValidationTools</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="ValidationTools.html#.CASValidator">CASValidator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="ValidationTools.html#.arithmeticValidator">arithmeticValidator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="ValidationTools.html#.classicalPropositionalValidator">classicalPropositionalValidator</a></span></li><li class="nav-item"><span class="nav-item-type type-function" title="function">F</span><span class="nav-item-name is-function"><a href="ValidationTools.html#.intuitionisticPropositionalValidator">intuitionisticPropositionalValidator</a></span></li></ul><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="global.html#LurchOptions">LurchOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-member" title="member">M</span><span class="nav-item-name is-member"><a href="global.html#predictableStringify">predictableStringify</a></span></li>
+  </nav>
+</header>
+
+
+<main class="layout-main  layout-content--source">
+  <div class="container">
+    <p class="page-kind">source</p>
+    <h1 class="page-title">experimental/parsing.js</h1>
+    
+
+
+
+    
+
+<section>
+    <article>
+        <pre id="source" class="source-page line-numbers"><code class="language-js">/**
+ * Parse a string to convert it to an LC and process Shorthands that appear in
+ * an LC.
+ *
+ * @module Parsing
+ */
+//////////////////////////////////////////////////////////////////////////////
+//
+//                       Parsers and Parsing Utilties 
+//                       for converting strings to LCs
+//                       and vice versa
+//
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Imports
+//
+import { Environment } from '../environment.js'
+import { Symbol as LurchSymbol } from '../symbol.js'
+import { Application } from '../application.js'
+import Algebrite from '../../dependencies/algebrite.js'
+const compute = Algebrite.run
+import './extensions.js'
+
+/**
+ * Make both a normal and tracing peggy parser from the given string and capture
+ * and customize the error formatting, then return both parsers and the original
+ * parser (which throws errors but doesn't trace) in an array.
+ * @function
+ * @param {string} parserstr - the peggy parser definition string  
+ * @returns {function[]} - the normal, tracing, and raw parsers
+ */
+const makeParser = parserstr => {
+  
+  const opts = { cache:true }
+  const traceopts = { ...opts , trace:true }
+  const rawparser = peggy.generate(parserstr,opts)
+  const rawtraceparser = peggy.generate(parserstr,traceopts)
+  
+  const parser = (s,opts) => {
+    try { 
+      return rawparser.parse(s,opts)
+    } catch(e) {
+      if (typeof e.format === 'function') {
+        console.log(e.format([{
+          grammarSource:parserstr,
+          text:s
+        }]))
+      } else {    
+        console.log(e.toString())
+      }
+      return undefined
+    }
+  }
+  
+  // No need for this in a browser
+  const traceparser = (typeof global !== 'undefined' ) ?
+    s => {
+      // make the backtracer
+      
+      const tracer = new Tracer(s,
+        { showTrace : true,
+          showFullPath : false,
+          hiddenPaths : [ "__" , "_" ]
+        }
+      )
+  
+      // show backtracing whether it's an error or not
+      try { 
+        const ans = rawtraceparser.parse(s,{ tracer:tracer })
+        write(tracer.getBacktraceString())
+        return ans
+      } catch(e) {
+        write(tracer.getBacktraceString())
+        return undefined
+      }
+    } : undefined
+  
+  return { parse: parser, trace: traceparser, raw:  rawparser.parse }
+}
+
+// Take a text file that has n lines and parse it one line at a time, optionally
+// showing how each line parses, and reporting on the number of lines that
+// failed to parse.  The main use is to take a file with LurchNotation lines and
+// convert it to either putdown or latex, and print the results as a test of the
+// parser.
+const parseLines = (parser,verbose=true,name='LurchParserTests',opts) => {
+  let ans = []
+  const lines = 
+    loadStr(name,'./parsers/','lurch').split('\n')
+       .map(line => line.trim())
+       .filter(line => line.length > 0 &amp;&amp; line.slice(0,2)!=='//')
+  // console.log(`File contains ${lines.length} parseable lines`)
+  let pass = 0, fail = 0
+  let report = []
+  lines.forEach( l => {
+    try { 
+      ans.push(parser(l,opts))
+      pass++
+      if (verbose) write(`${Pens.itemPen(l)}\n → ${Pens.stringPen(parser(l,opts))}\n`)
+    } catch {
+      report.push(l)
+      fail++
+    }
+  })
+  report.forEach(l=>console.log(`Could not parse ${Pens.contextPen(l)}`))
+
+  console.log(`Parsed ${pass} lines successfully, ${fail} failed`)
+  return (verbose) ? ans : undefined
+}
+
+// This was a prototype made quickly at the AIM workshop We keep it for now but
+// improve on it below.
+export const lc2algebrite = e => {
+  if (e instanceof Application &amp;&amp; 
+      e.numChildren()==3 &amp;&amp;
+      e.child(0) instanceof LurchSymbol &amp;&amp;
+      e.child(0).text()==='is' &amp;&amp; 
+      e.child(2) instanceof LurchSymbol &amp;&amp;
+      e.child(2).text()==='prime' &amp;&amp;
+      e.child(1) instanceof LurchSymbol &amp;&amp;
+      e.child(1).text().length > 0 &amp;&amp;
+      Number.isInteger(Number(e.child(1).text())) ) {
+    const n = Number(e.child(1).text())  
+    return `isprime(${n})`
+  } else {  
+    return '0'
+  }
+}
+
+///////////////////////////////////////////////////////////////////
+//  Arithmetic
+//
+
+// For now, the only three relations we allow
+const NumericRelns = ['=','&lt;','≤']
+
+// utilities
+// check if this LC is non-negative
+const isNonnegative = e => {
+  return isNumeric(e) &amp;&amp; (compute(`0&lt;=${numericToCAS(e)}`)==='1')
+}
+// check if this LC is non-zero
+const isNonzero = e => {
+  return isNumeric(e) &amp;&amp; (compute(`0==${numericToCAS(e)}`)==='0')
+}
+// check if this LC isRational, but mathematically reduces to an integer
+const isReducedInteger = e => {
+  return isNumeric(e) &amp;&amp; (compute(`denominator(${numericToCAS(e)})`)==='1')
+}
+
+// Natural Numbers
+//
+// Check if this LC represents a natural constant
+const isNaturalNumber = n => n.matches('[1-9][0-9]*$|^0')
+// Check if this expression is a natural number expression
+const isNatural = e => {
+  // base case - natural numbers are always natural expressions
+  if (isNaturalNumber(e)) return true
+  // recursion - if it is not an application, we're done
+  if  ( ! (e instanceof Application) ) return false
+  // it is an Application so get the op
+  const op = e.child(0)
+  const nargs = e.numChildren()
+  // check the binary ops
+  if (['\\+','⋅','\\^'].some(x=>op.matches(x)) &amp;&amp; nargs == 3) 
+    return e.children().slice(1).every(isNatural)
+  // check unary ops
+  if (op.matches('!') &amp;&amp; nargs == 2) 
+    return isNatural(e.child(1))
+  // otherwise it's not a supported operator
+  return false
+}
+// Check if this expression can be evaluated by natural number arithmetic
+const isNaturalArithmetic = e => {
+  // it must be an application with three children...
+  return e instanceof Application &amp;&amp; e.numChildren() === 3 &amp;&amp;
+    // and it's operator must be one of the three...
+    NumericRelns.some( reln => e.child(0).matches(reln)) &amp;&amp;
+    // .. and the rest of the arguments are natural expressions
+    e.children().slice(1).every(c=>isNatural(c))
+}
+
+// Integers
+//
+// Since negation is an operator, the constants are the same as for
+// Natural Numbers
+
+// Check if this expression is an integer expression
+const isInteger = e => {
+  // base case - natural numbers are always integer expressions
+  if (isNaturalNumber(e)) return true
+  // recursion - if it is not an application, we're done
+  if  ( ! (e instanceof Application) ) return false
+  // it is an Application so get the op
+  const op = e.child(0)
+  // and the arity
+  const nargs = e.numChildren()
+  // check the easy binary ops
+  if (['\\+','⋅'].some(x=>op.matches(x)) &amp;&amp; nargs == 3 &amp;&amp;
+      e.children().slice(1).every(isInteger)) return true
+  // for ^ check that the second arg is non-negative
+  if (op.matches('\\^') &amp;&amp; nargs == 3 &amp;&amp;
+      e.children().slice(1).every(isInteger)) {
+    return isNonnegative(e.child(2))
+  }
+  // check unary ops
+  // negation can have any argument
+  if (op.matches('-') &amp;&amp; nargs == 2 ) return isInteger(e.child(1)) 
+  // factorial has to have nonnegative argument
+  if (op.matches('!') &amp;&amp; nargs == 2 ) 
+    return isInteger(e.child(1)) &amp;&amp; isNonnegative(e.child(1))  
+  // otherwise it's not a supported operator
+  return false
+}
+// Check if this expression can be evaluated by natural number arithmetic
+const isIntegerArithmetic = e => {
+  // it must be an application with three children...
+  return e instanceof Application &amp;&amp; e.numChildren() === 3 &amp;&amp;
+    // and it's operator must be one of the three...
+    NumericRelns.some( reln => e.child(0).matches(reln)) &amp;&amp;
+    // .. and the rest of the arguments are natural expressions
+    e.children().slice(1).every(c=>isInteger(c))
+}
+
+// Rational
+//
+// Since negation and division are operators, the constants are the same as for
+// Natural Numbers
+
+// Check if this expression is an integer expression
+const isRational = e => {
+  // base case - natural numbers are always integer expressions
+  if (isNaturalNumber(e)) return true
+  // recursion - if it is not an application, we're done
+  if  ( ! (e instanceof Application) ) return false
+  // it is an Application so get the op
+  const op = e.child(0)
+  // and the arity
+  const nargs = e.numChildren()
+  // check the easy binary ops
+  if (['\\+','⋅'].some(x=>op.matches(x)) &amp;&amp; nargs == 3 &amp;&amp;
+      e.children().slice(1).every(isRational)) return true
+  // for ^ check that the second arg is an integer expression (no roots)
+  // Note: we don't allow rational expressions that simplify to an integer
+  if (op.matches('\\^') &amp;&amp; nargs == 3 &amp;&amp;
+      e.children().slice(1).every(isRational)) {
+    return isReducedInteger(e.child(2)) // this should allow rational that is integer... TODO
+  }
+  // check unary ops
+  // for / check that the second arg is nonzero
+  if (op.matches('/') &amp;&amp; nargs == 2 &amp;&amp;
+      isRational(e.child(1))) {
+    return isNonzero(e.child(1))
+  }
+  // negation can have any argument
+  if (op.matches('-') &amp;&amp; nargs == 2 ) return isRational(e.child(1)) 
+  // factorial has to have nonnegative integer argument
+  if (op.matches('!') &amp;&amp; nargs == 2 ) 
+    return isInteger(e.child(1)) &amp;&amp; isNonnegative(e.child(1))  
+  // otherwise it's not a supported operator
+  return false
+}
+// Check if this expression can be evaluated by natural number arithmetic
+const isRationalArithmetic = e => {
+  // it must be an application with three children...
+  return e instanceof Application &amp;&amp; e.numChildren() === 3 &amp;&amp;
+    // and it's operator must be one of the three...
+    NumericRelns.some( reln => e.child(0).matches(reln)) &amp;&amp;
+    // .. and the rest of the arguments are natural expressions
+    e.children().slice(1).every(c=>isRational(c))
+}
+
+// Since naturals and integers are special cases of rationals, they are all numerics
+const isNumeric = isRational
+
+// Check if this LC represents an equality (=) or inequality (&lt; , ≤) of numeric
+// expressions in the given ring. This allows us to specify the ring independently.
+export const isArithmetic = {
+  ℕ: isNaturalArithmetic,
+  ℤ: isIntegerArithmetic,
+  ℚ: isRationalArithmetic
+}
+// convert an Arithmetic statement in a ring to a CAS input string
+// this assumes you have already checked that the Arithmetic is in the appropriate ring
+export const arithmeticToCAS = e => {
+  const ans = numericToCAS(e.child(1))+e.child(0).text()+numericToCAS(e.child(2))
+  return ans.replace(/=/g,'==')
+            .replace(/≤/g,'&lt;=')
+}
+
+// convert an LC that isNumeric into a CAS input string
+const numericToCAS = e => {
+  // just return if it isn't a Numeric Expression
+  if (!isNumeric(e)) return
+  // syntactic sugar
+  const convert = numericToCAS
+  // if it's a number, return its text
+  if (isNaturalNumber(e)) return e.text()
+  // It isn't a number so it must be compound
+  const kids = e.children()
+  // binary infix ops (all for now)
+  if (kids.length===3) {
+    return `(${convert(kids[1])}${kids[0].text()}${convert(kids[2])})`.replace(/⋅/g,'*')
+  // unary on the right
+  } else if (kids[0].matches('!')) {
+    return `(${convert(kids[1])}!)`
+  // unary on the left
+  // division is unary reciprocal
+  } else if (kids[0].matches('/')) {
+    return `(1/${convert(kids[1])})`
+  // negation is what's left  
+  } else {
+    return `(${kids[0].text()}${convert(kids[1])})`
+  }
+}
+
+/**
+ *  ## Process Shorthands 
+ *
+ * In order to make it convenient to enter large documents in putdown notation,
+ * it is convenient to use fromPutdown to enter some reserved content in the
+ * document that is preprocessed before evaluating the document.
+ *
+ * The following are what we have for Shorthands. More might be added later. 
+ *
+ *   * Scan for occurrences of the symbol `&lt;comma` and mark its previous
+ *     sibling's `.continued` attribute true. Then delete the `&lt;comma` symbol.  
+ *
+ *   * Scan for occurrences of the symbol `given>` and mark its next sibling as
+ *     a `given`.  If the next sibling has attribute `.continued` true then do
+ *     the same for it's next sibling and iterate until a sibling is found that
+ *     does not have that propoerty (or you run out of next siblings) Then
+ *     delete the `given>` symbol.  
+ *
+ *   * Scan a document looking for any of the following Shorthands and convert
+ *     the next (>) or previous (&lt;) sibling to the corresponding type in the asA
+ *     column.
+ *
+ *       | Shorthand   |  mark asA |
+ *       | ------------|-----------|
+ *       | 'BIH>'      | 'BIH'     |
+ *       | 'declare>'  | 'Declare' |
+ *       | 'rule>'     | 'Rule'    |
+ *       | 'cases>'    | 'Cases'   |
+ *       | 'subs>'     | 'Subs'    |
+ *       | 'thm>'      | 'Theorem' |
+ *       | '&lt;thm'      | 'Theorem' |
+ *       | 'proof>'    | 'Proof'   |
+ *
+ *   * Scan for occurrences of the symbol `rules>`. Its next sibling should be
+ *     an environment containing given Environments. Mark each child of the next
+ *     sibling as a `Rule` and delete both the `rules>` symbol and the outer
+ *     environment containing the newly marked `Rules.  This allows us to use an
+ *     Environment to mark a lot of consecutive `Rules` all at once and then
+ *     ignore the wrapper Environment. For libraries this is cleaner than trying
+ *     to mark every Rule with `rule>` individually.  
+ *
+ *   * Scan for occurrences of the symbol `λ` (or  `@` for backwards
+ *     compatibility) and replace that with the symbol "LDE EFA" (which then
+ *     will still print as '𝜆' but it's what is needed under the hood).
+ *
+ *   * Scan for occurrences of the symbols `pair`and `triple`, and replace them
+ *     with the symbol "tuple". 
+ *
+ *   * Scan for occurrences of the symbol `then`. They are intended to be a
+ *     shorthand way to enter an If-then environment inline without using a
+ *     shell. The 'then' should be between given siblings and one or more claim
+ *     siblings in a continuation chain determined by commas. For example, `If
+ *     A,B,C then D,E,F` will then be converted to the environment `{ :A :B :C D
+ *     E F }`.  These cannot be nested.  This is useful for both inserting
+ *     If-then environments inline, and also for using them as the body of a
+ *     declaration.  Thus, for example you can say e.g. `If A,B,C then D,E,F for
+ *     some c` or `Let x be such that if A,B,C then D,E,F` If you just want a
+ *     conjunction you can also do `D,E,F for some c` or `Let x be such that
+ *     D,E,F `
+ *
+ * The Rule will then be replaced by the expanded version and the `≡` symbols
+ *     removed, following the cyclic TFAE style of implications.  For example,
+ *     if the Rule has the form `:{ a ≡ b c ≡ d }` then it will be replaced by
+ *     `:{ {:a {b c}} {:{b c} d } {:d a} }`.
+ *
+ *   * Scan for occurrences of the symbol `≡`. They are intended to be a
+ *     shorthand way to enter IFF rules (equivalences).  The '≡' should be a
+ *     child of a Rule environment, and should not be the first or last child.
+ *     The Rule will then be replaced by the expanded version and the `≡`
+ *     symbols removed, following the cyclic TFAE style of implications.  For
+ *     example, if the Rule has the form `:{ a ≡ b c ≡ d }` then it will be
+ *     replaced by `:{ {:a {b c}} {:{b c} d } {:d a} }`.
+ *
+ *   * Scan for occurrences of the symbol `➤`. If found it should be the first
+ *     child of an Application whose second child is a symbol whose text is the
+ *     text of the comment.  Mark that Application with `.ignore=true` so it is
+ *     ignored propositionally.
+ *
+ *   * Scan for occurrences of the symbol `by` and mark its previous sibling's
+ *     `.by` attribute with the text of its next sibling, which must be a
+ *     LurchSymbol. Then delete both the `by` and it's next sibling.  Currently
+ *     used by the `Cases` tool, the Substitution rule, the CAS tool, and the
+ *     Arithmetic and Algebra tools.
+ *
+ *   * Scan for occurrences of the symbol `✔︎`, `✗`, and `⁉︎` and mark its
+ *     previous sibling with .expectedResult 'valid', 'indeterminate', and
+ *     'invalid' respectively.
+ *
+ *   * Scan a document looking for the symbol `&lt;&lt;`, which we call a 'marker'.
+ *     For every marker, 
+ *     - if the preceding sibling is an environment, attribute it as a `BIH`. 
+ *
+ *     - if the preceding sibling is a declaration, attribute it as a `Declare`, 
+ *
+ *     - in either case, finally, delete the marker.
+ *
+ * Naturally we have to run this FIRST before anything else.  These changes are
+ * made in-place - they don't return a copy of the document.
+ *
+ * This does no error checking, so &lt;&lt; has to be an outermost expression with a
+ * previous sibling and λ has to appear in some sensible location and so on.
+ *
+ * @function
+ * @param {Environment} L - the document
+ * @returns {LogicConcept} - the modified document
+ */
+export const processShorthands = L => {
+
+  // for each symbol named symb, do f, i.e. execute f(symb)
+  const processSymbol = ( symb , f ) =>  {
+    L.descendantsSatisfying( x => (x instanceof LurchSymbol) &amp;&amp; x.text()===symb )
+     .forEach( s => f(s) )
+  }
+  // make next sibling have a given type.  If the optional third argument is missing, do nothing further.  If flag is 'given' make the target a given.  If the flag is 'claim' make the target a claim.
+  const makeNext =  (m,type,flag) => {
+    const next = m.nextSibling()
+    next.makeIntoA(type)
+    if (flag === 'given') next.makeIntoA('given')
+    if (flag === 'claim') next.unmakeIntoA('given')
+    m.remove()
+  }
+  // make previous sibling have a given type
+  const makePrevious =  (m,type) => {
+    m.previousSibling().makeIntoA(type)
+    m.remove()
+  }
+
+  // In addition to processing Symbols, we also want to sometimes react
+  // to the presence of certain attributes.
+  
+  // Move ExpectedResult LC attributes to js attributes.  The reason to do this
+  // is so we can use .lurch files created with the web UI as test files by
+  // exporting them after validating (using the CMD+SHIFT+D option).  That has
+  // to attribute the LC's with an LC attribute.  
+  //
+  // To use such a file as a test file we must validate it and compare the
+  // ExpectedResult's with the actual results.  However, the process of
+  // validation makes copies of some LC's, like the user-rules created for each
+  // Theorem and the ForSome bodies.  
+  //
+  // But the LC copy method copies it's LC
+  // attributes producing items marked with ExpectedResults that do not have any
+  // result at all from validation. By moving the LC attribute to a js attribute
+  // that fixes that problem because the LC copy routine does not copy js
+  // attributes on the LC.
+  L.descendantsSatisfying( x => x.hasAttribute('ExpectedResult'))
+    .forEach( s => {
+      s.ExpectedResult = s.getAttribute('ExpectedResult')
+      s.clearAttributes('ExpectedResult')
+    } ) 
+  
+  // attribute the previous sibling with .continued attribute whose value is true if
+  // its next sibling is a `&lt;comma` symbol.
+  processSymbol( '&lt;comma' ,  m => { 
+    let LHS = m.previousSibling()
+    // for testing purposes if the previous sibling is an 'expected result' marker
+    // attribute its previous sibling instead
+    if (['✔︎','✗','⁉︎','⊘'].some(x=>LHS.matches(x))) LHS = LHS.previousSibling()
+    LHS.continued = true
+    m.remove()  
+    return 
+  } )
+
+  // make the next sibling into a Given, and if it has `.continued` equal to
+  // true, do the same for its next sibling, and iterate until you reach a next
+  // sibling that doesn't have that attribute or you run out of next siblings,
+  // whichever comes first.  Then delete the 'given>' symbol.
+  processSymbol( 'given>' ,  m => { 
+    let next = m.nextSibling()
+    while (next) { 
+      next.makeIntoA('given')
+      next = (next.continued) ? next.nextSibling() : undefined
+    }
+    m.remove()  
+    return 
+  } )
+  
+  // declare the type of the next or previous sibling 
+  processSymbol( 'BIH>'          , m => makeNext(m,'BIH','claim') )
+  processSymbol( 'declare>'      , m => makeNext(m,'Declare','given') )
+  processSymbol( 'rule>'         , m => makeNext(m,'Rule','given') )  
+  processSymbol( 'thm>'          , m => makeNext(m,'Theorem','claim') )  
+  processSymbol( '&lt;thm'          , m => makePrevious(m,'Theorem','claim') )  
+  processSymbol( 'proof>'        , m => makeNext(m,'Proof','claim') )
+  processSymbol( 'cases>'        , m => makeNext(m,'Cases','given') )  
+
+  // Label a rule.  We imitate
+  processSymbol( 'label>'         , m => {
+    // if it isn't inside a Rule (or inside more than one) do nothing
+    const rules = m.ancestorsSatisfying(x=>x.isA('Rule'))
+    if (!rules.length==1) return
+    const rule = rules[0]
+    // it should have a next sibling from the parser, and it should be a
+    // symbol whose text is the quoted string the user typed inside the
+    // argument to the label command.
+    const label = m.nextSibling().text().toLowerCase().replace(/\s+/g,'')
+    // if the parent has no .labels attribute add one as an array of labels,
+    // otherwise add this label to the rest.
+    if (rule.labels) {
+      // Convert to lower case and remove all whitespace before saving to give
+      // users a little slack.
+      if (!rule.labels.includes(label)) rule.labels.push(label)
+    } else {
+      rule.labels = [ label ]
+    }
+    m.parent().remove()
+  })
+
+  // Mark a rule as the substitution rule, and mark it's conclusion as a 
+  // substitution EFA so that it can be instantiated by expressions marked
+  // with .by='substitution'
+  processSymbol( 'subs>'         , m => {
+    m.nextSibling().conclusions().forEach( c => c.makeIntoA('Subs'))
+    makeNext(m,'Subs','given')
+  })  
+  
+  // Deprecated: This is the old version that was made at the AiM workshop to
+  // accommodate the CAS rule.  But the CAS rule has been updated to the Algebra
+  // Tool rule, so this is probably going to be deleted eventually.
+  //
+  // attribute the previous sibling with .by attribute whose value is the text
+  // of the next sibling if it is a symbol, and the next sibling LC itself if it isn't.
+  // processSymbol( 'by' ,  m => { 
+  //   let LHS = m.previousSibling()
+  //   // for testing purposes if the previous sibling is an 'expected result' marker
+  //   // attribute its previous sibling instead
+  //   if (['✔︎','✗','⁉︎','⊘'].some(x=>LHS.matches(x))) LHS = LHS.previousSibling()
+  //   const RHS = m.nextSibling()
+  //   // it should be a LurchSymbol or an Application
+  //   if (RHS instanceof LurchSymbol) {
+  //     if (RHS.text()==='CAS') {
+  //       LHS.by = { CAS: lc2algebrite(LHS) }
+  //       m.remove()
+  //       RHS.remove()
+  //     } else {
+  //       LHS.by = RHS.text()
+  //       m.remove()
+  //       RHS.remove()
+  //     }
+  //   } else if (RHS instanceof Application ) {
+  //     if (RHS.child(0) instanceof LurchSymbol &amp;&amp; RHS.child(0).text()==='CAS') { 
+  //       // TODO: handle the case where no arg is passed or it's not a symbol
+  //       LHS.by = { CAS: RHS.child(1).text() }
+  //       m.remove()
+  //       RHS.remove()
+  //     }
+  //   }
+  //   return 
+  // } )
+  
+  // attribute the previous sibling with .by attribute whose value is the text
+  // of the next sibling if it is a symbol, and the next sibling LC itself if it isn't.
+  processSymbol( 'by' ,  m => { 
+    let LHS = m.previousSibling()
+    // if there is no previous sibling, do nothing
+    if (!LHS) return
+    // for testing purposes if the previous sibling is an 'expected result' marker
+    // attribute its previous sibling instead
+    if (['✔︎','✗','⁉︎','⊘'].some(x=>LHS.matches(x))) LHS = LHS.previousSibling()
+    // if there is no previous sibling, do nothing
+    if (!LHS) return
+    const RHS = m.nextSibling()
+    // if there is no next sibling, or it's not a symbol, do nothing
+    if (!(RHS &amp;&amp; RHS instanceof LurchSymbol) ) return
+    LHS.by = RHS.text()
+    m.remove()
+    RHS.remove()
+  } )
+  
+  // rules> - Mark each of the children of the next sibling (which should be an
+  // environment) as a Rule, and delete both the shorthand and the environment. 
+  processSymbol( 'rules>' , m => {
+    const wrapper = m.nextSibling()
+    wrapper.children().forEach( kid => {
+      if (kid instanceof Environment) { 
+        kid.makeIntoA('Rule') 
+        kid.makeIntoA('given')
+        // the rule has no creators
+        kid.creators=[]
+        // TODO: the following would be useful for web UI but not for 
+        // Lode, since I've used claim environments in rules.
+        // kid.children().forEach( premise => {
+        //   if (premise instanceof Environment) {
+        //     premise.makeIntoA('given') 
+        //   }
+        // }) 
+      }
+      wrapper.shiftChild()
+      kid.insertBefore(wrapper) 
+    } )
+    wrapper.remove()
+    m.remove()
+  } )
+  
+  // simple replacements
+  processSymbol( 'λ' , m => { 
+    m.replaceWith(new LurchSymbol('LDE EFA'))
+  } )  
+  processSymbol( '@' , m => { 
+    m.replaceWith(new LurchSymbol('LDE EFA'))
+  } )
+  processSymbol( 'pair' , m => { 
+    m.replaceWith(new LurchSymbol('tuple'))
+  } )
+  processSymbol( 'triple' , m => { 
+    m.replaceWith(new LurchSymbol('tuple'))
+  } )
+  
+  // Expand equivalences
+  processSymbol( '≡' ,  m => { 
+    // find the parent environment, if there is none, then do nothing
+    const parent = m.parent()
+    if (!parent) return
+
+    // a utility to identify equivalence separators
+    const isSeparator = x => x instanceof LurchSymbol &amp;&amp; x.text() === '≡'
+
+    // get the children of the parent
+    let inputArray = parent.children()
+    // an array to hold the groups
+    let groups = []
+    
+    // while there are separators, split the input array into groups
+    let k = inputArray.findIndex( isSeparator )
+    while ( k !== -1) {
+      if (k==1) groups.push(inputArray[0])
+      else groups.push(inputArray.slice(0,k))
+      inputArray = inputArray.slice(k+1)
+      k = inputArray.findIndex( isSeparator )      
+    }
+    // if there are no more separators, then push what's left
+    if (inputArray.length === 1) groups.push(inputArray[0])
+    else groups.push(inputArray)
+  
+    // for each group, if it is an array, create a new Environment containing
+    // the group elements, otherwise just use the element itself.  Collect them
+    // all into a results array.
+    const results = []
+    groups.forEach( group => {
+      if (Array.isArray(group) ) {
+        const newEnv = new Environment( ...group )
+        results.push(newEnv)
+      } else {
+        results.push(group)
+      }
+    })
+
+    // finally, replace the parent with a new environment containing all of the 
+    // cyclic implications.
+    const ans = new Environment()
+    ans.copyAttributesFrom(parent)
+
+    // put all of the pairs into the new environment except the last one
+    results.slice(0,-1).forEach( ( result, i ) => { 
+      let myEnv = new Environment( result.asA('given') , 
+                                   results[i+1].copy().unmakeIntoA('given') ) 
+      ans.pushChild(myEnv)
+    } )
+    // and complete the cycle with the last one
+    ans.pushChild(new Environment( 
+      results[results.length-1].asA('given'), 
+              results[0].copy().unmakeIntoA('given') ) )
+    
+    // replace the parent with the new environment  
+    parent.replaceWith(ans)
+  } )
+
+  // Expand equivalences
+  processSymbol( 'then' ,  m => { 
+    // make a new array to contain the relevant LHS and RHS siblings
+    let sibs = []
+    // get all of the consecutive previous given siblings and unshift them onto
+    // the array
+    let prev = m.previousSibling()
+    while (prev &amp;&amp; prev.isA('given')) { 
+      sibs.unshift(prev)
+      prev=prev.previousSibling()
+    }
+    // if there weren't any, just return without doing anything
+    if (!sibs.length) return
+    // now get the continuation-sequence of claims that follow it and push them
+    // onto the array
+    let next = m.nextSibling()
+    // if there aren't any, just return without doing anything
+    if (!next || next.isA('given')) return
+    // otherwise get them all
+    while (next &amp;&amp; !next.isA('given')) { 
+      sibs.push(next)
+      next = (next.continued) ? next.nextSibling() : undefined
+    }
+    // put them all in an environment - this removes them from the document
+    const env = new Environment(...sibs)
+    // then replace the instance of `then` with the new environment (which does
+    // not contain the `then`)
+    m.replaceWith(env)
+  } )
+
+  // add the next sibling, if present, to the body of the previous declaration.
+  // Note that this should not appear in the user's document if it is not after
+  // a Let declaration whose body is empty (i.e., its last child is the symbol
+  // "LDE empty") because the UI doesn't allow it to be constructed otherwise,
+  // so we don't check for that.
+  processSymbol( '&lt;be' ,  m => { 
+    let dec = m.previousSibling()
+    const body = m.nextSibling()
+    // if it doesn't have a next sibling, don't do anything.
+    if (!body) return
+    dec.popChild()
+    dec.pushChild(body) // should remove body as the next sibling too
+    m.remove()
+    return 
+  } )
+
+  // Add the previous sibling, if present, to the body of the next declaration.
+  // If the previous sibling is a continuation (the last in a comma separated
+  // list of claims) then do this for the entire sequence. Note that if the
+  // some> is preceded by an if-then sequence the if-then will be converted to
+  // an environment first, so that the previous element will just be a single
+  // LC.
+  //
+  // There are two possible cases to check for, depending if the declaration
+  // already has an environment as a body or not (due to the `for some x,y in A`
+  // shortcut). Note that this should not appear in the user's document if it is
+  // not before a ForSome declaration whose body is either empty (i.e., its last
+  // child is the symbol "LDE empty") or an environment containing one or more
+  // `x∈A` expressions, because the UI doesn't allow it to be constructed
+  // otherwise, so we don't check for that. 
+  processSymbol( 'some>' ,  m => {
+    // if it doesn't have a previous sibling, don't do anything.
+    let prev = m.previousSibling()
+    if (!prev) return
+    // the UI can only construct some> if it's followed by a symbol
+    const dec = m.nextSibling()
+    // base case: if the body isn't an environment, and the previous sibling is not a continuation, just make it the body as expected
+    if (!(dec.body() instanceof Environment) &amp;&amp; 
+        !prev.previousSibling()?.continued ) {
+      dec.popChild() // remove the placeholder
+      dec.pushChild(prev) // replace with the prev expression
+    // otherwise
+    } else { 
+      // if the body isn't an environment, make it one
+      if (!(dec.body() instanceof Environment)) {
+        dec.popChild() // remove the placeholder
+        dec.pushChild(new Environment()) 
+      } 
+      // then unshift the prev sequence onto it
+      while (prev) {
+        // write('prev is')
+        // write(prev)
+        dec.body().unshiftChild(prev)
+        // write('new dec is')
+        // write(dec)
+        // write('new dec prev sibling is')
+        // write(dec.previousSibling())
+        // write('and it is')
+        // write(dec.previousSibling()?.continued)
+        prev = (m.previousSibling()?.continued) ? m.previousSibling() : undefined
+        // write('new prev is')
+        // write(prev)
+      }
+    }
+    // either way, prev should no longer be where it was, so just get rid of the some>
+    m.remove()
+    return 
+  } )
+
+  // For testing purposes, flag the expected result
+  processSymbol( '✔︎' , m => { 
+    m.previousSibling().ExpectedResult = 'valid'
+    m.remove() 
+  } )
+  
+  processSymbol( '✗' , m => { 
+    m.previousSibling().ExpectedResult = 'indeterminate' 
+    m.remove()
+  } )
+  
+  processSymbol( '⁉︎' , m => { 
+    m.previousSibling().ExpectedResult = 'invalid' 
+    m.remove()
+  } )
+
+  processSymbol( '⊘' , m => { 
+    m.previousSibling().ExpectedResult = 'inapplicable' 
+    m.remove()
+  } )
+
+  // TODO: make this more consistent with the other shorthands
+  processSymbol( '➤' , m => { 
+    if (m.parent().isAComment()) m.parent().ignore=true 
+  })
+  
+  // Labels
+  //
+  // Just a quickie lable mechanism that will be upgraded later.
+  // Labels are currently a single symbol of the form name> which assigns
+  // 'name' to the .label attribute of the next sibling.  Previous siblings
+  // aren't supported yet, nor is whitespace. 
+  // L.descendantsSatisfying( s => (s instanceof LurchSymbol) &amp;&amp; 
+  //   /[^"()\[\]\s]+>/.test(s.text()) )
+  //   .forEach( s => { 
+  //     s.nextSibling().label=s.text().slice(0,-2).toLowerCase() 
+  //     s.remove()
+  //   } ) 
+
+  // depricated but kept for backward compatibility
+  processSymbol( '&lt;&lt;' , m => { 
+    const target = m.previousSibling()
+    const type = (target instanceof Declaration) ? 'Declare' : 'BIH'
+    target.makeIntoA(type)
+    m.remove()
+  } )
+  // depricated but kept for backward compatibility
+  processSymbol( '>>' , m => makeNext(m,'BIH') )
+  
+  return L
+}
+
+export default {
+  isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger, isRational,
+  isNumeric, isNaturalArithmetic,  isIntegerArithmetic, isRationalArithmetic, 
+  numericToCAS, parseLines, makeParser
+}
+///////////////////////////////////////////////////////////////////////////////</code></pre>
+    </article>
+</section>
+
+
+
+
+  </div>
+</main>
+
+<footer class="layout-footer">
+  <div class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a>
+  </div>
+</footer>
+
+
+
+<script src="scripts/prism.dev.js"></script>
+</body>
+</html>
