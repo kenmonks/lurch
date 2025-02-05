@@ -538,6 +538,8 @@ rpl.defineCommand( "features", {
                       it with the optional filename, e.g. initialize('acidtests') 
       ${itemPen('compute(s)')}    : calls Algebrite.run(s) 
                       (see Algebrite docs at algebrite.org)')}
+      ${itemPen('benchmark()')}    : run Lode, validate some documents, then call
+                      'benchmark()' to see a report
 
       ${headingPen('Extra Packages')}  
       ${itemPen('Algebrite')}     : a computer algebra system (see algebrite.org)
