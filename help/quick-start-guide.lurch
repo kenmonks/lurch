@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://127.0.0.1:5500/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://127.0.0.1:5500/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -43,6 +43,7 @@
 <p>You can open a Lurch document directly from the web (usually by clicking a link on a course web page) or from your computer. You can only save a document to your computer. You can do both from the Lurch&nbsp;<strong>File </strong>menu. Do not save from the browser <strong>File </strong>menu.&nbsp;</p>
 <ul>
 <li><span style="color: rgb(186, 55, 42);"><em>Do not use the browser to save your document</em></span>. If you use a hotkey instead of the menu, be sure to use the hotkey listed on the Lurch menu and not the one listed on the browser menu.</li>
+<li>If your browser doesn't prompt you to choose the file name and location before saving, you might have to change a browser setting.&nbsp; In Chrome settings, choose the&nbsp; <strong>Downloads</strong> section and enable <strong>Ask where to save each file before downloading.</strong></li>
 <li>S<em>ave your work often!</em></li>
 </ul>
 <h3>Meaningful Math</h3>
