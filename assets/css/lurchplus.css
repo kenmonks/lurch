@@ -16,7 +16,7 @@
   /* theme blue */
   --theme-color: #428bca;
   /* accent blue */
-  --accent-color: #025D8C; 
+  --accent-color: #025d8c; 
   /* nav link color */
   --nav-link-color: #5DA9E9;
   /* submenu header color */
@@ -64,9 +64,12 @@
   --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
   /* inline semantic math expression font color */
   --code-bg-color: #ecf0f1; /* matches TinyMCE light gray */
-  /* base font size */
-  /* inline semantic math expression font color */
-  --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
+  /* Soft blue for lesson background */
+  --lesson-bg-color: #f4faff; 
+  /* Subtle gray for sub-items */
+  --subitem-color: #666; 
+  /* Soft shadow */
+  --shadow-color: rgba(0, 0, 0, 0.1); 
   /* base font size */
   --base-font-size: 11pt;
   /* subproof indentation */
@@ -419,6 +422,13 @@ div.subtitle-box {
   color: blueviolet;
 }
 
+span.green-check {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  color: var(--check-color);
+  padding-right: 0.2em;
+}
+
 /* #content-block ul#topfeatures {
    margin-left: 3rem; 
 } */
@@ -510,37 +520,68 @@ div.flexrow {
   margin-bottom: 0;
 }
 
-#checklist th {
+#thmchecklist th {
   text-align: left;
 }
 
-#checklist td:first-child,
+#thmchecklist td:first-child,
 .question-mark,
 .checkmark {
-  font-family: "Lucida Grande";
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif;
   font-weight: bold;
   color: #d8b400;
   text-align: center;
 }
 
-#checklist td.done,
+#thmchecklist td.done,
 .checkmark {
   color: #4caf50
 }
 
-#checklist tbody tr:hover {
+#thmchecklist tbody tr:hover {
   background-color: #bbd6fb;
   color: #0068c2;
 }
 
-#checklist tbody tr[data-href]:hover {
+#thmchecklist tbody tr[data-href]:hover {
   cursor: pointer;
 }
 
-#content-block table#checklist {
+#content-block table#thmchecklist {
   margin-bottom: 4rem;
 }
 
+/* Hide the native checkbox */
+.contains-task-list input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+/* Style the custom checkbox box using ::before */
+.contains-task-list label::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #666;
+  border-radius: 3px; /* Optional: rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  margin-right: 0.2em;
+}
+
+/* Style the custom checkbox box when checked */
+.contains-task-list label.checked::before {
+  content: '✓';
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  color: var(--check-color);
+  padding-right: 2px;
+  border: none;
+}
+
+/* 
+ * The footer block
+ */
 #footer-block {
   background: none;
   color: black;
