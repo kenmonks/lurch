@@ -46,18 +46,18 @@ node:internal/modules/esm/resolve:275
 
 Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/monks/Dropbox/files/monkware/git/lurch/lde/lde/src/index.js' imported from /Users/monks/Dropbox/files/monkware/git/lurch/lde/tutorial-tmp-file-Methods in each LC subclass.md.js
     at finalizeResolution (node:internal/modules/esm/resolve:275:11)
-    at moduleResolve (node:internal/modules/esm/resolve:932:10)
-    at defaultResolve (node:internal/modules/esm/resolve:1056:11)
-    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:654:12)
-    at #cachedDefaultResolve (node:internal/modules/esm/loader:603:25)
-    at ModuleLoader.resolve (node:internal/modules/esm/loader:586:38)
-    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:242:38)
-    at ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
+    at moduleResolve (node:internal/modules/esm/resolve:860:10)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:688:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:612:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:595:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:248:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:136:49) {
   code: 'ERR_MODULE_NOT_FOUND',
   url: 'file:///Users/monks/Dropbox/files/monkware/git/lurch/lde/lde/src/index.js'
 }
 
-Node.js v22.13.0
+Node.js v23.5.0
 ```
 
 

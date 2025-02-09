@@ -731,12 +731,29 @@ rpl.defineCommand( "parsertest", {
 rpl.defineCommand( "makedocs", {
   help: "Run jsdocs to make the documentation.",
   action() {
-    console.log(defaultPen('Building docs...')) 
     try {
+      console.log(defaultPen('Building experimental docs...')) 
+      // this runs in the experimental folder
       execStr('rm -rf docs &amp;&amp; jsdoc ./* -d docs -c utils/jsdoc-conf.json -u tutorials/ &amp;&amp; node utils/post-docs')
       console.log(defaultPen('...done'))
     } catch (err) {
-      console.log('Error building docs.')
+      console.log('Error building experimental docs.')
+    }
+    try {
+      console.log(defaultPen('Building lde docs...')) 
+      // this runs in the lde folder
+      execStr('cd ../.. &amp;&amp; npm run docs')
+      console.log(defaultPen('...done'))
+    } catch (err) {
+      console.log('Error building lde docs.')
+    }
+    try {
+      console.log(defaultPen('Building lurchmath docs...')) 
+      // this runs in the lurchmath folder
+      execStr('cd ../../../lurchmath &amp;&amp; npm run docs')
+      console.log(defaultPen('...done'))
+    } catch (err) {
+      console.log('Error building lurchmath docs.')
     }
     this.displayPrompt()
   }

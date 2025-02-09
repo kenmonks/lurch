@@ -1904,7 +1904,9 @@ LogicConcept.prototype._validate = function (target = this,
     // negate this
     doc.negate()
     try {
-      answer = !CNF.isSatisfiable(this.cnf(target, checkPreemies))
+      let cnf 
+      profile(() => cnf = this.cnf(target, checkPreemies),'convert to CNF')
+      profile(() => answer = !CNF.isSatisfiable(cnf),'call satSolve')
     } catch (e) {
       doc.negate()
       console.log(`\nError validating the following for ${(checkPreemies) ? 'preemies' : 'prop'}:\n`)
