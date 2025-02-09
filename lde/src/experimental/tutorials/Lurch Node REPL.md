@@ -118,6 +118,6 @@ You can use `.list` to see a list of current files and libraries and load a docu
   
   ```
 
-The command `.makedocs` builds the jsdoc documentation for the `experimental` folder.
+The command `.makedocs` builds the jsdoc documentation for the `experimental`, `lde`, and `lurchmath` folders.
 
 There are many other features available. You can type `.features` in $\lode$ to see the current list of features.
