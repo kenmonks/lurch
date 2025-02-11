@@ -2,7 +2,8 @@
     "plugins": ["plugins/markdown"],
     "opts": {
         "template": "./node_modules/tidy-jsdoc",
-        "prism-theme": "prism-default"
+        "prism-theme": "prism-default",
+        "readme": "doc-main.md"
     },
     "metadata": {
         "title": "Lurch Web User Interface"
