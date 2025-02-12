@@ -105,6 +105,55 @@
             >Writing Proofs worksheet</a
           >.</p
         >
+        <h2>Motivation and Goals</h2>
+        <p
+          >One of the main goals of the Lurch project is to check proofs written
+          in the natural mathematical style commonly found in undergraduate
+          textbooks. Let’s identify some key characteristics of that style.
+          Below is a theorem and proof from a randomly selected calculus
+          textbook from my bookshelf.$^{***}$</p
+        >
+        <p
+          ><img
+            src="../assets/media/CalculusProof.png"
+            alt="Calculus Proof"
+            width="75%"
+        /></p>
+        <p class="smallskip"
+          >Notice the following characteristics of such proofs.</p
+        >
+        <ul class="disc">
+          <li
+            ><strong>Theorems Are Sentences</strong> – The statements being
+            proven are typically written as full sentences containing multiple
+            mathematical expressions rather than a single formal mathematical
+            expression like:<br />
+            $$ \left(\forall x\in (a,b),f'(x)=0\right)\Rightarrow\left(\exists
+            c,\forall x\in(a,b),f(x)=c\right) $$</li
+          >
+          <li
+            ><strong>Minimal Justifications</strong> – Textbook proofs rarely
+            provide explicit reasons for each step. In the example above, the
+            only justification given is &quot;by the MVT&quot;.</li
+          >
+          <li
+            ><strong>Assumed Context</strong> – The proof relies on implicit
+            background material, including previously stated content in the book
+            or unstated prerequisite knowledge expected for the course.</li
+          >
+          <li
+            ><strong>Informal Logical Notation</strong> – Logical symbols such
+            as $\Rightarrow, \Leftrightarrow, \vee, \wedge, \forall$, and
+            $\exists$ are rarely used in such proofs. The example above contains
+            none of them.</li
+          >
+        </ul>
+        <p
+          >Thus, one of the key motivations behind the Lurch validation
+          algorithm is to support checking proofs with these characteristics,
+          written in this informal yet rigorous style. Let’s explore how it
+          achieves that.</p
+        >
         <h2 id="math">Lurch Theory for Mathematicians</h2>
         <p
           >If you look at the example proofs in Lurch, one striking feature you
@@ -258,15 +307,16 @@
         <h3>How does this help?</h3>
         <ul class="disc">
           <li
-            ><strong>No Formal Language</strong> – Modern Foundations of
+            ><strong>Natural Language Theorems</strong> – Modern Foundations of
             Mathematics like ZFC, Type Theory, Category Theory, frequently begin
             by defining a language - the set of syntactically valid statements
             in the mathematical topic that they are trying to formalize. 
             Lurch's foundation does not make any such restriction. You can
-            define and say whatever you want.</li
+            define and say whatever you want. Theorems can be environments
+            containing sentences and paragraphs, or a single expression.</li
           >
           <li
-            ><strong>No Context</strong> ‐ Lurch does not assume any
+            ><strong>Customizable Context</strong> ‐ Lurch does not assume any
             mathematical or logical rules by default, so instructors and users
             are free to define their own from scratch. Proofs in undergraduate
             math textbooks rarely used formal operators like $\Rightarrow$,
@@ -310,14 +360,14 @@
           </div>
           <p
             >Let $P=$ 'mocha is chocolate' and $Q=$ 'Gina loves mocha'. Then
-            this document has propositional form $(\neg P \vee (\neg( \neg P
-            \vee Q ) \vee (Q \wedge P)) )^*$ which is a tautology. So Lurch
+            this document has propositional form $\neg P \vee (\neg( \neg P \vee
+            Q ) \vee (Q \wedge P))$ which is a tautology$^\dagger$. So Lurch
             indicates that the document is valid.</p
           >
           <p
             ><span class="small"
-              >$^*$Equivalently $(P\text{ and } (P \Rightarrow Q )) \Rightarrow
-              (Q \text{ and } P)$</span
+              >$^\dagger$Equivalently $(P\text{ and } (P \Rightarrow Q ))
+              \Rightarrow (Q \text{ and } P)$</span
             ></p
           >
         </div>
@@ -408,7 +458,7 @@
               &amp;= 0\cdot g(0)+0 \\ &amp;= 0\cdot g(0) \\ &amp;= 0
               \end{aligned} $$</p
             >
-            <p>So <span class="m">g(0)=0</span> as desired.</p>
+            <p>So <span class="m">$g(0)=0$</span> as desired.</p>
             <p>$\square$</p>
           </div>
           <p
@@ -522,7 +572,11 @@
             >$^{**}$It is not necessary to understand anything on this page in
             order to use Lurch. It is just how I think about it. I find that
             having some deeper way of thinking about it can be helpful when
-            creating your own contexts and assignments.</p
+            creating your own contexts and assignments. <br /><br
+          /></p>
+          <p
+            >$^{***}$Sisson, P. &amp; Szarvas, T.; <em>Calculus</em> (2nd
+            edition), Hawkes Learning, page 321.</p
           >
         </div>
       </div>
