@@ -468,25 +468,13 @@ global.catdocs = ( ...files ) => {
   return ans
 }
 
-
 ////////////////////////////////////////////////////////////////////////////
 //
 // Welcome splash screen
 //
 console.log(`\nWelcome to ${defaultPen("𝕃𝕠𝕕𝕖")}`+
 ` - the Lurch Node app\n(type .help for help)\n`)
-// if there is an argument to lode.js, i.e., if someone runs this script as
-//
-// > node lode fname
-//  
-// then initialize the lode instance with the script named fname.js
-if (process.argv.length>2) {
-  let fname=process.argv[2]
-  initialize(fname)
-  // if there is no argument, try to load init.js in the current folder
-} else if ( fs.existsSync('init.js') ) {
-  initialize('init')
-}
+
 // start a new REPL context
 //
 // Note: that we use the useGlobal parameter so the current context is shared
@@ -752,4 +740,18 @@ global.write = s => console.log(rpl.writer(s))
 // total time, number of instantiations created, etc.
 global.Accumulator = { }
 global.clearAccumulator = () => Accumulator = { }
+
+// if there is an argument to lode.js, i.e., if someone runs this script as
+//
+// > node lode fname
+//  
+// then initialize the lode instance with the script named fname.js
+if (process.argv.length>2) {
+  let fname=process.argv[2]
+  initialize(fname)
+  // if there is no argument, try to load init.js in the current folder
+} else if ( fs.existsSync('init.js') ) {
+  initialize('init')
+}
+
 /////////////////////////////////////////////
