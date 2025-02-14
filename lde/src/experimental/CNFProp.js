@@ -43,6 +43,9 @@ export class CNFProp {
         
     catalog = catalog || L.catalog()
 
+    const negated = (L.isA('given') || L.isAccessibleTo(target)) 
+    const sign = negated ? -1 : 1
+
     // TODO: for now, simply use two separate routines for checkPreemies vs not, and
     //       optionally merge them later
     if (checkPreemies) {
@@ -58,7 +61,7 @@ export class CNFProp {
 
         // propositions accessible to the target (nonreflexive) are treated as
         // given when the target is present.
-        let sign = (L.isA('given') || L.isAccessibleTo(target)) ? -1 : 1
+        // let sign = (L.isA('given') || L.isAccessibleTo(target)) ? -1 : 1
         return sign*L.lookup( catalog , ignores )  
 
       // if it's an environment process the relevant children, skipping over
@@ -77,7 +80,7 @@ export class CNFProp {
         // givens and claims accessible to the target other than itself, should be
         // negated.  Thus we don't pass the second argument to isAccessibleTo to
         // say it should be reflexive.
-        env.negated = L.isA(`given`) || L.isAccessibleTo(target)
+        env.negated = negated // L.isA(`given`) || L.isAccessibleTo(target)
         while ( kids.length > 0 ) {
            let A = kids.pop()
            // skip it if it's a Declare
@@ -92,8 +95,10 @@ export class CNFProp {
            // otherwise get it's prop form  
            let Aprop = CNFProp.fromLC(A,catalog,target,checkPreemies)
            if ( Aprop === null ) continue 
+           // cache if it's given or accessible to the target
+           const isNegated = A.isA(`given`) || A.isAccessibleTo(target)
            // check if we have to change the op based on this latest child
-           let newop = (A.isA(`given`) || A.isAccessibleTo(target)) ? `or` : `and`
+           let newop = isNegated ? `or` : `and`
            // if we do, and there's more than one kid, wrap the kids w/ previous
            // op
            if ( newop!==env.op && env.kids.length>1 ) {
@@ -102,11 +107,7 @@ export class CNFProp {
            env.op = newop
            // if the new guy has the same op and is not negated, unshift its
            // children, otherwise just unshift the whole thing
-           if ( Aprop.op===env.op && 
-                !(A.isA(`given`) || 
-                  A.isAccessibleTo(target)
-                 )
-               ) {
+           if ( Aprop.op===env.op && !isNegated ) {
              env.kids.unshift(...Aprop.kids)
            } else {
              env.kids.unshift(Aprop)
@@ -126,7 +127,7 @@ export class CNFProp {
       if ( L.isAProposition() ) { 
         // propositions accessible to the target (nonreflexive) are treated as
         // given when the target is present.
-        let sign = (L.isA('given') || L.isAccessibleTo(target)) ? -1 : 1
+        // let sign = (L.isA('given') || L.isAccessibleTo(target)) ? -1 : 1
         return sign*L.lookup(catalog)  
       // if it's an environment process the relevant children, skipping over
       // anything irrelevant to the target and Declare's which have no prop form.
@@ -144,7 +145,7 @@ export class CNFProp {
         // givens and claims accessible to the target other than itself, should be
         // negated.  Thus we don't pass the second argument to isAccessibleTo to
         // say it should be reflexive.
-        env.negated = L.isA(`given`) || L.isAccessibleTo(target)
+        env.negated = negated // L.isA(`given`) || L.isAccessibleTo(target)
         while ( kids.length > 0 ) {
           let A = kids.pop()
           // skip it if it's a Declare
@@ -156,8 +157,10 @@ export class CNFProp {
           // otherwise get it's prop form  
           let Aprop = CNFProp.fromLC(A,catalog,target)
           if ( Aprop === null ) continue 
+          // cache if it's given or accessible to the target
+          const isNegated = A.isA(`given`) || A.isAccessibleTo(target)
           // check if we have to change the op based on this latest child
-          let newop = (A.isA(`given`) || A.isAccessibleTo(target)) ? `or` : `and`
+          let newop = isNegated ? `or` : `and`
           // if we do, and there's more than one kid, wrap the kids w/ previous
           // op
           if ( newop!==env.op && env.kids.length>1 ) {
@@ -166,11 +169,7 @@ export class CNFProp {
           env.op = newop
           // if the new guy has the same op and is not negated, unshift its
           // children, otherwise just unshift the whole thing
-          if ( Aprop.op===env.op && 
-               !(A.isA(`given`) || 
-                 A.isAccessibleTo(target)
-                )
-              ) {
+          if ( Aprop.op===env.op && !isNegated ) {
             env.kids.unshift(...Aprop.kids)
           } else {
             env.kids.unshift(Aprop)

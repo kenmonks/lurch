@@ -759,7 +759,9 @@ Environment.prototype.cnf = function ( target=this , checkPreemies = false ) {
   // number the switch vars starting at one more than the catalog length
   let n = cat.length+2 
   // make the CNFProp from this LC, either with or without the preemie check
-  let ans = CNFProp.fromLC( this , cat , target , checkPreemies ).simplify()
+  let ans
+  profile( () => ans = CNFProp.fromLC( this , cat , target , checkPreemies ), '  from LC' )
+  profile( () => ans = ans.simplify() , '  simplify' )
   // convert the resulting CNFProp to a cnf that can be passed to CNF.isSatisfiable
   return CNFProp.toCNF(ans,{num:n})
 }

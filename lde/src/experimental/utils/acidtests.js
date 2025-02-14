@@ -13,7 +13,7 @@ const endTest = LurchOptions.endStudentTest
 // const startTest = 1
 // const endTest = 10
 
-// declare the acide array
+// declare the acid array
 acid=[]
 // define a nice utility for loading a test
 const loadtest = (name, folder='acid tests', extension='lurch',
