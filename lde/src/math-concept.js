@@ -831,6 +831,17 @@ export class MathConcept extends Superclass {
         return result
     }
 
+    // Not useful yet
+    ancestorsSatisfyingInline ( predicate ) {
+        const result = [ ]
+        let curr = this
+        do {
+            if ( predicate( curr ) ) result.push( curr )
+            curr = curr._parent
+        } while ( curr )
+        return result
+    }
+
     /**
      * Whether this MathConcept has an ancestor (including itself) satisfying the
      * given predicate.
@@ -846,6 +857,16 @@ export class MathConcept extends Superclass {
     hasAncestorSatisfying ( predicate ) {
         for ( let ancestor of this.ancestorsIterator() )
             if ( predicate( ancestor ) ) return true
+        return false
+    }
+
+    // Not useful yet
+    hasAncestorSatisfyingInline ( predicate ) {
+        let curr = this
+        do {
+            if ( predicate( curr ) ) return true
+            curr = curr._parent
+        } while ( curr )
         return false
     }
 
