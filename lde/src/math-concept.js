@@ -685,9 +685,21 @@ export class MathConcept extends Superclass {
      * @see {@link MathConcept#hasDescendantSatisfying hasDescendantSatisfying()}
      */
     *descendantsIterator () {
+    // *descendantsIteratorStack () {
+        let stack = [ this ]
+        while (stack.length > 0) {
+            let curr = stack.pop()
+            yield curr
+            stack.push(...curr._children)
+        }
+    }
+
+    // *descendantsIterator () {
+    *descendantsIteratorRecursive () {
         yield this
         for ( let child of this._children ) yield* child.descendantsIterator()
     }
+
 
     /**
      * An array of those descendants of this MathConcept that satisfy the given
@@ -714,6 +726,18 @@ export class MathConcept extends Superclass {
         return result
     }
 
+    // Not helpful yet
+    descendantsSatisfyingInline ( predicate ) {
+        let result = [ ]
+        let stack = [ this ]
+        while (stack.length > 0) {
+            let curr = stack.pop()
+            if ( predicate( curr ) ) result.push( curr )
+            stack.push(...curr._children)
+        }
+        return result
+    }
+
     /**
      * Whether this MathConcept has any descendant satisfying the given predicate.
      * The predicate will be evaluated on each descendant in depth-first order
@@ -737,6 +761,18 @@ export class MathConcept extends Superclass {
         return false
     }
 
+    // Not helpful on small tests
+    hasDescendantSatisfyingInline ( predicate ) {
+        let stack = [ this ]
+        while (stack.length > 0) {
+            let curr = stack.pop()
+            if ( predicate( curr ) ) return true
+            stack.push(...curr._children)
+        }
+        return false
+    }
+
+
     /**
      * An iterator through all the ancestors of this MathConcept, starting with
      * itself as the first (trivial) ancestor, and walking upwards from there.
@@ -748,6 +784,16 @@ export class MathConcept extends Superclass {
      * @see {@link MathConcept#parent parent()}
      */
     *ancestorsIterator () {
+    // *ancestorsIteratorIterative () {
+        let curr = this
+        do {
+            yield curr
+            curr = curr._parent
+        } while ( curr )
+    }
+
+    // *ancestorsIterator () {
+    *ancestorsIteratorRecursive () {
         yield this
         if ( this.parent() ) yield* this.parent().ancestorsIterator()
     }

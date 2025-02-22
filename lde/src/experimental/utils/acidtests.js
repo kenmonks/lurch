@@ -197,7 +197,8 @@ console.log(`Test result stored in the array 'acid'\n`)
 
 ///////////////////////////////////////////////////////////
 // closing
-console.log(defaultPen(`done! (${msToTime(Date.now()-start)})`))
+runtimeMS = Date.now()-start
+console.log(defaultPen(`done! (${msToTime(runtimeMS)})`))
 // don't echo anything
 undefined
 ///////////////////////////////////////////////////////////
