@@ -79,6 +79,15 @@ self.doc = () => {
   return Message.document(tinymce.activeEditor, "putdown").content.code
 }
 
+self.constants = () => {
+  const d = lc(doc())
+  interpret(d)
+  const ans = d.getDeclares()
+               .map(x=>x.getAttribute('lurchNotation'))
+               .filter( z => z !== undefined )
+  return ans
+}
+
 ////////////////////////////////////////////////////////
 // Custom LC formatter (for a browser console)
 //
