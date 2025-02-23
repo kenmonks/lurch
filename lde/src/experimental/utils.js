@@ -129,28 +129,59 @@ const timer = (f,msg='') => {
 /** 
  * Report the time it took to execute function `f`, passed as an argument. 
  */
+// globalThis.Accumulator = globalThis.Accumulator || { }
+// const profile = (f,name) => {
+//   // initialize the new entry if necessary
+//   if (!Accumulator[name]) Accumulator[name] = { count: 0, time:0, start: [] }
+//   // for recursive calls, push the new start time onto the stack
+//   Accumulator[name].start.push(Date.now())
+//   // run the function to be timed
+//   const ans = f()
+//   // we count the number of calls
+//   Accumulator[name].count++ 
+//   // accumulate the time
+//   Accumulator[name].time += Date.now()-Accumulator[name].start.pop()
+//   // return the result of the function
+//   return ans
+// }
+/** 
+ * Report the time it took to execute function `f`, passed as an argument. 
+ */
 globalThis.Accumulator = globalThis.Accumulator || { }
 const profile = (f,name) => {
+  // initialize the new entry if necessary
   if (!Accumulator[name]) Accumulator[name] = { count: 0, time:0 }
-  let start = Date.now()
+  const start = Date.now()
+  // run the function to be timed
   const ans = f()
+  // count the number of calls
   Accumulator[name].count++
+  // accumulate the time
   Accumulator[name].time += Date.now()-start
+  // return the result of the function
   return ans
 }
+
 // Run any code in Lode (validate something, run the test suite, etc.) and then call
 // `benchmark(Accumulator)` to see a report.
 const benchmark = (data = Accumulator) => {
-  console.log(`| Function Name            | Count | Time (ms) |`);
-  console.log(`|--------------------------|-------|-----------|`);
 
+  console.log('');
+  console.log('| Function Name            |   Count   | Time (ms) |')
+  console.log('|--------------------------|-----------|-----------|')
+  
+  // sum the total time take
+  let total = 0
   // Iterate over each key in the object
   for (const key in data) {
       if (data.hasOwnProperty(key)) {
           const { count, time } = data[key];
-          console.log(`| ${key.padEnd(24)} | ${String(count).padStart(5)} | ${String(time).padStart(9)} |`);
+          console.log(`| ${key.padEnd(24)} | ${String(count).padStart(9)} | ${String(time).padStart(9)} |`);
+          total += time
       }
   }
+  console.log('|--------------------------|-----------|-----------|')
+  console.log(`| Total                    |           | ${String(total).padStart(9)} |`)
 }
 
 export default {
