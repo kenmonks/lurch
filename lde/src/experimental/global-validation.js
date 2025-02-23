@@ -293,11 +293,18 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   ///////////////
   // Caching
   //
-  // cache the let-scopes in the root (if the aren't)
-  if (!doc.letScopes) doc.letScopes = doc.scopes()
+  // cache the let-scopes in the root (if they aren't)
+  doc.letScopes = doc.letScopes || doc.scopes()
+  
+  // 
+  // For debugging purposes, before leaving, rename all of the ProperNames to
+  // something human-readable. 
+  // TODO: maybe improve or eliminate this in the future
+  // TODO: maybe improve or eliminate this in the future
+  profile(()=>tidyProperNames(doc),'tidy Proper Names')
   // cache the catalog in the root
   if (!doc.cat) doc.cat = doc.catalog()
-  
+
   // when its all complete mark the declared symbols again (this is fast, so no
   // need to do it too carefully)
   profile(()=>markDeclaredSymbols(doc),'Mark Declared Symbols')
@@ -305,19 +312,21 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   ///////////////
   // Prop Check
   if (LurchOptions.validateall) {
-    profile(()=>doc._validateall( target ),'validate all')
+    // profile(()=>doc._validateall( target ),'validate all')
+    doc._validateall( target )
     if (LurchOptions.checkPreemies) doc._validateall( target , true ) 
   } else { 
-    profile(()=>doc._validate( target ),'validate target')
+    // profile(()=>doc._validate( target ),'validate target')
+    doc._validate( target )
     if (LurchOptions.checkPreemies) doc._validate( target , true ) 
   }
 
   // For debugging purposes, before leaving, rename all of the ProperNames to
   // something human-readable. 
   // TODO: maybe improve or eliminate this in the future
-  profile(()=>tidyProperNames(doc),'tidy Proper Names')
+  // profile(()=>tidyProperNames(doc),'tidy Proper Names')
   // re-cache the catalog, since these are new prop names
-  doc.cat = doc.catalog()
+  // doc.cat = doc.catalog()
 
   return doc   
 }
@@ -1857,8 +1866,10 @@ LogicConcept.prototype._validate = function (target = this,
     doc.negate()
     try {
       let cnf 
-      profile(() => cnf = this.cnf(target, checkPreemies),' convert to CNF')
-      profile(() => answer = !CNF.isSatisfiable(cnf),' call satSolve')
+      // profile(() => cnf = this.cnf(target, checkPreemies),' convert to CNF')
+      // profile(() => answer = !CNF.isSatisfiable(cnf),' call satSolve')
+      cnf = this.cnf(target, checkPreemies)
+      answer = !CNF.isSatisfiable(cnf)
     } catch (e) {
       doc.negate()
       console.log(`\nError validating the following for ${(checkPreemies) ? 'preemies' : 'prop'}:\n`)
@@ -1881,7 +1892,8 @@ LogicConcept.prototype._validate = function (target = this,
       ans = Validation.result(target).result === 'valid'
     } else {
       // say(`Not already validated by n-compact.. checking`)
-      ans = profile(()=>satCheck(this, target),'SAT check')
+      // ans = profile(()=>satCheck(this, target),'SAT check')
+      ans = satCheck(this, target)
       // determine the appropriate feedback
       result = (ans)
         ? { result: 'valid', reason: 'n-compact' }
@@ -1914,7 +1926,8 @@ LogicConcept.prototype._validate = function (target = this,
       if (Validation.result(target).result === 'valid') {
         // say(`Prop valid, so checking for preemies`)
         // say(`this is currently a given ${this.isA('given')}`)
-        ans = profile(()=>satCheck(this, target, true),'SAT check')
+        // ans = profile(()=>satCheck(this, target, true),'SAT check')
+        ans = satCheck(this, target, true)
         // determine the appropriate feedback
         result = (ans)
           ? { result: 'valid', reason: 'n-compact' }
@@ -2154,38 +2167,12 @@ const markDeclarationContexts = doc => {
     })
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Debottlenecker
-//
-// In order to see where the bottlenecks are in the code, we build here a crude
-// custom code profiler/timer. It works as follows. Calling Benchmark(f,name)
-// times the execution of function f and stores the time it took under the name
-// 'name', which should be a string, in a global object called Report with a key
-// for each name.  The value of each key is an object of the form { calls:n ,
-// time:t } where n is the number of times the routine was called, and t was the
-// total time it took for those calls.
-//
-// TODO:
-// * finish this
-let Stats = {}
-const Benchmark = function (f, name) {
-  const start = Date.now()
-  f()
-  const t = Date.now() - start
-  if (!Report[name]) {
-    Report[name] = { calls: 1, time: t }
-  } else {
-    Report[name].calls++
-    Report[name].time += t
-  }
-}
-
 export default {
   validate, getUserPropositions, instantiate, insertInstantiation, 
   insertSymmetricEquivalences, reverseEquation, markDeclarationContexts, processBIHs, 
   processChains, processEquations, upgradeChains, eq2chain, splitChains, 
-  splitEquations, processDomains, diff, cacheFormulaDomainInfo, Benchmark, 
-  getCaselikeRules, LurchOptions, Stats, matchPropositions, LogicConcept, 
+  splitEquations, processDomains, diff, cacheFormulaDomainInfo, 
+  getCaselikeRules, LurchOptions, matchPropositions, LogicConcept, 
   Formula, Scoping, Validation
 }
 ///////////////////////////////////////////////////////////////////////////////

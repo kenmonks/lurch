@@ -595,6 +595,20 @@ Object.defineProperty(LogicConcept.prototype, 'all', {
 })
 
 // Because this is used so often
+Object.defineProperty(LogicConcept.prototype, 'clean', {
+  get: function() {
+    this.report(clean)
+  }
+})
+
+// Because this is used so often
+Object.defineProperty(LogicConcept.prototype, 'allclean', {
+  get: function() {
+    this.report(allclean)
+  }
+})
+
+// Because this is used so often
 Object.defineProperty(LogicConcept.prototype, 'most', {
   get: function() {
     this.report(most)

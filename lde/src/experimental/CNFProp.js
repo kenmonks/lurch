@@ -8,7 +8,7 @@ import CNF from '../validation/conjunctive-normal-form.js'
 import { LogicConcept } from '../logic-concept.js'
 import { Environment } from '../environment.js'
 import  Utilities from './utils.js'
-const { tab, indent, subscript } = Utilities
+const { tab, indent, subscript, profile } = Utilities
 
 /**
  * Represents the Propositional Form of any LC and the utilities to convert that
@@ -33,40 +33,51 @@ export class CNFProp {
   /**
    * Make a CNFProp from an LC - this is the main purpose of this class.
    * 
-   * @param {LogicConcept} L 
+   * @param {LogicConcept} L
    * @param {string[]} catalog 
    * @param {LogicConcept} target 
    * @param {boolean} checkPreemies 
    * @returns {CNFProp}
    */
-  static fromLC ( L , catalog = L.cat, target = L , checkPreemies = false) {
-        
+  static fromLC ( L , catalog = L.cat, target = L , checkPreemies = false ) {
+    
     catalog = catalog || L.catalog()
 
+    // check if it should be negated
+    // propositions accessible to the target (nonreflexive) are treated as
+    // given when the target is present.
     const negated = (L.isA('given') || L.isAccessibleTo(target)) 
     const sign = negated ? -1 : 1
 
-    // TODO: for now, simply use two separate routines for checkPreemies vs not, and
-    //       optionally merge them later
-    if (checkPreemies) {
-      // Lets to ignore for this target
-      const ignores = target.letAncestors()
-      
-      // Propositions have atomic prop form. ForSome declarations have an atomic
-      // propositional form with constants renamed by the body.  A copy of the
-      // body is added afterwards, and treated like any other LC in the
-      // document. Note that .isAProposition ignores anything that is marked
-      // .ignore or in the array ignores.
-      if ( L.isAProposition( ignores ) ) { 
+    // Propositions have atomic prop form. ForSome declarations have an atomic
+    // propositional form with constants renamed by the body.  A copy of the
+    // body is added afterwards, and treated like any other LC in the
+    // document. Note that .isAProposition ignores anything that is marked
+    // .ignore or in the supplied array 'ignores'.
+    const ignores = (checkPreemies) ? target.letAncestors() : []
+    const sig = CNFProp.signature(ignores)
 
-        // propositions accessible to the target (nonreflexive) are treated as
-        // given when the target is present.
-        // let sign = (L.isA('given') || L.isAccessibleTo(target)) ? -1 : 1
-        return sign*L.lookup( catalog , ignores )  
+    if ( L.isAProposition( ignores ) ) { 
+      let ans
+      // if its index is cached, use that
+      if (!L.propIndex) L.propIndex = new Map()
+      const lookup = L.propIndex.get(sig) || 
+            profile( () => L.lookup( catalog , ignores ) , 'catalog lookup' )
+      L.propIndex.set(sig,lookup)
+      ans = sign*lookup 
+      return ans
 
-      // if it's an environment process the relevant children, skipping over
-      // anything irrelevant to the target and Declare's which have no prop form.
-      } else if (L instanceof Environment) {
+    // if it's an environment process the relevant children, skipping over
+    // anything irrelevant to the target and Declare's which have no prop form.
+    } else if (L instanceof Environment) {
+
+      // if it's a cached environment, return it
+      if (L.CNFProp && L.CNFProp.has(sig)) {
+        return L.CNFProp.get(sig)
+      }
+      // make the environment's CNFProp 
+      let env = new CNFProp()
+      profile( () => {
         let kids = L.children()
         // remove trailing givens and anything irrelevantTo the target
         while ( kids.length>0 && 
@@ -75,77 +86,10 @@ export class CNFProp {
                 )
               ) 
         kids.pop()
-        // make the environment's CNFProp     
-        let env = new CNFProp()
         // givens and claims accessible to the target other than itself, should be
         // negated.  Thus we don't pass the second argument to isAccessibleTo to
-        // say it should be reflexive.
-        env.negated = negated // L.isA(`given`) || L.isAccessibleTo(target)
-        while ( kids.length > 0 ) {
-           let A = kids.pop()
-           // skip it if it's a Declare
-           if (A.isA('Declare')) continue
-           // skip it if it's a Comment or anything with .ignore.  This eliminates
-           // entire subenvironments and everything inside them because of this
-           // recursion is top-down.
-           if (A.ignore) continue
-           // since we are doing the preemie check, skip all of the Lets on the
-           // ignores list
-           if (ignores.includes(A)) continue
-           // otherwise get it's prop form  
-           let Aprop = CNFProp.fromLC(A,catalog,target,checkPreemies)
-           if ( Aprop === null ) continue 
-           // cache if it's given or accessible to the target
-           const isNegated = A.isA(`given`) || A.isAccessibleTo(target)
-           // check if we have to change the op based on this latest child
-           let newop = isNegated ? `or` : `and`
-           // if we do, and there's more than one kid, wrap the kids w/ previous
-           // op
-           if ( newop!==env.op && env.kids.length>1 ) {
-              env.kids = [ new CNFProp( env.op , ...env.kids ) ]
-           }
-           env.op = newop
-           // if the new guy has the same op and is not negated, unshift its
-           // children, otherwise just unshift the whole thing
-           if ( Aprop.op===env.op && !isNegated ) {
-             env.kids.unshift(...Aprop.kids)
-           } else {
-             env.kids.unshift(Aprop)
-           }
-        }
-        // console.log(`returning ${env.toAlgebraic()}`)
-        return env
-      }
-
-    // check propositionally
-    } else {
-
-      // Propositions have atomic prop form. ForSome declarations have an atomic
-      // propositional form with constants renamed by the body.  A copy of the
-      // body is added afterwards, and treated like any other LC in the document.
-      // Note that .isAProposition ignores anything that is marked .ignore.
-      if ( L.isAProposition() ) { 
-        // propositions accessible to the target (nonreflexive) are treated as
-        // given when the target is present.
-        // let sign = (L.isA('given') || L.isAccessibleTo(target)) ? -1 : 1
-        return sign*L.lookup(catalog)  
-      // if it's an environment process the relevant children, skipping over
-      // anything irrelevant to the target and Declare's which have no prop form.
-      } else if (L instanceof Environment) {
-        let kids = L.children()
-        // remove trailing givens and anything irrelevantTo the target
-        while ( kids.length > 0 && 
-                ( kids.last().isA('given') || 
-                  kids.last().irrelevantTo(target)
-                )
-              ) 
-          kids.pop()
-        // make the environment's CNFProp     
-        let env = new CNFProp()
-        // givens and claims accessible to the target other than itself, should be
-        // negated.  Thus we don't pass the second argument to isAccessibleTo to
-        // say it should be reflexive.
-        env.negated = negated // L.isA(`given`) || L.isAccessibleTo(target)
+        // say it should be reflexive.  
+        env.negated = negated
         while ( kids.length > 0 ) {
           let A = kids.pop()
           // skip it if it's a Declare
@@ -154,17 +98,19 @@ export class CNFProp {
           // entire subenvironments and everything inside them because of this
           // recursion is top-down.
           if (A.ignore) continue
+          // if doing a preemie check, ignore the let ancestors of the target
+          if (checkPreemies && ignores.includes(A)) continue
           // otherwise get it's prop form  
-          let Aprop = CNFProp.fromLC(A,catalog,target)
+          let Aprop = CNFProp.fromLC(A,catalog,target,checkPreemies)
           if ( Aprop === null ) continue 
-          // cache if it's given or accessible to the target
-          const isNegated = A.isA(`given`) || A.isAccessibleTo(target)
+          // check if it's given or accessible to the target
+          const isNegated = A.isA('given') || A.isAccessibleTo(target)
           // check if we have to change the op based on this latest child
-          let newop = isNegated ? `or` : `and`
+          let newop = isNegated ? 'or' : 'and'
           // if we do, and there's more than one kid, wrap the kids w/ previous
           // op
           if ( newop!==env.op && env.kids.length>1 ) {
-             env.kids = [ new CNFProp( env.op , ...env.kids ) ]
+            env.kids = [ new CNFProp( env.op , ...env.kids ) ]
           }
           env.op = newop
           // if the new guy has the same op and is not negated, unshift its
@@ -174,14 +120,42 @@ export class CNFProp {
           } else {
             env.kids.unshift(Aprop)
           }
-        }
-        // console.log(`returning ${env.toAlgebraic()}`)
-        return env
-      }
+        } 
+      } , 'env to CNFProp' )
+      // compare what's cached to the new one
+      // if (L.CNFProp && L.isA('given') && L.parent()===L.root() && L.CNFProp!==env) {  
+      //   console.log(`These don't match: ${L.address()}`)
+      //   console.log(L.root().cat)
+      //   console.log(L.CNFProp)
+      //   console.log(`and:`)
+      //   console.log(env)
+      //   console.log(`---------------------`)
+      // }
 
-    }
+      // given environments that are children of the root are typically instantiations, 
+      // so we cache their CFProp because it is only a function of the ignore signature. 
+      if (L.isA('given') && L.parent()===L.root()) {
+        if (!L.CNFProp) L.CNFProp = new Map()
+        L.CNFProp.set(sig,env)
+      }
+      return env
+    }  
   }
-    
+
+  /**
+   * Compute Address Signature
+   *
+   * When we have an array of LC's in a document it is convenient to have a
+   * signature for that array obtained by concatenating the addresses of all of
+   * the LCs. This routine computes that signature.  This is useful for the
+   * 'ignore' arrays of let-scopes when checking preemies.
+   * 
+   * @param {Array} A - The array of LCs
+   */
+  static signature = A => {
+    return JSON.stringify(A.map( x => x.address()))
+  }
+
   /**
    * Converts an integer $x$ to a variable. If the optional argument $n$ is present,
    * return a switch variable if $n<\left|x\right|$.

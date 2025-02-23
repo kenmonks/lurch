@@ -591,7 +591,7 @@ LogicConcept.prototype.symbols = function () {
  * body this is the renaming that accounts for the body. Note that the Prop form
  * does not include the leading `:` for givens. 
  *
- * We cache the results in a `.propform` js attribute and return them if
+ * We cache the results in a `.propForms` js attribute and return them if
  * present.
  *
  * In order to check for preemies we need a different propositional form in some
@@ -716,11 +716,15 @@ Environment.prototype.catalog = function ( ) {
   // scope of any declaration of that symbol. To minimize the number of prop
   // forms for such a proposition, we need to know all of the let-scopes in the
   // document.  Ignore everything containing a metavariable.
-  this.propositions()
-      .filter( P => !P.some( x => x.isA('LDE MV') ) )
-      .map( s => s.allProps() )
-      .forEach( x => catalog = catalog.union( x ) )
-  return [ ...catalog ] 
+  this.propositions().forEach( P => {
+    // Skip propositions containing a metavariable
+    if (P.some(x => x.isA('LDE MV'))) return
+    // Add allProps() result to the catalog efficiently
+    for (const prop of P.allProps()) {
+      catalog.add(prop)
+    }
+  })
+  return [ ...catalog ]
 }
 
 /** 
@@ -760,8 +764,10 @@ Environment.prototype.cnf = function ( target=this , checkPreemies = false ) {
   let n = cat.length+2 
   // make the CNFProp from this LC, either with or without the preemie check
   let ans
-  profile( () => ans = CNFProp.fromLC( this , cat , target , checkPreemies ), '  from LC' )
-  profile( () => ans = ans.simplify() , '  simplify' )
+  // profile( () => ans = CNFProp.fromLC( this , cat , target , checkPreemies ), '  from LC' )
+  // profile( () => ans = ans.simplify() , '  simplify' )
+  ans = CNFProp.fromLC( this , cat , target , checkPreemies )
+  ans = ans.simplify()
   // convert the resulting CNFProp to a cnf that can be passed to CNF.isSatisfiable
   return CNFProp.toCNF(ans,{num:n})
 }
