@@ -690,7 +690,9 @@ export class MathConcept extends Superclass {
         while (stack.length > 0) {
             let curr = stack.pop()
             yield curr
-            stack.push(...curr._children)
+            for (let ind = curr._children.length - 1; ind >= 0; ind--) {
+                stack[stack.length] = curr._children[ind]
+            }
         }
     }
 
@@ -733,7 +735,10 @@ export class MathConcept extends Superclass {
         while (stack.length > 0) {
             let curr = stack.pop()
             if ( predicate( curr ) ) result.push( curr )
-            stack.push(...curr._children)
+                
+            for (let ind = curr._children.length - 1; ind >= 0; ind--) {
+                stack[stack.length] = curr._children[ind]
+            }
         }
         return result
     }
@@ -767,7 +772,10 @@ export class MathConcept extends Superclass {
         while (stack.length > 0) {
             let curr = stack.pop()
             if ( predicate( curr ) ) return true
-            stack.push(...curr._children)
+            
+            for (let ind = curr._children.length - 1; ind >= 0; ind--) {
+                stack[stack.length] = curr._children[ind]
+            }
         }
         return false
     }
