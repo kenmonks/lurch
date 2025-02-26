@@ -685,9 +685,23 @@ export class MathConcept extends Superclass {
      * @see {@link MathConcept#hasDescendantSatisfying hasDescendantSatisfying()}
      */
     *descendantsIterator () {
+    // *descendantsIteratorStack () {
+        let stack = [ this ]
+        while (stack.length > 0) {
+            let curr = stack.pop()
+            yield curr
+            for (let ind = curr._children.length - 1; ind >= 0; ind--) {
+                stack[stack.length] = curr._children[ind]
+            }
+        }
+    }
+
+    // *descendantsIterator () {
+    *descendantsIteratorRecursive () {
         yield this
         for ( let child of this._children ) yield* child.descendantsIterator()
     }
+
 
     /**
      * An array of those descendants of this MathConcept that satisfy the given
@@ -714,6 +728,21 @@ export class MathConcept extends Superclass {
         return result
     }
 
+    // Not helpful yet
+    descendantsSatisfyingInline ( predicate ) {
+        let result = [ ]
+        let stack = [ this ]
+        while (stack.length > 0) {
+            let curr = stack.pop()
+            if ( predicate( curr ) ) result.push( curr )
+                
+            for (let ind = curr._children.length - 1; ind >= 0; ind--) {
+                stack[stack.length] = curr._children[ind]
+            }
+        }
+        return result
+    }
+
     /**
      * Whether this MathConcept has any descendant satisfying the given predicate.
      * The predicate will be evaluated on each descendant in depth-first order
@@ -737,6 +766,21 @@ export class MathConcept extends Superclass {
         return false
     }
 
+    // Not helpful on small tests
+    hasDescendantSatisfyingInline ( predicate ) {
+        let stack = [ this ]
+        while (stack.length > 0) {
+            let curr = stack.pop()
+            if ( predicate( curr ) ) return true
+            
+            for (let ind = curr._children.length - 1; ind >= 0; ind--) {
+                stack[stack.length] = curr._children[ind]
+            }
+        }
+        return false
+    }
+
+
     /**
      * An iterator through all the ancestors of this MathConcept, starting with
      * itself as the first (trivial) ancestor, and walking upwards from there.
@@ -748,6 +792,16 @@ export class MathConcept extends Superclass {
      * @see {@link MathConcept#parent parent()}
      */
     *ancestorsIterator () {
+    // *ancestorsIteratorIterative () {
+        let curr = this
+        do {
+            yield curr
+            curr = curr._parent
+        } while ( curr )
+    }
+
+    // *ancestorsIterator () {
+    *ancestorsIteratorRecursive () {
         yield this
         if ( this.parent() ) yield* this.parent().ancestorsIterator()
     }
@@ -785,6 +839,17 @@ export class MathConcept extends Superclass {
         return result
     }
 
+    // Not useful yet
+    ancestorsSatisfyingInline ( predicate ) {
+        const result = [ ]
+        let curr = this
+        do {
+            if ( predicate( curr ) ) result.push( curr )
+            curr = curr._parent
+        } while ( curr )
+        return result
+    }
+
     /**
      * Whether this MathConcept has an ancestor (including itself) satisfying the
      * given predicate.
@@ -800,6 +865,16 @@ export class MathConcept extends Superclass {
     hasAncestorSatisfying ( predicate ) {
         for ( let ancestor of this.ancestorsIterator() )
             if ( predicate( ancestor ) ) return true
+        return false
+    }
+
+    // Not useful yet
+    hasAncestorSatisfyingInline ( predicate ) {
+        let curr = this
+        do {
+            if ( predicate( curr ) ) return true
+            curr = curr._parent
+        } while ( curr )
         return false
     }
 
