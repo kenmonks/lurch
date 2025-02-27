@@ -56,9 +56,10 @@
   const sequence = s => {
     const a = s.map(texsymbol)
     if (a.length>2) {
-      return a.slice(0,-1).join('\\text{, }')+'\\text{, and }'+a[a.length-1]
+      return a.slice(0,-1).join(
+        '\\text{, }')+'\\text{, }\\textcolor{black}{\\text{and }}'+a[a.length-1]
     } else if (a.length === 2) {
-      return `${a[0]}\\text{ and }${a[1]}`
+      return `${a[0]}\\textcolor{black}{\\text{ and }}${a[1]}`
     } else {
       return a[0]
     }
