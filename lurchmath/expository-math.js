@@ -238,8 +238,8 @@ export const install = editor => {
         onAction : insertExpositoryMath
     } )
     // Install that function as what happens when you type a dollar sign,
-    // as in LaTeX.  (Yes, this means that you can't type a dollar sign in Lurch.
-    // We will later make that into a configurable option.)
+    // as in LaTeX.  (Yes, this means that you can't type a dollar sign directly in Lurch.
+    // but you can enter one as expository math by entering \$ for the LaTeX.)
     editor.on( 'init', () => {
         editor.dom.doc.body.addEventListener( 'keypress', event => {
             if ( event.key == '$' && appSettings.get( 'dollar sign shortcut' ) ) {
