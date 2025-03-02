@@ -221,6 +221,18 @@ div.lurch-atom.unindented {
   }
 }
 
+/* context preview atoms */
+div.lurch-atom[data-metadata_type*="preview"] {
+  outline: 3px solid var(--selected-color)
+}         
+
+div#declaresPanel {
+  background-color: floralwhite;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
 /* Lists */
 
 /* top level numbered lists inside shells */

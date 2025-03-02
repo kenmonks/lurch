@@ -63,6 +63,10 @@ export const setHeader = ( editor, header ) =>
  */
 export const install = editor => {
     // Utility functions and global-ish variables for dependency preview searching
+    const getDeclares = () => Atom.allIn( editor).filter( atom => {
+      const notation = atom.getMetadata('lurchNotation')
+      return notation && /^\s*declare/i.test(notation)
+    })
     const getPreviews = () => Atom.allIn( editor ).filter(
         atom => atom.getMetadata( 'type' ) == 'preview' )
     const previewExists = () => Atom.allIn( editor ).some(
@@ -411,10 +415,33 @@ export const install = editor => {
             // If they then hide it, it's nice to jump back to where they were.
             editor.selectionBeforePreview = editor.selection.getRng()
             // Insert it into the document.
-            editor.selection.setCursorLocation() // == start
-            editor.insertContent( allPreviewHTML )
+            const body = editor.getBody()
+            editor.selection.setCursorLocation(body,0) // == start
+            editor.insertContent(allPreviewHTML)
+            editor.selection.collapse()
+            // there should be exactly one such element in the document at this point
+            const context = getPreviews()[0].element
+
+            // now that the context is shown, fetch all of the declares in both
+            // the context and the document itself and add it to the top.
+            // const decwrap = Atom.newBlock(editor, '' , { type: 'preview' })
+            let decHTML = ''
+            getDeclares().forEach(dec => {
+                decHTML += `${dec.element.outerHTML}.<br/>`
+            })
+            decHTML = `<h1 style='text-align:center'>Mathematical Context</h1>
+                       <h2>Constants</h2>
+                       <p>The following symbols are declared to be constants.</p> 
+                       <div id='declaresPanel'>
+                         ${decHTML}
+                       </div>`
+            context.contentEditable = true
+            editor.selection.setCursorLocation(context,0) // == start
+            editor.insertContent(decHTML)
             editor.undoManager.clear()
-            editor.selection.setCursorLocation() // deselect new insertions
+            editor.selection.collapse()
+            context.contentEditable = false
+            // editor.selection.setCursorLocation() // deselect new insertions
             editor.getWin().scrollTo(0, 0) // scroll the window to the top
         }
     } )
