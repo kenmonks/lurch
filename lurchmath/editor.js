@@ -258,6 +258,7 @@ window.Lurch = {
                     MathLiveCSS
                 ],
                 visual_table_class : 'lurch-borderless-table',
+                noneditable_class: 'mceNonEditable',
                 height : "100%",
                 promotion : false, // disable premium features advertisement
                 toolbar : options.toolbarData,

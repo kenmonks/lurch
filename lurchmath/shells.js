@@ -633,7 +633,7 @@ export class Subproof extends Shell {
 export class Premise extends Shell {
     static subclassName = Atom.registerSubclass( 'premise', Premise )
     static advancedFriendly = true
-    getTitle () { return '' }
+    getTitle () { return 'Premise:' }
     finalize ( shellLC ) {
         shellLC.makeIntoA( 'given' )
     }

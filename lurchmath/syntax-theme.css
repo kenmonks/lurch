@@ -56,6 +56,9 @@
 :root {
   /* for \text mode in Math Live */
   --_text-font-family: "Roboto", "Arial", Helvetica, sans-serif;
+  
+  /* colors */
+  
   /* hovered atom background color */
   --hover-color: #bbd6fb; /* rgb(187,214,251); #B9D9F2*/
   /* semantic hovered atom background color */
@@ -95,10 +98,21 @@
   /* base font size */
   /* inline semantic math expression font color */
   --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
+
+  /* sizes */
+
   /* base font size */
   --base-font-size: 11pt;
   /* subproof indentation */
   --indentation: 0.75rem;
+  /* context box indentation */
+  --context-indentation: 1.25rem;
+  /* shell title offset */
+  --shell-title-offset: -72px;
+  /* shell title offset */
+  --shell-title-width: 72px;
+  /* shell title offset */
+  --shell-border-width: 1px;
   /* paragraph top margins inside of unindented shells */
   --p-gap: 0.75rem;
   /* top margin for shells inside of other shells */
@@ -173,10 +187,10 @@ span.lurch-atom {
 div.lurch-atom {
   position: relative;
   /* leave room to toggle borders (TODO: consider outline) */
-  border-left: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  border-top: 0.5px solid transparent;
-  border-right: 0.5px solid transparent;
+  border-left: var(--shell-border-width) solid transparent;
+  border-bottom: var(--shell-border-width) solid transparent;
+  border-top: calc(0.5*var(--shell-border-width)) solid transparent;
+  border-right: calc(0.5*var(--shell-border-width)) solid transparent;
   border-radius: 6pt;
   /* For top level shells give them right padding and separate them by a p-gap  */
   padding: 0.5rem var(--indentation);
@@ -221,14 +235,35 @@ div.lurch-atom.unindented {
   }
 }
 
+/* context box and its contents */
+
 /* context preview atoms */
-div.lurch-atom[data-metadata_type*="preview"] {
-  outline: 3px solid var(--selected-color)
+div.lurch-atom#context {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }         
+/* nested ones have no border or side padding */
+div.lurch-atom#context div.lurch-atom[data-metadata_type*="preview"] {
+  outline: none;
+  padding-left: 0;
+  padding-right: 0;
+}         
+/* nothing inside is user-selectable */
+div.lurch-atom#context * {
+  user-select: none;
+}
+/* center the main title */
+h1#contextTitle {
+  text-align: center;
+}
 
 div#declaresPanel {
   background-color: floralwhite;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   padding: 1rem;
   border-radius: 6px;
 }
@@ -263,21 +298,21 @@ body.shell-style-boxed {
       padding-left: var(--indentation);
     }  
   }
-  /* Add the border and shadow to shells with titles (even subproof) */
+  /* Add the border and shadow to shells with titles (even subproofs) */
   [data-shell_title] {
     position: relative;
     /* borders */
-    border-bottom: 1px solid var(--left-border-color);
-    border-left: 1px solid var(--left-border-color);
-    border-top: 0.5px solid var(--left-border-color);
-    border-right: 0.5px solid var(--left-border-color);
+    border-bottom: var(--shell-border-width) solid var(--left-border-color);
+    border-left: var(--shell-border-width) solid var(--left-border-color);
+    border-top: calc(0.5*var(--shell-border-width)) solid var(--left-border-color);
+    border-right: calc(0.5*var(--shell-border-width)) solid var(--left-border-color);
     border-radius: 6pt;
     box-shadow: -6pt 4pt 5pt -3pt var(--left-border-color);
   }
 
   /* Shell titles */
 
-  /* Add a shell title in the left margin except for subproofs */
+  /* Add the shell title in the left margin */
   [data-shell_title]::before {
     content: attr(data-shell_title);
     color: var(--margin-color);
@@ -286,23 +321,42 @@ body.shell-style-boxed {
     font-size: smaller;
     position: absolute;
     top: 11px;
-    left: -64pt;
-    width: 64px;
+    left: var(--shell-title-offset);
+    width: var(--shell-title-width);
   }
-  /* If it is inside a wrapper shell, move the title left */
+  /* If it is inside another shell */
   [data-shell_title] [data-shell_title]::before {
-    left: -74pt;
+    left: calc(var(--shell-title-offset) - var(--indentation) - var(--shell-border-width));
+    width: calc(var(--shell-title-width) + var(--indentation) + var(--shell-border-width));
   }
-  /* Add a shell title for premises */
-  [data-metadata_type='"premise"']::before {
-    content: "Premise:";
-    left: -6rem;
+  /* If it is inside the context */
+  #context [data-shell_title]::before {
+    left: calc(var(--shell-title-offset) - var(--context-indentation) - var(--shell-border-width));
+    width: calc(var(--shell-title-width) + var(--context-indentation + var(--shell-border-width)));
   }
-  /* manually handle nested premises */
-  [data-metadata_type='"premise"'] [data-metadata_type='"premise"']::before {
-    content: "Premise:";
-    left: -7rem;
+  /* If it is inside a shell inside the context */
+  #context [data-shell_title] [data-shell_title]::before {
+    left: calc(var(--shell-title-offset) - var(--indentation) 
+                    - var(--context-indentation) - 2*var(--shell-border-width));
+    width: calc(var(--shell-title-width) + var(--indentation) 
+                    + var(--context-indentation) + 2*var(--shell-border-width));
   }
+  /* If it is inside a shell inside a shell inside the context */
+  #context [data-shell_title] [data-shell_title] [data-shell_title]::before {
+    left: calc(var(--shell-title-offset) - var(--indentation) 
+                                         - var(--context-indentation) 
+                                         - 3*var(--shell-border-width));
+    width: calc(var(--shell-title-width) + var(--indentation) 
+                                         + var(--context-indentation)
+                                         + 3*var(--shell-border-width));
+  }
+  /* 
+   * for backward compatibility in already saved documents, we have to manually
+   * handle Premises separately 
+   */
+   [data-metadata_type*='"premise"']::before {
+    content: 'Premise:';
+   }
 
 } /* END of semantic view */
 
@@ -394,8 +448,11 @@ div.lurch-atom[data-shell_title][data-validation_result="error"]::after {
 
 /*  Rules, but not premises */
 [data-metadata_type*="rule"]:not(.atom-is-selected, :hover),
+#context [data-metadata_type*="rule"]:not(.atom-is-selected),
 body.shell-style-minimal 
   [data-metadata_type*="rule"]:not(.atom-is-selected, :hover) .lurch-atom,
+#context [data-metadata_type*="rule"],
+body.shell-style-minimal #context [data-metadata_type*="rule"] .lurch-atom,
 body.shell-style-boxed 
   [data-metadata_type*="rule"]:not(.atom-is-selected, :hover) 
   span.lurch-atom:not([data-metadata_type*="premise"] span.lurch-atom) {
@@ -409,13 +466,15 @@ body.shell-style-boxed {
   }
 }
 /* Theorems */
-[data-metadata_type*="theorem"]:not(.atom-is-selected, :hover), 
+[data-metadata_type*="theorem"]:not(.atom-is-selected, :hover),
+#context [data-metadata_type*="theorem"]:not(.atom-is-selected),
 [data-metadata_type*="theorem"]:not(.atom-is-selected, :hover) .lurch-atom {
   background-color: var(--theorem-color);
   border-color: var(--theorem-color);
 }
 /* Recall */
 [data-metadata_type*="recall"]:not(.atom-is-selected, :hover),
+#context [data-metadata_type*="recall"]:not(.atom-is-selected),
 [data-metadata_type*="recall"]:not(.atom-is-selected, :hover) .lurch-atom {
   background-color: var(--recall-color);
   border-color: var(--recall-color);
@@ -426,19 +485,21 @@ body.shell-style-boxed {
 
 /* Highlight on hover */
 
-/* in both views hovered inline atoms use the darker hover color */
-span.lurch-atom:hover {
+/* in both views hovered inline atoms use the darker hover color except 
+   in the context box  */
+span.lurch-atom:hover:not( #context, #context * ) {
   background-color: var(--hover-color);
   border-color: var(--hover-color);
 }
+
 /* For minimal view highlight everything inside the innermost hovered shell */
 body.shell-style-minimal {
   /* atoms which are hovered, but do not contain any hovered atom (by De Morgan's Law)
      note that these also include hovered inline atoms */
-  :not(:not(.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover)),
+  :not(:not(.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover), #context, #context *),
   /* and also all atoms which are contained in a hovered shell which does not
      contain a hovered shell */
-  :not(:not(.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover)) .lurch-atom {
+  :not(:not(.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover), #context, #context *) .lurch-atom {
     background-color: var(--hover-color);
     border-color: var(--hover-color);
   }
@@ -446,23 +507,24 @@ body.shell-style-minimal {
 /* but for semantic view, only highlight the hovered shell and its inline atoms */
 body.shell-style-boxed {
   /* atoms which are hovered, but do not contain any hovered atom (by De Morgan's Law) */
-  :not(:not(div.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover)),
+  :not(:not(div.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover), #context, #context *),
   /* and also inline atoms which ...  */
   :not(
     /* ...are contained in a hovered shell which does not contain a hovered shell 
        AND ... */
     :not(:not(:not(.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover)) span.lurch-atom),
     /* ... are not contained in a shell which is not hovered  */
-    div.lurch-atom:not(:hover) span.lurch-atom
+    div.lurch-atom:not(:hover) span.lurch-atom,
+    #context, #context *
     ) {
       background-color: var(--semantic-hover-color);
   }
 }
 /* Make selected visible when parent is hovered */
 :not(:not(.lurch-atom:hover), .lurch-atom:has(.lurch-atom:hover)) {
-  .atom-is-selected,
-  .atom-is-selected .lurch-atom,
-  .atom-is-selected .ML__latex {
+  .atom-is-selected:not(#context, #context *),
+  .atom-is-selected:not(#context, #context *) .lurch-atom,
+  .atom-is-selected:not(#context, #context *) .ML__latex {
     background-color: var(--selected-color);
   }
 
@@ -472,16 +534,17 @@ body.shell-style-boxed {
 /*                           Selected Atoms                            */
 
 /* We not only want to shade the background of a selected inline atom, but if
-the MathLive rendering spills outside the atom we want to shade that as well */
-.atom-is-selected,
-.atom-is-selected .lurch-atom,
-.atom-is-selected .ML__latex {
+the MathLive rendering spills outside the atom we want to shade that as well 
+but for atoms inside of the context box don't highlight anything */
+.atom-is-selected:not(#context, #context *),
+.atom-is-selected:not(#context, #context *) .lurch-atom,
+.atom-is-selected:not(#context, #context *) .ML__latex {
   background-color: var(--hover-color);
-  padding: 0;
+  /* padding: 0; not sure why this was here.  */
   outline: 3px solid var(--selected-color)
 }
 /* Set the border color */
-.mce-content-body [contentEditable="false"][data-mce-selected] {
+.mce-content-body [contentEditable="false"][data-mce-selected]:not(#context *) {
   /* cursor: not-allowed; */
   outline: 3px solid var(--selected-color);
 } /* END of selected atoms */
