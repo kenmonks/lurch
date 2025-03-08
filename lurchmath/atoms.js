@@ -1083,7 +1083,10 @@ export const install = editor => {
     editor.ui.registry.addContextMenu( 'atoms', {
         update : element => {
             const atom = Atom.findAbove( element, editor )
-            const items = atom ? atom.contextMenu( atom ) : [ ]
+            let items = atom ? atom.contextMenu( atom ) : [ ]
+            // if we are inside a context, remove all other context menu items first
+            const hidecontext = items.find( item => item.text === 'Hide this context' )
+            if (hidecontext) items = [ hidecontext ]
             items.forEach( item => {
                 const original = item.onAction
                 item.onAction = () => {

@@ -73,7 +73,10 @@ export const install = editor => {
         atom => atom.getMetadata( 'type' ) == 'preview' )
 
     const previewExists = () => Atom.allIn( editor ).some(
-        atom => atom.getMetadata( 'type' ) == 'preview' )
+      atom => atom.getMetadata( 'type' ) == 'preview' )
+
+    const contextExists = () => Atom.allIn( editor ).some(
+      atom => atom.getMetadata( 'type' ) == 'context' )
     
     const shiftHTML = ( div, html ) => {
       const range = editor.dom.createRng()
@@ -166,9 +169,9 @@ export const install = editor => {
     } )
     // Whenever anything in the document changes (even the cursor position),
     // decide whether to show the search toolbar
-    editor.on( 'input NodeChange Paste Change Undo Redo', () => {
+    editor.on( 'input NodeChange Paste Change Undo Redo SelectionChange ExecCommand', () => {
         if ( searchToolbar ) {
-            const show = previewExists()
+            const show = contextExists()
             const wasShown = searchToolbar.style.display == ''
             searchToolbar.style.display = show ? '' : 'none'
             // If the toolbar just appeared, clear its search box
@@ -435,15 +438,20 @@ export const install = editor => {
                 allPreviewHTML += preview.element.outerHTML
               } )
 
-            // wrap everything in a #context div
-            const contextHTML = 
-            `<div id="context" class='lurch-atom' data-metadata_type='"preview"'>
-              ${allPreviewHTML}  
-            </div>`
-            shiftHTML( body, contextHTML)
-            const context = editor.getBody().querySelector('#context')
-
+            const contextAtom = Atom.newBlock( editor, '', { type: 'context' } )
+            const context = contextAtom.element
+            context.id = 'context'
             if (!context) console.error(`Error: context not found!`)
+            context.innerHTML = allPreviewHTML
+
+            // wrap everything in a #context div
+            // const contextHTML = 
+            // `<div id="context" class='lurch-atom' data-metadata_type='"preview"'>
+            //   ${allPreviewHTML}  
+            // </div>`
+            shiftHTML( body, context.outerHTML)
+            // const context = editor.getBody().querySelector('#context')
+
 
             // now that the context is shown, fetch all of the declares in both
             // the context and the document itself and add it to the top. To
@@ -498,7 +506,6 @@ export const install = editor => {
                    </div>` 
               }
             }
-            console.log  
             shiftHTML( context, HTML)
 
             // hopefully this will lock everything down

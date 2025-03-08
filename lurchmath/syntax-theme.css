@@ -250,6 +250,7 @@ div.lurch-atom#context div.lurch-atom[data-metadata_type*="preview"] {
   outline: none;
   padding-left: 0;
   padding-right: 0;
+  box-shadow: none;
 }         
 /* nothing inside is user-selectable */
 div.lurch-atom#context * {
@@ -540,12 +541,13 @@ but for atoms inside of the context box don't highlight anything */
 .atom-is-selected:not(#context, #context *) .lurch-atom,
 .atom-is-selected:not(#context, #context *) .ML__latex {
   background-color: var(--hover-color);
-  /* padding: 0; not sure why this was here.  */
   outline: 3px solid var(--selected-color)
+  /* padding: 0; not sure why this was here.  */
 }
 /* Set the border color */
+#context.atom-is-selected,
+#context:has(.atom-is-selected),
 .mce-content-body [contentEditable="false"][data-mce-selected]:not(#context *) {
-  /* cursor: not-allowed; */
   outline: 3px solid var(--selected-color);
 } /* END of selected atoms */
 
