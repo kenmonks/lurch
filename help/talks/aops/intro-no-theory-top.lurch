@@ -415,7 +415,7 @@
 <div>This is a library containing the Peano Axioms. They define a formal system for the Natural Numbers.&nbsp; This library includes all of the rules, definitions, and axioms from the Logic Theorems library.</div>
 <hr>
 <h3>Constants</h3>
-<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare 0, sigma, +, *, leq&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare </span><span class="ML__cmr">0</span><span class="ML__text">, </span><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">σ</span><span class="ML__text">, </span><span class="ML__cmr">+</span><span class="ML__text">, </span><span class="ML__cmr">⋅</span><span class="ML__text">, and </span><span class="ML__cmr">≤</span></span></span></span></span> to be constants.</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare sigma, +, *, leq&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare </span><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">σ</span><span class="ML__text">, </span><span class="ML__cmr">+</span><span class="ML__text">, </span><span class="ML__cmr">⋅</span><span class="ML__text">, </span><span style="color: #000000;"><span class="ML__text">and </span></span><span class="ML__cmr">≤</span></span></span></span></span> to be constants.</p>
 <h3>Peano Axioms</h3>
 <h4><strong>The set <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{N}&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">N</span></span></span></span></span></strong></h4>
 <p>(We don't need axioms N0 or N1 because in this context the domain of discourse is the set of natural numbers.)</p>
@@ -491,7 +491,7 @@
 <p>This library contains some definitions from Number Theory.&nbsp; It includes all of the rules in the Peano Axioms library.</p>
 <hr>
 <h3>Constants</h3>
-<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare 1, 2, 3, 4, 5, <, is, |, prime, even, odd&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare </span><span class="ML__cmr">1</span><span class="ML__text">, </span><span class="ML__cmr">2</span><span class="ML__text">, </span><span class="ML__cmr">3</span><span class="ML__text">, </span><span class="ML__cmr">4</span><span class="ML__text">, </span><span class="ML__cmr">5</span><span class="ML__text">, </span><span class="ML__cmr">&lt;</span><span class="ML__text">, is, </span><span class="ML__cmr">∣</span><span class="ML__text">, prime, even, and odd</span></span></span></span></span></p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare <, is, |, prime, even, odd&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare </span><span class="ML__cmr">&lt;</span><span class="ML__text">, is, </span><span class="ML__cmr">∣</span><span class="ML__text">, prime, even, </span><span style="color: #000000;"><span class="ML__text">and </span></span><span class="ML__text">odd</span></span></span></span></span></p>
 <h3>Definitions</h3>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Base ten digits</strong><br><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;1=sigma(0)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">1</span><span class="ML__cmr">=</span><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">σ</span><span class="ML__left-right" style="margin-top: 0em; height: 0.64444em;"><span class="ML__small-delim ML__open">(</span><span class="ML__cmr">0</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span></p>
@@ -1220,7 +1220,7 @@
 <hr>
 <p>&nbsp;</p>
 <p><img style="display: block; margin-left: auto; margin-right: auto;" src="media/lurchlogo.png"></p>
-<p style="text-align: center;">(Joint with Nathan Carter, Bentley University)</p>
+<p style="text-align: center;">(<a href="about" target="_blank" rel="noopener">see project history</a>)</p>
 <h3><span style="font-size: 18pt; color: rgb(53, 152, 219);">Project Goals</span></h3>
 <ul class="ul1">
 <li class="li1" style="font-size: 14pt;"><span class="s2" style="font-size: 14pt;">Word processor-like user interface&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
@@ -1243,7 +1243,7 @@
 <h3>Example:</h3>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
 <p><strong>Theorem (composition of continuous is continuous):</strong>&nbsp;</p>
-<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If f:X to X, g:X to X, f is continuous, g is continuous&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit" style="margin-right: 0.11em;">f</span><span class="ML__cmr">:</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__cmr">&rarr;</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__text">, </span><span class="ML__mathit" style="margin-right: 0.04em;">g</span><span class="ML__cmr">:</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__cmr">&rarr;</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__text">, </span><span class="ML__mathit" style="margin-right: 0.11em;">f</span><span class="ML__text"> is continuous, and </span><span class="ML__mathit" style="margin-right: 0.04em;">g</span><span class="ML__text"> is continuous</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;g comp f is continuous&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.04em;">g</span><span class="ML__cmr">∘</span><span class="ML__mathit" style="margin-right: 0.11em;">f</span><span class="ML__text"> is continuous</span></span></span></span></span>.</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If f:X to X, g:X to X, f is continuous, g is continuous&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit" style="margin-right: 0.11em;">f</span><span class="ML__cmr">:</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__cmr">&rarr;</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__text">, </span><span class="ML__mathit" style="margin-right: 0.04em;">g</span><span class="ML__cmr">:</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__cmr">&rarr;</span><span class="ML__mathit" style="margin-right: 0.08em;">X</span><span class="ML__text">, </span><span class="ML__mathit" style="margin-right: 0.11em;">f</span><span class="ML__text"> is continuous, </span><span style="color: #000000;"><span class="ML__text">and </span></span><span class="ML__mathit" style="margin-right: 0.04em;">g</span><span class="ML__text"> is continuous</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;g comp f is continuous&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.04em;">g</span><span class="ML__cmr">∘</span><span class="ML__mathit" style="margin-right: 0.11em;">f</span><span class="ML__text"> is continuous</span></span></span></span></span>.</p>
 </div>
 <div class="lurch-atom unindented" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
 <p><strong>Proof:</strong></p>
@@ -1290,9 +1290,11 @@
 <p style="text-align: center;">&nbsp;</p>
 </div>
 </div>
-<div><hr></div>
-<div>
+<div><hr>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+<div>
 <h2><span style="color: rgb(53, 152, 219); font-size: 18pt;">Two Kinds of Meaningful Content</span></h2>
 <h2><span style="font-size: 14pt;"><strong>1. Expressions</strong></span></h2>
 <ul>
