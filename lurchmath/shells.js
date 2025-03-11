@@ -857,47 +857,4 @@ export class Preview extends Shell {
 
 }
 
-/**
- * A "context" is a single atom that wraps the entire context, including the
- * constant declaration report and other information that may be added in the
- * future to the top of the document when showing context, without allowing the
- * user to edit it or any of its contents.  The context has no meaning (in terms
- * of LCs that will be used for validation).
- */
-export class Context extends Shell {
-
-    static subclassName = Atom.registerSubclass( 'context', Context )
-    static advancedFriendly = false
-    
-    // Internal use only
-    // Erase all children of this shell before validation; it has no meaning
-    finalize ( shellLC ) {
-        while ( shellLC.numChildren() > 0 ) shellLC.removeChild( 0 )
-    }
-
-    // Internal use only
-    // Overrides the default isEditable() to always be false
-    isEditable () { return false }
-
-    // Internal use only
-    // Overrides the default so that we don't let users change the environment
-    // type for previews, but can open them in new windows.
-    contextMenu ( forThis ) {
-        return [ {
-          text: 'Hide this context',
-          onAction: () => {
-            this.element.remove()
-            this.editor.nodeChanged()
-          }
-        }]
-    }
-
-    // Internal use only
-    // Overrides the default to add a title stating that this is a preview only
-    toLatex ( innerLatex ) {
-        return 'View of context contents:\n' + super.toLatex( innerLatex )
-    }
-
-}
-
 export default { Shell, install }

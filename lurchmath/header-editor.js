@@ -83,7 +83,9 @@ export const install = editor => {
       range.setStart( div, 0)
       range.collapse(true)
       editor.selection.setRng(range)
+
       editor.insertContent( html )
+      
       editor.undoManager.clear()
       editor.selection.collapse(true)
     }
@@ -438,19 +440,14 @@ export const install = editor => {
                 allPreviewHTML += preview.element.outerHTML
               } )
 
-            const contextAtom = Atom.newBlock( editor, '', { type: 'context' } )
-            const context = contextAtom.element
-            context.id = 'context'
-            if (!context) console.error(`Error: context not found!`)
-            context.innerHTML = allPreviewHTML
 
-            // wrap everything in a #context div
-            // const contextHTML = 
-            // `<div id="context" class='lurch-atom' data-metadata_type='"preview"'>
-            //   ${allPreviewHTML}  
-            // </div>`
-            shiftHTML( body, context.outerHTML)
-            // const context = editor.getBody().querySelector('#context')
+            // wrap everything in a #context div and insert it
+            shiftHTML( body, 
+              `<div class='lurch-atom' id='context' contenteditable='true'>
+                 ${allPreviewHTML}
+               </div>`
+            )
+            const context = editor.getBody().querySelector('#context')
 
 
             // now that the context is shown, fetch all of the declares in both
