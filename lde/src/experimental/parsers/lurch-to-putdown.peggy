@@ -153,7 +153,7 @@
   ]
   
   const UnicodeNames = {
-    '⋅' : '*'          ,  '≤' : 'leq'       , '¬' : 'not'    , '→' : 'to'        ,
+    '⋅' : '*'          ,  '≤' : 'leq'       , '¬' : 'neg'    , '→' : 'to'        ,
     '←' : 'from'       ,  '⇒' : 'implies'   , '⇔' : 'iff'    , '∩' : 'intersect' ,   
     '∪' : 'union'      ,  '×' : 'cross'     , '∈' : 'in'     , '⊆' : 'subset'    ,    
     '∖' : 'setminus'   ,  '∘' : 'circ'      , '∧' : 'wedge'  , '∨' : 'vee'       ,
@@ -171,7 +171,7 @@
     'in'        : '∈' , 'Sum'      : 'sum', '\\'     : ' '  , 'fear'         : 'fears' ,
     'complement': '°' , 'intersect': '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
     'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'cross'        : '×'     ,
-    'star'      : '★' , 'division' : '/'
+    'star'      : '★' , 'division' : '/'  , 'neg'    : '¬'
   }
 
   // for use in Declare's, look up the internal name of a reserved word or
@@ -499,7 +499,7 @@ Prop = Iff
   Implies = a:(Or/And/PropArg)|1..,_'implies'_x|     { return lispSeq('⇒',a)   }
   Or      = a:(And/PropArg)|1..,_('or'/'vee')_x|     { return lispSeq('or',a)  }
   And     = a:(Not/PropArg)|1..,_('and'/'wedge')_x|  { return lispSeq('and',a) }
-  Not     = _'not'_x b:PropArg                       { return lispUnary('¬',b) }
+  Not     = _('not'/'neg')_x b:PropArg               { return lispUnary('¬',b) }
   
 ///////////////////////////////////////////////////////////////////////////////
 // Relations
@@ -812,7 +812,7 @@ Symbol "Symbol" =
 // aren't symbols that we still want to declare as constants.
 ReservedWord  = $(
     'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' /
-    'not' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
+    'not' / 'neg' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
     'cross' / 'subset' / 'setminus'i / 'circ' / 'comp' / 'wedge' / 'vee' / 
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' / 
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / 

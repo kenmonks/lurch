@@ -295,7 +295,7 @@
   ]
 
   const UnicodeNames = {
-    '⋅' : '*'          ,  '≤' : 'leq'       , '¬' : 'not'    , '→' : 'to'        ,
+    '⋅' : '*'          ,  '≤' : 'leq'       , '¬' : 'neg'    , '→' : 'to'        ,
     '←' : 'from'       ,  '⇒' : 'implies'   , '⇔' : 'iff'    , '∩' : 'intersect' ,
     '∪' : 'union'      ,  '×' : 'cross'     , '∈' : 'in'     , '⊆' : 'subset'    ,
     '∖' : 'setminus'   ,  '∘' : 'circ'      , '∧' : 'wedge'  , '∨' : 'vee'       ,
@@ -312,7 +312,8 @@
     'divides'   : '|' , 'cdot'     : '⋅'  , '*'      : '⋅'  , 'love'         : 'loves' ,
     'in'        : '∈' , 'Sum'      : 'sum', '\\'     : ' '  , 'fear'         : 'fears' ,
     'complement': '°' , 'intersect': '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
-    'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'star'         : '★'
+    'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'star'         : '★'     ,
+    'neg'       : '¬'
   }
 
   // for use in Declare's, look up the internal name of a reserted word or
@@ -643,8 +644,8 @@ Prop = Iff
               { return a.join('\\text{ or }')       }
   And     = a:(Not/PropArg)|1..,_('and'/'wedge')_x|
               { return a.join('\\text{ and }')      }
-  Not     = _'not'_x b:PropArg
-              { return '\\text{not } '+b                   }
+  Not     = _'not'_x b:PropArg { return '\\text{not } '+b } / 
+            _'neg'_x b:PropArg { return '\\neg '+b }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Relations
