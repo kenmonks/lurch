@@ -75,8 +75,7 @@ export const install = editor => {
     const previewExists = () => Atom.allIn( editor ).some(
       atom => atom.getMetadata( 'type' ) == 'preview' )
 
-    const contextExists = () => Atom.allIn( editor ).some(
-      atom => atom.getMetadata( 'type' ) == 'context' )
+    const contextExists = () => (editor.getBody().querySelector('#context')) ? true : false
     
     const shiftHTML = ( div, html ) => {
       const range = editor.dom.createRng()
