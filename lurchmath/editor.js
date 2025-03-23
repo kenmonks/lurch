@@ -355,7 +355,25 @@ window.Lurch = {
                             return false
                         }
                     } )
+                     
+                    // when using the fullscreen plugin, check if the app is changed
+                    // to full screen and if so toggle the visibility of the
+                    // Lurch menu and toolbar and Logo
+                    editor.on('FullscreenStateChanged', function(e) {
 
+                        if (e.state) {
+                            // Hide toolbar and menus
+                            document.querySelector('.tox-editor-header').style.display = 'none'
+                            // Hide status bar (we don't have one)
+                            // document.querySelector('.tox-statusbar').style.display = 'none' 
+                        } else {
+                            // Show toolbar and menus
+                            document.querySelector('.tox-editor-header').style.display = ''
+                            // Show status bar (we don't have one)
+                            // document.querySelector('.tox-statusbar').style.display = '' 
+                        }
+                    })
+                  
                     // Do not let the user leave the page accidentally, only on
                     // purpose (after confirming via dialog).  See docs above
                     // for the default value of this feature.

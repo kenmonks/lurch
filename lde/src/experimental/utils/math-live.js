@@ -24,8 +24,10 @@ import asciiMathToLatex from '../parsers/asciimath-to-latex.js'
 // Ensures the MathLive scripts are loaded, so you can do whatever you want with
 // the stuff they install in the global (window) object thereafter.
 const loadMathFieldClass = () =>
-    loadScript( 'https://unpkg.com/mathlive@0.100.0' ).then( () =>
-    loadScript( 'https://unpkg.com/@cortex-js/compute-engine@0.24.1' ) )
+    // loadScript( 'https://unpkg.com/mathlive@0.100.0' ).then( () =>
+    // loadScript( 'https://unpkg.com/@cortex-js/compute-engine@0.24.1' ) )
+    loadScript( '../../dependencies/mathlive/mathlive.min.js' ).then( () =>
+    loadScript( '../../dependencies/mathlive/compute-engine.min.js' ) )
 
 /**
  * We store here the URL to the MathLive CSS stylesheet, so that we can define
@@ -33,7 +35,7 @@ const loadMathFieldClass = () =>
  * 
  * @type {string}
  */
-export const stylesheet = 'https://unpkg.com/mathlive@0.100.0/dist/mathlive-static.css'
+export const stylesheet = '../../dependencies/mathlive/mathlive-static.css'
 
 /**
  * An item that can be used in a {@link Dialog} and shows up as an equation

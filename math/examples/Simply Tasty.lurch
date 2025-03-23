@@ -1,0 +1,28 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'https://proveitmath.org/lurch/?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"minimal"</div></div>
+            <div id="document"><h1>Simply Tasty</h1>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare pie, basket&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare 🥧 and 🧺</span></span></span></span></span> to be constants.&nbsp; We only have one rule.&nbsp;</p>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Simply Feast Rule:</strong></p>
+<div class="lurch-atom" data-metadata_type="&quot;premise&quot;" data-shell_title="">
+<p style="line-height: 2;">If the set of theorems has the property that</p>
+<p style="line-height: 2; text-align: center;">'<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;if pie&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">if 🥧</span></span></span></span></span> is a theorem then so is <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;basket&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">🧺</span></span></span></span></span>'</p>
+</div>
+<p style="line-height: 2;">then we can conclude that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;pie&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">🥧</span></span></span></span></span> is a theorem.</p>
+</div>
+<p>There is a legend that says we cannot prove 🥧 with<span style="font-size: 12pt;"> just the above rule no matter how long and convoluted of a proof we come might come up with.&nbsp; &nbsp;Let's try.</span></p>
+<div class="lurch-atom" title="Good work!" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:" data-validation_result="valid">
+<p><strong>Theorem (<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\pi&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">&pi;</span></span></span></span></span>): &nbsp;</strong><span class="lurch-atom" title="Good work!" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;pie&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">🥧</span></span></span></span><span class="lurch-atom-suffix"><span class="feedback-marker-valid">&nbsp;</span></span></span></p>
+</div>
+<p>Wow.&nbsp; Lurch says that's valid without giving it any proof at all!</p>
+<p>That's because we <em>can</em> prove it.&nbsp; Either pie is a theorem or it isn't.&nbsp; If pie isn't a theorem then we know that the set of theorems has the property that if pie is a theorem then so is basket, so we we can conclude that pie is a theorem by the Simply Feast Rule.&nbsp; So pie is a theorem.&nbsp;</p></div>
+        

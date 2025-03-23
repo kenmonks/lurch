@@ -65,3 +65,7 @@ We made the following modifications when importing `big-integer` into this repos
    export default bigInt
    ```
    to the bottom of the file so it can be imported by our modified Algebrite.
+
+## mathlive
+
+A LaTeX math rendered for web pages from https://cortexjs.io/mathfield.  It has been renamed to MathField now, but we are using this fixed version for now.

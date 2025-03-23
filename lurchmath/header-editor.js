@@ -147,7 +147,7 @@ export const install = editor => {
                         searchText == ''
                         || relevantText(node).includes( searchText )
                     ) ? '' : 'none'
-                    numShown += node.style.display == '' ? 1 : 0
+                    numShown += (node.style.display == '' || searchText == '') ? 1 : 0
                     return
                 }
                 // Recursive case: Apply filter to all children, then show this
@@ -161,7 +161,8 @@ export const install = editor => {
                 ) ? '' : 'none'
             }
             getPreviews().forEach( preview => showRecursive( preview.element ) )
-            searchCounter.textContent = searchText == '' ? '' :
+            searchCounter.textContent = 
+            // searchText == '' ? '' :
                                         numShown == 1 ? '1 rule found' :
                                         `${numShown} rules found`
         }

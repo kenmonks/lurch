@@ -53,6 +53,11 @@ body:not(.fullscreen) #editor-container {
   text-align: center;
 }
 
+/* Hide the Logo in full screen view */
+.tox-fullscreen #logo {
+  display: none !important;
+}
+
 #logo #check {
   color: #4CAF50;
 }

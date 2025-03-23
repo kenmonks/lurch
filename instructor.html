@@ -45,15 +45,21 @@
         editor: {
           font_size_formats: '8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 36pt',
           draggable_modal: true,
-          plugins: 'lists link table code',
+          plugins: 'lists link table code fullscreen',
+          toolbar: 'undo redo | '
+                + 'styles bold italic | '
+                + 'alignleft aligncenter alignright outdent indent | '
+                + 'numlist bullist fullscreen',
+          fullscreen_native: true,      
           menubar: 'file edit format table math developer help',
           content_css: ['document',
             // `lurchmath/editor-styles.css`,
             // `lurchmath/leftborder-theme.css`+`?nocache=${new Date().getTime()}`,
             `lurchmath/syntax-theme.css` + `?nocache=${new Date().getTime()}`,
             // `lurchmath/syntax-theme.css`,
-            'https://unpkg.com/mathlive@0.100.0/dist/mathlive-static.css']
-        },
+            // 'https://unpkg.com/mathlive@0.100.0/dist/mathlive-static.css']
+            'lde/dependencies/mathlive/mathlive-static.css']
+          },
         menuData: {
           file: {
             title: 'File',
