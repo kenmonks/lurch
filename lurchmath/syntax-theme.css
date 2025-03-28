@@ -108,9 +108,9 @@
   /* context box indentation */
   --context-indentation: 1.25rem;
   /* shell title offset */
-  --shell-title-offset: -72px;
+  --shell-title-offset: -90px;
   /* shell title offset */
-  --shell-title-width: 72px;
+  --shell-title-width: 90px;
   /* shell title offset */
   --shell-border-width: 1px;
   /* paragraph top margins inside of unindented shells */

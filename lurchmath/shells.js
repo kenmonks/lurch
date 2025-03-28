@@ -36,7 +36,7 @@ import { getHeader } from './header-editor.js'
 import { onlyBefore, isOnScreen, copyHTMLToClipboard } from './utilities.js'
 import { Atom, className as atomClassName } from './atoms.js'
 import { addAutocompleteFunction } from './auto-completer.js'
-import { Dialog, SelectBoxItem } from './dialog.js'
+import { Dialog, TextInputItem, SelectBoxItem } from './dialog.js'
 import { Environment } from './lde-cdn.js'
 import { lookup, store } from './document-settings.js'
 import { appSettings } from './settings-install.js'
@@ -176,7 +176,7 @@ export class Shell extends Atom {
         const shellSubclassNames = Shell.subclassNames().filter( name => { 
             return (Atom.subclasses.get( name )?.advancedFriendly) } )
         if ( shellSubclassNames.length == 0 ) return false
-        const dialog = new Dialog( 'Edit environment', this.editor )
+        const dialog = new Dialog( 'Change environment type', this.editor )
         dialog.addItem( new SelectBoxItem(
             'shellSubclass',
             'Type of environment',
@@ -188,6 +188,33 @@ export class Shell extends Atom {
         return dialog.show().then( userHitOK => {
             if ( !userHitOK ) return false
             this.setSubclass( dialog.get( 'shellSubclass' ) )
+            return true
+        } )
+    }
+
+    /**
+     * Show a dialog to allow the user to edit the marginal label of the shell.
+     * The labels are currently limited to 11 characters. Any new lable is saved
+     * in the individual environment and preserved when the document is saved,
+     * but does not apply to all environments of the given type.
+     *
+     * @returns {Promise} a promise that resolves to true if the editing dialog
+     *   is shown and the user confirms their edits, or resolves to false if the
+     *   editing dialog cannot be shown or the user cancels
+     */
+    editMarginalLabel () {
+        const shellSubclassNames = Shell.subclassNames().filter( name => { 
+            return (Atom.subclasses.get( name )?.advancedFriendly) } )
+        if ( shellSubclassNames.length == 0 ) return false
+        const dialog = new Dialog( 'Edit marginal label', this.editor )
+        dialog.addItem( new TextInputItem('label','','') )
+        dialog.setDefaultFocus( 'label' )
+        dialog.setInitialData( {
+            label : this.element.dataset.shell_title
+        } )
+        return dialog.show().then( userHitOK => {
+            if ( !userHitOK ) return false
+            this.element.dataset.shell_title = dialog.get('label')
             return true
         } )
     }
@@ -243,6 +270,13 @@ export class Shell extends Atom {
                 result.unshift( {
                     text : 'Change environment type',
                     onAction : () => this.editShellType( shellSubclassNames )
+                } )
+            // allow changing the environment marginal label
+            if ( this.isEditable() 
+                 && lookup( this.editor, 'shell style' ) == 'boxed')
+                result.unshift( {
+                    text : 'Edit marginal label',
+                    onAction : () => this.editMarginalLabel( )
                 } )
             // allow toggling indentation iff we're in a style that can see it
             if ( lookup( this.editor, 'shell style' ) == 'minimal' )
