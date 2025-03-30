@@ -178,7 +178,7 @@ body {
 }
 
 #leftnav li li:before {
-  content: '\2014';
+  content: '\2013'; /* or \23FA */
   margin-right: 5px;
   flex-shrink: 0;
   color: var(--nav-link-color);
