@@ -4,14 +4,14 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:5500/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
             <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="main" data-key="header" data-value-type="html"></div></div>
             <div id="document"><h1>Linear Algebra</h1>
 <p>Let's make a tiny context with just four rules to get started.</p>
-<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare linear, is&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare linear</span><span style="color: #000000;"><span class="ML__text"> and </span></span><span class="ML__text">is</span></span></span></span></span> to be constants.</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare linear, is, +, =, *&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare linear, is, </span><span class="ML__cmr">+</span><span class="ML__text">, </span><span class="ML__cmr">=</span><span class="ML__text">, </span><span style="color: #000000;"><span class="ML__text">and </span></span><span class="ML__cmr">&sdot;</span></span></span></span></span> to be constants.</p>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Definition of =:&nbsp;&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;EquationsRule&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">EquationsRule</span></span></span></span></span></p>
 </div>

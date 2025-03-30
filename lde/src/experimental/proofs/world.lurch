@@ -4,4 +4,4 @@ Rule {  If x is y, z loves y     z loves x }
 
 // Suppose mocha is chocolate
 // Assume Gina loves chocolate
-Gina loves mocha
+// Gina loves mocha
