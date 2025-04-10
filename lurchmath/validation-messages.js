@@ -331,7 +331,7 @@ export class Message {
         // Note that, because dependencies are just hidden parts of the DOM,
         // this will capture their contents just the same as it does any other
         // document content.
-        const selector = `.${atomClassName}`
+        const selector = `.${atomClassName}:not(#context):not(#context .${atomClassName})`
         let LC = documentLC(
             [
                 ...( getHeader( editor )?.querySelectorAll( selector ) || [ ] ),
