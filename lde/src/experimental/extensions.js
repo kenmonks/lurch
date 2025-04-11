@@ -900,6 +900,6 @@ LogicConcept.prototype.attributes = function ( ) {
 
 // Check if this LC is a Lurch symbol whose text matches the regular expression
 // formed by the string argument s
-LogicConcept.prototype.matches = function(s) {
+LogicConcept.prototype.isSymbol = LogicConcept.prototype.matches = function(s) {
   return this instanceof LurchSymbol && new RegExp(`^${s}$`).test(this.text())
 }
