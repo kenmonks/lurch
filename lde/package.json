@@ -52,6 +52,7 @@
     "pegjs-backtrace": "^0.2.1",
     "punycode": "^2.3.1",
     "react": "^18.2.0",
-    "strip-ansi": "^7.0.1"
+    "strip-ansi": "^7.0.1",
+    "z3-solver": "^4.14.1"
   }
 }

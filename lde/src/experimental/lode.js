@@ -178,6 +178,27 @@ global.Tracer = Tracer
 // External packages
 // load Algebrite
 import Algebrite from '../../dependencies/algebrite.js'
+// load Z3
+import { init as z3init } from 'z3-solver'
+// export this for making new Contexts if I want more than one
+const { Context } = await z3init()
+global.Context = Context
+// set a default unnamed Context for Lode
+global.Z3 = Context()
+// the default solver for Lode
+// 
+// example:
+// ▶︎ solver.add(z3.Real.const("b").neq(z3.Real.val(0)))
+// ▶︎ solver.add(z3.Real.const("a").eq(z3.Real.const("c").div(z3.Real.const("b"))))
+// ▶︎ solver.add(z3.Real.const("a").mul(z3.Real.const("b")).neq(z3.Real.const("c")))
+// ▶︎ await(solver.check())
+// unsat
+global.solver = new Z3.Solver()
+global.tree = x => Algebrite.run(`printlist(${x})`)
+// and our custom utilities to support it
+import Z3Utils from './z3.js'
+Object.assign( global, Z3Utils )
+
 // load SAT
 import { satSolve } from '../../dependencies/LSAT.js'
 ///////////////////////////////////////////////////////////////////////////////
