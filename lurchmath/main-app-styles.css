@@ -8,6 +8,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+/* theme vars */
+:root {  
+  /* colors */
+
+  /* hovered atom background color */
+  --hover-color: #bbd6fb; /* rgb(187,214,251); #B9D9F2*/
+  /* semantic hovered atom background color */
+  --semantic-hover-color: #f2f8ff;/* blues:#f0f7ff; #ebf3ff; yellows: #fff9dc;  #fffce9; */
+  /* selected atom backround color */
+  --selected-color: #a1c6f5;
+  /* borders and titles of shells color */
+  --border-color: #b4d7ff;
+  /* marginal annotation of shell types */
+  --margin-color:  #b4d7ff; /* transparent; */
+  /* left border of shells in semantic view */
+  --left-border-color: #b4d7ff;
+  /* green checkmark color */
+  --check-color: #4caf50;
+  /* question mark feedback icon color */
+  --questionmark-color: #d8b400; /* or white if background used */
+  /* question mark feedback icon background color */
+  --questionmark-background-color: chocolate;
+  /* red X feedback icon color */
+  --x-color: red;
+  /* exclamation point error feedback icon color */
+  --error-color: red;
+  /* default shell background color */
+  --atom-color: white;
+  /* rule shell background color */
+  --rule-color: #e7f3fd;
+  /* premise shell background color */
+  --premise-color: #fff6e9;
+  /* theorem shell background color */
+  --theorem-color: #f5f5f5;
+  /* recall shell background color */
+  --recall-color: #efe9f1;
+  /* inline semantic math expression font color */
+  --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
+  /* inline semantic math expression font color */
+  --code-bg-color: #ecf0f1; /* matches TinyMCE light gray */
+  /* base font size */
+  /* inline semantic math expression font color */
+  --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
+}
+
 /* Background color */
 body {
   margin: 0;
@@ -82,11 +127,48 @@ body:not(.fullscreen) #editor-container {
   background-color: #fff7f7
 }
 
-/* The MathJax preview div in the Advanced mode text editor (inline)*/
-.tox .tox-dialog div#mathjaxPreview {
-  width: 100%;
-  border: 0;
-  padding: 0.5rem 0 0 0.5rem;
+/* The info icon div in the expository math dialog */
+.tox .tox-dialog div#latexDialogLabel {
+  font-size: 0.8rem;
+  color: #7CA2EB;
+  cursor: default;
+  margin-bottom: 0.3rem;
+}
+.tox .tox-dialog div#latexDialogLabel span#info-icon {
+  display: inline-block;
+  position: relative;
+  font-family: "Font Awesome 6 Free"; 
+  font-weight: 900;
+  font-size: 0.7rem;
+  line-height: 1; 
+  color: var(--selected-color); 
+  margin-left: 0.1rem;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+.tox .tox-dialog div#latexDialogLabel #tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 120%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: inherit; 
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: opacity 0.5s;
+  z-index: 1000;
+}
+.tox .tox-dialog div#latexDialogLabel #info-icon .fa-circle-info:hover + #tooltip-text {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* The MathJax preview div in the Advanced mode text editor (display)*/
@@ -114,6 +196,7 @@ div.tox .tox-toolbar__overflow {
   background-image: linear-gradient(#e3e3e3 0 1px, transparent 1px 39px);
 }
 
+ 
 /* Document File Name */
 /* Commenting this out for now until we design something better */
 

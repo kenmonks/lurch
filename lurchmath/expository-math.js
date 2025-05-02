@@ -68,6 +68,14 @@ export class ExpositoryMath extends Atom {
             // use an expandable textarea for Advanced mode
             ? new LongTextInputItem( 'latex', '', '' )
             : new TextInputItem( 'latex', 'LaTeX notation', '' )
+        dialog.addItem(new HTMLItem(
+          `<div id='latexDialogLabel'>
+            Enter LaTeX
+            <span id='info-icon'>
+              <i class='fa-solid fa-circle-info'></i>
+              <span id='tooltip-text'>(expository math not validated by Lurch)</span>
+            </span>
+          </div>`))
         dialog.addItem( latexInput )
         const textSelector = mode == 'Advanced' 
             ? 'textarea[type="text"]'
