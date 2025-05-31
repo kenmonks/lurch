@@ -579,9 +579,11 @@ Environment =  '{' a:LCs '}' { return `\\left\\{ ${a} \\right\\}` }
 // Declare constants (cannot have a body and is a given)
 Declare = a:'declare'i __ b:DeclareSeq { return `${txt(a)} ${b}` }
 // ForSome declaration (always a claim)
-ForSome = body:Expression __ 'for'i __ 'some'i __ a:Symbol __ 'in'i __ b:Expression
-            { return `${body}\\text{ for some }${a}\\in ${b}` } /
-          body:Expression __ 'for' __ 'some' __ a:SymbolSeq
+// We also allow the special shorthand `for some x,y,z in A` since it is so common.
+// TODO: upgrade to allow environment bodies
+ForSome = body:Expression __ 'for'i __ 'some'i __ a:(Symbol)|1..,comma| __ 'in'i __ b:Expression 
+            { return `${body}\\text{ for some }${a.join(',')}\\in ${b}` } /
+          body:Expression __ 'for'i __ 'some'i __ a:SymbolSeq 
             { return `${body}\\text{ for some }${a}` }
 // the 'given' colon is optional since these are always 'given'. We also
 // allow the special shortand `Let x∈A` since it is so common.
