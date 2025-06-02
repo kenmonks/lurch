@@ -439,11 +439,8 @@ Declare = 'declare'i __ a:DeclareSeq { return `declare> :[${a}]` }
 // We also allow the special shorthand `for some x in A` since it is so common.
 // upgrade some> to a shorthand to allow environment bodies
 ForSome = 'for'i __ 'some'i __ a:(Symbol)|1..,comma| __ 'in'i __ b:Expression 
-       // body:Expression __ 'for'i __ 'some'i __ a:Symbol __ 'in'i __ b:Expression
             { return `some> [${a.join(' ')},{ ${a.map(x=>`(∈ ${x} ${b})`).join(' ')} }]` } /
-            // { return `[${a}, (and ${body} (∈ ${a} ${b}))]` } /
           'for'i __ 'some'i __ a:SymbolSeq 
-       // body:Expression __ 'for'i __ 'some'i __ a:SymbolSeq 
             { return `some> [${a}]` }
 // the 'given' colon is optional since these are always 'given'. We also 
 // allow the special shorthand `Let x∈A` since it is so common.          
