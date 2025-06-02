@@ -25,9 +25,10 @@
 
 import { Message } from './validation-messages.js'
 import { Atom } from './atoms.js'
-import { Dialog } from './dialog.js'
+import { Dialog, HTMLItem } from './dialog.js'
 import { isOnScreen } from './utilities.js'
 import { LurchDocument } from './lurch-document.js'
+import { appSettings } from './settings-install.js'
 
 /**
  * This function should be called in the editor's setup routine.  It installs
@@ -55,7 +56,8 @@ import { LurchDocument } from './lurch-document.js'
 export const install = editor => {
 
     // Object for storing the progress notification we show during validation
-    let progressNotification = null
+    // let progressNotification = null
+    editor.progressDialog = null
 
     // Define utility function used below:
     // Remove all validation markers from all atoms and shells in the editor
@@ -119,19 +121,69 @@ export const install = editor => {
                     console.log( JSON.stringify( message.content, null, 4 ) )
                 }
             } else if ( message.is( 'progress' ) ) {
-                progressNotification.progressBar.value( message.get( 'complete' ) )
+                // update the progress meter %
+                const progress = Math.round(message.get('complete') || 0)
+                const meter = editor.progressDialog?.querySelector('#progress-text')
+                const gap = (progress<10)?'  ;':' '
+                if (meter)
+                  meter.textContent = `Validating...${gap}${progress}%`
             } else if ( message.is( 'done' ) ) {
-                progressNotification.close()
-                Dialog.notify( editor, 'success', 'Validation complete', 2000 )
-                progressNotification = null
-                editor.dispatch( 'validationFinished' )
+              // TODO: add setting for:
+              // const showcomplete = appSettings.load('show validation has completed')
+              const showcomplete = true
+              // check that the dialog isn't already closed by the user
+              // (shouldn't happen because them closing the dialog kills the
+              // worker that would generate this message, but maybe a race
+              // condition is possible?)
+              const dialog = editor.progressDialog
+              if (!dialog) return
+              
+              // We could just immediately close the dialog when it's finished
+              // to allow the user to get back to editing as quickly as
+              // possible.  But a very brief message saying it's done might will
+              // make it less jarring, initially. So we make that an application
+              // setting.
+              if (showcomplete) {
+                  // Change background and message
+                  dialog.element.classList.add('validation-completed')
+                  const textEl = dialog.querySelector('#progress-text')
+                  if (textEl) textEl.textContent = 'Validation... done!'
+                  // Delay 750ms, then close — unless already closed
+                  //
+                  // Note that we don't need to kill the worker in this situation
+                  // since it has already finished validating
+                  setTimeout(() => {
+                      if (editor.progressDialog === dialog) {
+                        dialog.close()
+                        editor.progressDialog = null
+                        editor.dispatch('validationFinished')
+                      }
+                  }, 750)
+              } else {
+                  // same thing but without the background change and delay
+                  const textEl = dialog.querySelector('#progress-text')
+                  if (textEl) textEl.textContent = 'Validation...100%'
+                  if (editor.progressDialog === dialog) {
+                    dialog.close()
+                    editor.progressDialog = null
+                    editor.dispatch('validationFinished')
+                  }
+              }
+              // For future reference, note that in general using something like
+              // this:
+              //
+              // Dialog.notify( editor, 'success', 'Validation complete', 2000)
+              //
+              // Is a bad idea because if the user opens a modal dialog while
+              // the notification is open, this notification window will close
+              // the dialog unexpectedly.
             } else if ( message.content?.type?.startsWith( 'mathlive#' ) ) {
                 // Ignore messages MathLive is sending to itself
             } else if ( event.data['lurch-embed'] ) {
                 // Ignore messages that initialize embedded Lurch instances
             } else {
                 console.log( 'Warning: unrecognized message type' )
-                // console.log( JSON.stringify( message.content, null, 4 ) )
+                console.log( JSON.stringify( message.content, null, 2 ) )
             }
         } )
     installEventHandlers( window )
@@ -144,7 +196,8 @@ export const install = editor => {
         installEventHandlers( result )
         return result
     }
-    let worker = newValidationWorker()
+
+    editor.worker = newValidationWorker()
 
     // Add menu item for toggling validation
     editor.ui.registry.addMenuItem( 'validate', {
@@ -153,16 +206,11 @@ export const install = editor => {
         tooltip : 'Run Lurch\'s checking algorithm on the document',
         shortcut : 'meta+0',
         onAction : () => {
-            // If there is validation in progress, terminate it and say so.
-            if ( progressNotification ) {
-                progressNotification.close()
-                progressNotification = null
-                worker.terminate()
-                worker = newValidationWorker()
-                Dialog.notify( editor, 'warning', 'Validation stopped', 2000 )
-                editor.dispatch( 'validationFinished' )
-                return
-            }
+            // If there is validation in progress, we might want to terminate
+            // it, but changing the notification to a modal dialog seems to
+            // prevent the hotkey for the menu item from doing anything when the
+            // dialog is shown (i.e., the entire editor is locked) 
+
             // If there are validation results in the document, then clear them
             // out and be done.
             if ( Array.from(
@@ -175,13 +223,66 @@ export const install = editor => {
             // Clear old results just to be safe.
             clearAll()
             // Start progress bar in UI
-            progressNotification = editor.notificationManager.open( {
-                text : 'Validating...',
-                type : 'info',
-                progressBar : true
-            } )
+            const dialog = new Dialog('Validating...', editor, 'progress-dialog')
+            
+            // Add a progress bar
+            const progressDisplay = new HTMLItem(
+                `
+                <div id="progress-row">
+                  <span id="progress-text">Validating...  0%</span>
+                  <span id="progress-close" title="Cancel validation">
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                      viewBox="0 0 384 512"
+                      width="16"
+                      height="16" 
+                      fill="#000">
+                      <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                      <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                    </svg>
+                  </span>
+                </div>
+                `)
+            dialog.addItem(progressDisplay)
+            
+            // hide the header and footer
+            dialog.hideHeader = true
+            dialog.hideFooter = true
+            
+            // Override the cancel logic to allow it to stop the worker
+            dialog.json.onCancel = () => {
+                console.log('Escape Key Pressed')
+                if (editor.worker) {
+                    editor.worker.terminate()
+                    editor.worker = newValidationWorker()
+                }
+                editor.dispatch('validationFinished')
+                dialog.close()
+                editor.progressDialog = null
+            }
+            // cache the dialog in the editor
+            editor.progressDialog = dialog
+            
+            // show the editor 
+            dialog.show()
+            // after it is created add the close button onclick action
+            setTimeout(() => {
+              const closeButton = dialog.querySelector('#progress-close')
+              if (closeButton)
+                dialog.element.tabIndex = -1
+                dialog.element.focus({ preventScroll: true })
+                closeButton.onclick = () => {
+                  console.log('Close dialog clicked')
+                  if (editor.worker) {
+                      editor.worker.terminate()
+                      editor.worker = newValidationWorker()
+                  }
+                  editor.dispatch('validationFinished')
+                  dialog.close()
+                  editor.progressDialog = null
+                }
+            }, 0)
             // Send the document to the worker to initiate background validation
-            Message.document( editor, 'putdown' ).send( worker )
+            Message.document( editor, 'putdown' ).send( editor.worker )
         }
     } )
 

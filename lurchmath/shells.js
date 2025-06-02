@@ -287,8 +287,10 @@ export class Shell extends Atom {
             // allow deleting environments
             result.unshift( {
                 text : 'Remove this environment',
-                onAction : () =>
+                onAction : () => {
+                    this.wasDeleted()
                     this.element.replaceWith( ...this.element.childNodes )
+                  }
             } )
             // // Later when toLCs() for shells gets an upgrade:
             // result.unshift( {

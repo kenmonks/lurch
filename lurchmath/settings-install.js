@@ -223,6 +223,11 @@ export const shortAppSettings = new Settings(
                 'warn before embed header',
                 'Show warning before moving document content into header',
                 'Moving content into the header is an action that cannot be undone.'
+            ),
+               new BoolSettingMetadata(
+                'show validation has completed',
+                'Show a brief message that validation has completed',
+                true
             )
         )
     )

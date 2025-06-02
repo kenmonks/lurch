@@ -18,8 +18,9 @@ export class Dialog {
      * @param {string} title - the title to display at the top of the dialog
      * @param {tinymce.Editor} editor - the editor in which to create the dialog
      */
-    constructor ( title, editor ) {
+    constructor ( title, editor, cssClass = null ) {
         this.editor = editor
+        this.cssClass = cssClass
         this.json = {
             title,
             body : {
@@ -274,6 +275,8 @@ export class Dialog {
             this.currentTabName = this.json.body.tabs[0].name
         this.dialog = this.editor.windowManager.open( this.json )
         this.element = Dialog.getTopDialogElement()
+        if (this.cssClass)
+            this.element.classList.add(this.cssClass)
         if ( this.hideHeader )
             this.querySelector( '.tox-dialog__header' ).style.display = 'none'
         if ( this.hideFooter )
