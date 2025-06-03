@@ -44,7 +44,8 @@ export const install = editor => {
     getConverter().then( result => converter = result )
     // Define reusable function that initiates the insertion of an expression
     const insertExpression = () => {
-        const mode = appSettings.get( 'expression editor type' )
+        // const mode = appSettings.get( 'expression editor type' )
+        const mode = 'Advanced'
         const atom = Atom.newInline( editor, '',
             mode == 'Beginner' ? {
                 type : 'expression',
@@ -671,7 +672,8 @@ export class Expression extends Atom {
      *   {@link module:Atoms.Atom#edit edit() for Atoms}
      */
     edit () {
-        switch ( appSettings.get( 'expression editor type' ) ) {
+        // switch ( appSettings.get( 'expression editor type' ) ) {
+        switch ( 'Advanced' ) {
             case 'Beginner':
                 return this.editInBeginnerMode()
             case 'Intermediate':

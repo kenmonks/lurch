@@ -501,7 +501,8 @@ export class Dialog {
         result.addItem( new HTMLItem( putdownHTML( LCs ) ), 'Code' )
         result.show()
         setTimeout( () =>
-            result.showTab( appSettings.get( 'preferred meaning style' ) ) )
+            // result.showTab( appSettings.get( 'preferred meaning style' ) ) )
+            result.showTab( 'Code' ) )
     }
 
 }

@@ -20,7 +20,7 @@ import {
  * 
  * @see {@link Settings}
  */
-export const appSettings = new Settings(
+export const oldAppSettings = new Settings(
     'Application settings',
     new SettingsMetadata(
         new SettingsCategoryMetadata(
@@ -191,7 +191,7 @@ export const appSettings = new Settings(
  *
  * @see {@link Settings}
  */
-export const shortAppSettings = new Settings(
+export const appSettings = new Settings(
     'Application settings',
     new SettingsMetadata(
         new SettingsCategoryMetadata(
@@ -242,13 +242,15 @@ const applySettings = changes => {
     if ( changes && changes.length > 0 ) appSettings.save()
     // Now, for any change that must result in some code being run now to alter
     // the app's behavior, run that code.
-    if ( !changes || changes.includes( 'application width in window' ) ) {
-        // Mark the body as to whether we're full screen or not, so CSS responds
-        if ( appSettings.get( 'application width in window' ) == 'Fixed size' )
-            document.body.classList.remove( 'fullscreen' )
-        else
-            document.body.classList.add( 'fullscreen' )
-    }
+
+    // This shouldn't happen because it's not an actual setting anymore
+    // if ( !changes || changes.includes( 'application width in window' ) ) {
+    //     // Mark the body as to whether we're full screen or not, so CSS responds
+    //     if ( appSettings.get( 'application width in window' ) == 'Fixed size' )
+    //         document.body.classList.remove( 'fullscreen' )
+    //     else
+    //         document.body.classList.add( 'fullscreen' )
+    // }
 }
 
 /**
@@ -270,7 +272,7 @@ export const install = editor => {
         icon : 'preferences',
         onAction : () => {
             appSettings.load()
-            shortAppSettings.userEdit( editor ).then( changes =>
+            appSettings.userEdit( editor ).then( changes =>
                 applySettings( changes ) )
         }
     } )

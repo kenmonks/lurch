@@ -557,9 +557,11 @@ export const install = editor => {
             }
         } )
         const inBeginnerMode =
-            appSettings.get( 'expression editor type' ) == 'Beginner'
+            // appSettings.get( 'expression editor type' ) == 'Beginner'
+            false
         const inAdvancedMode =
-            appSettings.get( 'expression editor type' ) == 'Advanced'
+            // appSettings.get( 'expression editor type' ) == 'Advanced'
+            true
         return shellSubclassNames.map( subclassName => {
             const subclass = Atom.subclasses.get( subclassName )
             if ( inBeginnerMode && !subclass.beginnerFriendly ||

@@ -728,7 +728,8 @@ export class FileSystem {
             } )
         } )
         setTimeout( () => {
-            const defaultTab = appSettings.get( 'default open dialog tab' )
+            // const defaultTab = appSettings.get( 'default open dialog tab' )
+            const defaultTab = `From your computer`
             if ( tabs.map( tab => tab.name ).includes( defaultTab ) )
                 dialog.showTab( defaultTab )
         } )
@@ -803,7 +804,8 @@ export class FileSystem {
             } )
         } )
         setTimeout( () => {
-            const defaultTab = appSettings.get( 'default save dialog tab' )
+            // const defaultTab = appSettings.get( 'default save dialog tab' )
+            const defaultTab = `To your computer`
             if ( tabs.map( tab => tab.name ).includes( defaultTab ) )
                 dialog.showTab( defaultTab )
         } )
@@ -880,7 +882,8 @@ export class FileSystem {
             } )
         } )
         setTimeout( () => {
-            const defaultTab = appSettings.get( 'default open dialog tab' )
+            // const defaultTab = appSettings.get( 'default open dialog tab' )
+            const defaultTab = `From your computer`
             if ( tabs.map( tab => tab.name ).includes( defaultTab ) )
                 dialog.showTab( defaultTab )
         } )

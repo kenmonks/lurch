@@ -128,9 +128,9 @@ export const install = editor => {
                 if (meter)
                   meter.textContent = `Validating...${gap}${progress}%`
             } else if ( message.is( 'done' ) ) {
-              // TODO: add setting for:
-              // const showcomplete = appSettings.load('show validation has completed')
-              const showcomplete = true
+              const showcomplete = appSettings.get('show validation has completed')
+              console.log(showcomplete)
+              // const showcomplete = true
               // check that the dialog isn't already closed by the user
               // (shouldn't happen because them closing the dialog kills the
               // worker that would generate this message, but maybe a race

@@ -491,13 +491,15 @@ export class LurchDocument {
                 'notation',
                 'Default notation to use for new expressions',
                 [ 'Lurch notation', 'LaTeX' ],
-                appSettings.get( 'notation' )
+                // appSettings.get( 'notation' )
+                'Lurch notation'
             ),
             new CategorySettingMetadata(
                 'shell style',
                 'Style for displaying environments',
                 [ 'boxed', 'minimal' ],
-                appSettings.get( 'default shell style' )
+                // appSettings.get( 'default shell style' )
+                'minimal'
             )
         ),
         new SettingsCategoryMetadata(

@@ -59,7 +59,8 @@ export class ExpositoryMath extends Atom {
      *   {@link module:Atoms.Atom#edit edit() for Atoms}
      */
     edit () {
-        const mode = appSettings.get( 'expository math editor type' )
+        // const mode = appSettings.get( 'expository math editor type' )
+        const mode = 'Advanced'
         const latex = this.getMetadata( 'latex' )
         // set up dialog contents
         const dialog = new Dialog( 'Edit expository math', this.editor )
@@ -250,7 +251,8 @@ export const install = editor => {
     // but you can enter one as expository math by entering \$ for the LaTeX.)
     editor.on( 'init', () => {
         editor.dom.doc.body.addEventListener( 'keypress', event => {
-            if ( event.key == '$' && appSettings.get( 'dollar sign shortcut' ) ) {
+            // if ( event.key == '$' && appSettings.get( 'dollar sign shortcut' ) ) {
+            if ( event.key == '$' ) {
                 event.preventDefault()
                 event.stopPropagation()
                 insertExpositoryMath()
