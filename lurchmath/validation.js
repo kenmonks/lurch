@@ -129,7 +129,6 @@ export const install = editor => {
                   meter.textContent = `Validating...${gap}${progress}%`
             } else if ( message.is( 'done' ) ) {
               const showcomplete = appSettings.get('show validation has completed')
-              console.log(showcomplete)
               // const showcomplete = true
               // check that the dialog isn't already closed by the user
               // (shouldn't happen because them closing the dialog kills the
@@ -250,7 +249,6 @@ export const install = editor => {
             
             // Override the cancel logic to allow it to stop the worker
             dialog.json.onCancel = () => {
-                console.log('Escape Key Pressed')
                 if (editor.worker) {
                     editor.worker.terminate()
                     editor.worker = newValidationWorker()
@@ -271,7 +269,6 @@ export const install = editor => {
                 dialog.element.tabIndex = -1
                 dialog.element.focus({ preventScroll: true })
                 closeButton.onclick = () => {
-                  console.log('Close dialog clicked')
                   if (editor.worker) {
                       editor.worker.terminate()
                       editor.worker = newValidationWorker()
