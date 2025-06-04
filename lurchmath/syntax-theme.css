@@ -125,6 +125,12 @@
 }
 
 /***********************************************************************/
+/*                               Utilities                             */
+
+/* Add this class to hide any div. Useful for toggling. */
+.hidden { display: none;}
+
+/***********************************************************************/
 /*                                Fonts                                */
 
 /* set the base font */
@@ -244,14 +250,14 @@ div.lurch-atom#context {
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}         
+}
 /* nested ones have no border or side padding */
 div.lurch-atom#context div.lurch-atom[data-metadata_type*="preview"] {
   outline: none;
   padding-left: 0;
   padding-right: 0;
   box-shadow: none;
-}         
+}
 /* nothing inside is user-selectable */
 div.lurch-atom#context * {
   user-select: none;
@@ -260,7 +266,18 @@ div.lurch-atom#context * {
 h1#contextTitle {
   text-align: center;
 }
-
+/* Remove the bottom margin from the filtered-heading */
+#filter-head h2 {
+  margin-bottom: 0;
+}
+.no-rules-found::after {
+  content: "No rules mention your search string.";
+  display: block;
+  margin-top: 0.7em;
+  color: gray;
+  font-style: italic;
+}
+/* declared constants table */
 div#declaresPanel {
   background-color: floralwhite;
   margin-top: 1rem;
@@ -268,6 +285,12 @@ div#declaresPanel {
   padding: 1rem;
   border-radius: 6px;
 }
+/* nothing inside is user-selectable */
+div#context-head {
+  margin: 0;
+  padding: 0;
+}
+
 
 /* Lists */
 

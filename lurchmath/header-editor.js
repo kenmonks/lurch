@@ -120,6 +120,16 @@ export const install = editor => {
         // Define the search function
         doSearch = () => {
             const searchText = searchBox.value.toLowerCase()
+            // if the search box has something to search for, hide the context
+            // head div
+            const head = editor.getBody().querySelector('#context-head')
+            const fhead = editor.getBody().querySelector('#filter-head')
+            const searching = searchText!==''
+            if (head && fhead) {
+                head.classList.toggle('hidden',searching)
+                fhead.classList.toggle('hidden',!searching)
+                editor.getWin().scrollTo(0, 0)
+            }
             let numShown = 0
             const relevantText = rulenode => {
                 // start with the text content of the rule
@@ -165,9 +175,44 @@ export const install = editor => {
             // searchText == '' ? '' :
                                         numShown == 1 ? '1 rule found' :
                                         `${numShown} rules found`
+            // edge case formatting when there are no rules that match the
+            // filter
+            if (fhead) fhead.classList.toggle('no-rules-found',numShown==0)
         }
-        // Install the search function
+        // Install the search functions
         searchBox.addEventListener( 'input', doSearch )
+        searchBox.addEventListener('keydown', event => {
+            const isMac = /Mac/.test(navigator.platform)
+            const metaKey = isMac ? event.metaKey : event.ctrlKey
+            if (metaKey && event.altKey && event.code === 'Digit0') {
+                event.preventDefault()
+                event.stopPropagation()
+                // If the context is shown (it should be), delete it and return
+                const existingContext = editor.getBody().querySelector('#context')
+                if ( existingContext ) {
+                    existingContext.remove()
+                    editor.selection.setCursorLocation( editor.getBody(), 0 )
+                    // Also, if we have a cursor location stored from before we
+                    // showed this preview, put the user's cursor location back
+                    // there for convenience.  (See more comments on this below.)
+                    if ( editor.selectionBeforePreview ) {
+                        editor.selection.setRng( editor.selectionBeforePreview )
+                        editor.selectionBeforePreview = null
+                        editor.selection.getStart()?.scrollIntoView()
+                    } else {
+                        // If none was saved, place the cursor at start of document
+                        editor.selection.setCursorLocation( editor.getBody(), 0 )
+                    }
+                    // return focus to the editor
+                    editor.focus()
+                    // restor the scroll position if it was saved
+                    if (editor.scrollYBeforePreview !== undefined) {
+                        editor.getWin().scrollTo(0, editor.scrollYBeforePreview)
+                        delete editor.scrollYBeforePreview
+                    }
+                }
+            }
+        })
     } )
     // Whenever anything in the document changes (even the cursor position),
     // decide whether to show the search toolbar
@@ -180,6 +225,7 @@ export const install = editor => {
             if ( show && !wasShown ) {
                 searchBox.value = ''
                 doSearch()
+                searchBox.focus()
             }
         }
     } )
@@ -416,6 +462,10 @@ export const install = editor => {
                     editor.selectionBeforePreview = null
                     editor.selection.getStart()?.scrollIntoView()
                 }
+                if (editor.scrollYBeforePreview !== undefined) {
+                    editor.getWin().scrollTo(0, editor.scrollYBeforePreview)
+                    delete editor.scrollYBeforePreview
+                }
                 return
             }
 
@@ -426,6 +476,7 @@ export const install = editor => {
             // because it may be large and require them to scroll to see it.
             // If they then hide it, it's nice to jump back to where they were.
             editor.selectionBeforePreview = editor.selection.getRng()
+            editor.scrollYBeforePreview = editor.getWin().scrollY
 
             // get the dependency content
             const header = getHeader( editor )
@@ -503,6 +554,8 @@ export const install = editor => {
                    </div>` 
               }
             }
+            HTML = `<div id="context-head">${HTML}</div>
+                    <div id="filter-head" class="hidden"><h2>Matching rules:</h2></div>`
             shiftHTML( context, HTML)
 
             // hopefully this will lock everything down
@@ -521,6 +574,7 @@ export const install = editor => {
             editor.getWin().scrollTo(0, 0) // scroll the window to the top
         }
     } )
+    
 }
 
 export default { install }
