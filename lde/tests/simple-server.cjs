@@ -4,7 +4,7 @@
 // Thank you!
 
 const http = require( 'http' )
-const url = require( 'url' )
+const { URL } = require( 'url' )
 const fs = require( 'fs' )
 const path = require( 'path' )
 const port = 8080
@@ -17,7 +17,8 @@ const startServer = ( options = { } ) => {
     }, options ) // But update them with the actual options given.
     // Create the server:
     const server = http.createServer( ( req, res ) => {
-        const parsedUrl = url.parse( req.url )
+        // const parsedUrl = url.parse( req.url )
+        const parsedUrl = new URL(req.url, `http://${req.headers.host}`)
         let pathname = `.${parsedUrl.pathname}`
         const ext = path.parse( pathname ).ext
         const extensionToMime = {
