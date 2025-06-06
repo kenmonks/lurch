@@ -6,6 +6,7 @@
 node_modules/
 
 # ignore lots of stuff for local customizations
+toc.html
 
 # ignore the initproofs.js file for Lode
 initproofs.js
@@ -15,5 +16,4 @@ initproofs.js
 /math299
 /pima
 /cicm
-toc.html
 studentfiles299
