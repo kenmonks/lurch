@@ -6126,7 +6126,7 @@ function peg$parse(input, options) {
           }
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
-            s7 = peg$parseProduct();
+            s7 = peg$parseAlgebraic();
             if (s7 !== peg$FAILED) {
               s8 = peg$parse__();
               if (s8 !== peg$FAILED) {
@@ -6140,7 +6140,7 @@ function peg$parse(input, options) {
                 if (s9 !== peg$FAILED) {
                   s10 = peg$parse__();
                   if (s10 !== peg$FAILED) {
-                    s11 = peg$parseProduct();
+                    s11 = peg$parseAlgebraic();
                     if (s11 !== peg$FAILED) {
                       s12 = peg$parse__();
                       if (s12 !== peg$FAILED) {
@@ -6243,7 +6243,7 @@ function peg$parse(input, options) {
               if (s6 !== peg$FAILED) {
                 s7 = peg$parse__();
                 if (s7 !== peg$FAILED) {
-                  s8 = peg$parseProduct();
+                  s8 = peg$parseAlgebraic();
                   if (s8 !== peg$FAILED) {
                     s9 = peg$parse__();
                     if (s9 !== peg$FAILED) {
@@ -6277,7 +6277,7 @@ function peg$parse(input, options) {
               if (s6 !== peg$FAILED) {
                 s7 = peg$parse__();
                 if (s7 !== peg$FAILED) {
-                  s8 = peg$parseProduct();
+                  s8 = peg$parseAlgebraic();
                   if (s8 !== peg$FAILED) {
                     s9 = peg$parse__();
                     if (s9 !== peg$FAILED) {
@@ -6469,7 +6469,7 @@ function peg$parse(input, options) {
                       if (s11 !== peg$FAILED) {
                         s12 = peg$parse__();
                         if (s12 !== peg$FAILED) {
-                          s13 = peg$parseProduct();
+                          s13 = peg$parseAlgebraic();
                           if (s13 !== peg$FAILED) {
                             s14 = peg$parse__();
                             if (s14 !== peg$FAILED) {
@@ -6503,7 +6503,7 @@ function peg$parse(input, options) {
                       if (s11 !== peg$FAILED) {
                         s12 = peg$parse__();
                         if (s12 !== peg$FAILED) {
-                          s13 = peg$parseProduct();
+                          s13 = peg$parseAlgebraic();
                           if (s13 !== peg$FAILED) {
                             peg$savedPos = s0;
                             s0 = peg$f66(s4, s7, s10, s13);
@@ -6575,7 +6575,7 @@ function peg$parse(input, options) {
                     s7 = peg$parsecomma();
                     if (s7 !== peg$FAILED) {
                       s8 = peg$currPos;
-                      s9 = peg$parseProduct();
+                      s9 = peg$parseAlgebraic();
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parsecomma();
                         if (s10 !== peg$FAILED) {
@@ -6591,7 +6591,7 @@ function peg$parse(input, options) {
                       if (s8 === peg$FAILED) {
                         s8 = null;
                       }
-                      s9 = peg$parseProduct();
+                      s9 = peg$parseAlgebraic();
                       if (s9 !== peg$FAILED) {
                         s10 = peg$parse_();
                         if (input.charCodeAt(peg$currPos) === 41) {

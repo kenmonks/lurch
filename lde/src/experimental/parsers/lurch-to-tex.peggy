@@ -785,21 +785,21 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
   // k to n of f(k) + sum k to n of g(k)' will be the sum of the two summations,
   // rather than a single summation where the second one is part of the summands
   // of the first.
-  Summation = 'sum'i __ k:Symbol __ a:('from' __ @Product __)? 'to'i __ b:Product
+  Summation = 'sum'i __ k:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
               __ ('of'i __)? f:Product
                   { return summation(f,k,a,b) }  /
 
-              'sum'i __ k:Symbol _ '=' _ a:Product __ 'to'i __ b:Product
+              'sum'i __ k:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
               __ ('of'i __)? f:Product
                   { return summation(f,k,a,b) }  /
 
               'sum'i __ ('of'i __)? f:Product __
               ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)?
-              a:('from' __ @Product __)? 'to'i __ b:Product
+              a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
                   { return summation(f,k,a,b) }  /
 
               'sum'i '(' _ f:Product comma
-                           k:Symbol comma a:(@Product comma)? b:Product _ ')'
+                           k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
                   { return summation(f,k,a,b) }
 
     Product   = a:(Denom/Negated/ExpArgs)
