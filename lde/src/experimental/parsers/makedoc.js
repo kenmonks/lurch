@@ -53,6 +53,23 @@ const syntax =
   'sum( k^2 , k , 0 , n )',
   'sum(k^2,k,0,n)',
   'sum(k^2,k,n)'                     ],`\\sum_{k=0}^n k^2`],
+[['int x=0 to n of x^2',
+  'int x from 0 to n of x^2',
+  'int of x^2 as x goes from 0 to n',
+  'int x^2 as x goes from 0 to n',
+  'int x^2 as x from 0 to n',
+  'int x^2 for x from 0 to n',
+  'int x^2 for x to n',
+  'int of x^2 as x to n',
+  'int of x^2 for x to n',
+  'int( x^2 , x , 0 , n )',
+  'int(x^2,x,0,n)'                   ],`\\int_0^n x^2\,\mathrm{d}x`],
+[['int x^2 dx',
+  'int with respect to x of x^2',
+  'int wrt x of x^2',
+  'int of x^2 with respect to x',
+  'int x^2 wrt x',
+  'int(x^2,x)'                       ],`\\int x^2\,\mathrm{d}x`],
 [['Fib_(n+2)'                        ],`F_{n+2}`],
 
 'Set Theory',
@@ -148,7 +165,7 @@ export const makedoc = () => {
     }
   })
   let doc = loadStr('lurch-parser-docs-template','./parsers/','html')
-              .replace(/## MAKEDOC OUTPUT GOES HERE ##/g,ans)           
+              .replace(/## MAKEDOC OUTPUT GOES HERE ##/g,ans)
   fs.writeFileSync('./parsers/lurch-parser-docs.html', doc)
   write('The Lurch syntax documentation page was written successfully.')
 }

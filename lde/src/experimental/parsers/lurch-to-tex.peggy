@@ -100,6 +100,12 @@
     return `\\displaystyle\\sum_{${k}=${a}}^{${b}} ${f}`
   }
 
+  // convert summations to tex
+  const integral = (f,x,a,b) => {
+    if (a) return `\\displaystyle\\int_{${a}}^{${b}} ${f}\\,\\mathrm{d}${x}`
+    return `\\displaystyle\\int ${f}\\,\\mathrm{d}${x}`
+  }
+
   // convert indexed union to tex
   const union = (f,k,a) => {
     return `\\displaystyle\\bigcup_{${k}\\in ${a}} ${f}`
@@ -768,7 +774,7 @@ Set = RelativeComp
 // Once again, Algebraic only has to point to the lowest precedence operator
 // that inherits the ones below it (but Choose does not). Atomic is passed up
 // the chain from Exp.
-Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
+Algebraic = Choose / Sum / Summation / Integral / IndexedUnion / IndexedIntersect / Product
 
   // we make this lower precedence that sums so e.g. 'n+1 choose k' can be
   // entered without parentheses
@@ -801,6 +807,42 @@ Algebraic = Choose / Sum / Summation / IndexedUnion / IndexedIntersect / Product
               'sum'i '(' _ f:Product comma
                            k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
                   { return summation(f,k,a,b) }
+  
+  // definite integrals are similar to summations, but we don't have to fuss about 
+  // their precedence relative to addition because they have a closing delimiter
+  Integral = 'int'i __ x:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
+              __ ('of'i __)? f:Algebraic
+                  { return integral(f,x,a,b) }  / 
+
+              'int'i __ x:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+              __ ('of'i __)? f:Product
+                  { return integral(f,x,a,b) }  /  
+
+              'int'i __ ('of'i __)? f:Algebraic 
+              __ ('as'i __ / 'for'i__) x:Symbol __ ('goes'i __)? 
+              a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                  { return integral(f,x,a,b) }  /
+
+              'int'i '(' _ f:Algebraic comma 
+              x:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
+                  { return integral(f,x,a,b) }  /
+              
+              // antiderivatives (indefinite integrals)
+
+              'int'i __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i ) __ x:Symbol 
+              __ ('of'i __)? f:Algebraic
+                  { return integral(f,x) }  / 
+
+              'int'i __ ('of'i __)? f:Algebraic 
+              __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i) __ x:Symbol 
+                  { return integral(f,x) }  /
+
+              'int'i '(' _ f:Algebraic comma x:Symbol _ ')'
+                  { return integral(f,x) } /
+
+              'int'i __ f:Algebraic __ 'd' x:Symbol
+                  { return integral(f,x) }
+
 
     Product   = a:(Denom/Negated/ExpArgs)
                 |1..,(_'⋅'_/_'cdot'_x/_'*'_)|
