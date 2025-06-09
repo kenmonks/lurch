@@ -800,7 +800,7 @@ Symbol "Symbol" =
   'QQ'            { return 'ℚ'  }  /  'RR'            { return 'ℝ'  }   /
   'CC'            { return 'ℂ'  }  /  'II'            { return '𝕀'  }   /  
   'OO'            { return '𝕆'  }  /  '~'                              /
-  !(ReservedWord !alphanum) @$([a-z]i alphanum* ) 
+  StringLiteral / !(ReservedWord !alphanum) @$([a-z]i alphanum* ) 
 
 // Reserved Words
 //

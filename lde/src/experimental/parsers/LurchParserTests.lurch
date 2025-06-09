@@ -250,6 +250,10 @@ comment "Fred often ponders reality."
 ➤ "Fred often ponders reality."
 % "Fred often ponders reality."
 
+// Symbols with spaces
+n is a "natural number"
+declare is, "natural number"
+
 ////////////////////////////////
 // ND Propositional Logic Axioms
 ////////////////////////////////

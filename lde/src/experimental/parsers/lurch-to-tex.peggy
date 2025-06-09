@@ -529,7 +529,7 @@ Comment = ( '%' / 'Comment'i ) __ a:StringLiteral
 
 // A string literal is anything enclosed in double quotes
 // Currently only used for comments
-StringLiteral = $('"' [^"]* '"')
+StringLiteral = '"' a:([^"]*) '"' { return `\\text{${a.join('')}}` }
 // Labels
 Label = 'label'i _ [(\[{"] _ a:([^)\]}"]+) _ [)\]}"]
   { return `\\text{\\textcolor{grey}{${a.join('')}}}` }
@@ -935,7 +935,7 @@ Prefix =  // LDE EFA's first
 // Atomic Expressions
 //
 // morally atomic expressions (do not require parentheses)
-Atomic = Parenthesized / // EquivalenceClass
+Atomic = Parenthesized / StringLiteral / // EquivalenceClass
          Matrix / Tuple / SetBracketed / Symbol / Number
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -989,7 +989,7 @@ Natural = $( [1-9][0-9]* / '0' )
 // For clarity in reading the putdown output we rename some special frequently used
 // symbols.
 Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { return texsymbol(a) } /
-  !(ReservedWord !alphanum) a:([a-z]i alphanum* )
+  StringLiteral / !(ReservedWord !alphanum) a:([a-z]i alphanum* )
   { let b = texsymbol(a[0]+a[1].join(''))
     return (b.length>1 && !b.startsWith('\\')) ? `\\text{${b}}` : b }
 
