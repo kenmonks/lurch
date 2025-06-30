@@ -6,7 +6,7 @@ include libs/Reals
 //////////////////////////////////
 // Definitions for Sets
 //////////////////////////////////
-Declare Set, ∈, ⊆, ∩, ∪, ∖, °, 𝒫
+Declare Set, ∈, ⊆, ∩, ∪, ∖, °, 𝒫, set, tuple, pair, ×
 Axioms:  
 {
 	:{ x ∉ Set() }                                // empty set
