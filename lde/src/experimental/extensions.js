@@ -889,17 +889,35 @@ LogicConcept.prototype.attributes = function ( ) {
     ]
 }
 
- 
-//  A utilty function to inspect the contents of an LC in the console in a nice
-// format. 
-// LogicConcept.prototype.inspect = function(x) { 
-//   console.log(util.inspect(x , depth = 1) , 
-//   { customInspect: false , showHidden: false , depth: depth , colors: true } ) 
-// }
-// LogicConcept.prototype.inspect = function(...args) { inspect(this,...args) }
+/**
+ * Determine if this LogicConcept is a `LurchSymbol` whose text equals the given
+ * string. If the `compareProperNames` flag is truthy, then the comparison uses
+ * the symbol's proper name instead of its `.text()` representation.
+ *
+ * @param {string} s - The string to compare against the symbol's text or proper
+ * name.
+ * @param {boolean} [compareProperNames=false] - Whether to compare using the
+ * symbol's proper name.
+ * @returns {boolean} `true` if this is a matching `LurchSymbol`, `false`
+ * otherwise.
+ *
+ */
+LogicConcept.prototype.isSymbol = function(s, compareProperNames) {
+  return this instanceof LurchSymbol && 
+         (compareProperNames ? s === this.properName : s === this.text())
+}
 
-// Check if this LC is a Lurch symbol whose text matches the regular expression
-// formed by the string argument s
-LogicConcept.prototype.isSymbol = LogicConcept.prototype.matches = function(s) {
+/**
+ * Determine if this LogicConcept is a `LurchSymbol` whose text matches a given
+ * pattern. The string `s` is interpreted as a regular expression and must match
+ * the entire symbol text.
+ *
+ * @param {string} s - A string pattern (not a full RegExp object) to match the
+ * symbol's text.
+ * @returns {boolean} `true` if the symbol's text matches the pattern, `false`
+ * otherwise.
+ * @see LurchSymbol
+ */
+LogicConcept.prototype.matches = function(s) {
   return this instanceof LurchSymbol && new RegExp(`^${s}$`).test(this.text())
 }
