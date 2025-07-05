@@ -66,6 +66,8 @@ import './disable-event-target.js'
 import * as Lurch from '../index.js'
 import { Problem } from '../matching/problem.js'
 import CNF from '../validation/conjunctive-normal-form.js'
+import TreeIndexer from './tree-indexer.js'
+import { addLurchIndices, addIndex } from './index-definitions.js'
 import { LurchOptions } from './lurch-options.js'
 
 // Experimental Code
@@ -222,6 +224,9 @@ Object.assign( global, ParsingTools )
 global.CNF = CNF
 global.Problem = Problem
 global.CNFProp = CNFProp
+global.TreeIndexer = TreeIndexer
+global.addIndex = addIndex
+global.addLurchIndices = addLurchIndices
 
 // External packages
 global.satSolve = satSolve

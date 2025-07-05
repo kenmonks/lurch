@@ -21,6 +21,7 @@ import { Application } from '../application.js'
 import Algebrite from '../../dependencies/algebrite.js'
 const compute = Algebrite.run
 import './extensions.js'
+import { addIndex } from './index-definitions.js'
 
 /**
  * Make both a normal and tracing peggy parser from the given string and capture
@@ -423,10 +424,12 @@ const numericToCAS = e => {
  */
 export const processShorthands = L => {
 
+  // cache the index for parsing
+  addIndex(L,'Parsing')
+
   // for each symbol named symb, do f, i.e. execute f(symb)
   const processSymbol = ( symb , f ) =>  {
-    L.descendantsSatisfying( x => (x instanceof LurchSymbol) && x.text()===symb )
-     .forEach( s => f(s) )
+    L.index.getAll(symb).forEach( s => f(s) )
   }
   // make next sibling have a given type.  If the optional third argument is missing, do nothing further.  If flag is 'given' make the target a given.  If the flag is 'claim' make the target a claim.
   const makeNext =  (m,type,flag) => {
@@ -460,11 +463,10 @@ export const processShorthands = L => {
   // result at all from validation. By moving the LC attribute to a js attribute
   // that fixes that problem because the LC copy routine does not copy js
   // attributes on the LC.
-  L.descendantsSatisfying( x => x.hasAttribute('ExpectedResult'))
-    .forEach( s => {
-      s.ExpectedResult = s.getAttribute('ExpectedResult')
-      s.clearAttributes('ExpectedResult')
-    } ) 
+  L.index.getAll('ExpectedResults').forEach( s => {
+    s.ExpectedResult = s.getAttribute('ExpectedResult')
+    s.clearAttributes('ExpectedResult')
+  } ) 
   
   // attribute the previous sibling with .continued attribute whose value is true if
   // its next sibling is a `<comma` symbol.
@@ -682,7 +684,7 @@ export const processShorthands = L => {
     parent.replaceWith(ans)
   } )
 
-  // Expand equivalences
+  // Inline environments
   processSymbol( 'then' ,  m => { 
     // make a new array to contain the relevant LHS and RHS siblings
     let sibs = []
