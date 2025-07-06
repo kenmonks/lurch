@@ -575,21 +575,36 @@ export class Expression extends Atom {
                 return null
             }
         }
+        // utility used below
+        const convertToLC = () => {
+            try {
+              return LogicConcept.fromPutdown( 
+                converter( dialog.get( 'lurchNotation' ), 'lurch', 'putdown' ) 
+              )
+            } catch {
+                return null
+            }
+        }
         // if they edit the Lurch notation or latex, keep them in sync
         dialog.onChange = ( _, component ) => {
             if ( component.name == 'lurchNotation' ) {
-                const converted = convertToLatex()
-                if ( converted || converted === '' )
-                    mathLivePreview.setValue( converted )
+                // be sure the user input is valid syntax for BOTH parsers
+                // before allowing them to enter it
+                const convertedTex = convertToLatex()
+                const convertedLC = convertToLC()
+                const validSyntax = !!(convertedLC && (convertedTex || convertedTex === ''))
+                console.log(validSyntax)
+                if ( validSyntax )
+                    mathLivePreview.setValue( convertedTex )
                 const lurchInputElement = dialog.querySelector( 'textarea' )
                 if ( lurchInputElement ) {
-                    if ( typeof converted === 'string' ) {
+                    if ( typeof convertedTex === 'string' ) {
                         lurchInputElement.classList.remove('badsyntax')
                     } else {
                         lurchInputElement.classList.add('badsyntax')
                     }
                 }
-                dialog.dialog.setEnabled( 'OK', !!converted )
+                dialog.dialog.setEnabled( 'OK', validSyntax )
             }
         }
         // Show it and if they accept any changes, apply them to the atom.
