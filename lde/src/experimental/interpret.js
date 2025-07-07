@@ -87,6 +87,8 @@ const interpret = doc => {
   
   // mark it as interpreted
   doc.interpreted = true
+  // mark it as a document
+  doc.makeIntoA('document')
 
   return doc
 }

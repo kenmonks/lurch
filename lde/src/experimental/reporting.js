@@ -346,9 +346,13 @@ const isNestedLCs = A => {
 
 // Apply the custom formatter to nested arrays and sets containing LCs. Indent
 // and number lines as needed.  Note that for Arrays or Sets we usually are
-// debugging something, so we show everything.
-const format = (x,options,indentlevel=0) => {
+// debugging something, so we show everything.  Similarly, we usually want to
+// show everything when not showing an entire document (like just one rule or
+// instantiation).  We check that using indentlevel.
+const format = (x,options,indentlevel=0) => {  
   if (x instanceof LogicConcept) {
+    // if it's not a document, show everything
+    if (indentlevel==0 && !x.isA('document') ) options=all
     return defaultPen(indent(
       x.toPutdown(formatter(options), 
         text => /\n/.test( text )         || 
