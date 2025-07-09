@@ -582,8 +582,14 @@ rpl.defineCommand( "list", {
 // define the Lode .test command
 rpl.defineCommand( "test", {
   help: "Run the default test script ('acidtests.js').",
-  action() { 
+  action(n) { 
     clearAccumulator()
+    // If a number is passed, store it in a global variable
+    if (n !== "" && Number.isInteger(Number(n))) {
+      global.TestIndex = Number(n)
+    } else {
+      delete global.TestIndex  // clean up if not specified
+    }
     initialize('utils/acidtests')
     this.displayPrompt()
   }

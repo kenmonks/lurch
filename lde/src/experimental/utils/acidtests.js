@@ -23,11 +23,17 @@ const loadtest = (name, folder='acid tests', extension='lurch',
   // student files have their own verbose mode
   if ( showFile ) 
     // avoid newline at the end of this by not using console.log
-    process.stdout.write(defaultPen(`Loading ${folder}/${name}`.padEnd(50,'.')))
+    process.stdout.write(defaultPen(`${acid.length}. Loading ${folder}/${name}`.padEnd(50,'.')))
   try {
-    let a = loadDoc(name,`proofs/${folder}`, extension, language)
-    if (desc) a.desc=desc
-    acid.push(a) 
+    // if we are asking for a specify test number, just load the array with strings
+    if (typeof TestIndex === 'number' ) {
+      let a = loadDocStr(name,`proofs/${folder}`, extension, language)
+      acid.push(a) 
+    } else {
+      let a = loadDoc(name,`proofs/${folder}`, extension, language)
+      if (desc) a.desc=desc
+      acid.push(a) 
+    }
   } catch {
     console.log(`Error loading acid test: ${name}`)
     acid.push(xPen(`Error loading acid test: ${name}`))
@@ -130,14 +136,20 @@ console.log()
 let passed = 0
 let failed = 0
 
-// test the asciimath Peggy parser by itself
-try { 
-  const s=lc(parse(loadStr('parsers/LurchParserTests')))
-  passed++
-  console.log(`${itemPen('Parser Test:')} → ok`)
-} catch (e) { 
-  failed++
-  console.log(xPen(`ERROR: asciimath peggy parser test failed.`)) 
+// if a test number is specified, skip the parser test and compile it
+if (typeof TestIndex === 'number') {
+  acid=[$(`{ ${acid[TestIndex]} }`)]
+  validate(acid[0])
+} else {
+  // test the asciimath Peggy parser by itself
+  try { 
+    const s=lc(parse(loadStr('parsers/LurchParserTests')))
+    passed++
+    console.log(`${itemPen('Parser Test:')} → ok`)
+  } catch (e) { 
+    failed++
+    console.log(xPen(`ERROR: asciimath peggy parser test failed.`)) 
+  }
 }
 
 // and the rest of the acid tests
