@@ -593,7 +593,7 @@ export class Expression extends Atom {
                 const convertedTex = convertToLatex()
                 const convertedLC = convertToLC()
                 const validSyntax = !!(convertedLC && (convertedTex || convertedTex === ''))
-                console.log(validSyntax)
+                // console.log(validSyntax)
                 if ( validSyntax )
                     mathLivePreview.setValue( convertedTex )
                 const lurchInputElement = dialog.querySelector( 'textarea' )
