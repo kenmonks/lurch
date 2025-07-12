@@ -168,7 +168,7 @@ class TreeIndexer {
     console.log('\nIndex Definitions')
     console.log('-----------------')
     this.indexes.forEach( (val,key) => {
-      console.log(`\n${metavariablePen(key)} -> type: '${stringPen(val.type)}' order: '${stringPen(val.order)}'`)
+      console.log(`\n${itemPen(key)} -> type: '${stringPen(val.type)}' order: '${stringPen(val.order)}'`)
       writeNice(val)
     } )
 
