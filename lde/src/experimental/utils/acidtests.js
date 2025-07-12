@@ -140,6 +140,7 @@ let failed = 0
 if (typeof TestIndex === 'number') {
   acid=[$(`{ ${acid[TestIndex]} }`)]
   validate(acid[0])
+  global.doc = acid[0]
 } else {
   // test the asciimath Peggy parser by itself
   try { 
