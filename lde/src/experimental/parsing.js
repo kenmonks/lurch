@@ -21,7 +21,6 @@ import { Application } from '../application.js'
 import Algebrite from '../../dependencies/algebrite.js'
 const compute = Algebrite.run
 import './extensions.js'
-import { addIndex } from './index-definitions.js'
 
 /**
  * Make both a normal and tracing peggy parser from the given string and capture

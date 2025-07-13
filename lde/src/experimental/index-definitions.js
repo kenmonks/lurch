@@ -16,6 +16,10 @@
  */
 
 import TreeIndexer from './tree-indexer.js'
+import {
+  LogicConcept, MathConcept, BindingExpression, Application, 
+  Environment, Declaration, Expression, LurchSymbol
+} from '../index.js'
 
 /**
  * Create a document index, add it to the document, and populate it. The second
@@ -101,12 +105,16 @@ export const addLurchIndices = (indexer, phase) => {
 
     define( 'Lets', x => 
       x instanceof Declaration && x.isA('given') && !x.isA('Declare') )
-
+  
     // define( 'Lets with body', x => 
     //   x instanceof Declaration && x.isA('given') && !x.isA('Declare') && x.body() )
 
     // define( 'ForSomes', x => 
     //   x instanceof Declaration && !x.isA('given') && !x.isA('Declare') )
+
+    define( 'Formulas', x =>
+       (x.isA('Rule') || x.isA('Part')) && !(x.finished)
+    )
 
   } else {
 

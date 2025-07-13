@@ -47,6 +47,9 @@ import Utilities from './utils.js'
 const { subscript } = Utilities
 const instantiation = 'LDE CI'
 
+// import tree-indexer and definitions
+import { addIndex } from './index-definitions.js'
+
 // import the LDE options
 import { LurchOptions } from './lurch-options.js'
 
