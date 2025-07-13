@@ -57,6 +57,7 @@ import Parsing from './experimental/parsing.js'
  * @memberof Formula
  * @alias Formula.from
  */
+// TODO: update this to use the document tree-indexer (doc.index)
 const from = (LC, inPlace=false) => {
     // what symbol names were already declared?
     const declared = new Set( LC.accessibles().filter(

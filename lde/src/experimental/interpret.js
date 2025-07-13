@@ -77,8 +77,8 @@ const interpret = doc => {
   addSystemDeclarations(doc)
   addIndex(doc,'Parsing')
   processShorthands(doc)
-  moveDeclaresToTop(doc)
   addIndex(doc,'Interpret')
+  moveDeclaresToTop(doc)
   processTheorems(doc)
   processDeclarationBodies(doc)
   processLetEnvironments(doc)
@@ -115,15 +115,12 @@ const addSystemDeclarations = doc => {
 
 /** Move `Declare` declarations to the top of the document. */
 const moveDeclaresToTop = doc => {
-  doc.getDeclares().reverse().forEach( dec => {
-    // if (dec.body()) { 
-    //   write(dec)
-    //   console.log(dec.body())
-    //   // throw new Error('Global constant declarations cannot have a body.')
-    // }
+  const Decs = doc.index.get('Declares')
+  for (let i = Decs.length - 1; i >= 0; i--) {
+    const dec = Decs[i] 
     dec.remove()
-  doc.unshiftChild(dec)
-})
+    doc.unshiftChild(dec)
+  }
 return doc
 }
 
@@ -159,7 +156,7 @@ return doc
  * accessibilty in that situation.
  */
 const processTheorems = doc => {
-  doc.getTheorems().forEach( 
+  doc.index.get('Theorems').forEach( 
     thm => {
       // to make this idempotent, check if the rule copy is already there
       if ( thm.nextSibling()?.userRule ) { return }
@@ -188,6 +185,10 @@ const processTheorems = doc => {
       // and insert it after the theorem
       thmrule.insertAfter(thm)
     })
+  
+  // update the Rules index since we might have added a few
+  doc.index.update('Rules')
+  
   return doc
 }
 
@@ -199,7 +200,7 @@ const processTheorems = doc => {
 const processDeclarationBodies = doc => {
   // get the declarations with a body (hence the 'true') that don't contain 
   // metavariables (do this before converting a Rule to a formula)
-  const decs = doc.declarations(true).filter( dec => Formula.domain(dec).size===0)
+  const decs = doc.index.get('Decs with body').filter( dec => Formula.domain(dec).size===0)
   // insert a copy of the body after the declaration and mark where it came from
   // with the js attribute .bodyOf, unless it's already there
   decs.forEach( dec => {
@@ -210,8 +211,10 @@ const processDeclarationBodies = doc => {
     decbody.bodyOf = dec
     decbody.insertAfter(dec)
   })
+  // overkill, but let's do it for now since the body might be almost anything
+  doc.index.update('Statements')
   return doc
-}  
+}
 
 
 /**
@@ -228,11 +231,12 @@ const processLetEnvironments = doc => {
   // Get all of the Let's whether or not they have bodies and make sure they are
   // the first child of their enclosing environment.  If not, wrap their scope
   // in an environment so that they are.
-  doc.lets().forEach( dec => {
+  doc.index.get('Lets').forEach( dec => {
     const i = dec.indexInParent()
     const parent = dec.parent()
     if (i) parent.insertChild( new Environment(...parent.children().slice(i)) , i )
-  })
+  } )
+  return doc
 }
 
 
@@ -243,7 +247,8 @@ const processLetEnvironments = doc => {
  * bound variables in order.
  */
 const processBindings = doc => {
-  doc.statements().forEach( expr => renameBindings( expr ))
+  doc.index.update('Statements')
+  doc.index.get('Statements').forEach( expr => renameBindings( expr ))
   return doc
 }
 
@@ -259,7 +264,7 @@ const processBindings = doc => {
  */
 const processRules = doc => {
   // get all of the Rules
-  doc.getRules().forEach( f => {
+  doc.index.get('Rules').forEach( f => {
     // check if f is not an Environment, or is a Let-environment, and throw
     // an error either way
     if (!f instanceof Environment || f.isALetEnvironment() )
@@ -286,6 +291,9 @@ const processRules = doc => {
       renameBindings( expr )
       } )
   } )
+  // update the index
+  doc.index.update('Rules')
+  return doc
 }
 
 
@@ -494,7 +502,8 @@ const markDeclaredSymbols = ( target ) => {
   // if the text of the constants is cached in an array in doc.constants, fetch
   // it, otherwise compute it
   if (!doc.constants) { 
-    doc.constants = new Set(doc.getDeclares().map(x=>x.children().map(kid=>kid.text())).flat())
+    doc.constants = new Set(doc.index.get('Declares')
+                    .map(x=>x.children().map(kid=>kid.text())).flat())
   }
   // fetch all of the symbols in the target
   let symbols = target.descendantsSatisfying( x => x instanceof LurchSymbol )
@@ -505,8 +514,8 @@ const markDeclaredSymbols = ( target ) => {
   return target
 }
 
-export default { interpret, processShorthands, moveDeclaresToTop, processTheorems,
-  processDeclarationBodies, processLetEnvironments, processBindings,  
-  processRules, assignProperNames, markDeclaredSymbols, replaceBindings,
-  renameBindings
+export default { interpret, addSystemDeclarations, processShorthands, 
+  moveDeclaresToTop, processTheorems, processDeclarationBodies, 
+  processLetEnvironments, processBindings, processRules, assignProperNames,
+  markDeclaredSymbols, replaceBindings, renameBindings
 }
