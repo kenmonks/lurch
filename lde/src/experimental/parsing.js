@@ -431,12 +431,9 @@ const numericToCAS = e => {
  */
 export const processShorthands = L => {
 
-  // cache the index for parsing
-  addIndex(L,'Parsing')
-
   // for each symbol named symb, do f, i.e. execute f(symb)
   const processSymbol = ( symb , f ) =>  {
-    L.index.getAll(symb).forEach( s => f(s) )
+    L.index.get(symb).forEach( s => f(s) )
   }
   // make next sibling have a given type.  If the optional third argument is missing, do nothing further.  If flag is 'given' make the target a given.  If the flag is 'claim' make the target a claim.
   const makeNext =  (m,type,flag) => {
@@ -470,7 +467,7 @@ export const processShorthands = L => {
   // result at all from validation. By moving the LC attribute to a js attribute
   // that fixes that problem because the LC copy routine does not copy js
   // attributes on the LC.
-  L.index.getAll('ExpectedResults').forEach( s => {
+  L.index.get('ExpectedResults').forEach( s => {
     s.ExpectedResult = s.getAttribute('ExpectedResult')
     s.clearAttributes('ExpectedResult')
   } ) 

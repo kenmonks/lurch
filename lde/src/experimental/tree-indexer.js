@@ -50,7 +50,7 @@ class TreeIndexer {
    * @param {string} key - The index key.
    * @returns {Array|Set} The set or array of indexed values.
    */
-  getAll(key) {
+  get(key) {
     if (!this.cache.has(key)) this.update(key)
     return this.cache.get(key)
   }

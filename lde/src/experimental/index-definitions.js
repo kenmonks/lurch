@@ -70,7 +70,8 @@ export const addLurchIndices = (indexer, phase) => {
     indexer.define('ExpectedResults', { 
       selector: x => x.hasAttribute('ExpectedResult') 
     })
-  } else {
+  } else if (phase === 'Interpret') {
+
     // find all the useful .isA() nodes
     const defineIsA = types => {
       types.forEach( ([label,type]) => {
@@ -88,7 +89,8 @@ export const addLurchIndices = (indexer, phase) => {
       ['Considers','Consider']
     ]
     defineIsA(TypeList)
-
+     
+  } else {
 
   }
 }

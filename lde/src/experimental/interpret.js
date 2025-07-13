@@ -75,8 +75,10 @@ const interpret = doc => {
   if (doc.interpreted) return
 
   addSystemDeclarations(doc)
+  addIndex(doc,'Parsing')
   processShorthands(doc)
   moveDeclaresToTop(doc)
+  addIndex(doc,'Interpret')
   processTheorems(doc)
   processDeclarationBodies(doc)
   processLetEnvironments(doc)
@@ -249,8 +251,11 @@ const processBindings = doc => {
 /**
  * Process Rules 
  *
- * Check all of `Rules` to ensure they are the right type of LC. Convert them into
- * formulas.  If they have metavariables, mark them `.ignore` so they have no prop form. If they don't mark them as an `Inst`. Replace and rename their bound variables to `y₀, y₁, ...` to avoid classes with user variables with the same name.
+ * Check all of `Rules` to ensure they are the right type of LC. Convert them
+ * into formulas.  If they have metavariables, mark them `.ignore` so they have
+ * no prop form. If they don't mark them as an `Inst`. Replace and rename their
+ * bound variables to `y₀, y₁, ...` to avoid classes with user variables with
+ * the same name.
  */
 const processRules = doc => {
   // get all of the Rules
@@ -477,7 +482,7 @@ const resetComputedAttributes = doc => {
 /**
  * Mark Declared Symbols
  * 
- * Mark explicitly declared symbols `s, throughout an LC by setting
+ * Mark explicitly declared symbols `s`, throughout an LC by setting
  * `s.constant=true`.  Symbols consisting of a string of digits are automatically
  * marked as constants.
  * 
