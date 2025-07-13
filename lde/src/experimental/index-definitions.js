@@ -84,7 +84,7 @@ export const addLurchIndices = (indexer, phase) => {
       ['Declares','Declare'],
       ['Theorems','Theorem'],
       ['Proofs','Proof'],
-      ['Metavars','LDE MV'],
+      ['Metavars','Metavar'],
       ['Considers','Consider']
     ]
     defineIsA(TypeList)

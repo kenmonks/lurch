@@ -231,7 +231,7 @@ const defaultOptions = {
 }
 
 // Syntactic sugar for the formatter
-const metavariable = "LDE MV"
+const metavariable = "Metavar"
 const instantiation = "LDE CI"
 const EFA = "LDE EFA"
 const formula = "Formula"

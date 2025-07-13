@@ -341,7 +341,7 @@ export class Substitution {
      * a few text replacements, as follows:
      * 
      *  * The JSON notation for the metavariable attribute is replaced with a
-     *    double underscore, so rather than seeing `'P +{"_type_LDE MV":true}'`,
+     *    double underscore, so rather than seeing `'P +{"_type_Metavar":true}'`,
      *    you will see simply `P__`.
      *  * The binder for expression functions, `"LDE lambda"`, is replaced with
      *    the more compact and intuitive `𝝺`.
@@ -359,7 +359,7 @@ export class Substitution {
             .replace( /"\[\\"LDE DB\\"\,(.*?)\]"/g, '($1)' )
             .replace( /"LDE DB"/g, 'DB' )
             .replace( /\n      /g, '' )
-            .replace( / \+\{"_type_LDE MV":true\}\n/g, '__' )
+            .replace( / \+\{"_type_Metavar":true\}\n/g, '__' )
             .replace( /"LDE EFA"/g, '@' )
             .replace( /"LDE lambda"/g, '𝝺' )
     }

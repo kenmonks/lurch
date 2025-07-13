@@ -765,7 +765,7 @@ Environment.prototype.catalog = function ( ) {
   // forms for such a proposition, we need to know all of the let-scopes in the
   // document.  Ignore everything containing a metavariable.
   this.propositions()
-      .filter( P => !P.some( x => x.isA('LDE MV') ) )
+      .filter( P => !P.some( x => x.isA('Metavar') ) )
       .map( s => s.allProps() )
       .forEach( x => catalog = catalog.union( x ) )
   return [ ...catalog ] 

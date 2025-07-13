@@ -718,7 +718,7 @@ Environment.prototype.catalog = function ( ) {
   // document.  Ignore everything containing a metavariable.
   this.propositions().forEach( P => {
     // Skip propositions containing a metavariable
-    if (P.some(x => x.isA('LDE MV'))) return
+    if (P.some(x => x.isA('Metavar'))) return
     // Add allProps() result to the catalog efficiently
     for (const prop of P.allProps()) {
       catalog.add(prop)

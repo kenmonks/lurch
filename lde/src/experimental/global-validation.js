@@ -142,7 +142,7 @@ import { LurchOptions } from './lurch-options.js'
 // Convenience Utilities
 //
 const instantiation = 'LDE CI'
-const metavariable  = 'LDE MV'
+const metavariable  = 'Metavar'
 const EFA  = 'LDE EFA'
 
 // Debug is a global boolean

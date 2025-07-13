@@ -296,7 +296,7 @@ const processRules = doc => {
  */
 const assignProperNames = doc => {
   
-  const metavariable = "LDE MV"
+  const metavariable = "Metavar"
   
   // get the declarations with a body (hence the 'true') which is an expression
   let declarations = doc.declarations(true)
