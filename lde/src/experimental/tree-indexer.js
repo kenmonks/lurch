@@ -50,7 +50,7 @@ class TreeIndexer {
    * @param {string} key - The index key.
    * @returns {Array|Set} The set or array of indexed values.
    */
-  getAll(key) {
+  get(key) {
     if (!this.cache.has(key)) this.update(key)
     return this.cache.get(key)
   }
@@ -160,25 +160,21 @@ class TreeIndexer {
   show() {
 
     const writeNice = val => {
-      console.log('{')
       console.log(` selector: ${val.selector.toString()}`)
       console.log(` transform: ${val.transform.toString()}`)
-      console.log(` type: '${stringPen(val.type)}'`)
-      console.log(` order: '${stringPen(val.order)}'`)
-      console.log('}')
     }
 
     console.log('\nIndex Definitions')
     console.log('-----------------')
     this.indexes.forEach( (val,key) => {
-      write(`\n${key} ->`)
+      console.log(`\n${itemPen(key)} -> type: '${stringPen(val.type)}' order: '${stringPen(val.order)}'`)
       writeNice(val)
     } )
 
     console.log('\nCached Values')
     console.log('-------------')
     this.cache.forEach( (val,key) => {
-      write(`\n${key} ->`)
+      console.log(`\n${itemPen(key)} ->`)
       write(val)
       console.log('---------')
     })

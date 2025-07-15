@@ -16,6 +16,10 @@
  */
 
 import TreeIndexer from './tree-indexer.js'
+import {
+  LogicConcept, MathConcept, BindingExpression, Application, 
+  Environment, Declaration, Expression, LurchSymbol
+} from '../index.js'
 
 /**
  * Create a document index, add it to the document, and populate it. The second
@@ -54,19 +58,21 @@ const metavariable = "LDE MV"
 //  order = 'Depth'            // 'Depth' or 'Post' 
 export const addLurchIndices = (indexer, phase) => {
 
+  // a convenient utility
+  const define = (key,selector) => indexer.define(key,{ selector: selector })
+
   ////////////////////
   //  Phase 0: Parsing
   //
   if (phase === 'Parsing') {
+    
     // Find and cache Shorthands
     const ShorthandsList = [
       'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
       '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
       '✔︎','✗','⁉︎','⊘','➤','<<','>>'
     ]
-    ShorthandsList.forEach( x => {
-      indexer.define( x, { selector: s => s.isSymbol(x) } )
-    })
+    ShorthandsList.forEach( x => define( x, s => s.isSymbol(x) ) )
     
     // Parsing also needs to tweak the LCs with the ExpectedResult attribute
     indexer.define('ExpectedResults', { 
@@ -90,26 +96,44 @@ export const addLurchIndices = (indexer, phase) => {
   } else {
     // find all the useful .isA() nodes
     const defineIsA = types => {
-      types.forEach( ([label,type]) => {
-        indexer.define(label,{ selector: x => x.isA(type) })
-      } )
+      types.forEach( ([label,type]) => define(label,  x => x.isA(type) ) )
     }
     const TypeList = [
       ['Rules','Rule'],
-      ['Parts','Part'],
-      ['Insts','Inst'],
       ['Declares','Declare'],
       ['Theorems','Theorem'],
-      ['Proofs','Proof'],
-      ['Metavars','LDE MV'],
-      ['Considers','Consider']
+      ['Metavars','Metavar']
     ]
     defineIsA(TypeList)
 
-    // find various instanceof nodes
-    indexer.define('Environments',{ selector: x => x instanceof Environment })
-    indexer.define('Declarations',{ selector: x => x instanceof Declaration })
-    indexer.define('LurchSymbols',{ selector: x => x instanceof LurchSymbol })
+    // virtual types (not cached in the LC)
+
+    define( 'Statements', x => 
+      (x instanceof Expression) && x.isOutermost() &&
+      !( (x.parent() instanceof Declaration) &&
+          x.parent().symbols().includes(x)
+      )
+    )
+
+    // // define( 'Decs', x => x instanceof Declaration && !x.isA('Declare') )
+
+    define( 'Decs with body', x => 
+      x instanceof Declaration && !x.isA('Declare') && x.body() )
+
+    define( 'Lets', x => 
+      x instanceof Declaration && x.isA('given') && !x.isA('Declare') )
+  
+    // define( 'Lets with body', x => 
+    //   x instanceof Declaration && x.isA('given') && !x.isA('Declare') && x.body() )
+
+    // define( 'ForSomes', x => 
+    //   x instanceof Declaration && !x.isA('given') && !x.isA('Declare') )
+
+    define( 'Formulas', x =>
+       (x.isA('Rule') || x.isA('Part')) && !(x.finished)
+    )
+
+  } else {
 
   }
 }

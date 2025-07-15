@@ -131,7 +131,7 @@ import Interpret from './interpret.js'
 const { markDeclaredSymbols, renameBindings, assignProperNames, interpret } = Interpret
 // import experimental utilities
 import Utils from './utils.js'
-const commonInitialSlice = Utils.commonInitialSlice
+const { subscript, commonInitialSlice } = Utils
 // profile it iff running in Lode
 const profile = (globalThis.global) ? Utils.profile : f=>f()
 // import the LDE options
@@ -142,7 +142,7 @@ import { LurchOptions } from './lurch-options.js'
 // Convenience Utilities
 //
 const instantiation = 'LDE CI'
-const metavariable  = 'LDE MV'
+const metavariable  = 'Metavar'
 const EFA  = 'LDE EFA'
 
 // Debug is a global boolean
@@ -352,8 +352,11 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
 const processDomains = doc => {
   // make it idempotent
   if (doc.domainsProcessed) { return }
-
-  doc.formulas().forEach(f => {
+  
+  // refresh the index
+  doc.index.update('Formulas')
+  
+  doc.index.get('Formulas').forEach(f => {
     cacheFormulaDomainInfo(f)
     // If there are no metavariables in this formula, instantiate it so it is
     // available for validation.
@@ -399,6 +402,71 @@ const cacheFormulaDomainInfo = f => {
   // forbidden metavars are still present but max===0.
   f.weenies = f.propositions().filter(p =>
     max > 0 && p.domain && (p.domain.size === max))  
+}
+
+/**
+ * Convert a pattern into a canonical string form by consistently renaming its
+ * metavariables. This is useful for comparing patterns up to permutation of
+ * metavariables, e.g., for detecting "doppleganger" patterns (alpha-equivalent
+ * patterns differing only by a permutation of metavariable names).
+ *
+ * The canonicalization works by traversing the pattern in depth-first order,
+ * assigning metavariables names in the order they appear. Each metavariable is
+ * renamed to a standardized name of the form `𝛼₁`, `𝛼₂`, ... using subscripts
+ * to make them human-readable. All constants and structural elements are left
+ * unchanged.
+ *
+ * @function patternForm
+ * @param {LogicConcept} pattern - A pattern expression that may contain metavariables.
+ * @returns {string} A canonical string representation of the pattern in Putdown notation
+ *                   with consistent metavariable renaming.
+ *
+ * @example
+ * // Suppose pattern is (or W V) with W and V as metavariables
+ * patternForm(pattern)
+ * // → '(or 𝛼₁ 𝛼₂)'
+ *
+ * @see LogicConcept#metavars
+ * @see LogicConcept#toPutdown
+ */
+const patternForm = pattern => {
+  let counter = 1
+  const mapping = new Map()
+
+  // Assign each metavariable a canonical name in depth-first order.
+  // Example: if pattern contains W and V, they might become 𝛼₁ and 𝛼₂.
+  pattern.metavars().forEach(metavar => {
+    let name = metavar.text()
+    if (!mapping.has(name)) mapping.set(name, `𝛼${subscript(counter++)}`)
+  })
+
+  // Produce the Putdown representation, replacing each metavariable
+  // with its canonical name while leaving constants unchanged.
+  return pattern.toPutdown((L, S, A) => {
+    return (L.isA('Metavar')) ? mapping.get(L.text()) : S
+  })
+}
+
+/**
+ * Determine whether two patterns are dopplegangers, meaning they differ only
+ * by a permutation of the same set of metavariable names but have identical
+ * structure and constants.
+ *
+ * @param {LogicConcept} p1 - The first pattern.
+ * @param {LogicConcept} p2 - The second pattern.
+ * @returns {boolean} True if p1 and p2 are dopplegangers, false otherwise.
+ */
+export const isDopplegangerOf = (p1, p2) => {
+
+  // Collect metavariable name sets for both patterns
+  const set1 = new Set(p1.metavars().map(mv => mv.text()))
+  const set2 = new Set(p2.metavars().map(mv => mv.text()))
+
+  // If sets are not equal, they can't be dopplegangers
+  if (!set1.equals(set2)) return false
+
+  // Finally, check canonical form equality
+  return patternForm(p1) === patternForm(p2)
 }
 
 /**
@@ -1389,10 +1457,18 @@ const instantiate = doc => {
     // elements of E to find instantiations and partial instantiations
     formulas.forEach(f => {
       // we can only instantiate formulas that have a non-forbidden weeny.
-      // get this formula's maximally weeny patterns (must be cached)
-      // f.weenies.forEach(p => {
-      if (f.weenies.length) {
-        let p = f.weenies[0]
+      // get this formula's maximally weeny patterns (must be cached)   
+      f.weenies.forEach(p => {
+      
+      // The following doesn't quite work, because of rules like { 1*n=1 n*1=n }
+      // where the weenie it picks isn't the one that matches in the proof, and
+      // these are no doppelgangers.  I will try combining it with the splitting
+      // of conclusions feature.  If it does work, then the doppelganger
+      // grouping might be more efficient if done up front instead of filtering
+      // as below.  Below was just a quick implementation for testing.
+
+      // f.weenies.filter(x=>isDopplegangerOf(x,f.weenies[0])).forEach(p => {
+        
         // try to match this pattern p to every user proposition e
         E.forEach(e => {
           // if it's a Subs EFA and e isn't .by substitution skip it
@@ -1432,7 +1508,7 @@ const instantiate = doc => {
           //////////////////////////////////////////////////////////////////
 
         })
-      }
+      })
       // we've matched every user proposition to every weeny pattern in
       // this formula, and don't want to do it again on future passes, so
       // mark it as finished.
@@ -2175,6 +2251,6 @@ export default {
   processChains, processEquations, upgradeChains, eq2chain, splitChains, 
   splitEquations, processDomains, diff, cacheFormulaDomainInfo, 
   getCaselikeRules, LurchOptions, matchPropositions, LogicConcept, 
-  Formula, Scoping, Validation
+  Formula, Scoping, Validation, patternForm
 }
 ///////////////////////////////////////////////////////////////////////////////

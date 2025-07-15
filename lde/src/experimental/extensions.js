@@ -590,6 +590,15 @@ LogicConcept.prototype.bindings = function () {
 }
 
 /** 
+ * Compute the array of all Metavars in this LC in Depth order
+ * 
+ * @memberof Extensions
+ */
+LogicConcept.prototype.metavars = function () {
+  return this.descendantsSatisfying( x => x.isA('Metavar') )
+}
+
+/** 
  * Compute the array of all LurchSymbols in this LC 
  * 
  * @memberof Extensions
@@ -733,7 +742,7 @@ Environment.prototype.catalog = function ( ) {
   // document.  Ignore everything containing a metavariable.
   this.propositions().forEach( P => {
     // Skip propositions containing a metavariable
-    if (P.some(x => x.isA('LDE MV'))) return
+    if (P.some(x => x.isA('Metavar'))) return
     // Add allProps() result to the catalog efficiently
     for (const prop of P.allProps()) {
       catalog.add(prop)

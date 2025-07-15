@@ -57,6 +57,7 @@ import Parsing from './experimental/parsing.js'
  * @memberof Formula
  * @alias Formula.from
  */
+// TODO: update this to use the document tree-indexer (doc.index)
 const from = (LC, inPlace=false) => {
     // what symbol names were already declared?
     const declared = new Set( LC.accessibles().filter(
@@ -203,7 +204,7 @@ const instantiate = (
  * @alias Formula.hasDeclarationCapture
  */
 const hasDeclarationCapture = ( formula, instantiation ) => {
-    const dbg = foo => foo.toPutdown().replace( / \+\{"_type_LDE MV"\:true\}\n/g, '_' )
+    const dbg = foo => foo.toPutdown().replace( / \+\{"_type_Metavar"\:true\}\n/g, '_' )
     // console.log( 'Formula: ' + dbg( formula ) )
     // console.log( 'Instantiation:' )
     // Object.keys( instantiation ).map( key =>

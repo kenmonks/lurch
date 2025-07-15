@@ -305,7 +305,7 @@ export class Problem {
                  + ( '(' + decodeExpression( c.pattern ).toPutdown()
                    + ',' + decodeExpression( c.expression ).toPutdown() + ')' )
             .replace( /\n      /g, '' )
-            .replace( / \+\{"_type_LDE MV":true\}\n/g, '__' )
+            .replace( / \+\{"_type_Metavar":true\}\n/g, '__' )
             .replace( /"LDE EFA"/g, '@' )
             .replace( /"LDE lambda"/g, '𝝺' )
         }

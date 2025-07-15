@@ -21,6 +21,7 @@ import { Message } from './validation-messages.js'
 import { LDE } from './lde-cdn.js'
 
 const LogicConcept = LDE.LogicConcept
+const Expression = LDE.Expression
 
 // Internal use only
 // Sets up an event handler for progress notifications from the LDE, to pass
@@ -114,7 +115,7 @@ const validateDocument = LC => {
     try {
         LDE.validate( LC )
     } catch ( error ) {
-        // console.log( error.stack )
+        console.log( error.stack )
         Message.error( `Error running LDE validation: ${error.message}` )
         return
     }
