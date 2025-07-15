@@ -59,7 +59,8 @@ const metavariable = "LDE MV"
 export const addLurchIndices = (indexer, phase) => {
 
   // a convenient utility
-  const define = (key,selector) => indexer.define(key,{ selector: selector })
+  const define = (key,selector,order = 'Depth') => 
+    indexer.define(key,{ selector: selector , order: order})
 
   ////////////////////
   //  Phase 0: Parsing
@@ -80,20 +81,20 @@ export const addLurchIndices = (indexer, phase) => {
     })
   } else if (phase = 'Interpret') {
 
-    indexer.define('Environments',{ selector: x => x instanceof Environment })
+    define('Environments', x => x instanceof Environment )
 
     // find all environments containing metavariables inside a given environment
     // that has more than one conclusion in post-order (for splitting rule
     // conclusions)
-    indexer.define( 'multi-conclusion-environments',{
-      selector: x => x instanceof Environment && 
-                     x.ancestors().some( d => d.isA('given')) &&
-                     x.some( d => d.isA(metavariable)) &&
-                     !x.some( d => d.isAForSome()) &&
-                     x.conclusions().length>1,
-      order: 'Post'
-    } )
-  } else {
+    define( 'multi-conclusion-environments', x => 
+      x instanceof Environment && 
+      x.ancestors().some( d => d.isA('given')) &&
+      x.some( d => d.isA(metavariable)) &&
+      !x.some( d => d.isAForSome()) &&
+      x.conclusions().length>1,
+      'Post'
+    )
+
     // find all the useful .isA() nodes
     const defineIsA = types => {
       types.forEach( ([label,type]) => define(label,  x => x.isA(type) ) )
