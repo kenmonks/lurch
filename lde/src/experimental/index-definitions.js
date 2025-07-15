@@ -48,8 +48,6 @@ export const addIndex = ( doc, phase ) => {
  * @param {'Parsing'} phase - the phase to compute the cache for
  */
 
-const metavariable = "LDE MV"
-
 // quick reference while coding this
 //
 //  selector = () => false,    // determines if a node gets indexed for this key
@@ -88,8 +86,8 @@ export const addLurchIndices = (indexer, phase) => {
     // conclusions)
     define( 'multi-conclusions', x => 
       x instanceof Environment && 
-      x.ancestors().some( d => d.isA('given')) &&
-      x.some( d => d.isA(metavariable)) &&
+      x.ancestors().some( d => d.isA('given') ) &&
+      x.some( d => d.isA('Metavar') ) &&
       !x.some( d => d.isAForSome()) &&
       x.conclusions().length>1,
       'Post'

@@ -1458,7 +1458,7 @@ const instantiate = doc => {
     formulas.forEach(f => {
       // we can only instantiate formulas that have a non-forbidden weeny.
       // get this formula's maximally weeny patterns (must be cached)   
-      f.weenies.forEach(p => {
+      // f.weenies.forEach(p => {
       
       // The following doesn't quite work, because of rules like { 1*n=1 n*1=n }
       // where the weenie it picks isn't the one that matches in the proof, and
@@ -1467,7 +1467,7 @@ const instantiate = doc => {
       // grouping might be more efficient if done up front instead of filtering
       // as below.  Below was just a quick implementation for testing.
 
-      // f.weenies.filter(x=>isDopplegangerOf(x,f.weenies[0])).forEach(p => {
+      f.weenies.filter(x=>isDopplegangerOf(x,f.weenies[0])).forEach(p => {
         
         // try to match this pattern p to every user proposition e
         E.forEach(e => {
