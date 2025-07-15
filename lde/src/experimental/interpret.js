@@ -47,9 +47,6 @@ import { processShorthands } from './parsing.js'
 import Utilities from './utils.js'
 const { subscript } = Utilities
 const instantiation = 'LDE CI'
-
-// import tree-indexer and definitions
-import { addIndex } from './index-definitions.js'
 const MCE ='multi-conclusion-environments'
 
 // import the LDE options
@@ -90,7 +87,7 @@ const interpret = doc => {
   // removeTrailingGivens(doc)
   processBindings(doc)
   processRules(doc)
-  processMultiConclusions(doc)
+  splitConclusions(doc)
   assignProperNames(doc)
   markDeclaredSymbols(doc)
   
@@ -269,10 +266,10 @@ const removeTrailingGivens = doc => {
  * conclusion and split them into multiple propositionally equivalent environments
  * with one conclusion each.
  */
-const processMultiConclusions = doc => {
+const splitConclusions = doc => {
   // update the relevant index and fetch them
-  doc.index.update('multi-conclusion-environments')
-  const E = doc.index.getAll('multi-conclusion-environments')
+  doc.index.update('multi-conclusions')
+  const E = doc.index.get('multi-conclusions')
   // for each such environment
   E.forEach( e => { 
     // get the indices of its child claims
@@ -582,7 +579,7 @@ const markDeclaredSymbols = ( target ) => {
 
 export default { interpret, addSystemDeclarations, processShorthands, 
   moveDeclaresToTop, processTheorems, processDeclarationBodies, 
-  processLetEnvironments, removeTrailingGivens, processMultiConclusions, 
+  processLetEnvironments, removeTrailingGivens, splitConclusions, 
   processBindings, processRules, assignProperNames, markDeclaredSymbols,
   replaceBindings, renameBindings
 }

@@ -86,7 +86,7 @@ export const addLurchIndices = (indexer, phase) => {
     // find all environments containing metavariables inside a given environment
     // that has more than one conclusion in post-order (for splitting rule
     // conclusions)
-    define( 'multi-conclusion-environments', x => 
+    define( 'multi-conclusions', x => 
       x instanceof Environment && 
       x.ancestors().some( d => d.isA('given')) &&
       x.some( d => d.isA(metavariable)) &&
