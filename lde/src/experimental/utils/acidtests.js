@@ -1,6 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
 //  Acid Tests
 //
+//  Run all of the custom tests for Lurch and report the results.
+//
+//  If the global variable TextIndex is defined and a number, only run that one
+//  test.
+
 // opening
 process.stdout.write(itemPen(`\nLoading the acid tests ...\n\n`))
 let start = Date.now()
@@ -13,32 +18,36 @@ const endTest = LurchOptions.endStudentTest
 // const startTest = 1
 // const endTest = 10
 
-// declare the acid array
-acid=[]
+// declare the acid array.
+// acidstr - hold the raw source strings
+// acid - hold the validated LC docs source strings.
+acidstr = []
+acid = []
+
 // define a nice utility for loading a test
 const loadtest = (name, folder='acid tests', extension='lurch',
                   language='lurch', desc = '') => { 
   let lasttime = Date.now()
   const showFile = verbose && !/studentfiles/.test(folder)
   // student files have their own verbose mode
-  if ( showFile ) 
+  if ( showFile && (typeof TestIndex !== 'number') ) 
     // avoid newline at the end of this by not using console.log
     process.stdout.write(defaultPen(`${acid.length}. Loading ${folder}/${name}`.padEnd(50,'.')))
   try {
-    // if we are asking for a specify test number, just load the array with strings
+    // if we are asking for a specific test number, just load the array with strings
     if (typeof TestIndex === 'number' ) {
       let a = loadDocStr(name,`proofs/${folder}`, extension, language)
-      acid.push(a)
+      acidstr.push([a,language])
     } else {
       let a = loadDoc(name,`proofs/${folder}`, extension, language)
       if (desc) a.desc=desc
       acid.push(a) 
     }
   } catch {
-    console.log(`Error loading acid test: ${name}`)
+    console.log(xPen(`\nError loading acid test: ${name}`))
     acid.push(xPen(`Error loading acid test: ${name}`))
   }
-  if ( showFile ) console.log(attributePen(
+  if ( showFile && (typeof TestIndex !== 'number' )) console.log(attributePen(
     `  ${msToTime(Date.now()-lasttime)} (${msToTime(Date.now()-start)} total)`))
 }
 
@@ -91,11 +100,15 @@ if (LurchOptions.runStudentTests) {
   studentFiles.forEach( (filename,i) => {
     let lasttime = Date.now()
     const numfiles = Math.min(studentFiles.length,endTest-startTest+1)
-    process.stdout.write(defaultPen(
-      `Loading student test file ${i+1} of ${numfiles}`.padEnd(50,'.')))
-    loadtest(filename, studentFolder, 'txt', 'putdown', filename)
-    console.log(attributePen(
-      `${msToTime(Date.now()-lasttime).padStart(11,' ')} (${msToTime(Date.now()-start)} total)`))
+    if (typeof TestIndex !== 'number') {
+      process.stdout.write(defaultPen(
+        `Loading student test file ${i+1} of ${numfiles}`.padEnd(50,'.')))
+      loadtest(filename, studentFolder, 'txt', 'putdown', filename)
+      console.log(attributePen(
+        `${msToTime(Date.now()-lasttime).padStart(11,' ')} (${msToTime(Date.now()-start)} total)`))
+    } else {
+      loadtest(filename, studentFolder, 'txt', 'putdown', filename)
+    }
   })
 }
 
@@ -138,9 +151,17 @@ let failed = 0
 
 // if a test number is specified, skip the parser test and compile it
 if (typeof TestIndex === 'number') {
-  acid=[$(`{ ${acid[TestIndex]} }`)]
-  validate(acid[0])
+
+  const compile = n => {
+    const str = acidstr[n][0]
+    const language = acidstr[n][1]
+    return (language === 'lurch') ? $('{'+str+'}') : lc(str)
+  }
+
+  acid=[compile(TestIndex)]
   global.doc = acid[0]
+  validate(doc)
+  
 } else {
   // test the asciimath Peggy parser by itself
   try { 
