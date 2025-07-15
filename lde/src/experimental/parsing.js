@@ -723,7 +723,8 @@ export const processShorthands = L => {
     if (!prev) return
     // the UI can only construct some> if it's followed by a symbol
     const dec = m.nextSibling()
-    // base case: if the body isn't an environment, and the previous sibling is not a continuation, just make it the body as expected
+    // base case: if the body isn't an environment, and the previous sibling is
+    // not a continuation, just make it the body as expected
     if (!(dec.body() instanceof Environment) && 
         !prev.previousSibling()?.continued ) {
       dec.popChild() // remove the placeholder

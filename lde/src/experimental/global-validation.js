@@ -664,7 +664,7 @@ const processChains = doc => {
 
 
 /**
- * Check if the doc contains the Rule `:{ EquationsRule }`.  If not, just split
+ * Check if the doc contains the Rule `:{ :EquationsRule }`.  If not, just split
  * the equation chains.  
  * 
  * Otherwise after splitting get the diffs of all equations, and add the
@@ -1234,7 +1234,7 @@ const getCaselikeRules = doc => {
     if (!U.isA(metavariable)) return false
     const others = rule.descendantsSatisfying( x => x.equals(U) )
     // we return only rules that have more than one U to avoid
-    // matching rules like :{ :EquationsRule } propositionally.
+    // matching rules like :{ EquationsRule } propositionally.
     // Note that a rule like :{ →← U } will match however.
     return others.length>1 && others.every( u => u.isOutermost() ) 
   })
@@ -1389,8 +1389,10 @@ const instantiate = doc => {
     // elements of E to find instantiations and partial instantiations
     formulas.forEach(f => {
       // we can only instantiate formulas that have a non-forbidden weeny.
-      // get this formula's maximally weeny patterns (must be cached)   
-      f.weenies.forEach(p => {
+      // get this formula's maximally weeny patterns (must be cached)
+      // f.weenies.forEach(p => {
+      if (f.weenies.length) {
+        let p = f.weenies[0]
         // try to match this pattern p to every user proposition e
         E.forEach(e => {
           // if it's a Subs EFA and e isn't .by substitution skip it
@@ -1430,7 +1432,7 @@ const instantiate = doc => {
           //////////////////////////////////////////////////////////////////
 
         })
-      })
+      }
       // we've matched every user proposition to every weeny pattern in
       // this formula, and don't want to do it again on future passes, so
       // mark it as finished.
@@ -1873,7 +1875,7 @@ LogicConcept.prototype._validate = function (target = this,
     } catch (e) {
       doc.negate()
       console.log(`\nError validating the following for ${(checkPreemies) ? 'preemies' : 'prop'}:\n`)
-      console.log(target)
+      write(target)
       console.log(`at address: ${target.address()}`)
     }
     // un-negate this

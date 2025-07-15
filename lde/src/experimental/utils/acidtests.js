@@ -28,7 +28,7 @@ const loadtest = (name, folder='acid tests', extension='lurch',
     // if we are asking for a specify test number, just load the array with strings
     if (typeof TestIndex === 'number' ) {
       let a = loadDocStr(name,`proofs/${folder}`, extension, language)
-      acid.push(a) 
+      acid.push(a)
     } else {
       let a = loadDoc(name,`proofs/${folder}`, extension, language)
       if (desc) a.desc=desc
@@ -140,6 +140,7 @@ let failed = 0
 if (typeof TestIndex === 'number') {
   acid=[$(`{ ${acid[TestIndex]} }`)]
   validate(acid[0])
+  global.doc = acid[0]
 } else {
   // test the asciimath Peggy parser by itself
   try { 

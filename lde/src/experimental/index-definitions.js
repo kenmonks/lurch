@@ -44,6 +44,8 @@ export const addIndex = ( doc, phase ) => {
  * @param {'Parsing'} phase - the phase to compute the cache for
  */
 
+const metavariable = "LDE MV"
+
 // quick reference while coding this
 //
 //  selector = () => false,    // determines if a node gets indexed for this key
@@ -70,6 +72,21 @@ export const addLurchIndices = (indexer, phase) => {
     indexer.define('ExpectedResults', { 
       selector: x => x.hasAttribute('ExpectedResult') 
     })
+  } else if (phase = 'Interpret') {
+
+    indexer.define('Environments',{ selector: x => x instanceof Environment })
+
+    // find all environments containing metavariables inside a given environment
+    // that has more than one conclusion in post-order (for splitting rule
+    // conclusions)
+    indexer.define( 'multi-conclusion-environments',{
+      selector: x => x instanceof Environment && 
+                     x.ancestors().some( d => d.isA('given')) &&
+                     x.some( d => d.isA(metavariable)) &&
+                     !x.some( d => d.isAForSome()) &&
+                     x.conclusions().length>1,
+      order: 'Post'
+    } )
   } else {
     // find all the useful .isA() nodes
     const defineIsA = types => {
@@ -89,6 +106,10 @@ export const addLurchIndices = (indexer, phase) => {
     ]
     defineIsA(TypeList)
 
+    // find various instanceof nodes
+    indexer.define('Environments',{ selector: x => x instanceof Environment })
+    indexer.define('Declarations',{ selector: x => x instanceof Declaration })
+    indexer.define('LurchSymbols',{ selector: x => x instanceof LurchSymbol })
 
   }
 }

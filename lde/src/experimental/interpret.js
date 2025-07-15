@@ -42,10 +42,12 @@ import {
   BindingExpression, Formula
 } from '../index.js'
 
+import { addIndex } from './index-definitions.js'
 import { processShorthands } from './parsing.js'
 import Utilities from './utils.js'
 const { subscript } = Utilities
 const instantiation = 'LDE CI'
+const MCE ='multi-conclusion-environments'
 
 // import the LDE options
 import { LurchOptions } from './lurch-options.js'
@@ -67,10 +69,9 @@ import { LurchOptions } from './lurch-options.js'
  *  - markDeclaredSymbols(doc)
  * When it is finished it marks the document as interpreted.
  * 
- * @param {Environment} doc - the raw user's document as an LC environment 
+ * @param {Environment | Array} doc - the raw user's document as an LC environment 
  */
 const interpret = doc => {
-  
   // just return if it's already interpreted
   if (doc.interpreted) return
 
@@ -80,8 +81,11 @@ const interpret = doc => {
   processTheorems(doc)
   processDeclarationBodies(doc)
   processLetEnvironments(doc)
+  addIndex(doc,'Interpret')
+  // removeTrailingGivens(doc)
   processBindings(doc)
   processRules(doc)
+  processMultiConclusions(doc)
   assignProperNames(doc)
   markDeclaredSymbols(doc)
   
@@ -233,6 +237,64 @@ const processLetEnvironments = doc => {
   })
 }
 
+/**
+ * Remove trailing givens
+ *
+ * Remove any givens at the end of an environment because they have no
+ * propositional value.
+ *
+ */
+const removeTrailingGivens = doc => {
+  const E = doc.index.getAll('Environments')
+  E.forEach( e => { 
+    while (e.lastChild()?.isA('given')) { 
+      e.popChild() 
+    } 
+  })
+}
+
+/**
+ * Split Multiple Conclusion Environments
+ *
+ * Find all given environments in the document which have more than one
+ * conclusion and split them into multiple propositionally equivalent environments
+ * with one conclusion each.
+ */
+const processMultiConclusions = doc => {
+  // update the relevant index and fetch them
+  doc.index.update('multi-conclusion-environments')
+  const E = doc.index.getAll('multi-conclusion-environments')
+  // for each such environment
+  E.forEach( e => { 
+    // get the indices of its child claims
+    const indices = []
+    e.children().forEach( (kid,i) => { 
+      if (!kid.isA('given')) indices.push(i)
+    })
+    // for each one, construct the appropriate copy and insert it after the
+    // environment in reverse order to preserve their relative positions in the
+    // document
+    indices.reverse().forEach( i => {
+      let copy = e.copy()
+      let c = copy.child(i)
+      // remove everything after this conclusion
+      while (c.nextSibling()) c.nextSibling().remove()
+      // and the conclusions before it
+      copy.children().forEach( (kid,j) => {
+        if (indices.includes(j) && i !== j) kid.remove()
+      } )
+      // check if e.ignore and set it on the copy iff it contains metavars
+      if (e.ignore && copy.some(x=>x.isA(metavariable))) copy.ignore = true
+      // insert it after the original environment.  We reversed the array of
+      // conclusions above, so they will be insered in the correct order
+      copy.insertAfter(e)      
+    } )
+    // finally, delete the original environment these replace
+    e.remove()
+  } )
+  // update the index (TODO: update individual indices instead of them all?)
+}
+
 
 /**
  * Rename Bindings for Alpha Equivalence
@@ -249,8 +311,11 @@ const processBindings = doc => {
 /**
  * Process Rules 
  *
- * Check all of `Rules` to ensure they are the right type of LC. Convert them into
- * formulas.  If they have metavariables, mark them `.ignore` so they have no prop form. If they don't mark them as an `Inst`. Replace and rename their bound variables to `y₀, y₁, ...` to avoid classes with user variables with the same name.
+ * Check all of `Rules` to ensure they are the right type of LC. Convert them
+ * into formulas.  If they have metavariables, mark them `.ignore` so they have
+ * no prop form. If they don't mark them as an `Inst`. Replace and rename their
+ * bound variables to `y₀, y₁, ...` to avoid classes with user variables with
+ * the same name.
  */
 const processRules = doc => {
   // get all of the Rules
@@ -500,8 +565,9 @@ const markDeclaredSymbols = ( target ) => {
   return target
 }
 
-export default { interpret, processShorthands, moveDeclaresToTop, processTheorems,
-  processDeclarationBodies, processLetEnvironments, processBindings,  
-  processRules, assignProperNames, markDeclaredSymbols, replaceBindings,
-  renameBindings
+export default { interpret, addSystemDeclarations, processShorthands, 
+  moveDeclaresToTop, processTheorems, processDeclarationBodies, 
+  processLetEnvironments, removeTrailingGivens, processMultiConclusions, 
+  processBindings, processRules, assignProperNames, markDeclaredSymbols,
+  replaceBindings, renameBindings
 }
