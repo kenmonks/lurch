@@ -575,6 +575,15 @@ LogicConcept.prototype.bindings = function () {
 }
 
 /** 
+ * Compute the array of all Metavars in this LC in Depth order
+ * 
+ * @memberof Extensions
+ */
+LogicConcept.prototype.metavars = function () {
+  return this.descendantsSatisfying( x => x.isA('Metavar') )
+}
+
+/** 
  * Compute the array of all LurchSymbols in this LC 
  * 
  * @memberof Extensions

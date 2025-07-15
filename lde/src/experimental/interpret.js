@@ -296,6 +296,7 @@ const processRules = doc => {
   } )
   // update the index
   doc.index.update('Rules')
+  doc.index.update('Metavars')
   return doc
 }
 
