@@ -1,221 +1,264 @@
 ///////////////////////////////////////////////////////////////////////////
-//  Acid Tests
+// Acid Test Harness for Lurch
 //
-// opening
+// Runs all configured tests for Lurch, including:
+//   - Acid tests
+//   - Student tests (optional)
+//   - A single test specified by global TestIndex
+//
+// Output includes pass/fail counts and timing details.
+//
+// Dependencies: LurchOptions, Validation, LogicConcept utilities
+///////////////////////////////////////////////////////////////////////////
+
 process.stdout.write(itemPen(`\nLoading the acid tests ...\n\n`))
-let start = Date.now()
+const startTime = Date.now()
+
+////////////////////////////////////////////////////////////////////////////
+// Configuration
 ////////////////////////////////////////////////////////////////////////////
 
 const verbose = true
-// Note that you can specify the start and end student files for smaller tests
 const startTest = LurchOptions.startStudentTest
 const endTest = LurchOptions.endStudentTest
-// const startTest = 1
-// const endTest = 10
+const runStudentTests = LurchOptions.runStudentTests
+const runAcidTests = LurchOptions.runAcidTests
+const singleTestIndex = typeof TestIndex === 'number' ? TestIndex : null
 
-// declare the acid array
-acid=[]
-// define a nice utility for loading a test
-const loadtest = (name, folder='acid tests', extension='lurch',
-                  language='lurch', desc = '') => { 
-  let lasttime = Date.now()
-  const showFile = verbose && !/studentfiles/.test(folder)
-  // student files have their own verbose mode
-  if ( showFile ) 
-    // avoid newline at the end of this by not using console.log
-    process.stdout.write(defaultPen(`${acid.length}. Loading ${folder}/${name}`.padEnd(50,'.')))
+// Internal state
+const acidRawStrings = []   // Holds raw source strings for single-test mode
+const acidDocs = []         // Holds compiled LogicConcept documents
+
+////////////////////////////////////////////////////////////////////////////
+// Utility Functions
+////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Format elapsed time in ms to human-readable string.
+ */
+const elapsedTime = ms => msToTime(ms)
+
+/**
+ * Safely run a function and log errors.
+ */
+const safeExecute = (fn, errorMessage) => {
   try {
-    // if we are asking for a specify test number, just load the array with strings
-    if (typeof TestIndex === 'number' ) {
-      let a = loadDocStr(name,`proofs/${folder}`, extension, language)
-      acid.push(a) 
+    fn()
+  } catch (e) {
+    console.log(xPen(errorMessage))
+  }
+}
+
+/**
+ * Compute the validation result for an equation chain with _id.
+ */
+const computeChainResult = chain => {
+  const id = chain.getAttribute('_id')
+  if (!id) return
+  const matches = result => chain.root().some(eq =>
+    eq.getAttribute('_id') === id &&
+    Validation.result(eq)?.result === result
+  )
+  if (matches('invalid')) return 'invalid'
+  if (matches('indeterminate')) return 'indeterminate'
+  if (matches('valid')) return 'valid'
+  return
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Test Loading
+////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Load a single test document (compiled or raw string).
+ */
+const loadTest = (name, folder = 'acid tests', ext = 'lurch', language = 'lurch', desc = '') => {
+  const showFile = verbose && !/studentfiles/.test(folder)
+  const displayIndex = acidDocs.length
+  const label = `${displayIndex}. Loading ${folder}/${name}`
+
+  if (showFile && singleTestIndex === null) 
+    process.stdout.write(defaultPen(label.padEnd(50, '.')))
+  const lastTime = Date.now()
+
+  try {
+    if (singleTestIndex !== null) {
+      const content = loadDocStr(name, `proofs/${folder}`, ext, language)
+      acidRawStrings.push([content, language])
     } else {
-      let a = loadDoc(name,`proofs/${folder}`, extension, language)
-      if (desc) a.desc=desc
-      acid.push(a) 
+      const doc = loadDoc(name, `proofs/${folder}`, ext, language)
+      if (desc) doc.desc = desc
+      acidDocs.push(doc)
     }
   } catch {
-    console.log(`Error loading acid test: ${name}`)
-    acid.push(xPen(`Error loading acid test: ${name}`))
+    console.log(xPen(`\nError loading test: ${name}`))
+    acidDocs.push(`Error loading test: ${name}`)
   }
-  if ( showFile ) console.log(attributePen(
-    `  ${msToTime(Date.now()-lasttime)} (${msToTime(Date.now()-start)} total)`))
+
+  if (showFile && singleTestIndex === null)
+    console.log(attributePen(`  ${elapsedTime(Date.now() - lastTime)} (${elapsedTime(Date.now() - startTime)} total)`))
 }
 
-// compute the final feedback result for a transitive chain of = in the case
-// where it has an _id
-const getChainResult = chain => {
-  const id = chain.getAttribute('_id')
-  // for now we only need this for the case where a chain has an ID from web files
-  if (!id) return  
-  const someHas = result => {
-    return chain.root().some( eq => eq.getAttribute('_id')==id &&
-                         Validation.result(eq) &&
-                         Validation.result(eq).result==result)
-  }
-  // check the results in order
-  if (someHas('invalid')) return 'invalid'
-  if (someHas('indeterminate')) return 'indeterminate'
-  if (someHas('valid')) return 'valid'
-  // return nothing if none of these hold
-  return 
-}
-
-// compute the final feedback result for a transitive chain of = in the case
-// where it has an _id
-const getEquationResult = chain => {
-  const id = chain.getAttribute('_id')
-  // for now we only need this for the case where a chain has an ID from web files
-  if (!id) return  
-  const someHas = result => {
-    return chain.root().some( eq => eq.getAttribute('_id')==id &&
-                         Validation.result(eq) &&
-                         Validation.result(eq).result==result)
-  }
-  // check the results in order
-  if (someHas('invalid')) return 'invalid'
-  if (someHas('indeterminate')) return 'indeterminate'
-  if (someHas('valid')) return 'valid'
-  // return nothing if none of these hold
-  return 
-}
-
-// Load student test files iff requested
-if (LurchOptions.runStudentTests) {
+/**
+ * Load all student tests if enabled.
+ */
+const loadStudentTests = () => {
   const studentFolder = 'math299/studentfiles299'
-  const getStudentFiles = () => {
-    return fs.readdirSync( './proofs/'+studentFolder )
-             .filter(x=>x.endsWith('.txt')) 
-  }
-  const studentFiles = getStudentFiles().slice(startTest,endTest+1)
-  studentFiles.forEach( (filename,i) => {
-    let lasttime = Date.now()
-    const numfiles = Math.min(studentFiles.length,endTest-startTest+1)
-    process.stdout.write(defaultPen(
-      `Loading student test file ${i+1} of ${numfiles}`.padEnd(50,'.')))
-    loadtest(filename, studentFolder, 'txt', 'putdown', filename)
-    console.log(attributePen(
-      `${msToTime(Date.now()-lasttime).padStart(11,' ')} (${msToTime(Date.now()-start)} total)`))
-  })
-}
+  const studentFiles = fs.readdirSync(`./proofs/${studentFolder}`)
+    .filter(f => f.endsWith('.txt'))
+    .slice(startTest, endTest + 1)
 
-// Load Acid Tests
-if (LurchOptions.runAcidTests) {
-  // If LurchOptons.onetest is set, only load that test
-  if (LurchOptions.onetest!==undefined) loadtest(`acid ${LurchOptions.onetest}`)
-  else {
-    Array.seq(k=>k,0,13).forEach( k => loadtest(`acid ${k}`) )
-    // Load other tests in the acid tests folder
-    loadtest('Transitive Chains')
-    loadtest('Cases')
-    loadtest('BIH Cases')
-    loadtest('user-thms')
-    loadtest('ArithmeticNatural')
-    loadtest('ArithmeticInteger')
-    loadtest('ArithmeticRational')
-    // Load Math 299 tests
-    loadtest('prop','math299')
-    loadtest('pred','math299')
-    loadtest('peanoBIH','math299')
-    loadtest('peano','math299')
-    loadtest('midterm','math299')
-    loadtest('recursion','math299')
-    loadtest('reals','math299')
-    loadtest('sets','math299')
-    loadtest('BIHchain','math299','txt','putdown','small BIH & trans chain test')
-    loadtest('inapplicable','math299','txt','putdown','testing an inapplicable')
-  }
-}
-// Misc test zone - edit for one-off tests
-// loadtest(filename, studentFolder, ext, 'putdown/lurch', filename)
+  studentFiles.forEach((filename, i) => {
+    const numFiles = Math.min(studentFiles.length, endTest - startTest + 1)
+    const lastTime = Date.now()
 
-// skip a space
-console.log()
-
-// run the tests
-let passed = 0
-let failed = 0
-
-// if a test number is specified, skip the parser test and compile it
-if (typeof TestIndex === 'number') {
-  acid=[$(`{ ${acid[TestIndex]} }`)]
-  validate(acid[0])
-  global.doc = acid[0]
-} else {
-  // test the asciimath Peggy parser by itself
-  try { 
-    const s=lc(parse(loadStr('parsers/LurchParserTests')))
-    passed++
-    console.log(`${itemPen('Parser Test:')} → ok`)
-  } catch (e) { 
-    failed++
-    console.log(xPen(`ERROR: asciimath peggy parser test failed.`)) 
-  }
-}
-
-// and the rest of the acid tests
-let numchecks = 0
-let numindets = 0
-let numinvalids = 0
-let numinapps = 0
-
-acid.forEach( (T,k) => {
-  if (typeof T === 'string') { write(T) ; failed++; return }
-  // for each test, if a description was provided, use that, otherwise find the first comment, if any, in the test file.
-  desc = T.desc || T.find(x=>x.isAComment())?.child(1) || ''
-  console.log((itemPen(`\nTest ${k}: ${stringPen(desc)}`)))
-
-  T.descendantsSatisfying( x => x.ExpectedResult).forEach( (s,i) => {
-    if ((Validation.result(s) && 
-        (Validation.result(s).result==s.ExpectedResult ||
-        // handle the inapplicable arithmetic case
-        s.results('arithmetic')?.result==s.ExpectedResult ||
-        // handle the bad BIH case
-        (s.badBIH && s.ExpectedResult == 'invalid') ) ) ||
-        // handle the redeclared variable case
-        (s.getAttribute('scope errors')?.redeclared && s.ExpectedResult=='invalid') ||
-        // handle the transitive chain case - see if some equation derived
-        // from the transitive chain has the matching validation result, and nothing 
-        // has a worse result
-        (s.isAChain() && getChainResult(s)==s.ExpectedResult)
-        // TODO: there is an edge case where the document has a bad variable
-        // declaration inside a Rule environment, but we currently do not check for that.
-      ) {
-      process.stdout.write(`  Test ${k}.${i}`.padEnd(12,' ')+' → ok')
-      process.stdout.write( ((i+1) % 4) ? '' : '\n' )
-      ++passed
-    } else {
-      console.log(xPen(`\n  Test ${k}.${i} → FAIL!!\n`))
-      write(s)
-      write(`at address ${s.address()}\n\n`)
-      ++failed
+    if (singleTestIndex === null) {
+      process.stdout.write(defaultPen(`Loading student file ${i + 1} of ${numFiles}`.padEnd(50, '.')))
     }
-  })
-  T.descendantsSatisfying( x => x.ExpectedResult ).forEach( r => {
-    result = r.ExpectedResult
-    if (result==='valid') ++numchecks  
-    if (result==='indeterminate') ++numindets
-    if (result==='invalid') ++numinvalids
-    if (result==='inapplicable') ++numinapps 
-  })
-})
 
-const pen = (!failed) ? chalk.ansi256(40) : chalk.ansi256(9)
-console.log(pen(`\n${passed} tests passed - ${failed} tests failed\n`))
-console.log(
-`${checkPen(numchecks.toString().padStart(5,' '))} ${checkPen('✔︎')}'s
-${checkPen(numindets.toString().padStart(5,' '))} ${itemPen('?')}'s
-${checkPen(numinvalids.toString().padStart(5,' '))} ${xPen('✗')}'s
-${checkPen(numinapps.toString().padStart(5,' '))} ${xPen('⊘')}'s
-${checkPen('    1')} ${stringPen('parser test')}
+    loadTest(filename, studentFolder, 'txt', 'putdown', filename)
+
+    if (singleTestIndex === null)
+      console.log(attributePen(`${elapsedTime(Date.now() - lastTime).padStart(11, ' ')} (${elapsedTime(Date.now() - startTime)} total)`))
+  })
+}
+
+/**
+ * Load all acid tests.
+ */
+const loadAcidTests = () => {
+  if (LurchOptions.onetest !== undefined) {
+    loadTest(`acid ${LurchOptions.onetest}`)
+  } else {
+    Array.seq(k => k, 0, 13).forEach(k => loadTest(`acid ${k}`))
+    ;[
+      'Transitive Chains', 'Cases', 'BIH Cases', 'user-thms',
+      'ArithmeticNatural', 'ArithmeticInteger', 'ArithmeticRational',
+      ['prop', 'math299'], ['pred', 'math299'], ['peanoBIH', 'math299'],
+      ['peano', 'math299'], ['midterm', 'math299'], ['recursion', 'math299'],
+      ['reals', 'math299'], ['sets', 'math299'],
+      ['BIHchain', 'math299', 'txt', 'putdown', 'small BIH & trans chain test'],
+      ['inapplicable', 'math299', 'txt', 'putdown', 'testing an inapplicable']
+    ].forEach(args => Array.isArray(args) ? loadTest(...args) : loadTest(args))
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Test Execution
+////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Compile a single test when TestIndex is set.
+ */
+const compileSingleTest = index => {
+  const [source, language] = acidRawStrings[index]
+  return validate((language === 'lurch') ? $('{' + source + '}') : lc(source))
+}
+
+/**
+ * Run validation on all loaded tests.
+ */
+const runTests = () => {
+  let passed = 0, failed = 0, failedTests = new Set()
+  let numChecks = 0, numIndets = 0, numInvalids = 0, numInapps = 0
+
+  acidDocs.forEach((doc, k) => {
+    if (typeof doc === 'string') {
+      write(doc)
+      failed++
+      return
+    }
+
+    const desc = doc.desc || doc.find(x => x.isAComment())?.child(1) || ''
+    console.log(itemPen(`\nTest ${k}: ${stringPen(desc)}`))
+
+    doc.descendantsSatisfying(x => x.ExpectedResult).forEach((s, i) => {
+      const resultMatches =
+        (Validation.result(s)?.result === s.ExpectedResult) ||
+        (s.results('arithmetic')?.result === s.ExpectedResult) ||
+        (s.badBIH && s.ExpectedResult === 'invalid') ||
+        (s.getAttribute('scope errors')?.redeclared && s.ExpectedResult === 'invalid') ||
+        (s.isAChain() && computeChainResult(s) === s.ExpectedResult)
+
+      if (resultMatches) {
+        const pad = 11+Math.floor(Math.log10(k))
+        process.stdout.write(`  Test ${k}.${i}`.padEnd(pad, ' ') + ' → ok')
+        process.stdout.write(((i + 1) % 4) ? '' : '\n')
+        passed++
+      } else {
+        console.log(xPen(`\n  Test ${k}.${i} → FAIL!!\n`))
+        write(s)
+        write(`at address ${s.address()}\n\n`)
+        failed++
+        failedTests.add(k)
+      }
+    })
+
+    doc.descendantsSatisfying(x => x.ExpectedResult).forEach(r => {
+      const res = r.ExpectedResult
+      if (res === 'valid') numChecks++
+      if (res === 'indeterminate') numIndets++
+      if (res === 'invalid') numInvalids++
+      if (res === 'inapplicable') numInapps++
+    })
+  })
+
+  return { passed, failed, failedTests, numChecks, numIndets, numInvalids, numInapps }
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Main Flow
+////////////////////////////////////////////////////////////////////////////
+
+// load the files
+if (runStudentTests) loadStudentTests()
+if (runAcidTests) loadAcidTests()
+// store the parser test result
+let parserresult = false  
+
+// in the single test case, all test strings should be in acidRawStrings array
+// so select and compile the one we want
+if (singleTestIndex !== null) {
+  acidDocs.push(compileSingleTest(singleTestIndex))
+} else {
+  // run the parser test iff its not a single test
+  try {
+    const parserTest = lc(parse(loadStr('parsers/LurchParserTests')))
+    console.log(`\n${itemPen('Parser Test:')} → ok`)
+    parserresult = true
+  } catch (e) { 
+    console.log(xPen('ERROR: asciimath parser test failed.')) 
+  }
+}
+
+let { passed, failed, failedTests, numChecks, 
+      numIndets, numInvalids, numInapps } = runTests()
+
+// adjust for the parser test
+if (singleTestIndex === null)  (parserresult) ? passed++ : failed++
+
+// export the results
+global.acidStrings = acidRawStrings
+global.acid = acidDocs
+if (singleTestIndex) global.doc = acid[0]
+
+////////////////////////////////////////////////////////////////////////////
+// Summary
+////////////////////////////////////////////////////////////////////////////
+
+const color = failed ? chalk.ansi256(9) : chalk.ansi256(40)
+const ptest = (singleTestIndex === null) ? '    1' : '    0'
+console.log(color(`\n${passed} tests passed - ${failed} tests failed\n`))
+if (failedTests.size) 
+  console.log(itemPen(`Failed tests:`),...[...failedTests].sort((x,y)=>x-y),'\n')
+console.log(`
+${checkPen(numChecks.toString().padStart(5, ' '))} ${checkPen('✔︎')}'s
+${checkPen(numIndets.toString().padStart(5, ' '))} ${itemPen('?')}'s
+${checkPen(numInvalids.toString().padStart(5, ' '))} ${xPen('✗')}'s
+${checkPen(numInapps.toString().padStart(5, ' '))} ${xPen('⊘')}'s
+${checkPen(ptest)} ${stringPen('parser test')}
 `)
 
 console.log(`Test result stored in the array 'acid'\n`)
-
-///////////////////////////////////////////////////////////
-// closing
-runtimeMS = Date.now()-start
-console.log(defaultPen(`done! (${msToTime(runtimeMS)})`))
-// don't echo anything
+console.log(defaultPen(`done! (${elapsedTime(Date.now() - startTime)})`))
 undefined
-///////////////////////////////////////////////////////////
