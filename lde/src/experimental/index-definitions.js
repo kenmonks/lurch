@@ -60,23 +60,29 @@ export const addLurchIndices = (indexer, phase) => {
   const define = (key,selector,order = 'Depth') => 
     indexer.define(key,{ selector: selector , order: order})
 
+  // Find and cache Shorthands
+  const ShorthandsList = [
+    'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
+    '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
+    '✔︎','✗','⁉︎','⊘','➤','<<','>>'
+  ]
+
   ////////////////////
   //  Phase 0: Parsing
   //
   if (phase === 'Parsing') {
     
-    // Find and cache Shorthands
-    const ShorthandsList = [
-      'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
-      '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
-      '✔︎','✗','⁉︎','⊘','➤','<<','>>'
-    ]
     ShorthandsList.forEach( x => define( x, s => s.isSymbol(x) ) )
-    
     // Parsing also needs to tweak the LCs with the ExpectedResult attribute
     indexer.define('ExpectedResults', { 
       selector: x => x.hasAttribute('ExpectedResult') 
     })
+  
+  } else if (phase === 'After ≡') {
+
+    const remaining = ShorthandsList.slice(ShorthandsList.indexOf('≡') + 1)
+    remaining.forEach( x => define( x, s => s.isSymbol(x) ) )
+    
   } else if (phase = 'Interpret') {
 
     define('Environments', x => x instanceof Environment )
@@ -86,8 +92,9 @@ export const addLurchIndices = (indexer, phase) => {
     // conclusions)
     define( 'multi-conclusions', x => 
       x instanceof Environment && 
-      x.ancestors().some( d => d.isA('given') ) &&
       x.some( d => d.isA('Metavar') ) &&
+      x.ancestors().some( d => d.isA('Rule') ) &&
+      !x.ancestors().some( d => d instanceof Declaration ) &&
       !x.some( d => d.isAForSome()) &&
       x.conclusions().length>1,
       'Post'

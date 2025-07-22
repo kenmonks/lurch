@@ -1430,8 +1430,11 @@ const processAlgebra = doc => {
 const instantiate = doc => {
   // make it idempotent
   if (doc.instantiated) { return }
-  let formulas = doc.formulas()
+  let formulas = doc.index.get('Formulas')
+  // let formulas = doc.formulas()
   if (formulas.length === 0) { return }
+  // mark formulas that need to have all weenies checked
+  formulas.forEach( f => f.useAllWeenies = ( f.some(x => x.isAForSome()) ) )
   // there are some formulas, so get the user's Propositions to match
   const E = getUserPropositions(doc)
   // the pass number that will be stored in each Part and Inst for later
@@ -1460,14 +1463,12 @@ const instantiate = doc => {
       // get this formula's maximally weeny patterns (must be cached)   
       // f.weenies.forEach(p => {
       
-      // The following doesn't quite work, because of rules like { 1*n=1 n*1=n }
-      // where the weenie it picks isn't the one that matches in the proof, and
-      // these are no doppelgangers.  I will try combining it with the splitting
-      // of conclusions feature.  If it does work, then the doppelganger
-      // grouping might be more efficient if done up front instead of filtering
-      // as below.  Below was just a quick implementation for testing.
+      // The doppelganger grouping might be more efficient if done up front
+      // instead of filtering as below.  Below was just a quick implementation
+      // for testing.
 
-      f.weenies.filter(x=>isDopplegangerOf(x,f.weenies[0])).forEach(p => {
+      f.weenies.filter( x => f.useAllWeenies || isDopplegangerOf(x,f.weenies[0]) 
+      ).forEach(p => {
         
         // try to match this pattern p to every user proposition e
         E.forEach(e => {

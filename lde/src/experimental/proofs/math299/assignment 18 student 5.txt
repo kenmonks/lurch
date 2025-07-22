@@ -1,0 +1,1621 @@
+{
+  declare>
+      +{"_id":"1"}
+      +{"lurchNotation":"Declare ⇔, and, ⇒, or, ¬, contradiction"}
+  :[⇔ and ⇒ or ¬ →←]
+      +{"_id":"2"}
+      +{"lurchNotation":"Declare ⇔, and, ⇒, or, ¬, contradiction"}
+  :{
+    :W
+        +{"_id":"4"}
+        +{"lurchNotation":"From W"}
+    :V
+        +{"_id":"5"}
+        +{"lurchNotation":"From V"}
+    (and W V)
+        +{"_id":"6"}
+        +{"lurchNotation":"W and V"}
+  }
+      +{"_id":"3"}
+      +{"_type_Rule":true}
+  :{
+    :(and W V)
+        +{"_id":"8"}
+        +{"lurchNotation":"From W and V"}
+    W
+        +{"_id":"9"}
+        +{"lurchNotation":"W"}
+    V
+        +{"_id":"10"}
+        +{"lurchNotation":"V"}
+  }
+      +{"_id":"7"}
+      +{"_type_Rule":true}
+  :{
+    :{
+      :W
+          +{"_id":"13"}
+          +{"lurchNotation":"Assume W"}
+      V
+          +{"_id":"14"}
+          +{"lurchNotation":"V"}
+    } +{"_id":"12"}
+    (⇒ W V)
+        +{"_id":"15"}
+        +{"lurchNotation":"W implies V"}
+  }
+      +{"_id":"11"}
+      +{"_type_Rule":true}
+  :{
+    :(⇒ W V)
+        +{"_id":"17"}
+        +{"lurchNotation":"From W implies V"}
+    :W
+        +{"_id":"18"}
+        +{"lurchNotation":"From W"}
+    V
+        +{"_id":"19"}
+        +{"lurchNotation":"V"}
+  }
+      +{"_id":"16"}
+      +{"_type_Rule":true}
+  :{
+    :{
+      :W
+          +{"_id":"22"}
+          +{"lurchNotation":"Assume W"}
+      V
+          +{"_id":"23"}
+          +{"lurchNotation":"V"}
+    } +{"_id":"21"}
+    :{
+      :V
+          +{"_id":"25"}
+          +{"lurchNotation":"Assume V"}
+      W
+          +{"_id":"26"}
+          +{"lurchNotation":"W"}
+    } +{"_id":"24"}
+    (⇔ W V)
+        +{"_id":"27"}
+        +{"lurchNotation":"W iff V"}
+  }
+      +{"_id":"20"}
+      +{"_type_Rule":true}
+  :{
+    :(⇔ W V)
+        +{"_id":"29"}
+        +{"lurchNotation":"From W iff V"}
+    :W
+        +{"_id":"30"}
+        +{"lurchNotation":"From W"}
+    V
+        +{"_id":"31"}
+        +{"lurchNotation":"V"}
+  }
+      +{"_id":"28"}
+      +{"_type_Rule":true}
+  :{
+    :(⇔ W V)
+        +{"_id":"33"}
+        +{"lurchNotation":"From W iff V"}
+    :V
+        +{"_id":"34"}
+        +{"lurchNotation":"From V"}
+    W
+        +{"_id":"35"}
+        +{"lurchNotation":"W"}
+  }
+      +{"_id":"32"}
+      +{"_type_Rule":true}
+  :{
+    :W
+        +{"_id":"37"}
+        +{"lurchNotation":"From W"}
+    (or W V)
+        +{"_id":"38"}
+        +{"lurchNotation":"W or V"}
+    (or V W)
+        +{"_id":"39"}
+        +{"lurchNotation":"V or W"}
+  }
+      +{"_id":"36"}
+      +{"_type_Rule":true}
+  :{
+    :(or W V)
+        +{"_id":"41"}
+        +{"lurchNotation":"From W or V"}
+    :(⇒ W U)
+        +{"_id":"42"}
+        +{"lurchNotation":"From W implies U"}
+    :(⇒ V U)
+        +{"_id":"43"}
+        +{"lurchNotation":"From V implies U"}
+    U
+        +{"_id":"44"}
+        +{"lurchNotation":"U"}
+  }
+      +{"_id":"40"}
+      +{"_type_Rule":true}
+  :{
+    :{
+      :W
+          +{"_id":"47"}
+          +{"lurchNotation":"Assume W"}
+      →←
+          +{"_id":"48"}
+          +{"lurchNotation":"contradiction"}
+    } +{"_id":"46"}
+    (¬ W)
+        +{"_id":"49"}
+        +{"lurchNotation":"not W"}
+  }
+      +{"_id":"45"}
+      +{"_type_Rule":true}
+  :{
+    :{
+      :(¬ W)
+          +{"_id":"52"}
+          +{"lurchNotation":"Assume not W"}
+      →←
+          +{"_id":"53"}
+          +{"lurchNotation":"contradiction"}
+    } +{"_id":"51"}
+    W
+        +{"_id":"54"}
+        +{"lurchNotation":"W"}
+  }
+      +{"_id":"50"}
+      +{"_type_Rule":true}
+  :{
+    :W
+        +{"_id":"56"}
+        +{"lurchNotation":"From W"}
+    :(¬ W)
+        +{"_id":"57"}
+        +{"lurchNotation":"From not W"}
+    →←
+        +{"_id":"58"}
+        +{"lurchNotation":"→←"}
+  }
+      +{"_id":"55"}
+      +{"_type_Rule":true}
+  declare>
+      +{"_id":"59"}
+      +{"lurchNotation":"Declare ∀, ∃, ∃!, ="}
+  :[∀ ∃ ∃! =]
+      +{"_id":"60"}
+      +{"lurchNotation":"Declare ∀, ∃, ∃!, ="}
+  :{
+    :{
+      :[z]
+          +{"_id":"63"}
+          +{"lurchNotation":"Let z"}
+      (λ P z)
+          +{"_id":"64"}
+          +{"lurchNotation":"𝜆P(z)"}
+    } +{"_id":"62"}
+    (∀ x , (λ P x))
+        +{"_id":"65"}
+        +{"lurchNotation":"forall x.𝜆P(x)"}
+  }
+      +{"_id":"61"}
+      +{"_type_Rule":true}
+  :{
+    :(∀ x , (λ P x))
+        +{"_id":"67"}
+        +{"lurchNotation":"From forall x.𝜆P(x)"}
+    (λ P t)
+        +{"_id":"68"}
+        +{"lurchNotation":"𝜆P(t)"}
+  }
+      +{"_id":"66"}
+      +{"_type_Rule":true}
+  :{
+    :(λ P t)
+        +{"_id":"70"}
+        +{"lurchNotation":"From 𝜆P(t)"}
+    (∃ x , (λ P x))
+        +{"_id":"71"}
+        +{"lurchNotation":"exists x.𝜆P(x)"}
+  }
+      +{"_id":"69"}
+      +{"_type_Rule":true}
+  :{
+    :(∃ x , (λ P x))
+        +{"_id":"73"}
+        +{"lurchNotation":"From exists x.𝜆P(x)"}
+    [c , (λ P c)]
+        +{"_id":"74"}
+        +{"lurchNotation":"𝜆P(c) for some c"}
+  }
+      +{"_id":"72"}
+      +{"_type_Rule":true}
+  :{
+    (= W W)
+        +{"_id":"76"}
+        +{"lurchNotation":"W=W"}
+  }
+      +{"_id":"75"}
+      +{"_type_Rule":true}
+  subs>
+      +{"_id":"77"}
+      +{"lurchNotation":"SubsRule"}
+  :{
+    :(= w v)
+        +{"_id":"79"}
+        +{"lurchNotation":"From w=v"}
+    :(λ P w)
+        +{"_id":"80"}
+        +{"lurchNotation":"From 𝜆P(w)"}
+    (λ P v)
+        +{"_id":"81"}
+        +{"lurchNotation":"𝜆P(v)"}
+  }
+      +{"_id":"78"}
+      +{"_type_Rule":true}
+  :{
+    :(∃! x , (λ P x))
+        +{"_id":"83"}
+        +{"lurchNotation":"From ∃!x.𝜆P(x)"}
+    [c , (and (λ P c) (∀ y , (⇒ (λ P y) (= y c))))]
+        +{"_id":"84"}
+        +{"lurchNotation":"𝜆P(c) and (forall y.(𝜆P(y) implies y=c)) for some c"}
+  }
+      +{"_id":"82"}
+      +{"_type_Rule":true}
+  :{
+    :(λ P t)
+        +{"_id":"86"}
+        +{"lurchNotation":"From 𝜆P(t)"}
+    :{
+      :[y , (λ P y)]
+          +{"_id":"88"}
+          +{"lurchNotation":"Let y be such that 𝜆P(y)"}
+      (= y t)
+          +{"_id":"89"}
+          +{"lurchNotation":"y=t"}
+    } +{"_id":"87"}
+    (∃! x , (λ P x))
+        +{"_id":"90"}
+        +{"lurchNotation":"∃!x.𝜆P(x)"}
+  }
+      +{"_id":"85"}
+      +{"_type_Rule":true}
+  :{
+    (or W (¬ W))
+        +{"_id":"92"}
+        +{"lurchNotation":"W or not W"}
+  }
+      +{"_id":"91"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (¬ W))
+        +{"_id":"94"}
+        +{"lurchNotation":"not (not W)"}
+    ≡
+        +{"_id":"95"}
+        +{"lurchNotation":"equiv"}
+    W
+        +{"_id":"96"}
+        +{"lurchNotation":"W"}
+  }
+      +{"_id":"93"}
+      +{"_type_Rule":true}
+  :{
+    :(or W V)
+        +{"_id":"98"}
+        +{"lurchNotation":"From W or V "}
+    (or V W)
+        +{"_id":"99"}
+        +{"lurchNotation":"V or W"}
+  }
+      +{"_id":"97"}
+      +{"_type_Rule":true}
+  :{
+    (or (or W V) U)
+        +{"_id":"101"}
+        +{"lurchNotation":"(W or V) or U ≡ W or (V or U)"}
+    ≡
+        +{"_id":"102"}
+        +{"lurchNotation":"(W or V) or U ≡ W or (V or U)"}
+    (or W (or V U))
+        +{"_id":"103"}
+        +{"lurchNotation":"(W or V) or U ≡ W or (V or U)"}
+  }
+      +{"_id":"100"}
+      +{"_type_Rule":true}
+  :{
+    (⇒ W V)
+        +{"_id":"105"}
+        +{"lurchNotation":"W implies V"}
+    ≡
+        +{"_id":"106"}
+        +{"lurchNotation":"equiv"}
+    (or (¬ W) V)
+        +{"_id":"107"}
+        +{"lurchNotation":"not W or V"}
+  }
+      +{"_id":"104"}
+      +{"_type_Rule":true}
+  :{
+    :(or W V)
+        +{"_id":"109"}
+        +{"lurchNotation":"From W or V"}
+    :(¬ W)
+        +{"_id":"110"}
+        +{"lurchNotation":"From not W"}
+    V
+        +{"_id":"111"}
+        +{"lurchNotation":"V"}
+  }
+      +{"_id":"108"}
+      +{"_type_Rule":true}
+  :{
+    :(or W V)
+        +{"_id":"113"}
+        +{"lurchNotation":"From W or V"}
+    :(¬ V)
+        +{"_id":"114"}
+        +{"lurchNotation":"From not V"}
+    W
+        +{"_id":"115"}
+        +{"lurchNotation":"W"}
+  }
+      +{"_id":"112"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (⇒ W V))
+        +{"_id":"117"}
+        +{"lurchNotation":"not (W implies V)"}
+    ≡
+        +{"_id":"118"}
+        +{"lurchNotation":"≡"}
+    W
+        +{"_id":"119"}
+        +{"lurchNotation":"W"}
+    (¬ V)
+        +{"_id":"120"}
+        +{"lurchNotation":"not V"}
+  }
+      +{"_id":"116"}
+      +{"_type_Rule":true}
+  :{
+    (⇒ W V)
+        +{"_id":"122"}
+        +{"lurchNotation":"W implies V "}
+    ≡
+        +{"_id":"123"}
+        +{"lurchNotation":"≡ "}
+    (⇒ (¬ V) (¬ W))
+        +{"_id":"124"}
+        +{"lurchNotation":"not V implies not W"}
+  }
+      +{"_id":"121"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (and W V))
+        +{"_id":"126"}
+        +{"lurchNotation":"not (W and V)"}
+    ≡
+        +{"_id":"127"}
+        +{"lurchNotation":"equiv"}
+    (or (¬ W) (¬ V))
+        +{"_id":"128"}
+        +{"lurchNotation":"not W or not V"}
+  }
+      +{"_id":"125"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (or W V))
+        +{"_id":"130"}
+        +{"lurchNotation":"not (W or V)"}
+    ≡
+        +{"_id":"131"}
+        +{"lurchNotation":"equiv"}
+    (and (¬ W) (¬ V))
+        +{"_id":"132"}
+        +{"lurchNotation":"not W and not V"}
+  }
+      +{"_id":"129"}
+      +{"_type_Rule":true}
+  :{
+    :→←
+        +{"_id":"134"}
+        +{"lurchNotation":"From →←"}
+    W
+        +{"_id":"135"}
+        +{"lurchNotation":"W"}
+  }
+      +{"_id":"133"}
+      +{"_type_Rule":true}
+  declare>
+      +{"_id":"136"}
+      +{"lurchNotation":"Declare 0, sigma, +, ⋅, ≤"}
+  :[0 σ + ⋅ ≤]
+      +{"_id":"137"}
+      +{"lurchNotation":"Declare 0, sigma, +, ⋅, ≤"}
+  :{
+    :(= (σ m) (σ n))
+        +{"_id":"139"}
+        +{"lurchNotation":"If sigma(m)=sigma(n)"}
+    (= m n)
+        +{"_id":"140"}
+        +{"lurchNotation":"m=n"}
+  }
+      +{"_id":"138"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (= 0 (σ n)))
+        +{"_id":"142"}
+        +{"lurchNotation":"0 neq sigma(n)"}
+  }
+      +{"_id":"141"}
+      +{"_type_Rule":true}
+  :{
+    :(λ P 0)
+        +{"_id":"144"}
+        +{"lurchNotation":"If 𝜆P(0)"}
+    :{
+      :[k , (λ P k)]
+          +{"_id":"146"}
+          +{"lurchNotation":"Let k be such that 𝜆P(k)"}
+      (λ P (σ k))
+          +{"_id":"147"}
+          +{"lurchNotation":"𝜆P(sigma(k))"}
+    } +{"_id":"145"}
+    (∀ n , (λ P n))
+        +{"_id":"148"}
+        +{"lurchNotation":"forall n.𝜆P(n)"}
+  }
+      +{"_id":"143"}
+      +{"_type_Rule":true}
+  :{
+    (= (+ n 0) n)
+        +{"_id":"150"}
+        +{"lurchNotation":"n+0=n"}
+  }
+      +{"_id":"149"}
+      +{"_type_Rule":true}
+  :{
+    (= (+ m (σ n)) (σ (+ m n)))
+        +{"_id":"152"}
+        +{"lurchNotation":"m+sigma(n)=sigma(m+n)"}
+  }
+      +{"_id":"151"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ n 0) 0)
+        +{"_id":"154"}
+        +{"lurchNotation":"n*0=0"}
+  }
+      +{"_id":"153"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ m (σ n)) (+ m (⋅ m n)))
+        +{"_id":"156"}
+        +{"lurchNotation":"m*sigma(n) = m+m*n"}
+  }
+      +{"_id":"155"}
+      +{"_type_Rule":true}
+  :{
+    (≤ m n)
+        +{"_id":"158"}
+        +{"lurchNotation":"m leq n ≡ exists k.m+k=n"}
+    ≡
+        +{"_id":"159"}
+        +{"lurchNotation":"m leq n ≡ exists k.m+k=n"}
+    (∃ k , (= (+ m k) n))
+        +{"_id":"160"}
+        +{"lurchNotation":"m leq n ≡ exists k.m+k=n"}
+  }
+      +{"_id":"157"}
+      +{"_type_Rule":true}
+  declare>
+      +{"_id":"161"}
+      +{"lurchNotation":"Declare 1, 2, 3, 4, 5, <, is, |, prime, even, odd"}
+  :[1 2 3 4 5 < is | prime even odd]
+      +{"_id":"162"}
+      +{"lurchNotation":"Declare 1, 2, 3, 4, 5, <, is, |, prime, even, odd"}
+  :{
+    (= 1 (σ 0))
+        +{"_id":"164"}
+        +{"lurchNotation":"1=sigma(0)"}
+    (= 2 (σ 1))
+        +{"_id":"165"}
+        +{"lurchNotation":"2=sigma(1)"}
+    (= 3 (σ 2))
+        +{"_id":"166"}
+        +{"lurchNotation":"3=sigma(2)"}
+    (= 4 (σ 3))
+        +{"_id":"167"}
+        +{"lurchNotation":"4=sigma(3)"}
+    (= 5 (σ 4))
+        +{"_id":"168"}
+        +{"lurchNotation":"5=sigma(4)"}
+  }
+      +{"_id":"163"}
+      +{"_type_Rule":true}
+  :{
+    (< m n)
+        +{"_id":"170"}
+        +{"lurchNotation":"m<n"}
+    ≡
+        +{"_id":"171"}
+        +{"lurchNotation":"equiv"}
+    (≤ m n)
+        +{"_id":"172"}
+        +{"lurchNotation":"m leq n"}
+    (¬ (= m n))
+        +{"_id":"173"}
+        +{"lurchNotation":"m neq n"}
+  }
+      +{"_id":"169"}
+      +{"_type_Rule":true}
+  :{
+    :(| m n)
+        +{"_id":"175"}
+        +{"lurchNotation":"If m|n"}
+    [k , (= n (⋅ k m))]
+        +{"_id":"176"}
+        +{"lurchNotation":"n=k*m for some k"}
+  }
+      +{"_id":"174"}
+      +{"_type_Rule":true}
+  :{
+    :(= n (⋅ k m))
+        +{"_id":"178"}
+        +{"lurchNotation":"If n=k*m"}
+    (| m n)
+        +{"_id":"179"}
+        +{"lurchNotation":"m|n"}
+  }
+      +{"_id":"177"}
+      +{"_type_Rule":true}
+  :{
+    (is n prime)
+        +{"_id":"181"}
+        +{"lurchNotation":"n is prime"}
+    ≡
+        +{"_id":"182"}
+        +{"lurchNotation":"≡"}
+    (< 1 n)
+        +{"_id":"183"}
+        +{"lurchNotation":"1<n"}
+    (¬ (∃ k , (and (and (< 1 k) (< k n)) (| k n))))
+        +{"_id":"184"}
+        +{"lurchNotation":"not (exists k.(1<k and k<n) and k|n)"}
+  }
+      +{"_id":"180"}
+      +{"_type_Rule":true}
+  :{
+    :(is n even)
+        +{"_id":"186"}
+        +{"lurchNotation":"If n is even "}
+    [m , (= n (⋅ 2 m))]
+        +{"_id":"187"}
+        +{"lurchNotation":"n=2*m for some m"}
+  }
+      +{"_id":"185"}
+      +{"_type_Rule":true}
+  :{
+    :(= n (⋅ 2 m))
+        +{"_id":"189"}
+        +{"lurchNotation":"If n=2*m"}
+    (is n even)
+        +{"_id":"190"}
+        +{"lurchNotation":"n is even"}
+  }
+      +{"_id":"188"}
+      +{"_type_Rule":true}
+  :{
+    (is n odd)
+        +{"_id":"192"}
+        +{"lurchNotation":"n is odd"}
+    ≡
+        +{"_id":"193"}
+        +{"lurchNotation":"equiv"}
+    (¬ (is n even))
+        +{"_id":"194"}
+        +{"lurchNotation":"not n is even"}
+  }
+      +{"_id":"191"}
+      +{"_type_Rule":true}
+  :{
+    EquationsRule
+        +{"_id":"196"}
+        +{"lurchNotation":"EquationsRule"}
+  }
+      +{"_id":"195"}
+      +{"_type_Rule":true}
+  :{
+    (= (σ n) (+ n 1))
+        +{"_id":"198"}
+        +{"lurchNotation":"sigma(n)=n+1"}
+  }
+      +{"_id":"197"}
+      +{"_type_Rule":true}
+  :{
+    (= (+ m n) (+ n m))
+        +{"_id":"200"}
+        +{"lurchNotation":"m+n=n+m"}
+  }
+      +{"_id":"199"}
+      +{"_type_Rule":true}
+  :{
+    (= (+ (+ m n) p) (+ m (+ n p)))
+        +{"_id":"202"}
+        +{"lurchNotation":"(m+n)+p = m+(n+p)"}
+  }
+      +{"_id":"201"}
+      +{"_type_Rule":true}
+  :{
+    (= (+ 0 n) n)
+        +{"_id":"204"}
+        +{"lurchNotation":"0+n=n"}
+  }
+      +{"_id":"203"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ 0 n) 0)
+        +{"_id":"206"}
+        +{"lurchNotation":"0*n = 0"}
+  }
+      +{"_id":"205"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ n 1) n)
+        +{"_id":"208"}
+        +{"lurchNotation":"n*1 = n"}
+  }
+      +{"_id":"207"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ 1 n) n)
+        +{"_id":"210"}
+        +{"lurchNotation":"1*n = n"}
+  }
+      +{"_id":"209"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ m n) (⋅ n m))
+        +{"_id":"212"}
+        +{"lurchNotation":"m*n = n*m"}
+  }
+      +{"_id":"211"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ (⋅ m n) p) (⋅ m (⋅ n p)))
+        +{"_id":"214"}
+        +{"lurchNotation":"(m*n)*p = m*(n*p)"}
+  }
+      +{"_id":"213"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ m (+ n p)) (+ (⋅ m n) (⋅ m p)))
+        +{"_id":"216"}
+        +{"lurchNotation":"m*(n+p)=m*n+m*p"}
+  }
+      +{"_id":"215"}
+      +{"_type_Rule":true}
+  :{
+    (= (⋅ (+ n p) m) (+ (⋅ n m) (⋅ p m)))
+        +{"_id":"218"}
+        +{"lurchNotation":"(n+p)*m=n*m+p*m"}
+  }
+      +{"_id":"217"}
+      +{"_type_Rule":true}
+  declare>
+      +{"_id":"219"}
+      +{"lurchNotation":"Declare Sum, Fib, !, multinomial, choose, ^"}
+  :[sum Fib ! multinomial choose ^]
+      +{"_id":"220"}
+      +{"lurchNotation":"Declare Sum, Fib, !, multinomial, choose, ^"}
+  :{
+    (= (sum (k , (λ P k)) 0 0) (λ P 0))
+        +{"_id":"222"}
+        +{"lurchNotation":"sum k to 0 of @P(k) = @P(0)"}
+  }
+      +{"_id":"221"}
+      +{"_type_Rule":true}
+  :{
+    (= (sum (k , (λ P k)) 0 (σ n)) (+ (λ P (σ n)) (sum (k , (λ P k)) 0 n)))
+        +{"_id":"224"}
+        +{"lurchNotation":"sum k to sigma(n) of @P(k) = @P(sigma(n))+sum k to n of @P(k)"}
+  }
+      +{"_id":"223"}
+      +{"_type_Rule":true}
+  :{
+    (= (^ z 0) 1)
+        +{"_id":"226"}
+        +{"lurchNotation":"z^0=1"}
+  }
+      +{"_id":"225"}
+      +{"_type_Rule":true}
+  :{
+    (= (^ z (σ n)) (⋅ z (^ z n)))
+        +{"_id":"228"}
+        +{"lurchNotation":"z^(sigma(n))=z*z^n"}
+  }
+      +{"_id":"227"}
+      +{"_type_Rule":true}
+  :{
+    (= (! 0) 1)
+        +{"_id":"230"}
+        +{"lurchNotation":"0! =1"}
+  }
+      +{"_id":"229"}
+      +{"_type_Rule":true}
+  :{
+    (= (! (σ n)) (⋅ (σ n) (! n)))
+        +{"_id":"232"}
+        +{"lurchNotation":"sigma(n)! = sigma(n)*n!"}
+  }
+      +{"_id":"231"}
+      +{"_type_Rule":true}
+  :{
+    (= (Fib 0) 1)
+        +{"_id":"234"}
+        +{"lurchNotation":"Fib_(0)=1"}
+    (= (Fib 1) 1)
+        +{"_id":"235"}
+        +{"lurchNotation":"Fib_(1)=1"}
+  }
+      +{"_id":"233"}
+      +{"_type_Rule":true}
+  :{
+    (= (Fib (+ n 2)) (+ (Fib (+ n 1)) (Fib n)))
+        +{"_id":"237"}
+        +{"lurchNotation":"Fib_(n+2)=Fib_(n+1)+Fib_(n)"}
+  }
+      +{"_id":"236"}
+      +{"_type_Rule":true}
+  :{
+    (= (multinomial m 0) 1)
+        +{"_id":"239"}
+        +{"lurchNotation":"multinomial(m,0)=1"}
+  }
+      +{"_id":"238"}
+      +{"_type_Rule":true}
+  :{
+    (= (multinomial 0 n) 1)
+        +{"_id":"241"}
+        +{"lurchNotation":"multinomial(0,n)=1"}
+  }
+      +{"_id":"240"}
+      +{"_type_Rule":true}
+  :{
+    (= (multinomial (σ m) (σ n)) (+ (multinomial (σ m) n) (multinomial m (σ n))))
+        +{"_id":"243"}
+        +{"lurchNotation":"multinomial(sigma(m),sigma(n))    = multinomial(sigma(m),n) +     multinomial(m,sigma(n))"}
+  }
+      +{"_id":"242"}
+      +{"_type_Rule":true}
+  :{
+    (= (choose (+ n m) m) (multinomial n m))
+        +{"_id":"245"}
+        +{"lurchNotation":"n+m choose m =multinomial(n,m)"}
+  }
+      +{"_id":"244"}
+      +{"_type_Rule":true}
+  declare>
+      +{"_id":"246"}
+      +{"lurchNotation":"Declare <, -"}
+  :[< -]
+      +{"_id":"247"}
+      +{"lurchNotation":"Declare <, -"}
+  :{
+    (= (+ x 0) x)
+        +{"_id":"249"}
+        +{"lurchNotation":"x+0=x"}
+    (= (+ 0 x) x)
+        +{"_id":"250"}
+        +{"lurchNotation":"0+x=x"}
+  }
+      +{"_id":"248"}
+      +{"_type_Rule":true}
+  :{
+    (= (+ x (- x)) 0)
+        +{"_id":"252"}
+        +{"lurchNotation":"x+(-x)=0"}
+    (= (+ (- x) x) 0)
+        +{"_id":"253"}
+        +{"lurchNotation":"-x+x=0"}
+  }
+      +{"_id":"251"}
+      +{"_type_Rule":true}
+  :{ }
+      +{"_id":"254"}
+      +{"_type_Rule":true}
+  :{ }
+      +{"_id":"255"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (= 1 0))
+        +{"_id":"257"}
+        +{"lurchNotation":"1 neq 0"}
+  }
+      +{"_id":"256"}
+      +{"_type_Rule":true}
+  :{ }
+      +{"_id":"258"}
+      +{"_type_Rule":true}
+  :{
+    :(¬ (= x 0))
+        +{"_id":"260"}
+        +{"lurchNotation":"if x neq 0"}
+    (= (⋅ x (^ x -)) 1)
+        +{"_id":"261"}
+        +{"lurchNotation":"x*x^-=1"}
+    (= (⋅ (^ x -) x) 1)
+        +{"_id":"262"}
+        +{"lurchNotation":"(x^-)*x=1"}
+  }
+      +{"_id":"259"}
+      +{"_type_Rule":true}
+  :{ }
+      +{"_id":"263"}
+      +{"_type_Rule":true}
+  :{ }
+      +{"_id":"264"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (< x x))
+        +{"_id":"266"}
+        +{"lurchNotation":"not (x<x)"}
+  }
+      +{"_id":"265"}
+      +{"_type_Rule":true}
+  :{
+    :(< x y)
+        +{"_id":"268"}
+        +{"lurchNotation":"If x<y, y<z"}
+    :(< y z)
+        +{"_id":"269"}
+        +{"lurchNotation":"If x<y, y<z"}
+    (< x z)
+        +{"_id":"270"}
+        +{"lurchNotation":"x<z"}
+  }
+      +{"_id":"267"}
+      +{"_type_Rule":true}
+  :{
+    (or (= x y) (or (< x y) (< y x)))
+        +{"_id":"272"}
+        +{"lurchNotation":"x=y or (x<y or y<x)"}
+  }
+      +{"_id":"271"}
+      +{"_type_Rule":true}
+  :{ }
+      +{"_id":"273"}
+      +{"_type_Rule":true}
+  :{
+    :(< x y)
+        +{"_id":"275"}
+        +{"lurchNotation":"If x<y"}
+    (< (+ x z) (+ y z))
+        +{"_id":"276"}
+        +{"lurchNotation":"x+z<y+z"}
+  }
+      +{"_id":"274"}
+      +{"_type_Rule":true}
+  :{
+    :(< 0 x)
+        +{"_id":"278"}
+        +{"lurchNotation":"if 0<x, 0<y"}
+    :(< 0 y)
+        +{"_id":"279"}
+        +{"lurchNotation":"if 0<x, 0<y"}
+    (< 0 (⋅ x y))
+        +{"_id":"280"}
+        +{"lurchNotation":"0<x*y"}
+  }
+      +{"_id":"277"}
+      +{"_type_Rule":true}
+  declare>
+      +{"_id":"281"}
+      +{"lurchNotation":"Declare in, subset, cap, cup, complement, setminus , powerset, cross, set, tuple, Union, Intersect, setbuilder"}
+  :[∈ ⊆ ∩ ∪ ° ∖ powerset × set tuple Union Intersect setbuilder]
+      +{"_id":"282"}
+      +{"lurchNotation":"Declare in, subset, cap, cup, complement, setminus , powerset, cross, set, tuple, Union, Intersect, setbuilder"}
+  :{
+    (¬ (∈ x (set)))
+        +{"_id":"284"}
+        +{"lurchNotation":"x notin Set()"}
+  }
+      +{"_id":"283"}
+      +{"_type_Rule":true}
+  :{
+    (¬ (= A (set)))
+        +{"_id":"286"}
+        +{"lurchNotation":"A neq { }"}
+    ≡
+        +{"_id":"287"}
+        +{"lurchNotation":"equiv"}
+    (∃ x , (∈ x A))
+        +{"_id":"288"}
+        +{"lurchNotation":"exists x.x in A"}
+  }
+      +{"_id":"285"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (set a))
+        +{"_id":"290"}
+        +{"lurchNotation":"x in set(a) equiv x=a"}
+    ≡
+        +{"_id":"291"}
+        +{"lurchNotation":"x in set(a) equiv x=a"}
+    (= x a)
+        +{"_id":"292"}
+        +{"lurchNotation":"x in set(a) equiv x=a"}
+  }
+      +{"_id":"289"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (set a b))
+        +{"_id":"294"}
+        +{"lurchNotation":"x in set(a,b) equiv x=a or x=b"}
+    ≡
+        +{"_id":"295"}
+        +{"lurchNotation":"x in set(a,b) equiv x=a or x=b"}
+    (or (= x a) (= x b))
+        +{"_id":"296"}
+        +{"lurchNotation":"x in set(a,b) equiv x=a or x=b"}
+  }
+      +{"_id":"293"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (set a b c))
+        +{"_id":"298"}
+        +{"lurchNotation":"x in set(a,b,c) equiv x=a or (x=b or x=c)"}
+    ≡
+        +{"_id":"299"}
+        +{"lurchNotation":"x in set(a,b,c) equiv x=a or (x=b or x=c)"}
+    (or (= x a) (or (= x b) (= x c)))
+        +{"_id":"300"}
+        +{"lurchNotation":"x in set(a,b,c) equiv x=a or (x=b or x=c)"}
+  }
+      +{"_id":"297"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (set a b c d))
+        +{"_id":"302"}
+        +{"lurchNotation":"x in set(a,b,c,d) equiv  x=a or (x=b or (x=c or x=d))"}
+    ≡
+        +{"_id":"303"}
+        +{"lurchNotation":"x in set(a,b,c,d) equiv  x=a or (x=b or (x=c or x=d))"}
+    (or (= x a) (or (= x b) (or (= x c) (= x d))))
+        +{"_id":"304"}
+        +{"lurchNotation":"x in set(a,b,c,d) equiv  x=a or (x=b or (x=c or x=d))"}
+  }
+      +{"_id":"301"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (setbuilder (z , (λ P z))))
+        +{"_id":"306"}
+        +{"lurchNotation":"x in { z : @P(z) } equiv @P(x)"}
+    ≡
+        +{"_id":"307"}
+        +{"lurchNotation":"x in { z : @P(z) } equiv @P(x)"}
+    (λ P x)
+        +{"_id":"308"}
+        +{"lurchNotation":"x in { z : @P(z) } equiv @P(x)"}
+  }
+      +{"_id":"305"}
+      +{"_type_Rule":true}
+  :{
+    :(⊆ A B)
+        +{"_id":"310"}
+        +{"lurchNotation":"From A subset B"}
+    :(∈ x A)
+        +{"_id":"311"}
+        +{"lurchNotation":"From x in A"}
+    (∈ x B)
+        +{"_id":"312"}
+        +{"lurchNotation":"x in B"}
+  }
+      +{"_id":"309"}
+      +{"_type_Rule":true}
+  :{
+    :{
+      :[x , (∈ x A)]
+          +{"_id":"315"}
+          +{"lurchNotation":"Let x in A"}
+      (∈ x B)
+          +{"_id":"316"}
+          +{"lurchNotation":"x in B"}
+    } +{"_id":"314"}
+    (⊆ A B)
+        +{"_id":"317"}
+        +{"lurchNotation":"A subset B"}
+  }
+      +{"_id":"313"}
+      +{"_type_Rule":true}
+  :{
+    :{
+      :[a , (∈ a A)]
+          +{"_id":"320"}
+          +{"lurchNotation":"Let a in A"}
+      (∈ a B)
+          +{"_id":"321"}
+          +{"lurchNotation":"a in B"}
+    } +{"_id":"319"}
+    :{
+      :[b , (∈ b B)]
+          +{"_id":"323"}
+          +{"lurchNotation":"Let b in B"}
+      (∈ b A)
+          +{"_id":"324"}
+          +{"lurchNotation":"b in A"}
+    } +{"_id":"322"}
+    (= A B)
+        +{"_id":"325"}
+        +{"lurchNotation":"A=B"}
+  }
+      +{"_id":"318"}
+      +{"_type_Rule":true}
+  :{
+    (= A B)
+        +{"_id":"327"}
+        +{"lurchNotation":"A=B"}
+    ≡
+        +{"_id":"328"}
+        +{"lurchNotation":"equiv"}
+    (⊆ A B)
+        +{"_id":"329"}
+        +{"lurchNotation":"A subset B"}
+    (⊆ B A)
+        +{"_id":"330"}
+        +{"lurchNotation":"B subset A"}
+  }
+      +{"_id":"326"}
+      +{"_type_Rule":true}
+  :{
+    (∈ A (powerset B))
+        +{"_id":"332"}
+        +{"lurchNotation":"A in powerset(B) equiv A subset B"}
+    ≡
+        +{"_id":"333"}
+        +{"lurchNotation":"A in powerset(B) equiv A subset B"}
+    (⊆ A B)
+        +{"_id":"334"}
+        +{"lurchNotation":"A in powerset(B) equiv A subset B"}
+  }
+      +{"_id":"331"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (∩ A B))
+        +{"_id":"336"}
+        +{"lurchNotation":"x in A intersect B"}
+    ≡
+        +{"_id":"337"}
+        +{"lurchNotation":"equiv"}
+    (∈ x A)
+        +{"_id":"338"}
+        +{"lurchNotation":"x in A"}
+    (∈ x B)
+        +{"_id":"339"}
+        +{"lurchNotation":"x in B"}
+  }
+      +{"_id":"335"}
+      +{"_type_Rule":true}
+  :{
+    (∈ a (∪ A B))
+        +{"_id":"341"}
+        +{"lurchNotation":"a in A union B equiv x in A or x in B"}
+    ≡
+        +{"_id":"342"}
+        +{"lurchNotation":"a in A union B equiv x in A or x in B"}
+    (or (∈ x A) (∈ x B))
+        +{"_id":"343"}
+        +{"lurchNotation":"a in A union B equiv x in A or x in B"}
+  }
+      +{"_id":"340"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (∖ A B))
+        +{"_id":"345"}
+        +{"lurchNotation":"x in A setminus B"}
+    ≡
+        +{"_id":"346"}
+        +{"lurchNotation":"equiv"}
+    (∈ x A)
+        +{"_id":"347"}
+        +{"lurchNotation":"x in A"}
+    (¬ (∈ x B))
+        +{"_id":"348"}
+        +{"lurchNotation":"x notin B"}
+  }
+      +{"_id":"344"}
+      +{"_type_Rule":true}
+  :{
+    (∈ x (° B))
+        +{"_id":"350"}
+        +{"lurchNotation":"x in B complement equiv x notin B"}
+    ≡
+        +{"_id":"351"}
+        +{"lurchNotation":"x in B complement equiv x notin B"}
+    (¬ (∈ x B))
+        +{"_id":"352"}
+        +{"lurchNotation":"x in B complement equiv x notin B"}
+  }
+      +{"_id":"349"}
+      +{"_type_Rule":true}
+  :{
+    (= (tuple a b) (tuple c d))
+        +{"_id":"354"}
+        +{"lurchNotation":"⟨a,b⟩=⟨c,d⟩"}
+    ≡
+        +{"_id":"355"}
+        +{"lurchNotation":"equiv"}
+    (= a c)
+        +{"_id":"356"}
+        +{"lurchNotation":"a=c"}
+    (= b d)
+        +{"_id":"357"}
+        +{"lurchNotation":"b=d"}
+  }
+      +{"_id":"353"}
+      +{"_type_Rule":true}
+  :{
+    (= (tuple a b c) (tuple d e f))
+        +{"_id":"359"}
+        +{"lurchNotation":"⟨a,b,c⟩=⟨d,e,f⟩"}
+    ≡
+        +{"_id":"360"}
+        +{"lurchNotation":"equiv"}
+    (= a d)
+        +{"_id":"361"}
+        +{"lurchNotation":"a=d"}
+    (= b e)
+        +{"_id":"362"}
+        +{"lurchNotation":"b=e"}
+    (= c f)
+        +{"_id":"363"}
+        +{"lurchNotation":"c=f"}
+  }
+      +{"_id":"358"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ z (× A B))
+        +{"_id":"365"}
+        +{"lurchNotation":"If z in A cross B"}
+    [a b , (and (= z (tuple a b)) (and (∈ a A) (∈ b B)))]
+        +{"_id":"366"}
+        +{"lurchNotation":"z=⟨a,b⟩ and (a in A and b in B) for some a,b"}
+  }
+      +{"_id":"364"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ (tuple a b) (× A B))
+        +{"_id":"368"}
+        +{"lurchNotation":"If pair(a,b) in A cross B"}
+    (∈ a A)
+        +{"_id":"369"}
+        +{"lurchNotation":"a in A"}
+    (∈ b B)
+        +{"_id":"370"}
+        +{"lurchNotation":"b in B"}
+  }
+      +{"_id":"367"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ a A)
+        +{"_id":"372"}
+        +{"lurchNotation":"If a in A, b in B"}
+    :(∈ b B)
+        +{"_id":"373"}
+        +{"lurchNotation":"If a in A, b in B"}
+    (∈ (tuple a b) (× A B))
+        +{"_id":"374"}
+        +{"lurchNotation":"pair(a,b) in A cross B"}
+  }
+      +{"_id":"371"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ z (× A B C))
+        +{"_id":"376"}
+        +{"lurchNotation":"If z in A cross B cross C"}
+    [a b c , (and (= z (tuple a b c)) (and (∈ a A) (and (∈ b B) (∈ c C))))]
+        +{"_id":"377"}
+        +{"lurchNotation":"z=⟨a,b,c⟩ and (a in A and (b in B and c in C)) for some a,b,c"}
+  }
+      +{"_id":"375"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ a A)
+        +{"_id":"379"}
+        +{"lurchNotation":"If a in A, b in B, c in C"}
+    :(∈ b B)
+        +{"_id":"380"}
+        +{"lurchNotation":"If a in A, b in B, c in C"}
+    :(∈ c C)
+        +{"_id":"381"}
+        +{"lurchNotation":"If a in A, b in B, c in C"}
+    (∈ (tuple a b c) (× A B C))
+        +{"_id":"382"}
+        +{"lurchNotation":"triple(a,b,c) in A cross B cross C"}
+  }
+      +{"_id":"378"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ (tuple a b c) (× A B C))
+        +{"_id":"384"}
+        +{"lurchNotation":"If triple(a,b,c) in A cross B cross C"}
+    (∈ a A)
+        +{"_id":"385"}
+        +{"lurchNotation":"a in A"}
+    (∈ b B)
+        +{"_id":"386"}
+        +{"lurchNotation":"b in B"}
+    (∈ c C)
+        +{"_id":"387"}
+        +{"lurchNotation":"c in C"}
+  }
+      +{"_id":"383"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ x (Union (i , (λ A i)) I))
+        +{"_id":"389"}
+        +{"lurchNotation":"If x in Union i in I of @A(i)"}
+    [j , (and (∈ x (λ A j)) (∈ j I))]
+        +{"_id":"390"}
+        +{"lurchNotation":"x in @A(j) for some j in I"}
+  }
+      +{"_id":"388"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ j I)
+        +{"_id":"392"}
+        +{"lurchNotation":"If j in I, x in @A(j) "}
+    :(∈ x (λ A j))
+        +{"_id":"393"}
+        +{"lurchNotation":"If j in I, x in @A(j) "}
+    (∈ x (Union (i , (λ A i)) I))
+        +{"_id":"394"}
+        +{"lurchNotation":"x in Union i in I of @A(i)"}
+  }
+      +{"_id":"391"}
+      +{"_type_Rule":true}
+  :{
+    :(∈ x (Intersect (i , (λ A i)) I))
+        +{"_id":"396"}
+        +{"lurchNotation":"If x in Intersect i in I of @A(i), j in I"}
+    :(∈ j I)
+        +{"_id":"397"}
+        +{"lurchNotation":"If x in Intersect i in I of @A(i), j in I"}
+    (∈ x (λ A j))
+        +{"_id":"398"}
+        +{"lurchNotation":"x in @A(j)"}
+  }
+      +{"_id":"395"}
+      +{"_type_Rule":true}
+  :{
+    :{
+      :[j , (∈ j I)]
+          +{"_id":"401"}
+          +{"lurchNotation":"Let j in I"}
+      (∈ x (λ A j))
+          +{"_id":"402"}
+          +{"lurchNotation":"x in @A(j)"}
+    } +{"_id":"400"}
+    (∈ x (Intersect (i , (λ A i)) I))
+        +{"_id":"403"}
+        +{"lurchNotation":"x in Intersect i in I of @A(i)"}
+  }
+      +{"_id":"399"}
+      +{"_type_Rule":true}
+  {
+    (= (° (° A)) A)
+        +{"ExpectedResult":"valid"}
+        +{"_id":"405"}
+        +{"lurchNotation":"(A')'=A"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"404"}
+      +{"_type_Theorem":true}
+  {
+    {
+      :[x , (∈ x (° (° A)))]
+          +{"_id":"408"}
+          +{"lurchNotation":"let x in (A')'"}
+      (¬ (∈ x (° A)))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"409"}
+          +{"lurchNotation":"x notin A'"}
+      {
+        :(¬ (∈ x A))
+            +{"_id":"411"}
+            +{"lurchNotation":"Assume x notin A"}
+        (¬ (∈ x (° A)))
+            +{"ExpectedResult":"valid"}
+            +{"_id":"412"}
+            +{"lurchNotation":"x notin A'"}
+        →←
+            +{"ExpectedResult":"valid"}
+            +{"_id":"413"}
+            +{"lurchNotation":"contradiction"}
+      }
+          +{"ExpectedResult":"valid"}
+          +{"_id":"410"}
+      (∈ x A)
+          +{"ExpectedResult":"valid"}
+          +{"_id":"414"}
+          +{"lurchNotation":"x in A"}
+    }
+        +{"ExpectedResult":"valid"}
+        +{"_id":"407"}
+    {
+      :[x , (∈ x A)]
+          +{"_id":"416"}
+          +{"lurchNotation":"let x in A"}
+      {
+        :(∈ x (° A))
+            +{"_id":"418"}
+            +{"lurchNotation":"Assume x in A'"}
+        (¬ (∈ x A))
+            +{"ExpectedResult":"valid"}
+            +{"_id":"419"}
+            +{"lurchNotation":"x notin A"}
+        (∈ x A)
+            +{"ExpectedResult":"valid"}
+            +{"_id":"420"}
+            +{"lurchNotation":"x in A"}
+        →←
+            +{"ExpectedResult":"valid"}
+            +{"_id":"421"}
+            +{"lurchNotation":"contradiction"}
+      }
+          +{"ExpectedResult":"valid"}
+          +{"_id":"417"}
+      (¬ (∈ x (° A)))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"422"}
+          +{"lurchNotation":"x notin A'"}
+      (∈ x (° (° A)))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"423"}
+          +{"lurchNotation":"x in (A')'"}
+    }
+        +{"ExpectedResult":"valid"}
+        +{"_id":"415"}
+    (= (° (° A)) A)
+        +{"ExpectedResult":"valid"}
+        +{"_id":"424"}
+        +{"lurchNotation":"(A')'=A"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"406"}
+      +{"_type_Proof":true}
+  {
+    (∈ (set) (powerset A))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"426"}
+        +{"lurchNotation":"{} in powerset(A)"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"425"}
+      +{"_type_Theorem":true}
+  {
+    {
+      :[x , (∈ x (set))]
+          +{"_id":"429"}
+          +{"lurchNotation":"let x in {}"}
+      {
+        :(¬ (∈ x A))
+            +{"_id":"431"}
+            +{"lurchNotation":"Assume x notin A"}
+        (¬ (∈ x (set)))
+            +{"ExpectedResult":"valid"}
+            +{"_id":"432"}
+            +{"lurchNotation":"x notin {}"}
+        →←
+            +{"ExpectedResult":"valid"}
+            +{"_id":"433"}
+            +{"lurchNotation":"contradiction"}
+      }
+          +{"ExpectedResult":"valid"}
+          +{"_id":"430"}
+      (∈ x A)
+          +{"ExpectedResult":"valid"}
+          +{"_id":"434"}
+          +{"lurchNotation":"x in A"}
+    }
+        +{"ExpectedResult":"valid"}
+        +{"_id":"428"}
+    (⊆ (set) A)
+        +{"ExpectedResult":"valid"}
+        +{"_id":"435"}
+        +{"lurchNotation":"{} subset A"}
+    (∈ (set) (powerset A))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"436"}
+        +{"lurchNotation":"{} in powerset(A)"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"427"}
+      +{"_type_Proof":true}
+  {
+    :(⊆ A B)
+        +{"_id":"438"}
+        +{"lurchNotation":"If A subset B"}
+    (⊆ (powerset A) (powerset B))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"439"}
+        +{"lurchNotation":"powerset(A) subset powerset(B)"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"437"}
+      +{"_type_Theorem":true}
+  {
+    :(⊆ A B)
+        +{"_id":"441"}
+        +{"lurchNotation":"Suppose A subset B"}
+    {
+      :[S , (∈ S (powerset A))]
+          +{"_id":"443"}
+          +{"lurchNotation":"let S in powerset(A)"}
+      (⊆ S A)
+          +{"ExpectedResult":"valid"}
+          +{"_id":"444"}
+          +{"lurchNotation":"S subset A"}
+      (⊆ S B)
+          +{"ExpectedResult":"valid"}
+          +{"_id":"445"}
+          +{"lurchNotation":"S subset B"}
+      {
+        :[x , (∈ x S)]
+            +{"_id":"447"}
+            +{"lurchNotation":"let x in S"}
+        (∈ x B)
+            +{"ExpectedResult":"valid"}
+            +{"_id":"448"}
+            +{"lurchNotation":"x in B"}
+      }
+          +{"ExpectedResult":"valid"}
+          +{"_id":"446"}
+      (⊆ S B)
+          +{"ExpectedResult":"valid"}
+          +{"_id":"449"}
+          +{"lurchNotation":"S subset B"}
+      (∈ S (powerset B))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"450"}
+          +{"lurchNotation":"S in powerset(B)"}
+    }
+        +{"ExpectedResult":"valid"}
+        +{"_id":"442"}
+    (⊆ (powerset A) (powerset B))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"451"}
+        +{"lurchNotation":"powerset(A) subset powerset(B)"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"440"}
+      +{"_type_Proof":true}
+  {
+    :(∈ x A)
+        +{"_id":"453"}
+        +{"lurchNotation":"If x in A, x in B, x in C"}
+    :(∈ x B)
+        +{"_id":"454"}
+        +{"lurchNotation":"If x in A, x in B, x in C"}
+    :(∈ x C)
+        +{"_id":"455"}
+        +{"lurchNotation":"If x in A, x in B, x in C"}
+    (¬ (= (∖ (∖ A B) C) (∖ A (∖ B C))))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"456"}
+        +{"lurchNotation":"(A setminus B) setminus C neq  A setminus (B setminus C)"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"452"}
+      +{"_type_Theorem":true}
+  {
+    :(∈ x A)
+        +{"_id":"458"}
+        +{"lurchNotation":"Suppose x in A, x in B, x in C"}
+    :(∈ x B)
+        +{"_id":"459"}
+        +{"lurchNotation":"Suppose x in A, x in B, x in C"}
+    :(∈ x C)
+        +{"_id":"460"}
+        +{"lurchNotation":"Suppose x in A, x in B, x in C"}
+    {
+      :(= (∖ (∖ A B) C) (∖ A (∖ B C)))
+          +{"_id":"462"}
+          +{"lurchNotation":"Assume (A setminus B) setminus C =   A setminus (B setminus C)"}
+      (⊆ (∖ (∖ A B) C) (∖ A (∖ B C)))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"463"}
+          +{"lurchNotation":"(A setminus B) setminus C subset A setminus (B setminus C)"}
+      (∈ x A)
+          +{"ExpectedResult":"valid"}
+          +{"_id":"464"}
+          +{"lurchNotation":"x in A"}
+      {
+        :(∈ x B)
+            +{"_id":"466"}
+            +{"lurchNotation":"Assume x in B"}
+        (∈ x (∖ A B))
+            +{"ExpectedResult":"indeterminate"}
+            +{"_id":"467"}
+            +{"lurchNotation":"x in A setminus B"}
+        →←
+            +{"ExpectedResult":"valid"}
+            +{"_id":"468"}
+            +{"lurchNotation":"contradiction"}
+      }
+          +{"ExpectedResult":"indeterminate"}
+          +{"_id":"465"}
+      (¬ (∈ x B))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"469"}
+          +{"lurchNotation":"x notin B"}
+      (∈ x (∖ A B))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"470"}
+          +{"lurchNotation":"x in A setminus B"}
+      (¬ (∈ x C))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"471"}
+          +{"lurchNotation":"x notin C"}
+      (∈ x (∖ (∖ A B) C))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"472"}
+          +{"lurchNotation":" x in(A setminus B) setminus C"}
+      (∈ x (∖ A (∖ B C)))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"473"}
+          +{"lurchNotation":"x in A setminus (B setminus C)"}
+      (⊆ (∖ A (∖ B C)) (∖ (∖ A B) C))
+          +{"ExpectedResult":"valid"}
+          +{"_id":"474"}
+          +{"lurchNotation":" A setminus (B setminus C)subset (A setminus B) setminus C"}
+      →←
+          +{"ExpectedResult":"valid"}
+          +{"_id":"475"}
+          +{"lurchNotation":"contradiction"}
+    }
+        +{"ExpectedResult":"indeterminate"}
+        +{"_id":"461"}
+    (¬ (= (∖ (∖ A B) C) (∖ A (∖ B C))))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"476"}
+        +{"lurchNotation":"(A setminus B) setminus C neq  A setminus (B setminus C)"}
+  }
+      +{"ExpectedResult":"indeterminate"}
+      +{"_id":"457"}
+      +{"_type_Proof":true}
+  {
+    (∈ (set 1 2) (setbuilder (Y , (⊆ (set 1) Y))))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"478"}
+        +{"lurchNotation":"{1,2} in { Y: {1} subset Y }"}
+  }
+      +{"ExpectedResult":"valid"}
+      +{"_id":"477"}
+      +{"_type_Theorem":true}
+  {
+    {
+      :(¬ (∈ (set 1 2) (setbuilder (Y , (⊆ (set 1) Y)))))
+          +{"_id":"481"}
+          +{"lurchNotation":"Assume {1,2} notin { Y: {1} subset Y }"}
+      →←
+          +{"ExpectedResult":"indeterminate"}
+          +{"_id":"482"}
+          +{"lurchNotation":"contradiction"}
+    }
+        +{"ExpectedResult":"indeterminate"}
+        +{"_id":"480"}
+    (∈ (set 1 2) (setbuilder (Y , (⊆ (set 1) Y))))
+        +{"ExpectedResult":"valid"}
+        +{"_id":"483"}
+        +{"lurchNotation":"{1,2} in { Y: {1} subset Y }"}
+  }
+      +{"ExpectedResult":"indeterminate"}
+      +{"_id":"479"}
+      +{"_type_Proof":true}
+}
+    +{"_id":"documentEnvironment"}
+    +{"instantiateEverything":false}
