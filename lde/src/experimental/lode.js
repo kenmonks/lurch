@@ -47,6 +47,9 @@ import { XMLParser } from 'fast-xml-parser'
 global.xml = (s) => new XMLParser({ ignoreAttributes:false }).parse(s)
 // import asciimath2latex from './parsers/asciimath-to-latex.js'
 import { latexToLurch } from './parsers/tex-to-lurch.js'
+// import readline utility for interactive Lode utilities
+import readline from 'readline'
+
 // import * as MathLive from 'mathlive'
 // import { getConverter } from './utils/math-live.js'
 // import katex from 'katex'
@@ -770,6 +773,131 @@ rpl.defineCommand( "fixrepo", {
 
     console.log(defaultPen('...done'))
     this.displayPrompt()
+  }
+})
+
+// define the 'interpret' list of function calls to loop through with .step,
+// assigning appropriate labels
+const makeInterpretSteps = () => {
+  const rawlist = [ 
+    ['addSystemDeclarations', addSystemDeclarations],  
+    ['processShorthands', doc => {
+        addIndex(doc,'Parsing')
+        return processShorthands(doc)
+      }],
+    [ 'moveDeclaresToTop', doc => { 
+        addIndex(doc,'Interpret')
+        return moveDeclaresToTop(doc)
+      }],
+    [ 'processTheorems', processTheorems ],
+    [ 'processDeclarationBodies',processDeclarationBodies ],
+    [ 'processLetEnvironments', processLetEnvironments ],
+    [ 'processBindings', doc => {
+        addIndex(doc,'Interpret')
+        return processBindings(doc)
+      }],
+    ['processRules',processRules],
+    ['splitConclusions',splitConclusions],
+    ['assignProperNames',assignProperNames],
+    ['markDeclaredSymbols',markDeclaredSymbols]
+  ]
+  rawlist.forEach( ([ nm, fn ]) => {
+    fn.label = nm
+  })
+  return rawlist.map( x => x[1])
+}
+global.interpretSteps = makeInterpretSteps()
+
+// Add interactive step-through utility to global scope
+global.runStepByStep = async (funcs, doc) => {
+
+  if (!Array.isArray(funcs) || funcs.length === 0) {
+    console.log('No functions provided.')
+    return
+  }
+
+  console.log(`\nInteractive step-through started for ${funcs.length} functions on`)
+  console.log(rpl.writer(doc))
+
+  const promptKey = (message) => {
+    return new Promise(resolve => {
+      process.stdin.setRawMode(true)
+      process.stdin.resume()
+      process.stdin.once('data', key => {
+        const k = key.toString()
+        resolve(k)
+      })
+      process.stdout.write(message)
+    })
+  }
+
+  let escaped = false
+  try {
+    for (let i = 0; i < funcs.length; i++) {
+      const fn = funcs[i]
+      const name = fn.label || fn.name || `Function #${i + 1}`
+
+      const key = await promptKey(`\n[${i + 1}/${funcs.length}] Run "${name}"? (Enter=run, Esc=quit): `)
+
+      if (key === '\u001b') { // ESC key
+        escaped = true
+        break
+      }
+
+      if (key === '\r') { // Enter
+        try {
+          const result = await fn(doc)
+          console.log(rpl.writer(result))
+          doc = result // optional chaining of results
+        } catch (err) {
+          console.error(`Error in ${name}:`, err)
+        }
+      }
+    }
+  } finally {
+    const msg = (escaped)?'\n\n✗ Aborting step-through.\n':'\n✔ Step-through complete.\n'
+    console.log(msg)
+    rpl.displayPrompt()     
+  }
+}
+
+// Define .step command for REPL
+rpl.defineCommand("step", {
+  help: "Interactively run a list of functions on a given argument.",
+  action(input) {
+    try {
+      // Expect input like: "arg f1 f2 f3" (functions must exist in global scope)
+      const parts = input.trim().split(/\s+/)
+      if (parts[0] === '') {
+        console.log("Usage: .step <arg>")
+        this.displayPrompt()
+        return
+      }
+      
+      let docName = parts[0]
+      let doc
+      if (docName in global) {
+        doc = global[docName] // Use the actual variable if it exists
+      } else {
+        // If it's not a variable name, try JSON parse
+        try {
+          doc = JSON.parse(docName)
+        } catch {
+          doc = docName // fallback to raw string
+        }
+      }
+
+      const funcs = interpretSteps
+      // const funcs = parts.slice(1).map(fnName => {
+      //   if (typeof global[fnName] === 'function') return global[fnName]
+      //   throw new Error(`Function not found: ${fnName}`)
+      // })
+
+      runStepByStep(funcs, doc).then(() => this.displayPrompt())
+    } catch (err) {
+      console.error('Error starting step-through:', err.message)
+      this.displayPrompt()
+    }
   }
 })
 
