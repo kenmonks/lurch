@@ -397,6 +397,21 @@ LogicConcept.prototype.isALet = function ( ) {
 }
 
 /**
+ * A ForSome is defined to be a claim declaration that is not marked as a 'Declare'
+ * whether or not it has a body
+ * 
+ * @param {boolean} withbody - if true, only return true for ForSome's with a body
+ * @memberof Extensions
+ * @returns {boolean} 
+ */
+LogicConcept.prototype.isAForSome = function ( withbody ) {
+  return  this instanceof Declaration && 
+          !this.isA('given') && 
+          !this.isA('Declare')  && 
+          (!withbody || this.body())
+}
+
+/**
  * Get the array of all of the Let ancestors of this LC Note: since everything
  * is its own ancestor by default, the Let that is the first child of a Let
  * environment is considered to be a letAncestor of the Let environment.
@@ -572,6 +587,15 @@ LogicConcept.prototype.bindings = function () {
       ans = ans.concat( child.bindings() )    
   )
   return ans  
+}
+
+/** 
+ * Compute the array of all Metavars in this LC in Depth order
+ * 
+ * @memberof Extensions
+ */
+LogicConcept.prototype.metavars = function () {
+  return this.descendantsSatisfying( x => x.isA('Metavar') )
 }
 
 /** 

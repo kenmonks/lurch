@@ -57,25 +57,48 @@ export const addIndex = ( doc, phase ) => {
 export const addLurchIndices = (indexer, phase) => {
 
   // a convenient utility
-  const define = (key,selector) => indexer.define(key,{ selector: selector })
+  const define = (key,selector,order = 'Depth') => 
+    indexer.define(key,{ selector: selector , order: order})
+
+  // Find and cache Shorthands
+  const ShorthandsList = [
+    'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
+    '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
+    '✔︎','✗','⁉︎','⊘','➤','<<','>>'
+  ]
 
   ////////////////////
   //  Phase 0: Parsing
   //
   if (phase === 'Parsing') {
     
-    // Find and cache Shorthands
-    const ShorthandsList = [
-      'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
-      '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
-      '✔︎','✗','⁉︎','⊘','➤','<<','>>'
-    ]
     ShorthandsList.forEach( x => define( x, s => s.isSymbol(x) ) )
-    
     // Parsing also needs to tweak the LCs with the ExpectedResult attribute
-    define('ExpectedResults', x => x.hasAttribute('ExpectedResult') )
+    indexer.define('ExpectedResults', { 
+      selector: x => x.hasAttribute('ExpectedResult') 
+    })
+  
+  } else if (phase === 'After ≡') {
 
-  } else if (phase === 'Interpret') {
+    const remaining = ShorthandsList.slice(ShorthandsList.indexOf('≡') + 1)
+    remaining.forEach( x => define( x, s => s.isSymbol(x) ) )
+    
+  } else if (phase = 'Interpret') {
+
+    define('Environments', x => x instanceof Environment )
+
+    // find all environments containing metavariables inside a given environment
+    // that has more than one conclusion in post-order (for splitting rule
+    // conclusions)
+    define( 'multi-conclusions', x => 
+      x instanceof Environment && 
+      x.some( d => d.isA('Metavar') ) &&
+      x.ancestors().some( d => d.isA('Rule') ) &&
+      !x.ancestors().some( d => d instanceof Declaration ) &&
+      !x.some( d => d.isAForSome()) &&
+      x.conclusions().length>1,
+      'Post'
+    )
 
     // find all the useful .isA() nodes
     const defineIsA = types => {
@@ -84,8 +107,8 @@ export const addLurchIndices = (indexer, phase) => {
     const TypeList = [
       ['Rules','Rule'],
       ['Declares','Declare'],
-      ['Theorems','Theorem']
-      // ['Metavars','Metavar']
+      ['Theorems','Theorem'],
+      ['Metavars','Metavar']
     ]
     defineIsA(TypeList)
 

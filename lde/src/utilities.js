@@ -306,7 +306,10 @@ Set.prototype.symmetricDifference = function ( other ) {
  * @see {@link Set#isSuperset isSuperset()}
  */
 Set.prototype.isSubset = function ( other ) {
-    return [ ...this ].every( x => other.has( x ) )
+  for (let elt of this) {
+    if (!other.has(elt)) return false
+  }
+  return true
 }
 
 /**

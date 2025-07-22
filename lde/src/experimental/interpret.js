@@ -42,13 +42,12 @@ import {
   BindingExpression, Formula
 } from '../index.js'
 
+import { addIndex } from './index-definitions.js'
 import { processShorthands } from './parsing.js'
 import Utilities from './utils.js'
 const { subscript } = Utilities
 const instantiation = 'LDE CI'
-
-// import tree-indexer and definitions
-import { addIndex } from './index-definitions.js'
+const MCE ='multi-conclusion-environments'
 
 // import the LDE options
 import { LurchOptions } from './lurch-options.js'
@@ -70,10 +69,9 @@ import { LurchOptions } from './lurch-options.js'
  *  - markDeclaredSymbols(doc)
  * When it is finished it marks the document as interpreted.
  * 
- * @param {Environment} doc - the raw user's document as an LC environment 
+ * @param {Environment | Array} doc - the raw user's document as an LC environment 
  */
 const interpret = doc => {
-  
   // just return if it's already interpreted
   if (doc.interpreted) return
 
@@ -85,8 +83,11 @@ const interpret = doc => {
   processTheorems(doc)
   processDeclarationBodies(doc)
   processLetEnvironments(doc)
+  addIndex(doc,'Interpret')
+  // removeTrailingGivens(doc)
   processBindings(doc)
   processRules(doc)
+  splitConclusions(doc)
   assignProperNames(doc)
   markDeclaredSymbols(doc)
   
@@ -181,6 +182,7 @@ const processTheorems = doc => {
       // if it does, change it from a Theorem to a Rule
       thmrule.unmakeIntoA('Theorem')
       thmrule.makeIntoA('Rule')
+      thmrule.makeIntoA('given')
       // mark it for easy identification later
       thmrule.userRule = true
       // initialize it's creators array
@@ -242,7 +244,6 @@ const processLetEnvironments = doc => {
   return doc
 }
 
-
 /**
  * Rename Bindings for Alpha Equivalence
  *
@@ -296,9 +297,98 @@ const processRules = doc => {
   } )
   // update the index
   doc.index.update('Rules')
+  doc.index.update('Metavars')
   return doc
 }
 
+
+/**
+ * Remove trailing givens
+ *
+ * Remove any givens at the end of an environment because they have no
+ * propositional value.
+ *
+ * (currently not used because of EquationsRule type rules where they won't be
+ * instantiated if they have just a claim as a constant. TODO: fix this correctly)
+ */
+const removeTrailingGivens = doc => {
+  const E = doc.index.getAll('Environments')
+  E.forEach( e => { 
+    while (e.lastChild()?.isA('given')) { 
+      e.popChild() 
+    } 
+  })
+}
+
+/**
+ * Split Multiple Conclusion Environments
+ *
+ * Find all given environments in the document which have more than one
+ * conclusion and split them into multiple propositionally equivalent environments
+ * with one conclusion each.
+ */
+const splitConclusions = doc => {
+  // update the relevant index and fetch them
+  doc.index.update('multi-conclusions')
+  const E = doc.index.get('multi-conclusions')
+  // for each such environment
+  E.forEach( e => { 
+
+    // write(`\nSplitting:`)
+    // write(e)
+
+    // get the indices of its child claims
+    const indices = []
+    e.children().forEach( (kid,i) => { 
+      if (!kid.isA('given')) indices.push(i)
+    })
+    // for each one, construct the appropriate copy and insert it after the
+    // environment in reverse order to preserve their relative positions in the
+    // document
+    indices.reverse().forEach( i => {
+      let copy = e.copy()
+      let c = copy.child(i)
+      // remove everything after this conclusion
+      while (c.nextSibling()) c.nextSibling().remove()
+      // and the conclusions before it
+      copy.children().forEach( (kid,j) => {
+        if (indices.includes(j) && i !== j) kid.remove()
+      } )
+      // check if e.ignore and e.userRule set it on the copy iff it contains metavars
+      if (e.ignore && copy.some(x=>x.isA('Metavar'))) copy.ignore = true
+      if (e.userRule && copy.some(x=>x.isA('Metavar'))) copy.userRule = true
+      // insert it after the original environment.  We reversed the array of
+      // conclusions above, so they will be insered in the correct order
+      //
+      // For clean-up if there is only one child of the copy environment, and
+      // it's not a Rule, just insert the child. Note that we've already checked
+      // that the child isn't a ForSome, and that there is at least one
+      // conclusion inside of the copy environment, so that it the lone child
+      // must be a conclusion.
+      
+      // write(`Inserting:`)
+
+      if (copy.numChildren() == 1 && !copy.isA('Rule') ) {
+        if (copy.isA('given')) copy.child(0).makeIntoA('given')
+        // write(copy.child(0))
+        copy.child(0).insertAfter(e)
+      } else {
+        // write(copy)
+        copy.insertAfter(e)
+      }  
+
+    } )
+    // finally, delete the original environment these replace
+
+      // write(`Deleting:`)
+      // write(e)
+
+    e.remove()
+  } )
+  // update the index (TODO: update individual indices instead of them all?)
+  doc.index.updateAll()
+  return doc
+}
 
 /**
  * Assign Proper Names
@@ -311,15 +401,17 @@ const processRules = doc => {
  * form.
  */
 const assignProperNames = doc => {
-  
-  const metavariable = "Metavar"
-  
+    
   // get the declarations with a body (hence the 'true') which is an expression
   let declarations = doc.declarations(true)
   
   // rename all of the declared symbols with body that aren't metavars
   declarations.forEach( decl => {
-    decl.symbols().filter(s=>!s.isA(metavariable)).forEach( c => {
+    // write(`Decl:`)
+    // write(decl)
+    decl.symbols().filter(s=>!s.isA('Metavar')).forEach( c => {
+    // write(`c:`)
+    // write(c)
       // Compute the new ProperName
       c.setAttribute('ProperName',
         c.text()+'#'+decl.body().toPutdown((L,S,A)=>S)) //.prop())
@@ -337,7 +429,7 @@ const assignProperNames = doc => {
   // TODO: merge this with the code immediately above.
   declarations = doc.declarations().filter( x => x.body()===undefined )
   declarations.forEach( decl => {
-    decl.symbols().filter(s=>!s.isA(metavariable)).forEach( c => {
+    decl.symbols().filter(s=>!s.isA('Metavar')).forEach( c => {
       // Compute the new ProperName
       c.setAttribute('ProperName', c.text())
       // apply it to all c's in it's scope
@@ -348,7 +440,7 @@ const assignProperNames = doc => {
 
   // Now add tick marks for all symbols declared with Let's.
   doc.lets().forEach( decl => {
-    decl.symbols().filter(s=>!s.isA(metavariable)).forEach( c => {
+    decl.symbols().filter(s=>!s.isA('Metavar')).forEach( c => {
       // Compute the new ProperName
       let cname = c.properName()
       if (!cname.endsWith("'")) c.setAttribute( 'ProperName' , cname + "'" )
@@ -362,6 +454,7 @@ const assignProperNames = doc => {
     })
   })
 
+  return doc
 }
 
 
@@ -519,6 +612,7 @@ const markDeclaredSymbols = ( target ) => {
 
 export default { interpret, addSystemDeclarations, processShorthands, 
   moveDeclaresToTop, processTheorems, processDeclarationBodies, 
-  processLetEnvironments, processBindings, processRules, assignProperNames,
-  markDeclaredSymbols, replaceBindings, renameBindings
+  processLetEnvironments, removeTrailingGivens, splitConclusions, 
+  processBindings, processRules, assignProperNames, markDeclaredSymbols,
+  replaceBindings, renameBindings
 }

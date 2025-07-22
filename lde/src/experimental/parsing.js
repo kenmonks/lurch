@@ -430,6 +430,9 @@ const numericToCAS = e => {
  */
 export const processShorthands = L => {
 
+  // get the doc
+  const doc = L.root()
+
   // for each symbol named symb, do f, i.e. execute f(symb)
   const processSymbol = ( symb , f ) =>  {
     L.index.get(symb).forEach( s => f(s) )
@@ -651,7 +654,11 @@ export const processShorthands = L => {
     
     // replace the parent with the new environment  
     parent.replaceWith(ans)
+
   } )
+  
+  // update the index (TODO: only specific ones?)
+  addIndex(doc,'After ≡')
 
   // Inline environments
   processSymbol( 'then' ,  m => { 
@@ -717,9 +724,10 @@ export const processShorthands = L => {
     // if it doesn't have a previous sibling, don't do anything.
     let prev = m.previousSibling()
     if (!prev) return
-    // the UI can only construct some> if it's followed by a symbol
+    // the UI can only construct some> if it's followed by a symbol declaration
     const dec = m.nextSibling()
-    // base case: if the body isn't an environment, and the previous sibling is not a continuation, just make it the body as expected
+    // base case: if the body isn't an environment, and the previous sibling is
+    // not a continuation, just make it the body as expected
     if (!(dec.body() instanceof Environment) && 
         !prev.previousSibling()?.continued ) {
       dec.popChild() // remove the placeholder

@@ -99,7 +99,6 @@ class TreeIndexer {
     // separate the pre-order keys from the post-order ones
     const preKeys = new Map([...this.indexes].filter(([k,v])=>v.order=='Depth'))
     const postKeys = new Map([...this.indexes].filter(([k,v])=>v.order=='Post'))
-    
     // initialize the cache with the appropriate keys and containers
     preKeys?.forEach( (value,key) => { 
       this.cache.set( key , (value.type === 'Set')? new Set() : [])
