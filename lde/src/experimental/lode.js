@@ -598,7 +598,14 @@ rpl.defineCommand( "test", {
 // define the Lode .test command
 rpl.defineCommand( "testall", {
   help: "Run the default test script ('acidtests.js') including student files (long!).",
-  action() {
+   action(n) {
+    clearAccumulator()
+    // If a number is passed, store it in a global variable
+    if (n !== "" && Number.isInteger(Number(n))) {
+      global.TestIndex = Number(n)
+    } else {
+      delete global.TestIndex  // clean up if not specified
+    }
     const saved = LurchOptions.runStudentTests 
     LurchOptions.runStudentTests = true 
     initialize('utils/acidtests')
