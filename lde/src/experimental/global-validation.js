@@ -888,7 +888,7 @@ const instantiateTransitives = (doc,rule) => {
       inst.pushChild(newtrio.asA('given'))
     }
     // find the correct operation
-    const op = new LurchSymbol((ops.has('<'))?'<':(ops.has('leq'))?'leq':'=')
+    const op = new LurchSymbol((ops.has('<'))?'<':(ops.has('≤'))?'≤':'=')
     
     // construct and add the conclusion
     inst.pushChild(
