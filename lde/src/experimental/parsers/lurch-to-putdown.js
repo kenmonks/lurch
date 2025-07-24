@@ -64,11 +64,16 @@
       return args.reduce( (ans,expr) => { return `(${ans} ${expr})` } , op )
   }
   
-  // convert a transitive chain to the correct putdown
+  // convert a transitive chain to the correct putdown a is the leading
+  // expression, and b is a sequence of triples [op, arg, byname] where op is
+  // the relational operator, arg is it's RHS.  If arg is optionally followed by
+  // 'by algebra' (or some other symbol) byname will be 'algebra', otherwise it
+  // will be null.
   const lispChain = (a,b) => {
+    const byarg = x => { return (x===null)?``:` by ${x}` }
     // just an ordinary equation or inequality
-    if ( b.length==1 ) return `(${b[0][0]} ${a} ${b[0][1]} )`
-    return `(trans_chain ${a} ${b.flat().join(' ') } )`
+    if ( b.length==1 ) return `(${b[0][0]} ${a} ${b[0][1]} )` + byarg(b[0][2])
+    return `(trans_chain ${a} ${b.map(x=>{ return `${x[0]} ${x[1]}${byarg(x[2])}` }).flat().join(' ') } )`
   }
 
   // convert signed sums to lisp
@@ -4160,7 +4165,7 @@ function peg$parse(input, options) {
   }
 
   function peg$parseChain() {
-    let s0, s1, s2, s3, s4, s5;
+    let s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
 
     const key = peg$currPos * 91 + 46;
     const cached = peg$resultsCache[key];
@@ -4186,7 +4191,42 @@ function peg$parse(input, options) {
           s5 = peg$parseRelArg();
         }
         if (s5 !== peg$FAILED) {
-          s4 = [s4, s5];
+          s6 = peg$currPos;
+          s7 = peg$parse__();
+          if (s7 !== peg$FAILED) {
+            s8 = input.substr(peg$currPos, 2);
+            if (s8.toLowerCase() === peg$c7) {
+              peg$currPos += (2);
+            } else {
+              s8 = peg$FAILED;
+              if (peg$silentFails === 0) { peg$fail(peg$e12); }
+            }
+            if (s8 !== peg$FAILED) {
+              s9 = peg$parse__();
+              if (s9 !== peg$FAILED) {
+                s10 = peg$parseSymbol();
+                if (s10 !== peg$FAILED) {
+                  s6 = s10;
+                } else {
+                  peg$currPos = s6;
+                  s6 = peg$FAILED;
+                }
+              } else {
+                peg$currPos = s6;
+                s6 = peg$FAILED;
+              }
+            } else {
+              peg$currPos = s6;
+              s6 = peg$FAILED;
+            }
+          } else {
+            peg$currPos = s6;
+            s6 = peg$FAILED;
+          }
+          if (s6 === peg$FAILED) {
+            s6 = null;
+          }
+          s4 = [s4, s5, s6];
           s3 = s4;
         } else {
           peg$currPos = s3;
@@ -4207,7 +4247,42 @@ function peg$parse(input, options) {
               s5 = peg$parseRelArg();
             }
             if (s5 !== peg$FAILED) {
-              s4 = [s4, s5];
+              s6 = peg$currPos;
+              s7 = peg$parse__();
+              if (s7 !== peg$FAILED) {
+                s8 = input.substr(peg$currPos, 2);
+                if (s8.toLowerCase() === peg$c7) {
+                  peg$currPos += (2);
+                } else {
+                  s8 = peg$FAILED;
+                  if (peg$silentFails === 0) { peg$fail(peg$e12); }
+                }
+                if (s8 !== peg$FAILED) {
+                  s9 = peg$parse__();
+                  if (s9 !== peg$FAILED) {
+                    s10 = peg$parseSymbol();
+                    if (s10 !== peg$FAILED) {
+                      s6 = s10;
+                    } else {
+                      peg$currPos = s6;
+                      s6 = peg$FAILED;
+                    }
+                  } else {
+                    peg$currPos = s6;
+                    s6 = peg$FAILED;
+                  }
+                } else {
+                  peg$currPos = s6;
+                  s6 = peg$FAILED;
+                }
+              } else {
+                peg$currPos = s6;
+                s6 = peg$FAILED;
+              }
+              if (s6 === peg$FAILED) {
+                s6 = null;
+              }
+              s4 = [s4, s5, s6];
               s3 = s4;
             } else {
               peg$currPos = s3;

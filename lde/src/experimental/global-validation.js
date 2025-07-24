@@ -1054,9 +1054,20 @@ const splitChains = doc => {
   doc.equations(true).forEach(x=>x.equation=true)
   // fetch the conclusion equations (argument = true)
   doc.chains(true).forEach( eq => {
-    // let n be the number of arguments to =. Since it should be created by
-    // parsing a user's transitive chain it should have an even number of
-    // arguments to tran_chain,
+    // if it has lurch notation (from the browers) we need to transfer it to the
+    // individual triples for 'by algebra' to use
+    let lurchmath = ''
+    if (eq.hasAttribute('lurchNotation')) {
+      lurchmath = eq.getAttribute('lurchNotation')
+      // remove the 'by algebra' strings because they are handled by the js 'by'
+      // attribute
+      lurchmath = lurchmath.replace(/\s*by\s+algebra\s*/g, ' ').trim()
+      // split by the operators, keeping them as tokens
+      lurchmath = lurchmath.split(/\s*(=|leq|<)\s*/).filter(Boolean)
+    } 
+        
+    // Since it should be created by parsing a user's transitive chain it should
+    // have an even number of arguments to trans_chain,
     let n = eq.numChildren()
     let last = eq
     for (let k=1;k<n-2;k+=2) {
@@ -1068,6 +1079,17 @@ const splitChains = doc => {
       newtrio.unshiftChild(eq.child(k+1).copy())
       newtrio.removeChild(2)
       if (newtrio.isAnEquation()) newtrio.equation = true 
+      // apply the 'by algebra' attribute if necessary.  In this case it also
+      // needs the original Lurch notation to pass to Algebrite
+      if (eq.child(k+2).by) {
+        newtrio.by = eq.child(k+2).by
+        delete eq.child(k+2).by
+        
+        if (lurchmath) {
+          newtrio.setAttribute('lurchNotation',lurchmath.slice(k-1,k+2).join(' '))
+        }
+      }
+      // insert it
       newtrio.insertAfter(last)
       last=newtrio
     }

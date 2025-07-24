@@ -199,6 +199,12 @@
   // This is only called if the user included a newline after or before one
   // of the chain operators
   const texChain = (a,x) => {
+    // add the 'by's
+    x.forEach( entry => {
+      if (entry.length === 3 && entry[2]!==null) {
+        entry[2]='\\text{ by }'+entry[2]
+      }
+    })
     if (x.length === 1) { return a+x.flat().join('') }
     let ans = `\\begin{align*}\n  ${a} &${x[0].join('')}`
     x.slice(1).forEach( row => ans += ` \\\\\n    &${row.join('')}`)
@@ -684,9 +690,9 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                  { return `${a}\\in ${b}`  }
   Divides    = a:RelArg _('|'_ / 'divides'_x) b:RelArg
                  { return `${a}\\mid ${b}` }
-  Chain      = a:(Binding/RelArg) b:( sChainOp (Binding/RelArg) )*
-                                  c:( nChainOp (Binding/RelArg) )
-                                  d:( _ @ChainOp _ @(Binding/RelArg) )*
+  Chain      = a:(Binding/RelArg) b:( sChainOp (Binding/RelArg) (__ 'by'i __ @Symbol)? )*
+                                  c:( nChainOp (Binding/RelArg) (__ 'by'i __ @Symbol)? )
+                                  d:( _ @ChainOp _ @(Binding/RelArg) @(__ 'by'i __ @Symbol)? )*
                  { return texChain(a,[...b,c,...d]) } /
                a:(Binding/RelArg) b:( _ @ChainOp _ @(Binding/RelArg) )+
                  { return a+b.flat().join('')}

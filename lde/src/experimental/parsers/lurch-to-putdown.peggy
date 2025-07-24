@@ -80,11 +80,16 @@
       return args.reduce( (ans,expr) => { return `(${ans} ${expr})` } , op )
   }
   
-  // convert a transitive chain to the correct putdown
+  // convert a transitive chain to the correct putdown a is the leading
+  // expression, and b is a sequence of triples [op, arg, byname] where op is
+  // the relational operator, arg is it's RHS.  If arg is optionally followed by
+  // 'by algebra' (or some other symbol) byname will be 'algebra', otherwise it
+  // will be null.
   const lispChain = (a,b) => {
+    const byarg = x => { return (x===null)?``:` by ${x}` }
     // just an ordinary equation or inequality
-    if ( b.length==1 ) return `(${b[0][0]} ${a} ${b[0][1]} )`
-    return `(trans_chain ${a} ${b.flat().join(' ') } )`
+    if ( b.length==1 ) return `(${b[0][0]} ${a} ${b[0][1]} )` + byarg(b[0][2])
+    return `(trans_chain ${a} ${b.map(x=>{ return `${x[0]} ${x[1]}${byarg(x[2])}` }).flat().join(' ') } )`
   }
 
   // convert signed sums to lisp
@@ -533,7 +538,7 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                  { return lispBinary('∈',a,b) }
   Divides    = a:RelArg _('|'_ / 'divides'_x) b:RelArg      
                  { return lispBinary('|',a,b) }
-  Chain      = a:(Binding/RelArg) b:( ChainOp (Binding/RelArg) )+
+  Chain      = a:(Binding/RelArg) b:( ChainOp (Binding/RelArg) (__ 'by'i __ @Symbol)? )+
                  { return lispChain(a,b) }
   NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg   
                  { return `(¬ ${lispBinary('=',a,b)})` }
