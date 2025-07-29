@@ -344,6 +344,16 @@ sum( k^2 , k , 0 , n )
 sum(k^2,k,0,n)
 sum(k^2,k,n)
 
+x*sum(k^2,k,0,n)
+sum(k^2,k,0,n)*y
+x*sum(k^2,k,0,n)*y
+x*sum k to n of x^k
+x*sum k to n of x^k
+sum k to n of x^k*y
+(sum k to n of x^k)*y
+x*sum k to n of x^k*y
+x*(sum k to n of x^k)*y
+
 // definite integrals
 int x=0 to n of x^2
 int x from 0 to n of x^2

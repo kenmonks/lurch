@@ -137,13 +137,16 @@
         `\\frac{${nopar(latest)}}{${nopar(next.substring(1))}}`
       // otherwise the next term is not a reciprocal, so append and update latest
       } else {
-        // in more elementary courses we might want to use the following to
-        // have concatenation for products, e.g. in polynomials, but for
-        // Math 299 it is not useful for things like n⋅0 in the Peano Axioms
+        // if it's not in the numerator and is a summation, since it has a next
+        // factor, put parentheses around it.
+        if (latest.startsWith('\\displaystyle\\sum')) latest = `\\left(${latest}\\right)`
+        
+        // in more elementary courses we might want to use the following to have
+        // concatenation for products, e.g. in polynomials, but for Math 299 it
+        // is not useful for things like n⋅0 in the Peano Axioms
         //
-        // ans += (ans.length>0 && /\d$/.test(ans) && /^\d/.test(latest))
-        //        ? `\\cdot ${latest}`
-        //        : latest
+        // ans += (ans.length>0 && /\d$/.test(ans) && /^\d/.test(latest)) ?
+        //        `\\cdot ${latest}` : latest
         ans += (ans.length>0) ? `\\cdot ${latest}` : latest
         latest = next
       }
@@ -780,79 +783,77 @@ Set = RelativeComp
 // Once again, Algebraic only has to point to the lowest precedence operator
 // that inherits the ones below it (but Choose does not). Atomic is passed up
 // the chain from Exp.
-Algebraic = Choose / Sum / Summation / Integral / IndexedUnion / IndexedIntersect / Product
+Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / IndexedIntersect
 
-  // we make this lower precedence that sums so e.g. 'n+1 choose k' can be
+  // we make this lower precedence than sums so e.g. 'n+1 choose k' can be
   // entered without parentheses
   Choose    = a:(Sum / Product) _'choose'_x b:(Sum / Product)
                 { return `\\binom{${nopar(a)}}{${nopar(b)}}` }
-
   Sum       = a:(Summation / Product) _ b:(_ [-+] _ (Summation / Product))+
                 { return texSum(a,b) }
+  Product   = a:(Summation/Integral/Denom/Negated/ExpArgs)
+              |1..,(_'⋅'_/_'cdot'_x/_'*'_)|
+              { return texProduct(a) }
 
-  // this is one of the more complex symbols so we support multiple ways of
-  // entering it Precendence for this is a bit tricky.  What seems most natural
-  // and avoids the most awkward parentheses is to make summation higher
-  // precedence than addition but lower than multiplication.  That way e.g. 'sum
-  // k to n of f(k) + sum k to n of g(k)' will be the sum of the two summations,
-  // rather than a single summation where the second one is part of the summands
-  // of the first.
-  Summation = 'sum'i __ k:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Product
-                  { return summation(f,k,a,b) }  /
+    // this is one of the more complex symbols so we support multiple ways of
+    // entering it Precendence for this is a bit tricky.  What seems most natural
+    // and avoids the most awkward parentheses is to make summation higher
+    // precedence than addition but lower than multiplication.  That way e.g. 'sum
+    // k to n of f(k) + sum k to n of g(k)' will be the sum of the two summations,
+    // rather than a single summation where the second one is part of the summands
+    // of the first.
+    Summation = 'sum'i '(' _ f:Product comma k:Symbol comma 
+                             a:(@Algebraic comma)? b:Algebraic _ ')'
+                    { return summation(f,k,a,b) } /
 
-              'sum'i __ k:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Product
-                  { return summation(f,k,a,b) }  /
-
-              'sum'i __ ('of'i __)? f:Product __
-              ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)?
-              a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-                  { return summation(f,k,a,b) }  /
-
-              'sum'i '(' _ f:Product comma
-                           k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
-                  { return summation(f,k,a,b) }
+                'sum'i __ k:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Product
+                    { return summation(f,k,a,b) }  /
   
-  // definite integrals are similar to summations, but we don't have to fuss about 
-  // their precedence relative to addition because they have a closing delimiter
-  Integral = 'int'i __ x:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Algebraic
-                  { return integral(f,x,a,b) }  / 
+                'sum'i __ k:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Product
+                    { return summation(f,k,a,b) }  /
+  
+                'sum'i __ ('of'i __)? f:Product __
+                ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)?
+                a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                    { return summation(f,k,a,b) } 
+      
+    // definite integrals are similar to summations, but we don't have to fuss about 
+    // their precedence relative to addition because they have a closing delimiter
+    Integral = 'int'i __ x:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Algebraic
+                    { return integral(f,x,a,b) }  / 
+  
+                'int'i __ x:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Product
+                    { return integral(f,x,a,b) }  /  
+  
+                'int'i __ ('of'i __)? f:Algebraic 
+                __ ('as'i __ / 'for'i__) x:Symbol __ ('goes'i __)? 
+                a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                    { return integral(f,x,a,b) }  /
+  
+                'int'i '(' _ f:Algebraic comma 
+                x:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
+                    { return integral(f,x,a,b) }  /
+                
+                // antiderivatives (indefinite integrals)
+  
+                'int'i __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i ) __ x:Symbol 
+                __ ('of'i __)? f:Algebraic
+                    { return integral(f,x) }  / 
+  
+                'int'i __ ('of'i __)? f:Algebraic 
+                __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i) __ x:Symbol 
+                    { return integral(f,x) }  /
+  
+                'int'i '(' _ f:Algebraic comma x:Symbol _ ')'
+                    { return integral(f,x) } /
+  
+                'int'i __ f:Algebraic __ 'd' x:Symbol
+                    { return integral(f,x) }
 
-              'int'i __ x:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Product
-                  { return integral(f,x,a,b) }  /  
-
-              'int'i __ ('of'i __)? f:Algebraic 
-              __ ('as'i __ / 'for'i__) x:Symbol __ ('goes'i __)? 
-              a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-                  { return integral(f,x,a,b) }  /
-
-              'int'i '(' _ f:Algebraic comma 
-              x:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
-                  { return integral(f,x,a,b) }  /
-              
-              // antiderivatives (indefinite integrals)
-
-              'int'i __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i ) __ x:Symbol 
-              __ ('of'i __)? f:Algebraic
-                  { return integral(f,x) }  / 
-
-              'int'i __ ('of'i __)? f:Algebraic 
-              __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i) __ x:Symbol 
-                  { return integral(f,x) }  /
-
-              'int'i '(' _ f:Algebraic comma x:Symbol _ ')'
-                  { return integral(f,x) } /
-
-              'int'i __ f:Algebraic __ 'd' x:Symbol
-                  { return integral(f,x) }
-
-
-    Product   = a:(Denom/Negated/ExpArgs)
-                |1..,(_'⋅'_/_'cdot'_x/_'*'_)|
-                { return texProduct(a) }
     Denom     = '/' _ a:ExpArgs
                   { return '/'+a }
     Negated   = '-' _ a:ExpArgs
@@ -1014,8 +1015,12 @@ SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
                '｛'_ a:ExpressionSeq _'｝'
                  { return `\\left\\{\\,${a}\\,\\right\\}` }
 // parenthesized - we also put things here that when they appear in parentheses
-// don't need them
-Parenthesized = '(' _ a:(Choose/Multinomial/Prefix) _ ')' { return a  } /
+// don't need them.  Do summations first because of the precedence of products
+// vs summation
+Parenthesized = '(' _ a:Summation _ ')' {
+                return `\\left(${a}\\right)` } /
+                // some things come with their own, so don't need extras
+                '(' _ a:(Choose/Multinomial/Prefix) _ ')' { return a  } /
                 '(' _ a:Expression _ ')' {
                 // we have to check for ~ as a special case (see above)
                 return (a === '\\sim') ? a : `\\left(${a}\\right)` }

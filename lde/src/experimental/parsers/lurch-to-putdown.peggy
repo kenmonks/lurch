@@ -584,7 +584,7 @@ Set = RelativeComp
                     { return lispSeq('∘',a) }
   
   // We imitate Summation to implement both IndexedUnion and IndexedIntersection
-  // and give it rought the same precedence
+  // and give it roughly the same precedence
   BigUnionName = 'Union'/'Cup'/'bigcup'i 
   IndexedUnion = BigUnionName __ k:Symbol __ 'in'_x a:Set __ 'of' __ f:Set
                   { return union(f,k,a) }  / 
@@ -621,75 +621,75 @@ Set = RelativeComp
 // Once again, Algebraic only has to point to the lowest precedence operator
 // that inherits the ones below it (but Choose does not). Atomic is passed up
 // the chain from Exp.
-Algebraic = Choose / Sum / Summation / Integral / IndexedUnion / IndexedIntersect / Product
+Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / IndexedIntersect
   
   Choose    = a:(Sum / Product) _'choose'_x b:(Sum / Product) 
                 { return lispBinary('choose',a,b) }      
   Sum       = a:(Summation / Product) _ b:(_ [-+] _ (Summation / Product))+ 
                 { return lispSum(a,b) }
-
-  // this is one of the more complex symbols so we support multiple ways of
-  // entering it Precendence for this is a bit tricky.  What seems most natural
-  // and avoids the most awkward parentheses is to make summation higher
-  // precedence than addition but lower than multiplication.  That way e.g. 'sum
-  // k to n of f(k) + sum k to n of g(k)' will be the sum of the two summations,
-  // rather than a single summation where the second one is part of the summands
-  // of the first. 
-  Summation = 'sum'i __ k:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Product
-                  { return summation(f,k,a,b) }  / 
-
-              'sum'i __ k:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Product
-                  { return summation(f,k,a,b) }  /  
-
-              'sum'i __ ('of'i __)? f:Product 
-              __ ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)? 
-              a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-                  { return summation(f,k,a,b) }  /
-
-              'sum'i '(' _ f:Product comma 
-              k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
-                  { return summation(f,k,a,b) }              
-  
-  // definite integrals are similar to summations, but we don't have to fuss about 
-  // their precedence relative to addition because they have a closing delimiter
-  Integral = 'int'i __ k:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Algebraic
-                  { return integral(f,k,a,b) }  / 
-
-              'int'i __ k:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-              __ ('of'i __)? f:Product
-                  { return integral(f,k,a,b) }  /  
-
-              'int'i __ ('of'i __)? f:Algebraic 
-              __ ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)? 
-              a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-                  { return integral(f,k,a,b) }  /
-
-              'int'i '(' _ f:Algebraic comma 
-              k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
-                  { return integral(f,k,a,b) }  /
-
-              // antiderivatives (indefinite integrals)
-
-              'int'i __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i ) __ x:Symbol 
-              __ ('of'i __)? f:Algebraic
-                  { return integral(f,x) }  / 
-
-              'int'i __ ('of'i __)? f:Algebraic 
-              __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i) __ x:Symbol 
-                  { return integral(f,x) }  /
-
-              'int'i '(' _ f:Algebraic comma x:Symbol _ ')'
-                  { return integral(f,x) } /
-
-              'int'i __ f:Algebraic __ 'd' x:Symbol
-                  { return integral(f,x) }
-
-  Product   = a:(Denom/Negated/ExpArgs)
+  Product   = a:(Summation/Integral/Denom/Negated/ExpArgs)
                 |1..,(_'⋅'_/_'cdot'_x/_'*'_)| 
                 { return lispSeq('⋅',a) }
+
+    // this is one of the more complex symbols so we support multiple ways of
+    // entering it Precendence for this is a bit tricky.  What seems most natural
+    // and avoids the most awkward parentheses is to make summation higher
+    // precedence than addition but lower than multiplication.  That way e.g. 'sum
+    // k to n of f(k) + sum k to n of g(k)' will be the sum of the two summations,
+    // rather than a single summation where the second one is part of the summands
+    // of the first. 
+    Summation = 'sum'i '(' _ f:Product comma 
+                k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
+                    { return summation(f,k,a,b) } /
+  
+                'sum'i __ k:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Product
+                    { return summation(f,k,a,b) }  / 
+  
+                'sum'i __ k:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Product
+                    { return summation(f,k,a,b) }  /  
+  
+                'sum'i __ ('of'i __)? f:Product 
+                __ ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)? 
+                a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                    { return summation(f,k,a,b) } 
+  
+    
+    // definite integrals are similar to summations, but we don't have to fuss about 
+    // their precedence relative to addition because they have a closing delimiter
+    Integral = 'int'i __ k:Symbol _ '=' _ a:Algebraic __ 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Algebraic
+                    { return integral(f,k,a,b) }  / 
+  
+                'int'i __ k:Symbol __ a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                __ ('of'i __)? f:Product
+                    { return integral(f,k,a,b) }  /  
+  
+                'int'i __ ('of'i __)? f:Algebraic 
+                __ ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)? 
+                a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
+                    { return integral(f,k,a,b) }  /
+  
+                'int'i '(' _ f:Algebraic comma 
+                k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
+                    { return integral(f,k,a,b) }  /
+  
+                // antiderivatives (indefinite integrals)
+  
+                'int'i __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i ) __ x:Symbol 
+                __ ('of'i __)? f:Algebraic
+                    { return integral(f,x) }  / 
+  
+                'int'i __ ('of'i __)? f:Algebraic 
+                __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i) __ x:Symbol 
+                    { return integral(f,x) }  /
+  
+                'int'i '(' _ f:Algebraic comma x:Symbol _ ')'
+                    { return integral(f,x) } /
+  
+                'int'i __ f:Algebraic __ 'd' x:Symbol
+                    { return integral(f,x) }
                 
     Denom     = '/' _ a:ExpArgs 
                   { return lispUnary('/',a) }    
