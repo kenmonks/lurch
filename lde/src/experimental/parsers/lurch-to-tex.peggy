@@ -140,7 +140,7 @@
         // if it's not in the numerator and is a summation, since it has a next
         // factor, put parentheses around it.
         if (latest.startsWith('\\displaystyle\\sum')) latest = `\\left(${latest}\\right)`
-        
+
         // in more elementary courses we might want to use the following to have
         // concatenation for products, e.g. in polynomials, but for Math 299 it
         // is not useful for things like n⋅0 in the Peano Axioms
@@ -965,6 +965,9 @@ Prefix =  // LDE EFA's first
           // allow 'tuple' to be case insensitive and format it appropriately
           'tuple('i _ b:ExpressionSeq _ ')'
             { return `\\left\\langle\\,${b}\\,\\right\\rangle` } /
+          // format 'abs' as | | 
+          'abs(' _ b:ExpressionSeq _ ')'
+            { return `\\left|\\,${b}\\,\\right|` } /
           // then the rest
           a:(Exp / Symbol / Parenthesized)
           b:( '_'? '('_ ExpressionSeq _')' )+ { return texPrefix(a,b) }
