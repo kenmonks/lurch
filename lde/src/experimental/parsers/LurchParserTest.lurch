@@ -117,6 +117,11 @@ x+y
 -2-(x-3/(yz^4))
 (2/(x-3/y) cdot z)^(-4)
 -2 cdot (x^3+y)/(-z)-4
+// absolute value
+abs(x)
+abs((x+1)/(x-1))
+(1+abs(x))/abs(1+abs(x))
+abs((1+abs(x))/abs(1+abs(x)))
 // factorials
 // n!
 // (n+1)!+2

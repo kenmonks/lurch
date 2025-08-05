@@ -955,7 +955,7 @@ function peg$parse(input, options) {
   function peg$f87(a) {    return `\\left[${a}\\right]`  }
   function peg$f88(a, b) {    return `\\left[${a}\\right]_{${b}}`  }
   function peg$f89(b) {    return `\\left\\langle\\,${b}\\,\\right\\rangle`  }
-  function peg$f90(b) {    return `\\left|\\,${b}\\,\\right|`  }
+  function peg$f90(b) {    return `\\left| ${b} \\right|`  }
   function peg$f91(a, b) {    return texPrefix(a,b)  }
   function peg$f92(a, b) {    return `{${a}}^{${nopar(b)}}`  }
   function peg$f93(a) {    return texJoin('\\star ',a)  }

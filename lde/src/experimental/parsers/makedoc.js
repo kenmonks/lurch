@@ -40,6 +40,7 @@ const syntax =
 [['x factorial', 'x!'                ],`x!`],
 [['(n+1) choose (k-1)'               ],`\\binom{n+1}{k-1}`],
 [['multinomial(m,n)'                 ],`(m,n)`],
+[['abs((1-x)/(1+x))'                 ],`\\left|\\,\\frac{1+x}{1-x}\\,\\right|`],
 [['sum k=0 to n of k^2',
   'sum k from 0 to n of k^2',
   'sum k to n of k^2',

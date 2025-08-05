@@ -967,7 +967,7 @@ Prefix =  // LDE EFA's first
             { return `\\left\\langle\\,${b}\\,\\right\\rangle` } /
           // format 'abs' as | | 
           'abs(' _ b:ExpressionSeq _ ')'
-            { return `\\left|\\,${b}\\,\\right|` } /
+            { return `\\left| ${b} \\right|` } /
           // then the rest
           a:(Exp / Symbol / Parenthesized)
           b:( '_'? '('_ ExpressionSeq _')' )+ { return texPrefix(a,b) }
