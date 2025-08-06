@@ -457,109 +457,95 @@ const assignProperNames = doc => {
   return doc
 }
 
+/**
+ * Common helper used by both `replaceBindings` and `renameBindings`
+ * to walk a tree and assign canonical bound variable names.
+ *
+ * @param {Expression} expr - Expression to process
+ * @param {string} symb - Prefix symbol (e.g. 'x' or 'y')
+ * @param {boolean} ProperNameOnly - If true, uses setAttribute('ProperName') instead of .rename()
+ */
+const canonicalizeBindings = (expr, symb, ProperNameOnly = false) => {
+  // the current stack of declared binding names and their new name
+  const stack = new Map()
+  // push and pop from the stack during traversal
+  const push = () => stack.forEach(v => v.push(v.at(-1)))
+  const pop = () => stack.forEach((v, k) => {
+    v.pop()
+    if (v.length === 0) stack.delete(k)
+  }) 
+  // get the new name of something on the stack
+  const get = name => stack.has(name) ? stack.get(name).at(-1) : undefined
+  // set the new name of the correct name on the stack. If the name is already
+  // there (which happens if the user enters, e.g. ∃x, P(x) ⇒ ∃x, Q(x) )
+  // disambiguate by renaming to the latest thing the x's are in the scope of
+  // (∃x₁, P(x₁) ⇒ ∃x₂, Q(x₂)).
+  const set = (name, newname) => {
+    if (stack.has(name)) stack.get(name)[stack.get(name).length - 1] = newname
+    else stack.set(name, [newname])
+  }
+  // traverse the tree
+  let counter = 0
+  const solve = e => {
+    // LurchSymbols get renamed according to what's on the stack
+    if (e instanceof LurchSymbol && stack.has(e.text())) {
+      const newname = get(e.text())
+      if (ProperNameOnly)
+        e.setAttribute('ProperName', newname)
+      else
+        e.rename(newname)
+    }
+    // BindingExpessions push everything they bind onto the stack, then
+    // processed the children, the pops off the stack.
+    if (e instanceof BindingExpression) {
+      push()
+      counter++
+      // with the current parser there should only be one bound symbol name e.g.
+      // x.y.z.P(x,y,z) parsed to nested univariate bindings.
+      e.boundSymbolNames().forEach(name => {
+        set(name, `${symb}${subscript(counter)}`)
+      })
+      e.children().forEach(c => solve(c))
+      counter--
+      pop()
+    }
+    // Applications just process the children recursvely
+    if (e instanceof Application)
+      e.children().forEach(c => solve(c))
+    // Note that we don't allow a declaration inside a binding currently.
+  }
+
+  solve(expr)
+}
 
 /**
  * Replace bound variables in formulas
  * 
- * Matching checks if a match would violate variable capture, but
- * `Formula.instantiate` does not.  So we need to turn all bound variables in
- * formulas to a canonical form e.g. `y₀, y₁, ...` that cannot be entered by the
- * user. Applying this to formulas before instantiating fixes that.  
- * 
- * TODO: 
- * * When making this permanent, just upgrade Formula.instantiate to respect
- *   ProperNames so we can delete this routine and just use the previous one
- *   instead. 
- * * Also enforce the requirement that user's can't enter any of `y₀, y₁, ...` .
- * * We might want to keep the user's original bound formula variable names
- *   somewhere for feedback purposes, but the canonical ones aren't that bad for
- *   now.
+ * This turns all bound variables in formulas to a canonical form like `y₀, y₁, ...`
+ * that cannot be entered by the user. Applying this to formulas before instantiating
+ * prevents variable capture.
  * 
  * @param {Expression} expr - The expression to process
  * @param {string} [symb='y'] - The symbol to use for the replacement
  */
-const replaceBindings = ( expr , symb='y' ) => {
-  const stack = new Map()
-  const push = () => stack.forEach( value => value.push( value.last() ) )
-  const pop = () => stack.forEach( ( value, key ) => {
-      if ( value.length > 0 ) value.pop()
-      else stack.delete( key )
-  } )
-  const get = name => stack.has( name ) ? stack.get( name ).last()
-                                        : undefined
-  const set = ( name, newname ) => {
-      if ( stack.has( name ) ) {
-          const array = stack.get( name )
-          array[array.length-1] = newname
-      } else {
-          stack.set( name, [ newname ] )
-      }
-  }
-  let counter = 0
-  const solve = e => {
-      if ( e instanceof LurchSymbol && stack.has(e.text()) ) 
-          e.rename( get( e.text() ) )
-      if ( e instanceof BindingExpression ) {
-          push()
-          e.boundSymbolNames().forEach( name => {
-              counter++
-              set( name, `${symb}${subscript(counter)}` ) 
-          })
-          e.children().forEach( c => solve(c) )
-          pop()
-      }
-      if ( e instanceof Application)
-          e.children().forEach( c => solve(c) )
-  }
-  solve( expr )
+const replaceBindings = (expr, symb = 'y') => {
+  canonicalizeBindings(expr, symb, false)
 }
 
 /**
- * Rename bound variables for alpha equivalence
- * 
- * We also need alpha equivalent statements to have the same propositional form.
- * This assigns canonical names x₀ , x₁ , etc. as the ProperName attribute of
- * bound variables, and that is what .prop uses to make the propositional form.
- * 
+ * Rename bound variables for alpha equivalence (scope-aware)
+ *
+ * This assigns canonical names x₀, x₁, etc. as the ProperName attribute of
+ * variables *lexically bound* in BindingExpressions. It avoids renaming
+ * variables that are free or outside the scope of any binding.  This allows
+ * alpha equivalent expression to have the same propositional form.
+ *
  * @param {Expression} expr - The expression to process
  * @param {string} [symb='x'] - The symbol to use for the replacement
  */
-const renameBindings = ( expr , symb='x' ) => {
-  const stack = new Map()
-  const push = () => stack.forEach( value => value.push( value.last() ) )
-  const pop = () => stack.forEach( ( value, key ) => {
-    value.pop()
-    if ( value.length == 0 ) stack.delete( key )
-  } )
-  const get = name => stack.has( name ) ? stack.get( name ).last()
-                                        : undefined
-  const set = ( name, newname ) => {
-    if ( stack.has( name ) ) {
-      const array = stack.get( name )
-      array[array.length-1] = newname
-    } else {
-      stack.set( name, [ newname ] )
-    }
-  }
-  let counter = 0
-  const solve = e => {
-    if ( e instanceof LurchSymbol && stack.has(e.text()) ) 
-      e.setAttribute( 'ProperName' , get( e.text() ) )
-    if ( e instanceof BindingExpression ) {
-      push()
-      let savecounter = counter
-      e.boundSymbolNames().forEach( name => {
-        counter++
-        set( name, `${symb}${subscript(counter)}` ) 
-      })
-      e.children().forEach( c => solve(c) )
-      counter = savecounter
-      pop()
-    }
-    if ( e instanceof Application)
-      e.children().forEach( c => solve(c) )
-  }
-  solve( expr )
+
+const renameBindings = (expr, symb = 'x') => {
+  canonicalizeBindings(expr, symb, true)
 }
 
 // TODO: These next two are not complete.  Complete them or delete them.
