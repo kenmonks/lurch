@@ -968,6 +968,9 @@ Prefix =  // LDE EFA's first
           // format 'abs' as | | 
           'abs(' _ b:ExpressionSeq _ ')'
             { return `\\left| ${b} \\right|` } /
+          // temporarily format 'product(E,k,a,b)' as an indexed product 
+          ('prod(' / 'product(') _ E:Expression comma k:Symbol comma a:Expression comma b:Expression _ ')'
+            { return `\\prod_{${k}=${a}}^{${b}} ${E}` } /
           // then the rest
           a:(Exp / Symbol / Parenthesized)
           b:( '_'? '('_ ExpressionSeq _')' )+ { return texPrefix(a,b) }
