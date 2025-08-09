@@ -104,6 +104,12 @@
     return ans + ')'
   }
 
+  // convert indexedProducts to putdown
+  const indexedProduct = (f,k,a,b) => {
+    a = a || 0 
+    return `(product (${k} , ${f}) ${a} ${b})`
+  }
+
   // convert summations to putdown
   const summation = (f,k,a,b) => {
     a = a || 0 
@@ -318,6 +324,9 @@
 
   // set options.debug to true for debugging
   if (options.debug) say(input)
+
+  // Hand the normalized input to an external tracer, if provided
+  if (options && typeof options.__setTraceInput === 'function') options.__setTraceInput(input)
 
 }
 
@@ -621,7 +630,7 @@ Set = RelativeComp
 // Once again, Algebraic only has to point to the lowest precedence operator
 // that inherits the ones below it (but Choose does not). Atomic is passed up
 // the chain from Exp.
-Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / IndexedIntersect
+Algebraic = Choose / Sum / Product / IndexedUnion / IndexedIntersect
   
   Choose    = a:(Sum / Product) _'choose'_x b:(Sum / Product) 
                 { return lispBinary('choose',a,b) }      
@@ -632,13 +641,25 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
                 { return lispSeq('⋅',a) }
 
     // this is one of the more complex symbols so we support multiple ways of
-    // entering it Precendence for this is a bit tricky.  What seems most natural
-    // and avoids the most awkward parentheses is to make summation higher
-    // precedence than addition but lower than multiplication.  That way e.g. 'sum
-    // k to n of f(k) + sum k to n of g(k)' will be the sum of the two summations,
-    // rather than a single summation where the second one is part of the summands
-    // of the first. 
-    Summation = 'sum'i '(' _ f:Product comma 
+    // entering it Precendence for this is a bit tricky.  What seems most
+    // natural and avoids the most awkward parentheses is to make summation
+    // higher precedence than addition but lower than multiplication.  That way
+    // e.g. 'sum k to n of f(k) + sum k to n of g(k)' will be the sum of the two
+    // summations, rather than a single summation where the second one is part
+    // of the summands of the first. 
+    //
+    // Update: Since adding this notation I've added more support for 'by
+    // algebra' But Algebrite only support the `sum(f(k),k,a,b)` notation for
+    // 'by algebra' so semantically it will be confusing for students to wonder
+    // why typing the same expression one way works with 'by algebra' and a
+    // different way doesn't.  So for this reason I'm deprecating the fancy
+    // notation for sum (and not adding it for indexed products).  I'll let it
+    // still support it for backwards compatibility in old documents, but will
+    // remove it from the Lurch syntax documentation and other files and only
+    // teach the one way in the future.  A similar thing might apply to definite
+    // integrals.
+    Summation = // sum(f,k,a,b) is Algebrite compatible
+                'sum'i '(' _ f:Product comma 
                 k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
                     { return summation(f,k,a,b) } /
   
@@ -670,8 +691,9 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
                 __ ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)? 
                 a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
                     { return integral(f,k,a,b) }  /
-  
-                'int'i '(' _ f:Algebraic comma 
+
+                // defint(f,x,a,b) is Algebrite compatible
+                ('int'i/'defint') '(' _ f:Algebraic comma 
                 k:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
                     { return integral(f,k,a,b) }  /
   
@@ -684,8 +706,9 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
                 'int'i __ ('of'i __)? f:Algebraic 
                 __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i) __ x:Symbol 
                     { return integral(f,x) }  /
-  
-                'int'i '(' _ f:Algebraic comma x:Symbol _ ')'
+               
+                // integral(f,x) is Algebrite compatible
+                ('int'i/'integral') '(' _ f:Algebraic comma x:Symbol _ ')'
                     { return integral(f,x) } /
   
                 'int'i __ f:Algebraic __ 'd' x:Symbol
@@ -775,6 +798,10 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
               // allow 'paren' to wrap an expression in visual parens with no
               // meaning change
               'paren('i _ b:Expression _')'  { return b } /
+              // indexed products require Algebrite notation to prevent fussing
+              'product' '(' _ E:Product comma k:Symbol comma 
+                a:(@Algebraic comma)? b:Algebraic _ ')'
+                { return indexedProduct(E,k,a,b) } /
               // allow 'class' to be case insensitive
               'class('i _ b:ExpressionSeq _')'  
                 { return `(class ${b})` } /
@@ -859,7 +886,8 @@ ReservedWord  = $(
     'cross' / 'subset' / 'setminus'i / 'circ' / 'comp' / 'wedge' / 'vee' / 
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' / 
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / 
-    'sum'i / 'to' / 'of' / 'from' / 'as' / 'for' / '^' / 'division')
+    'sum'i / 'to' / 'of' / 'from' / 'as' / 'for' / '^' / 'division' /
+    'union'i / 'bigcup'i / 'cup'i / 'intersect'i / 'bigcap'i / 'cap'i )
 
 ChainOp = _ @( @'='_ / 'leq'_x { return '≤'} / 'lt'_x { return '<' } / @'<'_)
 

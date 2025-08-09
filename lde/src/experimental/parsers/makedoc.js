@@ -54,6 +54,7 @@ const syntax =
   'sum( k^2 , k , 0 , n )',
   'sum(k^2,k,0,n)',
   'sum(k^2,k,n)'                     ],`\\sum_{k=0}^n k^2`],
+[['product(k^2,k,0,n)'               ],`\\prod_{k=0}^n k^2`],
 [['int x=0 to n of x^2',
   'int x from 0 to n of x^2',
   'int of x^2 as x goes from 0 to n',

@@ -94,6 +94,12 @@
     return ans
   }
 
+  // convert indexed products to tex
+  const indexedProduct = (E,k,a,b) => {
+    a = a || 1
+    return `\\displaystyle\\prod_{${k}=${a}}^{${b}} ${E}`
+  }
+
   // convert summations to tex
   const summation = (f,k,a,b) => {
     a = a || 0
@@ -462,8 +468,13 @@
   // Now proceed with the set bracket replacements
   if (options.enableSets)
     input = input.replace(/{/g,'｛').replace(/}/g,'｝')
-  // set optios.debug to true to enable the following for debugging
+  
+  // set options.debug to true to enable the following for debugging
   if (options.debug) say(input)
+  
+  // Hand the normalized input to an external tracer, if provided
+  if (options && typeof options.__setTraceInput === 'function') options.__setTraceInput(input)
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -833,8 +844,9 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
                 __ ('as'i __ / 'for'i__) x:Symbol __ ('goes'i __)? 
                 a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
                     { return integral(f,x,a,b) }  /
-  
-                'int'i '(' _ f:Algebraic comma 
+                
+                // defint(f,x,a,b) is Algebrite compatible
+                ('int'i/'defint') '(' _ f:Algebraic comma 
                 x:Symbol comma a:(@Algebraic comma)? b:Algebraic _ ')'
                     { return integral(f,x,a,b) }  /
                 
@@ -847,8 +859,9 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
                 'int'i __ ('of'i __)? f:Algebraic 
                 __ ('with'i __ 'respect'i __ 'to'i / 'wrt'i) __ x:Symbol 
                     { return integral(f,x) }  /
-  
-                'int'i '(' _ f:Algebraic comma x:Symbol _ ')'
+
+                // integral(f,x) is Algebrite compatible
+                ('int'i/'integral') '(' _ f:Algebraic comma x:Symbol _ ')'
                     { return integral(f,x) } /
   
                 'int'i __ f:Algebraic __ 'd' x:Symbol
@@ -968,9 +981,10 @@ Prefix =  // LDE EFA's first
           // format 'abs' as | | 
           'abs(' _ b:ExpressionSeq _ ')'
             { return `\\left| ${b} \\right|` } /
-          // temporarily format 'product(E,k,a,b)' as an indexed product 
-          ('prod(' / 'product(') _ E:Expression comma k:Symbol comma a:Expression comma b:Expression _ ')'
-            { return `\\prod_{${k}=${a}}^{${b}} ${E}` } /
+          // format 'product(E,k,a,b)' as an indexed product (Algebrite compatible)
+          'product' '(' _ E:Expression comma 
+                          k:Symbol comma a:Expression comma b:Expression _ ')'
+            { return `\\displaystyle\\prod_{${k}=${a}}^{${b}} ${E}` } /
           // then the rest
           a:(Exp / Symbol / Parenthesized)
           b:( '_'? '('_ ExpressionSeq _')' )+ { return texPrefix(a,b) }
@@ -1026,7 +1040,7 @@ SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
 Parenthesized = '(' _ a:Summation _ ')' {
                 return `\\left(${a}\\right)` } /
                 // some things come with their own, so don't need extras
-                '(' _ a:(Choose/Multinomial/Prefix) _ ')' { return a  } /
+                '(' _ a:(Choose/Multinomial/Integral/Prefix) _ ')' { return a  } /
                 '(' _ a:Expression _ ')' {
                 // we have to check for ~ as a special case (see above)
                 return (a === '\\sim') ? a : `\\left(${a}\\right)` }
@@ -1060,6 +1074,7 @@ Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { re
 ReservedWord  = $(
     'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' / 'lt' /
     'not' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
+    'Cup' / 'Cap' / 'Union' / 'Intersect' / 'bigcup'i / 'bigcup'i /
     'cross' / 'subset' / 'setminus'i / 'circ' / 'wedge' / 'vee' /
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' /
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / '^')
