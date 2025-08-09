@@ -125,48 +125,54 @@ global.tex = (s,opts)  => {
 
 // load the Lurch to putdown parser precompiled for efficiency
 import { parse as lurchToPutdownTrace } from './parsers/lurch-to-putdown-trace.js'
-global.trace = s => {
-
-  const tracer = new Tracer(s,
-    { showTrace : true,
-      showFullPath : false,
-      hiddenPaths : [ "__" , "_" ]
-    }
-  )
-
-  // show backtracing whether it's an error or not
-  try { 
-    const ans = lurchToPutdownTrace(s,{ cache:true, tracer:tracer })
-    console.log(tracer.getBacktraceString())
-    return ans
-  } catch(e) {
-    console.log('error!')
-    console.log(tracer.getBacktraceString())
+global.trace = (s, opts = {}) => {
+  const tracer = new CompactTracer({
+    mode: 'tree',
+    preview: true,
+    noIndent: true,
+    breakOnSpanChange: true,
+    input: s,
+    ...opts
+  })
+  try {
+    const out = lurchToPutdownTrace(s, {
+      cache: true,
+      tracer,
+      __setTraceInput: norm => { tracer.input = norm }
+    })
+    return out
+  } catch (e) {
+    if (typeof e.format === 'function') console.log(e.format([{ text: s }]))
+    else console.log(e.toString())
     return undefined
   }
 }
+
 // load the Lurch to TeX parser precompiled for efficiency
 import { parse as lurchToTexTrace } from './parsers/lurch-to-tex-trace.js'
-global.textrace = s => {
-
-  const tracer = new Tracer(s,
-    { showTrace : true,
-      showFullPath : false,
-      hiddenPaths : [ "__" , "_" ]
-    }
-  )
-
-  // show backtracing whether it's an error or not
-  try { 
-    const ans = lurchToTexTrace(s,{ cache:true, tracer:tracer })
-    console.log(tracer.getBacktraceString())
-    return ans
-  } catch(e) {
-    console.log('error!')
-    console.log(tracer.getBacktraceString())
+global.textrace = (s, opts = {}) => {
+  const tracer = new CompactTracer({
+    mode: 'tree',
+    preview: true,
+    noIndent: true,
+    breakOnSpanChange: true,
+    input: s,
+    ...opts
+  })
+  try {
+    const out = lurchToTexTrace(s, {
+      cache: true,
+      tracer,
+      __setTraceInput: norm => { tracer.input = norm }
+    })
+    return out
+  } catch (e) {
+    if (typeof e.format === 'function') console.log(e.format([{ text: s }]))
+    else console.log(e.toString())
     return undefined
   }
 }
+
 // load the Lurch to LaTeX parser precompiled for efficiency
 import { makedoc } from './parsers/makedoc.js'
 // load the utility to create the site lurch file index page
@@ -179,6 +185,9 @@ global.Pens = Pens
 // load the pegjs tracer only in Lode
 import Tracer from 'pegjs-backtrace'
 global.Tracer = Tracer
+// load my custom tracer for the parsers
+import { CompactTracer } from './parsers/tracer.js'
+global.CompactTracer = CompactTracer
 
 // External packages
 
@@ -617,50 +626,25 @@ rpl.defineCommand( "testall", {
   }
 })
 
-// define the Lode .rebuildparsers command
-rpl.defineCommand( "rebuildparsers", {
-  help: "Make the tracing versions of the parsers.",
-  action() { 
-    console.log(defaultPen(`Compiling parse(), trace(), and raw()...`))
-    const parser = loadParser('lurch-to-putdown')
-    global.parse = parser.parse
-    global.trace = parser.trace
-    global.raw   = parser.raw
-    console.log(defaultPen(`Compiling texparse(), textrace(), and texraw()...`))
-    const texparser = loadParser('lurch-to-tex')
-    global.tex      = texparser.parse
-    global.textrace = texparser.trace
-    global.texraw   = texparser.raw
-    console.log(defaultPen(`Done.`))
-    this.displayPrompt()
-  }
-})
-
 // Define the Lode .compileparser command. 
 //
-// The tracing parser is only for Lode and debugging so we only compile it if the sparate
-// argument 'true' is supplied for the trace parameter to .compileparser. 
-// Use the Lode commmand .rebuildparsers for that.
+// The tracing parser is only for Lode and debugging and passes our own tracer
+// to the non-tracing parsers
 rpl.defineCommand( "compileparser", {
-  help: "Compile the Lurch parser and rebuild the parser docs.",
+  help: "Compile the Lurch parsers and rebuild the parser docs.",
   action(trace) {
-
-    if (!trace) console.log(
-      chalk.ansi256(246).italic(
-        `\n(Use the optional argument 'true' to recompile the trace parser.)\n`))
-
     const compile = (name) => {
-        console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}.js...`))
-        execStr(`cd parsers && peggy --cache --format es -o lurch-to-${name}.js lurch-to-${name}.peggy`)
-        if (trace) {
-          console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}-trace.js...`))
-          execStr(`cd parsers && peggy --cache --trace --format es -o lurch-to-${name}-trace.js lurch-to-${name}.peggy`)
-        }
-        // execStr(`cd parsers && cp lurch-to-${name}.js ../../../../lurchmath/parsers/`)
-        // execStr(`cd parsers && cp lurch-to-${name}.peggy ../../../../lurchmath/parsers/`)
-      }
+      console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}.js...`))
+      execStr(`cd parsers && peggy --cache --format es -o lurch-to-${name}.js lurch-to-${name}.peggy`)
+      if (trace) {
+        console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}-trace.js...`))
+        execStr(`cd parsers && peggy --cache --trace --format es -o lurch-to-${name}-trace.js lurch-to-${name}.peggy`)
+      } 
+    }  
 
     try {
+      console.log('')
+      if (!trace) console.log(commentPen(`(Use option ${itemPen('.compileparser true')} to recompile the tracing parsers)\n`))
       compile('putdown')
       compile('tex')
     } catch (err) {
@@ -674,6 +658,7 @@ rpl.defineCommand( "compileparser", {
     } catch (err) {
       console.log(xPen('Error rebuilding the parser doc page.'))
     }
+    console.log()
     this.displayPrompt()
   }
 })
