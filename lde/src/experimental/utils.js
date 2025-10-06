@@ -106,6 +106,13 @@ const rgb2hex = (r, g, b) => {
   return `#${hexR}${hexG}${hexB}`;
 }
 
+/** 
+ * Convert HEX to RGB
+ */ 
+const hex2rgb = hex => hex.replace(/^#/, '')
+                           .match(/.{2}/g)
+                           .map(x => parseInt(x, 16));
+
 const msToTime = ms => {
   // Calculate hours, minutes, and seconds
   const hours = Math.floor(ms / (1000 * 60 * 60))
@@ -186,5 +193,5 @@ const benchmark = (data = Accumulator) => {
 
 export default {
   commonInitialSlice, checkExtension, checkFolder, tab, indent, 
-  lineNum, subscript, rgb2hex, msToTime, timer, profile, benchmark
+  lineNum, subscript, rgb2hex, hex2rgb, msToTime, timer, profile, benchmark
 }
