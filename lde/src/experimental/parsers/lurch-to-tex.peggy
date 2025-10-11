@@ -1053,8 +1053,8 @@ Matrix = '['_ a:_row_|..,comma| _']' b:"'"? !alphanum
 // tuples - a optional trailing tick mark transposes the output
 Tuple = '['_ a:Expression|..,comma| _']' b:"'"? !alphanum
         { return tuple(a,b) } /
-        'langle'_x a:ExpressionSeq _'rangle' b:"'"? !alphanum
-        { return tuple(a,b) }
+        'langle'_x a:ExpressionSeq _'rangle' !alphanum
+        { return tuple(a,'') }
 // sets
 SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
                  { return `\\left\\{\\,${a}:\\,${b}\\right\\}` } /

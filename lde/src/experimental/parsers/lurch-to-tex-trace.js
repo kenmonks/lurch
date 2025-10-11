@@ -112,12 +112,17 @@
 
   // check if an array of arrays is rectangular
   const isRectangular = M => !M.some(row=>row.length!==M[0].length)
+  // transpose a rectangular array of arrays
+  const transpose = M => {
+      return M[0].map( (_,k) => M.map( row => row[k] ) )
+  }
 
   // format matrices
   const matrix = (a,b) => {
-    let t = (b=="'") ? a.map((x,k) => a.map( r => r[k])) : a
-      return `\\left[\\begin{matrix} 
-        ${ a.map( row => { return row.join(' & ') }).join(' \\\\\n ')}\n\\end{matrix}\\right]`
+    let t = (b==="'") ? transpose(a) : a
+      return `\\left[\\begin{matrix}\n ` +
+        t.map( row => { return row.join(' & ') }).join(' \\\\\n ') +
+        `\n\\end{matrix}\\right]`
   }
 
   // format Tuples
@@ -1031,7 +1036,7 @@ function peg$parse(input, options) {
              return matrix(a,b)  }
   function peg$f95(a) {    return a  }
   function peg$f96(a, b) {    return tuple(a,b)  }
-  function peg$f97(a, b) {    return tuple(a,b)  }
+  function peg$f97(a) {    return tuple(a,'')  }
   function peg$f98(a, b) {    return `\\left\\{\\,${a}:\\,${b}\\right\\}`  }
   function peg$f99(a) {    return `\\left\\{\\,${a}\\,\\right\\}`  }
   function peg$f100(a) {
@@ -12984,29 +12989,19 @@ function peg$parse(input, options) {
             if (peg$silentFails === 0) { peg$fail(peg$e148); }
           }
           if (s5 !== peg$FAILED) {
-            if (input.charCodeAt(peg$currPos) === 39) {
-              s6 = peg$c116;
-              peg$currPos++;
-            } else {
-              s6 = peg$FAILED;
-              if (peg$silentFails === 0) { peg$fail(peg$e128); }
-            }
-            if (s6 === peg$FAILED) {
-              s6 = null;
-            }
-            s7 = peg$currPos;
+            s6 = peg$currPos;
             peg$silentFails++;
-            s8 = peg$parsealphanum();
+            s7 = peg$parsealphanum();
             peg$silentFails--;
-            if (s8 === peg$FAILED) {
-              s7 = undefined;
+            if (s7 === peg$FAILED) {
+              s6 = undefined;
             } else {
-              peg$currPos = s7;
-              s7 = peg$FAILED;
+              peg$currPos = s6;
+              s6 = peg$FAILED;
             }
-            if (s7 !== peg$FAILED) {
+            if (s6 !== peg$FAILED) {
               peg$savedPos = s0;
-              s0 = peg$f97(s3, s6);
+              s0 = peg$f97(s3);
             } else {
               peg$currPos = s0;
               s0 = peg$FAILED;
