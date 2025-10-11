@@ -126,6 +126,30 @@
     return s.replace(/^\\left\((.*)\\right\)$/,'$1')
   }
 
+  // check if an array of arrays is rectangular
+  const isRectangular = M => !M.some(row=>row.length!==M[0].length)
+  // transpose a rectangular array of arrays
+  const transpose = M => {
+      return M[0].map( (_,k) => M.map( row => row[k] ) )
+  }
+
+  // format matrices
+  const matrix = (a,b) => {
+    let t = (b==="'") ? transpose(a) : a
+      return `\\left[\\begin{matrix}\n ` +
+        t.map( row => { return row.join(' & ') }).join(' \\\\\n ') +
+        `\n\\end{matrix}\\right]`
+  }
+
+  // format Tuples
+  const tuple = (a,b) =>{
+    if (b=="'") { 
+      return `\\left[\\begin{matrix}\n ${
+        a.join(' \\\\\n ')}\n\\end{matrix}\\right]`
+    } else {
+      return `\\left\\langle{${a}}\\right\\rangle`
+    }
+  }
   // convert products (which include / operators) to tex
   const texProduct = term => {
     // latest is the most recent processed factor in the product
@@ -975,9 +999,8 @@ Prefix =  // LDE EFA's first
           'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
           'class('i _ a:Expression comma b:Expression')'
             { return `\\left[${a}\\right]_{${b}}` } /
-          // allow 'tuple' to be case insensitive and format it appropriately
-          'tuple('i _ b:ExpressionSeq _ ')'
-            { return `\\left\\langle\\,${b}\\,\\right\\rangle` } /
+          // treat Matrices and Tuples as expresions with the same precedence as Prefix   
+          Matrix / Tuple /  
           // format 'abs' as | | 
           'abs(' _ b:ExpressionSeq _ ')'
             { return `\\left| ${b} \\right|` } /
@@ -1018,17 +1041,20 @@ Atomic = Parenthesized / StringLiteral / // EquivalenceClass
 //   '[' a:Expression comma b:Symbol ']'    { return `\\left[${a}\\right]_${b}` } /
 //   '[' a:Expression comma b:'~' ']'    { return `\\left[${a}\\right]_{\\sim}` }
 // matrices - semantically they are just tuples of tuples, but we format them in 2d
-Matrix = '['_ a:Tuple|..,comma| _']' !alphanum
-         { return `\\left[\\begin{matrix}\n ${
-            a.map( s =>
-              s.replace(/,/g, ' & ')
-               .replace(/\\left\\langle{|}\\right\\rangle/g,''))
-             .join(' \\\\\n ')}\n\\end{matrix}\\right]` }
-// tuples
-Tuple = '['_ a:ExpressionSeq _']'!alphanum
-        { return `\\left\\langle{${a}}\\right\\rangle` } /
-        'langle'_x a:ExpressionSeq _'rangle'!alphanum
-        { return `\\left\\langle{${a}}\\right\\rangle` }
+Matrix = '['_ a:_row_|..,comma| _']' b:"'"? !alphanum
+         { if (!isRectangular(a)) error("Matrix rows must all have the same length", location()) 
+          return matrix(a,b) }
+    // this next rule doesn't return a tex string!  It just returns the js array of
+    // tex strings for a row or column of a matrix for use with the Matrix Rule
+    // above.         
+    _row_ = '['_ a:Expression|..,comma| _']' { return a }
+
+
+// tuples - a optional trailing tick mark transposes the output
+Tuple = '['_ a:Expression|..,comma| _']' b:"'"? !alphanum
+        { return tuple(a,b) } /
+        'langle'_x a:ExpressionSeq _'rangle' b:"'"? !alphanum
+        { return tuple(a,b) }
 // sets
 SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
                  { return `\\left\\{\\,${a}:\\,${b}\\right\\}` } /

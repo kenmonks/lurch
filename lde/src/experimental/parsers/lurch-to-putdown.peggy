@@ -839,8 +839,8 @@ Atomic = StringLiteral / Parenthesized / // EquivalenceClass /
 //   '[' b:( @Expression ) ']'                   { return lispPrefix('class',[b,'~']) } /
 //   '[' a:Expression comma b:('~'/Symbol) ']'   { return lispPrefix('class',[a,b]) }
 
-// tuples
-Tuple = '['_ a:ExpressionSeq _']'!alphanum { return `(tuple ${a})` } /
+// tuples - trailing tick marks are for formatting only and are ignored for semantics
+Tuple = '['_ a:ExpressionSeq _']' "'"? !alphanum { return `(tuple ${a})` } /
         'langle'_x a:ExpressionSeq _'rangle'!alphanum { return `(tuple ${a})` }
 // sets
 SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝' 

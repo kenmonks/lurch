@@ -11589,7 +11589,7 @@ function peg$parse(input, options) {
 
   function peg$parseTuple() {
     var startPos = peg$currPos;
-    let s0, s1, s2, s3, s4, s5, s6, s7;
+    let s0, s1, s2, s3, s4, s5, s6, s7, s8;
 
     peg$tracer.trace({
       type: "rule.enter",
@@ -11641,17 +11641,27 @@ function peg$parse(input, options) {
         if (peg$silentFails === 0) { peg$fail(peg$e139); }
       }
       if (s5 !== peg$FAILED) {
-        s6 = peg$currPos;
-        peg$silentFails++;
-        s7 = peg$parsealphanum();
-        peg$silentFails--;
-        if (s7 === peg$FAILED) {
-          s6 = undefined;
+        if (input.charCodeAt(peg$currPos) === 39) {
+          s6 = peg$c116;
+          peg$currPos++;
         } else {
-          peg$currPos = s6;
           s6 = peg$FAILED;
+          if (peg$silentFails === 0) { peg$fail(peg$e126); }
         }
-        if (s6 !== peg$FAILED) {
+        if (s6 === peg$FAILED) {
+          s6 = null;
+        }
+        s7 = peg$currPos;
+        peg$silentFails++;
+        s8 = peg$parsealphanum();
+        peg$silentFails--;
+        if (s8 === peg$FAILED) {
+          s7 = undefined;
+        } else {
+          peg$currPos = s7;
+          s7 = peg$FAILED;
+        }
+        if (s7 !== peg$FAILED) {
           peg$savedPos = s0;
           s0 = peg$f90(s3);
         } else {
