@@ -1112,10 +1112,7 @@ function peg$parse(input, options) {
         if (s0 === peg$FAILED) {
           s0 = peg$parseRef();
           if (s0 === peg$FAILED) {
-            s0 = peg$parseStringLiteral();
-            if (s0 === peg$FAILED) {
-              s0 = peg$parseShorthand();
-            }
+            s0 = peg$parseShorthand();
           }
         }
       }

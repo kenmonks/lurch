@@ -380,7 +380,7 @@ LCs "LC" = _ a:(LC)|..,__| _  { return a.join(' ') }
 // A single LC
 LC = Meta / Given / Environment / Declaration / Expression
   // Things it searches for and replaces up front
-  Meta = Putdown / Comment / Label / Ref / StringLiteral / Shorthand 
+  Meta = Putdown / Comment / Label / Ref / Shorthand 
   // Declarations
   Declaration = Declare / ForSome / Let 
   // Expressions

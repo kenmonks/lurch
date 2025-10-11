@@ -1412,14 +1412,11 @@ function peg$parse(input, options) {
     if (s0 === peg$FAILED) {
       s0 = peg$parseComment();
       if (s0 === peg$FAILED) {
-        s0 = peg$parseStringLiteral();
+        s0 = peg$parseLabel();
         if (s0 === peg$FAILED) {
-          s0 = peg$parseLabel();
+          s0 = peg$parseRef();
           if (s0 === peg$FAILED) {
-            s0 = peg$parseRef();
-            if (s0 === peg$FAILED) {
-              s0 = peg$parseShorthand();
-            }
+            s0 = peg$parseShorthand();
           }
         }
       }
