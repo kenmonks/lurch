@@ -942,9 +942,7 @@ function peg$parse(input, options) {
   function peg$f44(a) {    return a.join('\\sim ')  }
   function peg$f45(a, b, c) {    return `${a}${txt(' '+b)}${c}`  }
   function peg$f46(a, b, c) {    return `${a}${txt(' '+b)}${c}`  }
-  function peg$f47(a, b, c) {    return (b.length==6)
-                     ? `${a}\\text{ ${b[0]} not ${b[2]} }${c}`
-                     : `${a}\\text{ ${b[0]} not }${c}`  }
+  function peg$f47(a, b, c) {    return `${a}\\text{ ${b.filter(Boolean).join(' ').replace(/\s+/g,' ').trim()} }${c}`  }
   function peg$f48(a, b, c) {    return (b.length==4)
                      ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
                      : `${a}\\text{ ${b[0]} }${c}`  }

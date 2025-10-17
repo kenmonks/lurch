@@ -743,12 +743,10 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
   Fears      = a:RelArg _ b:('fears'/'fear')_x c:RelArg
                 { return `${a}${txt(' '+b)}${c}` }
   Is         = a:RelArg _ b:('is' __ 'not' __ 'an' __ /
-                             'is' __ 'not' __ 'a'__   /
+                             'is' __ 'not' __ 'a' __  /
                              'is' __ 'not' __         /
                              'are'__ 'not' __ ) c:RelArg
-                { return (b.length==6)
-                  ? `${a}\\text{ ${b[0]} not ${b[2]} }${c}`
-                  : `${a}\\text{ ${b[0]} not }${c}` } /
+                { return `${a}\\text{ ${b.filter(Boolean).join(' ').replace(/\s+/g,' ').trim()} }${c}` } /
                a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __ 'the'__/'is' __/'are'__) c:RelArg
                 { return (b.length==4)
                   ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
