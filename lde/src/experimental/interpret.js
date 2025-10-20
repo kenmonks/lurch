@@ -571,11 +571,11 @@ const resetComputedAttributes = doc => {
 
 /**
  * Mark Declared Symbols
- * 
+ *
  * Mark explicitly declared symbols `s`, throughout an LC by setting
- * `s.constant=true`.  Symbols consisting of a string of digits are automatically
- * marked as constants.
- * 
+ * `s.constant=true`.  Symbols consisting of a string of digits, decimals, and
+ * repeating decimals like `1.23[456]` are automatically marked as constants.
+ *
  * @param {LurchDocument} [target] - The target 
  */
 const markDeclaredSymbols = ( target ) => {
@@ -591,7 +591,8 @@ const markDeclaredSymbols = ( target ) => {
   let symbols = target.descendantsSatisfying( x => x instanceof LurchSymbol )
   // for each one, see if it is in the scope of any Declare declaration of that symbol
   symbols.forEach( s => {
-      if ( /^\d+$/.test(s.text()) || doc.constants.has(s.text())) s.constant = true
+      if ( /^\d+$|^\d+\.\d*(\[\d+\])?$/.test(s.text()) || 
+           doc.constants.has(s.text())) s.constant = true
   })
   return target
 }

@@ -852,8 +852,9 @@ Parenthesized = '(' _ @Expression _ ')'
 ///////////////////////////////////////////////////////////////////////////////
 // Numbers 
 // (negatives and fractions are compound)
-Number  = Decimal / Natural
-Decimal = $( Natural '.' [0-9]+ )
+Number  = RepeatingDecimal / Decimal / Natural
+RepeatingDecimal = $(Decimal '[' [0-9]+ ']') 
+Decimal = $( Natural '.' [0-9]* ) 
 Natural = $( [1-9][0-9]* / '0' )
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1072,8 +1072,10 @@ Parenthesized = '(' _ a:Summation _ ')' {
 ///////////////////////////////////////////////////////////////////////////////
 // Numbers
 // (negatives and fractions are compound)
-Number  = Decimal / Natural
-Decimal = $( Natural '.' [0-9]+ )
+Number  = RepeatingDecimal / Decimal / Natural
+RepeatingDecimal = a:Decimal '[' b:[0-9]+ ']' 
+                   { return `${a}\\overline{${b.join('')}}`}
+Decimal = $( Natural '.' [0-9]* ) 
 Natural = $( [1-9][0-9]* / '0' )
 
 ///////////////////////////////////////////////////////////////////////////////

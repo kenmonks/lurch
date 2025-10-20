@@ -17,6 +17,10 @@ fred
 0.5
 12.0
 12.0340
+10200.
+0.[5]
+12.0[123]
+12.[0340]
 // function applications
 f()
 fred(x)

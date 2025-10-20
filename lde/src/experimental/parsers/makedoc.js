@@ -154,6 +154,7 @@ const syntax =
 [['Declare is, 0, +, cos'            ],`\\text{Declare is, 0, +, and cos}` ],
 
 'Miscellaneous',
+[['1.23[456]'                        ],`1.23\\overline{456}`],
 [['x^-' , 'x⁻'                       ],`x^-`],
 [['@P(k)', 'λP(k)'                   ],`\\lambda{P}(k)` ]
 
