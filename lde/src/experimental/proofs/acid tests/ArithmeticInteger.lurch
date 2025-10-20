@@ -19,7 +19,10 @@ Rule: :{ Arithmetic(ZZ) }
   2*(-3)=-6 ✔︎ by arithmetic
   (-2^3=-8) ✔︎ by arithmetic
   (-3!=-2*3) ✔︎ by arithmetic
-} 
+  (2 neq 3) ✔︎ by arithmetic
+  (-2 neq 2) ✔︎ by arithmetic
+  (2 neq 2-3) ✔︎ by arithmetic
+	} 
 
 // invalid ones
 {
@@ -29,6 +32,9 @@ Rule: :{ Arithmetic(ZZ) }
   2^3<-8 ✗ by arithmetic
   (-3!<-2*3) ✗ by arithmetic
   (-2*3^2=19) ✗ by arithmetic
+  (2 neq 2) ✗ by arithmetic
+  (-2 neq -2) ✗ by arithmetic
+  (-2 neq 2-4) ✗ by arithmetic
 }
 
 // inapplicable ones
@@ -41,4 +47,7 @@ Rule: :{ Arithmetic(ZZ) }
   2^(1/2) ⊘ by arithmetic // no rational exponents
   3/0 ⊘ by arithmetic // no zero denominators
   3/(2-2) ⊘ by arithmetic // no zero denominators
+  (2/1 neq 2) ⊘ by arithmetic
+  (-2^(1/2) neq -2) ⊘ by arithmetic
+  (-2^(-1) neq 2-4) ⊘ by arithmetic
 }

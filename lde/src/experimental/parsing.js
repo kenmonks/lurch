@@ -290,6 +290,21 @@ export const arithmeticToCAS = e => {
 }
 
 /**
+ * Check if this LC is the negation of an expression that isArithmetic.
+ * 
+ * @param {LogicConcept} e 
+ */
+export const isNegationOfArithmetic = (e,ring = 'ℚ') => {
+  // it must be an application with two children...
+  return e instanceof Application && e.numChildren() === 2 &&
+    // and it's operator must be ¬...
+    e.child(0).matches('¬') &&
+    // .. and the rest of the arguments are natural expressions
+    isArithmetic[ring](e.child(1))
+}
+
+
+/**
  * Convert a numeric logic concept into a CAS-compatible expression string.
  *
  * Recognizes constants, binary arithmetic expressions, and unary operations

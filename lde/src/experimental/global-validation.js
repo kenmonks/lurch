@@ -121,7 +121,7 @@ import {
   LogicConcept, Expression, Declaration, Environment, LurchSymbol,
   Matching, Formula, Scoping, Validation, Application, BindingExpression
 } from '../index.js'
-import { isArithmetic, arithmeticToCAS } from './parsing.js'
+import { isArithmetic, arithmeticToCAS, isNegationOfArithmetic } from './parsing.js'
 
 const Problem = Matching.Problem
 const isAnEFA = Matching.isAnEFA
@@ -1378,14 +1378,18 @@ const processArithmetic = doc => {
   
   // check each expression that is by arithmetic
   userArithmetics.forEach( c => { 
-    // if it's not allowed arithmetic it's not 'invalid', it's 'not applicable'
-    // (but you can't have a space in a class name)
-    if (!isArithmetic[ring](c)) {
+    // if it's not allowed arithmetic or the negation of one it's not 'invalid',
+    // it's 'not applicable' (but you can't have a space in a class name)
+    if (!isArithmetic[ring](c) && !isNegationOfArithmetic(c,ring)) {
       c.setResult('arithmetic', 'inapplicable', 'CAS')
       return
     }
+    const negate = isNegationOfArithmetic(c,ring)
+    const e = (negate ? c.child(1) : c)
     // if the CAS evaluates to '1', mark the proposition as valid
-    const ans = (compute(arithmeticToCAS(c))==='1') ? 'valid' : 'invalid'
+    const ans = ( (compute(arithmeticToCAS(e))==='1' && !negate) ||
+                  (compute(arithmeticToCAS(e))==='0' && negate) )
+                ? 'valid' : 'invalid'
     c.setResult('arithmetic', ans , 'CAS')
     if (ans === 'valid')
       insertInstantiation( new Environment(c.copy()) , rule, c)
@@ -1412,6 +1416,22 @@ const processAlgebra = doc => {
     typeof x.by === 'string' && x.by ==='algebra' )]
 
   userAlgebras.forEach( c => { 
+
+    // since Arithmetic(ℚ) is more robust and handles inequalities, allow that
+    if (isArithmetic.ℚ(c) || isNegationOfArithmetic(c)) {
+      const negate = isNegationOfArithmetic(c,'ℚ')
+      const e = (negate ? c.child(1) : c)
+      // if the CAS evaluates to '1', mark the proposition as valid
+      const ans = ( (compute(arithmeticToCAS(e))==='1' && !negate) ||
+                    (compute(arithmeticToCAS(e))==='0' && negate) )
+                  ? 'valid' : 'invalid'
+      c.setResult('arithmetic', ans , 'CAS')
+      if (ans === 'valid')
+        insertInstantiation( new Environment(c.copy()) , rule, c)
+      return    
+    }
+
+    // otherwise pass the lurch notation to algebrite
     // get the lurch notation for the expression
     let lurchmath = c.getAttribute('lurchNotation')
     // if the user included 'by algebra' in the same Atom as the identity, truncate it
@@ -1419,13 +1439,21 @@ const processAlgebra = doc => {
     if (match) lurchmath=lurchmath.slice(0,match.index)
     // a regex for an equation
     const eqn = /^([^=]+)=([^=]+)$/
-    // if it's not a simple equation we're done
-    if (!eqn.test(lurchmath)) return
+    // if it's not a simple equation both in putdown and lurchmath we're done
+    if (!(c instanceof Application && c.numChildren() === 3 && c.child(0).matches('=') &&
+          eqn.test(lurchmath)) ) {
+      c.setResult('algebra', 'inapplicable' , 'CAS')      
+      return
+    }
+  
     // otherwise get the LHS and RHS
     const [LHS,RHS]=lurchmath.match(eqn).slice(-2)
     const command = `simplify((${LHS})-(${RHS}))`
     // if the CAS evaluates to 0, mark the proposition as valid
-    const ans = (compute(command)==='0') ? 'valid' : 'invalid'
+    let result = '1' // non-zero
+    try { result = compute(command) } catch { result='error' }
+    const ans = (result==='0') ? 'valid' : 
+                (result==='error') ? 'inapplicable' : 'invalid'
     c.setResult('algebra', ans , 'CAS')
     if (ans === 'valid')
       insertInstantiation( new Environment(c.copy()) , rule, c)

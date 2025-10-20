@@ -87,6 +87,7 @@ import Compact from './global-validation.js'
 import Reporting from './reporting.js' 
 // import the parsing utiltiies (processShorthands comes from Interpret)
 import ParsingTools from './parsing.js'
+import { isArithmetic, isNegationOfArithmetic } from './parsing.js'
 // load the CNFProp tools for testing
 import { CNFProp } from './CNFProp.js'
 // load the Lurch to putdown parser precompiled for efficiency
@@ -233,6 +234,8 @@ Object.assign( global, Interpret)
 Object.assign( global, Compact )
 Object.assign( global, Reporting )
 Object.assign( global, ParsingTools )
+global.isArithmetic = isArithmetic
+global.isNegationOfArithmetic = isNegationOfArithmetic
 global.CNF = CNF
 global.Problem = Problem
 global.CNFProp = CNFProp
