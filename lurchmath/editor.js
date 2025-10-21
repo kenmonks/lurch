@@ -266,9 +266,12 @@ window.Lurch = {
                 menu : menuData,
                 browser_spellcheck: true,
                 contextmenu : 'atoms',
-                plugins : 'lists link',
+                plugins : 'lists link save',
                 link_context_toolbar: true,
                 statusbar : false,
+                save_onsavecallback: editor => {
+                    editor.execCommand('savedocument')
+                },
                 setup : editor => {
                     // Save the options object for any part of the app to reference:
                     editor.appOptions = options
