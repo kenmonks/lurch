@@ -53,8 +53,9 @@
   // of them that is grammatically correct.  If a has one element x, just return
   // x. If it has two elements, x and y, just return `x and y`.  If it has
   // elements x1, x2, ..., xn for n>2 return `x1, x2, ..., x_{n-1}, and x_n`.
-  const sequence = s => {
+  const sequence = (s,omitAND = false) => {
     const a = s.map(texsymbol)
+    if (omitAND) { return a.join(",") }
     if (a.length>2) {
       return a.slice(0,-1).join(
         '\\text{, }')+'\\text{, }\\textcolor{black}{\\text{and }}'+a[a.length-1]
@@ -157,6 +158,9 @@
     // of a \frac, depending on whether the next factor is a reciprocal
     let latest = term.shift()
     let ans = ''
+    // treat a leading negative sign as subtraction, not negation
+    const subtract = latest.startsWith('-')
+    if (subtract) latest = latest.slice(1)
     while (term.length>0) {
       // get the next factor
       let next = term.shift()
@@ -183,6 +187,8 @@
     }
     // no more factors, so just cat the latest
     ans += (ans.length>0) ? `\\cdot ${latest}` : latest
+    // return the leading - if necessary
+    if (subtract) ans = '-'+ans
     return ans
   }
   // instead of making a separate parsing class for each symbol we want
@@ -216,6 +222,7 @@
       Fib     : 'F'         , by       : '\\text{ by }' , pie       : '🥧'           ,
       basket  : '🧺'        , tree     : '🌳'           , apple      : '🍎'           ,
       cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       ,
+      oplus   : '\\oplus'   , otimes   : '\\otimes'    , odot       : '\\odot'       ,
       infty   : '\\infty'   , infinity : '\\infty'     ,
       iff                 : '\\Leftrightarrow'             ,
       contradiction       : '\\rightarrow\\leftarrow'      ,
@@ -637,7 +644,7 @@ ForSome = body:Expression __ 'for'i __ 'some'i __ a:(Symbol)|1..,comma| __ 'in'i
             { return `${body}\\text{ for some }${a}` }
 // the 'given' colon is optional since these are always 'given'. We also
 // allow the special shortand `Let x∈A` since it is so common.
-Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression
+Let = a:'Let'i __ b:Symbolseq __ 'in'i __ c:Expression
           { return `${txt(a)}${b}\\in ${c}` } /
       a:'Let'i __ b:SymbolSeq __ 'be' __ 'such' __ 'that' // __ c:Expression
           { return `${txt(a)}${b}\\text{ be such that }` } /
@@ -650,6 +657,8 @@ Let = a:'Let'i __ b:Symbol __ 'in'i __ c:Expression
   // We allow Reserved Words and Numbers to be declared by a Declare, but not
   // by a Let or ForSome.
   SymbolSeq  = a:(Symbol)|1..,comma| { return sequence(a) }
+  // when we don't want the inserted expository ' and '
+  Symbolseq  = a:(Symbol)|1..,comma| { return sequence(a,true) }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Expressions
@@ -999,6 +1008,14 @@ Prefix =  // LDE EFA's first
             { return `\\left[${a}\\right]_{${b}}` } /
           // treat Matrices and Tuples as expresions with the same precedence as Prefix   
           Matrix / Tuple /  
+          // the inverse of a square matrix (to support Algebrite, but you can
+          // apply it to any expression, keeping in mind that it assumes
+          // parentheses are not required before applying the exponent
+          'inv('i _ a:Expression _')'
+            { return `${a}^{-1}` } /
+          // product of two or more matrices (to support Algebrite)
+          'dot('i _ a:Expression|2..,comma| _')'
+            { return a.join('\\cdot') } /
           // format 'abs' as | | 
           'abs(' _ b:ExpressionSeq _ ')'
             { return `\\left| ${b} \\right|` } /
@@ -1018,8 +1035,14 @@ Prefix =  // LDE EFA's first
             { return `{${a}}^{${nopar(b)}}` }
 
     // An arbitrary high precedence infix operator
-    Star = a:Atomic|1..,(_'★'_/_'star'_x)|
-                { return texJoin('\\star ',a) }
+    Star = a:Atomic|2..,(_'★'_/_'star'_x)|
+                { return texJoin('\\star ',a) } /
+           a:Atomic|2..,(_'⊕'_/_'oplus'_x)|
+                { return texJoin('\\oplus ',a) } /
+           a:Atomic|2..,(_'⊗'_/_'otimes'_x)|
+                { return texJoin('\\otimes ',a) } /
+           a:Atomic|2..,(_'⊙'_/_'odot'_x)|
+                { return texJoin('\\odot ',a) } 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Atomic Expressions

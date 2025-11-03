@@ -226,6 +226,8 @@ P and (exists x.P(x)  implies  Q)  implies  P and (for all y.Q)
 Declare x,y,z,0
 Let x
 let x,y,z,wilma
+Let x in A
+// let x,y,z in A
 Declare f
 declare fred, wilma, barney, !
 P(c) for some c

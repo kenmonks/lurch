@@ -146,6 +146,7 @@ const syntax =
   ':P',                              ],`\\text{Assume }P\\text{  (etc.)}` ],
 [['Let x'                            ],`\\text{Let }x` ],
 [['Let x in A'                       ],`\\text{Let }x\\in A` ],
+// [['Let x,y,z in A'                   ],`\\text{Let }x,y,z\\in A` ],
 [['Let x be such that x in RR',
   'Let x such that x in RR'          ],
   `\\text{Let }x\\text{ be such that }x\\in\\mathbb{R}` ],
