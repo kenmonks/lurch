@@ -831,10 +831,10 @@ Algebraic = Choose / Sum / Product / IndexedUnion / IndexedIntersect
     Exp = a:Atomic _'^'_ b:(Atomic / '-') { return lispBinary('^',a,b) } 
 
     // An arbitrary high precedence infix operator
-    Star = a:Atomic|1..,(_'★'_/_'star'_x)  | { return lispSeq('★',a) } /
-           a:Atomic|1..,(_'⊕'_/_'oplus'_x) | { return lispSeq('⊕',a) } /
-           a:Atomic|1..,(_'⊗'_/_'otimes'_x)| { return lispSeq('⊗',a) } /
-           a:Atomic|1..,(_'⊙'_/_'odot'_x)  | { return lispSeq('⊙',a) }        
+    Star = a:Atomic|2..,(_'★'_/_'star'_x)  | { return lispSeq('★',a) } /
+           a:Atomic|2..,(_'⊕'_/_'oplus'_x) | { return lispSeq('⊕',a) } /
+           a:Atomic|2..,(_'⊗'_/_'otimes'_x)| { return lispSeq('⊗',a) } /
+           a:Atomic|2..,(_'⊙'_/_'odot'_x)  | { return lispSeq('⊙',a) }        
 
 ///////////////////////////////////////////////////////////////////////////////
 // Atomic Expressions
@@ -905,7 +905,8 @@ ReservedWord  = $(
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' / 
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / 
     'sum'i / 'to' / 'of' / 'from' / 'as' / 'for' / '^' / 'division' /
-    'union'i / 'bigcup'i / 'cup'i / 'intersect'i / 'bigcap'i / 'cap'i )
+    'union'i / 'bigcup'i / 'cup'i / 'intersect'i / 'bigcap'i / 'cap'i /
+    'oplus' / 'otimes' / 'odot')
 
 ChainOp = _ @( @'='_ / 'leq'_x { return '≤'} / 'lt'_x { return '<' } / @'<'_)
 
