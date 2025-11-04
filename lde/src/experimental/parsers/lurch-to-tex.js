@@ -352,7 +352,7 @@
     'neg'       : '¬'
   }
 
-  // for use in Declare's, look up the internal name of a reserted word or
+  // for use in Declare's, look up the internal name of a reserved word or
   // symbol that might appear in the declare sequence.  If the name isn't on the
   // list, then it is just itself internally.
   const internal = s => {

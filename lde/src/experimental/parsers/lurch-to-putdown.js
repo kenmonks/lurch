@@ -184,7 +184,8 @@
     'in'        : '∈' , 'Sum'      : 'sum', '\\'     : ' '  , 'fear'         : 'fears' ,
     'complement': '°' , 'intersect': '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
     'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'cross'        : '×'     ,
-    'star'      : '★' , 'division' : '/'  , 'neg'    : '¬'
+    'star'      : '★' , 'division' : '/'  , 'neg'    : '¬'  , 'oplus'        : '⊕'     ,
+    'otimes'    : '⊗' , 'odot'     : '⊙'
   }
 
   // for use in Declare's, look up the internal name of a reserved word or
