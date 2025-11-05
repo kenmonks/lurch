@@ -292,7 +292,9 @@
   //
   // In order to use ~ and ≈ as both infix operations AND sets (and talk about
   // their properties) we replace '~' and '≈' up front with (~) and (≈)
-  // respectively.
+  // respectively. 
+  // The same thing applies to binary operators like '⊕', '⊗',
+  // '⊙', '★' in groups or rings.
   input = input.replace(/'~'/g, '(~)')
   input = input.replace(/'≈'/g, '(approx)')
   
@@ -885,14 +887,19 @@ Natural = $( [1-9][0-9]* / '0' )
 // For clarity in reading the putdown output we rename some special frequently used
 // symbols.
 Symbol "Symbol" = 
-  '✔︎' / '✗' / '⁉︎' / '⊘' / // useful unicode
+  '✔︎' / '✗' / '⁉︎' / '⊘' / '~' / 
   ('infty'/'infinity') { return '∞'  }  /
   'contradiction' { return '→←' }  /  'sigma'         { return 'σ'  }   /
   'NN'            { return 'ℕ'  }  /  'ZZ'            { return 'ℤ'  }   /
   'QQ'            { return 'ℚ'  }  /  'RR'            { return 'ℝ'  }   /
   'CC'            { return 'ℂ'  }  /  'II'            { return '𝕀'  }   /  
-  'OO'            { return '𝕆'  }  /  '~'                              /
-  StringLiteral / !(ReservedWord !alphanum) @$([a-z]i alphanum* ) 
+  'OO'            { return '𝕆'  }  /  
+  StringLiteral / 
+  !(ReservedWord !alphanum) @$([a-z]i alphanum* ) /
+  // these reserved words should come after the generic rule for symbols so they 
+  // don't capture a symbol prefixed by one of them, e.g., 'starry'
+  'star'          { return '★'  }  / 'oplus'          { return '⊕'  } /
+  'otimes'        { return '⊗'  }  / 'odot'           { return '⊙'  } 
 
 // Reserved Words
 //
@@ -907,7 +914,7 @@ ReservedWord  = $(
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / 
     'sum'i / 'to' / 'of' / 'from' / 'as' / 'for' / '^' / 'division' /
     'union'i / 'bigcup'i / 'cup'i / 'intersect'i / 'bigcap'i / 'cap'i /
-    'oplus' / 'otimes' / 'odot')
+    'oplus' / 'otimes' / 'odot' / 'star' )
 
 ChainOp = _ @( @'='_ / 'leq'_x { return '≤'} / 'lt'_x { return '<' } / @'<'_)
 

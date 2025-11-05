@@ -352,7 +352,7 @@
     'neg'       : '¬'
   }
 
-  // for use in Declare's, look up the internal name of a reserted word or
+  // for use in Declare's, look up the internal name of a reserved word or
   // symbol that might appear in the declare sequence.  If the name isn't on the
   // list, then it is just itself internally.
   const internal = s => {
@@ -15586,7 +15586,10 @@ function peg$parse(input, options) {
   //
   // In order to use ~ and ≈ as both infix operations AND sets (and talk about
   // their properties) we replace '~' and '≈' up front with (~) and (≈)
-  // respectively.
+  // respectively.  
+  //
+  // The same thing applies to binary operators like '⊕', '⊗','⊙', '★' in groups
+  // or rings.
   input = input.replace(/'~'/g, '(~)')
   input = input.replace(/'≈'/g, '(approx)')
 

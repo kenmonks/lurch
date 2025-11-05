@@ -457,7 +457,10 @@
   //
   // In order to use ~ and ≈ as both infix operations AND sets (and talk about
   // their properties) we replace '~' and '≈' up front with (~) and (≈)
-  // respectively.
+  // respectively.  
+  //
+  // The same thing applies to binary operators like '⊕', '⊗','⊙', '★' in groups
+  // or rings.
   input = input.replace(/'~'/g, '(~)')
   input = input.replace(/'≈'/g, '(approx)')
 
@@ -1006,8 +1009,6 @@ Prefix =  // LDE EFA's first
           'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
           'class('i _ a:Expression comma b:Expression')'
             { return `\\left[${a}\\right]_{${b}}` } /
-          // treat Matrices and Tuples as expresions with the same precedence as Prefix   
-          Matrix / Tuple /  
           // the inverse of a square matrix (to support Algebrite, but you can
           // apply it to any expression, keeping in mind that it assumes
           // parentheses are not required before applying the exponent
