@@ -17,6 +17,7 @@
           // console.log(`The text input is blank: ${isBlank}`)
           tex = (!isBlank) ? `$${lurch2tex(text,{enableSets:true})}$` : ''
           putdown = (!isBlank) ? lurch2putdown(text,{enableSets:true}) : ''
+          textarea.classList.remove('badparse')
           // console.log(
             // `changing render from ${text} to ${tex} with meaning ${putdown}` )
           const meaningDiv = document.getElementById('meaning')
@@ -24,7 +25,9 @@
           const renderDiv = document.getElementById('rendered')
           renderDiv.innerHTML = tex
           try { MathJax.typeset([renderDiv]) } catch (e) { }
-        } catch (e) {  } 
+        } catch (e) {  
+          textarea.classList.add('badparse')
+        } 
       }
       update()
       textarea.addEventListener('input', update)
@@ -152,6 +155,7 @@
     <tr><td>exponentials $\left(x^2\right)$</td></tr>
     <tr><td>function application $\left(f_0(x,y)(z)\right)$</td></tr>
     <tr><td>postfix ($n!$, $f'$)</td></tr>
+    <tr><td>abstract infix operators ($\star$, $\oplus$, $\otimes$, $\odot$)</td></tr>
     <tr><td>negation ($-x$), reciprocal ($1/2$)</td></tr>
     <tr><td>product ($2\cdot x$)</td></tr>
     <tr><td>summation $\left(\sum_{k=0}^n f(k)\right)$</td></tr>

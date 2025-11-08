@@ -17,6 +17,7 @@
           // console.log(`The text input is blank: ${isBlank}`)
           tex = (!isBlank) ? `$${lurch2tex(text,{enableSets:true})}$` : ''
           putdown = (!isBlank) ? lurch2putdown(text,{enableSets:true}) : ''
+          textarea.classList.remove('badparse')
           // console.log(
             // `changing render from ${text} to ${tex} with meaning ${putdown}` )
           const meaningDiv = document.getElementById('meaning')
@@ -24,7 +25,9 @@
           const renderDiv = document.getElementById('rendered')
           renderDiv.innerHTML = tex
           try { MathJax.typeset([renderDiv]) } catch (e) { }
-        } catch (e) {  } 
+        } catch (e) {  
+          textarea.classList.add('badparse')
+        } 
       }
       update()
       textarea.addEventListener('input', update)
@@ -239,6 +242,54 @@
 <tr>
           <td>abs((1-x)/(1+x))</td>
           <td>$\left| \frac{1-x}{1+x} \right|$</td>
+        </tr>
+<tr>
+          <td>x star y</td>
+          <td>$x \star  y$</td>
+        </tr>
+<tr>
+          <td>x star y star z</td>
+          <td>$x \star  y \star  z$</td>
+        </tr>
+<tr>
+          <td>x oplus y</td>
+          <td>$x \oplus  y$</td>
+        </tr>
+<tr>
+          <td>x oplus y oplus z</td>
+          <td>$x \oplus  y \oplus  z$</td>
+        </tr>
+<tr>
+          <td>x otimes y</td>
+          <td>$x \otimes  y$</td>
+        </tr>
+<tr>
+          <td>x otimes y otimes z</td>
+          <td>$x \otimes  y \otimes  z$</td>
+        </tr>
+<tr>
+          <td>x odot y</td>
+          <td>$x \odot  y$</td>
+        </tr>
+<tr>
+          <td>x odot y odot z</td>
+          <td>$x \odot  y \odot  z$</td>
+        </tr>
+<tr>
+          <td>star is associative</td>
+          <td>$\star\text{ is }\text{associative}$</td>
+        </tr>
+<tr>
+          <td>oplus is associative</td>
+          <td>$\oplus\text{ is }\text{associative}$</td>
+        </tr>
+<tr>
+          <td>otimes is associative</td>
+          <td>$\otimes\text{ is }\text{associative}$</td>
+        </tr>
+<tr>
+          <td>odot is associative</td>
+          <td>$\odot\text{ is }\text{associative}$</td>
         </tr>
 <tr>
           <td>sum k=0 to n of k^2<br/>sum k from 0 to n of k^2<br/>sum k to n of k^2<br/>sum of k^2 as k goes from 0 to n<br/>sum k^2 as k goes from 0 to n<br/>sum k^2 as k from 0 to n<br/>sum k^2 for k from 0 to n<br/>sum k^2 for k to n<br/>sum of k^2 as k to n<br/>sum of k^2 for k to n<br/>sum( k^2 , k , 0 , n )<br/>sum(k^2,k,0,n)<br/>sum(k^2,k,n)</td>
@@ -524,6 +575,7 @@
     <tr><td>exponentials $\left(x^2\right)$</td></tr>
     <tr><td>function application $\left(f_0(x,y)(z)\right)$</td></tr>
     <tr><td>postfix ($n!$, $f'$)</td></tr>
+    <tr><td>abstract infix operators ($\star$, $\oplus$, $\otimes$, $\odot$)</td></tr>
     <tr><td>negation ($-x$), reciprocal ($1/2$)</td></tr>
     <tr><td>product ($2\cdot x$)</td></tr>
     <tr><td>summation $\left(\sum_{k=0}^n f(k)\right)$</td></tr>

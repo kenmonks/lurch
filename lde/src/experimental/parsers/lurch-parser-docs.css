@@ -142,6 +142,10 @@ caption {
   resize: none;
 }
 
+.ioArea.badparse {
+  background: #FFF7F7;
+}
+
 #source {
   font-family: Consolas, Menlo, Monaco, monospace;
 }

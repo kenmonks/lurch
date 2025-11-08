@@ -130,6 +130,18 @@ x+y
 -2-(x-3/(yz^4))
 (2/(x-3/y) cdot z)^(-4)
 -2 cdot (x^3+y)/(-z)-4
+x star y
+1+x star 2 star 4*z
+x oplus y
+1+x oplus 2 oplus 4*z
+x otimes y
+1+x otimes 2 otimes 4*z
+x odot y
+1+x odot 2 odot 4*z
+star is associative
+oplus is associative
+otimes is associative
+odot is associative
 // absolute value
 abs(x)
 abs((x+1)/(x-1))

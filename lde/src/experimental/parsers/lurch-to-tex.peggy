@@ -907,7 +907,7 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
                   { return '-'+a }
 
     // Exp and higher precedence args
-    ExpArgs = Complement / Factorial / Multinomial / Floor / Ceiling / Prefix / Exp / Star / Atomic
+    ExpArgs = Star / Complement / Factorial / Multinomial / Floor / Ceiling / Prefix / Exp / Atomic
 
     // The choice of precedence of Function application vs Exp is tricky.
     // Consider e.g. 2^cos(x), f^2(x), 2^f(x), f^(-1)(x), and the nightmare
@@ -1036,14 +1036,15 @@ Prefix =  // LDE EFA's first
             { return `{${a}}^{${nopar(b)}}` }
 
     // An arbitrary high precedence infix operator
-    Star = a:Atomic|2..,(_'★'_/_'star'_x)|
+    Star = a:StarArgs|2..,(_'★'_/_'star'_x)|
                 { return texJoin('\\star ',a) } /
-           a:Atomic|2..,(_'⊕'_/_'oplus'_x)|
+           a:StarArgs|2..,(_'⊕'_/_'oplus'_x)|
                 { return texJoin('\\oplus ',a) } /
-           a:Atomic|2..,(_'⊗'_/_'otimes'_x)|
+           a:StarArgs|2..,(_'⊗'_/_'otimes'_x)|
                 { return texJoin('\\otimes ',a) } /
-           a:Atomic|2..,(_'⊙'_/_'odot'_x)|
+           a:StarArgs|2..,(_'⊙'_/_'odot'_x)|
                 { return texJoin('\\odot ',a) } 
+      StarArgs = Complement / Factorial / Multinomial / Floor / Ceiling / Prefix / Exp / Atomic
 
 ///////////////////////////////////////////////////////////////////////////////
 // Atomic Expressions

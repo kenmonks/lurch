@@ -738,7 +738,7 @@ Algebraic = Choose / Sum / Product / IndexedUnion / IndexedIntersect
                   { return lispUnary('-',a) }
 
     // higher precedence args 
-    ExpArgs =  Factorial / Complement / Prefix / Exp / Star / Atomic
+    ExpArgs =  Star / Factorial / Complement / Prefix / Exp / Atomic
 
     // The choice of precedence of Function application vs Exp is tricky.
     // Consider e.g. 2^cos(x), f^2(x), 2^f(x), f^(-1)(x), and the nightmare
@@ -833,12 +833,12 @@ Algebraic = Choose / Sum / Product / IndexedUnion / IndexedIntersect
     // this point.
     Exp = a:Atomic _'^'_ b:(Atomic / '-') { return lispBinary('^',a,b) } 
 
-    // An arbitrary high precedence infix operator
-    Star = a:Atomic|2..,(_'★'_/_'star'_x)  | { return lispSeq('★',a) } /
-           a:Atomic|2..,(_'⊕'_/_'oplus'_x) | { return lispSeq('⊕',a) } /
-           a:Atomic|2..,(_'⊗'_/_'otimes'_x)| { return lispSeq('⊗',a) } /
-           a:Atomic|2..,(_'⊙'_/_'odot'_x)  | { return lispSeq('⊙',a) }        
-
+    // A generic high precedence infix operator
+    Star = a:StarArgs|2..,(_'★'_/_'star'_x)  | { return lispSeq('★',a) } /
+           a:StarArgs|2..,(_'⊕'_/_'oplus'_x) | { return lispSeq('⊕',a) } /
+           a:StarArgs|2..,(_'⊗'_/_'otimes'_x)| { return lispSeq('⊗',a) } /
+           a:StarArgs|2..,(_'⊙'_/_'odot'_x)  | { return lispSeq('⊙',a) }        
+      StarArgs = Factorial / Complement / Prefix / Exp / Atomic
 ///////////////////////////////////////////////////////////////////////////////
 // Atomic Expressions
 //
