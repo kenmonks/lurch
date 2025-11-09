@@ -5,6 +5,9 @@
 # ignore the node modules
 node_modules/
 
+# ignore the output of the line counter extension
+.VSCodeCounter
+
 # ignore lots of stuff for local customizations
 toc.html
 
