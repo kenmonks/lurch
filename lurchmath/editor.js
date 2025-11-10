@@ -265,13 +265,73 @@ window.Lurch = {
                 menubar : 'file edit insert format document developer help',
                 menu : menuData,
                 browser_spellcheck: true,
-                contextmenu : 'atoms',
-                plugins : 'lists link',
+                contextmenu : 'atoms lurchBase',
+                plugins : 'lists link contextmenu',
                 link_context_toolbar: true,
                 statusbar : false,
                 setup : editor => {
+
+                    // Register base context menu items once and expose a getter for Atoms
+                    const installBaseMenu = editor => {
+                        const reg = editor.ui.registry.getAll().menuItems
+                        // idempotent: avoid duplicate registration if multiple editors exist
+                        if (reg && reg.shellLabels) return
+
+                        // Base menu items
+                        editor.ui.registry.addMenuItem('shellLabels', {
+                            text: 'Show/Hide Environment Labels',
+                            tooltip: 'Show or hide the environment labels when viewing meaning.',
+                            onAction: () => { 
+                              editor.getBody().classList.toggle('shell-labels') 
+                              editor.focus()
+                            }
+                        })                      
+                        editor.ui.registry.addMenuItem('enterFullscreen', {
+                          text: 'Enter fullscreen',
+                          onAction: () => editor.execCommand('mceFullScreen')
+                        })
+                        editor.ui.registry.addMenuItem('exitFullscreen', {
+                          text: 'Exit fullscreen',
+                          onAction: () => editor.execCommand('mceFullScreen')
+                        })
+                        editor.lurchBaseMenu = () => 'shellLabels'
+                    }
+
                     // Save the options object for any part of the app to reference:
-                    editor.appOptions = options
+                    editor.appOptions = options                    
+                    
+                    // Register base context menu before Atoms installs its own
+                    installBaseMenu(editor)
+
+                    // Show the base context menu when right-clicking anything,
+                    // but only if the editor body has class "shell-style-boxed"
+                    editor.ui.registry.addContextMenu('lurchBase', {
+                      update: () => {
+                        const hasBoxed = editor.getBody().classList.contains('shell-style-boxed')
+                        return hasBoxed && editor.lurchBaseMenu ? editor.lurchBaseMenu() : ''
+                      }
+                    })
+
+                    editor.ui.registry.addContextMenu('lurchBase', {
+                      update: () => {
+                        const body = editor.getBody()
+                        let result = ''
+                        // add the shell-labels item iff showing meaning 
+                        if (body.classList.contains('shell-style-boxed') && editor.lurchBaseMenu) 
+                          result += editor.lurchBaseMenu()
+
+                        // Robust fullscreen state: use plugin API if available, else class probe
+                        const isFs = !!(
+                          editor?.plugins?.fullscreen?.isFullscreen?.() ??
+                          (document.documentElement.classList.contains('tox-fullscreen') ||
+                           document.body.classList.contains('tox-fullscreen'))
+                        )
+                        // choose which item to show
+                        const toggleFullscreen = isFs ? 'exitFullscreen' : 'enterFullscreen'
+                        result += ' '+ toggleFullscreen
+                        return result
+                      }
+                    })
 
                     // As soon as the editor is ready...
                     editor.on( 'init', () => {

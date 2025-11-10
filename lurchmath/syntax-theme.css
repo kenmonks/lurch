@@ -304,9 +304,20 @@ div.lurch-atom ol ol {
   padding: 0 0 0 0.5rem;
 }
 
+/* Shrink wrapped shells */
+
+/* The following is used for a 'display math' style rule where you just want
+  to assert a single formula, usually for a particular exercise, but not put it
+  in the context of the document. */
+[data-shell_title].shrink-wrap{
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+
 /***********************************************************************/
 /*                           Semantic View                             */
-
 body.shell-style-boxed {
 
   /* Inline atoms get math syntax color */
@@ -322,6 +333,7 @@ body.shell-style-boxed {
       padding-left: var(--indentation);
     }  
   }
+  
   /* Add the border and shadow to shells with titles (even subproofs) */
   [data-shell_title] {
     position: relative;
@@ -336,8 +348,8 @@ body.shell-style-boxed {
 
   /* Shell titles */
 
-  /* Add the shell title in the left margin */
-  [data-shell_title]::before {
+  /* Add the shell title in the left margin for body.shell-labels (toggleable by users via context menu) */
+  &.shell-labels [data-shell_title]::before {
     content: attr(data-shell_title);
     color: var(--margin-color);
     background-color: transparent;
@@ -349,24 +361,24 @@ body.shell-style-boxed {
     width: var(--shell-title-width);
   }
   /* If it is inside another shell */
-  [data-shell_title] [data-shell_title]::before {
+  &.shell-labels [data-shell_title] [data-shell_title]::before {
     left: calc(var(--shell-title-offset) - var(--indentation) - var(--shell-border-width));
     width: calc(var(--shell-title-width) + var(--indentation) + var(--shell-border-width));
   }
   /* If it is inside the context */
-  #context [data-shell_title]::before {
+  &.shell-labels #context [data-shell_title]::before {
     left: calc(var(--shell-title-offset) - var(--context-indentation) - var(--shell-border-width));
     width: calc(var(--shell-title-width) + var(--context-indentation + var(--shell-border-width)));
   }
   /* If it is inside a shell inside the context */
-  #context [data-shell_title] [data-shell_title]::before {
+  &.shell-labels #context [data-shell_title] [data-shell_title]::before {
     left: calc(var(--shell-title-offset) - var(--indentation) 
                     - var(--context-indentation) - 2*var(--shell-border-width));
     width: calc(var(--shell-title-width) + var(--indentation) 
                     + var(--context-indentation) + 2*var(--shell-border-width));
   }
   /* If it is inside a shell inside a shell inside the context */
-  #context [data-shell_title] [data-shell_title] [data-shell_title]::before {
+  &.shell-labels #context [data-shell_title] [data-shell_title] [data-shell_title]::before {
     left: calc(var(--shell-title-offset) - var(--indentation) 
                                          - var(--context-indentation) 
                                          - 3*var(--shell-border-width));
@@ -378,7 +390,7 @@ body.shell-style-boxed {
    * for backward compatibility in already saved documents, we have to manually
    * handle Premises separately 
    */
-   [data-metadata_type*='"premise"']::before {
+   &.shell-labels [data-metadata_type*='"premise"']::before {
     content: 'Premise:';
    }
 

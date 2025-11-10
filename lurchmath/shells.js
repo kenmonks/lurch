@@ -264,13 +264,6 @@ export class Shell extends Atom {
         const shellSubclassNames = Shell.subclassNames().filter(
             name => name != 'preview' )
         if ( forThis == this ) {
-            // allow changing the environment iff it's editable and some types
-            // have been registered for us to let the user browse
-            if ( this.isEditable() && shellSubclassNames.length > 0 )
-                result.unshift( {
-                    text : 'Change environment type',
-                    onAction : () => this.editShellType( shellSubclassNames )
-                } )
             // allow changing the environment marginal label
             if ( this.isEditable() 
                  && lookup( this.editor, 'shell style' ) == 'boxed')
@@ -278,11 +271,32 @@ export class Shell extends Atom {
                     text : 'Edit marginal label',
                     onAction : () => this.editMarginalLabel( )
                 } )
+            // allow toggling shrink-wrap
+            if ( this.isEditable() ) {
+                if (this.element.classList.contains( 'shrink-wrap' )) {
+                  result.unshift( {
+                      text : 'Full width',
+                      onAction : () => this.element.classList.toggle( 'shrink-wrap' )
+                  } )
+                } else {
+                  result.unshift( {
+                      text : 'Fit contents',
+                      onAction : () => this.element.classList.toggle( 'shrink-wrap' )
+                  } )
+                }
+              }
             // allow toggling indentation iff we're in a style that can see it
             if ( lookup( this.editor, 'shell style' ) == 'minimal' )
                 result.unshift( {
                     text : 'Toggle Subproof Indentations',
                     onAction : () => this.element.classList.toggle( 'unindented' )
+                } )
+            // allow changing the environment iff it's editable and some types
+            // have been registered for us to let the user browse
+            if ( this.isEditable() && shellSubclassNames.length > 0 )
+                result.unshift( {
+                    text : 'Change environment type',
+                    onAction : () => this.editShellType( shellSubclassNames )
                 } )
             // allow deleting environments
             result.unshift( {
