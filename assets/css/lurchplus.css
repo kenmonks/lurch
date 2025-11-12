@@ -579,6 +579,28 @@ div.flexrow {
   border: none;
 }
 
+
+/* feedback markers */
+
+/* common marker style */
+.marker-checkmark::after,
+.marker-redx::after,
+.marker-questionmark::after,
+.feedback-marker-indeterminate::after,
+.marker-nosymbol::after,
+.feedback-marker-error::after {
+  font-family:"Lucida Grande";
+  font-weight:bold;
+}
+
+/* markers */
+.marker-checkmark::after { content:"✓"; color:var(--check-color) }
+.feedback-marker-indeterminate::after,
+.marker-questionmark::after { content:"?"; color:var(--questionmark-color) }
+.marker-redx::after { content:"✗"; color:var(--x-color) }
+.marker-nosymbol::after { content:"⊘"; font-size:110%; font-weight:bold; color:var(--x-color) }
+.feedback-marker-error::after { content:"!"; color:var(--error-color) }
+
 /* 
  * The footer block
  */

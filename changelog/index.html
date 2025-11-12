@@ -1,0 +1,447 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Lurch ChangeLog</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/monks.css" />
+    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body>
+    <div id="leftnav">
+      <img
+        src="../assets/media/lurchlogo.png"
+        style="margin: 0px; border-radius: 5px; display: block"
+        width="190px" />
+
+      <ul>
+        <li
+          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
+        >
+        <li><a href="../getlurch">Get Lurch!</a></li>
+        <li><a href="../teaching">Teaching with Lurch</a></li>
+        <li><a href="../theory">Documentation and Theory</a></li>
+        <li><a href="../talks">Lurch Talk Slides</a></li>
+        <li><a href="../100">100 Theorem Challenge!</a></li>
+        <li><a href="../about">About Lurch</a></li>
+      </ul>
+
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank"
+            >monks.scranton.edu</a
+          >
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1>Lurch Changelog</h1>
+          <h2>Recent changes and updates</h2>
+        </div>
+        <hr />
+        <p
+          >Here we provide a summary overview of recent changes, bug fixes, and
+          new features added to Lurch in reverse chronological order. This will
+          continue to be updated with the most recent changes at the top.</p
+        >
+        <ul class="square">
+          <li
+            ><strong>ChangeLog Page!</strong> - added this changelog page to
+            this site. 😎</li
+          >
+          <li
+            ><strong>Fit-to-Content environment option</strong> - environment
+            widths can be toggled between full width and just wide enough to fit
+            their contents (and centered) from the right-click context menu.
+            This is useful for examples like the
+            <a href="/student.html?load=math/examples/group-example.lurch"
+              >group theory example</a
+            >, or
+            <a
+              href="/student.html?load=math/examples/Linear-Algebra-Examples.lurch"
+              >linear algebra examples #2 and #3</a
+            >, where you want to want to define a formula (i.e., a single
+            expression rule) temporarily for a particular problem (as opposed to
+            adding it to the context).</li
+          >
+          <li
+            ><strong>Environment labels</strong> - can be customized and toggled
+            on and off from the right-click context menu. The new default is to
+            hide them, since they are redundant (the environment background
+            colors distinguish them).</li
+          >
+          <li
+            ><strong>Full screen mode</strong> - is available on the toolbar and
+            via the context menu if you right-click anywhere in the editor.</li
+          >
+          <li
+            ><strong>Group Theory and Linear Algebra examples</strong> - added
+            to the <a href="/#examples">examples gallery</a> on the home page.
+            The group theory example uses the Linear Algebra context.</li
+          >
+          <li
+            ><strong>Linear Algebra Context</strong> - added a
+            <a href="/instructor.html?load=math/Linear-Algebra-Rules.lurch"
+              >starter context for Linear Algebra</a
+            >
+            for two and three dimensional vector spaces over the reals. It
+            defines linear transformation and subspace. It is not enough for an
+            entire course, but more rules and definitions can be added in the
+            future.</li
+          >
+          <li
+            ><strong>Friendly Rule Name Options</strong> - the the Algebra Rule
+            can now be specified by entering
+            <code>&quot;algebra rule&quot;</code> (case insensitive, double
+            quotes are required) as a single expression in a rule environment,
+            instead of <code>AlgebraRule</code> (case sensitive). Similarly,
+            <code>&quot;equations rule&quot;</code> or
+            <code>&quot;chains rule&quot;</code> can be used instead of
+            <code>EquationsRule</code> or <code>ChainsRule</code>. This makes it
+            easier to format the rule in a more natural mathematical way,
+            instead of the more computery camel case originals (which still work
+            for backward compatibility).</li
+          >
+          <li
+            ><strong>Error highlight in parser docs</strong> - the input text
+            area on the
+            <a href="/lde/src/experimental/parsers/lurch-parser-docs.html"
+              >parser docs page</a
+            >
+            now turns red when the contents can't parse.</li
+          >
+          <li
+            ><strong>Algebra Rule includes Arithmetic($\mathbb{Q}$)</strong> -
+            the Algebra Rule now validates inequalites which can be checked by
+            the Arithmetic($\mathbb{Q}$) rule.</li
+          >
+          <li
+            ><strong>New Infix Operators</strong> - the expressions
+            <code>x star y</code>, <code>x oplus y</code>,
+            <code> x otimes y</code>, and <code>x odot y</code> now render as
+            $x\star y$, $x\oplus y$, $x\otimes y$, and $x\odot y$ respectively.
+            Semantically they are treated as $n$-ary operators. For example,
+            <code>x star y star z</code> means <code>(★ x y z)</code> under the
+            hood in putdown notation.</li
+          >
+          <li
+            ><strong>Matrix Product and Inverses</strong> - the expression
+            <code>dot([[a,b],[c,d]],[[e,f],[g,h]])</code> formats as
+            $\left[\begin{matrix} a &amp; b \\ c &amp; d \end{matrix}\right]
+            \cdot \left[\begin{matrix} e &amp; f \\ g &amp; h
+            \end{matrix}\right]$ and <code>inv([[a,b],[c,d]])</code> formats as
+            $\left[\begin{matrix} a &amp; b \\ c &amp; d
+            \end{matrix}\right]^{-1}$. This notation is compatible with
+            Algebrite, so can be used with <code>by algebra</code> to validate
+            identities.</li
+          >
+          <li
+            ><strong>Added $\neq$ support</strong> - the Arithmetic rules now
+            can validate the $\neq$ relation in addition to $=$, $&lt;$, and
+            $\leq$.</li
+          >
+          <li
+            ><strong>Column Vector Support</strong> - placing a tick mark after
+            a tuple or matrix transposes the output (but not the internal
+            meaning). This allows a user to format the output of tuples as
+            column vectors.</li
+          >
+          <li
+            ><strong>Custom Parsing Tracer</strong> - wrote a development tool
+            for tracing the parsers when debugging, and integrated it with Lode.
+            Only useful for developers who are customizing the parsers.</li
+          >
+          <li
+            ><strong>Indexed Product support</strong> - added to the $\LaTeX$
+            parser so that <code>product(E(n),n,a,b)</code> formats as
+            $\displaystyle\prod_{n=a}^{b} E\left(n\right)$. Additional forms of
+            input might be added later, corresponding to how it handles indexed
+            sums, with some reasonable precedence.</li
+          >
+          <li
+            ><strong>Absolute value support</strong> - added to the $\LaTeX$
+            parser so that <code>abs(x)</code> formats as $\left|x\right|$.</li
+          >
+          <li
+            ><strong>100 Theorem Challenge</strong> - added Theorem 66 proof by
+            Dan Cerra, and updated the context of Theorem 1.</li
+          >
+          <li
+            ><strong>Improved formatting of Summations in Products</strong> -
+            there was a parsing bug that would prevent expressions entered as
+            <code>sum(f(k),k,0,n)*x</code> from parsing because summation was
+            higher precedence than products. Now products have a higher
+            precedence than summations, and the tex formatter takes this into
+            account when deciding whether to add parentheses around a
+            summation.</li
+          >
+          <li
+            ><strong>Algebra Rule Support in Transitive Chains</strong> - Users
+            can now use cite 'by algebra' after any equation within a transitive
+            chain when the Algebra Rule is available to check simple algebric
+            identities by CAS.</li
+          >
+          <li
+            ><strong>Even More Efficiency Improvement</strong> - Lurch is now 31
+            times faster at validating typical documents than it was in May
+            2024. Multiple things contributed, but the main one was only
+            instantiating one expression per pass for a given rule to avoid lots
+            of duplicates. There is quite a bit of finesse required to do that
+            in a way that doesn't avoid instaitiations.</li
+          >
+          <li
+            ><strong>Expression editor checks both parsers</strong> - upgraded
+            the expression editor dialog so it forbids any Lurch notation that
+            can't parse with both parsers, LaTeX and putdown (it was only
+            checking conversion to LaTeX).</li
+          >
+          <li
+            ><strong>Symbol Names with Spaces</strong> - You can now use double
+            quoted strings containing spaces as symbol names, e.g.,
+            <code>declare is, &quot;natural number&quot;</code> and
+            <code>Assume n is a &quot;natural number&quot;</code>. Here,
+            &quot;natural number&quot; is a single Lurch symbol. In the editor,
+            the surrounding quotes are hidden, so the latter expression appears
+            simply as <code>Assume n is a natural number</code> as desired. If
+            user-defined MixFix operator capability is implemented in the
+            future, double quotes may no longer be necessary.</li
+          >
+          <li
+            ><strong>Summation notation fix</strong> - Summations no longer
+            require parentheses around the upper or lower bound when the bound
+            is a sum.</li
+          >
+          <li
+            ><strong>Improved Rule Searching Interface</strong> - The search
+            tool input box now gets focus when the hotkey to show the context is
+            pressed. The hotkey still functions when focus is in the search box.
+            It also puts a nice title on the search results and gives an
+            informative message when no rules match the search string.</li
+          >
+          <li
+            ><strong>Clear Feedback on Remove Environment</strong> - if there
+            are validation feedback icons in the document and the user selects
+            the <code>Remove this environment</code> context menu item, it now
+            clears the feedback icons. Any document change that may affect
+            validation should also clear existing feedback. This was one of the
+            missing edge cases.</li
+          >
+          <li
+            ><strong>Modal Validation Dialog</strong> - replaced the non-modal
+            validation progress notification with a modal dialog. Also added an
+            application setting that determines if it will show a
+            <code>Validation... done!</code> message for 0.75 seconds when
+            validation completes. In progress validation can be terminated
+            immediately by pressing the escape key or closing the dialog. Using
+            a modal dialog has two advantages:
+            <ol>
+              <li
+                >It prevents the user from editing the document while validation
+                is in progress, and potentially receiving incorrect feedback as
+                a result.</li
+              >
+              <li
+                >If the user edits an expression while validation is in
+                progress, when the notification closed it would also close the
+                user's expression editor dialog.</li
+              >
+            </ol>
+          </li>
+          <li
+            ><strong>Expository Math Dialog Label</strong> - added a label and
+            tooltip to distinguish it from the meaningful math dialog.</li
+          >
+          <li
+            ><strong>Lurch notation</strong> - The Lurch notation 'neg' and
+            'not' both semantically parse the same way, but 'neg' renders as
+            $\neg$, while 'not' renders as <code>not</code></li
+          >
+          <li
+            ><strong>Context Display Overhaul</strong>
+            <ul class="dash">
+              <li
+                >Showing context now summarizes declared constants at the
+                top.</li
+              >
+              <li
+                >Reports when the context is empty rather than showing nothing
+                or an alert</li
+              >
+              <li
+                >No longer highlights on hover - behaves more like an image</li
+              >
+            </ul>
+          </li>
+          <li
+            ><strong>Added MathLive and KaTeX locally</strong> to the Lurch
+            repository to prevent Lurch rendering from breaking when the cdn
+            doesn't deliver MathLive (as happened with the upkg and the current
+            version used by Lurch)</li
+          >
+          <li
+            ><strong>Enabled Editing Marginal Labels</strong> for environments
+            that show up in Show Meaning view.
+            <ul class="dash">
+              <li>Added the necessary dialog</li>
+              <li>Added the context menu to open the dialog</li>
+            </ul>
+          </li>
+          <li
+            ><strong>Major Efficiency Improvements</strong>
+            <ul class="dash">
+              <li>Validation is now 11 times faster than it was in May 2024</li>
+              <li>Cached some of the CNFProp computations and propositions</li>
+              <li
+                >Major speed improvements to tree iterator utilities by Matthew
+                Kilgore (thanks, Matthew!).</li
+              >
+            </ul>
+          </li>
+          <li
+            ><strong>Improved Benchmarking and Profiling Reports</strong> and
+            integrated with Lode</li
+          >
+          <li
+            ><strong>Added Transitive Chain Support for Inequalities</strong>
+            <ul class="dash">
+              <li
+                >It now supports transitive chains with =, &lt;, and $\leq$ in
+                any combination</li
+              >
+              <li
+                >Semantically they all convert to
+                <code>(trans_chain arg1 op1 arg2 op2 ... op_n arg_n)</code>.</li
+              >
+            </ul>
+          </li>
+          <li
+            ><strong>Changed Feedback Icon</strong> - for preemies from
+            <span class="marker-redx" role="img" aria-label="redx"></span> to
+            <span
+              class="marker-questionmark"
+              role="img"
+              aria-label="qmark"></span
+            >, to be consistent with the rest of Lurch feedback icons which only
+            get a
+            <span class="marker-redx" role="img" aria-label="redx"></span> when
+            they are known to be wrong, not simply currently unproven.</li
+          >
+          <li
+            ><strong
+              >Changed the Formatting for 'and' in Declaration Sequences</strong
+            >
+            when showing meaning
+            <ul class="dash">
+              <li
+                >Distinguishes between actually declaring the constant
+                <code>and</code> and the grammatical insertion of the word
+                <code>and</code> before the last constant being declared.</li
+              >
+              <li
+                >The grammatical 'and' is shown in black, while the meaningful
+                symbol is shown in gold.</li
+              >
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <h3>
+                  <a href="http://monks.scranton.edu/" target="_blank"
+                    >Dr. Kenneth G. Monks</a
+                  >
+                </h3>
+                Department of Mathematics<br />
+                University of Scranton<br />
+                Scranton, PA 18510
+              </div>
+            </div>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="../assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank"
+                  >monks@scranton.edu</a
+                >
+              </div>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
+              </div>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="../assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank"
+                  >Prove it!&nbsp;Math Academy</a
+                >
+              </div>
+            </div>
+            <!-- row -->
+            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          processEscapes: true
+        }
+      }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>
