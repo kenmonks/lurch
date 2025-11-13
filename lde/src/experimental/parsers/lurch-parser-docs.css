@@ -146,13 +146,21 @@ caption {
   background: #FFF7F7;
 }
 
-#source {
+#source, #rendered, #meaning {
+  height: auto;
+  min-height: 3rem;
   font-family: Consolas, Menlo, Monaco, monospace;
 }
 
-#meaning {
+#source {
   height: 3rem;
-  font-family: Consolas, Menlo, Monaco, monospace;
+  line-height: 1.5;
+  resize: vertical;
+  overflow-y: hidden;
+}
+
+#meaning {
+  overflow-x: auto;
 }
 
 #forkMe {

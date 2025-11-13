@@ -11,15 +11,18 @@
       const textarea = document.getElementById('source')
       const update = () => {
         const text = textarea.value
+        
+        // resize to fit the input
+        textarea.style.height = '0' // reset to force the browser to compute the correct height
+        textarea.style.height = `${textarea.scrollHeight}px` 
+
+        // update the mathjax and putdown
         let tex,putdown
         try { 
           const isBlank = /^\s*$/.test(text)
-          // console.log(`The text input is blank: ${isBlank}`)
           tex = (!isBlank) ? `$${lurch2tex(text,{enableSets:true})}$` : ''
           putdown = (!isBlank) ? lurch2putdown(text,{enableSets:true}) : ''
           textarea.classList.remove('badparse')
-          // console.log(
-            // `changing render from ${text} to ${tex} with meaning ${putdown}` )
           const meaningDiv = document.getElementById('meaning')
           meaningDiv.textContent = putdown
           const renderDiv = document.getElementById('rendered')
@@ -27,7 +30,7 @@
           try { MathJax.typeset([renderDiv]) } catch (e) { }
         } catch (e) {  
           textarea.classList.add('badparse')
-        } 
+        }
       }
       update()
       textarea.addEventListener('input', update)
@@ -76,16 +79,15 @@
     It is currently under development, and more features will be added in the future.
   </p>
 
-	<div class="leftColumn">
+	<div class="fullColumn">
 		<label for="source">Input:</label>
 		<br/>
 
 		<textarea class="ioArea" id="source" onchange="()=>{ 
-      // console.log('changed!')
       updateRender(this.value) }">sum i=1 to n of i^3 = ((n(n+1))/2)^2</textarea>
 	</div>
 
-	<div class="rightColumn">
+	<div class="fullColumn">
 		<label for="rendered">Rendering:</label>
 		<br/>
 
