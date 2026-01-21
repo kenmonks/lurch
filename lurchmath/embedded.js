@@ -55,7 +55,7 @@ const splitJSONHeader = text => {
 // corresponding value in the window object, or on a case-by-case basis in each
 // div, using the appURL attribute.
 const defaultAppURL = window.defaultAppURL
-    || 'https://lurchmath.github.io/lurchmath/index.html'
+    || 'https://lurch.plus/student'
 
 // List of all iframes we've processed
 const iframes = [ ]

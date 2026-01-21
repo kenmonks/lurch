@@ -609,7 +609,7 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma
   Rule    = $(('rule'i / 'axiom'i / 'definition'i) ':'?)
   Thm     = $(('theorem'i / 'thm'i / 'lemma'i / 'corollary'i) ':'?)
   Proof   = $('proof'i ':'?)
-  Cases   = $('CasesRule'i ':'?)
+  Cases   = $('CasesRule'i ':'?) { return 'Cases' }
   Subs    = 'SubsRule'i ':'? { return 'Substitution' }
   Comma   = $(',')
 
