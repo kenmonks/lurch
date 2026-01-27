@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title></title>
+    <title>Intro to Proof</title>
     <meta charset="utf-8" />
     <meta
       name="description"
@@ -12,7 +12,7 @@
       name="keywords"
       content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <link rel="shortcut icon" href="../../assets/media/favicon-L+.svg" />
     <!-- load Font Awesome icon pack 
      see https://fontawesome.com/search?m=free&o=r for more icons
 -->
@@ -28,101 +28,220 @@
       href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
       rel="stylesheet" />
 
-    <link rel="stylesheet" href="../assets/css/monks.css" />
-    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
+    <link rel="stylesheet" href="../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../assets/css/lurchplus.css" />
 
     <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
   </head>
 
-  <body>
+  <body class="course">
     <div id="leftnav">
-      <a href="/" target="lurchplus" rel="noopener noreferrer">
-        <img
-          src="../assets/media/lurchlogo.png"
-          style="margin: 0px; border-radius: 5px; display: block"
-          width="190px" />
-      </a>
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
 
-      <ul class="menu-root"> </ul>
-
-      <div id="contact">
-        <div>
+        <div class="byline">
           <a href="mailto:monks@scranton.edu">Ken Monks</a>
         </div>
-        <div>
-          <a href="https://monks.scranton.edu" target="_blank"
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
             >monks.scranton.edu</a
           >
         </div>
-        <div>
-          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
-        </div>
-        <div>
-          <a href="https://github.com/kenmonks/lurch" target="_blank"
-            >github.com/kenmonks/lurch</a
-          >
-        </div>
+      </div>
+
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li class="active">
+            <a href="/learn/proofs/">1: Introduction</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
       </div>
     </div>
 
     <!-- flex column for content-block and footer-block -->
     <div id="wrap">
-      <div id="content-block">
-        <meta http-equiv="refresh" content="0;url=/instructor.html" />
+      <div id="content-block" class="problems" style="--chapter: ''">
+        <div class="title-box">
+          <h1>Introduction to Mathematical Proof</h1>
+          <h2>Building the Bridge to Higher Mathematics</h2>
+        </div>
+        <div class="split left-25 left middle">
+          <div class="pane right">
+            <p
+              ><img
+                src="../../assets/media/sherlock.jpg"
+                alt="Sherlock Holmes"
+                id="sherlock"
+            /></p>
+          </div>
+          <div class="pane">
+            <div class="haiku">
+              <p class="smallskip"
+                >I hear and I forget.<br />
+                I see and I remember.<br />
+                I do and I understand</p
+              >
+              <p class="attribution">Ancient Proverb</p>
+            </div>
+            <div class="haiku">
+              <p class="smallskip"
+                >Is my proof correct?<br />
+                Lurch says it is not convinced.<br />
+                I need to say more.</p
+              >
+              <p class="attribution">Anonymous, 2024</p>
+            </div>
+          </div>
+        </div>
+        <p class="bigskip"></p>
+        <p class="large complement"
+          >Welcome to the revised Lecture Notes for Math 299. This site is a
+          work in progress. Check back often for updates.</p
+        >
+        <h2>Introduction</h2>
+        <p
+          >The development of logic and mathematics over thousands of years is
+          one of the great achievements of human cognition.</p
+        >
+        <p
+          >On the one hand, its usefulness and practical importance in the
+          modern world is hard to overstate. It provides a foundation upon which
+          science, engineering, finance, medicine, economics, computer science,
+          agriculture, and many other areas of human knowledge have been
+          developed. But this fact raises an interesting question.
+          <em>Why?</em></p
+        >
+        <p
+          >Why is it that such a wide and disparate collection of applications
+          from counting to cosmology all rely upon mathematics? Why are they
+          built upon mathematics instead of something else like, say, music or
+          poetry? Most of us recognize that mathematics is exceedingly useful,
+          but <em>why</em> is it so useful?</p
+        >
+        <p
+          >One possible reason is that it provides us with a reliable starting
+          point on which to build <em>consensus</em>. A group can accomplish
+          much more by working collaboratively than they can by working as
+          separate individuals. But cooperation and collaborative
+          decision-making require a consensus about the assumptions,
+          terminology, and facts that allow us to communicate and inform our
+          decisions.</p
+        >
+        <p
+          >Mathematics and its underlying logic provide us with a tool that
+          allows us to reason in a way that is reliable, objectively verifiable,
+          and independent of our individual, personal, and subjective human
+          biases. Mathematicians do not debate whether $5$ is larger than $4$,
+          or whether $2+3=5$. The fact that mathematics can be verified
+          objectively and reliably is what makes it a prototype for achieving
+          consensus about mathematical facts. Other disciplines that can
+          successfully build upon mathematics can then use it to construct a
+          solid foundation for consensus about facts in their own subject
+          area.</p
+        >
+        <p
+          >In addition to being useful, mathematics is one of the most
+          beautiful, creative, and sublime creations of the human mind. It is
+          inherently valuable for its own sake as a work of art, to be enjoyed
+          and shared with others, and passed down from generation to generation
+          for thousands of years.</p
+        >
+        <p
+          >For this reason, our introduction to mathematical proof must combine
+          both the rigorous objectivity that is needed for determining and
+          communicating mathematical facts, with the elegance and beauty that
+          exemplifies any human art form.</p
+        >
+        <p
+          >The main reason mathematics and logic are so amenable to building
+          consensus is that
+          <em>anyone can check a mathematical claim for themselves</em>. There
+          is no need to believe anyone, cite any book, or consult any oracle. We
+          can each take personal ownership of our mathematics by proving all of
+          it ourselves.</p
+        >
+        <p
+          >The goal of this course is to do exactly that. It will guide you on a
+          personal journey to build and verify most of elementary mathematics
+          from the ground up. It is a quest to objectively prove for yourself
+          all of the basic elementary mathematical facts about logic, natural
+          numbers, sequences, real numbers, set theory, functions, relations,
+          and combinatorics.</p
+        >
+        <p
+          >To accomplish this, we must begin by slowly and carefully defining
+          exactly what constitutes a mathematical proof, how to construct them
+          ourselves, and how to express them up in a way that allows them to be
+          accurately and elegantly shared with others.</p
+        >
+        <!-- ## Contents
+
+-->
       </div>
 
       <div id="footer-block">
-        <footer>
-          <div class="container">
-            <div class="row">
-              <div class="col-xs-12">
-                <h3>
-                  <a href="http://monks.scranton.edu/" target="_blank"
-                    >Dr. Kenneth G. Monks</a
-                  >
-                </h3>
-                Department of Mathematics<br />
-                University of Scranton<br />
-                Scranton, PA 18510
-              </div>
-            </div>
-            <div class="row" id="more-contact-info">
-              <div class="col-xs-12 col-md-4" id="email-footer">
-                <img
-                  src="../assets/media/envelope.svg"
-                  style="vertical-align: middle; padding-right: 0.2em" />
-                <a href="mailto:monks@scranton.edu" target="_blank"
-                  >monks@scranton.edu</a
-                >
-              </div>
-              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
-                <span class="checkmark" style="padding-right: 0.2em">✓</span>
-                <a href="http://lurch.plus">lurch.plus</a>
-              </div>
-              <div class="col-xs-12 col-md-4" id="proveit-footer">
-                <img
-                  src="../assets/media/therefore.svg"
-                  style="
-                    vertical-align: middle;
-                    padding-right: 0.2em;
-                    height: 0.8em;
-                  " />
-                <a href="https://proveitmath.org" target="_blank"
-                  >Prove it!&nbsp;Math Academy</a
-                >
-              </div>
-            </div>
-            <!-- row -->
-            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
-          </div>
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
         </footer>
       </div>
     </div>
 
     <script>
-      if (!window.name) window.name = 'lurchplus'
+      if (!window.name) window.name = 'intro-to-proof'
     </script>
-    <script src="../assets/js/utils.js"></script>
+    <script src="../../assets/js/utils.js"></script>
     <script>
       window.MathJax = {
         loader: {

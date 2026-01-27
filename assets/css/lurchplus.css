@@ -23,9 +23,7 @@
   --nav-plain-color: #ddd;
   /* note label font color */
   --note-label-color: #c71585;
-  /* the gap after the content blocks p, ol, ul, etc. */
-  --block-skip: 1rem;
-
+  
   /* Lurch editor syntax theme variables */
 
   /* hovered atom background color */
@@ -60,6 +58,8 @@
   --theorem-color: #f5f5f5;
   /* recall shell background color */
   --recall-color: #efe9f1;
+  /* comment color */
+  --comment-color: #efe9f1;
   /* inline semantic math expression font color */
   --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
   /* inline semantic math expression font color */
@@ -81,7 +81,15 @@
   /* top margin for shells inside of other shells */
   --nested-pad: 0.25rem;
   /* paragraph top margins inside of unindented shells */
-  --line-height: 1.2 /* 1.15; */
+  --Lurch-line-height: 1.35; /* 1.15; */
+  /* border color for the left sidebar elements in a course */
+  --book-borders: #2A3A4D;
+  /* the gap after the content blocks p, ol, ul, etc. */
+  --block-skip: 1em;
+  /* the gap after the content blocks p, ol, ul, etc. */
+  --tight-block-skip: 0.75em;
+  /* the gap between the  */
+  --content-nav-gap: 20px;
 }
 
 * {
@@ -100,6 +108,10 @@ body {
   display: flex;
   flex-direction: row;
   margin: 0;
+}
+
+body.course {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
 /* the left nav column */
@@ -178,7 +190,7 @@ body {
 }
 
 #leftnav li li:before {
-  content: '\2013'; /* or \23FA */
+  content: ' '; /* or \23FA or \2013 */
   margin-right: 5px;
   flex-shrink: 0;
   color: var(--nav-link-color);
@@ -243,6 +255,135 @@ body {
   padding-right: 6px;
 }
 
+/* turn the course site title into a link */
+#leftnav #courseinfo h1.site-title > a {
+  color: inherit;
+  text-decoration: none;
+  font: inherit;
+  display: inline;
+  cursor: pointer;
+}
+
+/* fixed hrule-like separators */
+.course #leftnav .nav-rule {
+  border-top: 1px solid var(--left-border-color);
+  margin: 1rem 0;
+}
+/* remove it from the ul (TODO: make the other menu consistent at some point) */
+.course #leftnav ul {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* powered-by sidebar footer */
+.course #leftnav .sidebar-powered {
+  margin-top: 12px;
+  padding-top: 1rem;
+  border-top: 1px solid var(--book-borders);
+}
+.course #leftnav a.powered-link, .course #leftnav a.powered-link:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.75;
+}
+.course #leftnav .powered-label {
+  font-size: 0.7rem;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+.course #leftnav .powered-logo {
+  width: 56px;
+  height: auto;
+  border-radius: 2px;
+  opacity: 0.75;
+}
+.course #leftnav a.powered-link:hover .powered-logo {
+  opacity: 1;
+}
+/* highlight the current page in the menu */
+#leftnav li.active:hover,
+#leftnav li.active:hover > a {
+  background-color: #8bb6ee;
+  color: #003f7f;
+}
+#leftnav li.active > a {
+  border-left: 3px solid #0068c2;
+  padding-left: calc(0.6rem - 3px);
+}
+
+
+/* ************************** */
+/* courseinfo header          */
+#courseinfo{
+  margin: 0.25rem 0 0.75rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06); /* or rgba(0,0,0,0.06) */
+  border: 1px solid rgba(255,255,255,0.10);
+}
+#courseinfo h1{
+  margin: 0;
+  font-size: 1.0rem;
+  line-height: 1.15;
+  font-weight: 800;
+}
+#courseinfo .byline{
+  margin-top: 0.35rem;
+  font-size: 0.76rem;
+  opacity: 0.85;
+}
+#courseinfo .byline a{
+  text-decoration: none;
+  opacity: 0.9;
+}
+#courseinfo .byline a:hover{
+  text-decoration: underline;
+  opacity: 1;
+}
+#courseinfo .site{
+  margin-top: 0.1rem;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+/* tweak spacing between top level paragraphs, Lurch blocks, ols, uls, etc. */
+/* reset for the course site */
+.course #content-block > p,
+.course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) { 
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.course #content-block > p + p { 
+  margin-top: var(--block-skip); 
+}
+/* .course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) { 
+  margin-top: var(--tight-block-skip); 
+} */
+.course #content-block > p + :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) {
+  margin-top: var(--block-skip);
+}
+.course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) + p {
+  margin-top: var(--block-skip);
+}
+.course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) +
+  :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) {
+  margin-top: var(--tight-block-skip);
+}
+/* ************************** */
+
+/* make the menu scrollable on short screens */
+#menu-scroll {
+  flex: 1 1 auto;      /* take remaining vertical space */
+  overflow-y: auto;    /* scroll only this area */
+  min-height: 0;       /* CRUCIAL for flexbox scrolling */
+}
+
 /* flex column for content-block and footer */
 #wrap {
   display: flex;
@@ -277,7 +418,7 @@ body {
   font-size: 110%;
 }
 
-#content-block p:not(#content-block > p, .example-box > p:not(:last-child)), 
+#content-block:not(.course #content-block) p:not(#content-block > p, .example-box > p:not(:last-child)), 
 #content-block ol:not(#content-block > ol, .example-box > ol:not(:last-child)), 
 #content-block ul:not(#content-block > ul, .example-box > ul:not(:last-child)), 
 #content-block blockquote:not(#content-block > blockquote, .example-box > blockquote:not(:last-child)) {
@@ -440,12 +581,113 @@ div.blue-box {
   border-radius: 12pt;
 }
 
+/* faux display math centering for any content */
+.display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* center contents like display math */
+  gap: 0.6em;              /* vertical spacing between title & table */
+  margin: 1.2em 0;
+  /* margin-top: 1.4em;
+  margin-bottom: 1.1em; */
+}
+.display > * {
+  display: inline-block;
+}
+
+/* a wrapper for tables and their titles so they don't all have to be attributed
+with booktab*/
+.nm {
+  margin-right: 1em;
+  font-weight: bold;
+}
+
+/* Make the .booktab style from monks.css be the default for the course site 
+Example:
+
+[Rules of Propositional Logic]{.table-title}
+
+| Name | Rule |
+|:---|:---|
+| and+ | ... |
+
+[This table summarizes the inference rules.]{.table-caption}
+
+*/
+.course #content-block table {
+  table-layout:auto;
+  display: table;
+  margin: 1em auto 1.2em auto;
+  border-collapse: collapse;
+	border-top:2px solid #333;
+	border-bottom:2px solid #333;
+}
+.course #content-block table > thead { 
+  border-bottom:1px solid #333;
+}
+.course #content-block table td,
+.course #content-block table th { 
+  border:none;
+	padding:0.5rem 1rem;
+}
+.course #content-block table > caption { 
+  padding-bottom:0.5rem;
+	font-size:125%;
+}
+.course #content-block .table-title {
+  text-align: center;
+  font-weight: 600;
+  margin: 1.0em 0 0.35em 0;
+}
+.course #content-block .table-caption {
+  text-align: center;
+  font-size: 0.92em;
+  color: #555;
+  margin: 0.35em 0 1.2em 0;
+}
+/* Optional table wrap div to allow captions to restrict to table width.
+
+Example:
+
+::: title-block
+[Rules of Propositional Logic]{.table-title}
+
+| Name | Rule |
+|:---|:---|
+| and+ | ... |
+
+[This table summarizes the inference rules.]{.table-caption}
+:::
+
+*/
+.course #content-block .table-block {
+  display: block;
+  margin: 1em auto 1.2em auto;    /* center */
+}
+.course #content-block#content-block .table-title {
+  display: block;          /* force its own line */
+  width: 100%;             /* span content width */
+  text-align: center;
+  font-weight: 600;
+  font-size: large;
+  margin: 1.0em 0 0.35em 0;
+  clear: both;             /* safety against floats */
+}
+/* keep table centered within wrapper */
+.course #content-block .table-block table {
+  margin: 0 auto;
+}
+
 #content-block .example-box {
   border-left: 10px solid var(--nav-link-color);
   padding: 1rem;
   margin-bottom: 1.5rem;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+}
+
+.course #content-block .example-box {
+  margin-top: 1em;
 }
 
 #content-block .note-box {
@@ -639,17 +881,25 @@ div.flexrow {
 
   /* Spacing */
 
-  /* remove left padding and margins for paragraphs and list items inside shells
-   * as those are handled by the shells themselves 
-   */
-  .Rule, .Premise, .Theorem, .Subproof, .Proof {
+  .Rule, .Premise, .Theorem, .Subproof, .Proof, .Comment {
+    
+    /* remove left padding and margins for paragraphs and list items inside shells
+     * as those are handled by the shells themselves 
+     */
     p,li {
       margin: 0;
       padding: 0;
       line-height: var(--line-height);
     }
-  }
 
+    /* add .fit class to make it fit contents and be centered */
+    &.fit {
+      width: fit-content;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
   .Proof {
     margin-bottom: 0; 
     padding-bottom: 0.25rem; 
@@ -667,7 +917,8 @@ div.flexrow {
   }
 
   /* Environment boxes */
-  .Rule, .Theorem, .Premise, .Subproof, .Proof {
+  .Rule, .Theorem, .Premise, .Subproof, .Proof, .Comment {
+    line-height: var(--line-height);
     font-family: "Roboto", "Arial", Helvetica, sans-serif;
     color: var(--black-font);
     padding: 0.5rem var(--indentation);
@@ -693,12 +944,454 @@ div.flexrow {
   .Subproof, .Proof {
     background-color: var(--page-background-color);
   }
+  .Comment {
+    background-color: var(--comment-color);
+  }
+
   
   /* indent nested subproofs and premises */
   .Subproof, .Premise {
     padding-left: var(--indentation);
   }
+
 }
 
-/* a neat box-shadow */
-/* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+/* =========================
+   Multi-column blocks (markdown-it-div)
+   Usage:
+   ::: cols cols-2 middle gap-md stack-sm
+   ::: col
+   ...
+   ::: col
+   ...
+   ::::
+   ========================= */
+#content-block .cols {
+  display: grid;
+  grid-template-columns: 1fr; /* fallback */
+  gap: 1rem;
+  align-items: start;
+  justify-items: start;
+
+  /* optional: give columns a bit of breathing room vs surrounding text */
+  margin: 1rem 0;
+}
+
+#content-block .cols.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#content-block .cols.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#content-block .cols.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* vertical alignment of the column "cells" */
+#content-block .cols.top { align-items: start; }
+#content-block .cols.middle { align-items: center; }
+#content-block .cols.bottom { align-items: end; }
+
+/* horizontal alignment inside each cell */
+#content-block .cols.left { justify-items: start; }
+#content-block .cols.center { justify-items: center; }
+#content-block .cols.right { justify-items: end; }
+
+/* gap presets */
+#content-block .cols.gap-sm { gap: 0.5rem; }
+#content-block .cols.gap-md { gap: 1rem; }
+#content-block .cols.gap-lg { gap: 1.5rem; }
+
+/* allow content to shrink without overflow in grid */
+#content-block .cols > .col { min-width: 0; }
+
+/* make images behave nicely in columns */
+#content-block .col img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* optional: tighten first/last margins inside columns so grids look tidy */
+#content-block .col > :first-child { margin-top: 0; }
+#content-block .col > :last-child { margin-bottom: 0; }
+
+/* responsive collapse */
+@media (max-width: 700px) {
+  #content-block .cols.stack-sm { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 900px) {
+  #content-block .cols.stack-md { grid-template-columns: 1fr !important; }
+}
+
+/* Generic unequal two-column “split” layout */
+#content-block .split {
+  display: flex;
+  gap: 1rem;               /* default: overridden by gap-* utilities */
+  align-items: flex-start; /* default: overridden by middle/bottom */
+}
+
+/* Panes should shrink nicely without overflowing */
+#content-block .split > .pane {
+  min-width: 0;
+}
+
+/* Default: split evenly if no width class is given */
+#content-block .split > .pane {
+  flex: 1 1 0;
+}
+
+/* Unequal width presets */
+#content-block .split.left-20 > .pane:first-child { flex: 0 0 20%; }
+#content-block .split.left-25 > .pane:first-child { flex: 0 0 25%; }
+#content-block .split.left-33 > .pane:first-child { flex: 0 0 33.333%; }
+#content-block .split.left-40 > .pane:first-child { flex: 0 0 40%; }
+#content-block .split.left-50 > .pane:first-child { flex: 0 0 50%; }
+#content-block .split.left-60 > .pane:first-child { flex: 0 0 60%; }
+#content-block .split.left-66 > .pane:first-child { flex: 0 0 66.666%; }
+#content-block .split.left-75 > .pane:first-child { flex: 0 0 75%; }
+#content-block .split.left-80 > .pane:first-child { flex: 0 0 80%; }
+
+#content-block .split.left-20 > .pane:last-child,
+#content-block .split.left-25 > .pane:last-child,
+#content-block .split.left-33 > .pane:last-child,
+#content-block .split.left-40 > .pane:last-child,
+#content-block .split.left-50 > .pane:last-child,
+#content-block .split.left-60 > .pane:last-child,
+#content-block .split.left-66 > .pane:last-child,
+#content-block .split.left-75 > .pane:last-child,
+#content-block .split.left-80 > .pane:last-child {
+  flex: 1 1 auto;
+}
+
+/* Horizontal alignment within panes */
+.pane.left   { text-align: left; }
+.pane.center { text-align: center; }
+.pane.right  { text-align: right; }
+
+/* Vertical alignment utilities */
+#content-block .split.middle { align-items: center; }
+#content-block .split.bottom { align-items: flex-end; }
+
+/* Gap utilities (optional) */
+#content-block .split.gap-sm { gap: 0.5rem; }
+#content-block .split.gap-md { gap: 1rem; }
+#content-block .split.gap-lg { gap: 1.5rem; }
+
+/* Responsive stacking (optional) */
+@media (max-width: 640px) {
+  #content-block .split.stack-sm {
+    flex-direction: column;
+  }
+  #content-block .split.stack-sm > .pane:first-child {
+    flex-basis: auto; /* let image take natural width */
+  }
+}
+/* ========================= */
+
+/* ============================================================
+   COURSE TYPOGRAPHY: Lurch blocks + lists + exercises + quotes
+   Assumes: body has .course, content wrapper is #content-block
+   ============================================================ */
+
+/* ---------------------------------------
+   Reset some globals for the course site.
+   --------------------------------------- */
+  body.course #content-block :is(p, ul, ol, li, blockquote) {
+    line-height: var(--Lurch-line-height);
+  }
+  body.course #content-block code {
+    background-color: inherit;
+  }
+/* ---------------------------
+   Lurch-style blocks in notes
+   --------------------------- */
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) {
+  line-height: var(--Lurch-line-height);
+  padding-top: 0.65em;
+  padding-bottom: 0.65em;
+}
+
+/* keep paragraphs inside these blocks from being too airy */
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) p {
+  margin: 0;
+}
+
+/* lists inside Lurch-style blocks: tighten but keep readable */
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) :is(ul, ol) {
+  margin: 0.35em 0 0.45em;
+  padding-left: 1.2em;
+}
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) :is(ul, ol) > li {
+  margin: 0.15em 0;
+}
+
+/* Wrap many .Rule blocks into a compact grid */
+.course #content-block .rule-grid {
+  display: grid;
+  gap: 0.9rem;                 /* space between tiles */
+  align-items: start;
+}
+
+/* 2 or 3 columns */
+.course #content-block .rule-grid.cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.course #content-block .rule-grid.cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Let the Rule fill its grid cell, but NOT force page-width behavior */
+.course #content-block .rule-grid > .Rule {
+  width: auto;                 /* overrides any width: 100% */
+  margin: 0;                   /* avoid vertical stacking margins */
+}
+
+/* Optional: tighten padding a hair in grid mode only (doesn't change internal look much) */
+/* .course #content-block .rule-grid > .Rule {
+  padding-top: 0.55em;
+  padding-bottom: 0.55em;
+} */
+
+/* If any Rule has long math, allow wrapping instead of overflow */
+.course #content-block .rule-grid > .Rule {
+  overflow-wrap: anywhere;
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 720px) {
+  .course #content-block .rule-grid.cols-2,
+  .course #content-block .rule-grid.cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ---------------------------
+   Prose lists in course notes
+   --------------------------- */
+.course #content-block :is(ul, ol) {
+  margin: 0.6em 0 0.8em;
+  padding-left: 1.3em;
+}
+.course #content-block :is(ul, ol) > li {
+  margin: 0.25em 0;
+}
+
+/* nested lists everywhere: reduce vertical sprawl */
+.course #content-block :is(ul, ol) :is(ul, ol) {
+  margin: 0.25em 0 0.35em;
+}
+
+/* if a list is followed by a “block”, give it breathing room */
+.course #content-block :is(ul, ol) + :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .question, blockquote, .quote) {
+  margin-top: 0.9em;
+}
+
+/* ---------------------------
+   Problem sections and numbering
+   --------------------------- */
+
+/* reset once per chapter-page
+   (you currently put .problems on #content-block; this still works) */
+.course .problems {
+  counter-reset: qnum;
+}
+
+/* each question increments */
+.course .problems .question {
+  counter-increment: qnum;
+  display: grid;
+  grid-template-columns: 2.8rem 1fr; /* label col, content col */
+  column-gap: 0.6rem;
+  align-items: start;
+  margin: 0.8em 0;
+  padding-left: 0; /* no longer needed */
+}
+
+/* put ALL direct children into the content column */
+.course .problems .question > * {
+  grid-column: 2;
+}
+
+/* print the number in the label column */
+.course .problems .question::before {
+  content: var(--chapter) "." counter(qnum) ".";
+  grid-column: 1;
+  justify-self: end;     /* right-align number in its column */
+  align-self: start;
+  /* font-weight: 600; */
+  /* margin-top: 0.16em;  */
+  transform: translateY(0.16em);   /* baseline tweak (adjust 0.08–0.18em if desired) */
+}
+
+/* add some space between paragraphs inside a question */
+.course .problems .question p {
+  margin: 0.45em 0;
+}
+
+/* trim top/bottom inside questions for consistent rhythm */
+.course .problems .question > :first-child { margin-top: 0; }
+.course .problems .question > :last-child  { margin-bottom: 0; }
+
+/* theorem-question label: first span in first paragraph */
+.course #content-block.problems .question .thm {
+  margin-right: 1em;
+  font-style: italic;
+}
+.course #content-block.problems .question .thm::after {
+  content: ')'
+}
+.course #content-block.problems .question .thm::before {
+  content: '('
+}
+
+/* lists inside questions: slightly tighter than prose */
+.course #content-block.problems .question :is(ul, ol) {
+  margin: 0.4em 0 0.5em;
+  padding-left: 1.2em;
+}
+.course #content-block.problems .question :is(ul, ol) > li {
+  margin: 0.15em 0;
+}
+
+/* question parts */
+.course #content-block.problems .question .parts > ol {
+  list-style-type: lower-alpha; /* (a), (b), ... */
+  margin: 0.45em 0 0.55em;
+  padding-left: 1.2em;
+}
+.course #content-block.problems .question .parts > :is(ul,ol) > li {
+  margin: 0.15em 0;
+  break-inside: avoid;
+}
+.course #content-block.problems .question .parts > :is(ul,ol) > li::marker {
+  content: "(" counter(list-item, lower-alpha) ") ";
+  font-weight: 500; /* optional */
+}
+/* simple 2-col/3-col option using CSS columns */
+.course #content-block.problems .question .parts.cols-2 > :is(ul,ol) { 
+  column-count: 2; column-gap: 2rem; 
+}
+.course #content-block.problems .question .parts.cols-3 > :is(ul,ol) { 
+  column-count: 3; column-gap: 2rem; 
+}
+
+/* ---------------------------
+   Intro to Proof book items
+   --------------------------- */
+#sherlock {
+  height: 205px;
+  padding-left: 6rem;
+}
+
+/* ---------------------------
+   Quote blocks
+   --------------------------- */
+.course #content-block .quote {
+  margin: 1.2em 2em;
+  padding-left: 1em;
+  border-left: 3px solid #bbb;
+  color: #555;
+}
+
+/* ---------------------------
+   Footnotes
+   --------------------------- */
+.course #content-block .footnotes-list {
+  margin-top: 1rem;
+}
+.course #content-block .footnotes-list .footnote-item {
+    font-size: .75rem;
+    color: #666;
+}
+.course #content-block hr.footnotes-sep {
+  margin: 2.5rem auto 0 0 ;
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.25);
+  width: 50%;
+}
+/* override this one from monks.css for now */
+.course #content-block #fn1 {
+  padding: 0;
+  border: none;
+}
+
+/* =============
+   Course footer
+   ============= */
+
+/* reset this */
+.course #content-block {
+  padding-bottom: 0;
+}
+
+/* footer container */
+.course #footer-block {
+  background: inherit;
+  border: none;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  padding-bottom: 0.5rem;
+}
+
+/* content-sized footer */
+.course #footer-block .microfooter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: #777;
+  padding-top: 0.6rem; /* space between rule and text */
+}
+
+/* centered rule matching content width */
+.course #footer-block .microfooter::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid rgba(0,0,0,0.12);
+}
+
+/* links */
+.course #footer-block .microfooter a {
+  color: #2196F3;
+  text-decoration: none;
+}
+
+.course #footer-block .microfooter a:hover,
+.course #footer-block .microfooter a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* separators */
+.course #footer-block .microfooter__sep {
+  opacity: 0.5;
+}
+
+/* mobile stacking */
+@media (max-width: 700px) {
+  .course #footer-block .microfooter {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+  .course #footer-block .microfooter__sep {
+    display: none;
+  }
+}
+
+
+/* -------------------------
+   Specialty items
+   ------------------------- */
+
+/* Problem-set subheadings */
+.course #content-block .pset-head {
+  margin: 1.2em 0 0.4em;
+  font-variant: all-small-caps;
+  letter-spacing: 0.04em;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #444;
+}

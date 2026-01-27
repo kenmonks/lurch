@@ -49,11 +49,13 @@ document.querySelectorAll('.has-submenu').forEach(item => {
     const icon = item.querySelector('i')
 
     // Toggle submenu visibility
-    submenu.classList.toggle('hidden')
+    submenu?.classList.toggle('hidden')
 
     // Toggle icon class
-    icon.classList.toggle('fa-caret-down')
-    icon.classList.toggle('fa-caret-right')
+    if (icon) {
+      icon.classList.toggle('fa-caret-down')
+      icon.classList.toggle('fa-caret-right')
+    }
   })
 })
 

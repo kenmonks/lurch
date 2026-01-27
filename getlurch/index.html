@@ -36,12 +36,14 @@
 
   <body>
     <div id="leftnav">
-      <img
-        src="../assets/media/lurchlogo.png"
-        style="margin: 0px; border-radius: 5px; display: block"
-        width="190px" />
+      <a href="/" target="lurchplus" rel="noopener noreferrer">
+        <img
+          src="../assets/media/lurchlogo.png"
+          style="margin: 0px; border-radius: 5px; display: block"
+          width="190px" />
+      </a>
 
-      <ul>
+      <ul class="menu-root">
         <li
           ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
         >
@@ -260,15 +262,192 @@
       </div>
     </div>
 
+    <script>
+      if (!window.name) window.name = 'lurchplus'
+    </script>
     <script src="../assets/js/utils.js"></script>
     <script>
       window.MathJax = {
+        loader: {
+          load: ['input/tex', 'output/svg'] // don’t load output/chtml here
+        },
+        startup: {
+          output: 'svg'
+        },
+        svg: { fontCache: 'global' },
         tex: {
-          inlineMath: [['$', '$']],
-          processEscapes: true
+          inlineMath: [
+            ['$', '$'],
+            ['\\(', '\\)']
+          ],
+          processEscapes: true,
+
+          packages: { '[+]': ['ams', 'unicode'] },
+
+          macros: {
+            abs: ['\\left\\lvert #1 \\right\\rvert', 1],
+            Abs: ['\\left\\lvert\\,{#1}\\,\\right\\rvert', 1],
+            bbA: '{\\mathbb{A}}',
+            bbB: '{\\mathbb{B}}',
+            bbC: '{\\mathbb{C}}',
+            bbD: '{\\mathbb{D}}',
+            bbE: '{\\mathbb{E}}',
+            bbF: '{\\mathbb{F}}',
+            bbG: '{\\mathbb{G}}',
+            bbH: '{\\mathbb{H}}',
+            bbI: '{\\mathbb{I}}',
+            bbJ: '{\\mathbb{J}}',
+            bbK: '{\\mathbb{K}}',
+            bbL: '{\\mathbb{L}}',
+            bbM: '{\\mathbb{M}}',
+            bbN: '{\\mathbb{N}}',
+            bbO: '{\\mathbb{O}}',
+            bbP: '{\\mathbb{P}}',
+            bbQ: '{\\mathbb{Q}}',
+            bbR: '{\\mathbb{R}}',
+            bbS: '{\\mathbb{S}}',
+            bbT: '{\\mathbb{T}}',
+            bbU: '{\\mathbb{U}}',
+            bbV: '{\\mathbb{V}}',
+            bbW: '{\\mathbb{W}}',
+            bbX: '{\\mathbb{X}}',
+            bbY: '{\\mathbb{Y}}',
+            bbZ: '{\\mathbb{Z}}',
+            AA: '{\\mathbb{A}}',
+            BB: '{\\mathbb{B}}',
+            CC: '{\\mathbb{C}}',
+            DD: '{\\mathbb{D}}',
+            EE: '{\\mathbb{E}}',
+            FF: '{\\mathbb{F}}',
+            GG: '{\\mathbb{G}}',
+            HH: '{\\mathbb{H}}',
+            II: '{\\mathbb{I}}',
+            JJ: '{\\mathbb{J}}',
+            KK: '{\\mathbb{K}}',
+            LL: '{\\mathbb{L}}',
+            MM: '{\\mathbb{M}}',
+            NN: '{\\mathbb{N}}',
+            OO: '{\\mathbb{O}}',
+            PP: '{\\mathbb{P}}',
+            QQ: '{\\mathbb{Q}}',
+            RR: '{\\mathbb{R}}',
+            SS: '{\\mathbb{S}}',
+            TT: '{\\mathbb{T}}',
+            UU: '{\\mathbb{U}}',
+            VV: '{\\mathbb{V}}',
+            WW: '{\\mathbb{W}}',
+            XX: '{\\mathbb{X}}',
+            YY: '{\\mathbb{Y}}',
+            ZZ: '{\\mathbb{Z}}',
+            cnf: '{\\operatorname{cnf}}',
+            coeff: '{\\operatorname{coeff}}',
+            cycle: ['\\left({#1}_1{#1}_2\\cdots{#1}_{#2}\\right)', 2],
+            cyclic: ['\\left\\langle{#1}\\right\\rangle', 1],
+            DECLARE: '{\\operatorname{Declare}}',
+            dseg: '{\\operatorname{dseg}}',
+            ficrsep: '{\\hspace{5mm}}',
+            GB: '{\\operatorname{GB}}',
+            hbinom: ['\\left(\\,#1 , #2\\,\\right)', 2],
+            hdn: '{\\operatorname{Dn}}',
+            HeeBGB: '{\\operatorname{HeeBGB}}',
+            hlt: '{\\operatorname{Lt}}',
+            hnil: '{\\operatorname{Nil}}',
+            hrt: '{\\operatorname{Rt}}',
+            hup: '{\\operatorname{Up}}',
+            iff: '\\mathbin{\\Leftrightarrow}',
+            implies: '\\mathbin{\\Rightarrow}',
+            Index: ['\\left\\langle{#1}\\right\\rangle', 1],
+            inv: '{\\operatorname{inv}}',
+            Ker: '{\\operatorname{Ker}}',
+            LC: '{\\operatorname{LC}}',
+            LET: '{\\operatorname{Let}}',
+            maj: '{\\operatorname{maj}}',
+            mapsby: ['\\overset{#1}{\\longrightarrow}', 1],
+            mobius: '{M\\"obius}',
+            multichoose: [
+              '\\left(\\!\\middle(\\genfrac{}{}{0pt}{}{#1}{#2}\\middle)\\!\\right)',
+              2
+            ],
+            negative: ['{\\vphantom{#1}}^-#1', 1],
+            nl: '{\\tabularnewline}',
+            pim: '{\\textsl{Prove~it!~Math}}',
+            pima: '{\\textsl{Prove~it!~Math Academy}}',
+            proveit: '{\\textsl{Prove~it!}}',
+            Qodd: '{\\mathbb{Q}_{\\operatorname{odd}}}',
+            ray: ['\\overrightarrow{#1}', 1],
+            seg: ['\\overline{#1}', 1],
+            seq: ['#1_0,#1_1,#1_2,#1_3,\\ldots', 1],
+            Set: ['\\left\\{\\,#1\\,\\right\\}', 1],
+            sgn: '{\\operatorname{sgn}}',
+            surreal: ['\\left\\langle #1 : #2 \\right\\rangle', 2],
+            Sym: '{\\operatorname{Sym}}',
+            true: '{\\operatorname{true}}',
+            Units: ['\\mathcal{U}\\left(#1\\right)', 1],
+            xaffine: '{\\operatorname{affine}}',
+            xAffine: '{\\operatorname{Affine}}',
+            xaffineC: '{\\operatorname{affineC}}',
+            xaffineM: '{\\operatorname{affineM}}',
+            xand: '\\mathbin{\\operatorname{and}}',
+            xarctanh: '{\\operatorname{arctanh}}',
+            xarg: '{\\operatorname{Arg}}',
+            xbase: '{\\operatorname{Base}}',
+            xbinom: ['{\\genfrac{(}{)}{0pt}{}{\\,#1\\,}{\\,#2\\,}}', 2],
+            xcodomain: '{\\operatorname{Codomain}}',
+            xcong: ['\\underset{#1}\\equiv', 1],
+            xcont: '{\\rightarrow\\leftarrow}',
+            xdiam: '{\\operatorname{diam}}',
+            xdir: '{\\operatorname{dir}}',
+            xdomain: '{\\operatorname{Domain}}',
+            xdseg: '{\\operatorname{dseg}}',
+            xend: '{\\leftarrow}',
+            xeuc: '{\\operatorname{Euc}}',
+            xgcd: '{\\operatorname{gcd}}',
+            xgraph: '{\\mathcal{G}}',
+            xhutch: '{\\operatorname{Hutch}}',
+            xid: '{\\operatorname{id}}',
+            xif: '\\mathbin{\\Leftarrow}',
+            xiff: '\\mathbin{\\Leftrightarrow}',
+            xim: '{\\operatorname{Im}}',
+            ximplies: '\\Rightarrow',
+            xintersect: '{\\cap}',
+            xIntersect: '{\\bigcap}',
+            xinv: '{\\operatorname{inv}}',
+            xlcm: '{\\operatorname{lcm}}',
+            xline: ['\\overleftrightarrow{#1}', 1],
+            xmatrix: [
+              '\\left(\\begin{smallmatrix} #1 & #2 \\\\ #3 & #4 \\end{smallmatrix}\\right)',
+              4
+            ],
+            xmod: '{\\operatorname{mod}}',
+            xMod: '{\\operatorname{Mod}}',
+            xmrface: '{\\operatorname{MrFace}}',
+            xnewt: '{\\operatorname{Newt}}',
+            xNo: '{\\mathbf{No}}',
+            xnot: '{\\operatorname{not}}',
+            xor: '\\mathbin{\\operatorname{or}}',
+            xorb: '{\\operatorname{Orb}}',
+            xorbit: '{\\mathcal{O}}',
+            xpc: '{\\operatorname{PC}}',
+            xpencil: '{\\operatorname{Pencil}}',
+            xpowerset: '{\\mathcal{P}}',
+            xpowset: '{\\mathcal{P}}',
+            xquo: '{\\operatorname{quo}}',
+            xrange: '{\\operatorname{Range}}',
+            xre: '{\\operatorname{Re}}',
+            xroot: '{\\operatorname{Root}}',
+            xseg: '{\\operatorname{seg}}',
+            xseq: ['{#1}_{#2},\\ldots,{#1}_{#3}', 3],
+            xsub: '{\\subseteq}',
+            xsym: '{\\operatorname{Sym}}',
+            xtag: '{\\operatorname{Tag}}',
+            xtaxi: '{\\operatorname{Taxi}}',
+            xunion: '{\\cup}',
+            xUnion: '{\\bigcup}'
+          }
         }
       }
     </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
       id="MathJax-script"></script>
