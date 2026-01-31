@@ -1435,3 +1435,10 @@ div.flexrow {
   font-weight: 600;
   color: #444;
 }
+
+/* Embedding */
+iframe.lurch-embed {
+  width: 92%;
+  height: 400px;
+  margin: 2rem;
+}

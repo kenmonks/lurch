@@ -242,6 +242,8 @@ const install = editor => {
     // if this is not an embedded version of the app, do nothing, because this
     // whole script is designed for embedded copies, not the top-level app
     if ( !isEmbedded() ) return
+    // flag the body for css purposes to let it know it's embedded
+    document.body.classList.add('lurch-embed')
     // when the editor finishes setting up, tell the top window that we're ready
     // to receive whatever document we should be displaying
     editor.on( 'init', () => window.top.postMessage( 'ready-for-embed', '*' ) )
