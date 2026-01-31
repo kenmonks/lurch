@@ -62,9 +62,9 @@ body {
   min-height: 100vh;
 }
 
-/* Don't use background color in full screen mode so that it doesn't peek in around
-   the rounded corners of the application. */
-body:not(.fullscreen) {
+/* Don't use background color in full screen or embedded mode so that it doesn't
+   peek in around the rounded corners of the application. */
+body:not(.fullscreen,.lurch-embed) {
   background: linear-gradient(45deg, darkslategrey, transparent);
 }
 
