@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>About Lurch</title>
+    <title></title>
     <meta charset="utf-8" />
     <meta
       name="description"
@@ -43,25 +43,7 @@
           width="190px" />
       </a>
 
-      <ul class="menu-root">
-        <li
-          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
-        >
-        <li><a href="../getlurch">Get Lurch!</a></li>
-        <li><a href="../teaching">Teaching with Lurch</a></li>
-        <li><a href="../theory">Documentation and Theory</a></li>
-        <li><a href="../talks">Lurch Talk Slides</a></li>
-        <li><a href="../100">100 Theorem Challenge!</a></li>
-        <li
-          ><span class="has-submenu"
-            ><i class="fa-solid fa-caret-right"></i>About Lurch</span
-          >
-          <ul class="submenu hidden">
-            <li><a href="#history">Project History</a></li>
-            <li><a href="#why_lurch">Why "Lurch"?</a></li>
-          </ul></li
-        >
-      </ul>
+      <ul class="menu-root"> </ul>
 
       <div id="contact">
         <div>
@@ -86,73 +68,233 @@
     <!-- flex column for content-block and footer-block -->
     <div id="wrap">
       <div id="content-block">
-        <div class="title-box">
-          <h1>About Lurch Plus</h1>
-          <h2>Lurch plus other goodies!</h2>
-        </div>
+        <h1>Lurch.plus — Eleventy Source Conventions</h1>
         <p
-          ><a href="https://lurch.plus">Lurch Plus</a> is the official home of
-          the Lurch proof verification project and its applications. In addition
-          to housing the latest official version of the Lurch web application,
-          it also contains supporting
-          <a href="../index.html#course"
-            >topics, content, course materials, and assignments</a
+          >This folder contains the <strong>Eleventy source</strong> for
+          https://lurch.plus.<br />
+          Everything here exists to build the static site; nothing here is
+          deployed directly.</p
+        >
+        <h2>Core ideas</h2>
+        <ul>
+          <li><strong>Markdown-first</strong> content</li>
+          <li
+            ><strong>YAML for configuration/data</strong> whenever possible</li
           >
-          from my undergraduate Introduction to Proof course, the
-          <a href="../100">100 Theorem Challenge!</a>, and other Lurch-related
-          goodies.</p
+          <li
+            ><strong>Minimal Eleventy magic</strong>, but consistent use of its
+            data cascade</li
+          >
+          <li
+            >Site styling and math rendering match the Lurch editor exactly</li
+          >
+        </ul>
+        <h2>Folder structure</h2>
+        <ul>
+          <li>
+            <p><code>data/</code></p>
+            <ul>
+              <li>Global site data (YAML/JS)</li>
+              <li>Examples: <code>site.yml</code>, <code>nav.yml</code></li>
+              <li
+                >Available in templates as <code>site</code>, <code>nav</code>,
+                etc. (namespaces)</li
+              >
+            </ul>
+          </li>
+          <li>
+            <p><code>includes/</code></p>
+            <ul>
+              <li><code>layouts/</code> — Liquid layouts (pages)</li>
+              <li
+                ><code>partials/</code> — Reusable UI fragments (menus, headers,
+                etc.)</li
+              >
+            </ul>
+          </li>
+          <li>
+            <p><code>assets/</code></p>
+            <ul>
+              <li>Static assets copied through as-is</li>
+              <li>CSS, JS, images, icons</li>
+            </ul>
+          </li>
+          <li>
+            <p
+              >Content folders (e.g. <code>learn/</code>,
+              <code>theory/</code>)</p
+            >
+            <ul>
+              <li>Markdown source files</li>
+              <li
+                >Optional per-folder defaults via <code>*.meta.yml</code> or
+                <code>*.yml</code> where * is the folder name.</li
+              >
+            </ul>
+          </li>
+        </ul>
+        <h2
+          >Directory defaults (<code>*.meta.yml</code> or
+          <code>*.yml</code>)</h2
         >
-        <h2 id="history">Project History</h2>
         <p
-          >In 1995, I was teaching my undergraduate course on Chaos and
-          Fractals, and at that time our department did not offer a bridge
-          course to introduce students to mathematical proofs. To address this,
-          I began the course with an introduction to mathematical proof, using a
-          modified version of Gentzen’s natural deduction. During the course,
-          one of my students, Nathan Carter, asked if it was possible to develop
-          a computer program to verify such proofs. This led to collaborative
-          discussions and the initial design and implementation of a few simple
-          tools before Nathan graduated and went off to graduate school in
-          mathematics.</p
+          >Folders may contain a YAML file named after the folder, with suffix
+          <code>.meta.yml</code>. or <code>.yml</code></p
         >
         <p
-          >Years later we revisited the project, and in 2008 we were awarded an
-          NSF grant (NSF DUE CCLI grant #0736644) to develop the first version
-          of the software. This desktop application, also known as Lurch, became
-          a key part of my Introduction to Proof classes and the Prove It! Math
-          Academy summer program.</p
+          >Example: <code>learn/proofs/proofs.yml</code> or
+          <code>learn/proofs/proofs.meta.yml</code></p
+        >
+        <p>These files define defaults like:</p>
+        <ul>
+          <li><code>layout</code></li>
+          <li><code>navMode</code></li>
+          <li><code>courseId</code></li>
+        </ul>
+        <p>They apply to all Markdown files in that folder and below.</p>
+        <h2>Layouts</h2>
+        <p>Layouts live in <code>includes/layouts/</code>.</p>
+        <p>Common layouts:</p>
+        <ul>
+          <li><code>lurchplus.liquid</code> — project pages</li>
+          <li><code>course.liquid</code> — course / textbook content</li>
+        </ul>
+        <p>Layouts are applied via directory defaults or front matter.</p>
+        <h2>Navigation</h2>
+        <p
+          >Navigation is <strong>hand-rolled</strong>, not Eleventy
+          TOC-based.</p
+        >
+        <ul>
+          <li>Menu rendering: <code>includes/partials/menu.liquid</code></li>
+          <li>Behavior (collapse/expand): <code>assets/js/utils.js</code></li>
+          <li>Structure defined in <code>data/nav.yml</code></li>
+          <li>Pages select a navigation mode via <code>navMode</code></li>
+        </ul>
+        <h2>Math</h2>
+        <ul>
+          <li>Math rendered with MathJax</li>
+          <li>Custom LaTeX macros defined globally</li>
+          <li>Styling matches Lurch editor contexts exactly</li>
+        </ul>
+        <h2>Documentation-only files</h2>
+        <p
+          >Files like this README exist for developers only and are excluded
+          from output using:</p
+        >
+        <pre><code>eleventyExcludeFromCollections: true
+</code></pre>
+        <h2>Navigation &amp; Collections (Eleventy Quick Reference)</h2>
+        <h3>Eleventy Navigation Plugin — What it is</h3>
+        <p
+          >Eleventy’s navigation plugin builds a tree structure of pages based
+          on metadata you add to front matter. That front matter describes the
+          ancestor-dependency tree.</p
+        >
+        <p>Minimal front matter example</p>
+        <pre><code>eleventyNavigation:
+  key: &quot;Intro to Proof&quot;
+</code></pre>
+        <p>Nested example:</p>
+        <pre><code>eleventyNavigation:
+  key: &quot;Chapter 1&quot;
+  parent: &quot;Intro to Proof&quot;
+  order: 1
+</code></pre>
+        <p>Accessing the navigation tree (Liquid)</p>
+        <pre><code>
+</code></pre>
+        <p>Start from a specific root:</p>
+        <pre><code>
+</code></pre>
+        <p>this gets that node and</p>
+        <p
+          >Each node typically contains: • title • url • key • children (array)
+          • any custom fields you added in eleventyNavigation</p
+        >
+        <h2>Eleventy collections — What they are</h2>
+        <p
+          >A collection is just an array of pages with metadata. Each item
+          represents one rendered page and includes: • url • inputPath •
+          outputPath • merged data (front matter + folder + global)</p
         >
         <p
-          >Building on lessons learned from the initial version, we completely
-          redesigned and rebuilt Lurch from the ground up, transforming it into
-          the modern web application it is today.</p
+          >Built-in collection • collections.all → all renderable pages (most
+          common input for navs, indexes, sitemaps)</p
         >
+        <p>Custom collections (in .eleventy.js)</p>
+        <pre><code>eleventyConfig.addCollection(&quot;chapters&quot;, api =&gt;
+  api.getFilteredByGlob(&quot;./src/learn/proofs/ch*.md&quot;)
+)
+</code></pre>
+        <p>Use in Liquid:</p>
+        <pre><code>
+</code></pre>
+        <h2>My Custom Markdown classes</h2>
         <p
-          >In Spring 2024, I created the necessary content and introduced the
-          new version of Lurch in my Introduction to Proof course. It was met
-          with great success.</p
+          >Using the <code>markdown-it-div</code> and
+          <code>markdown-it-attr</code> plugins allows me to define custom
+          markdown wrappers and attributes via css.</p
         >
-        <h2 id="why_lurch">Why is it called ‘Lurch’?</h2>
+        <h3>Mult-column Blocks (equally spaced)</h3>
+        <pre><code class="language-markdown">Usage:
+::: cols cols-2 middle gap-md stack-sm
+  ::: col
+    
+  :::   
+  ::: col
+  
+  :::
+:::
+</code></pre>
         <p
-          >The origin story of the name actually involves a computer algebra
-          system, types of trees (the plants, not the discrete structures), and
-          a Monty Python skit.</p
+          >Note that markdown allows fenced blocks to be indented up to 3 spaces
+          for nesting (the indentation of the fence is removed from the
+          indentation of the content as well)</p
         >
+        <p><em>Options:</em></p>
+        <ul>
+          <li>cols-2, cols-3, cols-4</li>
+          <li>gap-sm, gap-md, gap-lg</li>
+          <li>left, center, right</li>
+          <li>top, middle, bottom</li>
+        </ul>
+        <h3>Side-by-side panes</h3>
+        <pre><code>Usage:
+::: split left-25 
+  ::: pane center middle
+    
+  :::   
+  ::: pane left
+  
+  :::
+:::
+</code></pre>
         <p
-          >Back in the 1990’s, Nathan and I were brainstorming designs for an
-          application that would be an “expert system for verifying mathematical
-          proofs analogous to the way the Maple CAS is an expert system for
-          doing algebraic computations”. To distinguish the designs from each
-          other and from Maple we named them after other trees besides Maple -
-          Elm, Oak, Ash, Pine - you get the idea.</p
+          >Note that markdown allows fenced blocks to be indented up to 3 spaces
+          for nesting (the indentation of the fence is removed from the
+          indentation of the content as well)</p
         >
-        <p
-          >We eventually named one after a particular tree that was made
-          humorously famous by a Monty Python sketch - the Larch. But as the
-          design evolved, we made a small adjustment and decided the result
-          needed a slightly modified name. Enter Lurch. The name stuck, and we
-          really can’t imagine calling it anything else at this point.</p
-        >
+        <p><em>Options:</em></p>
+        <ul>
+          <li
+            >split
+            <ul>
+              <li
+                >left-20, 25, 33, 40, 50, 60, 66, 75, 80 (thirds, fourths,
+                fifths)</li
+              >
+            </ul>
+          </li>
+          <li
+            >pane
+            <ul>
+              <li>gap-sm, gap-md, gap-lg</li>
+              <li>left, center, right</li>
+              <li>top, middle, bottom</li>
+            </ul>
+          </li>
+        </ul>
       </div>
 
       <div id="footer-block">

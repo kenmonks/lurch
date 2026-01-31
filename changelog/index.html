@@ -161,7 +161,7 @@
             <a href="/lde/src/experimental/parsers/lurch-parser-docs.html"
               >parser docs page</a
             >
-            now turns red when the contents can't parse.</li
+            now turns red when the contents can’t parse.</li
           >
           <li
             ><strong>Algebra Rule includes Arithmetic($\mathbb{Q}$)</strong> -
@@ -230,7 +230,7 @@
           >
           <li
             ><strong>Algebra Rule Support in Transitive Chains</strong> - Users
-            can now use cite 'by algebra' after any equation within a transitive
+            can now use cite ‘by algebra’ after any equation within a transitive
             chain when the Algebra Rule is available to check simple algebric
             identities by CAS.</li
           >
@@ -240,12 +240,12 @@
             2024. Multiple things contributed, but the main one was only
             instantiating one expression per pass for a given rule to avoid lots
             of duplicates. There is quite a bit of finesse required to do that
-            in a way that doesn't avoid instaitiations.</li
+            in a way that doesn’t avoid instaitiations.</li
           >
           <li
             ><strong>Expression editor checks both parsers</strong> - upgraded
             the expression editor dialog so it forbids any Lurch notation that
-            can't parse with both parsers, LaTeX and putdown (it was only
+            can’t parse with both parsers, LaTeX and putdown (it was only
             checking conversion to LaTeX).</li
           >
           <li
@@ -253,8 +253,8 @@
             quoted strings containing spaces as symbol names, e.g.,
             <code>declare is, &quot;natural number&quot;</code> and
             <code>Assume n is a &quot;natural number&quot;</code>. Here,
-            &quot;natural number&quot; is a single Lurch symbol. In the editor,
-            the surrounding quotes are hidden, so the latter expression appears
+            “natural number” is a single Lurch symbol. In the editor, the
+            surrounding quotes are hidden, so the latter expression appears
             simply as <code>Assume n is a natural number</code> as desired. If
             user-defined MixFix operator capability is implemented in the
             future, double quotes may no longer be necessary.</li
@@ -296,7 +296,7 @@
               <li
                 >If the user edits an expression while validation is in
                 progress, when the notification closed it would also close the
-                user's expression editor dialog.</li
+                user’s expression editor dialog.</li
               >
             </ol>
           </li>
@@ -305,9 +305,9 @@
             tooltip to distinguish it from the meaningful math dialog.</li
           >
           <li
-            ><strong>Lurch notation</strong> - The Lurch notation 'neg' and
-            'not' both semantically parse the same way, but 'neg' renders as
-            $\neg$, while 'not' renders as <code>not</code></li
+            ><strong>Lurch notation</strong> - The Lurch notation ‘neg’ and
+            ‘not’ both semantically parse the same way, but ‘neg’ renders as
+            $\neg$, while ‘not’ renders as <code>not</code></li
           >
           <li
             ><strong>Context Display Overhaul</strong>
@@ -328,7 +328,7 @@
           <li
             ><strong>Added MathLive and KaTeX locally</strong> to the Lurch
             repository to prevent Lurch rendering from breaking when the cdn
-            doesn't deliver MathLive (as happened with the upkg and the current
+            doesn’t deliver MathLive (as happened with the upkg and the current
             version used by Lurch)</li
           >
           <li
@@ -381,7 +381,7 @@
           >
           <li
             ><strong
-              >Changed the Formatting for 'and' in Declaration Sequences</strong
+              >Changed the Formatting for ‘and’ in Declaration Sequences</strong
             >
             when showing meaning
             <ul class="dash">
@@ -391,7 +391,7 @@
                 <code>and</code> before the last constant being declared.</li
               >
               <li
-                >The grammatical 'and' is shown in black, while the meaningful
+                >The grammatical ‘and’ is shown in black, while the meaningful
                 symbol is shown in gold.</li
               >
             </ul>
@@ -470,6 +470,8 @@
           packages: { '[+]': ['ams', 'unicode'] },
 
           macros: {
+            m: '\\color{#cd853f}{}',
+            blk: '\\color{#333333}{}',
             abs: ['\\left\\lvert #1 \\right\\rvert', 1],
             Abs: ['\\left\\lvert\\,{#1}\\,\\right\\rvert', 1],
             bbA: '{\\mathbb{A}}',

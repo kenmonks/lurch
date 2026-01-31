@@ -59,7 +59,7 @@
   /* recall shell background color */
   --recall-color: #efe9f1;
   /* comment color */
-  --comment-color: #efe9f1;
+  --comment-color: #ebebeb;
   /* inline semantic math expression font color */
   --math-color: #cd853f; /* turquoise #079aa3 golds #cd853f or #D8833B; */
   /* inline semantic math expression font color */
@@ -417,6 +417,35 @@ body.course {
 #content-block code {
   font-size: 110%;
 }
+/* alternative with no border and thicker colored font
+.course #content-block :not(pre) > code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--accent-color);
+} */
+.course #content-block :not(pre) > code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95em;          /* usually better than 110% */
+  font-weight: 500;           /* subtle differentiation without shouting */
+  color: #1f2937;             /* slightly darker than body #333 */
+  background: rgba(2, 93, 140, 0.08);   /* tint toward your accent */
+  border: 1px solid rgba(2, 93, 140, 0.18);
+  border-radius: 0.35em;
+  padding: 0.08em 0.32em;     /* “chip” feel, but minimal */
+  white-space: break-spaces;  /* keeps multiple spaces if you ever need them */
+}
+/* Don’t double-style code inside code blocks */
+.course #content-block pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
 
 #content-block:not(.course #content-block) p:not(#content-block > p, .example-box > p:not(:last-child)), 
 #content-block ol:not(#content-block > ol, .example-box > ol:not(:last-child)), 
@@ -576,10 +605,12 @@ span.green-check {
 
 div.blue-box {
   background-color: #e7f3fd;
-  padding: 1rem 1rem 0.25rem 1rem;
+  padding: 1rem;
   margin-left: 0;
   border-radius: 12pt;
 }
+#content-block#content-block div.blue-box > :first-child { margin-top: 0; }
+#content-block#content-block div.blue-box > :last-child { margin-bottom: 0; }
 
 /* faux display math centering for any content */
 .display {
@@ -594,6 +625,10 @@ div.blue-box {
 .display > * {
   display: inline-block;
 }
+.display > :last-child {
+  margin-bottom: 0;
+}
+
 
 /* a wrapper for tables and their titles so they don't all have to be attributed
 with booktab*/
@@ -685,7 +720,9 @@ Example:
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
-
+#content-block#content-block .example-box > :last-child {
+  margin-bottom: 0;
+}
 .course #content-block .example-box {
   margin-top: 1em;
 }
@@ -696,6 +733,9 @@ Example:
   padding: 0.5rem 0.7rem;
   background-color: antiquewhite;
   border-radius: 10px;
+}
+#content-block .note-box > :last-child {
+  margin-bottom: 0;
 }
 
 #content-block .example-box h3 {
@@ -1100,7 +1140,7 @@ div.flexrow {
 /* ---------------------------
    Lurch-style blocks in notes
    --------------------------- */
-.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) {
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .Comment) {
   line-height: var(--Lurch-line-height);
   padding-top: 0.65em;
   padding-bottom: 0.65em;

@@ -99,12 +99,12 @@
           >Since Lurch supports proofs in <em>any</em> context, deciding what
           actually constitutes a formalization of one of the proofs is not
           obvious. For example, one can simply add each of the 100 theorems to
-          the context of a Lurch document as rules and they will all be 'proven'
+          the context of a Lurch document as rules and they will all be ‘proven’
           trivially.</p
         >
         <p
           >To address this, we self-impose our own standard for what qualifies.
-          Consistent with Lurch's philosophy, we consider a theorem to be proved
+          Consistent with Lurch’s philosophy, we consider a theorem to be proved
           by Lurch if the proof contains, at minimum, the level of detail you
           might find for the proof of that theorem in a textbook, spotting all
           of the other details as part of the context. Citing a proof of the
@@ -1460,6 +1460,8 @@
           packages: { '[+]': ['ams', 'unicode'] },
 
           macros: {
+            m: '\\color{#cd853f}{}',
+            blk: '\\color{#333333}{}',
             abs: ['\\left\\lvert #1 \\right\\rvert', 1],
             Abs: ['\\left\\lvert\\,{#1}\\,\\right\\rvert', 1],
             bbA: '{\\mathbb{A}}',
