@@ -250,7 +250,7 @@ const color = failed ? chalk.ansi256(9) : chalk.ansi256(40)
 const ptest = (singleTestIndex === null) ? '    1' : '    0'
 console.log(color(`\n${passed} tests passed - ${failed} tests failed\n`))
 if (failedTests.size) 
-  console.log(itemPen(`Failed tests:`),...[...failedTests].sort((x,y)=>x-y),'\n')
+  console.log(itemPen(`Failed test number(s):`),...[...failedTests].sort((x,y)=>x-y),'\n')
 console.log(`
 ${checkPen(numChecks.toString().padStart(5, ' '))} ${checkPen('✔︎')}'s
 ${checkPen(numIndets.toString().padStart(5, ' '))} ${itemPen('?')}'s
