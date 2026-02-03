@@ -64,7 +64,7 @@ body {
 
 /* Don't use background color in full screen or embedded mode so that it doesn't
    peek in around the rounded corners of the application. */
-body:not(.fullscreen,.lurch-embed) {
+html:not(.lurch-embed) body:not(.fullscreen) {
   background: linear-gradient(45deg, darkslategrey, transparent);
 }
 

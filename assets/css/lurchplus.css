@@ -90,6 +90,8 @@
   --tight-block-skip: 0.75em;
   /* the gap between the  */
   --content-nav-gap: 20px;
+  /* the gap between the  */
+  --embedded-lurch-height: 400px;
 }
 
 * {
@@ -1439,6 +1441,14 @@ div.flexrow {
 /* Embedding */
 iframe.lurch-embed {
   width: 92%;
-  height: 400px;
+  height: var(--embedded-lurch-height);
+  margin: 2rem;
+}
+
+/* hide the contents of the divs that are be replaced by the lurch app iframe
+   before they are replaced*/
+div.lurch-embed {
+  visibility: hidden;
+  min-height: var(--embedded-lurch-height);
   margin: 2rem;
 }

@@ -256,7 +256,8 @@ const install = editor => {
         wrapper.innerHTML = event.data['lurch-embed']
         const div = wrapper.firstElementChild
         // ensure it's the right format
-        const format = div.getAttribute( 'format' ) || 'markdown'
+        // TODO: temporarily setting this to html until I get the markdown figured out
+        const format = div.getAttribute( 'format' ) || 'html'
         if ( format == 'html' ) {
             // convert Lurch-specific elements, fill editor, and maybe validate
             putElementContentsIntoEditor( div, editor )
