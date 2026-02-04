@@ -470,40 +470,6 @@
           </div>
         </div>
         <div class="question">
-          <div class="wrap-noskip">
-            <p
-              >Define a toy recursive formal system as follows. The statements
-              can be any finite string of one or more characters, and there are
-              two rules of inference.</p
-            >
-            <ul>
-              <li
-                ><strong>Rule 0</strong>: The string <code>FLM</code> is a
-                theorem.</li
-              >
-              <li
-                ><strong>Rule 1</strong>: The concatenation of any two theorems
-                is a theorem.</li
-              >
-            </ul>
-            <p>Notice that Rule 0 is an axiom.</p>
-          </div>
-          <div class="parts">
-            <ol>
-              <li>What are the theorems in this system?</li>
-              <li
-                >What statements can be proven from the statement
-                <code>GS</code>?</li
-              >
-              <li
-                >List all statements that can be proven from the statements
-                <code>GS</code> and <code>LTR</code> that are less than ten
-                characters long.</li
-              >
-            </ol>
-          </div>
-        </div>
-        <div class="question">
           <p
             >Define a toy formal system as follows. The statements are all
             nonempty words that only contain the character $\star$. There are
@@ -530,50 +496,38 @@
             </ol>
           </div>
         </div>
-        <div class="question">
-          <p
-            >Define a toy formal system as follows. The statements are all
-            strings that begin with zero or more copies of the letter
-            <code>Y</code> followed by one or more copies of the letter
-            <code>X</code>. There are three rules of inference.</p
-          >
-          <ul>
-            <li
-              ><strong>Rule 0</strong>: The string <code>X</code> is a
-              theorem.</li
-            >
-            <li
-              ><strong>Rule 1</strong>: The string formed by replacing every
-              <code>Y</code> with <code>YY</code> and every <code>X</code> with
-              <code>YX</code> in a theorem is also a theorem.</li
-            >
-            <li
-              ><strong>Rule 2</strong>: If a theorem has <code>XXX</code> either
-              at the start of the string or immediately following a
-              <code>Y</code>, then the string formed by replacing that
-              occurrance of <code>XXX</code> with <code>Y</code> is also a
-              theorem.</li
-            >
-            <li
-              ><strong>Rule 3</strong>: If a theorem contains exactly two
-              <code>X</code>s, then the string formed by deleting one of the two
-              <code>X</code>s and then replacing every <code>Y</code> with
-              <code>XX</code> is also a theorem.</li
-            >
-          </ul>
-          <p
-            >For example, if you have <code>YYYXX</code> as a premise in Rule 3,
-            then you could conclude <code>XXXXXXX</code>.</p
-          >
-          <div class="parts">
-            <ol>
-              <li>Prove <code>XXXXX</code>.</li>
-              <li>Prove <code>YYY</code>.</li>
-              <li>Prove <code>YYX</code>.</li>
-              <li>What do you think the theorems are in this system?</li>
-            </ol>
-          </div>
-        </div>
+        <!-- 
+::: question
+ ::: wrap-noskip
+ Define a toy recursive formal system as follows. The statements can be any finite string of one or more characters, and there are two rules of inference.
+ - **Rule 0**: The string `FLM` is a theorem.
+ - **Rule 1**: The concatenation of any two theorems is a theorem.
+
+ Notice that Rule 0 is an axiom.
+ :::
+
+ ::: parts
+ 1. What are the theorems in this system?
+ 2. What statements can be proven from the statement `GS`?
+ 3. List all statements that can be proven from the statements `GS` and `LTR` that are less than ten characters long.
+ :::
+::: 
+
+::: question
+Define a toy formal system as follows.  The statements are all strings that begin with zero or more copies of the letter `Y` followed by one or more copies of the letter `X`. There are three rules of inference.
+  - **Rule 0**: The string `X` is a theorem.
+  - **Rule 1**: The string formed by replacing every `Y` with `YY` and every `X` with `YX` in a theorem is also a theorem.
+  - **Rule 2**: If a theorem has `XXX` either at the start of the string or immediately following a `Y`, then the string formed by replacing that occurrance of `XXX` with `Y` is also a theorem.
+  - **Rule 3**: If a theorem contains exactly two `X`s, then the string formed by deleting one of the two `X`s and then replacing every `Y` with `XX` is also a theorem.
+
+For example, if you have `YYYXX` as a premise in Rule 3, then you could conclude `XXXXXXX`.
+::: parts
+1. Prove `XXXXX`.
+2. Prove `YYY`.
+3. Prove `YYX`.
+4. What do you think the theorems are in this system?
+:::
+::: -->
       </div>
 
       <div id="footer-block">
@@ -614,11 +568,8 @@
     </div>
 
     <script>
-      if (!window.name) window.name = 'intro-to-proof'
-    </script>
-    <script src="../../../assets/js/embedded.js"></script>
-    <script type="module" src="../../../lurchmath/embed-listener.js"></script>
-    <script src="../../../assets/js/utils.js"></script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
     <script src="../../../assets/js/mathjax-config.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
