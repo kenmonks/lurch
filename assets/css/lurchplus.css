@@ -682,21 +682,7 @@ Example:
   color: #555;
   margin: 0.35em 0 1.2em 0;
 }
-/* Optional table wrap div to allow captions to restrict to table width.
-
-Example:
-
-::: title-block
-[Rules of Propositional Logic]{.table-title}
-
-| Name | Rule |
-|:---|:---|
-| and+ | ... |
-
-[This table summarizes the inference rules.]{.table-caption}
-:::
-
-*/
+/* Optional table wrap div to allow captions to restrict to table width. */
 .course #content-block .table-block {
   display: block;
   margin: 1em auto 1.2em auto;    /* center */
@@ -713,6 +699,14 @@ Example:
 /* keep table centered within wrapper */
 .course #content-block .table-block table {
   margin: 0 auto;
+}
+/* optionally make the rows closer together.  The rows have no gap by default,
+so the spacing comes from cell padding */
+.course #content-block .table-block tr:not(:last-of-type) td {
+  padding-bottom: 0.25rem;
+}
+.course #content-block .table-block tr:not(:first-of-type) td {
+  padding-top: 0.25rem;
 }
 
 #content-block .example-box {
@@ -1422,7 +1416,6 @@ div.flexrow {
     display: none;
   }
 }
-
 
 /* -------------------------
    Specialty items

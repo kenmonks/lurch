@@ -188,7 +188,7 @@
           expressions it is being applied to are called the
           <em>arguments</em>.</p
         >
-        <h4>Prefix, Infix, and List Notation</h4>
+        <h3>Prefix, Infix, and List Notation</h3>
         <p>There are several common ways to denote compound expressions.</p>
         <ul class="disc">
           <li
@@ -280,6 +280,14 @@
                 <td style="text-align: left">$(\xop{+}\xs 1\xs 2\xs 3)$</td>
               </tr>
               <tr>
+                <td style="text-align: left">$(1+2)+3$</td>
+                <td style="text-align: left">$\xop{+}(\xop{+}(1,2),3)$</td>
+                <td style="text-align: left">$(1+2)+3$</td>
+                <td style="text-align: left"
+                  >$(\xop{+}\xs (\xop{+}\xs 1\xs 2)\xs 3)$</td
+                >
+              </tr>
+              <tr>
                 <td style="text-align: left">$x^2$</td>
                 <td style="text-align: left">$\text{^}(x,2)$</td>
                 <td style="text-align: left">$x\text{^}2$</td>
@@ -294,7 +302,7 @@
               <tr>
                 <td style="text-align: left">$3\cdot x=1$</td>
                 <td style="text-align: left">$\xop{=}(\cdot(3,x),1)$</td>
-                <td style="text-align: left">$3\cdot x = 1 $</td>
+                <td style="text-align: left">$(3\cdot x) = 1 $</td>
                 <td style="text-align: left"
                   >$(\xop{=}\xs( \cdot\xs 3\xs x)\xs 1)$</td
                 >
@@ -312,7 +320,166 @@
           >From now on, when we use the term <strong>expression</strong> we will
           mean either an identifier or a compound expression formed by applying
           an expression to one or more expressions via function application, as
-          illustrated in the table.</p
+          illustrated in the table. Notice that the exponentiation operator
+          $\text{^}$ is usually omitted and formatted with the second argument
+          as a superscript in traditional math notation. Similarly, is also
+          commonplace in mathematics to omit explicit multiplication symbols in
+          algebraic expressions like $3x^3+2x-1$, but in this course we will
+          always write it explicitly, like $3\cdot x^3+2\cdot x-1$.</p
+        >
+        <h3>Precedence</h3>
+        <p
+          >Prefix and list notation include parentheses, so their meaning is
+          unambiguous, but compound expressions that combine different infix
+          operators sometimes require parentheses to disambiguate them. For
+          example, if $\star$ and $\diamond$ are infix operators and we write $a
+          \star b \diamond c$ does that mean $(a \star b) \diamond c$ or $a
+          \star (b \diamond c)$. In list notation, the former is $(\diamond\xs
+          (\star\xs a\xs b)\xs c)$ whereas the latter is $(\star \xs a\xs
+          (\diamond\xs b\xs c))$. In such a situation, we can use parentheses to
+          disambiguate which one we mean.</p
+        >
+        <p
+          >We can eliminate extra parentheses and reduce clutter by assigning
+          <em>precedence</em> to the operators. In the example $a \star b
+          \diamond c$ if we say that $\star$ has higher precedence than
+          $\diamond$ we are asserting that this expression should be interpreted
+          as $(a \star b) \diamond c$. If we say that $\diamond$ has higher
+          precedence than $\star$ then it would be interpreted as $a \star (b
+          \diamond c)$. If the operators have the same precedence, then the
+          expression is ambiguous and therefore syntactically invalid.</p
+        >
+        <p
+          >Some operators have universally accepted precedence, for example in
+          elementary arithmetic, multiplication $\cdot$ has higher precedence
+          than addition $+$, so that $3\cdot x+1$ is interpreted as $(3\cdot
+          x)+1$, not $3\cdot(x+1)$. Other choices of precedence are not as
+          universally accepted and may vary from textbook to textbook. In this
+          course we will use the following precedence for the operators.</p
+        >
+        <div class="table-block">
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: center">Precedence (high to low)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center"
+                  >parentheses $(\xs)$, tuples $\langle\xs \rangle$, equivalence
+                  classes $[\xs ]$, sets $\{\xs \}$, symbols, numbers</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >exponentials $\left(x^2\right)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >function application $\left(f_0(x,y)(z)\right)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center">postfix ($n!$, $f’$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >abstract infix operators ($\star$, $\oplus$, $\otimes$,
+                  $\odot$)</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >negation ($-x$), reciprocal ($1/2$)</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center">product ($2\cdot x$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >summation $\left(\sum_{k=0}^n f(k)\right)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >indexed union and intersection $\left(\bigcup_{i \in
+                  \mathbb{N}} A_{i}\right)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center">sum ($x+y-1$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">choose $\binom{m+n}{m}$</td>
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >composition $\left(g\circ f\right)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center">intersection ($A\cap B$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">union ($A\cup B$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >cartesian product ($A\times B$)</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >relative complement ($A\setminus B$)</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >relations ($f:A\to B$, $\underset{m}{\equiv}$, $\subseteq$,
+                  $\in$, $\notin$, $\mid$, $\leq$, $\lt$, $=$, $\neq$, $\sim$,
+                  ‘is’, ‘loves’)</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center">not ($\neg$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">and ($\wedge$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">or ($\vee$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">implies ($\Rightarrow$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">iff ($\Leftrightarrow$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">binding ($x.P(x)$)</td>
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >quantified ($\forall x.P(x)$)</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: center"
+                  >declarations (‘Declare’, ‘Let’, ‘for some’)</td
+                >
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p
+          >Note that subtraction is treated as addition of the negative and
+          division as multiplication of the reciprocal, so that $x-2$ means the
+          same thing as $x+(-2)$ (i.e., $(\xop{+}\xs x\xs (\xop{-}\xs 2))$ in
+          list notation), and $x/2$ means the same thing as $(\xop{\cdot}\xs
+          x\xs (\xop{/}\xs 2))$ in list notation.</p
         >
         <h2>Environments</h2>
         <p
@@ -447,6 +614,37 @@
             know, and write each one in (a) standard math formatting, (b) prefix
             notation, (c) infix notation, and (d) applicative list notation.</p
           >
+        </div>
+        <div class="question">
+          <p
+            >Fully parenthesize each of the following expressions according to
+            the precedence of operations, and express each one in list
+            notation.</p
+          >
+          <div class="parts cols-2">
+            <ol>
+              <li>$2\cdot x^2 + y$</li>
+              <li>$y \lt y+1$</li>
+              <li>$y \lt y \implies 1 = 0$</li>
+              <li>$A \cap B \cup C$</li>
+              <li>$A \subseteq B \xand P(x) \implies Q(x) \xor B = A$</li>
+              <li>$x+1 \in A \xand x/2 \in A \implies x^2\neq y$</li>
+              <li>$-x^2 + y \cdot z$</li>
+              <li>$f^{-1}(x)^2 + g^{-1}(x)^2$</li>
+              <li>$x \mid y \xand y \mid x \iff x = y$</li>
+              <li>$x \in A \cap B \iff x \in A \xand x \in B$</li>
+              <li>$\neg x \in A \setminus B \iff x \notin A \xand x \in B$</li>
+              <li>$f : A \to B \xand x \in A \implies f(x) \in B$</li>
+              <li
+                >$\forall x.\ x \in A \implies \exists y.\ y \in B \xand x =
+                f(y)$</li
+              >
+              <li
+                >$\langle x, y \rangle \in A \times B \iff x \in A \xand y \in
+                B$</li
+              >
+            </ol>
+          </div>
         </div>
       </div>
 
