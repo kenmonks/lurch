@@ -600,7 +600,7 @@ Ref = a:RefLabel _ [(\[{"] _ b:([^)\]}"]+) _ [)\]}"]
 // Shorthands are special symbols which are not allowed to be part
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
-Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma)
+Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / AlgRule / Comma)
                      !alphanum { return txt(a) }
   // Shorthands
   Equiv   = 'equiv'i { return '~\\equiv~' }
@@ -609,8 +609,9 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma
   Rule    = $(('rule'i / 'axiom'i / 'definition'i) ':'?)
   Thm     = $(('theorem'i / 'thm'i / 'lemma'i / 'corollary'i) ':'?)
   Proof   = $('proof'i ':'?)
-  Cases   = $('CasesRule'i ':'?) { return 'Cases' }
+  Cases   = 'CasesRule'i ':'? { return 'Cases' }
   Subs    = 'SubsRule'i ':'? { return 'Substitution' }
+  AlgRule = 'AlgebraRule'i ':'? { return 'Algebra' }
   Comma   = $(',')
 
 ///////////////////////////////////////////////////////////////////////////////
