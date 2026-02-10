@@ -184,9 +184,9 @@
           >We begin by playing with some simple “toy” proof systems that
           illustrate some aspects of formal proofs.</p
         >
-        <div class="definition Proof">
+        <div class="Def">
           <p
-            ><strong>Definition.</strong> A
+            ><strong>Definition <span class="thm"></span>.</strong> A
             <em>Formal Proof System</em> consists of</p
           >
           <ol>
@@ -198,27 +198,49 @@
           </ol>
         </div>
         <p
-          >The goal of our game will be to determine when a statement in the
-          system is a theorem. The theorems are, by definition, the valid
-          statements in a formal system. They don’t need to be true
-          <em>about</em> something else, via some interpretation of the
-          statements. To determine a statement is valid in a formal system we
-          only need to verify that it is a theorem.</p
+          >Thus, to specify formal proof system we must provide two pieces of
+          information.</p
+        >
+        <ul>
+          <li
+            ><span class="qu"><strong>Language</strong></span> The syntax and
+            grammar that determine the set of valid statements.</li
+          >
+          <li
+            ><span class="qu"><strong>Rules</strong></span> The criteria that
+            specify the set of theorems.</li
+          >
+        </ul>
+        <p
+          >The goal of our game will be to play according to the rules in order
+          to determine when a statement in the system is a theorem. The theorems
+          are, by definition, the valid statements in a formal system. They
+          don’t need to be true <em>about</em> something else, via some
+          interpretation of the statements. To determine a statement is valid in
+          a formal system we only need to verify that it is a theorem.</p
         >
         <p
-          >As with English, Spanish, and other languages, the syntax and grammar
-          that define the statements is called the <em>language</em> of the
-          formal system.</p
+          >That is not to say that there is no value in interpreting our
+          statements to be talking about something. Indeed, our intuition about
+          what the statements might be talking about is an essential aspect of
+          mastering the art of theorem proving. But such interpretations are not
+          required in order to determine that a particular statement is a
+          theorem in a formal system. This allows us to interpret the statements
+          individually however we like, while maintaining the ability to
+          mechanically, and therefore objectively, show that they are
+          theorems.</p
         >
         <p
-          >The set of theorems must always be well defined in the sense that we
-          have a mechanism for determining if a statement is a theorem. There
-          are many ways to do that. Let’s illustrate a few.</p
+          >We do not place any restrictions on what a rule can be in a formal
+          system, other than to say that the rules must provide a mechanism for
+          knowing that a statement is a theorem. There are many ways to do that.
+          Let’s illustrate a few.</p
         >
         <div class="example-box">
           <p
-            ><strong>Example 2.1.</strong> Consider a language with only the two
-            statements <span class="m">Gina loves chocolate</span> and
+            ><strong>Example <span class="thm"></span>.</strong> Consider a
+            language with only the two statements
+            <span class="m">Gina loves chocolate</span> and
             <span class="m">Mocha is chocolate</span>. There are four possible
             distinct formal systems we can define with this language.</p
           >
@@ -246,7 +268,8 @@
           >This example illustrates one of the first and simplest mechanisms for
           determining if a statement is a theorem in a formal system - just list
           the theorems! Such statements, which are explicitly stated to be
-          theorems are called the <em>axioms</em> of the system.</p
+          theorems, are called <em>axioms</em> of the system. We can also refer
+          to a rule that simply lists axioms as an <em>axiom</em> as well.</p
         >
         <p
           >For small finite languages like the one in the example, specifying
@@ -259,12 +282,13 @@
         >
         <div class="example-box">
           <p
-            ><strong>Example 2.2.</strong> Consider the formal system whose
-            statements are the positive integers, and whose theorems are the
-            even integers. Then we know $42$ is a theorem but $67$ is not. This
-            system has infinitely many theorems, but we have specified them all
-            by a rule which tells us how to easily determine if a statement is
-            or is not a theorem very easily in a finite amount of time.</p
+            ><strong>Example <span class="thm"></span>.</strong> Consider the
+            formal system whose statements are the positive integers, and whose
+            theorems are the even integers. Then we know $42$ is a theorem but
+            $67$ is not. This system has infinitely many theorems, but we have
+            specified them all by a rule which tells us how to easily determine
+            if a statement is or is not a theorem very easily in a finite amount
+            of time.</p
           >
         </div>
         <p
@@ -276,11 +300,11 @@
           >Another way to specify the set of theorems in a formal system is to
           do it <em>recursively</em>.</p
         >
-        <div class="example-box">
+        <div id="cat-dog-ex" class="example-box">
           <p
-            ><strong>Example 2.3.</strong> Consider the formal system whose set
-            of statements is the set of all English words. The theorems are
-            defined by the following rules.</p
+            ><strong>Example <span class="thm"></span>.</strong> Consider the
+            formal system whose set of statements is the set of all English
+            words. The theorems are defined by the following rules.</p
           >
           <ul>
             <li
@@ -297,7 +321,7 @@
             following.</p
           >
           <div class="Theorem">
-            <p><strong>Theorem:</strong> <code>dog</code></p>
+            <p><strong>Theorem.</strong> <code>dog</code></p>
           </div>
           <p>and we can prove it as follows.</p>
           <div class="Proof">
@@ -326,28 +350,29 @@
           >
         </div>
         <p
-          >Simiarly, we could specify the theorems in Example 2.2 recursively by
-          saying that $2$ is a theorem, and that whenever $n$ is a theorem, so
-          is $n+2$. Of course, it is much easier to define the theorems
+          >Similarly, we could specify the theorems in Example 2.3 recursively
+          by saying that $2$ is a theorem, and that whenever $n$ is a theorem,
+          so is $n+2$. Of course, it is much easier to define the theorems
           explicitly by just saying they are the even integers, but we obtain
           the same set of theorems either way.</p
         >
         <h3>Conditional Theorems</h3>
         <p
           >In a recursively defined system it is also often interesting to show
-          that one statement <em>follows from</em> some other statements
+          that a statement $Q$ <em>follows from</em> some other statements
           $P_1,\ldots,P_n$ in the sense that if those statements were theorems,
-          then we could prove that $Q$ is a theorem, too.</p
+          then we could prove that $Q$ is a theorem, too. We refer to such a
+          fact as a <em>conditional theorem</em>.</p
         >
-        <div class="example-box">
+        <div id="cond-thm-ex" class="example-box">
           <p
-            ><strong>Example.</strong> Consider the formal system in the
-            previous example. Prove that <code>cool</code> follows from from
-            <code>math</code>.</p
+            ><strong>Example <span class="thm"></span>.</strong> Consider the
+            formal system in the previous example. Prove that
+            <code>cool</code> follows from from <code>math</code>.</p
           >
           <div class="Theorem">
             <p
-              ><strong>Theorem:</strong> If <code>math</code> then
+              ><strong>Theorem.</strong> If <code>math</code> then
               <code>cool</code>.</p
             >
           </div>
@@ -389,7 +414,7 @@
         </div>
         <p
           >Notice that <code>math</code> is definitely not a theorem in the
-          formal system defined in Example 2.3 (can you explain why?), but if it
+          formal system defined in Example 2.4 (can you explain why?), but if it
           were a theorem, then <code>cool</code> would be too. In other formal
           systems this technique allows us to reduce the problem of proving that
           $Q$ is the theorem to the problem of proving that the statements it

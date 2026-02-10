@@ -117,6 +117,12 @@
           mathematics are a single lower case letter, upper case letter, or
           Greek letter, such as $x$, $P$, or $\alpha$.</p
         >
+        <p
+          >In this course, identifiers can be any case sensitive finite sequence
+          of alphanumeric characters and mathematical symbols, excluding
+          punctuation like commas, periods, spaces, and brackets, and a few
+          reserved words that we will encounter later.</p
+        >
         <h2>Expressions</h2>
         <p
           >Identifiers can also be combined in various ways to form larger
@@ -157,14 +163,15 @@
         <p
           >As we embark on our journey to build mathematics from the ground up,
           we will say exactly which mathematical expressions constitute the
-          statements in the formal systems we define. Generally speaking,
-          statements can be thought of as mathematical expressions or sentences
-          which can be said to be true or false – expressions which if you said
-          them in a courtroom during a trial, a lawyer could accuse you of lying
-          or telling the truth.</p
+          statements in the formal systems we define, which will be a subset of
+          the more general language of mathematics we are describing here.</p
         >
         <p
-          >For example, expressions like $2&lt;3$, $1+1=3$, and “<em
+          >Generally speaking, statements can be thought of as mathematical
+          expressions or sentences which can be said to be true or false –
+          expressions which if you said them in a courtroom during a trial, a
+          lawyer could accuse you of lying or telling the truth. For example,
+          expressions like $2&lt;3$, $1+1=3$, and “<em
             >Every set is a subset of itself.</em
           >” are usually statements in mathematics because they are either true
           or false, whereas expressions like $x^2+1$, $\frac{1}{2}$, and
@@ -504,8 +511,8 @@
         >
         <div class="example-box">
           <p
-            ><strong>Example.</strong> Consider this statement that might be
-            found in any calculus textbook.</p
+            ><strong>Example <span class="thm"></span>.</strong> Consider the
+            following theorem that might be found in any calculus textbook.</p
           >
           <div class="Theorem">
             <p
@@ -537,9 +544,90 @@
         <p
           >Second, environments can also be statements in or about the formal
           system itself. The Fundamental Theorem of Calculus stated above is a
-          theorem of calculus, and thus a statement. We will encounter four
-          specific flavors of environments in the next chapter, when we discuss
-          deduction.</p
+          theorem of calculus, and thus a statement in that sense.</p
+        >
+        <h3>Theorems, Proofs, Rules, and Premises</h3>
+        <p
+          >We will have four kinds of environments - <em>Theorems</em>,
+          <em>Proofs</em>, <em>Rules</em>, and <em>Premises</em> (capitalized
+          when we want to refer to an environment of that type). A Proof
+          environment that is inside of another environment is called a
+          <em>Subproof</em> environment. Rather than lableing them, we will
+          distinguish the four environment types visually by their background
+          color (Rule - blue, Premise - cream, Theorem - grey, Proof - white) as
+          shown.</p
+        >
+        <div class="env-grid">
+          <div class="Rule noskip">
+            <p><strong>Rule</strong></p>
+          </div>
+          <div class="Premise noskip">
+            <p><strong>Premise</strong></p>
+          </div>
+          <div class="Theorem">
+            <p><strong>Theorem</strong></p>
+          </div>
+          <div class="Proof">
+            <p><strong>Proof/Subproof</strong></p>
+          </div>
+        </div>
+        <p
+          >All environments can contain Premise and Subproof environments and
+          expressions (nested to any depth). We will see how the four
+          environment types differ later on. For now we are just adding them to
+          our language.</p
+        >
+        <h2>Assumptions</h2>
+        <p
+          >In the toy proof systems we encountered in Chapter 2, the rules were
+          not statements in the system. For example, <em>Rule 1</em> in the
+          circle-dot system is not a circle-dot string, and
+          <em>Spin Left</em> is not a sequence of colors in the Scrambler
+          system. The conditional theorem stated and proved in
+          <a href="/learn/proofs/ch02/#cat-dog-ex">Example 2.4</a> is not a
+          theorem in the formal system, but rather a fact <em>about</em> that
+          formal system. Namely, the system has the property that if
+          <code>math</code> were a theorem then <code>cool</code> would be a
+          theorem, too. Its proof shows why that claim is objectively valid.
+          Indeed the proof shows something more general - that the Theorem holds
+          in any formal system that satisfies Rule 1 and has
+          <code>math</code> as a theorem.</p
+        >
+        <p
+          >From this perspective we can view rules as assumptions about the
+          formal system we are interested in, and Theorems as facts about any
+          formal system satisfying those assumptions. In order to expand our
+          language to support such Theorems, we need to add the concept of an
+          <em>assumption</em>.</p
+        >
+        <div class="Def">
+          <p
+            ><strong>Definition <span class="thm"></span>.</strong> Any
+            expression or environment can be declared to be an
+            <em>assumption</em>. An expression or environment that is not
+            declared to be an assumption is said to be a <em>claim</em>.</p
+          >
+          <p
+            ><em>Expressions</em> prefixed with one of the words
+            <span class="kw">Assume</span>, <span class="kw">Suppose</span>,
+            <span class="kw">If</span>, <span class="kw">Given</span>,
+            <span class="kw">From</span>, or
+            <span class="kw">Define</span> (case insensitive) are assumptions.
+            All other expressions are claims.</p
+          >
+          <p
+            ><em>Environments</em> Rule and Premise are assumptions. The
+            Proof/Subproof and Premise environments are claims.</p
+          >
+        </div>
+        <p
+          >Naturally the terms <span class="kw">Assume</span>,
+          <span class="kw">Suppose</span>, <span class="kw">If</span>,
+          <span class="kw">Given</span>, <span class="kw">From</span>, or
+          <span class="kw">Define</span> (case insensitive) are only used to
+          indicate that an expression is an assumption. They cannot be used as
+          identifiers themselves either alone or as part of a compound
+          expression.</p
         >
         <h1>Problems</h1>
         <div class="question">

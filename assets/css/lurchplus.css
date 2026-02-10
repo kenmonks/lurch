@@ -4,8 +4,9 @@
  *  It overrides and extends the css from monks.scranton.edu.
  */
 
-/* import the Lurch editor fonts */
+/* import the Lurch editor fonts and site fonts */
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap");
 
 /* Define site CSS variables */
 :root {
@@ -23,7 +24,9 @@
   --nav-plain-color: #ddd;
   /* note label font color */
   --note-label-color: #c71585;
-  
+  /* left border color on blockquotes */
+  --flat-color: #bbb;
+
   /* Lurch editor syntax theme variables */
 
   /* hovered atom background color */
@@ -86,6 +89,8 @@
   --book-borders: #2A3A4D;
   /* the gap after the content blocks p, ol, ul, etc. */
   --block-skip: 1em;
+  /* the gap after the content blocks p, ol, ul, etc. */
+  --def-block-skip: 0.5em;
   /* the gap after the content blocks p, ol, ul, etc. */
   --tight-block-skip: 0.75em;
   /* the gap between the  */
@@ -357,24 +362,27 @@ body.course {
 /* tweak spacing between top level paragraphs, Lurch blocks, ols, uls, etc. */
 /* reset for the course site */
 .course #content-block > p,
-.course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) { 
+.course #content-block > :is(.Rule,.Proof,.Subproof,.Def,.Premise,.Theorem) { 
   margin-top: 0;
   margin-bottom: 0;
 }
 .course #content-block > p + p { 
   margin-top: var(--block-skip); 
 }
+.course #content-block .Def > p + p { 
+  margin-top: var(--def-block-skip); 
+}
 /* .course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) { 
   margin-top: var(--tight-block-skip); 
 } */
-.course #content-block > p + :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) {
+.course #content-block > p + :is(.Rule,.Proof,.Subproof,.Def,.Premise,.Theorem) {
   margin-top: var(--block-skip);
 }
-.course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) + p {
+.course #content-block > :is(.Rule,.Proof,.Subproof,.Def,.Premise,.Theorem) + p {
   margin-top: var(--block-skip);
 }
-.course #content-block > :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) +
-  :is(.Rule,.Proof,.Subproof,.Premise,.Theorem) {
+.course #content-block > :is(.Rule,.Proof,.Subproof,.Def,.Premise,.Theorem) +
+  :is(.Rule,.Proof,.Subproof,.Def,.Premise,.Theorem) {
   margin-top: var(--tight-block-skip);
 }
 /* ************************** */
@@ -408,10 +416,13 @@ body.course {
   background-color: #F2F2F2;
 }
 
+/* half a quad */
+.qu {
+  padding-right: 0.5rem;
+}
 .quad {
   padding-right: 1rem;
 }
-
 .qquad {
   padding-right: 2rem;
 }
@@ -570,6 +581,7 @@ div.subtitle-box {
   height: auto;
 }
 
+/* typographical */
 .large {
   font-size: large
 }
@@ -592,6 +604,17 @@ div.subtitle-box {
 
 .term {
   color: blueviolet;
+}
+
+/* syntax keywords */
+.course #content-block .kw {
+  font-family: "Source Serif 4", serif;
+  font-variant-caps: all-small-caps;
+  font-size: 1.1em; /* or 0.92em */
+  letter-spacing: 0.03em;  /* or 0.04em */
+  vertical-align: baseline;
+  font-weight: 400;
+  color: var(--accent-color);
 }
 
 span.green-check {
@@ -913,11 +936,12 @@ div.flexrow {
  * Lurch Editor styles
  */
 
-#content-block, #content-block .example-box {
+#content-block, 
+#content-block .example-box {
 
   /* Spacing */
 
-  .Rule, .Premise, .Theorem, .Subproof, .Proof, .Comment {
+  .Rule, .Premise, .Theorem, .Subproof, .Proof, .Def, .Comment {
     
     /* remove left padding and margins for paragraphs and list items inside shells
      * as those are handled by the shells themselves 
@@ -935,13 +959,17 @@ div.flexrow {
       margin-left: auto;
       margin-right: auto;
     }
+
+    &.half {
+      width: 50%;
+    }
   }
-  .Proof {
+  .Proof, .Def {
     margin-bottom: 0; 
     padding-bottom: 0.25rem; 
   }
   /* nested subproofs and premises */
-  .Rule, .Theorem, .Premise, .Subproof, .Proof { 
+  .Rule, .Theorem, .Premise, .Subproof, .Proof, .Def { 
     .Subproof, .Premise {
       margin: var(--nested-mar) 0;
       padding: var(--nested-pad) 0 var(--nested-pad) var(--indentation);
@@ -953,7 +981,7 @@ div.flexrow {
   }
 
   /* Environment boxes */
-  .Rule, .Theorem, .Premise, .Subproof, .Proof, .Comment {
+  .Rule, .Theorem, .Premise, .Subproof, .Proof, .Def, .Comment {
     line-height: var(--line-height);
     font-family: "Roboto", "Arial", Helvetica, sans-serif;
     color: var(--black-font);
@@ -966,6 +994,14 @@ div.flexrow {
     border-radius: 6pt;
     box-shadow: -6pt 4pt 5pt -3pt var(--left-border-color);
   }
+
+  /* Def is a version of Proof with no shadows */
+  .Def {
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      border-left: 4px solid var(--left-border-color);
+  }
   
   /* environment background colors */
   .Rule {
@@ -977,7 +1013,7 @@ div.flexrow {
   .Premise {
     background-color: var(--premise-color);
   }
-  .Subproof, .Proof {
+  .Subproof, .Proof, .Def {
     background-color: var(--page-background-color);
   }
   .Comment {
@@ -1136,23 +1172,23 @@ div.flexrow {
 /* ---------------------------
    Lurch-style blocks in notes
    --------------------------- */
-.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .Comment) {
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .Def, .Comment) {
   line-height: var(--Lurch-line-height);
   padding-top: 0.65em;
   padding-bottom: 0.65em;
 }
 
 /* keep paragraphs inside these blocks from being too airy */
-.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) p {
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .Def ) p {
   margin: 0;
 }
 
 /* lists inside Lurch-style blocks: tighten but keep readable */
-.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) :is(ul, ol) {
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .Def) :is(ul, ol) {
   margin: 0.35em 0 0.45em;
   padding-left: 1.2em;
 }
-.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof) :is(ul, ol) > li {
+.course #content-block :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .Def) :is(ul, ol) > li {
   margin: 0.15em 0;
 }
 
@@ -1214,14 +1250,29 @@ div.flexrow {
 }
 
 /* if a list is followed by a “block”, give it breathing room */
-.course #content-block :is(ul, ol) + :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .question, blockquote, .quote) {
+.course #content-block :is(ul, ol) + :is(.Rule, .Premise, .Theorem, .Subproof, .Proof, .Def, .question, blockquote, .quote) {
   margin-top: 0.9em;
 }
 
-/* ---------------------------
-   Problem sections and numbering
-   --------------------------- */
+/* ---------------------------------
+   Theorem numbering within chapters
+   --------------------------------- */
+/* reset once per chapter */
+body.course {
+  counter-reset: thm;
+}
+/* increment theorem counter */
+.course .thm {
+  counter-increment: thm;
+}
+/* print theorem number */
+.course .thm::before {
+  content: var(--chapter) "." counter(thm);
+}
 
+/* ------------------------------
+   Problem sections and numbering
+   ------------------------------ */
 /* reset once per chapter-page
    (you currently put .problems on #content-block; this still works) */
 .course .problems {
@@ -1321,7 +1372,7 @@ div.flexrow {
 .course #content-block .quote {
   margin: 1.2em 2em;
   padding-left: 1em;
-  border-left: 3px solid #bbb;
+  border-left: 3px solid var(--left-border-color);
   color: #555;
 }
 
@@ -1436,6 +1487,21 @@ iframe.lurch-embed {
   width: 92%;
   height: var(--embedded-lurch-height);
   margin: 2rem;
+}
+
+/* 2x2 environment grid */
+.env-grid {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 12rem);
+  column-gap: 1.5rem;
+  row-gap: 0rem;
+  justify-content: center; /* centers the whole grid */
+}
+.course #content-block .env-grid :is(.Rule,.Proof,.Def,.Subproof,.Premise,.Theorem) {
+  margin-bottom: 0;
+  margin-top: 1rem;
 }
 
 /* hide the contents of the divs that are be replaced by the lurch app iframe
