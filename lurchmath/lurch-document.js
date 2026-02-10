@@ -498,8 +498,8 @@ export class LurchDocument {
                 'shell style',
                 'Style for displaying environments',
                 [ 'boxed', 'minimal' ],
-                // appSettings.get( 'default shell style' )
-                'minimal'
+                appSettings.get( 'default shell style' )
+                // 'minimal'
             )
         ),
         new SettingsCategoryMetadata(

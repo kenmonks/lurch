@@ -194,6 +194,17 @@ export const oldAppSettings = new Settings(
 export const appSettings = new Settings(
     'Application settings',
     new SettingsMetadata(
+
+        new SettingsCategoryMetadata(
+            'Math content',
+            new CategorySettingMetadata(
+                'default shell style',
+                'Default style for environments in new documents',
+                [ 'boxed', 'minimal' ],
+                'minimal'
+            )
+        ),
+
         new SettingsCategoryMetadata(
             'Export to LaTeX',
             new BoolSettingMetadata(
@@ -212,6 +223,7 @@ export const appSettings = new Settings(
               true
             ),
         ),
+        
         new SettingsCategoryMetadata(
             'Application warnings',
             new ShowWarningSettingMetadata(
