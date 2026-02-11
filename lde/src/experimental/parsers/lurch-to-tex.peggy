@@ -1006,6 +1006,9 @@ Prefix =  // LDE EFA's first
           // format sqrt appropriately
           'sqrt('i _ a:ExpressionSeq _ ')'
             { return `\\sqrt{${a}}` } /
+          // format tuple() appropriately
+          'tuple('i _ a:ExpressionSeq _ ')'
+            { return tuple(a,'') } /
           // allow 'class' to be case insensitive (one or two args)
           'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
           'class('i _ a:Expression comma b:Expression')'
