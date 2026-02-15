@@ -54,7 +54,9 @@ export const loadFromURL = url => new Promise( ( resolve, reject ) => {
     } )
     request.addEventListener( 'error', reject )
     request.open( 'GET', url )
-    request.setRequestHeader( 'Cache-Control', 'max-age=0' )
+    // Temporarily commenting the next line out to allow github lurch-discussion-files files to
+    // be opened with lurch.plus without flagging CORS.  TODO: maybe restore some cache busting.
+    // request.setRequestHeader( 'Cache-Control', 'max-age=0' )
     request.send()
 } )
 
