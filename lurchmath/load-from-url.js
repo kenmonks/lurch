@@ -8,7 +8,7 @@
  */
 
 import { LurchDocument } from './lurch-document.js'
-import { appURL, isValidURL, makeAbsoluteURL } from './utilities.js'
+import { appURL, isValidURL, makeAbsoluteURL, cleanContextAndResetCaret } from './utilities.js'
 import { Dialog } from './dialog.js'
 
 // Internal use only
@@ -113,6 +113,14 @@ export const loadFromQueryString = editor => {
         loadFromURL( source )
         .then( content => {
             const LD = new LurchDocument( editor )
+
+            // Remove any context panel that may have been saved in the file
+            editor.once('SetContent', () => {
+              requestAnimationFrame(() => {
+                 cleanContextAndResetCaret(editor)
+              })
+            })
+
             LD.setDocument( content )
             LD.setFileID( source )
         } ).catch( () =>

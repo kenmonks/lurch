@@ -471,3 +471,96 @@ export const copyHTMLToClipboard = html =>
             [ 'text/html' ] : new Blob( [ html ], { type : 'text/html' } )
         } )
     ] )
+
+
+/**
+ * Remove one or more context panels from the editable document inside a
+ * TinyMCE editor instance.
+ *
+ * This function searches the editor's content body for elements matching
+ * the given CSS selector (default: `#context`) and removes them from the
+ * live DOM.  It does not modify editor metadata, serializer configuration,
+ * or saved file contents—only the current in-memory document.
+ *
+ * This is typically used immediately after loading a document that may
+ * have persisted a transient UI element such as a context panel.
+ *
+ * @param {tinymce.Editor} editor - The TinyMCE editor instance.
+ * @param {string} [selector='#context'] - CSS selector identifying elements
+ *   to remove from the editable body.
+ * @returns {number} The number of elements removed.
+ */
+export const removeContextDiv = (editor, selector = '#context') => {
+  const body = editor.getBody?.()
+  if (!body) return 0
+
+  const nodes = body.querySelectorAll(selector)
+  nodes.forEach(n => n.remove())
+  return nodes.length
+}
+
+/**
+ * Reset the editor caret to a collapsed position at the start of the
+ * editable document.
+ *
+ * This function clears any existing native selection ranges (which may
+ * reference nodes that were just removed from the DOM), then creates and
+ * applies a new collapsed selection at the beginning of the editor body.
+ * It forces TinyMCE to recompute selection geometry and scroll the caret
+ * into view.
+ *
+ * This is useful after programmatic DOM surgery (such as removing a
+ * transient element) that may leave the caret visually oversized or
+ * anchored to a stale range.
+ *
+ * The editor must already contain loaded content.
+ *
+ * @param {tinymce.Editor} editor - The TinyMCE editor instance.
+ * @returns {boolean} `true` if the caret was reset, `false` if no body
+ *   was available.
+ */
+export const resetCaretToStart = editor => {
+  const body = editor.getBody?.()
+  if (!body) return false
+
+  // Drop any stale native ranges (may reference removed nodes)
+  editor.getWin?.()?.getSelection?.()?.removeAllRanges?.()
+
+  const rng = editor.dom.createRng()
+  rng.setStart(body, 0)
+  rng.collapse(true)
+
+  editor.focus()
+  editor.selection.setRng(rng)
+  editor.selection.scrollIntoView()
+  editor.nodeChanged()
+  return true
+}
+
+/**
+ * Remove transient context elements from the editor and reset the caret.
+ *
+ * This is a convenience routine that combines {@link removeContextDiv}
+ * and {@link resetCaretToStart}.  It removes any elements matching the
+ * given selector (default: `#context`) from the editable document body,
+ * and if any were removed, forces a fresh collapsed caret position at the
+ * beginning of the document.
+ *
+ * This is typically used immediately after loading document content that
+ * may contain a saved context panel or other transient UI artifact.
+ * It prevents stale selection ranges from referencing removed nodes and
+ * avoids visual caret mis-sizing.
+ *
+ * The editor should already have finished setting its content (e.g.,
+ * inside a `SetContent` event handler or equivalent).
+ *
+ * @param {tinymce.Editor} editor - The TinyMCE editor instance.
+ * @param {string} [selector='#context'] - CSS selector identifying
+ *   elements to remove before resetting the caret.
+ * @returns {number} The number of elements removed.
+ */
+export const cleanContextAndResetCaret = (editor, selector = '#context') => {
+  const removed = removeContextDiv(editor, selector)
+  if (removed > 0) resetCaretToStart(editor)
+  return removed
+}

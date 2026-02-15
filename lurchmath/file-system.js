@@ -4,9 +4,10 @@ import {
     LongTextInputItem, AlertItem, TextInputItem, ListItem, LabeledGroup, HTMLItem
 } from './dialog.js'
 import { LurchDocument } from './lurch-document.js'
-import { appURL } from './utilities.js'
+import { appURL, cleanContextAndResetCaret } from './utilities.js'
 import { appSettings } from './settings-install.js'
 import { downloadFile } from './upload-download.js'
+
 
 // Internal use only
 // Tools for auto-saving the user's work as they edit, and for loading that work
@@ -701,46 +702,18 @@ export class FileSystem {
                 callback?.()
                 return
             }
-            // Utility functions for populating the editor, used below:
-            const removeContextDiv = editor => {
-                const body = editor.getBody?.()
-                if (!body) return
-                body.querySelectorAll('#context').forEach(n => n.remove())
-            }
-            const removeContextAndResetCaret = editor => {
-              const body = editor.getBody?.()
-              if (!body) return
-            
-              const ctx = body.querySelector('#context')
-              if (ctx) ctx.remove()
-            
-              // Drop any stale native ranges (they may still reference the removed node)
-              editor.getWin()?.getSelection?.()?.removeAllRanges?.()
-            
-              // Create a brand new collapsed range at the start of the body
-              const rng = editor.dom.createRng()
-              rng.setStart(body, 0)
-              rng.collapse(true)
-            
-              editor.focus()
-              editor.selection.setRng(rng)
-              editor.selection.scrollIntoView()
-              editor.nodeChanged()
-            }
             const openInEditor = fileObject => {
                 const LD = new LurchDocument( editor )
 
+                // Remove any context panel that may have been saved in the file
                 editor.once('SetContent', () => {
                   requestAnimationFrame(() => {
-                    removeContextAndResetCaret(editor)
+                    cleanContextAndResetCaret(editor)
                   })
                 })
 
                 LD.setDocument( fileObject.contents )
-                
-                // Remove any context panel that may have been saved in the file
-                // removeContextDiv(editor)
-                
+                                
                 delete currentFile.contents
                 LD.setFileID( currentFile )
                 Dialog.notify( editor, 'success',
