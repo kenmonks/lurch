@@ -1434,9 +1434,11 @@ const processAlgebra = doc => {
     // otherwise pass the lurch notation to algebrite
     // get the lurch notation for the expression
     let lurchmath = c.getAttribute('lurchNotation')
-    // if the user included 'by algebra' in the same Atom as the identity, truncate it
-    const match=lurchmath.match(/\s*by \s*algebra/)
-    if (match) lurchmath=lurchmath.slice(0,match.index)
+    // if the user included 'by anything' in the same Atom as the identity, remove it
+    // this can occur if 'by algebra' is in the same expression atom, or in Chains if the 
+    // line or previous line has 'by something' after it
+    lurchmath = lurchmath.replace(/\bby\s+\w+/gi, '')
+
     // a regex for an equation
     const eqn = /^([^=]+)=([^=]+)$/
     // if it's not a simple equation both in putdown and lurchmath we're done
