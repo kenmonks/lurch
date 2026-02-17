@@ -471,7 +471,7 @@ body.course {
 #content-block .example-box > ol:not(.noskip),
 #content-block .example-box > ul:not(.noskip),
 #content-block .example-box > blockquote:not(.noskip) {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 #content-block .blue-box code {
@@ -959,11 +959,28 @@ div.flexrow {
       margin-left: auto;
       margin-right: auto;
     }
-
+    /* half width */
     &.half {
       width: 50%;
     }
+    /* add validation markers */
+    /* make it relative to the shell */
+    position: relative;
+    &.check::after,
+    &.indet::after {
+      font-family: 'Lucida Grande';
+      font-weight: bold;
+      position: absolute;
+      bottom: 0;
+      right: 0pt;
+      padding: 0 6pt;
+    }
+    &.check::after { content: '✓'; color: var(--check-color); }
+    &.indet::after { content: '?'; color:var(--questionmark-color) };
+
   }
+
+  content:"?"; color:var(--questionmark-color)
   .Proof, .Def {
     margin-bottom: 0; 
     padding-bottom: 0.25rem; 

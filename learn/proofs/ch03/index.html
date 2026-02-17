@@ -62,7 +62,11 @@
           ><li> <a href="/learn/proofs/">1: Introduction</a> </li
           ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
           ><li class="active">
-            <a href="/learn/proofs/ch03/">3: The Language of Mathematics</a>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch04/">4: Reasoning about Mathematics</a>
           </li>
         </ul>
       </div>
@@ -486,7 +490,10 @@
           division as multiplication of the reciprocal, so that $x-2$ means the
           same thing as $x+(-2)$ (i.e., $(\xop{+}\xs x\xs (\xop{-}\xs 2))$ in
           list notation), and $x/2$ means the same thing as $(\xop{\cdot}\xs
-          x\xs (\xop{/}\xs 2))$ in list notation.</p
+          x\xs (\xop{/}\xs 2))$ in list notation. Consecutive, unparenthesized
+          function applications are applied left to right, so that e.g.,
+          $f(x)(y)(z)$ is interpreted as $(((f\xs x)\xs y)\xs z)$ in list
+          notation.</p
         >
         <h2>Environments</h2>
         <p
@@ -634,6 +641,65 @@
           introduce a a few additional concepts, but we can already do a lot
           with what we have defined so far, as we will see in the next
           chapter.</p
+        >
+        <h2>Proofs</h2>
+        <p
+          >We will write all of our formal proofs in a single Proof environment
+          which we will refer to as a <em>document</em>. This will have many
+          different kinds of content.</p
+        >
+        <h3>Meaningful content vs expository content</h3>
+        <p
+          >Since we want our proofs to both be objectively verifiable and
+          expository, we will have two kinds of content in our document -
+          <em>meaningful</em> and <em>expository</em>. Meaningful content will
+          contribute to the objective validity of the document. The expository
+          content is purely for commentary and communication that can help the
+          reader of our document understand the meaningful aspects. Meaningful
+          expressions will be written in a <span class="m">gold font</span>,
+          whereas expository comments will be written in ordinary black font.
+          All environments are meaningful.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> Here
+            is an example document (a proof environment) containing some
+            meaningful expressions and expository ones.</p
+          >
+          <div class="Proof half fit">
+            <p
+              >This black text is just commmentary but expressions in gold text
+              such as <span class="m">Gina loves mocha</span> or
+              <span class="m">$1+1=2$</span> are meaningful.</p
+            >
+          </div>
+          <!-- example-box -->
+        </div>
+        <p
+          >From now on, whenever we refer to assumptions, claims, statements,
+          expressions or environments, we are only referring to meaningful
+          content, not anything said in exposition.</p
+        >
+        <h3>Validity markers</h3>
+        <p
+          >Claims in a document can be marked with a green check (
+          <span class="marker-checkmark" role="img" aria-label="check"></span> )
+          to indicate that they they must be valid in any formal system that
+          satisfies what has already been said up to that point. Claims which
+          cannot be determined to be valid are said to be indeterminate, and
+          marked with a yellow question mark (
+          <span
+            class="marker-questionmark"
+            role="img"
+            aria-label="qmark"></span>
+          ). Thus the expression <span class="m">Gina loves mocha</span>
+          <span class="marker-checkmark" role="img" aria-label="check"></span>
+          is marked as valid, while <span class="m">Gina loves mocha</span>
+          <span
+            class="marker-questionmark"
+            role="img"
+            aria-label="indet"></span>
+          is marked as indeterminate.</p
         >
         <h1 id="problems">Problems</h1>
         <div class="question">

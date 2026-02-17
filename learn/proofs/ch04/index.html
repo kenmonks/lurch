@@ -1,0 +1,961 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Reasoning about Mathematics</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li> <a href="/learn/proofs/">1: Introduction</a> </li
+          ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
+          ><li>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li class="active">
+            <a href="/learn/proofs/ch04/">4: Reasoning about Mathematics</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: '4'">
+        <div class="title-box">
+          <h1>Chapter 4: Reasoning about Mathematics</h1>
+          <h2>Introduction to Super-Natural Deduction</h2>
+        </div>
+        <p
+          >With the language of the previous chapter in hand, we now turn our
+          attention to a general the notion of formal proof.</p
+        >
+        <h2>No valid unjustified claims</h2>
+        <p
+          >No matter how trivial or well known a claimed expression might be, in
+          absence of any other information about the formal system we are
+          considering we have no way of knowing if it is a theorem or not.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> The
+            following are well known facts in mathematics, but are not theorems
+            in systems like the circle-dot system, so are indeterminate.</p
+          >
+          <div class="Proof half fit">
+            <p
+              ><span class="m">$1+1=2$</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span
+            ></p>
+            <p
+              ><span class="m">$A\subseteq A$</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span
+            ></p>
+            <p
+              >I’m pretty sure that <span class="m">$5$ is prime</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span
+            ></p>
+          </div>
+          <!-- example-box -->
+        </div>
+        <h2>Reasoning with assumed expressions</h2>
+        <p
+          >Assumptions never require a feedback marker because they are just
+          announcing that we are temporarily pretending it is true so we can
+          determine the consequences if that were the case, not claiming that it
+          actually is true. Once we assume something is valid we then can
+          consider it valid as long as that assumption is in effect (until the
+          end of the document, proof, subproof, or theorem that contains it).</p
+        >
+        <p>Let’s illustrate this with an example.</p>
+        <div id="first-nested-ex" class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span></strong> The
+            following document environment has a Subproof environment on line 3,
+            and expressions on lines 1,2,4,5. There are only two different
+            statements in the entire proof
+            <span class="m">$n$ is even</span> and
+            <span class="m">$m$ is odd</span>. The first statement is assumed on
+            line 1, and therefore valid as a claim everywhere after line 1. The
+            second is assumed on line 3(a) inside the Subproof on line 3, and
+            therefore is only valid until the end of that subproof (as seen on
+            line 3.c), but no longer valid after that (as seen on line 5).
+            Notice that the statements on lines 1 and 3.a do not get validity
+            markers because they are assumptions.</p
+          >
+          <div class="Proof half fit">
+            <ol>
+              <li><span class="m">Assume $n$ is even</span></li>
+              <li
+                ><span class="m">$n$ is even</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></li>
+              <li>
+                <div class="Subproof">
+                  <ol>
+                    <li><span class="m">Assume $m$ is odd</span></li>
+                    <li
+                      ><span class="m">$n$ is even</span>
+                      <span
+                        class="marker-checkmark"
+                        role="img"
+                        aria-label="check"></span
+                    ></li>
+                    <li
+                      ><span class="m">$m$ is odd</span>
+                      <span
+                        class="marker-checkmark"
+                        role="img"
+                        aria-label="check"></span
+                    ></li>
+                  </ol>
+                </div>
+              </li>
+              <li
+                ><span class="m">$n$ is even</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></li>
+              <li
+                ><span class="m">$m$ is odd</span>
+                <span
+                  class="marker-questionmark"
+                  role="img"
+                  aria-label="indet"></span
+              ></li>
+            </ol>
+          </div>
+          <!-- example-box -->
+        </div>
+        <p
+          >For convenience, we can also declare consecutive expressions to all
+          be assumptions by declaring the first one to be an assumption and then
+          chaining them together with <em>meaningful commas</em>. Instead of
+          writing this</p
+        >
+        <div class="Proof half fit">
+          <p
+            ><span class="m">Assume $n$ is prime</span>,
+            <span class="m">assume $n$ is odd</span>, and
+            <span class="m">assume $n\in\ZZ$</span>. Then clearly
+            <span class="m">$n$ is odd</span>
+            <span class="marker-checkmark" role="img" aria-label="check"></span
+            >.</p
+          >
+        </div>
+        <p>we can write this</p>
+        <div class="Proof half fit">
+          <p
+            ><span class="m">Assume $n$ is prime,</span>
+            <span class="m">$n$ is odd,</span> and
+            <span class="m">$n\in\ZZ$</span>. Then clearly
+            <span class="m">$n$ is odd</span>
+            <span class="marker-checkmark" role="img" aria-label="check"></span
+            >.</p
+          >
+        </div>
+        <p>Compare the comma colors in the two situations.</p>
+        <p>It is interesting to notice here that a document like this one</p>
+        <div class="Proof half fit">
+          <p
+            ><span class="m">If $5$ is prime</span> then
+            <span class="m">$5$ is prime</span>
+            <span class="marker-checkmark" role="img" aria-label="check"></span
+            >.</p
+          >
+        </div>
+        <p
+          >is true about every formal proof system. No matter what system we
+          might be considering, if <span class="m">$5$ is prime</span> is a
+          theorem, then <span class="m">$5$ is prime</span> is a theorem. It is
+          functionally the very thing we mean when we say we assume
+          something.</p
+        >
+        <h3>Earlier statements justify later ones</h3>
+        <p
+          >We would like to know when a claim follows from what has already been
+          said before it in the document, even if what has been said is not yet
+          justified. For this reason, when checking the validity of individual
+          claims, we temporarily treat everything that has been said before it
+          as an assumption.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong>
+            Notice that earlier indeterminate claims justify later references to
+            themselves as if they were assumptions, but still get a validity
+            marker indicating that they themselves are indeterminate.</p
+          >
+          <div class="Proof half fit">
+            <p
+              ><span class="m">$5$ is prime</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span
+            ></p>
+            <p
+              ><span class="m">$5$ is prime</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+            ></p>
+            <p
+              >If we know <span class="m">$B\subseteq B$</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span
+              >, then <span class="m">$B\subseteq B$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >.</p
+            >
+          </div>
+          <p>Such claims don’t need to be consecutive.</p>
+          <div class="Proof half fit">
+            <p
+              ><span class="m">Gina loves chocolate</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span
+            ></p>
+            <p
+              ><span class="m">$5$ is prime</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span
+            ></p>
+            <p
+              >Oh, by the way <span class="m">Gina loves chocolate</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >.</p
+            >
+          </div>
+          <!-- example-box -->
+        </div>
+        <h2>Reasoning with environments</h2>
+        <p
+          >Having discussed validation involving expressions we now consider
+          environments.</p
+        >
+        <h3>Children and descendants</h3>
+        <p
+          >It is useful to be able to talk about the nesting of environments and
+          the expressions they contain.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong>
+            Every environment contains a list of zero or more expressions and/or
+            environments called its <em>children</em>. A <em>descendant</em> of
+            an environment is either a child of the environment or a child of a
+            <em>descendant</em>.</p
+          >
+        </div>
+        <p
+          >The first environment in
+          <a href="/learn/proofs/ch04/#first-nested-ex">Example 4.2</a> has five
+          children. The third child is a Subproof environment which has three
+          children of its own. The Proof itself has eight descendants – seven
+          expressions and one environment.</p
+        >
+        <h3>Reasoning with Proof and Subproof environments</h3>
+        <p
+          >Proof and Subproof environment are exactly the same as far as
+          validation goes. A Subproof is just a proof environment inside of
+          another Proof environment, so from now on when we refer to a Proof
+          environment it whatever we say also applies to Subproof environments.
+          Proof environments are claims.</p
+        >
+        <p
+          >A Proof environment that has only claims as children is unnecessary
+          because it will not affect the validity of the proof. It’s like
+          putting extra parentheses around and expression that doesn’t need
+          them, e.g., $((x^2)+(x))$ instead of just $x^2+x$. Such an environment
+          is just claiming that its children are all valid. It will be marked as
+          valid only if all of its children are valid.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> The
+            Subproof in Proof A only contains claims, so is extraneous and can
+            be omitted as shown in Proof B.</p
+          >
+          <div class="rule-grid cols-2">
+            <div class="Proof indet">
+              <p><strong class="qu">Proof A.</strong></p>
+              <p
+                ><span class="m">Gina loves chocolate</span>
+                <span
+                  class="marker-questionmark"
+                  role="img"
+                  aria-label="indet"></span
+              ></p>
+              <p
+                ><span class="m">$5$ is prime</span>
+                <span
+                  class="marker-questionmark"
+                  role="img"
+                  aria-label="indet"></span
+              ></p>
+              <div class="Subproof indet">
+                <p
+                  ><span class="m">Gina loves chocolate</span>
+                  <span
+                    class="marker-checkmark"
+                    role="img"
+                    aria-label="check"></span
+                ></p>
+                <p
+                  ><span class="m">$n$ is even</span>
+                  <span
+                    class="marker-questionmark"
+                    role="img"
+                    aria-label="indet"></span
+                ></p>
+                <p
+                  ><span class="m">$5$ is prime</span>
+                  <span
+                    class="marker-checkmark"
+                    role="img"
+                    aria-label="check"></span
+                ></p>
+              </div>
+              <p
+                ><span class="m">$n$ is even</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></p>
+            </div>
+            <div class="Proof indet">
+              <p><strong class="qu">Proof B.</strong></p>
+              <p
+                ><span class="m">Gina loves chocolate</span>
+                <span
+                  class="marker-questionmark"
+                  role="img"
+                  aria-label="indet"></span
+              ></p>
+              <p
+                ><span class="m">$5$ is prime</span>
+                <span
+                  class="marker-questionmark"
+                  role="img"
+                  aria-label="indet"></span
+              ></p>
+              <p
+                ><span class="m">Gina loves chocolate</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></p>
+              <p
+                ><span class="m">$n$ is even</span>
+                <span
+                  class="marker-questionmark"
+                  role="img"
+                  aria-label="indet"></span
+              ></p>
+              <p
+                ><span class="m">$5$ is prime</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></p>
+              <p
+                ><span class="m">$n$ is even</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></p>
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- example-box -->
+        </div>
+        <p
+          >There is, however, one particular kind of environment that will be
+          very useful.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong>
+            An <em>if-then environment</em> is an environment containing (as
+            children) one or more assumptions (called <em>premises</em>)
+            followed by one or more claims (called <em>conclusions</em>). It
+            asserts that if the premises are valid, so are the conclusions.</p
+          >
+        </div>
+        <p
+          >A Proof environment whose children are all assumptions has no
+          conclusions, and therefore is meaningless and ignored.</p
+        >
+        <h3>Reasoning with Premise environments</h3>
+        <p
+          >A Premise environment can be thought of as an assumed Proof
+          environment. If it contains only claims, it is equivalent to assuming
+          all of them. The premise in Proof A is an assumption that the claims
+          inside it are valid.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> The
+            following two proofs are equivalent.</p
+          >
+          <div class="rule-grid cols-2">
+            <div class="Proof check">
+              <p><strong class="qu">Proof A.</strong></p>
+              <div class="Premise">
+                <p><span class="m">Gina loves chocolate</span></p>
+                <p><span class="m">$5$ is prime</span></p>
+              </div>
+              <p
+                ><span class="m">$5$ is prime</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></p>
+            </div>
+            <div class="Proof check">
+              <p><strong class="qu">Proof B.</strong></p>
+              <p><span class="m">Given Gina loves chocolate</span></p>
+              <p><span class="m">Given $5$ is prime</span></p>
+              <p
+                ><span class="m">$5$ is prime</span>
+                <span
+                  class="marker-checkmark"
+                  role="img"
+                  aria-label="check"></span
+              ></p>
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- example-box -->
+        </div>
+        <p
+          >An if-then Premise environment can be thought of as assuming that its
+          conclusions are valid if its premises are. With such an assumption if
+          we assume or can prove that all of its premises are valid, then we can
+          conclude that it’s conclusions are as well.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> In
+            addition to earlier statements justifying later ones, an assumed
+            if-then environment and its premises justify its conclusions. Notice
+            that the Premise environment does not have a validation marker
+            because it is an assumption.</p
+          >
+          <div class="Proof check">
+            <p
+              ><span class="m">Suppose mocha is chocolate</span>. Additionally,
+              suppose we assume that</p
+            >
+            <div class="Premise">
+              <p
+                ><span class="m">if mocha is chocolate </span> then
+                <span class="m">Gina loves mocha</span>.</p
+              >
+            </div>
+            <p
+              >Then we can conclude that
+              <span class="m">Gina loves mocha</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >.</p
+            >
+          </div>
+          <!-- example-box -->
+        </div>
+        <h2>Formulas</h2>
+        <p
+          >In mathematics we often want to claim or assume infinitely many facts
+          of a certain type. For example, suppose we want to say that any number
+          multiplied by $0$ is equal to zero, i.e., $$0\cdot 0=0,\quad 0\cdot
+          1=0,\quad 0\cdot 2=0,\quad 0\cdot 3=0,\quad \ldots $$ That’s
+          infinitely many facts, so we can’t list them all. In algebra class we
+          might state all of these facts using a <em>formula</em> like this
+          $$0\cdot n=0$$ where the identifier $n$ can be replaced by any number
+          we like to obtain a valid fact. We cannot, however, replace the other
+          identifiers in that formula ($0, \cdot,$ and $=$) to obtain a valid
+          fact because in algebra those symbols are constants.</p
+        >
+        <p
+          >Thus, if we would like to use formulas in our proofs we need a way to
+          specify which identifiers are constants.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong>
+            Identifiers can be declared to be <em>constants</em> by listing them
+            separated by commas after the word <span class="kw">declare</span>.
+            A declared constant is treated as a constant globally throughout the
+            entire document. An identifier in a formula that is not a constant
+            is called a <em>meta-variable</em>.</p
+          >
+        </div>
+        <p
+          >For convenience, we will assume that identifiers which are strings of
+          digits are automatically declared to be constants (e.g. $0$, $42$,
+          $1234$, etc.)</p
+        >
+        <h3>Reasoning with Rules and Theorems</h3>
+        <p
+          >The Rule and Theorem environments are both formulas. They justify an
+          infinite family of facts obtained by substituting expressions for
+          their metavariables (the identifiers they contain that are not
+          declared to be constants). Proof and Premise environments are not
+          formulas. Thus, the four environments are defined by whether or not
+          they are assumptions and whether or not they are formulas.</p
+        >
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: right"></th>
+              <th style="text-align: center"><strong>is a formula</strong></th>
+              <th style="text-align: center"
+                ><strong>is not a formula</strong></th
+              >
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: right"
+                ><strong>is an assumption</strong></td
+              >
+              <td style="text-align: center">Rule</td>
+              <td style="text-align: center">Premise</td>
+            </tr>
+            <tr>
+              <td style="text-align: right"><strong>is a claim</strong></td>
+              <td style="text-align: center">Theorem</td>
+              <td style="text-align: center">Proof/Subproof</td>
+            </tr>
+          </tbody>
+        </table>
+        <p
+          >Thus, we can use Rule environments and Premises to state the
+          assumptions we are making about the formal systems we are
+          considering.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> If
+            we make $0\cdot n=0$ a Rule with constants $0,\cdot$, and $=$ we can
+            use it to justify that $0$ times anything equals $0$.</p
+          >
+          <div class="Proof">
+            <p
+              ><span class="m">Declare $0,\cdot,$</span> and
+              <span class="m">$=$</span> to be constants. Consider the following
+              rule.</p
+            >
+            <div class="Rule">
+              <p
+                ><strong>Multiplication by Zero.</strong>
+                <span class="m">$$0\cdot n= 0$$</span></p
+              >
+            </div>
+            <p
+              >Then we know all of the following are valid,
+              <span class="m">$0\cdot n=0$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >, <span class="m">$0\cdot m=0$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >, <span class="m">$0\cdot 0=0$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >, <span class="m">$0\cdot 42=0$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >, <span class="m">$0\cdot (x+1)=0$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >, <span class="m">$0\cdot n=0$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >, and <span class="m">$0\cdot n=0$</span>
+              <span
+                class="marker-checkmark"
+                role="img"
+                aria-label="check"></span
+              >. But <span class="m">$0+1=0$</span>
+              <span
+                class="marker-questionmark"
+                role="img"
+                aria-label="indet"></span>
+              is not valid because $\cdot$ is declared to be a constant, and
+              therefore is not a metavariable that can be replaced with $+$.</p
+            >
+          </div>
+          <!-- example-box -->
+        </div>
+        <p
+          >Note that Rules and Theorems cannot appear inside of other Rules,
+          Theorems, or Premises.</p
+        >
+        <h2>Given-conclude and If-then Rules and Equivalence Rules</h2>
+        <p
+          >With our language and reasoning in hand, we are ready to begin
+          proving theorems about our formal systems, and build mathematics from
+          the ground up, starting from scratch. To do so we will specify the
+          rules that our formal systems behave. There are many ways to format
+          the same rules, but we will use two in particular. The first is
+          similar to the style of theorems sometimes used in high school
+          geometry texts.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong> A
+            rule is specified in <em>given-conclude</em> style if it is of the
+            form</p
+          >
+          <div class="Rule fit half">
+            <p
+              ><em><strong>RuleName</strong></em></p
+            >
+            <div class="Premise">
+              <p><em>Given</em></p>
+              <p><span class="m">$W_1$</span></p>
+              <p><span class="m">$\vdots$</span></p>
+              <p><span class="m">$W_m$</span></p>
+            </div>
+            <p><em>Conclude</em></p>
+            <p><span class="m">$V_1$</span></p>
+            <p><span class="m">$\vdots$</span></p>
+            <p><span class="m">$V_n$</span></p>
+          </div>
+          <p
+            >where $W_1,\ldots,W_m,V_1,\ldots,V_n$ are all claims and
+            <em><strong>RuleName</strong></em> is replaced with the name of the
+            rule. The conclusions $V_1,\ldots,V_n$ are all expressions, but any
+            of the $W_1,\ldots,W_m$ can be an expression or an environment.</p
+          >
+        </div>
+        <p
+          >In the situation where all of the rule premises are expressions, we
+          can also format our rules more cleanly as a sentence.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong> A
+            rule is specified in <em>if-then</em> style if it is of the form</p
+          >
+          <div class="Rule fit half">
+            <p
+              ><strong class="qu"><em>RuleName</em>.</strong>
+              <span class="m">If $W_1,\ldots,W_m$</span> then
+              <span class="m">$V_1,\ldots,V_n$</span>.</p
+            >
+          </div>
+          <p>where $W_1,\ldots,W_m,V_1,\ldots,V_n$ are all expressions.</p>
+        </div>
+        <p
+          >Finally, it will be convenient to define one other form of Rule or
+          Theorem.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong> A
+            rule or theorem is an <em>equivalence</em> style if it is of the
+            form</p
+          >
+          <div class="Rule fit half">
+            <p
+              ><strong class="qu"><em>RuleName</em>.</strong>
+              <span class="m">$W_1,\ldots,W_m \equiv V_1,\ldots,V_n$</span>.</p
+            >
+          </div>
+          <p
+            >where $W_1,\ldots,W_m,V_1,\ldots,V_n$ are all expressions. This
+            rule is a compact way to write the two <em>if-then</em> rules</p
+          >
+          <div class="Rule fit half">
+            <p
+              ><strong class="qu"><em>RuleName</em>.</strong>
+              <span class="m">If $W_1,\ldots,W_m$</span> then
+              <span class="m">$V_1,\ldots,V_n$</span>.</p
+            >
+          </div>
+          <div class="Rule fit half">
+            <p
+              ><strong class="qu"><em>RuleName</em>.</strong>
+              <span class="m">If $V_1,\ldots,V_n$</span> then
+              <span class="m">$W_1,\ldots,W_m$</span>.</p
+            >
+          </div>
+        </div>
+        <h2>Theorems before their proof?</h2>
+        <p
+          >It is commonplace in mathematics to write a theorem immediately
+          before its proof, which unfortunately would mean that the proof could
+          be justified by the theorem rather than the other way around. To allow
+          for this, we make the convention that if a Theorem environment occurs
+          immediately before a Proof environment, then it will be treated as if
+          they occur in the reverse order, with the Theorem coming after the
+          Proof.</p
+        >
+        <h1 id="problems">Problems</h1>
+        <div class="question">
+          <p
+            >We have already seen examples of theorems that do not require any
+            proof, because they immediately follow from the meaning of
+            assumptions and if-then environments. Type the following theorems
+            into <a href="../../../student.html">Lurch</a>, each inside a
+            separate Proof environment (not a Theorem environment), and verify
+            that they all validate correctly.</p
+          >
+          <div class="parts">
+            <ol>
+              <li
+                ><span class="m">If $P$</span> then
+                <span class="m">$P$</span> and also
+                <span class="m">$P$</span>.</li
+              >
+              <li
+                ><span class="m">If $W$, $U$,</span> and
+                <span class="m">$V$</span> then <span class="m">$U$</span>.
+                Furthermore, <span class="m">suppose $X$</span>. Then definitely
+                both <span class="m">$V$</span> and
+                <span class="m">$X$</span>.</li
+              >
+              <li><span class="m">If $3$ is odd</span> and we know that</li>
+            </ol>
+            <div class="Premise fit">
+              <p
+                ><span class="m">if $3$ is odd</span> then
+                <span class="m">$3+1$ is not odd</span>,</p
+              >
+            </div>
+            <p>then <span class="m">$3+1$ is not odd</span>.</p>
+            <ol start="4">
+              <li>Suppose</li>
+            </ol>
+            <div class="Premise fit">
+              <p
+                ><span class="m">if mocha is chocolate</span> then
+                <span class="m">Gina loves mocha</span>.</p
+              >
+            </div>
+            <p
+              >and <span class="m">assume mocha is chocolate,</span> and
+              <span class="m">Gina loves chocolate</span>. Then
+              <span class="m">Gina loves mocha</span> and
+              <span class="m">Gina loves chocolate</span></p
+            >
+            <ol start="5">
+              <li
+                ><span class="m">Given $1\lt 2$, $2\lt 3$,</span> and
+                <span class="m">$3\lt 4$</span> and that</li
+              >
+            </ol>
+            <div class="Premise fit">
+              <p
+                ><span class="m">if $1\lt 2$,</span> and
+                <span class="m">$2\lt 3$</span> then
+                <span class="m">$1\lt 3$</span></p
+              >
+            </div>
+            <p>and</p>
+            <div class="Premise fit">
+              <p
+                ><span class="m">if $1\lt 3$,</span> and
+                <span class="m">$3\lt 4$</span> then
+                <span class="m">$1\lt 4$</span></p
+              >
+            </div>
+            <p>then <span class="m">$1\lt 4$</span>.</p>
+            <ol start="6">
+              <li>Suppose we know that</li>
+            </ol>
+            <div class="Premise fit">
+              <p><span class="m">$n$ is even $\equiv$ $n+1$ is odd</span></p>
+            </div>
+            <p>and</p>
+            <div class="Premise fit">
+              <p
+                ><span class="m"
+                  >$3\cdot n$ is even $\equiv$ $n$ is even</span
+                ></p
+              >
+            </div>
+            <p
+              >Then <span class="m">if $n+1$ is odd</span> it follows that
+              <span class="m">$3\cdot n$ is even</span>.</p
+            >
+            <!-- parts -->
+          </div>
+          <!-- question  -->
+        </div>
+        <!-- ::: lurch-embed
+**Example**
+1. <lurch>Assume n is even</lurch>
+2. <lurch>n is even</lurch>
+3. <subproof>
+   <lurch>Assume m is odd</lurch>
+   <lurch>n is even</lurch>
+   <lurch>m is odd</lurch>
+   </subproof>
+3. <lurch>n is even</lurch>
+2. <lurch>m is odd</lurch>
+::: -->
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>
