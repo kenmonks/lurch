@@ -1213,7 +1213,9 @@ div.flexrow {
 .course #content-block .rule-grid {
   display: grid;
   gap: 0.9rem;                 /* space between tiles */
-  align-items: start;
+  align-items: stretch;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 /* 2 or 3 columns */
@@ -1225,9 +1227,11 @@ div.flexrow {
 }
 
 /* Let the Rule fill its grid cell, but NOT force page-width behavior */
-.course #content-block .rule-grid > .Rule {
-  width: auto;                 /* overrides any width: 100% */
-  margin: 0;                   /* avoid vertical stacking margins */
+.course #content-block .rule-grid {
+  .Rule, .Rule-cell {
+    width: auto;                 /* overrides any width: 100% */
+    margin: 0;                   /* avoid vertical stacking margins */
+  }
 }
 
 /* Optional: tighten padding a hair in grid mode only (doesn't change internal look much) */
@@ -1237,8 +1241,10 @@ div.flexrow {
 } */
 
 /* If any Rule has long math, allow wrapping instead of overflow */
-.course #content-block .rule-grid > .Rule {
-  overflow-wrap: anywhere;
+.course #content-block .rule-grid {
+  .Rule, .Rule-cell {
+    overflow-wrap: anywhere;
+  }
 }
 
 /* Responsive: stack on narrow screens */

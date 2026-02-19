@@ -1,0 +1,17 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="main" data-key="header" data-value-type="html"></div></div>
+            <div id="document"><h1>Math 299 Rules, Definitions, and Theorems</h1>
+<h3>Ken Monks - University of Scranton - Spring 2026</h3>
+<p>Welcome to Math 299.&nbsp; Below you will find some of the rules, definitions, theorems, and declarations that we use in the course.&nbsp; For more detail about these rules see the Course Lecture Notes on the Math 299 Home Page accessible via the Lurch <code>Help</code> menu at the top of the page.&nbsp; (<em>Note that some of the definitions below differ from what is in the lecture notes as they are still in the process of being updated to be consistent with the rules below</em>.)</p>
+<p>There are many ways to write the same definition, theorem, or rule in Lurch.&nbsp; For consistency many of the rules below use the same style that imitates the <em>Given-Conclude</em> format used in many high school geometry textbooks.</p>
+<p>&nbsp;</p></div>
+        

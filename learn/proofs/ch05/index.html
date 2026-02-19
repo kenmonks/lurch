@@ -1,0 +1,866 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Propositional Logic</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li> <a href="/learn/proofs/">1: Introduction</a> </li
+          ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
+          ><li>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch04/"
+              >4: Reasoning about Mathematics</a
+            > </li
+          ><li class="active">
+            <a href="/learn/proofs/ch05/">5: Propositional Logic</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: '5'">
+        <div class="title-box">
+          <h1>Chapter 5: Propositional Logic</h1>
+        </div>
+        <p
+          >We now turn our attention to a formal axiom system that is based on
+          one first formulated by Gerhard Gentzen in 1934 as a formal system
+          that closely imitates the way mathematicians actually reason when
+          writing traditional expository proofs.</p
+        >
+        <h2>The Statements of Propositional Logic</h2>
+        <p
+          >The language of propositional logic has two constants $\mathtt{true}$
+          and $\mathtt{false}$. We sometimes will abbreviate these as
+          $\mathtt{T}$ and $\mathtt{F}$ respectively. The statements in the
+          language are all expressions of this type, namely, they all represent
+          a <em>truth value</em> which is either $\mathtt{true}$ or
+          $\mathtt{false}$.</p
+        >
+        <p
+          >Any variable can be used to represent a statement in this system.
+          Such variables, and the constants $\mathtt{true}$ and $\mathtt{false}$
+          are the atomic statements in the language of propositional logic. In
+          addition, we can form compound statements by first defining five
+          constants, “$\neg$”, “$\xand$”, “$\xor$”, “$\implies$”, and “$\iff$”,
+          and using them to define compound statements as follows.</p
+        >
+        <div class="definition Proof">
+          <p
+            ><strong>Definition.</strong> Let $\varphi ,\psi$ be statements.
+            Then the five expressions $$\begin{gathered} \neg \varphi \\ \varphi
+            \xand \psi \\ \varphi \xor \psi \\ \varphi \implies \psi \\ \varphi
+            \iff \psi \end{gathered}$$ are also statements whose truth values
+            are completely determined by the truth values of $\varphi$ and
+            $\psi$ as shown in the following table:</p
+          >
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: center">$\varphi$</th>
+                <th style="text-align: center">$\psi$</th>
+                <th style="text-align: center">$\neg \varphi$</th>
+                <th style="text-align: center">$\varphi\xand \psi$</th>
+                <th style="text-align: center">$\varphi\xor \psi$</th>
+                <th style="text-align: center">$\varphi\implies \psi$</th>
+                <th style="text-align: center">$P\iff \psi$</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">T</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">F</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">F</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">F</td>
+                <td style="text-align: center">T</td>
+                <td style="text-align: center">T</td>
+              </tr>
+            </tbody>
+          </table>
+          <p
+            >We can also write <code>not</code> for $\neg$,
+            <code>if and only if</code> or <code>iff</code> for $\iff$, and
+            <code>implies</code> for $\implies$. A statement of the form
+            $\varphi\implies\psi$ is called a <em>conditional statement</em> or
+            an <em>implication</em>, and can be written in English in several
+            different ways: '$\varphi$ implies $\psi$, 'if $\varphi$ then
+            $\psi$, '$\psi$ follows from $\varphi$, or '$\psi$, if $\varphi$.</p
+          >
+        </div>
+        <p>Thus, the statements of Propositional Logic consist of</p>
+        <ol>
+          <li
+            >Atomic Statements that do not contain any of the five logical
+            operators, and</li
+          >
+          <li
+            >Compound Statements that are one of the five forms, $\neg \varphi$,
+            $\varphi\xand \psi$, $\varphi\xor \psi$, $\varphi\ximplies \psi$, or
+            $\varphi\xiff \psi$ where $\varphi$ and $\psi$ are any statements of
+            Propositional Logic.</li
+          >
+        </ol>
+        <p class="bigskip"
+          ><strong>Note:</strong> Recall the precedence of these operators in
+          the following order (from highest to lowest).</p
+        >
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: left"
+                ><strong>Precedence of Notation</strong></th
+              >
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: left"
+                >parentheses, brackets, $(), {}, [ ]$ etc.</td
+              >
+            </tr>
+            <tr>
+              <td style="text-align: left"
+                >arithmetic operations$^*$ $\wedge,\cdot,+,\ldots$ etc.</td
+              >
+            </tr>
+            <tr>
+              <td style="text-align: left"
+                >set operations $\times,-,\cap,\cup,\ldots$ etc.</td
+              >
+            </tr>
+            <tr>
+              <td style="text-align: left"
+                >arithmetic and set relations $=,\subseteq,\leq,\neq,\ldots$
+                etc.</td
+              >
+            </tr>
+            <tr>
+              <td style="text-align: left">$\neg$</td>
+            </tr>
+            <tr>
+              <td style="text-align: left">$\xand$, $\xor$</td>
+            </tr>
+            <tr>
+              <td style="text-align: left">$\ximplies$</td>
+            </tr>
+            <tr>
+              <td style="text-align: left">$\xiff$</td>
+            </tr>
+            <tr>
+              <td style="text-align: left">$\forall,\exists,\exists!$</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2>The Rules of Propositional Logic</h2>
+        <p
+          >Natural deduction generally defines a pair of rules for each
+          definition. A <em>plus</em> or <em>introduction</em> rule is used to
+          prove statements that contain the thing being defined from statements
+          that do not, while <em>minus</em> or <em>elimination</em> rules do the
+          opposite. In the following rules, the variables $W$ and $V$ can be any
+          statement.</p
+        >
+        <div class="table-block">
+          <p class="table-title">Rules of Propositional Logic</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Name</th>
+                <th style="text-align: left">Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">and$+$</td>
+                <td style="text-align: left">$W,V \vdash (W \xand V)$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">and$-$</td>
+                <td style="text-align: left">$(W\xand V) \vdash W, V$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">or$+$</td>
+                <td style="text-align: left"
+                  >$W \vdash (W\xor V), (V\xor W)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">or$-$ (proof by cases)</td>
+                <td style="text-align: left"
+                  >$(W\xor V), (W\implies U), (V\implies U) \vdash U$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$\implies\!+$</td>
+                <td style="text-align: left"
+                  >$(W\vdash V) \vdash (W\implies V)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$\implies\!-$ (modus ponens)</td>
+                <td style="text-align: left">$(W\implies V), W \vdash V$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">$\iff\!+$</td>
+                <td style="text-align: left"
+                  >$(W \vdash V),(V\vdash W) \vdash (W\iff V)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$\iff\!-$</td>
+                <td style="text-align: left"
+                  >$(W\iff V), W \vdash V$ $(W\iff V), V \vdash W$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  >not$+$ (proof by contradiction)</td
+                >
+                <td style="text-align: left"
+                  >$(W \vdash ,\xcont) \vdash \xnot W$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  >not$-$ (proof by contradiction)</td
+                >
+                <td style="text-align: left"
+                  >$(\xnot W \vdash ,\xcont) \vdash W$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$\xcont+ $</td>
+                <td style="text-align: left">$W, (\xnot W) \vdash ,\xcont$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p
+          >We can also list these rules in if-then rule notation that mirrors
+          how they are used in proofs.</p
+        >
+        <p class="large"><strong>Definitions of Propositional Logic</strong></p>
+        <p
+          ><span class="m">Declare $\neg$, and, or, $\implies$, $\iff$</span>
+          and <span class="m">$\xcont$</span> to be constants.</p
+        >
+        <div class="rule-grid cols-2">
+          <div class="Rule">
+            <p><span class="nm">and+</span></p>
+            <div class="Premise">
+              <p
+                ><em>Given</em><br />
+                <span class="m">$W$</span><br />
+                <span class="m">$V$</span></p
+              >
+            </div>
+            <p><em>Conclude</em> <span class="m">$W\xand V$</span></p>
+          </div>
+          <div class="Rule">
+            <p><span class="nm">and-</span></p>
+            <div class="Premise">
+              <p
+                ><em>Given</em><br />
+                <span class="m">$W\xand V$</span></p
+              >
+            </div>
+            <p class="noskip"
+              ><em>Conclude</em> <span class="m">$W$</span><br />
+              <em>Conclude</em> <span class="m">$V$</span></p
+            >
+          </div>
+          <div class="Rule">
+            <p><span class="nm">implies+</span></p>
+            <div class="Premise">
+              <p
+                ><em>Given</em><br />
+                <span class="m">$W$</span></p
+              >
+              <div class="Subproof">
+                <p
+                  ><span class="m">Assume $W$</span><br />
+                  <span class="m">$V$</span></p
+                >
+              </div>
+            </div>
+            <p><em>Conclude</em> <span class="m">$W\implies V$</span></p>
+          </div>
+          <div class="Rule">
+            <p><span class="nm">implies-</span></p>
+            <div class="Premise">
+              <p
+                ><em>Given</em><br />
+                <span class="m">$W$</span><br />
+                <span class="m">$W\implies V$</span></p
+              >
+            </div>
+            <p><em>Conclude</em> <span class="m">$V$</span></p>
+          </div>
+          <div class="Rule">
+            <p><span class="nm">iff+</span></p>
+            <div class="Premise">
+              <p><em>Given</em></p>
+              <div class="Subproof">
+                <p
+                  ><span class="m">Assume $W$</span><br />
+                  <span class="m">$V$</span></p
+                >
+              </div>
+              <div class="Subproof">
+                <p
+                  ><span class="m">Assume $V$</span><br />
+                  <span class="m">$W$</span></p
+                >
+              </div>
+            </div>
+            <p><em>Conclude</em> <span class="m">$W\iff V$</span></p>
+          </div>
+          <div class="Rule-cell">
+            <div class="Rule">
+              <p><span class="nm">iff-</span></p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <p><span class="m">$W$</span></p>
+                <p><span class="m">$W\iff V$</span></p>
+              </div>
+              <p><em>Conclude</em> <span class="m">$V$</span></p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">iff-</span></p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <p><span class="m">$V$</span></p>
+                <p><span class="m">$W\iff V$</span></p>
+              </div>
+              <p><em>Conclude</em> <span class="m">$W$</span></p>
+            </div>
+          </div>
+          <div class="Rule">
+            <p><span class="nm">or+</span></p>
+            <div class="Premise">
+              <p
+                ><em>Given</em><br />
+                <span class="m">$W$</span></p
+              >
+            </div>
+            <p
+              ><em>Conclude</em> <span class="m">$W\xor V$</span><br />
+              <em>Conclude</em> <span class="m">$V\xor W$</span></p
+            >
+          </div>
+          <div class="Rule">
+            <p><span class="nm">or-</span> (proof by cases)</p>
+            <div class="Premise">
+              <p
+                ><em>Given</em><br />
+                <span class="m">$W\xor V$</span></p
+              >
+              <div class="Subproof">
+                <p
+                  ><span class="m">Assume $W$</span><br />
+                  <span class="m">$U$</span></p
+                >
+              </div>
+              <div class="Subproof">
+                <p
+                  ><span class="m">Assume $V$</span><br />
+                  <span class="m">$U$</span></p
+                >
+              </div>
+            </div>
+            <p><em>Conclude</em> <span class="m">$U$ by cases</span></p>
+          </div>
+          <div class="Rule">
+            <p><span class="nm">not-</span> (proof by contradiction)</p>
+            <div class="Premise">
+              <p><em>Given</em></p>
+              <div class="Subproof">
+                <p
+                  ><span class="m">Assume $\neg W$</span><br />
+                  <span class="m">$\xcont$</span></p
+                >
+              </div>
+            </div>
+            <p><em>Conclude</em> <span class="m">$W$</span></p>
+          </div>
+          <div class="Rule">
+            <p><span class="nm">not+</span> (proof by contradiction)</p>
+            <div class="Premise">
+              <p><em>Given</em></p>
+              <div class="Subproof">
+                <p
+                  ><span class="m">Assume $W$</span><br />
+                  <span class="m">$\xcont$</span></p
+                >
+              </div>
+            </div>
+            <p><em>Conclude</em> <span class="m">$\neg W$</span></p>
+          </div>
+          <div class="Rule">
+            <p><span class="nm">$\xcont+$</span></p>
+            <div class="Premise">
+              <p
+                ><em>Given</em><br />
+                <span class="m">$W$</span><br />
+                <span class="m">$\neg W$</span></p
+              >
+            </div>
+            <p><em>Conclude</em> <span class="m">$\xcont$</span></p>
+          </div>
+          <!-- rule grid -->
+        </div>
+        <p><em>Remarks:</em></p>
+        <ul class="disc">
+          <li
+            >The symbol $\xcont$ is called <em>contradiction</em> and represents
+            the logical constant <strong>false</strong>.</li
+          >
+          <li
+            >There is no useful reason to insert an assumption into your proof
+            unless you intend to use one of the rules of inference that requires
+            them as an input.</li
+          >
+        </ul>
+        <div class="Def">
+          <p
+            ><strong>Definition <span class="thm"></span>.</strong> A compound
+            statement of propositional logic is called a <em>tautology</em> if
+            it is true regardless of the truth values the atomic statements that
+            comprise it. Its column in its truth table contains only T’s.</p
+          >
+        </div>
+        <p
+          >It can be shown that a statement can be proved with Propositional
+          Logic if and only if the statement is a tautology.</p
+        >
+        <h2>Formal and Semiformal Proof Style</h2>
+        <p
+          >One way to write down the proof of a theorem is called a
+          <em>formal proof</em>.</p
+        >
+        <p>This style of proof consists must satisfy the following.</p>
+        <ul class="disc">
+          <li
+            >It must be a sequence of numbered (or labeled) lines containing
+            statements, reasons, and references to premises, optionally wrapped
+            in environments.</li
+          >
+          <li
+            >Every line contains exactly one statement (or declaration - see
+            below), and the reason given on that line is the name of a rule of
+            inference for which the statement on that line is the
+            conclusion.</li
+          >
+          <li
+            >If the rule of inference has premises, the reason is followed by
+            the line numbers or labels of the statements or variable
+            declarations which are the premises that the rule is being applied
+            to.</li
+          >
+          <li
+            >References to premises can only refer to lines which appear earlier
+            in the same proof which are not contained in a subproof that has
+            been closed.</li
+          >
+          <li
+            >Subproofs used as a premise are cited by listing the range of line
+            numbers comprising the subproof.</li
+          >
+        </ul>
+        <p
+          >A <em>semi-formal</em> proof is written in the same style as a formal
+          proof, but citing reasons and their premises to justify each statement
+          is optional.</p
+        >
+        <h2 id="problems">Problems</h2>
+        <p
+          >Prove the following tautologies using formal proofs. In the
+          following, $P,Q,R,S$ are statements. Sometimes we add additional
+          parentheses for legibility.</p
+        >
+        <h3>Easy Warmups</h3>
+        <div class="question">
+          <p><span class="thm">implies plus warmup</span> $P \implies P$</p>
+        </div>
+        <div class="question">
+          <p><span class="thm">iff plus warmup</span> $P \iff P$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">and plus warmup</span> $P \implies (P \xand
+            P)$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">or plus warmup</span> $P \implies P \xor Q$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">and minus warmup</span> $(P \xand P) \implies
+            P$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">iff minus warmup</span> $(P \iff Q) \implies (Q
+            \implies P)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">implies minus warmup</span> $((P \implies Q)
+            \xand P)\implies Q$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">or minus warmup</span> $P \xor Q \implies Q \xor
+            P$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">contradiction plus warmup</span> $(Q \xand \neg
+            Q) \implies \xcont$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">not plus warmup</span> $(Q \xand \neg Q) \implies
+            \neg P$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">not minus warmup</span> $(Q \xand \neg Q)
+            \implies P$</p
+          >
+        </div>
+        <h3>Famous Tautologies</h3>
+        <div class="question">
+          <p
+            ><span class="thm">a contradiction implies anything</span> $\xcont
+            \implies P$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">double negation</span> $\neg\neg P \iff P$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">modus tollens</span> $((P \implies Q) \xand \neg
+            Q) \implies \neg P$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">transitivity of $\implies$</span> $(P \implies Q)
+            \xand (Q \implies R) \implies (P \implies R)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">contrapositive</span> $(P \implies Q) \iff (\neg
+            Q \implies \neg P)$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">true!</span> $\neg \xcont$</p>
+        </div>
+        <div class="question">
+          <p><span class="thm">excluded middle</span> $P \xor \neg P$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Pierce’s Law</span> $((P \implies Q) \implies P)
+            \implies P$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">alternate $\xor!-$</span> $\left((P \xor Q) \xand
+            \neg P\right) \implies Q$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">exclusive or</span> $\neg (P \xiff Q) \iff (\neg
+            P \xand Q) \xor (P \xand \neg Q) $</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">alternate $\implies$</span> $(P \implies Q)
+            \xiff, (\neg P \xor Q)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">alternate $\xor!+$</span> $(\neg P \implies Q)
+            \implies (P \xor Q)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">not implies</span> $\neg\left(P\ximplies
+            Q\right)\xiff \left(P\xand\neg Q\right)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">shunting</span> $((P \xand Q) \ximplies R) \iff
+            (P\implies (Q \implies R))$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">De Morgan’s Law</span> $\neg(P\xand Q) \ximplies
+            \neg P \xor \neg Q$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">De Morgan’s Law</span> $\neg(P\xor Q) \xiff \neg
+            P \xand \neg Q$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">alternate definition of $\xor$</span> $P\xor Q
+            ,\xiff, (P\implies Q)\implies Q$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">the most beautiful tautology?</span> $P \implies
+            (P \iff P \xor (\neg P \xand P))$</p
+          >
+        </div>
+        <h3>Atomic statements aren’t just letters</h3>
+        <div class="question">
+          <p
+            >$\left(g \text{ is upper semi-computable }\right) \implies \left(g
+            \text{ is a finite simplicial complex}\right) \xor \left(g \text{ is
+            }\text{upper semi-computable }\right)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            >$\left(\left(0&lt;x \implies 0&lt;x^3\right) \xand \left(x&lt;0
+            \implies x^3&lt;0\right)\right) \xand \left(0&lt;x \xor
+            x&lt;0\right) \ximplies \left(0&lt;x^3 \xor x^3&lt;0\right)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            >The claim “If you like pizza and pizza is available then you will
+            eat pizza” is true if and only if the claim “If you like pizza, then
+            if pizza is available then you will eat pizza” is true.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            >It is not the case that $(M$ is representable over $\mathbb{F}_2
+            \xor M$ has an empty cokernal$)$ if and only if $(M$ is not
+            representable over $\mathbb{F}_2) \xand (M$ does not have an empty
+            cokernal$)$</p
+          >
+        </div>
+        <h3>Commutativity</h3>
+        <div class="question">
+          <p>$P \xand Q \iff Q \xand P$</p>
+        </div>
+        <div class="question">
+          <p>$P \xor Q \iff Q \xor P$</p>
+        </div>
+        <div class="question">
+          <p>$(P \iff Q) \iff (Q \iff P)$</p>
+        </div>
+        <div class="question">
+          <p
+            >Give examples of statements, $P$ and $Q$ such that $(P \implies Q)
+            \implies (Q \implies P)$ is false.</p
+          >
+        </div>
+        <h3>Associativity</h3>
+        <div class="question">
+          <p
+            >$\left(\left(P \xand Q\right) \xand R\right) \iff \left(P \xand
+            \left(Q \xand R\right)\right)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            >$\left(\left(P \xor Q\right) \xor R\right) \iff \left(P \xor
+            \left(Q \xor R\right)\right)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            >$\left(\left(P \iff Q\right) \iff R\right) \iff \left(P \iff
+            \left(Q \iff R\right)\right)$</p
+          >
+        </div>
+        <h3>Distributivity</h3>
+        <div class="question">
+          <p
+            >$P \xand \left(Q \xor R\right) \iff \left(P \xand Q\right) \xor
+            \left(P \xand R\right)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            >$P \xor \left(Q \xand R\right) \iff \left(P \xor Q\right) \xand
+            \left(P \xor R\right)$</p
+          >
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

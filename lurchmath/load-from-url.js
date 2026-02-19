@@ -54,6 +54,10 @@ export const loadFromURL = url => new Promise( ( resolve, reject ) => {
     } )
     request.addEventListener( 'error', reject )
     request.open( 'GET', url )
+    // TODO: The next line needs to be disabled to utilize
+    // lurch-discussion-files repo for links, but must stay enabled for adding
+    // contexts to files.
+    request.setRequestHeader( 'Cache-Control', 'max-age=0' )
     request.send()
 } )
 

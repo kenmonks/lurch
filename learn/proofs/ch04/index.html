@@ -66,8 +66,10 @@
               >3: The Language of Mathematics</a
             > </li
           ><li class="active">
-            <a href="/learn/proofs/ch04/">4: Reasoning about Mathematics</a>
-          </li>
+            <a href="/learn/proofs/ch04/"
+              >4: Reasoning about Mathematics</a
+            > </li
+          ><li> <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li>
         </ul>
       </div>
 
@@ -706,7 +708,7 @@
           >Note that Rules and Theorems cannot appear inside of other Rules,
           Theorems, or Premises.</p
         >
-        <h2>Given-conclude and If-then Rules and Equivalence Rules</h2>
+        <h2>Given-conclude and If-then Rules and Iff Rules</h2>
         <p
           >With our language and reasoning in hand, we are ready to begin
           proving theorems about our formal systems, and build mathematics from
@@ -769,8 +771,8 @@
         <div class="Def">
           <p
             ><strong class="qu">Definition <span class="thm"></span>.</strong> A
-            rule or theorem is an <em>equivalence</em> style if it is of the
-            form</p
+            rule or theorem is an <em>equivalence</em> or <em>Iff</em> style if
+            it is of the form</p
           >
           <div class="Rule fit half">
             <p
@@ -796,6 +798,25 @@
               <span class="m">$W_1,\ldots,W_m$</span>.</p
             >
           </div>
+        </div>
+        <h3>Turnstile Notation</h3>
+        <p
+          >It will sometimes be convenient to write down an environment without
+          having to use colored boxes. So we define a useful notation for
+          that.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong>
+            We write $$(W_1,\ldots,W_m \vdash V_1,\ldots,V_n)$$ for an if-then
+            environment with premises $W_1,\ldots,W_m$ and conclusions
+            $V_1,\ldots,V_n$. Similarly we write $$(W_1,\ldots,W_m \equiv
+            V_1,\ldots,V_n)$$ for an iff environment.</p
+          >
+          <p
+            >This notation can be nested if any of the $W_1,\ldots,W_m,
+            V_1,\ldots,V_n$ are themselves environments.</p
+          >
         </div>
         <h2>Theorems before their proof?</h2>
         <p
@@ -853,7 +874,7 @@
               >and <span class="m">assume mocha is chocolate,</span> and
               <span class="m">Gina loves chocolate</span>. Then
               <span class="m">Gina loves mocha</span> and
-              <span class="m">Gina loves chocolate</span></p
+              <span class="m">Gina loves chocolate</span>.</p
             >
             <ol start="5">
               <li
