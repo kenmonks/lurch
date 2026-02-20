@@ -1,0 +1,13 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'https://proveitmath.org/lurch/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="main" data-key="header" data-value-type="html"><div class="lurch-atom" contenteditable="false" data-metadata_type="&quot;dependency&quot;" data-metadata_description="&quot;none&quot;" data-metadata_filename="&quot;math/Sets-Equations-Logic-Rules.lurch&quot;" data-metadata_source="&quot;web&quot;" data-metadata_content="&quot;&quot;" data-metadata_auto-refresh="true" style="border: 1px solid gray; padding: 0px 1em;"><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Source:</td><td><tt>math/Sets-Equations-Logic-Rules.lurch</tt> (web)</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div></div>
+            <div id="document"></div>
+        
