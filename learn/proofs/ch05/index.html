@@ -289,7 +289,7 @@
               <tr>
                 <td style="text-align: left">or$-$ (proof by cases)</td>
                 <td style="text-align: left"
-                  >$(W\xor V), (W\implies U), (V\implies U) \vdash U$</td
+                  >$(W\xor V), (W \vdash U), (V \vdash U) \vdash U$</td
                 >
               </tr>
               <tr>
@@ -319,7 +319,7 @@
                   >not$+$ (proof by contradiction)</td
                 >
                 <td style="text-align: left"
-                  >$(W \vdash ,\xcont) \vdash \xnot W$</td
+                  >$(W \vdash \xcont) \vdash \xnot W$</td
                 >
               </tr>
               <tr>
@@ -327,12 +327,12 @@
                   >not$-$ (proof by contradiction)</td
                 >
                 <td style="text-align: left"
-                  >$(\xnot W \vdash ,\xcont) \vdash W$</td
+                  >$(\xnot W \vdash \xcont) \vdash W$</td
                 >
               </tr>
               <tr>
                 <td style="text-align: left">$\xcont+ $</td>
-                <td style="text-align: left">$W, (\xnot W) \vdash ,\xcont$</td>
+                <td style="text-align: left">$W, (\xnot W) \vdash \xcont$</td>
               </tr>
             </tbody>
           </table>
@@ -374,10 +374,7 @@
           <div class="Rule">
             <p><span class="nm">implies+</span></p>
             <div class="Premise">
-              <p
-                ><em>Given</em><br />
-                <span class="m">$W$</span></p
-              >
+              <p><em>Given</em></p>
               <div class="Subproof">
                 <p
                   ><span class="m">Assume $W$</span><br />
@@ -680,8 +677,8 @@
         </div>
         <div class="question">
           <p
-            ><span class="thm">alternate $\xor!-$</span> $\left((P \xor Q) \xand
-            \neg P\right) \implies Q$</p
+            ><span class="thm">alternate or-</span> $\left((P \xor Q) \xand \neg
+            P\right) \implies Q$</p
           >
         </div>
         <div class="question">
@@ -692,13 +689,13 @@
         </div>
         <div class="question">
           <p
-            ><span class="thm">alternate $\implies$</span> $(P \implies Q)
-            \xiff, (\neg P \xor Q)$</p
+            ><span class="thm">alternate $\implies$</span> $(P \implies Q) \xiff
+            (\neg P \xor Q)$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">alternate $\xor!+$</span> $(\neg P \implies Q)
+            ><span class="thm">alternate or+</span> $(\neg P \implies Q)
             \implies (P \xor Q)$</p
           >
         </div>
@@ -729,7 +726,7 @@
         <div class="question">
           <p
             ><span class="thm">alternate definition of $\xor$</span> $P\xor Q
-            ,\xiff, (P\implies Q)\implies Q$</p
+            \xiff (P\implies Q)\implies Q$</p
           >
         </div>
         <div class="question">

@@ -150,7 +150,7 @@
           xmrface: "{\\operatorname{MrFace}}",
           xnewt: "{\\operatorname{Newt}}",
           xNo: "{\\mathbf{No}}",
-          xnot: "{\\operatorname{not}}",
+          xnot: "{\\operatorname{not}\\,}",
           xop:  ["\\operatorname{#1}", 1],
           xor: "\\mathbin{\\operatorname{or}}",
           xorb: "{\\operatorname{Orb}}",
