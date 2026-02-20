@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://lurch.plus/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -167,7 +167,6 @@
 <p>Here it is, future mathematicians!&nbsp; Your first batch of proofs!</p>
 <hr>
 <p>In the following problems the identifiers <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;A, \\text{ anything}, P, Q, R, S&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">,</span><span class="ML__text"> anything</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.14em;">P</span><span class="ML__cmr">,</span><span class="ML__mathit">Q</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.01em;">R</span><span class="ML__cmr">,</span><span class="ML__mathit" style="margin-right: 0.06em;">S</span></span></span></span></span>&nbsp;all represent atomic statements.</p>
-<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span style="background-color: rgb(45, 194, 107); color: rgb(236, 240, 241);"><strong>&nbsp; Problem 1.&nbsp;</strong></span></p>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
 <p><strong>Theorem (why there's no contradiction- rule).&nbsp; </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;contradiction implies anything&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&rarr;&larr;&rArr;</span><span class="ML__text">anything</span></span></span></span></span></p>
@@ -177,9 +176,7 @@
 <p>&nbsp;</p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
 </div>
-</div>
 <hr>
-<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span style="background-color: rgb(45, 194, 107); color: rgb(236, 240, 241);"><strong>&nbsp; Problem 2.&nbsp;</strong></span></p>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
 <p><strong>Theorem (double negative).</strong>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;A iff not (not A)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">A</span><span class="ML__cmr">&hArr;</span><span class="ML__text">not </span><span class="ML__left-right" style="margin-top: 0em; height: 0.68333em;"><span class="ML__small-delim ML__open">(</span><span class="ML__text">not </span><span class="ML__mathit">A</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span>&nbsp;</p>
@@ -188,12 +185,9 @@
 <p><strong>Proof:</strong><br><br></p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
 </div>
-</div>
 <hr>
-<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span style="background-color: rgb(45, 194, 107); color: rgb(236, 240, 241);"><strong>&nbsp; Problem 3. </strong></span></p>
-<p>&nbsp;</p>
-<p>Recall that&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\neg&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">&not;</span></span></span></span></span> is a synonym for 'not'.</p>
+<p>Recall that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\neg&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">&not;</span></span></span></span></span> is a synonym for 'not'.</p>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
 <p><strong>Theorem (negating an implication).&nbsp; </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;neg (R implies S) implies R and neg S&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">&not;</span><span class="ML__left-right" style="margin-top: 0em; height: 0.68333em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit" style="margin-right: 0.01em;">R</span><span class="ML__cmr">&rArr;</span><span class="ML__mathit" style="margin-right: 0.06em;">S</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">&rArr;</span><span class="ML__mathit" style="margin-right: 0.01em;">R</span><span class="ML__text"> and </span><span class="ML__ams">&not;</span><span class="ML__mathit" style="margin-right: 0.06em;">S</span></span></span></span></span></p>
 </div>
@@ -201,7 +195,6 @@
 <p><strong>Proof:</strong></p>
 <p>&nbsp;</p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
-</div>
 </div>
 <hr>
 <div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
@@ -216,11 +209,8 @@
 </div>
 </div>
 <hr>
-<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span style="background-color: rgb(45, 194, 107); color: rgb(236, 240, 241);"><strong>&nbsp; Problem 5.&nbsp;</strong></span></p>
-<p>&nbsp;</p>
-<p>Note that <code>a is not b</code> means the same thing as <code>not (a is b)</code> and <code>not a is b</code>&nbsp; (because <code>is</code> has higher precedence than <code>not</code>).&nbsp; All three statements mean</p>
-<p><code>(&not; (is a b))</code> in list notation.</p>
+<p>Note that&nbsp;<code>a is not b</code> means the same thing as <code>not (a is b)</code> and <code>not a is b</code>&nbsp; (because <code>is</code> has higher precedence than <code>not</code>).&nbsp; All three statements mean <code>(&not; (is a b))</code> in list notation.</p>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
 <p><strong>Theorem (excluded middle).&nbsp; </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n is prime or n is not prime&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__text"> is prime or </span><span class="ML__mathit">n</span><span class="ML__text"> is not prime</span></span></span></span></span></p>
 </div>
@@ -228,7 +218,6 @@
 <p><strong>Proof:</strong></p>
 <p>&nbsp;</p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
-</div>
 </div>
 <hr>
 <p>&nbsp;</p>
