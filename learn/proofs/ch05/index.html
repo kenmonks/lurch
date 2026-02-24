@@ -70,7 +70,9 @@
               >4: Reasoning about Mathematics</a
             > </li
           ><li class="active">
-            <a href="/learn/proofs/ch05/">5: Propositional Logic</a>
+            <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li
+          ><li>
+            <a href="/learn/proofs/ch06/">6: Predicate Logic and Equality</a>
           </li>
         </ul>
       </div>
@@ -119,76 +121,79 @@
           constants, “$\neg$”, “$\xand$”, “$\xor$”, “$\implies$”, and “$\iff$”,
           and using them to define compound statements as follows.</p
         >
-        <div class="definition Proof">
+        <div class="Def">
           <p
             ><strong>Definition.</strong> Let $\varphi ,\psi$ be statements.
             Then the five expressions $$\begin{gathered} \neg \varphi \\ \varphi
             \xand \psi \\ \varphi \xor \psi \\ \varphi \implies \psi \\ \varphi
-            \iff \psi \end{gathered}$$ are also statements whose truth values
-            are completely determined by the truth values of $\varphi$ and
-            $\psi$ as shown in the following table:</p
-          >
-          <table>
-            <thead>
-              <tr>
-                <th style="text-align: center">$\varphi$</th>
-                <th style="text-align: center">$\psi$</th>
-                <th style="text-align: center">$\neg \varphi$</th>
-                <th style="text-align: center">$\varphi\xand \psi$</th>
-                <th style="text-align: center">$\varphi\xor \psi$</th>
-                <th style="text-align: center">$\varphi\implies \psi$</th>
-                <th style="text-align: center">$P\iff \psi$</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">T</td>
-              </tr>
-              <tr>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">F</td>
-              </tr>
-              <tr>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">F</td>
-              </tr>
-              <tr>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">F</td>
-                <td style="text-align: center">T</td>
-                <td style="text-align: center">T</td>
-              </tr>
-            </tbody>
-          </table>
-          <p
-            >We can also write <code>not</code> for $\neg$,
-            <code>if and only if</code> or <code>iff</code> for $\iff$, and
-            <code>implies</code> for $\implies$. A statement of the form
-            $\varphi\implies\psi$ is called a <em>conditional statement</em> or
-            an <em>implication</em>, and can be written in English in several
-            different ways: '$\varphi$ implies $\psi$, 'if $\varphi$ then
-            $\psi$, '$\psi$ follows from $\varphi$, or '$\psi$, if $\varphi$.</p
+            \iff \psi \end{gathered}$$ are also statements.</p
           >
         </div>
+        <p
+          >The truth values of those five statements are completely determined
+          by the truth values of $\varphi$ and $\psi$ as shown in the following
+          table:</p
+        >
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center">$\varphi$</th>
+              <th style="text-align: center">$\psi$</th>
+              <th style="text-align: center">$\neg \varphi$</th>
+              <th style="text-align: center">$\varphi\xand \psi$</th>
+              <th style="text-align: center">$\varphi\xor \psi$</th>
+              <th style="text-align: center">$\varphi\implies \psi$</th>
+              <th style="text-align: center">$P\iff \psi$</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">T</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">F</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">F</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">F</td>
+              <td style="text-align: center">T</td>
+              <td style="text-align: center">T</td>
+            </tr>
+          </tbody>
+        </table>
+        <p
+          >We can also write <code>not</code> for $\neg$,
+          <code>if and only if</code> or <code>iff</code> for $\iff$, and
+          <code>implies</code> for $\implies$. A statement of the form
+          $\varphi\implies\psi$ is called a <em>conditional statement</em> or an
+          <em>implication</em>, and can be written in English in several
+          different ways: '$\varphi$ implies $\psi$, 'if $\varphi$ then $\psi$,
+          '$\psi$ follows from $\varphi$, or '$\psi$, if $\varphi$.</p
+        >
         <p>Thus, the statements of Propositional Logic consist of</p>
         <ol>
           <li
@@ -341,185 +346,207 @@
           >We can also list these rules in if-then rule notation that mirrors
           how they are used in proofs.</p
         >
-        <p class="large"><strong>Definitions of Propositional Logic</strong></p>
-        <p
-          ><span class="m">Declare $\neg$, and, or, $\implies$, $\iff$</span>
-          and <span class="m">$\xcont$</span> to be constants.</p
-        >
-        <div class="rule-grid cols-2">
-          <div class="Rule">
-            <p><span class="nm">and+</span></p>
-            <div class="Premise">
-              <p
-                ><em>Given</em><br />
-                <span class="m">$W$</span><br />
-                <span class="m">$V$</span></p
-              >
-            </div>
-            <p><em>Conclude</em> <span class="m">$W\xand V$</span></p>
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Definitions of Propositional Logic</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Prop.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
           </div>
-          <div class="Rule">
-            <p><span class="nm">and-</span></p>
-            <div class="Premise">
-              <p
-                ><em>Given</em><br />
-                <span class="m">$W\xand V$</span></p
-              >
-            </div>
-            <p class="noskip"
-              ><em>Conclude</em> <span class="m">$W$</span><br />
-              <em>Conclude</em> <span class="m">$V$</span></p
-            >
-          </div>
-          <div class="Rule">
-            <p><span class="nm">implies+</span></p>
-            <div class="Premise">
-              <p><em>Given</em></p>
-              <div class="Subproof">
-                <p
-                  ><span class="m">Assume $W$</span><br />
-                  <span class="m">$V$</span></p
-                >
-              </div>
-            </div>
-            <p><em>Conclude</em> <span class="m">$W\implies V$</span></p>
-          </div>
-          <div class="Rule">
-            <p><span class="nm">implies-</span></p>
-            <div class="Premise">
-              <p
-                ><em>Given</em><br />
-                <span class="m">$W$</span><br />
-                <span class="m">$W\implies V$</span></p
-              >
-            </div>
-            <p><em>Conclude</em> <span class="m">$V$</span></p>
-          </div>
-          <div class="Rule">
-            <p><span class="nm">iff+</span></p>
-            <div class="Premise">
-              <p><em>Given</em></p>
-              <div class="Subproof">
-                <p
-                  ><span class="m">Assume $W$</span><br />
-                  <span class="m">$V$</span></p
-                >
-              </div>
-              <div class="Subproof">
-                <p
-                  ><span class="m">Assume $V$</span><br />
-                  <span class="m">$W$</span></p
-                >
-              </div>
-            </div>
-            <p><em>Conclude</em> <span class="m">$W\iff V$</span></p>
-          </div>
-          <div class="Rule-cell">
+          <p
+            ><span class="m">Declare $\neg$, and, or, $\implies$, $\iff$</span>
+            and <span class="m">$\xcont$</span> to be constants.</p
+          >
+          <div class="rule-grid cols-2">
             <div class="Rule">
-              <p><span class="nm">iff-</span></p>
+              <p><span class="nm">and+</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$W$</span><br />
+                  <span class="m">$V$</span></p
+                >
+              </div>
+              <p><em>Conclude</em> <span class="m">$W\xand V$</span></p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">and-</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$W\xand V$</span></p
+                >
+              </div>
+              <p class="noskip"
+                ><em>Conclude</em> <span class="m">$W$</span><br />
+                <em>Conclude</em> <span class="m">$V$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">implies+</span></p>
               <div class="Premise">
                 <p><em>Given</em></p>
-                <p><span class="m">$W$</span></p>
-                <p><span class="m">$W\iff V$</span></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Assume $W$</span><br />
+                    <span class="m">$V$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$W\implies V$</span></p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">implies-</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$W$</span><br />
+                  <span class="m">$W\implies V$</span></p
+                >
               </div>
               <p><em>Conclude</em> <span class="m">$V$</span></p>
             </div>
             <div class="Rule">
-              <p><span class="nm">iff-</span></p>
+              <p><span class="nm">iff+</span></p>
               <div class="Premise">
                 <p><em>Given</em></p>
-                <p><span class="m">$V$</span></p>
-                <p><span class="m">$W\iff V$</span></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Assume $W$</span><br />
+                    <span class="m">$V$</span></p
+                  >
+                </div>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Assume $V$</span><br />
+                    <span class="m">$W$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$W\iff V$</span></p>
+            </div>
+            <div class="Rule-cell">
+              <div class="Rule">
+                <p><span class="nm">iff-</span></p>
+                <div class="Premise">
+                  <p><em>Given</em></p>
+                  <p><span class="m">$W$</span></p>
+                  <p><span class="m">$W\iff V$</span></p>
+                </div>
+                <p><em>Conclude</em> <span class="m">$V$</span></p>
+              </div>
+              <div class="Rule">
+                <p><span class="nm">iff-</span></p>
+                <div class="Premise">
+                  <p><em>Given</em></p>
+                  <p><span class="m">$V$</span></p>
+                  <p><span class="m">$W\iff V$</span></p>
+                </div>
+                <p><em>Conclude</em> <span class="m">$W$</span></p>
+              </div>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">or+</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$W$</span></p
+                >
+              </div>
+              <p
+                ><em>Conclude</em> <span class="m">$W\xor V$</span><br />
+                <em>Conclude</em> <span class="m">$V\xor W$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">or-</span> (proof by cases)</p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$W\xor V$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Assume $W$</span><br />
+                    <span class="m">$U$</span></p
+                  >
+                </div>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Assume $V$</span><br />
+                    <span class="m">$U$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$U$ by cases</span></p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">not-</span> (proof by contradiction)</p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Assume $\neg W$</span><br />
+                    <span class="m">$\xcont$</span></p
+                  >
+                </div>
               </div>
               <p><em>Conclude</em> <span class="m">$W$</span></p>
             </div>
+            <div class="Rule">
+              <p><span class="nm">not+</span> (proof by contradiction)</p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Assume $W$</span><br />
+                    <span class="m">$\xcont$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$\neg W$</span></p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">$\xcont+$</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$W$</span><br />
+                  <span class="m">$\neg W$</span></p
+                >
+              </div>
+              <p><em>Conclude</em> <span class="m">$\xcont$</span></p>
+            </div>
+            <!-- rule-set-grid -->
           </div>
-          <div class="Rule">
-            <p><span class="nm">or+</span></p>
-            <div class="Premise">
-              <p
-                ><em>Given</em><br />
-                <span class="m">$W$</span></p
+          <div class="rule-set-remarks">
+            <p class="smallskip"><em>Remarks:</em></p>
+            <ul class="disc">
+              <li
+                >The symbol $\xcont$ is called <em>contradiction</em> and is a
+                constant statement that represents the logical constant
+                <strong>false</strong>.</li
               >
-            </div>
-            <p
-              ><em>Conclude</em> <span class="m">$W\xor V$</span><br />
-              <em>Conclude</em> <span class="m">$V\xor W$</span></p
-            >
-          </div>
-          <div class="Rule">
-            <p><span class="nm">or-</span> (proof by cases)</p>
-            <div class="Premise">
-              <p
-                ><em>Given</em><br />
-                <span class="m">$W\xor V$</span></p
+              <li
+                >There is no useful reason to insert an assumption into your
+                proof unless you intend to use one of the rules of inference
+                that requires them as an input.</li
               >
-              <div class="Subproof">
-                <p
-                  ><span class="m">Assume $W$</span><br />
-                  <span class="m">$U$</span></p
-                >
-              </div>
-              <div class="Subproof">
-                <p
-                  ><span class="m">Assume $V$</span><br />
-                  <span class="m">$U$</span></p
-                >
-              </div>
-            </div>
-            <p><em>Conclude</em> <span class="m">$U$ by cases</span></p>
+            </ul>
+            <!-- rule-set-remarks -->
           </div>
-          <div class="Rule">
-            <p><span class="nm">not-</span> (proof by contradiction)</p>
-            <div class="Premise">
-              <p><em>Given</em></p>
-              <div class="Subproof">
-                <p
-                  ><span class="m">Assume $\neg W$</span><br />
-                  <span class="m">$\xcont$</span></p
-                >
-              </div>
-            </div>
-            <p><em>Conclude</em> <span class="m">$W$</span></p>
-          </div>
-          <div class="Rule">
-            <p><span class="nm">not+</span> (proof by contradiction)</p>
-            <div class="Premise">
-              <p><em>Given</em></p>
-              <div class="Subproof">
-                <p
-                  ><span class="m">Assume $W$</span><br />
-                  <span class="m">$\xcont$</span></p
-                >
-              </div>
-            </div>
-            <p><em>Conclude</em> <span class="m">$\neg W$</span></p>
-          </div>
-          <div class="Rule">
-            <p><span class="nm">$\xcont+$</span></p>
-            <div class="Premise">
-              <p
-                ><em>Given</em><br />
-                <span class="m">$W$</span><br />
-                <span class="m">$\neg W$</span></p
-              >
-            </div>
-            <p><em>Conclude</em> <span class="m">$\xcont$</span></p>
-          </div>
-          <!-- rule grid -->
+          <!-- rule-set -->
         </div>
-        <p><em>Remarks:</em></p>
-        <ul class="disc">
-          <li
-            >The symbol $\xcont$ is called <em>contradiction</em> and represents
-            the logical constant <strong>false</strong>.</li
-          >
-          <li
-            >There is no useful reason to insert an assumption into your proof
-            unless you intend to use one of the rules of inference that requires
-            them as an input.</li
-          >
-        </ul>
         <div class="Def">
           <p
             ><strong>Definition <span class="thm"></span>.</strong> A compound
@@ -551,19 +578,19 @@
             conclusion.</li
           >
           <li
-            >If the rule of inference has premises, the reason is followed by
-            the line numbers or labels of the statements or variable
+            >If the rule of inference has premises, the reason can optionally be
+            followed by the line numbers or labels of the statements or variable
             declarations which are the premises that the rule is being applied
             to.</li
           >
           <li
             >References to premises can only refer to lines which appear earlier
-            in the same proof which are not contained in a subproof that has
-            been closed.</li
+            in the same proof which are not contained in a subproof that does
+            not also contain the line being justified.</li
           >
           <li
-            >Subproofs used as a premise are cited by listing the range of line
-            numbers comprising the subproof.</li
+            >Subproofs used as a premise can be cited by listing the range of
+            line numbers comprising the subproof or other appropriate label.</li
           >
         </ul>
         <p

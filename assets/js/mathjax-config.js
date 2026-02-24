@@ -16,6 +16,7 @@
         packages: { "[+]": ["ams"] },
 
         macros: {
+          mc: ["\\mathcal{#1}",1],
           m:   "\\color{#cd853f}{}",
           blk: "\\color{#333333}{}",
           abs: ["\\left\\lvert #1 \\right\\rvert", 1],
@@ -79,6 +80,7 @@
           DECLARE: "{\\operatorname{Declare}}",
           dseg: "{\\operatorname{dseg}}",
           ficrsep: "{\\hspace{5mm}}",
+          forsome: "{\\,\\mathbin{\\operatorname{for some}}\\,}",
           GB: "{\\operatorname{GB}}",
           hbinom: ["\\left(\\,#1 , #2\\,\\right)", 2],
           hdn: "{\\operatorname{Dn}}",
@@ -143,6 +145,7 @@
           xIntersect: "{\\bigcap}",
           xinv: "{\\operatorname{inv}}",
           xlcm: "{\\operatorname{lcm}}",
+          xlet: "{\\operatorname{Let}\\,}",
           xline: ["\\overleftrightarrow{#1}", 1],
           xmatrix: ["\\left(\\begin{smallmatrix} #1 & #2 \\\\ #3 & #4 \\end{smallmatrix}\\right)", 4],
           xmod: "{\\operatorname{mod}}",

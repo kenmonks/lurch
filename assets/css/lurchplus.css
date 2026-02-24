@@ -7,6 +7,7 @@
 /* import the Lurch editor fonts and site fonts */
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 /* Define site CSS variables */
 :root {
@@ -438,17 +439,16 @@ body.course {
   font-weight: 600;
   color: var(--accent-color);
 } */
-.course #content-block :not(pre) > code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-               "Liberation Mono", "Courier New", monospace;
-  font-size: 0.95em;          /* usually better than 110% */
-  font-weight: 500;           /* subtle differentiation without shouting */
-  color: #1f2937;             /* slightly darker than body #333 */
-  background: rgba(2, 93, 140, 0.08);   /* tint toward your accent */
-  border: 1px solid rgba(2, 93, 140, 0.18);
-  border-radius: 0.35em;
-  padding: 0.08em 0.32em;     /* “chip” feel, but minimal */
+body.course #content-block :not(pre) > code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.92em;          /* usually better than 110% */
+  font-weight: 600;           /* subtle differentiation without shouting */
+  color: var(--accent-color); 
+  /* background: rgba(2, 93, 140, 0.08); tint toward your accent */
+  /* background: #F8F8F8; tint toward your accent */
+  padding: 0.05em 0.1em;     /* “chip” feel, but minimal */
   white-space: break-spaces;  /* keeps multiple spaces if you ever need them */
+  border-radius: 4px;
 }
 /* Don’t double-style code inside code blocks */
 .course #content-block pre code {
@@ -1503,6 +1503,101 @@ body.course {
   font-size: 1.25em;
   font-weight: 600;
   color: #444;
+}
+/* launch-Lurch icons and links */
+
+/* TODO: expand this in the obvious way */
+.course {
+
+/* Lurch link */
+a.lurch-link {
+  color: var(--accent-color);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+/* Icon styling */
+a.lurch-link i {
+  font-size: 0.75em;
+  margin-left: 0.35em;
+  opacity: 0.75;
+  vertical-align: 0.05em;
+}
+/* Hover */
+/* a.lurch-link:hover {
+  text-decoration: underline;
+} */
+a.lurch-link:hover i {
+  opacity: 1;
+}
+/* heftier buttons */
+.lurch-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.45em 0.9em;
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  font-size: 0.9em;
+  text-decoration: none;
+  color: var(--accent-color);
+  margin: 0.6em 0;
+}
+.lurch-button i {
+  font-size: 0.85em;
+}
+.lurch-button:hover {
+  background-color: rgba(2, 93, 140, 0.08);
+}
+/* stronger emphasis */
+a.lurch-link.lurch-inline-strong {
+  font-weight: 600;
+}
+/* bigger icon */
+a.lurch-open .lurch-open__icon {
+  font-size: 0.9em;
+}
+
+
+/* rule-set wrapper */
+#content-block .rule-set {
+  margin: 1.1em 0 1.2em;
+  padding: 0.85em 1em 0.95em;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.02);  /* very light tint */
+}
+/* a header row */
+#content-block .rule-set-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.65em;
+  padding-bottom: 0.45em;
+  border-bottom: 1px solid rgba(0,0,0,0.10);
+}
+/* the group title */
+#content-block .rule-set-head > :first-child {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.05em;          /* replace your {.large} */
+  line-height: 1.2;
+}
+/* Keep header from inheriting weird p spacing rules */
+#content-block .rule-set-head p {
+  margin: 0;
+}
+/* remarks area (optional) */
+#content-block .rule-set-remarks {
+  margin-top: 0.75em;
+  padding-top: 0.65em;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  font-size: 0.95em;
+  color: #444;
+}
+
+/* end .course */
 }
 
 /* Embedding */
