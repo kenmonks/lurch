@@ -176,10 +176,9 @@
         <div class="Def">
           <p
             ><strong class="qu">Definition <span class="thm"></span></strong> If
-            $x$ is any variable and $\mc{W}(x)$ any statement that results from
-            evaluating a lambda expression $W$ on $x$ when applied to any
-            expression having the same type as $x$, then $(\forall x.\mc{W}(x))$
-            and $(\exists x.\mc{W}(x))$ are both statements.</p
+            $x$ is any variable and $\mc{P}(x)$ any statement that results from
+            applying a lambda expression $\mc{P}$ to $x$, then $(\forall
+            x.\mc{P}(x))$ and $(\exists x.\mc{P}(x))$ are both statements.</p
           >
         </div>
         <p
@@ -268,25 +267,25 @@
               <tr>
                 <td style="text-align: left">$\forall+$</td>
                 <td style="text-align: left"
-                  >$(\xlet s \vdash \mc{W}(s)) \vdash \forall x.\mc{W}(x)$</td
+                  >$(\xlet s \vdash \mc{P}(s)) \vdash \forall x.\mc{P}(x)$</td
                 >
               </tr>
               <tr>
                 <td style="text-align: left">$\forall-$</td>
                 <td style="text-align: left"
-                  >$(\forall x.\mc{W}(x)) \vdash \mc{W}(t)$</td
+                  >$(\forall x.\mc{P}(x)) \vdash \mc{P}(t)$</td
                 >
               </tr>
               <tr>
                 <td style="text-align: left">$\exists+$</td>
                 <td style="text-align: left"
-                  >$\mc{W}(t) \vdash \exists x.\mc{W}(x)$</td
+                  >$\mc{P}(t) \vdash \exists x.\mc{P}(x)$</td
                 >
               </tr>
               <tr>
                 <td style="text-align: left">$\exists-$</td>
                 <td style="text-align: left"
-                  >$(\exists x.\mc{W}(x)) \vdash \mc{W}(c)\forsome x$</td
+                  >$(\exists x.\mc{P}(x)) \vdash \mc{P}(c)\forsome x$</td
                 >
               </tr>
             </tbody>
@@ -327,13 +326,13 @@
                   <div class="Subproof">
                     <p
                       ><span class="m">Let $s$</span> be arbitrary.<br />
-                      <span class="m">$\mc{W(x)}$</span></p
+                      <span class="m">$\mc{P(x)}$</span></p
                     >
                   </div>
                 </div>
                 <p
                   ><em>Conclude</em>
-                  <span class="m">$\forall x.\mc{W(x)}$</span></p
+                  <span class="m">$\forall x.\mc{P(x)}$</span></p
                 >
               </div>
               <div class="Rule">
@@ -341,22 +340,22 @@
                 <div class="Premise">
                   <p
                     ><em>Given</em><br />
-                    <span class="m">$\forall x.\mc{W(x)}$</span></p
+                    <span class="m">$\forall x.\mc{P(x)}$</span></p
                   >
                 </div>
-                <p><em>Conclude</em> <span class="m">$\mc{W(t)}$</span></p>
+                <p><em>Conclude</em> <span class="m">$\mc{P(t)}$</span></p>
               </div>
               <div class="Rule">
                 <p><span class="nm">$\exists+$</span></p>
                 <div class="Premise">
                   <p
                     ><em>Given</em><br />
-                    <span class="m">$\mc{W(t)}$</span></p
+                    <span class="m">$\mc{P(t)}$</span></p
                   >
                 </div>
                 <p
                   ><em>Conclude</em>
-                  <span class="m">$\exists x.\mc{W(x)}$</span></p
+                  <span class="m">$\exists x.\mc{P(x)}$</span></p
                 >
               </div>
               <div class="Rule">
@@ -364,12 +363,12 @@
                 <div class="Premise">
                   <p
                     ><em>Given</em><br />
-                    <span class="m">$\exists x.\mc{W(x)}$</span></p
+                    <span class="m">$\exists x.\mc{P(x)}$</span></p
                   >
                 </div>
                 <p
                   ><em>Conclude</em>
-                  <span class="m">$\mc{W(c)}\forsome c$</span></p
+                  <span class="m">$\mc{P(c)}\forsome c$</span></p
                 >
               </div>
               <!-- rule-grid -->
@@ -380,21 +379,21 @@
                 <li
                   >In $\forall+$ the metavariable $s$ must be replaced by a new
                   identifier in the proof, not a compound expression. The
-                  conclusion $\forall x.\mc{W}(x)$ cannot appear in the scope of
+                  conclusion $\forall x.\mc{P}(x)$ cannot appear in the scope of
                   the declaration of $s$.</li
                 >
                 <li
                   >In $\forall-$ and $\exists+$ the metavariable $t$ can be
                   replaced by compound expressions, not just identifiers. No
                   free variable in $t$ may become bound when $t$ is substituted
-                  for $x$ in $\mc{W}(x)$ (this is true about applying lambda
+                  for $x$ in $\mc{P}(x)$ (this is true about applying lambda
                   expressions in general).</li
                 >
                 <li
-                  >In $\exists+$ the expression $\mc{W(t)}$ can be the
+                  >In $\exists+$ the expression $\mc{P(t)}$ can be the
                   expression obtained by replacing one or more of the
                   occurrences of $t$ with $x$, not necessarily every occurrence
-                  (by judiciously choosing $\mc{W}$</li
+                  (by judiciously choosing $\mc{P}$</li
                 >
                 <li
                   >In $\exists-$ the metavariable $c$ must be replaced by a new
@@ -643,9 +642,9 @@
             discourse of all quantified variables be the set of all people.
             Write each of the following English statements using only
             <code>and</code>, <code>or</code>, $\neg$, $\implies$, $\iff$,
-            $\forall$, $\exists$, $\exists!$, $L$, $=$, the bound variables $x$
-            and $y$ and the constants (names of people) given in the sentences.
-            For example, we could express “Everyone loves Bob.” as “$\forall
+            $\forall$, $\exists$, $L$, $=$, the bound variables $x$ and $y$ and
+            the constants (names of people) given in the sentences. For example,
+            we could express “Everyone loves Bob.” as “$\forall
             x.L(x,\text{Bob})$”.</p
           >
           <div class="parts">
@@ -685,18 +684,10 @@
               <li>$\forall x.\exists y.P(x,y)$</li>
               <li>$\exists x.\forall y.P(x,y)$</li>
               <li>$\exists x.\exists y.P(x,y)$</li>
-              <li>$\forall x.\exists! y.P(x,y)$</li>
-              <li>$\exists! x.\forall y.P(x,y)$</li>
-              <li>$\exists x.\exists! y.P(x,y)$</li>
-              <li>$\exists! x.\exists! y.P(x,y)$</li>
               <li>$\forall y.\forall x.P(x,y)$</li>
               <li>$\forall y.\exists x.P(x,y)$</li>
               <li>$\exists y.\forall x.P(x,y)$</li>
               <li>$\exists y.\exists x.P(x,y)$</li>
-              <li>$\forall y.\exists! x.P(x,y)$</li>
-              <li>$\exists! y.\forall x.P(x,y)$</li>
-              <li>$\exists y.\exists! x.P(x,y)$</li>
-              <li>$\exists! y.\exists! x.P(x,y)$</li>
             </ol>
           </div>
           <!-- question  -->
