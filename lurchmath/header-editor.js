@@ -433,147 +433,155 @@ export const install = editor => {
         }
     } )
 
+    // utility used by the next two UI items (menu item and toolbar icon)
+    const toggleContext = () => {
+      // get the document 
+      const doc = editor.getDoc()
+      // get the body element
+      const body = editor.getBody()
+       
+      // If the context is shown, delete it and return
+      const existingContext = editor.getBody().querySelector('#context')
+      if ( existingContext ) {
+        existingContext.remove()
+        editor.selection.setCursorLocation( editor.getBody(), 0 )
+        // Also, if we have a cursor location stored from before we
+        // showed this preview, put the user's cursor location back
+        // there for convenience.  (See more comments on this below.)
+        if ( editor.selectionBeforePreview ) {
+          editor.selection.setRng( editor.selectionBeforePreview )
+          editor.selectionBeforePreview = null
+          editor.selection.getStart()?.scrollIntoView()
+        }
+        if (editor.scrollYBeforePreview !== undefined) {
+          editor.getWin().scrollTo(0, editor.scrollYBeforePreview)
+          delete editor.scrollYBeforePreview
+        }
+        return
+      }
+         
+      // If not, we have to create them from the content in the header and
+      // the declarations.
+          
+      // Remember where the user's cursor was before we insert the preview,
+      // because it may be large and require them to scroll to see it.
+      // If they then hide it, it's nice to jump back to where they were.
+      editor.selectionBeforePreview = editor.selection.getRng()
+      editor.scrollYBeforePreview = editor.getWin().scrollY
+         
+      // get the dependency content
+      const header = getHeader( editor )
+        
+      // Accumulate the HTML representation of all previews of all
+      // dependencies in the header.
+      let allPreviewHTML = ''
+      if (header)
+        Dependency.topLevelDependenciesIn( header ).forEach( dependency => {
+          const preview = Atom.newBlock( editor, '', { type: 'preview' } )
+          preview.imitate( dependency )
+          allPreviewHTML += preview.element.outerHTML
+        } )
+              
+           
+      // wrap everything in a #context div and insert it
+      shiftHTML( body, 
+        `<div class='lurch-atom' id='context' contenteditable='true'>
+           ${allPreviewHTML}
+         </div>`
+      )
+      const context = editor.getBody().querySelector('#context')
+          
+           
+      // now that the context is shown, fetch all of the declares in both
+      // the context and the document itself and add it to the top. To
+      // make it more legible, upper case all the 'declares'.
+      let decHTML = ''
+      getDeclares().forEach(dec => {
+        decHTML += `${dec.element.outerHTML.replace('declare','Declare')}.<br/>`
+      })
+        
+      // create a title for the context and a subtitle for the Constant
+      // decs.  We don't make a subtitle for the dependencies because they
+      // can just type their own (or make a fake dependency at the top of
+      // the import chain that only has flarf).
+      const title = `<h1 id='contextTitle'>Mathematical Context</h1>`
+      const subtitle = `<h2>Constants</h2>`
+         
+      // then format the output, taking into account when things are empty
+      let HTML = ''
+      // if they are both empty 
+      if (!allPreviewHTML) {
+        // no constants or previews
+        if (!decHTML) {
+          HTML = 
+            `${title}
+             <p>There is nothing defined in this document's context.</p>`
+        // there are declarations but no previews
+        } else {
+          HTML = 
+            `${title}
+             ${subtitle}
+             <p>The following symbols are declared to be 
+                constants in this document.</p> 
+             <div id='declaresPanel' contenteditable='false'>
+                ${decHTML}
+             </div>
+             <p>There is no math defined in this document's context.</p>`
+        }
+      // otherwise the previews are already inserted  
+      } else { 
+        if (!decHTML) {
+          HTML = 
+            `${title}
+             <p>There are no globally defined constants in this document.</p>` 
+        } else { 
+          HTML =
+            `${title}
+             ${subtitle}
+             <p>The following symbols are declared to be 
+                constants in this document.</p> 
+             <div id='declaresPanel' contenteditable='false'>
+                ${decHTML}
+             </div>` 
+        }
+      }
+      HTML = `<div id="context-head">${HTML}</div>
+              <div id="filter-head" class="hidden"><h2>Matching rules:</h2></div>`
+      shiftHTML( context, HTML)
+        
+      // hopefully this will lock everything down
+      context.contentEditable='false'
+       
+      setTimeout( () => { 
+        const context = editor.getBody().querySelector('#context')
+        context.contentEditable = 'false'
+        context.setAttribute( 'contenteditable', 'false' )
+        // after checking this be sure nothing is selected by TinyMCE and
+        // the cursor is at the beginning of the document
+        editor.selection.select(editor.getBody(), true) 
+        editor.selection.collapse(true) 
+      } , 0)
+       
+      editor.getWin().scrollTo(0, 0) // scroll the window to the top
+    }
+
     // Add a menu item for moving into the document non-editable versions of
     // the *contents of* the background material, so that student users who need
     // to see a list of all axioms, theorems, and rules in force can do so.
     // Revealing these previews also shows a search/filter box in the toolbar.
     editor.ui.registry.addMenuItem( 'viewcontext', {
-        text : 'Show/Hide context',
-        icon: 'preview',
-        shortcut : 'meta+Alt+0',
-        tooltip : 'View the mathematical content on which this document depends',
-        onAction : () => {
-
-            // get the document 
-            const doc = editor.getDoc()
-            // get the body element
-            const body = editor.getBody()
-
-            // If the context is shown, delete it and return
-            const existingContext = editor.getBody().querySelector('#context')
-            if ( existingContext ) {
-                existingContext.remove()
-                editor.selection.setCursorLocation( editor.getBody(), 0 )
-                // Also, if we have a cursor location stored from before we
-                // showed this preview, put the user's cursor location back
-                // there for convenience.  (See more comments on this below.)
-                if ( editor.selectionBeforePreview ) {
-                    editor.selection.setRng( editor.selectionBeforePreview )
-                    editor.selectionBeforePreview = null
-                    editor.selection.getStart()?.scrollIntoView()
-                }
-                if (editor.scrollYBeforePreview !== undefined) {
-                    editor.getWin().scrollTo(0, editor.scrollYBeforePreview)
-                    delete editor.scrollYBeforePreview
-                }
-                return
-            }
-
-            // If not, we have to create them from the content in the header and
-            // the declarations.
-
-            // Remember where the user's cursor was before we insert the preview,
-            // because it may be large and require them to scroll to see it.
-            // If they then hide it, it's nice to jump back to where they were.
-            editor.selectionBeforePreview = editor.selection.getRng()
-            editor.scrollYBeforePreview = editor.getWin().scrollY
-
-            // get the dependency content
-            const header = getHeader( editor )
-
-            // Accumulate the HTML representation of all previews of all
-            // dependencies in the header.
-            let allPreviewHTML = ''
-            if (header)
-              Dependency.topLevelDependenciesIn( header ).forEach( dependency => {
-                const preview = Atom.newBlock( editor, '', { type: 'preview' } )
-                preview.imitate( dependency )
-                allPreviewHTML += preview.element.outerHTML
-              } )
-
-
-            // wrap everything in a #context div and insert it
-            shiftHTML( body, 
-              `<div class='lurch-atom' id='context' contenteditable='true'>
-                 ${allPreviewHTML}
-               </div>`
-            )
-            const context = editor.getBody().querySelector('#context')
-
-
-            // now that the context is shown, fetch all of the declares in both
-            // the context and the document itself and add it to the top. To
-            // make it more legible, upper case all the 'declares'.
-            let decHTML = ''
-            getDeclares().forEach(dec => {
-                decHTML += `${dec.element.outerHTML.replace('declare','Declare')}.<br/>`
-            })
-            
-            // create a title for the context and a subtitle for the Constant
-            // decs.  We don't make a subtitle for the dependencies because they
-            // can just type their own (or make a fake dependency at the top of
-            // the import chain that only has flarf).
-            const title = `<h1 id='contextTitle'>Mathematical Context</h1>`
-            const subtitle = `<h2>Constants</h2>`
-
-            // then format the output, taking into account when things are empty
-            let HTML = ''
-            // if they are both empty 
-            if (!allPreviewHTML) {
-              // no constants or previews
-              if (!decHTML) {
-                HTML = 
-                  `${title}
-                   <p>There is nothing defined in this document's context.</p>`
-              // there are declarations but no previews
-              } else {
-                HTML = 
-                  `${title}
-                   ${subtitle}
-                   <p>The following symbols are declared to be 
-                      constants in this document.</p> 
-                   <div id='declaresPanel' contenteditable='false'>
-                      ${decHTML}
-                   </div>
-                   <p>There is no math defined in this document's context.</p>`
-              }
-            // otherwise the previews are already inserted  
-            } else { 
-              if (!decHTML) {
-                HTML = 
-                  `${title}
-                   <p>There are no globally defined constants in this document.</p>` 
-              } else { 
-                HTML =
-                  `${title}
-                   ${subtitle}
-                   <p>The following symbols are declared to be 
-                      constants in this document.</p> 
-                   <div id='declaresPanel' contenteditable='false'>
-                      ${decHTML}
-                   </div>` 
-              }
-            }
-            HTML = `<div id="context-head">${HTML}</div>
-                    <div id="filter-head" class="hidden"><h2>Matching rules:</h2></div>`
-            shiftHTML( context, HTML)
-
-            // hopefully this will lock everything down
-            context.contentEditable='false'
-
-            setTimeout( () => { 
-              const context = editor.getBody().querySelector('#context')
-              context.contentEditable = 'false'
-              context.setAttribute( 'contenteditable', 'false' )
-              // after checking this be sure nothing is selected by TinyMCE and
-              // the cursor is at the beginning of the document
-              editor.selection.select(editor.getBody(), true) 
-              editor.selection.collapse(true) 
-            } , 0)
-            
-            editor.getWin().scrollTo(0, 0) // scroll the window to the top
-        }
+      text : 'Show/Hide context',
+      icon: 'preview',
+      shortcut : 'meta+Alt+0',
+      tooltip : 'View the mathematical content on which this document depends',
+      onAction : toggleContext
     } )
+    // the same thing, but on the toolbar
+    editor.ui.registry.addButton('viewcontext', {
+      icon: 'preview',
+      tooltip: 'Show/Hide context',
+      onAction: toggleContext
+    })
     
 }
 
