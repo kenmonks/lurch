@@ -593,12 +593,10 @@ export class Expression extends Atom {
                 const convertedTex = convertToLatex()
                 const convertedLC = convertToLC()
                 const validSyntax = !!(convertedLC && (convertedTex || convertedTex === ''))
-                // console.log(validSyntax)
-                if ( validSyntax )
-                    mathLivePreview.setValue( convertedTex )
+                if ( validSyntax ) mathLivePreview.setValue( convertedTex )
                 const lurchInputElement = dialog.querySelector( 'textarea' )
                 if ( lurchInputElement ) {
-                    if ( typeof convertedTex === 'string' ) {
+                    if ( validSyntax && typeof convertedTex === 'string' ) {
                         lurchInputElement.classList.remove('badsyntax')
                     } else {
                         lurchInputElement.classList.add('badsyntax')
@@ -614,7 +612,7 @@ export class Expression extends Atom {
             this.update()
             return true
         } )
-        dialog.dialog.setEnabled( 'OK', !!convertToLatex() )
+        dialog.dialog.setEnabled( 'OK', !!(convertToLatex() && convertToLC()) )
         // prevent enter to confirm if the input is invalid
         const lurchInputElement = dialog.querySelector( 'textarea' )
         if ( lurchInputElement ) {
@@ -642,9 +640,11 @@ export class Expression extends Atom {
                 if ( event.key == 'Enter' ) {
                     if ( event.shiftKey ) {
                         // allow Shift+Enter to add a line
-                    } else if ( convertToLatex() ) {
+                    } else if ( dialog.dialog.isEnabled?.('OK') ) {
                         // Plain enter submits if the input is valid
                         dialog.querySelector( 'button[title="OK"]' ).click()
+                        event.preventDefault()
+                        event.stopPropagation()
                     } else {
                         // Plain enter does nothing if the input is invalid
                         event.preventDefault()
