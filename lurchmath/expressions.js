@@ -607,7 +607,7 @@ export class Expression extends Atom {
         }
         // Show it and if they accept any changes, apply them to the atom.
         const result = dialog.show().then( userHitOK => {
-            if ( !userHitOK || !convertToLatex() ) return false
+            if ( !userHitOK || !convertToLatex() || !convertToLC() ) return false
             this.saveAdvancedModeData( dialog.get( 'lurchNotation' ) )
             this.update()
             return true
@@ -640,7 +640,7 @@ export class Expression extends Atom {
                 if ( event.key == 'Enter' ) {
                     if ( event.shiftKey ) {
                         // allow Shift+Enter to add a line
-                    } else if ( dialog.dialog.isEnabled?.('OK') ) {
+                    } else if ( !!(convertToLatex() && convertToLC()) ) {
                         // Plain enter submits if the input is valid
                         dialog.querySelector( 'button[title="OK"]' ).click()
                         event.preventDefault()
