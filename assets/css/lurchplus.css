@@ -1596,6 +1596,29 @@ a.lurch-open .lurch-open__icon {
   font-size: 0.95em;
   color: #444;
 }
+/* section headings in rule-grid */
+.rule-grid .rule-heading{
+  grid-column: 1 / -1;          /* span all columns */
+  margin: 0.5rem 0 0 0;
+  /* the grid gap provides padding */
+  padding: 0;
+  font-weight: 600;
+  font-size: 0.95em;
+  letter-spacing: 0.02em;
+  color: var(--black-font);
+}
+/* remove any margins and padding if the last child of the heading is a <p>
+(which  might also b he first-child) */
+.rule-grid .rule-heading p:last-child {
+  margin-bottom: 0;
+}
+/* optional: a little separator line under it */
+.rule-grid .rule-heading::after{
+  content: "";
+  display: block;
+  margin-top: 0.35rem;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+}
 
 /* end .course */
 }

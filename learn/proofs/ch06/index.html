@@ -118,9 +118,9 @@
             <em>binding</em> is an expression of the form $x.E$ where $x$ is any
             non-constant identifier and $E$ is any expression. All occurrences
             of $x$ in $x.E$ are said to be <em>bound variables</em>. All
-            identifiers in $x.\varphi$ other than constants or bound variable
-            are called <em>free variables</em>. An operator applied to a binding
-            is called a <em>quantifier</em>.</p
+            identifiers in $x.E$ other than constants or bound variable are
+            called <em>free variables</em>. An operator applied to a binding is
+            called a <em>quantifier</em>.</p
           >
         </div>
         <p
@@ -326,7 +326,7 @@
                   <div class="Subproof">
                     <p
                       ><span class="m">Let $s$</span> be arbitrary.<br />
-                      <span class="m">$\mc{P(x)}$</span></p
+                      <span class="m">$\mc{P(s)}$</span></p
                     >
                   </div>
                 </div>
@@ -734,6 +734,185 @@
             are real numbers and properties of real number arithmetic, like
             $1+1=2$, or $x+x=2x$, justifying these with the black-box reason
             <span class="m">by arithmetic</span>.</p
+          >
+        </div>
+        <h1>Proof Shortcuts</h1>
+        <p
+          >When writing formal proofs we quickly find that the perfect rigor
+          they provide is quickly offset by the extreme length and tediousness
+          of the proofs. Indeed, this aspect of formal proofs is often counter
+          to our goal of elegant and effective exposition. So how can we retain
+          the objective validity and rigor of a formal proof and make our proofs
+          more elegant and expository at the same time?</p
+        >
+        <p
+          >One way is to use well-defined <em>shortcuts</em> that eliminate the
+          tedious, obvious aspects of our proofs, while retaining the rigor and
+          important concepts. In this book we will list some of the shortcuts
+          that mathematicians use in order to shorten the proofs, make them more
+          readable, and eliminate parts of the proof that are repetitive or
+          uninteresting.</p
+        >
+        <h2>Use Famous Theorems</h2>
+        <p
+          >Once we have proven a theorem, we can use it as a new rule of
+          inference. Theorems are like Rules in that they can be used as
+          formulas by considering their free variables to be metavariables.
+          Thus, after we prove the major results about a particular topic, we
+          can add those theorems to the list of rules we can use to prove
+          additional results in new topic.</p
+        >
+        <p
+          >The following theorems about logic are quite well-known, and can
+          usually be used in an expository proof without proving them or even
+          justifying them with a reason (although you should in a formal or
+          semiformal proof).</p
+        >
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Theorems of Logic</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Logic-Theorems.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
+          </div>
+          <div class="rule-grid cols-2">
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (double negative)</span>
+                <span class="m">$\neg\neg W \equiv W$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (excluded middle)</span>
+                <span class="m">$W\xor\neg W$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (commutativity of or)</span><br />
+                <span class="m">If $W\xor V$</span> then
+                <span class="m">$V\xor W$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (associativity of or)</span><br />
+                <span class="m"
+                  >$(W\xor V)\xor U \equiv W \xor (V \xor U)$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (ternary and)</span><br />
+                <span class="m">$W\xand V \xand U \equiv W, V, U$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (alt def of implies)</span>
+                <span class="m">$W\implies V\equiv \neg W \xor V$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (alt or-)</span><br />
+                <span class="m">If $W\xor V$</span> and
+                <span class="m">$\neg V$</span> then
+                <span class="m">$W$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (negated implication)</span><br />
+                <span class="m">$\neg (W\implies V) \equiv W, \neg V$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (contrapositive)</span><br />
+                <span class="m">If $W\implies V$</span> and
+                <span class="m">$\neg V$</span> then
+                <span class="m">$\neg W$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (De Morgan)</span><br />
+                <span class="m"
+                  >$\neg(W \xor V) \equiv \neg W, \neg V $</span
+                ></p
+              >
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- rule-set -->
+        </div>
+        <h2>Use Transitive Chains!</h2>
+        <p
+          >While Leibniz definition of equality is very succinct, in practice it
+          becomes tedious to constantly use substitution, reflexivity, symmetry
+          and transitivity explicitly many times in our proofs to reach our
+          desired conclusion. To deal with this, mathematicians use a convenient
+          device called a <em>transitive chain</em>.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong>
+            Let $\langle r_1,r_2,\ldots,r_n\rangle$ be a sequence of binary
+            operators on a set $A$. We say such a sequence is
+            <em>mutually transitive</em> if and only if for every $a,b,c\in A$,
+            and for every $1\leq i\leq j\leq n$, $$a\,r_i\,b \xand b\,r_j\,c
+            \implies a\,r_j\,c$$ and $$a\,r_j\,b \xand b\,r_i\,c \implies
+            a\,r_j\,c$$</p
+          >
+        </div>
+        <p
+          >Examples of mutually transitive operator sequences on the set of
+          integers include: $\langle = \rangle$, $\langle =, \leq\rangle$,
+          $\langle =, &lt; \rangle$, $\langle =, \leq, &lt;\rangle$, $\langle
+          &gt;, \geq\rangle$, $\langle =, \equiv\rangle$ and $\langle =, \mid
+          \rangle$. An example of a sequence of mutually transitive logical
+          operators is $\langle\iff,\implies\rangle$.</p
+        >
+        <p
+          >Given such a sequence we can often shorten our proofs by using the
+          <em>transitive chain</em> notation $$ \begin{align*} x_1\,&amp;
+          r_{i_1}\, x_2 \\ &amp; r_{i_2}\, x_3 \\ &amp; r_{i_3}\, x_4 \\ &amp;
+          \vdots \\ &amp; r_{i_k}\, x_{k+1} \end{align*} $$ which is defined to
+          be an abbreviation for $$ \begin{align*} x_1\, &amp; r_{i_1}\, x_2 \\
+          x_2\, &amp; r_{i_2}\, x_3 \\ x_3\, &amp; r_{i_3}\, x_4 \\ &amp; \vdots
+          \\ x_{k}\, &amp; r_{i_k}\, x_{k+1} \end{align*} $$</p
+        >
+        <p
+          >Because the operators are mutually transitive we can use this entire
+          block as a single premise to justify that $x_1 r_\alpha x_{k+1}$ where
+          $\alpha$ is the largest subscript among $i_1,\ldots,i_k$. As a
+          shortcut, any such deduction can be omitted and the entire block of
+          lines used as in its place in the proof.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span></strong> In
+            the following transitive chain, the sequence of operators, $\langle
+            =,\leq,&lt;\rangle$, is mutually transitive. $$ \begin{align*}
+            0&amp;\leq (a+1)^2 \\ &amp;= a^2+2a+1 \\ &amp;&lt; (a^2+2a+1)+1 \\
+            &amp;= a^2+2(a+1) \end{align*} $$</p
+          >
+          <p
+            >Thus, we can conclude from this transitive chain that
+            $0&lt;a^2+2(a+1)$.</p
           >
         </div>
       </div>
