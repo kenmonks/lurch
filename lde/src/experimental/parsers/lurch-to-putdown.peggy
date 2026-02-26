@@ -534,7 +534,7 @@ Prop = Iff
   Implies = a:(Or/And/PropArg)|1..,_'implies'_x|     { return lispSeq('⇒',a)   }
   Or      = a:(And/PropArg)|1..,_('or'/'vee')_x|     { return lispSeq('or',a)  }
   And     = a:(Not/PropArg)|1..,_('and'/'wedge')_x|  { return lispSeq('and',a) }
-  Not     = _('not'/'neg')_x b:PropArg               { return lispUnary('¬',b) }
+  Not     = _('not'/'neg')_x b:(PropArg/Quantified)  { return lispUnary('¬',b) }
   
 ///////////////////////////////////////////////////////////////////////////////
 // Relations

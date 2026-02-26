@@ -709,8 +709,8 @@ Prop = Iff
               { return a.join('\\text{ or }')       }
   And     = a:(Not/PropArg)|1..,_('and'/'wedge')_x|
               { return a.join('\\text{ and }')      }
-  Not     = _'not'_x b:PropArg { return '\\text{not } '+b } / 
-            _'neg'_x b:PropArg { return '\\neg '+b }
+  Not     = _'not'_x b:(PropArg/Quantified) { return '\\text{not } '+b } / 
+            _'neg'_x b:(PropArg/Quantified) { return '\\neg '+b }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Relations

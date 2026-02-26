@@ -3848,6 +3848,9 @@ function peg$parse(input, options) {
       s3 = peg$parse_x();
       if (s3 !== peg$FAILED) {
         s4 = peg$parsePropArg();
+        if (s4 === peg$FAILED) {
+          s4 = peg$parseQuantified();
+        }
         if (s4 !== peg$FAILED) {
           peg$savedPos = s0;
           s0 = peg$f33(s4);
@@ -3877,6 +3880,9 @@ function peg$parse(input, options) {
         s3 = peg$parse_x();
         if (s3 !== peg$FAILED) {
           s4 = peg$parsePropArg();
+          if (s4 === peg$FAILED) {
+            s4 = peg$parseQuantified();
+          }
           if (s4 !== peg$FAILED) {
             peg$savedPos = s0;
             s0 = peg$f34(s4);
