@@ -71,8 +71,10 @@
             > </li
           ><li> <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li
           ><li class="active">
-            <a href="/learn/proofs/ch06/">6: Predicate Logic and Equality</a>
-          </li>
+            <a href="/learn/proofs/ch06/"
+              >6: Predicate Logic and Equality</a
+            > </li
+          ><li> <a href="/learn/proofs/ch07/">7: The Natural Numbers</a> </li>
         </ul>
       </div>
 
@@ -510,80 +512,81 @@
         <h3>Predicate Logic</h3>
         <div class="question">
           <p
-            ><span class="thm">distributivity</span> $(\forall x.P(x) \xand
+            ><span class="qnum">distributivity</span> $(\forall x.P(x) \xand
             Q(x)) \iff (\forall y.P(y)) \xand (\forall z.Q(z))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">distributivity</span> $(\exists x.P(x) \xor Q(x))
-            \iff (\exists y.P(y)) \xor (\exists z.Q(z))$</p
+            ><span class="qnum">distributivity</span> $(\exists x.P(x) \xor
+            Q(x)) \iff (\exists y.P(y)) \xor (\exists z.Q(z))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">distributivity</span> $(\exists x.P(x) \implies
+            ><span class="qnum">distributivity</span> $(\exists x.P(x) \implies
             Q(x)) \iff (\forall y.P(y)) \implies (\exists z.Q(z))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">equivalent predicates</span> $(\forall x.P(x)
+            ><span class="qnum">equivalent predicates</span> $(\forall x.P(x)
             \iff Q(x)) \implies ((\exists x.P(x))\implies (\exists x.Q(x)))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">commutativity</span> $(\forall x.\forall
+            ><span class="qnum">commutativity</span> $(\forall x.\forall
             y.P(x,y)) \implies (\forall y.\forall x.P(x,y))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">commutativity</span> $(\exists x.\exists
+            ><span class="qnum">commutativity</span> $(\exists x.\exists
             y.P(x,y)) \implies (\exists y.\exists x.P(x,y))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">one for all</span> $(\exists y.\forall x.P(x,y))
+            ><span class="qnum">one for all</span> $(\exists y.\forall x.P(x,y))
             \implies (\forall x.\exists y.P(x,y))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">some are the same</span> $(\forall x.\forall y.
+            ><span class="qnum">some are the same</span> $(\forall x.\forall y.
             P(x,y)) \implies \forall z. P(z,z)$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">De Morgan</span> $\neg (\exists x.P(x)) \iff
+            ><span class="qnum">De Morgan</span> $\neg (\exists x.P(x)) \iff
             (\forall x. \neg P(x))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">De Morgan</span> $\neg (\forall x.P(x)) \iff
+            ><span class="qnum">De Morgan</span> $\neg (\forall x.P(x)) \iff
             (\exists x. \neg P(x))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">quantifier fun</span> $\left(\forall x. P(x)
+            ><span class="qnum">quantifier fun</span> $\left(\forall x. P(x)
             \implies Q(x)\right) \xand \left(\forall x.\neg Q(x)\right) \implies
             \left(\forall x. \neg P(x)\right)$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">more quantifier fun</span> $(\forall x. P(x) \xor
-            Q(x)) \xand (\exists y. \neg P(y)) \implies (\exists z. Q(z))$</p
+            ><span class="qnum">more quantifier fun</span> $(\forall x. P(x)
+            \xor Q(x)) \xand (\exists y. \neg P(y)) \implies (\exists z.
+            Q(z))$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">less than, for example</span> $$(\forall x. \neg
+            ><span class="qnum">less than, for example</span> $$(\forall x. \neg
             P(x, x)) \xand (\forall x. \forall y. \forall z. P(x, y) \xand P(y,
             z) \implies P(x, z)) \implies (\forall x. \forall y. \neg (P(x, y)
             \xand P(y, x)))$$</p
@@ -591,7 +594,7 @@
         </div>
         <div class="question">
           <p
-            ><span class="thm">excluded middle</span> $(\forall x.P(x)) \xor
+            ><span class="qnum">excluded middle</span> $(\forall x.P(x)) \xor
             (\exists x.\neg P(x))$</p
           >
         </div>
@@ -601,37 +604,38 @@
         >
         <div class="question">
           <p
-            ><span class="thm">de-quantify</span> $(\exists x.Q(x) \xand P) \iff
-            (\exists x.Q(x)) \xand P$</p
+            ><span class="qnum">de-quantify</span> $(\exists x.Q(x) \xand P)
+            \iff (\exists x.Q(x)) \xand P$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">de-quantify</span> $(\forall x.Q(x) \xor P) \iff
+            ><span class="qnum">de-quantify</span> $(\forall x.Q(x) \xor P) \iff
             (\forall x.Q(x)) \xor P$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">de-quantify</span> $(\forall x.Q(x) \implies P)
+            ><span class="qnum">de-quantify</span> $(\forall x.Q(x) \implies P)
             \iff (\exists x. Q(x)) \implies P$</p
           >
         </div>
         <h3>Equality</h3>
         <div class="question">
           <p
-            ><span class="thm">symmetry of equality</span> $x=y \implies y=x$</p
+            ><span class="qnum">symmetry of equality</span> $x=y \implies
+            y=x$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">avoiding vacuous types</span> $(\exists x. x=x)
+            ><span class="qnum">avoiding vacuous types</span> $(\exists x. x=x)
             \xand (\forall y. P(y)) \implies \exists z. P(z)$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm">alternate definitions of unique existence</span>
+            ><span class="qnum">alternate definitions of unique existence</span>
             $(\exists x,P(x)\xand \forall y.P(y)\implies y=x) \iff (\exists
             x.P(x) \xand \forall y.\neg(y=x) \implies \neg P(y))$</p
           >
@@ -859,6 +863,33 @@
           </div>
           <!-- rule-set -->
         </div>
+        <p
+          >Sometimes the most elegant or compact way to state or prove a theorem
+          is not the most useful way to use it as a rule for proving future
+          theorems. In this case we can derive rules from the theorem itself
+          (with proof) that may be more useful for doing proofs. For example, if
+          we have the theorem</p
+        >
+        <div class="Theorem">
+          <p
+            ><strong>Theorem <span class="thm"></span></strong
+            ><span class="qu"></span
+            ><span class="m">$\forall x.x \neq 0 \implies 0\lt x^2$</span></p
+          >
+        </div>
+        <p>We might derive the following rule from that.</p>
+        <div class="Rule">
+          <p
+            ><strong>Theorem 6.6</strong><span class="qu"></span
+            ><span class="m">If $x \neq 0$</span> then
+            <span class="m">$0\lt x^2$</span></p
+          >
+        </div>
+        <p
+          >Since we can easily prove the rule from the theorem, we say that the
+          rule is <em>derived</em> rom the theorem, and can refer to it by the
+          same name.</p
+        >
         <h2>Use Transitive Chains!</h2>
         <p
           >While Leibniz definition of equality is very succinct, in practice it
@@ -915,6 +946,41 @@
             $0&lt;a^2+2(a+1)$.</p
           >
         </div>
+        <h2>Identify certain expressions</h2>
+        <p
+          >Sometimes it is convenient to have more than one notation for the
+          same expression. We will identify the following expressions.</p
+        >
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center">This expression…</th>
+              <th style="text-align: center">…means the same thing as</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">$\xnot W$</td>
+              <td style="text-align: center">$\neg W$</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">$x\neq y$</td>
+              <td style="text-align: center">$\neg (x=y)$</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">$x\notin A$</td>
+              <td style="text-align: center">$\neg (x\in A)$</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">$f$ is not continuous</td>
+              <td style="text-align: center">not ($f$ is continuous)</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">Let $x\in A$</td>
+              <td style="text-align: center">Let $x$ be such that $x\in A$</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div id="footer-block">

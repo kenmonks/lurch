@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:5500/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -366,7 +366,7 @@
 <h4><strong>The set <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\mathbb{N}&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__bb">N</span></span></span></span></span></strong></h4>
 <p>(We don't need axioms N0 or N1 because in this context the domain of discourse is the set of natural numbers.)</p>
 <p>&nbsp; &nbsp; <strong>Axiom N0:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;0&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">0</span></span></span></span></span> is a natural number.</p>
-<p>&nbsp; &nbsp; <strong>Axiom </strong><strong>N1:</strong> For all natural numbers&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span>, the successor of <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span> is a natural number.</p>
+<p>&nbsp; &nbsp; <strong>Axiom </strong><strong>N1:</strong> For all natural numbers&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\sigma(n)&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">&sigma;</span><span class="ML__cmr">(</span><span class="ML__mathit">n</span><span class="ML__cmr">)</span></span></span></span></span>, the successor of <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span> is a natural number.</p>
 <div>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Axiom N2 (successor is injective)</strong></p>
