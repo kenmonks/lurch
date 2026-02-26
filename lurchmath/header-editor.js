@@ -433,7 +433,7 @@ export const install = editor => {
         }
     } )
 
-    // utility used by the next two UI items (menu item and toolbar icon)
+    // the context action for both the menu item and the toolbar button
     const toggleContext = () => {
       // get the document 
       const doc = editor.getDoc()

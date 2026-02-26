@@ -49,11 +49,11 @@
           draggable_modal: true,
           plugins: 'lists link table code fullscreen',
           toolbar: 'undo redo | '
-                + 'styles bold italic | '
+                + 'styles bold italic '
                 // + 'alignleft aligncenter alignright outdent indent | '
-                + 'alignleft aligncenter alignright | '
-                // + 'numlist bullist fullscreen viewcontext',
-                + 'numlist bullist fullscreen',
+                + 'alignleft aligncenter alignright '
+                + 'numlist bullist fullscreen | viewcontext validate',
+                // + 'numlist bullist fullscreen',
           fullscreen_native: true,      
           menubar: 'file edit format table math developer help',
           content_css: ['document',
@@ -128,12 +128,12 @@
           // 'expression editor type': 'Advanced',
           // 'expository math editor type': 'Advanced',
           // 'dollar sign shortcut': true,
-          // 'default shell style': 'minimal',
           // 'application width in window': 'Fixed size',
           // 'developer mode on': false,
           // 'default open dialog tab': 'From your computer',
           // 'default save dialog tab': 'To your computer',
           // 'preferred meaning style': 'Code',
+          'default shell style': 'boxed',
           'add LaTeX document wrapper': true,
           'export LaTeX selection only': false,
           'export LaTeX shells': true,
@@ -141,7 +141,7 @@
         },
         documentDefaults: {
           'notation': 'Lurch notation',
-          'shell style': 'minimal'
+          'shell style': 'boxed'
         }
       }
       // add developer menu if requested

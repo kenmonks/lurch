@@ -198,90 +198,109 @@ export const install = editor => {
 
     editor.worker = newValidationWorker()
 
-    // Add menu item for toggling validation
-    editor.ui.registry.addMenuItem( 'validate', {
-        text : 'Show/Hide validity ✔︎',
-        icon : 'preview',
-        tooltip : 'Run Lurch\'s checking algorithm on the document',
-        shortcut : 'meta+0',
-        onAction : () => {
-            // If there is validation in progress, we might want to terminate
-            // it, but changing the notification to a modal dialog seems to
-            // prevent the hotkey for the menu item from doing anything when the
-            // dialog is shown (i.e., the entire editor is locked) 
+    // the validation action for both the menu item and the toolbar button
+    const toggleValidation = () => {
+        // If there is validation in progress, we might want to terminate
+        // it, but changing the notification to a modal dialog seems to
+        // prevent the hotkey for the menu item from doing anything when the
+        // dialog is shown (i.e., the entire editor is locked) 
 
-            // If there are validation results in the document, then clear them
-            // out and be done.
-            if ( Array.from(
-                editor.getBody().querySelectorAll( '[class^=feedback-marker]' )
-            ).some( feedback => isOnScreen( feedback ) ) ) {
-                clearAll()
-                return
-            }
-            // Otherwise the user wants us to start validation now; do so.
-            // Clear old results just to be safe.
+        // If there are validation results in the document, then clear them
+        // out and be done.
+        if ( Array.from(
+            editor.getBody().querySelectorAll( '[class^=feedback-marker]' )
+        ).some( feedback => isOnScreen( feedback ) ) ) {
             clearAll()
-            // Start progress bar in UI
-            const dialog = new Dialog('Validating...', editor, 'progress-dialog')
-            
-            // Add a progress bar
-            const progressDisplay = new HTMLItem(
-                `
-                <div id="progress-row">
-                  <span id="progress-text">Validating...  0%</span>
-                  <span id="progress-close" title="Cancel validation">
-                    <svg xmlns="http://www.w3.org/2000/svg" 
-                      viewBox="0 0 384 512"
-                      width="16"
-                      height="16" 
-                      fill="#000">
-                      <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                      <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-                    </svg>
-                  </span>
-                </div>
-                `)
-            dialog.addItem(progressDisplay)
-            
-            // hide the header and footer
-            dialog.hideHeader = true
-            dialog.hideFooter = true
-            
-            // Override the cancel logic to allow it to stop the worker
-            dialog.json.onCancel = () => {
-                if (editor.worker) {
-                    editor.worker.terminate()
-                    editor.worker = newValidationWorker()
-                }
-                editor.dispatch('validationFinished')
-                dialog.close()
-                editor.progressDialog = null
-            }
-            // cache the dialog in the editor
-            editor.progressDialog = dialog
-            
-            // show the editor 
-            dialog.show()
-            // after it is created add the close button onclick action
-            setTimeout(() => {
-              const closeButton = dialog.querySelector('#progress-close')
-              if (closeButton)
-                dialog.element.tabIndex = -1
-                dialog.element.focus({ preventScroll: true })
-                closeButton.onclick = () => {
-                  if (editor.worker) {
-                      editor.worker.terminate()
-                      editor.worker = newValidationWorker()
-                  }
-                  editor.dispatch('validationFinished')
-                  dialog.close()
-                  editor.progressDialog = null
-                }
-            }, 0)
-            // Send the document to the worker to initiate background validation
-            Message.document( editor, 'putdown' ).send( editor.worker )
+            return
         }
+        // Otherwise the user wants us to start validation now; do so.
+        // Clear old results just to be safe.
+        clearAll()
+        // Start progress bar in UI
+        const dialog = new Dialog('Validating...', editor, 'progress-dialog')
+        
+        // Add a progress bar
+        const progressDisplay = new HTMLItem(
+            `
+            <div id="progress-row">
+              <span id="progress-text">Validating...  0%</span>
+              <span id="progress-close" title="Cancel validation">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 384 512"
+                  width="16"
+                  height="16" 
+                  fill="#000">
+                  <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                  <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                </svg>
+              </span>
+            </div>
+            `)
+        dialog.addItem(progressDisplay)
+        
+        // hide the header and footer
+        dialog.hideHeader = true
+        dialog.hideFooter = true
+        
+        // Override the cancel logic to allow it to stop the worker
+        dialog.json.onCancel = () => {
+            if (editor.worker) {
+                editor.worker.terminate()
+                editor.worker = newValidationWorker()
+            }
+            editor.dispatch('validationFinished')
+            dialog.close()
+            editor.progressDialog = null
+        }
+        // cache the dialog in the editor
+        editor.progressDialog = dialog
+        
+        // show the editor 
+        dialog.show()
+        // after it is created add the close button onclick action
+        setTimeout(() => {
+          const closeButton = dialog.querySelector('#progress-close')
+          if (closeButton)
+            dialog.element.tabIndex = -1
+            dialog.element.focus({ preventScroll: true })
+            closeButton.onclick = () => {
+              if (editor.worker) {
+                  editor.worker.terminate()
+                  editor.worker = newValidationWorker()
+              }
+              editor.dispatch('validationFinished')
+              dialog.close()
+              editor.progressDialog = null
+            }
+        }, 0)
+        // Send the document to the worker to initiate background validation
+        Message.document( editor, 'putdown' ).send( editor.worker )
+    }
+
+
+    // Add menu item and toolbar button for toggling validation
+    editor.ui.registry.addMenuItem( 'validate', {
+      text : 'Show/Hide validity',
+      icon : 'preview',
+      tooltip : 'Run Lurch\'s validity checking algorithm on the document',
+      shortcut : 'meta+0',
+      onAction : toggleValidation
     } )
+    // custom Lurch checkmark for toolbar icon
+    editor.ui.registry.addIcon('lurchCheck', `
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <text x="4" y="17"
+          style="font-family: Lato, sans-serif; font-weight: 900; font-size: 18px; fill: #4CAF50;">
+          ✓
+        </text>
+      </svg>
+    `)
+    // the same thing, but on the toolbar
+    editor.ui.registry.addButton('validate', {
+      icon: 'lurchCheck',
+      tooltip: 'Show/Hide validity',
+      onAction: toggleValidation
+    })
 
     // Add menu item for clearing validation results
     editor.ui.registry.addMenuItem( 'clearvalidation', {

@@ -482,8 +482,8 @@ div.lurch-atom[data-shell_title][data-validation_result="error"]::after {
 /***********************************************************************/
 /*                       Shell background colors                       */
 
-/*  Rules, but not premises */
-[data-metadata_type*="rule"]:not(.atom-is-selected, :hover),
+/*  Rules, including premises and subproofs in minimal */
+[data-metadata_type*="rule"]:not(.atom-is-selected),
 #context [data-metadata_type*="rule"]:not(.atom-is-selected),
 body.shell-style-minimal 
   [data-metadata_type*="rule"]:not(.atom-is-selected, :hover) .lurch-atom,
@@ -496,20 +496,18 @@ body.shell-style-boxed
   border-color: var(--rule-color);
 }
 /* Premises */
-body.shell-style-boxed {
-  [data-metadata_type*="premise"] {
-    background-color: var(--premise-color);
-  }
+[data-metadata_type*="premise"]:not(.atom-is-selected) {
+  background-color: var(--premise-color);
 }
 /* Theorems */
-[data-metadata_type*="theorem"]:not(.atom-is-selected, :hover),
+[data-metadata_type*="theorem"]:not(.atom-is-selected),
 #context [data-metadata_type*="theorem"]:not(.atom-is-selected),
 [data-metadata_type*="theorem"]:not(.atom-is-selected, :hover) .lurch-atom {
   background-color: var(--theorem-color);
   border-color: var(--theorem-color);
 }
 /* Recall */
-[data-metadata_type*="recall"]:not(.atom-is-selected, :hover),
+[data-metadata_type*="recall"]:not(.atom-is-selected),
 #context [data-metadata_type*="recall"]:not(.atom-is-selected),
 [data-metadata_type*="recall"]:not(.atom-is-selected, :hover) .lurch-atom {
   background-color: var(--recall-color);
@@ -553,7 +551,8 @@ body.shell-style-boxed {
     div.lurch-atom:not(:hover) span.lurch-atom,
     #context, #context *
     ) {
-      background-color: var(--semantic-hover-color);
+      visibility: visible;
+      /* background-color: var(--semantic-hover-color); */
   }
 }
 /* Make selected visible when parent is hovered */

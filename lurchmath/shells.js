@@ -354,6 +354,8 @@ export class Shell extends Atom {
         result.element.removeAttribute( 'contenteditable' )
         result.setSubclass( subclassName )
         result.element.innerHTML = `<p><br data-mce-bogus="1"></p>`
+        // make the default be unindented
+        result.element.classList.toggle( 'unindented' )
         return result.element
     }
 
