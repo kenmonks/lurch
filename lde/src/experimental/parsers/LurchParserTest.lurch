@@ -206,6 +206,10 @@ exists x.y.P(x)
 (exists x.for all y.P(x,y))  implies  (for all y.exists x.P(x,y))
 (exists x.for all y.x loves y)  implies  (for all y.exists x.x loves y)
 P and (exists x.P(x)  implies  Q)  implies  P and (for all y.Q)
+not (forall x.P(x))
+not (exists x.P(x))
+not forall x.P(x)
+not exists x.P(x)
 // declarations
 Let x
 let x,y,z,wilma
