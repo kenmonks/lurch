@@ -209,6 +209,9 @@
               successor of $n$ is a natural number.</p
             >
             <div class="rule-grid">
+              <div class="rule-heading">
+                <p>The set $\NN$</p>
+              </div>
               <div class="Rule">
                 <p
                   ><span class="nm">Axiom N2 (successor is injective).</span>
@@ -251,6 +254,9 @@
                   <span class="m">$\forall n.\mc{P}(n)$</span></p
                 >
               </div>
+              <div class="rule-heading">
+                <p>Addition</p>
+              </div>
               <div class="Rule">
                 <p
                   ><span class="nm">Axiom A0 (base case for addition).</span>
@@ -262,6 +268,9 @@
                   ><span class="nm">Axiom A1 (recursion for addition).</span>
                   <span class="m">$m+\sigma(n) = \sigma(m+n)$</span>.</p
                 >
+              </div>
+              <div class="rule-heading">
+                <p>Multiplication</p>
               </div>
               <div class="Rule">
                 <p
@@ -279,13 +288,22 @@
                   <span class="m">$m\cdot\sigma(n) = m+m\cdot n$</span>.</p
                 >
               </div>
+              <div class="rule-heading">
+                <p>Order</p>
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Axiom I (less than or equal to).</span>
+                  <span class="m">$m \leq n \equiv \exists k.m+k=n$</span></p
+                >
+              </div>
               <!-- rule-grid -->
             </div>
             <div class="rule-set-remarks">
               <ul class="disc">
                 <li
-                  >In all of the axioms, the variables $k,m,n$ have natural
-                  number type.</li
+                  >In all of the axioms, the variables $k,m,n$ are natural
+                  numbers.</li
                 >
                 <li
                   >In N4 above and in the rest of this chapter, $\mc{P}(n)$ is a
@@ -306,33 +324,63 @@
             <p
               ><strong class="qu">Definition <span class="thm"></span>.</strong>
               We define the usual <em>base ten representation</em> of natural
-              numbers such that $1=\sigma(0)$, $2=\sigma(1)$, $3=\sigma(2)$,
-              $4=\sigma(3),\ldots$ and so on. Equivalently, $1=\sigma(0)$,
-              $2=\sigma(\sigma(0))$, $3=\sigma(\sigma(\sigma(0)))$,
-              $4=\sigma(\sigma(\sigma(\sigma(0)))),\ldots$ where the natural
-              number represented is the same as the number of $\sigma$ 's
-              applied to zero.</p
+              numbers as illustrated in the following table.</p
             >
-          </div>
-          <h2>Strong Induction</h2>
-          <p>Another form of induction is called <em>strong induction</em>.</p>
-          <div class="Theorem">
+            <div class="table-block">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="text-align: center">base-ten</th>
+                    <th style="text-align: center">definition</th>
+                    <th style="text-align: center">equivalently</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align: center">1</td>
+                    <td style="text-align: center">$\sigma(0)$</td>
+                    <td style="text-align: center">$\sigma(0)$</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">2</td>
+                    <td style="text-align: center">$\sigma(1)$</td>
+                    <td style="text-align: center">$\sigma(\sigma(0))$</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">3</td>
+                    <td style="text-align: center">$\sigma(2)$</td>
+                    <td style="text-align: center"
+                      >$\sigma(\sigma(\sigma(0)))$</td
+                    >
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">4</td>
+                    <td style="text-align: center">$\sigma(3)$</td>
+                    <td style="text-align: center"
+                      >$\sigma(\sigma(\sigma(\sigma(0))))$</td
+                    >
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">5</td>
+                    <td style="text-align: center">$\sigma(4)$</td>
+                    <td style="text-align: center"
+                      >$\sigma(\sigma(\sigma(\sigma(\sigma(0)))))$</td
+                    >
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">:</td>
+                    <td style="text-align: center">:</td>
+                    <td style="text-align: center">:</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             <p
-              ><strong>Theorem (strong induction).</strong
-              ><span class="qu"></span> Let $\mc{P}(n)$ be any statement about a
-              natural number variable $n$. Then $$ \mc{P}(0) \xand \Big(\forall
-              k.\big(\forall j.j\leq k\implies \mc{P}(j)\big) \implies
-              \mc{P}(\sigma(k)) \Big) \implies \forall n.\mc{P}\left( n\right)
-              \text{.} $$</p
+              >So each natural number is defined by the number of $\sigma$'s
+              applied to zero, and the successor of each natural number is the
+              next counting number in order.</p
             >
           </div>
-          <p
-            >It can be shown that Strong Induction and ordinary Induction are
-            logically equivalent. Namely, we can prove Strong Induction as a
-            theorem in the axiom system defined above, and also if we replace
-            the induction axiom with strong induction, we can prove ordinary
-            induction holds as a theorem.</p
-          >
           <h2>Number Theory</h2>
           <p
             >Once we have determined the basic properties that follow from our
@@ -355,50 +403,150 @@
                 <tr>
                   <td style="text-align: left">less than</td>
                   <td style="text-align: left"
-                    >$m&lt;n \xiff m\leq n \xand m\neq n$</td
+                    >$m&lt;n ~\iff~ m\leq n \xand m\neq n$</td
                   >
                 </tr>
                 <tr>
                   <td style="text-align: left">positive</td>
                   <td style="text-align: left"
-                    >$m$ is positive $\iff 1\leq m$</td
+                    >$n$ is positive $~\iff~ 1\leq n$</td
                   >
                 </tr>
                 <tr>
                   <td style="text-align: left">divides</td>
                   <td style="text-align: left"
-                    >$m\mid n \iff \exists k. n=m\cdot k$</td
-                  >
-                </tr>
-                <tr>
-                  <td style="text-align: left">prime</td>
-                  <td style="text-align: left"
-                    >$n$ is prime $\iff \neg \exists k. (1&lt;k&lt;n \xand k\mid
-                    n)$</td
+                    >$m\mid n ~\iff~ \exists k. n=m\cdot k$</td
                   >
                 </tr>
                 <tr>
                   <td style="text-align: left">even</td>
                   <td style="text-align: left"
-                    >$n$ is even $\iff \exists m.n=2\cdot m$</td
+                    >$n$ is even $~\iff~ \exists m.n=2\cdot m$</td
                   >
                 </tr>
                 <tr>
                   <td style="text-align: left">odd</td>
                   <td style="text-align: left"
-                    >$n$ is odd $\iff n$ is not even</td
+                    >$n$ is odd $~\iff~ n$ is not even</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">composite</td>
+                  <td style="text-align: left"
+                    >$n$ is composite $~\iff~ \exists k. 1&lt;k&lt;n \xand k\mid
+                    n$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">prime</td>
+                  <td style="text-align: left"
+                    >$n$ is prime $~\iff~ 1&lt;n \xand n$ is not composite</td
                   >
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+        <p>As usual, we can derive useful rules from these definitions.</p>
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Number Theory Definitions</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Number-theory.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
+          </div>
+          <p
+            ><span class="m"
+              >Declare $\lt$, is, positive, $\mid$, even, odd, composite,
+              prime</span
+            ></p
+          >
+          <div class="rule-grid cols-2">
+            <div class="Rule">
+              <p
+                ><span class="nm">less than</span>
+                <span class="m"
+                  >$m \lt n$ $~\equiv~$ $m\leq n$, $m\neq n$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">positive</span>
+                <span class="m">$n$ is positive $~\equiv~$ $1\leq n$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">divides</span>
+                <span class="m">If $m \mid n$</span> then
+                <span class="m">$n=k\cdot m$ for some $k$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">divides</span>
+                <span class="m">If $n=k\cdot m$</span> then
+                <span class="m">$m \mid n$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">even</span>
+                <span class="m">$n$ is even $~\equiv~$ $2\mid n$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">odd</span>
+                <span class="m">$n$ is odd $~\equiv~$ $n$ is not even</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">composite</span><br />
+                <span class="m">If $n$ is composite</span> then
+                <span class="m">$1&lt;k$, $k&lt;n$,</span> and
+                <span class="m">$k|n$ for some $k$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">composite</span><br />
+                <span class="m">If $1&lt;k$, $k&lt;n$,</span> and
+                <span class="m">$k|n$</span> then
+                <span class="m">$n$ is composite</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">prime</span><br />
+                <span class="m">$n$ is prime $~\equiv~$ $1&lt;n$</span> and
+                <span class="m">$n$ is not composite</span></p
+              >
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- rule-set -->
+        </div>
         <h2>Problems</h2>
         <p
           >The following theorems can be proved in the order shown. Therefore,
           you can use an earlier theorem as a rule of inference in the proof of
           a later theorem but not vice versa. These should be proved with a
-          semiformal proof using the shortcuts described in chapter 7 above.</p
+          semiformal proof using the
+          <a href="/learn/proofs/ch06/#shortcuts-sec">shortcuts</a> described in
+          Chapter 6.</p
         >
         <div class="pset-head">
           <p>Properties of the successor function</p>
