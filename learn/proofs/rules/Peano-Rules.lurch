@@ -307,7 +307,30 @@
 </div>
 <hr></div>
 </div></div>
-        </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Filename:</td><td><tt>learn/proofs/rules/Logic-theorems-Rules.lurch</tt></td></tr><tr><td>Source:</td><td>the web</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div></div>
+        </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Filename:</td><td><tt>learn/proofs/rules/Logic-theorems-Rules.lurch</tt></td></tr><tr><td>Source:</td><td>the web</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div><div class="lurch-atom" contenteditable="false" data-metadata_type="&quot;dependency&quot;" data-metadata_description="&quot;none&quot;" data-metadata_filename="&quot;learn/proofs/rules/Equations-Rules.lurch&quot;" data-metadata_source="&quot;the web&quot;" data-metadata_auto-refresh="true" style="border: 1px solid gray; padding: 0px 1em;"><div class="lurch-atom-metadata" style="display: none;"><div data-key="content">
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="main" data-key="header" data-value-type="html"></div></div>
+            <div id="document"><h1>Equations</h1>
+<p>The Equations Rule is a special built-in validation tool that Lurch provides for dealing with proofs involving lengthy transitive chains of equations, such as&nbsp;</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\begin{align*} a &amp;= b \\\\ &amp;=c \\\\ &amp;=d&quot;" data-metadata_given="false"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mtable"><span class="col-align-r"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__mathit">a</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span><span class="col-align-l"><span class="ML__vlist-t ML__vlist-t2"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 2.36em;"><span style="top: -4.51em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">b</span></span></span><span style="top: -3.01em;"><span style="height: 1.5em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">c</span></span></span><span style="top: -1.51em;"><span style="height: 1.2em; display: inline-block;"><span class="ML__cmr">=</span><span class="ML__mathit">d</span></span></span></span><span class="ML__vlist-s">​</span></span></span></span></span></span></span></span></span></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">(entered as&nbsp;<code>a=b=c=d</code>).&nbsp; It automates the application of the substitution and reflexive rules of equality, the derived properties of symmetry and transitivity, and checks each pair in the chain for both direct equality, and equality via a single substitution.&nbsp; This topic includes everything from the Number Theory topic.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Equations Rule</strong>&nbsp; &nbsp;We allow the <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;\&quot;equations rule\&quot;&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">equations rule</span></span></span></span></span>.</p>
+</div>
+<hr>
+<p>We can also add some convenient rules to avoid the need for explicitly citing 'by substitution' in common situations.</p>
+<div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Substitution for is:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If x=y, x is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">x</span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span style="color: #000000;"><span class="ML__text"> and </span></span><span class="ML__mathit">x</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;y is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span>.</p>
+</div>
+<p>&nbsp;</p>
+<h1>&nbsp;</h1></div>
+        </div></div><div class="lurch-atom-body"><table><colgroup><col><col></colgroup><tbody><tr><td colspan="2"><b>Imported dependency document</b></td></tr><tr><td>Description:</td><td><tt>none</tt></td></tr><tr><td>Filename:</td><td><tt>learn/proofs/rules/Equations-Rules.lurch</tt></td></tr><tr><td>Source:</td><td>the web</td></tr><tr><td>Auto-refresh:</td><td>yes</td></tr></tbody></table></div></div></div></div>
             <div id="document"><h1>Peano Axioms</h1>
 <div>This is a context containing the Peano Axioms. They define a formal system for the Natural Numbers.&nbsp; This context includes all of the rules, definitions, and axioms from the Logic Theorems library.</div>
 <hr>
@@ -341,7 +364,7 @@
 <p>Conclude <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;forall n.𝜆P(n)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&forall;</span><span class="ML__mathit">n</span><span class="ML__cmr">.</span><span class="ML__cal" style="margin-right: 0.09em;">P</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">n</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span></p>
 </div>
 </div>
-<div><strong>Additionon</strong></div>
+<div><strong>Addition</strong></div>
 <div>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Axiom A0 (base case for addition).&nbsp; &nbsp; </strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n+0=n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__cmr">+</span><span class="ML__cmr">0</span><span class="ML__cmr">=</span><span class="ML__mathit">n</span></span></span></span></span></p>
