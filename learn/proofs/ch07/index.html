@@ -542,6 +542,30 @@
           </div>
           <!-- rule-set -->
         </div>
+        <h2>Applications: Cardinal and Ordinal Numbers</h2>
+        <p
+          >The natural numbers have two very different but very useful
+          applications in mathematics (and outside of mathematics in
+          general).</p
+        >
+        <p
+          >On the one hand, they are useful for <em>counting</em>. For that we
+          use natural numbers to indicate how many items are in some collection.
+          Natural numbers used in this way are examples of
+          <em>cardinal</em> numbers, which are used to measure the relative
+          sizes, or <em>cardinality</em> of collections of items. The branch of
+          mathematics that studies cardinality and counting is called
+          <em>combinatorics</em>. We will discuss that in detail later in the
+          course.</p
+        >
+        <p
+          >On the other hand, natural numbers are useful for
+          <em>numbering</em> items to put them in some order, a first item,
+          second item, and so on. Natural numbers used in this way are examples
+          of <em>ordinal</em> numbers and are used to indicate the relative
+          positions of items in an ordered list of items. Such ordered lists are
+          called <em>sequences</em>, which we study next.</p
+        >
         <h2 id="problems">Problems</h2>
         <p
           >The following theorems can be proved in the order shown. Therefore,
@@ -557,7 +581,7 @@
         <div class="question">
           <p
             ><span class="thm">Nonzero implies successor</span>$\forall n. n\neq
-            0\ximplies \exists m. n=\sigma(m)$</p
+            0\implies \exists m. n=\sigma(m)$</p
           >
         </div>
         <div class="question">
@@ -601,13 +625,13 @@
         <div class="question">
           <p
             ><span class="thm">Zero sums</span>$\forall m.\forall n. m+n=0
-            \ximplies m=n=0$</p
+            \implies m=n=0$</p
           >
         </div>
         <div class="question">
           <p
             ><span class="thm">Cancellation Law of addition</span>$\forall
-            m.\forall n.\forall p. m+p=n+p \ximplies m=n$</p
+            m.\forall n.\forall p. m+p=n+p \implies m=n$</p
           >
         </div>
         <div class="pset-head">
@@ -652,13 +676,13 @@
         <div class="question">
           <p
             ><span class="thm">Zero divisors</span>$\forall m.\forall n. m\neq 0
-            \xand m\cdot n=0 \ximplies n=0$</p
+            \xand m\cdot n=0 \implies n=0$</p
           >
         </div>
         <div class="question">
           <p
             ><span class="thm">Cancellation Law of multiplication</span>$\forall
-            p.p\neq 0\ximplies \forall m.\forall n. p\cdot m=p\cdot n \ximplies
+            p.p\neq 0\implies \forall m.\forall n. p\cdot m=p\cdot n \implies
             m=n$</p
           >
         </div>
@@ -751,14 +775,14 @@
         <div class="question">
           <p
             ><span class="thm">Divisibility of differences</span>$\forall
-            b.b\neq 0\ximplies \forall m.\forall n.\forall r. b\cdot m=b\cdot
-            n+r \ximplies \exists p. r=b\cdot p$.</p
+            b.b\neq 0\implies \forall m.\forall n.\forall r. b\cdot m=b\cdot n+r
+            \implies \exists p. r=b\cdot p$.</p
           >
         </div>
         <div class="question">
           <p
             ><span class="thm">Division Algorithm - existence</span>$\forall
-            b.b\neq 0\ximplies \forall a.\exists q.\exists r. a=b\cdot q+r \xand
+            b.b\neq 0\implies \forall a.\exists q.\exists r. a=b\cdot q+r \xand
             0\leq r &lt; b$</p
           >
           <p
@@ -835,11 +859,161 @@
         <div class="question">
           <p>$2$ is prime.</p>
         </div>
+        <h1>Number theory theorems</h1>
+        <p
+          >As we did with logic, once we have proven major results about the
+          natural numbers and number theory, we can add those theorems to our
+          list of rules to justify statements in our proofs. Here are some of
+          the major results we can add to our context as we move on to other
+          topics or explore number theory more deeply.</p
+        >
+        <h2>Strong Induction</h2>
+        <p
+          >The following variant of induction is called
+          <em>strong induction</em>.</p
+        >
+        <div class="Theorem">
+          <p class="noskip"
+            ><strong>Theorem (strong induction).</strong
+            ><span class="qu"></span> Let $\mc{P}(n)$ be any statement about a
+            natural number variable $n$. Then $$ \mc{P}(0) \xand \Big(\forall
+            k.\big(\forall j.j\leq k\implies \mc{P}(j)\big) \implies
+            \mc{P}(\sigma(k)) \Big) \implies \forall n.\mc{P}\left( n\right)
+            \text{.} $$</p
+          >
+        </div>
+        <p>As usual, we can derive a more useful rule from this theorem.</p>
+        <div class="Rule">
+          <p><span class="nm">Strong Induction</span></p>
+          <div class="Premise">
+            <p
+              ><em>Given</em><br />
+              <span class="m">$\mc{P}(0)$</span></p
+            >
+            <div class="Subproof">
+              <p
+                ><span class="m"
+                  >Let $k$ be such that $\forall j.j\leq k \implies
+                  \mc{P}(j)$</span
+                ><br />
+                <span class="m">$\mc{P}(\sigma(k))$</span></p
+              >
+            </div>
+          </div>
+          <p><em>Conclude</em> <span class="m">$\forall n.\mc{P}(n)$</span></p>
+        </div>
+        <p
+          >It can be shown that Strong Induction and ordinary Induction are
+          logically equivalent. Namely, we can prove Strong Induction as a
+          theorem in the axiom system defined above, and also if we replace the
+          induction axiom with strong induction, we can prove ordinary induction
+          holds as a theorem.</p
+        >
+        <p><strong>Problem</strong></p>
         <div class="question">
           <p
             >Prove that the original statement of the principle of induction is
             equivalent to strong induction.</p
           >
+        </div>
+        <p class="medskip"></p>
+        <p
+          >The following rules are derived from the corresponding problems
+          above.</p
+        >
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Number Theory Theorems</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Number-theory-theorems-Rules.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
+          </div>
+          <div class="rule-grid cols-2">
+            <div class="Rule">
+              <p
+                ><span class="nm"
+                  >Theorem (alternate definition of $\sigma$) </span
+                >
+                <span class="m">$$\sigma(n)=n+1$$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (commutativity of addition)</span>
+                <span class="m">$$m+n=n+m$$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (associativity of addition)</span>
+                <span class="m">$$(m+n)+p=m+(n+p)$$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (addition of zero on the left)</span>
+                <span class="m">$$0+n=n$$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm"
+                  >Theorem (multiplication by zero on the left)</span
+                >
+                <span class="m">$$0\cdot n=0$$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Theorem (identity of multiplication)</span></p
+              >
+              <div class="display">
+                <p
+                  ><span class="m">$1\cdot n=n$</span> and
+                  <span class="m">$n\cdot 1=n$</span></p
+                >
+              </div>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm"
+                  >Theorem (commutativity of multiplication)</span
+                >
+                <span class="m">$$m\cdot n=n\cdot m$$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm"
+                  >Theorem (associativity of multiplication)</span
+                >
+                <span class="m"
+                  >$$(m\cdot n)\cdot p=m\cdot (n\cdot p)$$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm"
+                  >Theorem (distributive property of $\cdot$ over $+$)</span
+                >
+                <span class="m">$$m\cdot (n+p)=m\cdot n+m\cdot p$$</span>
+                <span class="m">$$(n+p)\cdot m=n\cdot m+p\cdot m$$</span></p
+              >
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- rule-set -->
         </div>
       </div>
 
