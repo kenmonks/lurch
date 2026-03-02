@@ -1081,21 +1081,32 @@ export const install = editor => {
     } )
     // Custom context menu creator
     editor.ui.registry.addContextMenu( 'atoms', {
-        update : element => {
-            const atom = Atom.findAbove( element, editor )
-            let items = atom ? atom.contextMenu( atom ) : [ ]
-            // if we are inside a context, remove all other context menu items first
-            const hidecontext = items.find( item => item.text === 'Hide this context' )
-            if (hidecontext) items = [ hidecontext ]
-            items.forEach( item => {
-                const original = item.onAction
-                item.onAction = () => {
-                    original()
-                    editor.focus()
-                }
-            } )
-            return items
+      update: element => {
+        const inContextPanel =
+          element?.closest?.('#context') || editor.dom.getParent(element, '#context')
+        
+        if (inContextPanel) {
+          const context = editor.getBody()?.querySelector('#context')
+          const items = editor.lurchContextPanelMenuItems?.() || []
+          const hasDependencies = context?.hasAttribute?.('data-has-dependencies')
+          if (!hasDependencies) items.forEach(i => i.enabled = false)
+          
+          return items
         }
+      
+        const atom = Atom.findAbove(element, editor)
+        let items = atom ? atom.contextMenu(atom) : []
+      
+        items.forEach(item => {
+          const original = item.onAction
+          item.onAction = () => {
+            original()
+            editor.focus()
+          }
+        })
+      
+        return items
+      }
     } )
     // TinyMCE does not show cursor selection well on atoms.
     // The following code tries to rectify that by putting a special class on

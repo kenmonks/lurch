@@ -433,6 +433,45 @@ export const install = editor => {
         }
     } )
 
+    // a utility to recursively build just the context content (no declaration table)
+    const buildRecursiveContextHTML = () => {
+      const header = getHeader(editor)
+      let allPreviewHTML = ''
+      if (header) {
+        Dependency.topLevelDependenciesIn(header).forEach(dependency => {
+          const preview = Atom.newBlock(editor, '', { type: 'preview' })
+          preview.imitate(dependency)
+          allPreviewHTML += preview.element.innerHTML
+        })
+      }
+      return allPreviewHTML
+    }
+
+    const openContextAsDocument = () => {
+      const html = buildRecursiveContextHTML()
+      // simplest: open a “viewer” page that embeds a normal Lurch instance
+      // (uses your existing embed infrastructure)
+      const lurchDoc = `
+        <div id="metadata" style="display:none"></div>
+        <div id="document">
+          ${html || '<p><em>No context defined.</em></p>'}
+        </div>
+        `
+      // console.log(page)  
+      openFileInNewWindow(lurchDoc)
+    }
+        
+    // register the #context context menu items (pardon the pun)
+    editor.lurchContextPanelMenuItems = () => ([
+      {
+        type: 'menuitem',
+        text: 'Open the context as a separate document',
+        icon: 'new-document',
+        enabled: true,
+        onAction: openContextAsDocument
+      }
+    ])
+
     // the context action for both the menu item and the toolbar button
     const toggleContext = () => {
       // get the document 
@@ -473,16 +512,16 @@ export const install = editor => {
       const header = getHeader( editor )
         
       // Accumulate the HTML representation of all previews of all
-      // dependencies in the header.
-      let allPreviewHTML = ''
-      if (header)
-        Dependency.topLevelDependenciesIn( header ).forEach( dependency => {
-          const preview = Atom.newBlock( editor, '', { type: 'preview' } )
-          preview.imitate( dependency )
-          allPreviewHTML += preview.element.outerHTML
-        } )
-              
-           
+      // dependencies in the header. 
+      let allPreviewHTML = buildRecursiveContextHTML()
+      // let allPreviewHTML = ''
+      // if (header)
+      //   Dependency.topLevelDependenciesIn( header ).forEach( dependency => {
+      //     const preview = Atom.newBlock( editor, '', { type: 'preview' } )
+      //     preview.imitate( dependency )
+      //     allPreviewHTML += preview.element.outerHTML
+      //   } )
+               
       // wrap everything in a #context div and insert it
       shiftHTML( body, 
         `<div class='lurch-atom' id='context' contenteditable='true'>
@@ -490,7 +529,11 @@ export const install = editor => {
          </div>`
       )
       const context = editor.getBody().querySelector('#context')
-          
+      
+      // flag if it has any actual dependencies to enable the context menu to
+      // open in a new window
+      const hasDependencies = !!allPreviewHTML.trim()
+      context.toggleAttribute('data-has-dependencies', hasDependencies)    
            
       // now that the context is shown, fetch all of the declares in both
       // the context and the document itself and add it to the top. To
