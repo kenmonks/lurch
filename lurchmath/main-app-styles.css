@@ -92,7 +92,10 @@ body:not(.fullscreen) #editor-container {
   right: 0;
   width: 120px;
   z-index: 9999;
-  margin: 25.5px 40px;
+  /* temporarily moving the logo so it doesn't overlap the toolbar icons when
+  the screen is narrow */
+  /* margin: 25.5px 40px; */
+  margin: 10px 10px;
   font-size: xx-large;
   font-family: Lato;
   font-weight: 900;
