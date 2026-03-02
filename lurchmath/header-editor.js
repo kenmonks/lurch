@@ -434,21 +434,23 @@ export const install = editor => {
     } )
 
     // a utility to recursively build just the context content (no declaration table)
-    const buildRecursiveContextHTML = () => {
+    const buildRecursiveContextHTML = (wrapDeps = true) => {
       const header = getHeader(editor)
       let allPreviewHTML = ''
       if (header) {
         Dependency.topLevelDependenciesIn(header).forEach(dependency => {
           const preview = Atom.newBlock(editor, '', { type: 'preview' })
           preview.imitate(dependency)
-          allPreviewHTML += preview.element.innerHTML
+          allPreviewHTML += wrapDeps ? preview.element.outerHTML 
+                                     : preview.element.innerHTML
         })
       }
       return allPreviewHTML
     }
 
     const openContextAsDocument = () => {
-      const html = buildRecursiveContextHTML()
+      // passing false tells it not to wrap deps in preview divs
+      const html = buildRecursiveContextHTML(false)
       // simplest: open a “viewer” page that embeds a normal Lurch instance
       // (uses your existing embed infrastructure)
       const lurchDoc = `
