@@ -74,7 +74,8 @@
             <a href="/learn/proofs/ch06/"
               >6: Predicate Logic and Equality</a
             > </li
-          ><li> <a href="/learn/proofs/ch07/">7: The Natural Numbers</a> </li>
+          ><li> <a href="/learn/proofs/ch07/">7: The Natural Numbers</a> </li
+          ><li> <a href="/learn/proofs/ch08/">8: Sequences</a> </li>
         </ul>
       </div>
 
@@ -883,12 +884,13 @@
           </div>
           <!-- rule-set -->
         </div>
+        <h2>Derived Rules: Super-Natural Deduction</h2>
         <p
           >Sometimes the most elegant or compact way to state or prove a theorem
           is not the most useful way to use it as a rule for proving future
-          theorems. In this case we can derive rules from the theorem itself
-          (with proof) that may be more useful for doing proofs. For example, if
-          we have the theorem</p
+          theorems. In this case we can <em>derive</em> rules from the theorem
+          itself (with proof) that may be more useful for doing proofs. For
+          example, if we have the theorem</p
         >
         <div class="Theorem">
           <p
@@ -910,6 +912,91 @@
           rule is <em>derived</em> rom the theorem, and can refer to it by the
           same name.</p
         >
+        <p
+          >Similarly we can replace most of the formal symbols $\implies$,
+          $\iff$, $\forall$, and $\exists$ in our theorem statements with
+          English phrases and sentences as illustrated in the following
+          table.</p
+        >
+        <div class="table-block">
+          <p class="table-title">Some English Equivalents for Formal Symbols</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">A theorem such as…</th>
+                <th style="text-align: left">…can be expressed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">Theorem: $P\implies Q$</td>
+                <td style="text-align: left"
+                  >Theorem: If $P$ then $Q$.<br />Theorem: Given $P$. Then
+                  $Q$.<br />Theorem: Suppose $P$. Then $Q$.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Theorem: $P\iff Q$</td>
+                <td style="text-align: left"
+                  >Theorem: $P$ if and only if $Q$.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Theorem: $\forall n.P(n)$</td>
+                <td style="text-align: left">Theorem: $P(n)$.</td>
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  >Theorem: $\forall n. P(n)\implies Q(n)$</td
+                >
+                <td style="text-align: left"
+                  >Theorem: If $P(n)$ then $Q(n)$.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Theorem: $\exists n. P(n)$</td>
+                <td style="text-align: left">Theorem: $P(n)$ for some $n$.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p
+          >In each case, since we have eliminated the corresponding formal
+          symbol, we no longer need to end the proof with a $\forall+$ or
+          $\implies+$ statement.</p
+        >
+        <p
+          >A similar situation arises when making rules for definitions, many of
+          which are equivalences involving the predicate logic quantifiers. In
+          those cases we need a separate introduction and elimination rule
+          because only one of them requires a declaration.</p
+        >
+        <div class="table-block">
+          <p class="table-title">Derived Rules from Definitions</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Definition Form</th>
+                <th style="text-align: left">Introduction ($+$) Rule</th>
+                <th>Elimination ($-$) Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">$x$ is $y \iff \forall z.P(z)$</td>
+                <td style="text-align: left"
+                  >$($Let $s \vdash P(s)) \vdash x$ is $y$</td
+                >
+                <td>$x$ is $y\vdash P(t)$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">$x$ is $y \iff \exists z.P(z)$</td>
+                <td style="text-align: left">$P(t) \vdash x$ is $y$</td>
+                <td>$x$ is $y\vdash P(c)$ for some $c$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <h2>Use Transitive Chains!</h2>
         <p
           >While Leibniz definition of equality is very succinct, in practice it

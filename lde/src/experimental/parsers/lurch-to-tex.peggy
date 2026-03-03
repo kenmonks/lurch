@@ -611,7 +611,7 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / AlgRu
   Proof   = $('proof'i ':'?)
   Cases   = 'CasesRule'i ':'? { return 'Cases' }
   Subs    = 'SubsRule'i ':'? { return 'Substitution' }
-  AlgRule = 'AlgebraRule'i ':'? { return 'Algebra' }
+  AlgRule = 'AlgebraRule'i ':'? { return 'algebra rule' }
   Comma   = $(',')
 
 ///////////////////////////////////////////////////////////////////////////////

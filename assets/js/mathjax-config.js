@@ -106,6 +106,7 @@
           pima: "{\\textsl{Prove~it!~Math Academy}}",
           proveit: "{\\textsl{Prove~it!}}",
           Qodd: "{\\mathbb{Q}_{\\operatorname{odd}}}",
+          qu: "\\hspace{0.5em}",
           ray: ["\\overrightarrow{#1}", 1],
           seg: ["\\overline{#1}", 1],
           seq: ["#1_0,#1_1,#1_2,#1_3,\\ldots", 1],

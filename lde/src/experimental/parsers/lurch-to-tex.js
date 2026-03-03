@@ -932,7 +932,7 @@ function peg$parse(input, options) {
   function peg$f7() {    return '~\\equiv~'  }
   function peg$f8() {    return 'Cases'  }
   function peg$f9() {    return 'Substitution'  }
-  function peg$f10() {    return 'Algebra'  }
+  function peg$f10() {    return 'algebra rule'  }
   function peg$f11(a, b) {    return `${txt(a)} ${sequence(b)}`  }
   function peg$f12(a) {    return `${txt(a) }`  }
   function peg$f13(a) {    return `\\left\\{ ${a} \\right\\}`  }
