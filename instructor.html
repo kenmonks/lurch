@@ -155,26 +155,33 @@
       // temp file so you don't get an error if you try to reload the page.
       Lurch.createApp(document.getElementById('editor-container'), options)
         .then(editor => {
-          
-          const stripTempQuery = () => {
-            const params = new URLSearchParams(window.location.search)
-            const load = params.get('load') || ''
-            const isTempLoad = /^temp_file_\d+$/.test(load)
-  
-            if (!isTempLoad) return
-  
-            const url = new URL(window.location.href)
-            url.searchParams.delete('load')
-            url.searchParams.delete('delete')
-            history.replaceState(null, '', url.pathname + url.search + url.hash)
+    
+        const params = new URLSearchParams(window.location.search)
+        const load = params.get('load') || ''
+        const isTempLoad = /^temp_file_\d+$/.test(load)
+    
+        if (!isTempLoad) return
+    
+        const tempKey = `lurch-temp-file-${load}`
+    
+        const stripQuery = () => {
+          const url = new URL(window.location.href)
+          url.searchParams.delete('load')
+          url.searchParams.delete('delete')
+          history.replaceState(null, '', url.pathname + url.search + url.hash)
+        }
+    
+        // Wait until the temp file has been deleted by the loader
+        const waitForDeletion = () => {
+          if (localStorage.getItem(tempKey) === null) {
+            stripQuery()
+          } else {
+            requestAnimationFrame(waitForDeletion)
           }
-  
-          // Only strip once, after content is actually loaded
-          editor.once('SetContent', () => {
-            stripTempQuery()
-          } )
-      } )
-
+        }
+    
+        requestAnimationFrame(waitForDeletion)
+      })
     })
   </script>
 </body>

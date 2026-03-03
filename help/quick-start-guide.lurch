@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://127.0.0.1:5500/student.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -74,6 +74,7 @@
 <ul>
 <li>Repeatedly pressing the hotkey for the <strong>Show/Hide context </strong>menu item when your cursor is in the document toggles the context view on and off.</li>
 <li>If there are lots of rules in the context, use the search bar to filter what is shown so that only rules mentioning the term or phrase you type are visible.</li>
+<li>You can open the entire context in a new separate Lurch document by right-clicking on it (two-finger tap on the Mac trackpad).</li>
 </ul>
 <h4>The Document Meaning</h4>
 <p>TRY IT: Below is an example of a theorem and proof. Put your cursor inside the Theorem and use <strong>Math &gt; Show/Hide meaning </strong>to show this document's meaning.</p>
