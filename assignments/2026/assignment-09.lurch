@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://lurch.plus/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -447,7 +447,6 @@
 <hr>
 <p>Prove the following theorems from Chapter 7. I have included theorems 7.1-7.6 and 7.10 in the context, so you can use those to prove the following.&nbsp;All variables below represent natural numbers.</p>
 <hr>
-<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span style="background-color: rgb(45, 194, 107); color: rgb(236, 240, 241);">&nbsp; Problem 1.<strong>&nbsp;</strong></span> &nbsp;(<em>Hint: use induction for <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;m&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span></span></span></span></span> and forall+ for <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span></span></span></span></span>.</em>)</p>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
 <p><strong>Theorem 7.7 (commutativity of addition).&nbsp; &nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;forall m.forall n.m+n=n+m&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&forall;</span><span class="ML__mathit">m</span><span class="ML__cmr">.</span><span class="ML__cmr">&forall;</span><span class="ML__mathit">n</span><span class="ML__cmr">.</span><span class="ML__mathit">m</span><span class="ML__cmr">+</span><span class="ML__mathit">n</span><span class="ML__cmr">=</span><span class="ML__mathit">n</span><span class="ML__cmr">+</span><span class="ML__mathit">m</span></span></span></span></span></p>
@@ -457,9 +456,7 @@
 <p>&nbsp;</p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
 </div>
-</div>
 <hr>
-<div class="lurch-atom" data-metadata_type="&quot;subproof&quot;" data-shell_title="">
 <p><span style="background-color: rgb(45, 194, 107); color: rgb(236, 240, 241);">&nbsp; Problem 2.<strong>&nbsp;</strong></span>&nbsp; (<em>Hint: use induction.</em>)</p>
 <div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
 <p><strong>Theorem 7.11 (multiplicative identity).</strong>&nbsp; &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;forall n.1*n=n and n*1=n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&forall;</span><span class="ML__mathit">n</span><span class="ML__cmr">.</span><span class="ML__cmr">1</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">n</span><span class="ML__cmr">=</span><span class="ML__mathit">n</span><span class="ML__text"> and </span><span class="ML__mathit">n</span><span class="ML__cmr">&sdot;</span><span class="ML__cmr">1</span><span class="ML__cmr">=</span><span class="ML__mathit">n</span></span></span></span></span></p>
@@ -468,7 +465,6 @@
 <p><strong>Proof:</strong>&nbsp;</p>
 <p>&nbsp;</p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
-</div>
 </div>
 <hr>
 <p>&nbsp;</p>
