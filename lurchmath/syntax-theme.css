@@ -262,6 +262,11 @@ div.lurch-atom#context div.lurch-atom[data-metadata_type*="preview"] {
 div.lurch-atom#context * {
   user-select: none;
 }
+/* don't flatten the gaps between paragraphs that are children of the context atom */
+div.lurch-atom#context div.lurch-atom[data-metadata_type*="preview"] > p {
+  margin-top: var(--p-gap);
+  line-height: var(--line-height);
+}
 /* center the main title */
 h1#contextTitle {
   text-align: center;
