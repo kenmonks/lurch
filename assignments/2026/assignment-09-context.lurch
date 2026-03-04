@@ -1,0 +1,37 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="main" data-key="header" data-value-type="html"></div></div>
+            <div id="document"><h2>Context for Assignment #09 - Spring 2026</h2>
+<h4>Properties of the successor</h4>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.1.&nbsp;&nbsp;</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If n neq 0&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">n</span><span class="ML__rlap"><span class="ML__inner"><span class="ML__cmr"></span></span></span><span class="ML__cmr">=</span><span class="ML__cmr">0</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;exists m.n=sigma(m)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&exist;</span><span class="ML__mathit">m</span><span class="ML__cmr">.</span><span class="ML__mathit">n</span><span class="ML__cmr">=</span><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">&sigma;</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">m</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.2.&nbsp;&nbsp;</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;n neq sigma(n)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">n</span><span class="ML__rlap"><span class="ML__inner"><span class="ML__cmr"></span></span></span><span class="ML__cmr">=</span><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">&sigma;</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">n</span><span class="ML__small-delim ML__close">)</span></span></span></span></span></span></p>
+</div>
+<h4>Properties of addition</h4>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.3. &nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;sigma(n)=n+1&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="lcGreek ML__mathit" style="margin-right: 0.04em;">&sigma;</span><span class="ML__left-right" style="margin-top: 0em; height: 0.43056em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">n</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">=</span><span class="ML__mathit">n</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span></span></span></span></span></p>
+</div>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.4. </strong>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m+(n+p)=(m+n)+p&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">+</span><span class="ML__left-right" style="margin-top: -0.19444em; height: 0.7777700000000001em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">n</span><span class="ML__cmr">+</span><span class="ML__mathit">p</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">=</span><span class="ML__left-right" style="margin-top: -0.08333em; height: 0.66666em;"><span class="ML__small-delim ML__open">(</span><span class="ML__mathit">m</span><span class="ML__cmr">+</span><span class="ML__mathit">n</span><span class="ML__small-delim ML__close">)</span></span><span class="ML__cmr">+</span><span class="ML__mathit">p</span></span></span></span></span>&nbsp;</p>
+</div>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.5.</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;0+m=m&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">0</span><span class="ML__cmr">+</span><span class="ML__mathit">m</span><span class="ML__cmr">=</span><span class="ML__mathit">m</span></span></span></span></span></p>
+</div>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.6. &nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;1+m=m+1&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">1</span><span class="ML__cmr">+</span><span class="ML__mathit">m</span><span class="ML__cmr">=</span><span class="ML__mathit">m</span><span class="ML__cmr">+</span><span class="ML__cmr">1</span></span></span></span></span></p>
+</div>
+<h4>Properties of multiplication</h4>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.10.&nbsp;</strong><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;0*m=0&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">0</span><span class="ML__cmr">&sdot;</span><span class="ML__mathit">m</span><span class="ML__cmr">=</span><span class="ML__cmr">0</span></span></span></span></span></p>
+</div></div>
+        
