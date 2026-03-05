@@ -448,6 +448,84 @@
             $m\cdot n!$ means $m\cdot (n!)$ and not $(m\cdot n)!$</li
           >
         </ul>
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Sequences and Recursion</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Sequences.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
+          </div>
+          <p
+            ><span class="m">Declare Sum, F, !, multinomial, choose</span> and
+            <span class="m">^</span> to be constants.</p
+          >
+          <div class="rule-grid">
+            <div class="Rule">
+              <p
+                ><span class="nm">Summation.</span>
+                <span class="m"
+                  >$\displaystyle\sum_{k=0}^{0}
+                  \mc{P}\left(k\right)=\mc{P}\left(0\right)$</span
+                >
+                and
+                <span class="m"
+                  >$\displaystyle\sum_{k=0}^{\sigma\left(n\right)}
+                  \mc{P}\left(k\right)=\mc{P}\left(\sigma\left(n\right)\right)+\displaystyle\sum_{k=0}^{n}
+                  \mc{P}\left(k\right)$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Natural Number Exponentiation.</span>
+                <span class="m">$z^0=1$</span> and
+                <span class="m">$z^\sigma(n)=z\cdot z^n$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Factorial.</span>
+                <span class="m">$0!=1$</span> and
+                <span class="m">$\sigma(n)!=\sigma(n)\cdot n!$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Fibonacci Numbers.</span>
+                <span class="m">$F_0=1$</span>, <span class="m">$F_1=1$</span>,
+                and <span class="m">$F_{n+2}=F_{n+1}+F_n$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Multinomial coefficients.</span>
+                <span class="m">$(m,0)=1$</span>,
+                <span class="m">$(0,n)=1$</span>, and
+                <span class="m"
+                  >$\left(\sigma\left(m\right),\sigma\left(n\right)\right)=\left(\sigma\left(m\right),n\right)+\left(m,\sigma\left(n\right)\right)$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Binomial coefficients.</span>
+                <span class="m">$\binom{n+m}{m}=\left(n,m\right)$</span></p
+              >
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- rule-set -->
+        </div>
         <h2>Shortcut: by arithmetic</h2>
         <p
           >From now on, we will allow ‘by arithmetic’ as a shortcut for
