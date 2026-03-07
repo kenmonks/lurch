@@ -26,6 +26,7 @@ import {
 } from './lde-cdn.js'
 import { DeclarationType } from './declarations.js'
 import { copyHTMLToClipboard } from './utilities.js'
+import { HTMLItem } from './dialog.js'
 
 let converter = null
 
@@ -561,6 +562,15 @@ export class Expression extends Atom {
             mathLivePreview.mathLiveEditor.style.padding = '0.5rem 0 0 0.5rem'
         }
         dialog.addItem( mathLivePreview )
+        dialog.addItem(new HTMLItem(
+           `<div id="shortcut-footer">
+              <div id="shortcut-hint">
+               <kbd>Esc</kbd> cancel
+               <span class="sep"></span>
+               <kbd>Enter</kbd> accept
+              </div>
+            </div>
+           `))
         // initialize dialog with data from the atom
         dialog.setInitialData( {
             lurchNotation : lurchNotation,
@@ -626,10 +636,20 @@ export class Expression extends Atom {
             // it should be valid to start since it was saved in the first place
             lurchInputElement.classList.remove('badsyntax')
 
-            // give it focus, but if it ever loses focus, close the dialog
+            // give it focus, but if it ever loses focus, close the dialog if they won't 
+            // lose changes, otherwise show instructions how to close the dialog
             lurchInputElement.focus()
-            lurchInputElement.addEventListener( 'blur', () =>
-                setTimeout( () => dialog.close() ) )
+            const helpFooter = dialog.querySelector( '#shortcut-footer' )
+            console.log(helpFooter)
+            lurchInputElement.addEventListener( 'blur', () => {
+              if (lurchInputElement.value.trim() === lurchNotation.trim()) 
+                setTimeout( () => dialog.close() )
+              else {
+                // display the footer
+                helpFooter?.classList.add('visible')
+                lurchInputElement.focus()
+              }
+            } )
 
             lurchInputElement.addEventListener('input', () =>
                 lurchInputElement.style.height = 

@@ -102,6 +102,16 @@ export class ExpositoryMath extends Atom {
             mathLivePreview.setValue( latex )
         }
         dialog.addItem( mathLivePreview )
+        // help footer
+        dialog.addItem(new HTMLItem(
+           `<div id="shortcut-footer">
+              <div id="shortcut-hint">
+               <kbd>Esc</kbd> cancel
+               <span class="sep"></span>
+               <kbd>Enter</kbd> accept
+              </div>
+            </div>
+           `))        
 
         // initialize dialog with data from the atom
         dialog.setInitialData( { latex } )
@@ -165,10 +175,20 @@ export class ExpositoryMath extends Atom {
             } )
             // add the css class
             latexInputElement.classList.add( 'advancedTextArea' )
-            // give it focus, but if it ever loses focus, close the dialog
+
+            // give it focus, but if it ever loses focus, close the dialog if they won't 
+            // lose changes, otherwise show instructions how to close the dialog
             latexInputElement.focus()
-            latexInputElement.addEventListener( 'blur', () =>
-                setTimeout( () => dialog.close() ) )          
+            const helpFooter = dialog.querySelector( '#shortcut-footer' )            
+            latexInputElement.addEventListener( 'blur', () => {
+              if (latexInputElement.value.trim() === latex.trim()) 
+                setTimeout( () => dialog.close() )
+              else {
+                // display the footer
+                helpFooter?.classList.add('visible')
+                latexInputElement.focus()
+              }
+            } )
         }
         // hide latex input for beginner mode
         latexInputElement.parentNode.style.display = mode == 'Beginner' ? 'none' : ''
