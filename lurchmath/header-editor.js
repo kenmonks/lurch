@@ -440,6 +440,8 @@ export const install = editor => {
       if (header) {
         Dependency.topLevelDependenciesIn(header).forEach(dependency => {
           const preview = Atom.newBlock(editor, '', { type: 'preview' })
+          // make it easier to style in css
+          preview.element.classList.add('preview')
           preview.imitate(dependency)
           allPreviewHTML += wrapDeps ? preview.element.outerHTML 
                                      : preview.element.innerHTML
