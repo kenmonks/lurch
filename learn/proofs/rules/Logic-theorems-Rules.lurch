@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://lurch.plus/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -278,7 +278,7 @@
 </div>
 <div>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
-<p><strong>Theorem (alternate or-) &nbsp; </strong>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If W or V, not W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__text"> or </span><span class="ML__mathit" style="margin-right: 0.23em;">V</span><span style="color: #000000;"><span class="ML__text"> and </span></span><span class="ML__text">not </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span>.</p>
+<p><strong>Theorem (alternate or-) &nbsp; </strong>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If W or V, not W&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span><span class="ML__text"> or </span><span class="ML__mathit" style="margin-right: 0.23em;">V</span><span style="color: #000000;"><span class="ML__text"> and </span></span><span class="ML__text">not </span><span class="ML__mathit" style="margin-right: 0.14em;">W</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;V&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.23em;">V</span></span></span></span></span>.</p>
 </div>
 </div>
 <div>
