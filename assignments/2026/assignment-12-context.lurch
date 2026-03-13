@@ -1,0 +1,20 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="main" data-key="header" data-value-type="html"></div></div>
+            <div id="document"><h2>Additional Context for Assignment 12</h2>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 7.9 (cancellation law of for addition).&nbsp;</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If m+p=n+p&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">m</span><span class="ML__cmr">+</span><span class="ML__mathit">p</span><span class="ML__cmr">=</span><span class="ML__mathit">n</span><span class="ML__cmr">+</span><span class="ML__mathit">p</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;m=n&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit">m</span><span class="ML__cmr">=</span><span class="ML__mathit">n</span></span></span></span></span>.</p>
+</div>
+<div class="lurch-atom unindented" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
+<p><strong>Theorem 8.3 (b) (power law).&nbsp;</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;z^m*z^n=z^(m+n)&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.05em;">z</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.72em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.31em; display: inline-block; font-size: 70%;"><span class="ML__mathit">m</span></span></span></span></span></span></span><span class="ML__cmr">&sdot;</span><span class="ML__mathit" style="margin-right: 0.05em;">z</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.72em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.31em; display: inline-block; font-size: 70%;"><span class="ML__mathit">n</span></span></span></span></span></span></span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.05em;">z</span><span class="ML__msubsup"><span class="ML__vlist-t"><span class="ML__vlist-r"><span class="ML__vlist" style="height: 0.83em;"><span style="top: -3.41em; margin-right: 0.05em;"><span style="height: 0.47em; display: inline-block; font-size: 70%;"><span class="ML__mathit">m</span><span class="ML__cmr">+</span><span class="ML__mathit">n</span></span></span></span></span></span></span></span></span></span></span></p>
+</div>
+<p>&nbsp;</p></div>
+        
