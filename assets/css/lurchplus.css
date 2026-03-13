@@ -662,18 +662,24 @@ with booktab*/
   font-weight: bold;
 }
 
-/* Make the .booktab style from monks.css be the default for the course site 
+/*------------------------------------
+  Tables
+   
+Make the .booktab style from monks.css be the default for the course site 
 Example:
 
+::: table-block
 [Rules of Propositional Logic]{.table-title}
 
 | Name | Rule |
-|:---|:---|
-| and+ | ... |
+|:-----|:-----|
+| and+ | ...  |
 
 [This table summarizes the inference rules.]{.table-caption}
+:::
 
-*/
+--------------------------------------*/
+/* top and bottom borders */
 .course #content-block table {
   table-layout:auto;
   display: table;
@@ -682,22 +688,73 @@ Example:
 	border-top:2px solid #333;
 	border-bottom:2px solid #333;
 }
+/* midrule between the header and the body */
 .course #content-block table > thead { 
   border-bottom:1px solid #333;
 }
+/* default row spacing */
 .course #content-block table td,
 .course #content-block table th { 
   border:none;
-	padding:0.5rem 1rem;
+  /* this affects the row spacing */
+	padding: 0.35rem 1rem;
+  /* this sets the line spacing in cells with a <br> */
+  line-height: 1.4;
+  vertical-align: top;
 }
-.course #content-block table > caption { 
-  padding-bottom:0.5rem;
-	font-size:125%;
+/* Add some vertical spacing above and below the hrules */
+.course #content-block table thead tr:first-child th {
+  padding-top: 0.7rem;
+  padding-bottom: 0.45rem;
+  vertical-align: bottom;
 }
+.course #content-block table tbody tr:last-child td {
+  padding-bottom: 0.7rem;
+}
+
+/* a compact variant for when the spacing is too much 
+
+Example
+
+::: table-block compact
+
+or
+
+| name | rule |
+|:-----|:-----|
+|  a   |   b  |
+
+{.compact}
+
+*/
+.course #content-block .table-block.compact table td,
+.course #content-block .table-block.compact table th,
+.course #content-block table.compact td,
+.course #content-block table.compact th {
+  padding: 0.22em 0.8rem;
+  line-height: 1.2;
+}
+.course #content-block table.compact thead tr:first-child th,
+.course #content-block .table-block.compact table thead tr:first-child th {
+  padding-top: 0.5rem;
+  padding-bottom: 0.3rem;
+}
+.course #content-block table.compact tbody tr:last-child td,
+.course #content-block .table-block.compact table tr:last-child td {
+  padding-bottom: 0.5rem;
+}
+
+
+/* table title formatting */
 .course #content-block .table-title {
   text-align: center;
   font-weight: 600;
   margin: 1.0em 0 0.35em 0;
+}
+/* caption formatting */
+.course #content-block table > caption { 
+  padding-bottom:0.5rem;
+	font-size:125%;
 }
 .course #content-block .table-caption {
   text-align: center;
@@ -722,14 +779,6 @@ Example:
 /* keep table centered within wrapper */
 .course #content-block .table-block table {
   margin: 0 auto;
-}
-/* optionally make the rows closer together.  The rows have no gap by default,
-so the spacing comes from cell padding */
-.course #content-block .table-block tr:not(:last-of-type) td {
-  padding-bottom: 0.25rem;
-}
-.course #content-block .table-block tr:not(:first-of-type) td {
-  padding-top: 0.25rem;
 }
 
 #content-block .example-box {
