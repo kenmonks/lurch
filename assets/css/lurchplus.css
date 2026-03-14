@@ -21,6 +21,8 @@
   --accent-color: #025d8c; 
   /* nav link color */
   --nav-link-color: #5DA9E9;
+  /* nav bar background color */
+  --nav-background-color: #101B27;
   /* submenu header color */
   --nav-plain-color: #ddd;
   /* note label font color */
@@ -74,6 +76,13 @@
   --subitem-color: #666; 
   /* Soft shadow */
   --shadow-color: rgba(0, 0, 0, 0.1); 
+
+  /* dimensions */
+
+  /* nav width */
+  --nav-width: 250px;
+  /* max width of content */
+  --content-max-width: 870px;
   /* base font size */
   --base-font-size: 11pt;
   /* subproof indentation */
@@ -122,7 +131,49 @@ body.course {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
-/* the left nav column */
+/* -------------------------
+   Persistent nav toggle
+   ------------------------- */
+
+#nav-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 2001;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* default desktop state */
+  background: var(--nav-background-color);
+  color: var(--nav-link-color);
+}
+
+#nav-toggle i {
+  pointer-events: none;
+}
+
+#nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* -------------------------
+   Left nav
+   ------------------------- */
+
 #leftnav {
   position: fixed;
   display: flex;
@@ -130,15 +181,124 @@ body.course {
   flex-shrink: 0;
   top: 0;
   left: 0;
-  width: 250px;
-  /* word-wrap: break-word; */
+  width: var(--nav-width);
   height: 100%;
-  background-color: #101B27;
+  background-color: var(--nav-background-color);
   color: white;
-  padding: 20px;
+  padding: 52px 20px 20px 20px;
   box-sizing: border-box;
   overflow-y: hidden;
   font-size: smaller;
+
+  transform: translate3d(0, 0, 0);
+
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  z-index: 2000;
+}
+
+/* -------------------------
+   Content wrapper
+   ------------------------- */
+
+#wrap {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  max-width: var(--content-max-width);
+  min-width: 0;
+
+  margin-left: var(--nav-width);
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+#wrap #content-block {
+  flex: 1;
+  overflow-x: auto;
+}
+
+/* -------------------------
+   Auto narrow mode
+   ------------------------- */
+
+body.nav-narrow {
+  display: block;
+}
+
+body.nav-narrow #leftnav {
+  transform: translate3d(-100%, 0, 0);
+}
+
+body.nav-narrow #wrap {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+body.nav-narrow #nav-toggle {
+  background: var(--page-background-color);
+  color: var(--black-font);
+}
+
+body.nav-narrow #nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* if manually opened in narrow mode */
+body.nav-narrow.nav-open #leftnav {
+  transform: translate3d(0, 0, 0);
+}
+
+body.nav-narrow.nav-open #nav-toggle {
+  background: var(--nav-background-color);
+  color: var(--nav-link-color);
+}
+
+body.nav-narrow.nav-open #nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* -------------------------
+   Auto wide mode
+   ------------------------- */
+
+body.nav-wide {
+  display: flex;
+}
+
+/* in wide mode, user can manually close nav */
+body.nav-wide.nav-closed #leftnav {
+  transform: translate3d(-100%, 0, 0);
+}
+
+body.nav-wide.nav-closed #wrap {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+body.nav-wide.nav-closed #nav-toggle {
+  background: var(--page-background-color);
+  color: var(--black-font);
+}
+
+body.nav-wide.nav-closed #nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* -------------------------
+   Enable animation only after load
+   ------------------------- */
+
+body.nav-ready #leftnav,
+body.nav-ready #wrap {
+  transition: transform 0.25s ease, margin-left 0.25s ease, padding 0.25s ease;
 }
 
 #leftnav ul {
@@ -393,23 +553,6 @@ body.course {
   flex: 1 1 auto;      /* take remaining vertical space */
   overflow-y: auto;    /* scroll only this area */
   min-height: 0;       /* CRUCIAL for flexbox scrolling */
-}
-
-/* flex column for content-block and footer */
-#wrap {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  width: fit-content;
-  max-width: 870px;
-  margin-left: 250px;
-  margin-right: auto;
-  padding-left: 20px;
-  padding-right: 10px;
-}
-
-#wrap #content-block {
-  flex: 1;
 }
 
 /* Utilities */

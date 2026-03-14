@@ -42,6 +42,46 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
+// make nav bar collapsable on narrow screens
+document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body
+  const toggle = document.getElementById("nav-toggle")
+
+  const getPxVar = name =>
+    parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)) || 0
+
+  const breakpoint = () =>
+    getPxVar("--nav-width") + getPxVar("--content-max-width") + 40
+
+  const applyAutoState = () => {
+    const narrow = window.innerWidth <= breakpoint()
+
+    body.classList.toggle("nav-narrow", narrow)
+    body.classList.toggle("nav-wide", !narrow)
+
+    // reset manual overrides whenever zoom/resize changes layout
+    body.classList.remove("nav-open", "nav-closed")
+  }
+
+  const isNarrow = () => body.classList.contains("nav-narrow")
+
+  toggle?.addEventListener("click", () => {
+    if (isNarrow()) {
+      body.classList.toggle("nav-open")
+    } else {
+      body.classList.toggle("nav-closed")
+    }
+  })
+
+  window.addEventListener("resize", applyAutoState)
+
+  applyAutoState()
+
+  requestAnimationFrame(() => {
+    body.classList.add("nav-ready")
+  })
+})
+
 // make submenus collapsible
 document.querySelectorAll('.has-submenu').forEach(item => {
   item.addEventListener('click', () => {
