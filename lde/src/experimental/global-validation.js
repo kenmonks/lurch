@@ -1449,7 +1449,10 @@ const processAlgebra = doc => {
     }
   
     // otherwise get the LHS and RHS
-    const [LHS,RHS]=lurchmath.match(eqn).slice(-2)
+    let [LHS,RHS]=lurchmath.match(eqn).slice(-2)
+    // remove any transpose-formatting apostrophe's (they are not semantic)
+    LHS = LHS.replace(/]'/g, ']')
+    RHS = RHS.replace(/]'/g, ']')
     
     // We need two tests.  The second command is stronger at evaluating
     // identities than the first but only the first can evaluate matrix
