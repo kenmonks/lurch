@@ -1450,13 +1450,57 @@ const processAlgebra = doc => {
   
     // otherwise get the LHS and RHS
     const [LHS,RHS]=lurchmath.match(eqn).slice(-2)
-    const command = `simplify((${LHS})-(${RHS}))`
-    // if the CAS evaluates to 0, mark the proposition as valid
-    let result = '1' // non-zero
-    try { result = compute(command) } catch { result='error' }
-    const ans = (result==='0') ? 'valid' : 
-                (result==='error') ? 'inapplicable' : 'invalid'
+    
+    // We need two tests.  The second command is stronger at evaluating
+    // identities than the first but only the first can evaluate matrix
+    // identities. The first test works for non-matrix identities too, but we
+    // still need both tests because something like `1/m = (m-1)/(m*(m-1))` will
+    // validate by the second test but not the first. 
+    //
+    // Both commands should return 1 iff valid.
+    // If either test passes we give it a green check. 
+    // If both tests give errors it is inapplicable.
+    // Otherwise it's invalid (which is indeterminate).
+    const command1 = `(${LHS})==(${RHS})`
+    const command2 = `simplify((${LHS})-(${RHS}))==0`
+    
+    // get the result from a command
+    const getResult = command => {
+      let result
+      try { result = compute(command) } catch { result='error' }
+      // both commands should return the string '1' if valid
+      if (result==='1') return 'valid'
+      // Algebrite flags syntax errors with an message containing 'Stop:'
+      if (result=='error' || result?.includes('Stop:')) return 'inapplicable'
+      // if it can't determine if its valid, we will say it's indeterminate, not
+      // invalid because it might just be that it can't figure out why they are
+      // equal.  This is different than the by Arithmetic rules, where when it
+      // is not valid it is almost certainly invalid.
+      return 'indeterminate'
+    }
+
+    let ans
+
+    // run the first test
+    const result1 = getResult(command1)
+    // for efficiency, if it's valid, we're done
+    if (result1==='valid') {  
+      ans = 'valid' 
+    // otherwise try harder with the second test
+    } else {
+      const result2 = getResult(command2)
+
+      // determine the answer from both results
+      ans = (result2==='valid') ? 'valid' : 
+            (result1==='inapplicable' && result2==='inapplicable') ? 'inapplicable' : 
+            'indeterminate'
+    }
+
     c.setResult('algebra', ans , 'CAS')
+    
+    // this changes the scope of where the identity holds to where the rule is
+    // for consistency with the rest of Lurch, but it's not totally necessary in
+    // this case.
     if (ans === 'valid')
       insertInstantiation( new Environment(c.copy()) , rule, c)
   })

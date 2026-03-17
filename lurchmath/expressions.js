@@ -640,7 +640,6 @@ export class Expression extends Atom {
             // lose changes, otherwise show instructions how to close the dialog
             lurchInputElement.focus()
             const helpFooter = dialog.querySelector( '#shortcut-footer' )
-            console.log(helpFooter)
             lurchInputElement.addEventListener( 'blur', () => {
               if (lurchInputElement.value.trim() === lurchNotation.trim()) 
                 setTimeout( () => dialog.close() )
