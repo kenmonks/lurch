@@ -299,11 +299,11 @@
           <p
             ><strong>Example <span class="thm"></span>.</strong> Consider the
             formal system whose statements are the positive integers, and whose
-            theorems are the even integers. Then we know $42$ is a theorem but
-            $67$ is not. This system has infinitely many theorems, but we have
-            specified them all by a rule which tells us how to easily determine
-            if a statement is or is not a theorem very easily in a finite amount
-            of time.</p
+            theorems are the even integers. Then we know that in this system
+            $42$ is a theorem but $67$ is not. This system has infinitely many
+            theorems, but we have specified them all by a rule that tells us how
+            to easily determine if a statement is or is not a theorem very
+            easily in a finite amount of time.</p
           >
         </div>
         <p
@@ -359,23 +359,23 @@
             <p>$\square$</p>
           </div>
           <p
-            >Notice that the proof in the box is an explanation of why
-            <code>dog</code> is theorem. That there might be more than one way
-            to prove the same theorem.</p
+            >The proof in the box is an explanation of why <code>dog</code> is
+            theorem. Notice that there might be more than one way to prove the
+            same theorem.</p
           >
           <!-- example-box -->
         </div>
         <p
-          >Similarly, we could specify the theorems in Example 2.3 recursively
-          by saying that $2$ is a theorem, and that whenever $n$ is a theorem,
-          so is $n+2$. Of course, it is much easier to define the theorems
-          explicitly by just saying they are the even integers, but we obtain
-          the same set of theorems either way.</p
+          >Alternatively, we could specify the theorems in Example 2.3
+          recursively by saying that $2$ is a theorem, and that whenever $n$ is
+          a theorem, so is $n+2$. Of course, it is much easier to define the
+          theorems explicitly by just saying they are the even integers, but we
+          obtain the same set of theorems either way.</p
         >
         <h3>Conditional Theorems</h3>
         <p
-          >In a recursively defined system it is also often interesting to show
-          that a statement $Q$ <em>follows from</em> some other statements
+          >In a recursively defined system it is also often useful to show that
+          a statement $Q$ <em>follows from</em> some other statements
           $P_1,\ldots,P_n$ in the sense that if those statements were theorems,
           then we could prove that $Q$ is a theorem, too. We refer to such a
           fact as a <em>conditional theorem</em>.</p
@@ -397,32 +397,32 @@
             <ol>
               <li>Suppose <code>math</code> is a theorem.</li>
               <li
-                >Then <code>mats</code> is a theorem by Rule 1 applied to line
-                2.</li
+                >Then <code>mats</code> is a theorem by Rule 1 applied to
+                <code>mats</code> which is a theorem by line 1.</li
               >
               <li
-                >Then <code>mass</code> is a theorem by Rule 1 applied to line
-                3.</li
+                >Then <code>mass</code> is a theorem by Rule 1 applied to
+                <code>mass</code> which is a theorem by line 2.</li
               >
               <li
-                >Then <code>moss</code> is a theorem by Rule 1 applied to line
-                4.</li
+                >Then <code>moss</code> is a theorem by Rule 1 applied to
+                <code>moss</code> which is a theorem by line 3.</li
               >
               <li
-                >Then <code>most</code> is a theorem by Rule 1 applied to line
-                5.</li
+                >Then <code>most</code> is a theorem by Rule 1 applied to
+                <code>most</code> which is a theorem by line 4.</li
               >
               <li
-                >Then <code>cost</code> is a theorem by Rule 1 applied to line
-                6.</li
+                >Then <code>cost</code> is a theorem by Rule 1 applied to
+                <code>cost</code> which is a theorem by line 5.</li
               >
               <li
-                >Then <code>coot</code> is a theorem by Rule 1 applied to line
-                7.</li
+                >Then <code>coot</code> is a theorem by Rule 1 applied to
+                <code>coot</code> which is a theorem by line 6.</li
               >
               <li
-                >Then <code>cool</code> is a theorem by Rule 1 applied to line
-                8.</li
+                >Then <code>cool</code> is a theorem by Rule 1 applied to
+                <code>cool</code> which is a theorem by line 7.</li
               >
             </ol>
             <p>$\square$</p>
@@ -431,10 +431,10 @@
         <p
           >Notice that <code>math</code> is definitely not a theorem in the
           formal system defined in Example 2.4 (can you explain why?), but if it
-          were a theorem, then <code>cool</code> would be too. In other formal
-          systems this technique allows us to reduce the problem of proving that
-          $Q$ is the theorem to the problem of proving that the statements it
-          follows from are theorems (if indeed they are).</p
+          were a theorem, then <code>cool</code> would be too. In many formal
+          systems, use of this type of rule allows us to reduce a potentially
+          hard problem of proving that Q is a theorem to a potentially easier
+          problem of proving the statements that Q follows from are theorems.</p
         >
         <h1>Problems</h1>
         <h2>Toy Proof Systems</h2>
@@ -452,11 +452,10 @@
         <div class="question">
           <p
             ><em>Scrambler!</em> is a formal proof system where the statements
-            are finite sequences of colors. The Rules of Inference are
-            permutations of these sequences (and so have one premise and one
-            conclusion each). The goal is to apply the Rules to show that a
-            given sequence of colors is provable from another given sequence of
-            colors.</p
+            are finite sequences of colors. The Rules are permutations of these
+            sequences (and so have one premise and one conclusion each). The
+            goal is to apply the Rules to show that a given sequence of colors
+            is provable from another given sequence of colors.</p
           >
           <p
             >Try to find a strategy for reliably beating each of the difficulty
@@ -470,12 +469,11 @@
         <div class="question">
           <p
             ><em>Trix Game</em> is a formal proof system where the statements
-            are positive integers. There are only two Rules of Inference, both
-            of which take a single positive integer as a premise, and return a
-            single positive integer as their conclusion. This system illustrates
-            a rule that has a condition on when you can use it. The goal is to
-            show that a given positive integer is provable from the premise $1$
-            in the system.</p
+            are positive integers. There are only two Rules, both of which take
+            a single positive integer as a premise, and return a single positive
+            integer as their conclusion. This system illustrates a rule that has
+            a condition on when you can use it. The goal is to show that a given
+            positive integer is provable from the premise $1$ in the system.</p
           >
           <p
             >Try to find a strategy for winning. Warning: if you can prove that
@@ -488,9 +486,9 @@
             ><em>Circle-Dot</em> is a formal proof system where the statements
             are just finite sequences of one or more circles and dots. This
             formal system has many of the features in common with actual
-            mathematical formal axiom systems. There are five rules of
-            inference, two of which are axioms. The goal is to prove various
-            circle-dot strings in the system.</p
+            mathematical formal axiom systems. There are five rules, two of
+            which are axioms. The goal is to prove various circle-dot strings in
+            the system.</p
           >
           <div class="parts">
             <ol>
@@ -514,7 +512,7 @@
           <p
             >Define a toy formal system as follows. The statements are all
             nonempty words that only contain the character $\star$. There are
-            two rules of inference.</p
+            two rules.</p
           >
           <ul>
             <li
