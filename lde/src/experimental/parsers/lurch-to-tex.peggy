@@ -223,14 +223,16 @@
       basket  : '🧺'        , tree     : '🌳'           , apple      : '🍎'           ,
       cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       ,
       oplus   : '\\oplus'   , otimes   : '\\otimes'    , odot       : '\\odot'       ,
-      infty   : '\\infty'   , infinity : '\\infty'     ,
+      infty   : '\\infty'   , infinity : '\\infty'     , 
+      Union               : '\\bigcup'                     ,
+      Intersect           : '\\bigcap'                     ,
       iff                 : '\\Leftrightarrow'             ,
       contradiction       : '\\rightarrow\\leftarrow'      ,
       equivalenceRelation : '\\text{equivalence relation}' ,
       strictPartialOrder  : '\\text{strict partial order}' ,
       partialOrder        : '\\text{partial order}'        ,
       totalOrder          : '\\text{total order}'          ,
-      topSpace            : '\\text{topological space}'
+      topSpace            : '\\text{topological space}'    
     }
     return (tex[s]) ? tex[s] : s
   }
@@ -683,8 +685,14 @@ Let = a:'Let'i __ b:Symbolseq __ 'in'i __ c:Expression
 // Quantified and Binding
 //
 // quantified binding expressions
-Quantified = 'forall' _x b:Binding           { return `\\forall ${b}`  } /
+Quantified = 'forall' _x a:Symbol __ 'in'i __ b:Set _ period _ c:Expression  
+                    { return `\\forall ${a} \\in ${b}.\\, ${c}`  } /
+             'forall' _x b:Binding           { return `\\forall ${b}`  } /
+             'exists' _x a:Symbol __ 'in'i __ b:Set _ period _ c:Expression  
+                    { return `\\exists ${a} \\in ${b}.\\, ${c}`  } /
              'exists' _x b:Binding           { return `\\exists ${b}`  } /
+             'existsUnique' _x a:Symbol __ 'in'i __ b:Set _ period _ c:Expression  
+                    { return `\\exists! ${a} \\in ${b}.\\, ${c}`  } /
              'existsUnique' _x b:Binding     { return `\\exists! ${b}` }
 // binding expressions / anonymous maps
 Binding = a:Symbol period _ b:Expression

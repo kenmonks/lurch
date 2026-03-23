@@ -210,8 +210,25 @@ not (forall x.P(x))
 not (exists x.P(x))
 not forall x.P(x)
 not exists x.P(x)
+// x∈A shortcut for quantifiers
+forall x in A.P(x)
+exists x in NN.P(x)
+forall x in A_(n).for all y.P(x)
+exists x in A.exists y in A.P(x)
+for all x in ZZ.exists y in ZZ.P(x)
+exists x.forall y in ZZ.P(x)
+exists x in ZZ.for all y.P(x)
+(exists x in A.for all y in B.P(x,y))  implies  (for all y in Z.exists x in Z.P(x,y))
+(exists x in Z.for all y in Z.x loves y)  implies  (for all y in Z.exists x in Z.x loves y)
+P and (exists x in A.P(x)  implies  Q)  implies  P and (for all y in Z.Q)
+not (forall x in ZZ.P(x))
+not (exists x in B.P(x))
+not forall x in QQ.P(x)
+not exists x in QQ.P(x)
 // declarations
 Let x
+let x,y,z,wilma
+Let x in A
 let x,y,z,wilma
 Declare f
 declare fred wilma barney !

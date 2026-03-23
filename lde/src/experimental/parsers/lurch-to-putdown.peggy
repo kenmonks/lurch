@@ -514,8 +514,14 @@ Let = 'Let'i __ a:Symbol __ 'in'i __ b:Expression
 // Quantified and Binding
 //
 // quantified binding expressions
-Quantified = 'forall' _x b:Binding           { return `(∀ ${b})`  } /
+Quantified = 'forall' _x a:Symbol __ 'in'i __ b:Set _ period _ c:Expression  
+                    { return `(∀ ${a},(⇒ (∈ ${a} ${b}) ${c}))`  } /
+             'forall' _x b:Binding           { return `(∀ ${b})`  } /
+             'exists' _x a:Symbol __ 'in'i __ b:Set _ period _ c:Expression  
+                    { return `(∃ ${a},(and (∈ ${a} ${b}) ${c}))`  } /
              'exists' _x b:Binding           { return `(∃ ${b})`  } /
+             'existsUnique' _x a:Symbol __ 'in'i __ b:Set _ period _ c:Expression 
+                   { return `(∃! ${a},(and (∈ ${a} ${b}) ${c}))`  } /
              'existsUnique' _x b:Binding     { return `(∃! ${b})` } 
 // binding expressions / anonymous maps
 Binding = a:Symbol (period _ / _'mapsto'_x) b:Expression 
