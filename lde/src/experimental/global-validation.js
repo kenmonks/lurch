@@ -2274,7 +2274,7 @@ Environment.prototype._validateall = function ( target = this,
  * target.
  */
 LogicConcept.prototype.irrelevantTo = function (target) {
-  // it's not an ancestor of the target and has an ancestor that is not
+  // it's not an ancestor of the target and has no ancestor that is 
   // accessible to the target
   return target.ancestors().indexOf(this) < 0 &&
     !this.hasAncestorSatisfying(z => { return z.isAccessibleTo(target, true) })
