@@ -912,6 +912,12 @@ LogicConcept.prototype.attributes = function ( ) {
     ...this.getAttributeKeys().map( key => [key,this.getAttribute(key)])  
     ]
 }
+/**
+ * Defined a getter as a shorthand synonym for `.attributes() for use in Lode
+ */
+Object.defineProperty(LogicConcept.prototype, 'props', {
+  get() { return this.attributes() }
+})
 
 /**
  * Determine if this LogicConcept is a `LurchSymbol` whose text equals the given
