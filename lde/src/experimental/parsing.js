@@ -275,6 +275,22 @@ export const isArithmetic = {
   ℚ: isRationalArithmetic
 }
 
+// Check if this LC is allowed to be sent to the CAS in the AlgebraRule(NoMatrixOps) rule.
+const isMatrixIdentity = e => {
+  return  e instanceof Application &&
+          e.numChildren() == 3 &&
+          e.child(0).matches('=') &&
+          e.child(1) instanceof Application &&
+          e.child(1).child(0)?.matches('tuple') &&
+          e.child(2) instanceof Application &&
+          e.child(2).child(0)?.matches('tuple')
+}
+// this doesn't actually check if it uses matrix operations... it forbids any matrix or vector anywhere in the expression other than matrix identities.
+export const hasMatrixOps = e => {
+  return e.some(x=>x?.matches('tuple')) && !isMatrixIdentity(e)
+}
+
+
 /**
  * Convert a numeric comparison LC (e.g., equality or inequality) to a CAS expression.
  *

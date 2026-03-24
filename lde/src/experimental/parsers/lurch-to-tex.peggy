@@ -232,7 +232,8 @@
       strictPartialOrder  : '\\text{strict partial order}' ,
       partialOrder        : '\\text{partial order}'        ,
       totalOrder          : '\\text{total order}'          ,
-      topSpace            : '\\text{topological space}'    
+      topSpace            : '\\text{topological space}'    ,
+      AlgebraRule         : '\\text{algebra rule}'
     }
     return (tex[s]) ? tex[s] : s
   }
@@ -602,7 +603,7 @@ Ref = a:RefLabel _ [(\[{"] _ b:([^)\]}"]+) _ [)\]}"]
 // Shorthands are special symbols which are not allowed to be part
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
-Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / AlgRule / Comma)
+Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Comma)
                      !alphanum { return txt(a) }
   // Shorthands
   Equiv   = 'equiv'i { return '~\\equiv~' }
@@ -613,7 +614,6 @@ Shorthand = Equiv / a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / AlgRu
   Proof   = $('proof'i ':'?)
   Cases   = 'CasesRule'i ':'? { return 'Cases' }
   Subs    = 'SubsRule'i ':'? { return 'Substitution' }
-  AlgRule = 'AlgebraRule'i ':'? { return 'algebra rule' }
   Comma   = $(',')
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1036,6 +1036,9 @@ Prefix =  // LDE EFA's first
           'product' '(' _ E:Expression comma 
                           k:Symbol comma a:Expression comma b:Expression _ ')'
             { return `\\displaystyle\\prod_{${k}=${a}}^{${b}} ${E}` } /
+          // specifically handle this rule
+          'AlgebraRule(NoMatrixOps)' 
+             { return '\\text{algebra rule (with no matrix operations)}'} /
           // then the rest
           a:(Exp / Symbol / Parenthesized)
           b:( '_'? '('_ ExpressionSeq _')' )+ { return texPrefix(a,b) }

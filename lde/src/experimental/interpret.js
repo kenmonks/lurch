@@ -75,7 +75,9 @@ const interpret = doc => {
   // just return if it's already interpreted
   if (doc.interpreted) return
 
-  addSystemDeclarations(doc)
+  // These are now just declared to be constants automatically in markDeclaredSymbols without adding them to the document. TODO: remove this safely
+  addSystemDeclarations(doc) 
+
   addIndex(doc,'Parsing')
   processShorthands(doc)
   addIndex(doc,'Interpret')
@@ -104,15 +106,27 @@ const interpret = doc => {
 // Structural Changing Utilities
 //
 
+/**
+ * System Reserved Constants
+ *
+ * Some symbols are reserved for system purposes as constants because they have
+ * special meaning to the validation algorithm.  They are listed here in this array.
+ */
+const systemConstants = [
+  'LDE EFA','➤',
+  'AlgebraRule','NoMatrixOps','Arithmetic','ChainsRule','EquationsRule'
+]
+
 /** 
  * Add system declarations to the top of the document. These are reserved
  * symbols that the user is not allowed to use. Currently they are
  * 'LDE EFA' and '➤'.
+ * 
 */
 const addSystemDeclarations = doc => {
   doc.unshiftChild(
     new Declaration(
-      [new LurchSymbol('LDE EFA'), new LurchSymbol('➤')]
+      systemConstants.map(x=>new LurchSymbol(x))
     ).asA('given').asA('Declare') )
   return doc
 }
@@ -567,7 +581,6 @@ const resetComputedAttributes = doc => {
   })
   return doc
 }
-
 
 /**
  * Mark Declared Symbols

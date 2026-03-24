@@ -121,7 +121,7 @@ import {
   LogicConcept, Expression, Declaration, Environment, LurchSymbol,
   Matching, Formula, Scoping, Validation, Application, BindingExpression
 } from '../index.js'
-import { isArithmetic, arithmeticToCAS, isNegationOfArithmetic } from './parsing.js'
+import { isArithmetic, arithmeticToCAS, isNegationOfArithmetic, hasMatrixOps } from './parsing.js'
 
 const Problem = Matching.Problem
 const isAnEFA = Matching.isAnEFA
@@ -646,7 +646,7 @@ const processChains = doc => {
     x=>(x.isA('Rule') || x.isA('Inst')) && x.numChildren()==1 && 
        x.child(0) instanceof LurchSymbol && 
        (x.child(0).text()==='EquationsRule' || x.child(0).text()==='ChainsRule'),
-    x=>!(x.isA('Rule') || x===doc))
+    x=>!(x.isA('Rule') || x.isA('Inst') || x===doc))
   // if there is no Chains Rule loaded we are done
   if (!rule) return
 
@@ -732,7 +732,7 @@ const processChains = doc => {
 
 
 /**
- * Check if the doc contains the Rule `:{ :EquationsRule }`.  If not, just split
+ * Check if the doc contains the Rule `:{ EquationsRule }`.  If not, just split
  * the equation chains.  
  * 
  * Otherwise after splitting get the diffs of all equations, and add the
@@ -1397,7 +1397,7 @@ const processArithmetic = doc => {
   })
 }
 
-// This is a prototype of the Algebra Tool based on the CAS tool
+// This is the Algebra Tool based on the CAS tool
 const processAlgebra = doc => {
   // check options
   if (!LurchOptions.processAlgebra) return
@@ -1405,10 +1405,18 @@ const processAlgebra = doc => {
   // check if the AlgebraRule is around, if not, we're done
   const rule=doc.find(
     x=>(x.isA('Rule') || x.isA('Inst')) && x.numChildren()==1 && 
-       x.child(0).matches('AlgebraRule'),
+       (x.child(0).matches('AlgebraRule') || 
+         (x.child(0) instanceof Application &&
+          x.child(0).numChildren()==2 &&
+          x.child(0,0).matches('AlgebraRule') &&
+          x.child(0,1).matches('NoMatrixOps')
+         )
+       ),
     x=>!(x.isA('Rule') || x.isA('Inst') || x===doc))
   // if there is no Algebra Rule loaded we are done
   if (!rule) return
+  // see if we are forbidding matrix ops
+  const noMatrixOps = rule.child(0,1)?.matches('NoMatrixOps')
   // console.log(`found`)
   // console.log(rule)
   // get all the things the user wants to checked as a conclusion by CAS
@@ -1447,7 +1455,10 @@ const processAlgebra = doc => {
       c.setResult('algebra', 'inapplicable' , 'CAS')      
       return
     }
-  
+
+    // if we are forbidding matrix ops and it isn't a matrix identity, we're done
+    if ( noMatrixOps && hasMatrixOps(c) ) return
+
     // otherwise get the LHS and RHS
     let [LHS,RHS]=lurchmath.match(eqn).slice(-2)
     // remove any transpose-formatting apostrophe's (they are not semantic)
