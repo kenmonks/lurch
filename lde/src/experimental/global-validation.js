@@ -1457,7 +1457,10 @@ const processAlgebra = doc => {
     }
 
     // if we are forbidding matrix ops and it isn't a matrix identity, we're done
-    if ( noMatrixOps && hasMatrixOps(c) ) return
+    if ( noMatrixOps && hasMatrixOps(c) ) {
+      c.setResult('algebra' , 'inapplicable' , 'CAS')      
+      return
+    }
 
     // otherwise get the LHS and RHS
     let [LHS,RHS]=lurchmath.match(eqn).slice(-2)
