@@ -1,0 +1,824 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Sets, Functions, Numbers</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li> <a href="/learn/proofs/">1: Introduction</a> </li
+          ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
+          ><li>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch04/"
+              >4: Reasoning about Mathematics</a
+            > </li
+          ><li> <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li
+          ><li>
+            <a href="/learn/proofs/ch06/"
+              >6: Predicate Logic and Equality</a
+            > </li
+          ><li> <a href="/learn/proofs/ch07/">7: The Natural Numbers</a> </li
+          ><li> <a href="/learn/proofs/ch08/">8: Sequences</a> </li
+          ><li class="active">
+            <a href="/learn/proofs/ch09/">9: Sets, Functions, Numbers</a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: '9'">
+        <div class="title-box">
+          <h1>Chapter 9: Sets, Functions, Numbers</h1>
+        </div>
+        <p
+          >As we have seen, sequences are ordered lists of items. They are
+          fundamental building blocks in mathematics. Another such fundamental
+          object is a collection of items that in unordered is called a
+          <em>set</em>.</p
+        >
+        <h2>Basic Definitions from Set theory</h2>
+        <p
+          >We can extend the language of mathematics we have developed thus far
+          by including a new constant $\in$ which is called “is an element of”
+          (or “is a member of” or “is in”) and a new variable and constant type
+          called a <em>set</em>. The expression $x\in A$ is a statement is read
+          “$x$ is an element of $A$” where $A$ is a set and $x$ can have any
+          type. The set containing no elements is called the <em>empty set</em>.
+          Many of the definitions below are informal definitions that are
+          sufficient for our purposes.</p
+        >
+        <div class="table-block">
+          <p class="table-title">Basic Set Notation and Operations</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Name</th>
+                <th style="text-align: left">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">Finite set notation</td>
+                <td style="text-align: left"
+                  >$x\in\Set{ x _ {1},\ldots,x _ {n} } \iff x=x _
+                  {1}\xor\cdots\xor,x=x _ {n}$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Set builder notation</td>
+                <td style="text-align: left"
+                  >$x\in\Set{ y : P(y) } \iff P(x)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Subset</td>
+                <td style="text-align: left"
+                  >$A\subseteq B\iff\forall x.x\in A\implies x\in B$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Set equality</td>
+                <td style="text-align: left"
+                  >$A=B\iff A\subseteq B\xand B\subseteq A$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Empty set</td>
+                <td style="text-align: left"
+                  >$A=\Set{}\iff\forall x.x\notin A$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Nonempty</td>
+                <td style="text-align: left"
+                  >$A$ is nonempty $\iff\, \exists c.c\in A$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Power set</td>
+                <td style="text-align: left"
+                  >$\mathcal{P}\left(A\right)=\Set{ B : B\subseteq A } $</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Intersection</td>
+                <td style="text-align: left"
+                  >$x\in A\cap B\iff x\in A\xand x\in B$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Union</td>
+                <td style="text-align: left"
+                  >$x\in A\cup B\iff x\in A\xor x\in B$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Relative Complement</td>
+                <td style="text-align: left"
+                  >$x\in B-A\iff x\in B\xand x\notin A$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Complement</td>
+                <td style="text-align: left">$x\in A’\iff x\notin A$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">Indexed Union</td>
+                <td style="text-align: left"
+                  >$x\in\bigcup\limits _ {i\in I}A _ {i}\iff\exists i.i\in
+                  I\xand x\in A _ {i}$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  >Cartesian Product [see
+                  <a href="#extended-set-builder">1</a>]</td
+                >
+                <td style="text-align: left"
+                  >$A\times B=\Set{ \left\langle x,y\right\rangle : x\in A\xand
+                  y\in B } $</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  >Cartesian Product [see
+                  <a href="#extended-set-builder">1</a>]</td
+                >
+                <td style="text-align: left"
+                  >$A _ {1}\times\cdots\times A _ {n}=\Set{ \left\langle x _
+                  {1},\ldots,x _ {n}\right\rangle : x _ {1}\in A _
+                  {1}\xand\cdots\xand,x _ {n}\in A _ {n} } $</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Two convenient abbreviations</td>
+                <td style="text-align: left"
+                  >$\left(\forall x\in A,P\left(x\right)\right)\iff\forall
+                  x.x\in A\implies P (x)$ <br />
+                  $\left(\exists x\in A,P\left(x\right)\right)\iff\exists x.x\in
+                  A\xand P(x)$</td
+                >
+              </tr>
+            </tbody>
+          </table>
+          <!-- table-block -->
+        </div>
+        <p><em>Remarks:</em></p>
+        <ul class="disc">
+          <li
+            >Set complement has a higher precedence than all other set
+            operations, so that, e.g., $A\cap B’$ means $A\cap (B’)$ and not
+            $(A\cap B)'$.</li
+          >
+          <li
+            >We will write $x\notin A$ as an abbreviation for $\neg\left(x\in
+            A\right)$.</li
+          >
+          <li
+            >The expression “<em>Let $x\in A$</em>” is an abbreviation for “<em
+              >Let x be such that $x\in A$</em
+            >”. Thus, there is a hidden assumption to keep track of when using
+            this shortcut. Rules treat these nested subproofs as a single
+            subproof block.</li
+          >
+          <li
+            >The expression <em>For some $x\in A$ and $y\in B$</em> is an
+            abbreviation for two applications of the $\exists-$ rule, namely it
+            is declaring two constants $x,y$ and further declaring that they are
+            elements of set $A$ and set $B$ respectively.</li
+          >
+        </ul>
+        <p
+          >As usual, in addition to using the above definitions in our proofs,
+          we can also derive many useful rules of inference from them.</p
+        >
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Basic Set Theory</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Sets-Rules.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
+          </div>
+          <p
+            ><span class="m"
+              >Declare $\in$, nonempty, $\subseteq,\cap, \cup,\, ', \setminus,
+              \mathscr{P}, \times,$ set, Union, Intersect</span
+            >
+            and <span class="m">setbuilder</span> to be constants.</p
+          >
+          <div class="rule-grid cols-2">
+            <div class="Rule">
+              <p
+                ><span class="nm">Empty Set</span>
+                <span class="m">$x \notin \Set{}$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Nonempty</span>
+                <span class="m"
+                  >$A$ is nonempty $\equiv \exists x.x \in A$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Set Builder</span>
+                <span class="m"
+                  >$x \in \Set{ z : \mc{P}(z) } \equiv \mc{P}(x)$</span
+                ></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Finite Sets</p>
+            </div>
+            <div class="Rule">
+              <p><span class="m">$x \in \Set{a}$ $\equiv$ $x=a$</span></p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="m"
+                  >$x \in \Set{a,b}$ $\equiv$ $x=a\xor x=b$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="m"
+                  >$x \in \Set{a,b,c}$ $\equiv$ <br />
+                  $\qquad x=a\xor x=b\xor x=c$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="m"
+                  >$x \in \Set{a,b,c,d}$ $\equiv$ <br />
+                  $\qquad x=a\xor x=b\xor x=c\xor x=d$</span
+                ></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Set Relations</p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Subset+</span></p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $x \in A$</span><br />
+                    <span class="m">$x\in B$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$A\subseteq B$</span></p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Set equality</span></p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $x \in A$</span><br />
+                    <span class="m">$x\in B$</span></p
+                  >
+                </div>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $x \in B$</span><br />
+                    <span class="m">$x\in A$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$A=B$</span></p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Subset-</span>
+                <span class="m">If $A\subseteq B$</span> and
+                <span class="m">$x\in A$</span> then
+                <span class="m">$x\in B$</span>.</p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Set from other sets</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Powerset</span>
+                <span class="m"
+                  >$A\in \mathscr{P}(B) \equiv A\subseteq B$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Intersection</span>
+                <span class="m">$x\in A\cap B \equiv x\in A , x\in B$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Union</span>
+                <span class="m"
+                  >$x\in A\cup B \equiv x\in A \xor x\in B$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Relative Complement</span>
+                <span class="m"
+                  >$x\in A\setminus B \equiv x\in A \xor x\notin B$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Complement</span>
+                <span class="m">$x\in B’ \equiv x\notin B$</span></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Cartesian product</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Binary $\times$</span>
+                <span class="m">If $z\in A\times B$</span> then <span class="m"
+                  >$z=\langle a,b\rangle$, $a\in A$, $b\in B$ for some $a$ and
+                  $b$</span
+                >.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Binary $\times$</span><br />
+                <span class="m"
+                  >$\langle a,b\rangle \in A\times B$ $\equiv$ $a\in A$,  $b\in
+                  B$</span
+                >.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Ternary $\times$</span>
+                <span class="m">If $z\in A\times B\times C$</span> then
+                <span class="m"
+                  >$z=\langle a,b,c\rangle$, $a\in A$, $b\in B$, $c\in C$ for
+                  some $a$, $b$, and $c$</span
+                >.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Ternary $\times$</span><br />
+                <span class="m"
+                  >$\langle a,b,c\rangle \in A\times B\times C$ $\equiv$ $a\in
+                  A$, $b\in B$, $c\in C$</span
+                ></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Indexed Union and Intersection</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Indexed Union+</span><br />
+                <span class="m">If $x\in A_j$</span> and
+                <span class="m">$j\in I$</span> then
+                <span class="m">$\displaystyle x\in\bigcup_{i\in I} A_i$</span
+                >.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Indexed Union-</span><br />
+                <span class="m"
+                  >If $\displaystyle x\in\bigcup_{i\in I} A_i$</span
+                >
+                then <span class="m">$x\in A_j$ for some $j\in I$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Indexed Intersection+</span></p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $j\in I$</span><br />
+                    <span class="m">$x\in A_j$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em>
+                <span class="m"
+                  >$\displaystyle x\in\bigcap_{i\in I} A_i$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Indexed Intersection-</span><br />
+                <span class="m"
+                  >If $\displaystyle x\in\bigcap_{i\in I} A_i$</span
+                >
+                and <span class="m">$j\in I$</span> then
+                <span class="m">$x\in A_j$</span>.</p
+              >
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- rule-set -->
+        </div>
+        <h2 id="extended-set-builder">Extended Set-Builder Notation</h2>
+        <p
+          >In addition to set builder notation, $\Set{ x : P(x) }$ where $P$ is
+          a predicate, it is quite common practice in mathematics to write sets
+          in the form $$\Set{ E(x _ 0,\ldots,x _ n) : P(x _ 0,\ldots,x _ n) }$$
+          where $E(x _ 0,\ldots,x _ n)$ is an expression containing the free
+          variables $x _ 0,\ldots,x _ n$ and $P$ is a predicate. This is defined
+          to be a shorthand for $$\Set{ x : \exists x _ 0,\ldots,x _ n, x=E(x _
+          0,\ldots,x _ n) \xand P(x _ 0,\ldots,x _ n) }.$$</p
+        >
+        <div class="example-box">
+          <p
+            ><strong>Example <span class="thm"></span></strong><br />
+            When we write $$\bbC = \Set{ a+bi : a,b\in\bbR}$$ this is an
+            abbreviation for $$\bbC = \Set{ x : \exists a.b, x=a+bi \xand
+            a,b\in\bbR }$$ or equivalently $$\bbC = \Set{ x : \exists
+            a.b\in\bbR, x=a+bi }$$</p
+          >
+          <p
+            >Thus, if you need to pick an arbitrary element of $\bbC$ in your
+            proof you should do it like this.</p
+          >
+          <div class="Subproof">
+            <p
+              >Let $z\in \bbC$<br />
+              $z = a+bi \forsome a\in\RR \xand b\in\RR$<br />
+              $\qquad\vdots$</p
+            >
+          </div>
+          <!-- example-box -->
+        </div>
+        <p>The derived rules do this for you automatically.</p>
+        <h1>Problems</h1>
+        <p
+          >In the following problems, capital letters represent sets which are
+          all subsets of a universal set $\mathcal{U}$.</p
+        >
+        <div class="question">
+          <p
+            ><span class="thm">easy warmup</span> If $x\in\Set{a}$ and
+            $y\in\Set{a}$ then $x=y$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Order doesn’t matter</span> $\Set{a,b} =
+            \Set{b,a}$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Order does matter</span> $\langle a,b\rangle =
+            \langle b,a\rangle$ if and only if $a=b$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">excluded middle</span> $x\in A\cup A’$</p>
+        </div>
+        <div class="question">
+          <p><span class="thm">double negative</span> $A’'=A$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">ordered pair inequality</span> $x\neq y$ if and
+            only if $\langle x,y\rangle \neq\langle y,x\rangle$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">A set of sets</span> $\Set{1,2} \in \Set{ A :
+            \Set{1} \subseteq A }$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Cartesian calculation</span> $\Set{2} \times
+            \Set{ 3,5 } = \Set{ \langle 2,3\rangle, \langle 2,5\rangle }$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">Subset is reflexive</span> $A\subseteq A$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">alternate definition of subset</span> $A\subseteq
+            B$ if and only if for all $x$, either $x\notin A$ or $x\in B$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Transitivity of $\subseteq$</span> $A\subseteq
+            B\xand B\subseteq C \implies A\subseteq C$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Not a subset</span> $\neg(A\subseteq B)$ if and
+            only if $\exists x. x\in A\cap B’$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">Double negative</span> $A - (B - A) = A$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Substraction lessens</span> $A - B \subseteq
+            A$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Contravariance of complement</span> $A \subseteq
+            B \iff B’ \subseteq A’$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">Idempotency of $\cap$</span> $A \cap A = A$</p>
+        </div>
+        <div class="question">
+          <p><span class="thm">Idempotency of $\cup$</span> $A \cup A = A$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Commutativity of $\cap$</span> $A \cap B = B\cap
+            A$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Commutativity of $\cup$</span> $A \cup B = B\cup
+            A$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Associativity of $\cap$</span> $(A \cap B) \cap C
+            = A\cap (B\cap C)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Associativity of $\cup$</span> $(A \cup B) \cup C
+            = A\cup (B\cup C)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Relative complement is not associative</span> If
+            $x\in A\cap B\cap C$ then $x\in A-(B-C)$ and $x\notin (A-B)-C$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Distributivity of $\cap$ over $\cup$</span> $A
+            \cap (B \cup C) = (A\cap B) \cup (A\cap C))$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Distributivity of $\cup$ over $\cap$</span> $A
+            \cup (B \cap C) = (A\cup B) \cap (A\cup C))$</p
+          >
+        </div>
+        <div class="question">
+          <p><span class="thm">De Morgan</span> $(A \cap B)’ = A’\cup B’$</p>
+        </div>
+        <div class="question">
+          <p><span class="thm">De Morgan</span> $(A \cup B)’ = A’\cap B’$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">More De Morgan</span> $A-(B \cap C) = (A-B)\cup
+            (A-C)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">More De Morgan</span> $A-(B \cup C) = (A-B)\cap
+            (A-C)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Even more De Morgan</span> $$\left(\bigcap _
+            {i\in I} A _ i\right)’ = \bigcup _ {j\in I} A _ j’$$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Even more De Morgan</span> $$\left(\bigcup _
+            {i\in I} A _ i\right)’ = \bigcap _ {j\in I} A _ j’$$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Not a subset</span> $\neg(A\subseteq B) \iff
+            \exists x.x\in A\cap B’$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Always in the power set</span>
+            $\emptyset\in\mathcal{P}(A)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Always in the power set</span>
+            $A\in\mathcal{P}(A)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Power sets of subsets</span> $A\subseteq
+            B\implies \mathcal{P}(A)\subseteq\mathcal{P}(B)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Power sets of complements</span> $A\subseteq
+            B\implies \mathcal{P}(B’)\subseteq\mathcal{P}(A’)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">$\times$ is not commutative</span> If $A\times B$
+            is non-empty, then $A\times B=B\times A$ if and only if $A=B$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Subsets are contagious</span> $A\subseteq C \xand
+            B\subseteq D\implies A\times B\subseteq C\times D$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Alternate definition of subset</span> $A
+            \subseteq B$ if and only if $\forall x. x\notin A \xor x\in B$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Relative complement is not associative</span> If
+            $x\in A\cap B \cap C$ then $x\in A - (B - C)$ and $x\notin (A - B) -
+            C$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Powerset and union</span>
+            $\mathcal{P}(A)\cup\mathcal{P}(B)\subseteq\mathcal{P}(A\cup B)$</p
+          >
+        </div>
+        <div class=""></div>
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>
