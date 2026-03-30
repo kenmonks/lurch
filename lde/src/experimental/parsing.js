@@ -275,6 +275,20 @@ export const isArithmetic = {
   ℚ: isRationalArithmetic
 }
 
+// check for any function other than 'tuple' or '=' which has a matrix as an argument
+export const hasMatrixOps = e => {
+  const isATuple = e => { 
+    return e instanceof Application && e?.child(0).matches('tuple') 
+  }
+  const isAMatrixOp = e => { 
+    return e instanceof Application && 
+           e.numChildren()>1 &&
+           !(e?.child(0)?.matches('tuple') || e?.child(0)?.matches('=')) &&
+           e.children().some( isATuple ) 
+  }
+  return e.some( isAMatrixOp )
+}
+
 // Check if this LC is allowed to be sent to the CAS in the AlgebraRule(NoMatrixOps) rule.
 const isMatrixIdentity = e => {
   return  e instanceof Application &&
@@ -284,10 +298,6 @@ const isMatrixIdentity = e => {
           e.child(1).child(0)?.matches('tuple') &&
           e.child(2) instanceof Application &&
           e.child(2).child(0)?.matches('tuple')
-}
-// this doesn't actually check if it uses matrix operations... it forbids any matrix or vector anywhere in the expression other than matrix identities.
-export const hasMatrixOps = e => {
-  return e.some(x=>x?.matches('tuple')) && !isMatrixIdentity(e)
 }
 
 
@@ -355,6 +365,22 @@ const numericToCAS = e => {
 }
 
 /**
+ * Partition an array into two arrays based on a predicate.
+ * Elements for which the predicate returns true are placed in the first array,
+ * and all others are placed in the second array.
+ *
+ * @template T
+ * @param {T[]} arr - The input array
+ * @param {(x: T) => boolean} pred - Predicate function
+ * @returns {[matches: T[], nonMatches: T[]]} A tuple of two arrays
+ */
+const partition = function (arr,f) {
+  const yes = [], no = []
+  arr.forEach(x => (f(x) ? yes : no).push(x))
+  return [yes, no]
+}
+    
+/**
  *  ## Process Shorthands 
  *
  * In order to make it convenient to enter large documents in putdown notation,
@@ -414,11 +440,6 @@ const numericToCAS = e => {
  *     conjunction you can also do `D,E,F for some c` or `Let x be such that
  *     D,E,F `
  *
- * The Rule will then be replaced by the expanded version and the `≡` symbols
- *     removed, following the cyclic TFAE style of implications.  For example,
- *     if the Rule has the form `:{ a ≡ b c ≡ d }` then it will be replaced by
- *     `:{ {:a {b c}} {:{b c} d } {:d a} }`.
- *
  *   * Scan for occurrences of the symbol `≡`. They are intended to be a
  *     shorthand way to enter IFF rules (equivalences).  The '≡' should be a
  *     child of a Rule environment, and should not be the first or last child.
@@ -426,6 +447,11 @@ const numericToCAS = e => {
  *     symbols removed, following the cyclic TFAE style of implications.  For
  *     example, if the Rule has the form `:{ a ≡ b c ≡ d }` then it will be
  *     replaced by `:{ {:a {b c}} {:{b c} d } {:d a} }`.
+ *
+ *     If the environment that contains the equivalences has one or more given
+ *     children listed at the start, they are added as premises to all of the
+ *     resulting rules.  This is a way to express "these are equivalent in this
+ *     situation".
  *
  *   * Scan for occurrences of the symbol `➤`. If found it should be the first
  *     child of an Application whose second child is a symbol whose text is the
@@ -635,11 +661,18 @@ export const processShorthands = L => {
     const parent = m.parent()
     if (!parent) return
 
+    // get any global premises (givens listed initially as children)
+    let [givens,inputArray] = partition(parent.children(),x=>x.isA('given'))
+    const globalgivens = (givens.length == 0) ? [] : 
+        (givens.length == 1) ? [givens[0]] : 
+        [new Environment(...givens.map(x=>x.unmakeIntoA('given'))).asA('given')]
+    
     // a utility to identify equivalence separators
     const isSeparator = x => x instanceof LurchSymbol && x.text() === '≡'
 
     // get the children of the parent
-    let inputArray = parent.children()
+    // let inputArray = parent.children()
+
     // an array to hold the groups
     let groups = []
     
@@ -675,14 +708,16 @@ export const processShorthands = L => {
 
     // put all of the pairs into the new environment except the last one
     results.slice(0,-1).forEach( ( result, i ) => { 
-      let myEnv = new Environment( result.asA('given') , 
+      let myEnv = new Environment( ...globalgivens.map(x=>x.copy()), 
+                                   result.asA('given') , 
                                    results[i+1].copy().unmakeIntoA('given') ) 
       ans.pushChild(myEnv)
     } )
     // and complete the cycle with the last one
-    ans.pushChild(new Environment( 
+    ans.pushChild(new Environment(
+      ...globalgivens.map(x=>x.copy()), 
       results[results.length-1].asA('given'), 
-              results[0].copy().unmakeIntoA('given') ) )
+      results[0].copy().unmakeIntoA('given') ) )
     
     // replace the parent with the new environment  
     parent.replaceWith(ans)
@@ -824,6 +859,6 @@ export const processShorthands = L => {
 export default {
   isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger, isRational,
   isNumeric, isNaturalArithmetic,  isIntegerArithmetic, isRationalArithmetic, 
-  numericToCAS, parseLines, makeParser
+  hasMatrixOps, numericToCAS, parseLines, makeParser
 }
 ///////////////////////////////////////////////////////////////////////////////
