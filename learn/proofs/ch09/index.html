@@ -80,7 +80,12 @@
             > </li
           ><li> <a href="/learn/proofs/ch07/">7: Natural Numbers</a> </li
           ><li> <a href="/learn/proofs/ch08/">8: Sequences</a> </li
-          ><li class="active"> <a href="/learn/proofs/ch09/">9: Sets</a> </li>
+          ><li class="active"> <a href="/learn/proofs/ch09/">9: Sets</a> </li
+          ><li>
+            <a href="/learn/proofs/ch10/"
+              >10: Integer, Rational, and Real Numbers</a
+            >
+          </li>
         </ul>
       </div>
       <div class="sidebar-powered">
@@ -171,7 +176,7 @@
               <tr>
                 <td style="text-align: left">Power set</td>
                 <td style="text-align: left"
-                  >$\mathcal{P}\left(A\right)=\Set{ B : B\subseteq A } $</td
+                  >$\mathscr{P}\left(A\right)=\Set{ B : B\subseteq A } $</td
                 >
               </tr>
               <tr>
@@ -204,6 +209,13 @@
                 >
               </tr>
               <tr>
+                <td style="text-align: left">Indexed Intersection</td>
+                <td style="text-align: left"
+                  >$x\in\bigcap\limits _ {i\in I}A _ {i}\iff\forall i.i\in
+                  I\implies x\in A _ {i}$</td
+                >
+              </tr>
+              <tr>
                 <td style="text-align: left"
                   >Cartesian Product [see
                   <a href="#extended-set-builder">1</a>]</td
@@ -225,11 +237,18 @@
                 >
               </tr>
               <tr>
+                <td style="text-align: left">Cartesian Product</td>
+                <td style="text-align: left"
+                  >$A^n=\underbrace{A\times \cdots \times A}_n$ where $A$ is a
+                  set and $1\leq n$</td
+                >
+              </tr>
+              <tr>
                 <td style="text-align: left">Two convenient abbreviations</td>
                 <td style="text-align: left"
-                  >$\left(\forall x\in A,P\left(x\right)\right)\iff\forall
+                  >$\left(\forall x\in A.P\left(x\right)\right)\iff\forall
                   x.x\in A\implies P (x)$ <br />
-                  $\left(\exists x\in A,P\left(x\right)\right)\iff\exists x.x\in
+                  $\left(\exists x\in A.P\left(x\right)\right)\iff\exists x.x\in
                   A\xand P(x)$</td
                 >
               </tr>
@@ -531,9 +550,9 @@
           <p
             ><strong>Example <span class="thm"></span></strong><br />
             When we write $$\bbC = \Set{ a+bi : a,b\in\bbR}$$ this is an
-            abbreviation for $$\bbC = \Set{ x : \exists a.b, x=a+bi \xand
+            abbreviation for $$\bbC = \Set{ x : \exists a.b.x=a+bi \xand
             a,b\in\bbR }$$ or equivalently $$\bbC = \Set{ x : \exists
-            a.b\in\bbR, x=a+bi }$$</p
+            a.b\in\bbR.x=a+bi }$$</p
           >
           <p
             >Thus, if you need to pick an arbitrary element of $\bbC$ in your

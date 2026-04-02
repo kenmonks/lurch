@@ -1,0 +1,1395 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Integer, Rational, and Real Numbers</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li> <a href="/learn/proofs/">1: Introduction</a> </li
+          ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
+          ><li>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch04/"
+              >4: Reasoning about Mathematics</a
+            > </li
+          ><li> <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li
+          ><li>
+            <a href="/learn/proofs/ch06/"
+              >6: Predicate Logic and Equality</a
+            > </li
+          ><li> <a href="/learn/proofs/ch07/">7: Natural Numbers</a> </li
+          ><li> <a href="/learn/proofs/ch08/">8: Sequences</a> </li
+          ><li> <a href="/learn/proofs/ch09/">9: Sets</a> </li
+          ><li class="active">
+            <a href="/learn/proofs/ch10/"
+              >10: Integer, Rational, and Real Numbers</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: '10'">
+        <div class="title-box">
+          <h1>Chapter 10: Integer, Rational, and Real Numbers</h1>
+        </div>
+        <h2>Notation</h2>
+        <p
+          >We have defined the natural numbers via the Peano Postulates, and now
+          would like to turn our attention to other famous sets of numbers,
+          namely the integers, rationals, and real numbers.</p
+        >
+        <p
+          >Natural numbers, integers, and rational numbers all turn out to be
+          special kinds of real numbers so it suffices to define the real
+          numbers first, and then specify which real numbers are considered to
+          be natural, integers, and rational numbers.</p
+        >
+        <p
+          >In addition to defining the real numbers themselves, we would like
+          our real numbers to be ordered so that we can tell when one real
+          number is less than another. If $x,y$ are real numbers, we will write
+          $x&lt;y$ as usual to indicate that $x$ is less than $y$.</p
+        >
+        <p
+          >We would also like to be able to add and multiply any two real
+          numbers. As usual, if $x,y$ are real numbers, we will write $x+y$ for
+          their sum and $x\cdot y$ as their product. With this notation in hand
+          we can now define the real numbers.</p
+        >
+        <!-- %  Reference:
+%
+% These are a slight modification of the axioms
+% found here:
+% https://en.wikipedia.org/wiki/Construction_of_the_real_numbers
+% Me and Maria and Bryan showed that the sequential
+% axiom of completeness given here is equivalent
+% to the standard one in an Archimedean system
+% (which is easy to prove)
+% -->
+        <h2>The Axioms for Real Numbers</h2>
+        <p
+          >In the following axioms, 0 and 1 are constants, the variables
+          $x,y,z,m,M$ are real numbers, and $a$ is an infinite sequence of real
+          numbers.</p
+        >
+        <div class="table-block compact">
+          <p class="table-title">The Axioms for Real Numbers</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Axiom Name</th>
+                <th style="text-align: left">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">closure of $+$</td>
+                <td style="text-align: left">$x+y$ is a real number</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">identity of $+$</td>
+                <td style="text-align: left"
+                  >$0$ is a real number and $x+0=0+x=x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">inverse for $+$</td>
+                <td style="text-align: left"
+                  >$\negative{x}$ is a real number and
+                  $x+(\negative{x})=\negative{x}+x=0$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">commutativity of $+$</td>
+                <td style="text-align: left">$x+y=y+x$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">associativity of $+$</td>
+                <td style="text-align: left">$(x+y)+z=x+(y+z)$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">closure of $\cdot$</td>
+                <td style="text-align: left">$x\cdot y$ is a real number</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">identity of $\cdot$</td>
+                <td style="text-align: left"
+                  >$1$ is a real number, $1\neq 0$, and $1\cdot x=x\cdot
+                  1=x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">inverse for $\cdot$</td>
+                <td style="text-align: left"
+                  >if $x\neq 0$ then $x^-$ is a real number and $x\cdot
+                  x^-=x^-\cdot x=1$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">commutativity of $\cdot$</td>
+                <td style="text-align: left">$x\cdot y=y\cdot x$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">associativity of $\cdot$</td>
+                <td style="text-align: left"
+                  >$(x\cdot y)\cdot z=x\cdot(y\cdot z)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">irreflexive</td>
+                <td style="text-align: left">$\neg(x&lt;x)$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">transitive</td>
+                <td style="text-align: left"
+                  >$x&lt;y \xand y&lt;z \ximplies x&lt;z$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">trichotomy</td>
+                <td style="text-align: left">$x=y$ or $x&lt;y$ or $y&lt;x$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">distributivity</td>
+                <td style="text-align: left"
+                  >$x\cdot (y+z)=x\cdot y + x\cdot z$ and $(y+z)\cdot x=y\cdot x
+                  + z\cdot x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">translation</td>
+                <td style="text-align: left">$x&lt;y \ximplies x+z&lt;y+z$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">product of positives</td>
+                <td style="text-align: left"
+                  >$0&lt;x \xand 0&lt;y \ximplies 0&lt;x\cdot y$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left"></td>
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">complete</td>
+                <td style="text-align: left"
+                  >Every bounded above set of real numbers has a least upper
+                  bound</td
+                >
+              </tr>
+            </tbody>
+          </table>
+          <!-- table-block -->
+        </div>
+        <p
+          >Any set that has addition, multiplication, and order defined in such
+          a way that satisfies these axioms will be called the
+          <em>set of real numbers</em>, $\mathbb{R}$, i.e., $\mathbb{R} = \Set{x
+          : x \text{ is a real number}}$.</p
+        >
+        <p
+          >It is also helpful to make some convenient definitions. In the
+          following definitions, let $x,y,z$ be real numbers.</p
+        >
+        <div class="table-block compact">
+          <p class="table-title">Definitions for Real Numbers</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Name</th>
+                <th style="text-align: left">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">$\leq$</td>
+                <td style="text-align: left"
+                  >$x\leq y \,\iff\, x&lt;y \xor x=y$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">quotient</td>
+                <td style="text-align: left"
+                  >if $y\neq 0$ then $\frac{x}{y}=x/y=x\cdot y^-$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">subtraction</td>
+                <td style="text-align: left">$x-y=x+(\negative{y})$</td>
+              </tr>
+              <tr>
+                <td style="text-align: left">positive</td>
+                <td style="text-align: left"
+                  >$x$ is positive $\,\iff~\, 0&lt;x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">negative</td>
+                <td style="text-align: left"
+                  >$x$ is negative $\,\iff~\, x&lt;0$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">nonnegative</td>
+                <td style="text-align: left"
+                  >$x$ is nonnegative $\,\iff~\, 0\leq x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">nonzero</td>
+                <td style="text-align: left"
+                  >$x$ is nonzero $\,\iff~\, x\neq 0$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">distance</td>
+                <td style="text-align: left"
+                  >the distance from $x$ to $y$ is $\lvert x-y\rvert $</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">increasing</td>
+                <td style="text-align: left"
+                  >$\langle a _ n\rangle _ {n=0}^\infty$ is increasing $\iff~
+                  \forall k.a _ k&lt;a _ {k+1}$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">nondecreasing</td>
+                <td style="text-align: left"
+                  >$\langle a _ n\rangle _ {n=0}^\infty$ is nondecreasing $\iff~
+                  \forall k.a _ k\leq a _ {k+1}$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">decreasing</td>
+                <td style="text-align: left"
+                  >$\langle a _ n\rangle _ {n=0}^\infty$ is decreasing $\iff~
+                  \forall k.a _ {k+1}&lt;a _ k$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">nonincreasing</td>
+                <td style="text-align: left"
+                  >$\langle a _ n\rangle _ {n=0}^\infty$ is nonincreasing*
+                  $\iff~ \forall k.a _ {k+1}\leq a _ k$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">absolute value</td>
+                <td style="text-align: left"
+                  >$\lvert x\rvert =\begin{cases} x &amp; \text{if }0\leq x \\
+                  \negative{x} &amp; \text{otherwise} \\ \end{cases}$</td
+                >
+              </tr>
+            </tbody>
+          </table>
+          <!-- table-block -->
+        </div>
+        <p
+          >We also interchangeably use the abbreviations $x\nless y$, $x\nleq
+          y$, $x\ngtr y$, and $x \ngeqslant y$ to say that $x$ is not less than
+          $y$, not less than or equal to $y$, not greater than $y$, and not
+          greater than or equal to $y$ respectively. As before, we will also use
+          the shortcut of identifying the statements $x\geq y$ with $y\leq x$,
+          and $x &gt; y$ with $y &lt; x$, without the need to justify it as a
+          separate step.</p
+        >
+        <p>As usual, we can derive useful rules from these definitions.</p>
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Axioms for Real Numbers</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Reals.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
+          </div>
+          <p
+            ><span class="m"
+              >Declare -, positive, negative, nonnegative, nonzero</span
+            >
+            and <span class="m">abs</span> to be constants.</p
+          >
+          <div class="rule-grid cols-2">
+            <div class="rule-heading">
+              <p>Axioms of Addition</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Additive identity</span><br />
+                <span class="m">$x+0=x$</span> and
+                <span class="m">$0+x=x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Additive inverse</span><br />
+                <span class="m">$x+(−x)=0$</span> and
+                <span class="m">$−x+x=0$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Commutativity of addition</span><br />
+                <span class="m">$x+y=y+x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Associativity of addition</span><br />
+                <span class="m">$(x+y)+z=x+(y+z)$</span></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Axioms of Multiplication</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Multiplicative identity</span><br />
+                <span class="m">$1 \neq 0$</span> and
+                <span class="m">$1\cdot x=x$</span> and
+                <span class="m">$x\cdot 1=x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Multiplicative inverse</span><br />
+                <span class="m">If $x\neq 0$</span> then
+                <span class="m">$x\cdot x^-=1$</span> and
+                <span class="m">$x^-\cdot x=1$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Commutativity of multiplication</span><br />
+                <span class="m">$x\cdot y=y\cdot x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Associativity of multiplication</span><br />
+                <span class="m">$(x\cdot y)\cdot z=x\cdot (y\cdot z)$</span></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Axioms of Order</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Less-than is irreflexive</span><br />
+                <span class="m">$\xnot (x &lt; x )$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Less-than is transitive</span><br />
+                <span class="m">$If x&lt;y$</span> and
+                <span class="m">$y&lt;z$</span> then
+                <span class="m">$x&lt;z$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Trichotomy</span><br />
+                <span class="m">$x=y \xor x&lt;y \xor y&lt;x$</span></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Axioms Relating $+$, $\cdot$, and $&lt;$</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Distributivity</span><br />
+                <span class="m">$x\cdot (y+z)=x\cdot y+x\cdot z$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Translation</span><br />
+                <span class="m">If $x&lt;y$</span> then
+                <span class="m">$x+z&lt;y+z$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Product of positives</span><br />
+                 <span class="m">If $0&lt;x$</span> and
+                <span class="m">$0&lt;y$</span> then
+                <span class="m">$0 &lt; x\cdot y$</span></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Definitions for Real Numbers</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">less than or equal to</span>
+                <span class="m">$x\leq y \equiv x&lt;y \xor x=y$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Subtraction</span>
+                <span class="m">$x - y = x+(-y)$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Quotient</span>
+                <span class="m">If $y\neq 0$</span> then
+                <span class="m">$\frac{x}{y} = x\cdot y^-$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Absolute value</span>
+                <span class="m">If $0\leq x$</span> then
+                <span class="m">$\left|x\right|=x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Absolute value</span>
+                <span class="m">If $x&lt;0$</span> then
+                <span class="m">$\left|x\right|=-x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Positive</span>
+                <span class="m">$x$ is positive $\equiv  0&lt;x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Negative</span>
+                <span class="m">$x$ is negative $\equiv  x&lt;0$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Nonnegative</span>
+                <span class="m">$x$ is nonnegative $\equiv  0\leq x$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Nonzero</span>
+                <span class="m">$x$ is nonzero $\equiv  x\neq 0$</span></p
+              >
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- rule-set -->
+        </div>
+        <h2>Basic Properties of Real Numbers</h2>
+        <p
+          >Armed with the axioms and definitions above, we can now prove a lot
+          of properties of real numbers.</p
+        >
+        <h1>Problems</h1>
+        <p>Prove each of the following facts about the real numbers.</p>
+        <div class="question">
+          <p
+            ><span class="thm">Product with zero</span> $x\cdot 0=0\cdot x=0$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Warm up facts</span> We know from the axioms that
+            $0\neq 1$. Now prove the following.</p
+          >
+          <div class="parts">
+            <ol>
+              <li>$\negative{0}=0$</li>
+              <li>$\negative{1}\cdot\negative{1}=1$</li>
+              <li>$0&lt;1$</li>
+              <li>$\negative{1}\neq 1$</li>
+            </ol>
+          </div>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Cancellation for addition</span> If $x+z=y+z$
+            then $x=y$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Cancellation for multiplication</span> If $z\neq
+            0$ and $z\cdot x=z\cdot y$ then $x=y$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Additive inverses are unique</span> If $z+x=0$
+            and $z+y=0$ then $x=y$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Multiplicative inverses are unique</span> If
+            $z\cdot x=1$ and $z\cdot y=1$ then $x=y$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Inverse of additive inverse</span> If $x$ is a
+            real number then $\vphantom{x}^-(\negative{x})=x$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Reciprocals are nonzero</span> If $x\neq 0$ then
+            $x^-\neq 0$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Inverse of multiplicative inverse</span> If $x$
+            is a real number and $x\neq 0$ then $(x^-)\vphantom{x}^-=x$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Alternate additive inverse</span> If $x$ is a
+            real number then $\negative{x}=\negative{1}\cdot x$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Alternate multiplicative inverse</span> If $x$ is
+            a real number and $x\neq 0$ then $(x^-)=\frac{1}{x}$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Generalized additive inverse</span> If $x,y$ are
+            any real numbers then there exists a unique real number $z$ such
+            that $x+z=y$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Generalized multiplicative inverse</span> If
+            $x,y$ are any nonzero real numbers then there exists a unique
+            nonzero real number $z$ such that $x\cdot z=y$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Signed products</span> For any real numbers
+            $x,y$, $$\negative{x}\cdot y=x\cdot
+            \negative{y}=\negative{\left(x\cdot y\right)}$$ and
+            $$\negative{x}\cdot \negative{y}=x\cdot y$$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Signed quotients</span> For any real numbers
+            $x,y,z$
+            $$\frac{\negative{x}}{y}=\frac{x}{\negative{y}}=\negative{\left(\frac{x}{y}\right)}$$
+            and $$\frac{\negative{x}}{\negative{y}}=\frac{x}{y}$$</p
+          >
+        </div>
+        <div class="question">
+          <p class="noskip"
+            ><span class="thm">Trichotomy Law</span> For all real numbers $x,y$
+            exactly one of the following is true:</p
+          >
+          <ul class="disc">
+            <li>$x&lt;y$</li>
+            <li>$x=y$</li>
+            <li>$y&lt;x$</li>
+          </ul>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Asymmetry</span> If $x&lt;y$ then $y\nless x$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Generalized translation</span> If $w&lt;x$ and
+            $y&lt;z$ then $w+y&lt;x+z$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Product of signs</span> For all nonzero real
+            numbers $x,y$</p
+          >
+          <div class="parts">
+            <ol>
+              <li>$0&lt;x\xand 0&lt;y \ximplies 0&lt;x\cdot y$</li>
+              <li>$x&lt;0\xand y&lt;0 \ximplies 0&lt;x\cdot y$</li>
+              <li>$0&lt;x\xand y&lt;0 \ximplies x\cdot y&lt;0$</li>
+              <li>$x&lt;0\xand 0&lt;y \ximplies x\cdot y&lt;0$</li>
+            </ol>
+          </div>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Inverses are opposite</span> $
+            (\negative{x}&lt;0\iff 0&lt;x)\xand (x&lt;0\iff
+            0&lt;\negative{x})$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Negating an inequality</span> $x&lt;y$ if and
+            only if $\negative{y}&lt;\negative{x}$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Scaling by a positive</span> If $0&lt;z$ and
+            $x&lt;y$ then $z\cdot x &lt; z\cdot y$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Scaling by a negative</span> If $z&lt;0$ and
+            $x&lt;y$ then $z\cdot y &lt; z\cdot x$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Properties of $\leq$</span> For all real numbers
+            $x, y, z,$</p
+          >
+          <div class="parts">
+            <ol>
+              <li><span class="thm">connexive</span> $x\leq y\xor y\leq x$</li>
+              <li
+                ><span class="thm">antisymmetric</span> $x\leq y \xand y\leq x
+                \implies x=y$</li
+              >
+              <li
+                ><span class="thm">transitive</span> $x\leq y\xand y\leq
+                z\implies x\leq z$</li
+              >
+              <li
+                ><span class="thm">negating</span> If $x\leq y$ then
+                $\negative{y}\leq\negative{x}$.</li
+              >
+              <li
+                ><span class="thm">multiplying by a positive</span> If $0\leq z$
+                and $x&lt;y$ then $z\cdot x &lt; z\cdot y$.</li
+              >
+              <li
+                ><span class="thm">multiplying by a negative</span> If $z&lt;0$
+                and $x&lt;y$ then $z\cdot y &lt; z\cdot x$.</li
+              >
+            </ol>
+          </div>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Squares are nonnegative</span> If $x$ is a real
+            number then $0\leq x^2$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Zero divisors</span> If $x\cdot y=0$ then $x=0$
+            or $y=0$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm">Difference of two squares</span> Let $x,y$ be
+            real numbers. Then</p
+          >
+        </div>
+        <p>$$x^2-y^2=(x+y)\cdot(x-y)$$</p>
+        <div class="">
+          <h2>Natural Numbers</h2>
+          <p
+            >Every natural number can be considered to be a real number. To see
+            this, define the successor $\sigma(x)$ of a real number $x$ to be
+            the real number $x+1$ and recursively define the sequence $\langle N
+            _ k\rangle _ {k=0}^\infty$ by $$N _ 0=0 \xand N _ {k+1}=\sigma(N _
+            k)$$ It can be shown that the terms of $N$, $\sigma$, $0$, $+$,
+            $\cdot$, and $\leq$ satisfy the Peano Axioms (see problem 10.32
+            below). Therefore, anything we can prove about the natural numbers
+            is true about the real numbers of the form $N _ k$ for some natural
+            number $k$. This prompts the following new (but equivalent)
+            definition of the natural numbers as a collection of certain real
+            numbers.</p
+          >
+          <div class="Def">
+            <p
+              ><strong class="qu">Definition <span class="thm"></span>.</strong>
+              A real number $n$ is said to be a <em>natural number</em> if and
+              only if $n=N _ k$ for some (Peano) natural number $k$.</p
+            >
+          </div>
+          <p
+            >Alternatively we can define the natural numbers as a subset of the
+            set of real numbers</p
+          >
+          <p
+            >Notice that the natural number we called $1$ is $\sigma(N _
+            0)=0+1=1$ in the reals. So both $0$ and $1$ in the reals correspond
+            to what we refer to as $0$ and $1$ in natural numbers. Similarly, we
+            can refer to the rest of the natural numbers in the reals as we did
+            before, namely $N _ 0=0$, $\sigma(0)=1$, $\sigma(1)=2$,
+            $\sigma(2)=3$, $\sigma(3)=4$, and so on.</p
+          >
+          <p
+            >But there are many more real numbers than just the natural numbers.
+            For example, there is no natural number that when added to 2 gives
+            1. But there is such a real number. This allows us to define the
+            integers.</p
+          >
+          <div class="Def">
+            <p
+              ><strong class="qu">Definition <span class="thm"></span>.</strong>
+              A real number is an <em>integer</em> if and only if it is either
+              (a) a natural number or (b) the additive inverse of a natural
+              number.</p
+            >
+          </div>
+          <p
+            >These are the ordinary integers that we have all come to know and
+            love. But there are many more real numbers besides the integers. For
+            example, there is no integer that you can multiply by $5$ to get
+            $3$. But there is such a real number. This allows us to define the
+            rational numbers.</p
+          >
+          <div class="Def">
+            <p
+              ><strong class="qu">Definition <span class="thm"></span>.</strong>
+              A real number is <em>rational</em> if and only if some integer
+              multiple of it is an integer, i.e., a real number $r$ is rational
+              if and only if there is some nonzero integer $m$ such that $r\cdot
+              m$ is an integer.</p
+            >
+          </div>
+          <p
+            >Indeed, in this definition if we define $k=r\cdot m$ then we can
+            show that $r=\frac{k}{m}$, i.e., the quotient of two integers. Thus,
+            once again, the rational numbers are the familiar quotients of
+            integers we all know and love.</p
+          >
+          <h2>Problems</h2>
+          <p>Prove each of the following facts about the real numbers.</p>
+          <div class="question">
+            <p
+              ><span class="thm">Unnatural integers</span> There exist integers
+              which are not natural numbers.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Additive inverses in the integers</span> For
+              every integer $m$ there exists a unique integer $n$ such that
+              $m+n=n+m=0$.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Closure in the integers</span> For any integers
+              $m,n$ both $m+n$, $m-n$, and $m\cdot n$ are integers.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Closure in the rationals</span> For any
+              rational numbers $m,n$, both $m+n$ and $m\cdot n$ are also
+              rational number. Furthermore, if $n\neq 0$ then $\frac{m}{n}$ is
+              also a rational number.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Every natural is real</span> The terms of the
+              sequence $N$, $0$, $+$, $\cdot$, $&lt;$ and $\sigma$ together
+              satisfy the Peano Axioms.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Every natural is an integer</span> Every
+              natural number is also an integer.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Every integer is rational</span> Every integer
+              is also a rational number.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Alternate definition of rational</span> A real
+              number $r$ is rational if and only if for some integer $m$ and
+              some nonzero integer $n$, $$r=\frac{m}{n}$$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Equivalent fractions</span> If $k,m,n$ are
+              nonzero integers, the $$\frac{k\cdot m}{k\cdot n}=\frac{m}{n}$$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">No gaps</span> There is a rational number
+              strictly between any two distinct rational numbers, i.e., if $s,t$
+              are rational number with $s&lt;t$ then there exists a rational
+              number $r$ such that $$s&lt;r&lt;t$$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Completeness for lower bounds</span> Every
+              infinite sequence of real numbers that has a lower bound has a
+              greatest lower bound.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Existence of floor and ceiling</span> For every
+              real number $x$ there are unique integers $m$ and $M$ such that
+              $m\leq x \leq M$.</p
+            >
+          </div>
+          <h2>Extending Definitions</h2>
+          <p
+            >Having developed the real numbers, we can extend many of the
+            definitions about natural numbers to integers, and many of the
+            definitions about sequences to apply to reals as mentioned in
+            Chapter \ref{sec:seq}. In particular, the definitions of summation
+            and powers extend to sums and products of integers, rational and
+            real numbers. We can also extend the definition of powers to include
+            negative integer exponents.</p
+          >
+          <div class="Def">
+            <p
+              ><strong class="qu"
+                >Definition <span class="thm"></span> (negative integer
+                exponents).</strong
+              >
+              If $z$ is a real number and $n$ is a natural number then
+              $$z^{-n}=(z^n)^-$$</p
+            >
+          </div>
+          <p
+            >Many of the definitions for natural numbers can be extended to
+            include all integers, along with adding some new definitions that
+            apply to integers only. In the following, all single letter
+            variables have type integer unless otherwise specified.</p
+          >
+          <div class="table-block">
+            <p class="table-title">Extended Definitions for Integers</p>
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align: left">Name</th>
+                  <th style="text-align: left">Definition</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: left">Division Algorithm Theorem</td>
+                  <td style="text-align: left"
+                    >$\forall a.\forall b&gt;0,\exists!q,\exists! r,a=qb+r\xand
+                    0\leq r&lt;b$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Quotient</td>
+                  <td style="text-align: left"
+                    >$\forall a.\forall b\neq0,\forall q.\forall
+                    r.a=qb+r\xand0\leq r&lt;b\iff q=\left(a \xquo b\right)$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Remainder</td>
+                  <td style="text-align: left"
+                    >$\forall a.\forall b\neq0,\forall q.\forall
+                    r.a=qb+r\xand0\leq r&lt;b\iff r=\left(a \xmod b\right)$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Divides</td>
+                  <td style="text-align: left"
+                    >$\forall a.b, a\mid b\iff\exists q.b=a\cdot q$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Divisor (or factor)</td>
+                  <td style="text-align: left"
+                    >$a$ is a divisor (or factor) of $b\iff a\mid b$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Even</td>
+                  <td style="text-align: left"
+                    >$a\text{ is even}\iff 2\mid a$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Odd</td>
+                  <td style="text-align: left"
+                    >$a\text{ is odd}\iff a \text{ is not even}$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Prime</td>
+                  <td style="text-align: left"
+                    >$p$ is prime $\iff \lvert p\rvert \gt 1 \xand \forall
+                    a.a\mid p \ximplies \lvert a\rvert = 1 \xor \lvert a\rvert =
+                    \lvert p\rvert$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Composite</td>
+                  <td style="text-align: left"
+                    >$n$ is composite $\iff\exists a. a\mid
+                    n\xand1&lt;a&lt;\lvert n\rvert$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Greatest Common Divisor</td>
+                  <td style="text-align: left"
+                    >$d=\xgcd\left(a,b\right)\iff$ <br />
+                    $0&lt;d \xand d\mid a\xand d\mid b\xand\forall c&gt;,c\mid
+                    a\xand c\mid b\ximplies c\leq d$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Least Common Multiple</td>
+                  <td style="text-align: left"
+                    >$d=\xlcm\left(a,b\right)\iff$ <br />
+                    $d&gt;0\xand a\mid d\xand b\mid d\xand\forall c&gt;0,a\mid
+                    c\xand b\mid c\ximplies d\leq c$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">GCD (alt version)</td>
+                  <td style="text-align: left"
+                    >$d=\xgcd\left(a,b\right)\iff$ <br />
+                    $d&gt;0\xand d\mid a\xand d\mid b\xand\forall c&gt;0,c\mid
+                    a\xand c\mid b\ximplies c\mid d$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">LCM (alt version)</td>
+                  <td style="text-align: left"
+                    >$d=\xlcm\left(a,b\right)\iff$ <br />
+                    $d&gt;0\xand a\mid d\xand b\mid d\xand\forall c&gt;0,a\mid
+                    c\xand b\mid c\ximplies d\mid c$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Relatively Prime</td>
+                  <td style="text-align: left"
+                    >$a,b$ are relatively prime
+                    $\iff\xgcd\left(a,b\right)=1$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">Congruent mod $m$</td>
+                  <td style="text-align: left"
+                    >$\forall m.\forall a.b,a\xcong{m} b\iff
+                    m\mid\left(a-b\right)$</td
+                  >
+                </tr>
+              </tbody>
+            </table>
+            <!-- table-block -->
+          </div>
+          <p
+            ><em>Remarks:</em> It is also commonplace to require that prime
+            numbers and composite numbers be positive.</p
+          >
+          <h2>Problems</h2>
+          <div class="question">
+            <p
+              ><span class="thm">ninety one</span> The natural number $91$ is
+              not prime.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">perfect squares mod $8$</span> Any integer that
+              is a perfect square has a remainder of $0$, $1$, or $4$ when
+              divided by $8$. Note that an integer is a perfect square if and
+              only if it is equal to the square of some integer.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">same gcd</span> If $a$ and $b$ are integers
+              then $\gcd(a,b)=\gcd(a,a+b)$.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">consecutives are relatively prime</span> The
+              greatest common divisor of two consecutive integers is $1$.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">binary fun</span> Define a sequence of natural
+              numbers by $a _ 0=1$ and for all natural numbers $n$, $$a _
+              {n+1}=2\cdot a _ n+1$$ Then for all natural numbers $n$, we have
+              $a _ n=2^{n+1}-1$.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">somewhat odd</span> Let $a$ be a sequence of
+              natural numbers such that $a _ 0=1$, $a _ 1=3$, and for all
+              natural numbers $n$, $$a _ {n+2}=2\cdot a _ {n+1}-a _ n$$ Then for
+              all natural numbers $n$, $$a _ n=2\cdot n+1$$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">interesting multiples of $25$</span> For all
+              $n\in\bbN^+$, the number $6^n-5\cdot n-1$ is divisible by $25$.</p
+            >
+          </div>
+          <h2>Infinite Series and Decimal Representation</h2>
+          <p
+            >As we have seen above, natural numbers can be expressed in the form
+            $0,1,2,3,\ldots$. Similiarly, integers can be expressed as
+            $\ldots,\negative{3},\negative{2},\negative{1},0,1,2,3,\ldots$. As
+            seen above, the rational numbers can all be represented as quotients
+            of integers. But what about arbitrary real numbers?</p
+          >
+          <p
+            >For these we have their <em>decimal</em> or
+            <em>base ten</em> representations. These can be defined in terms as
+            a special kind of <em>infinite series</em>.</p
+          >
+          <div class="definition">
+            <p
+              >Let $\langle a\rangle _ {k=0}^\infty$ be a sequence of
+              nonnegative real numbers such that the sequence of
+              <em>partial sums</em> $$\left\langle\sum _ {k=0}^n a _ k
+              \right\rangle _ {n=0}^\infty =a _ 0,\, a _ 0+a _ 1,,a _ 0+a _ 1+a
+              _ 2,,\ldots$$ is bounded above. For such sequences we define the
+              <em>infinite series</em> $$\sum _ {n=0}^\infty a _ k$$ to be the
+              least upper bound of the sequence of partial sums.</p
+            >
+          </div>
+          <p
+            >This allows us to define the decimal representation of any real
+            number.</p
+          >
+          <div class="definition">
+            <p
+              >Let $x$ be a nonnegative real number. A <em>digit</em> is one of
+              the numbers $0,1,2,\ldots,9$. If $(d _ {n-k}) _ {k=0}^\infty$ is a
+              sequence of digits such that $$x=\Sigma _ {k=0}^\infty d _
+              {n-k}\cdot 10^{n-k}$$ then the expression $$d _ nd _ {n-1}\cdots d
+              _ 0.d _ {\negative{1}}d _ {\negative{2}}d _ {\negative{3}}\cdots$$
+              is called a <em>decimal representation</em> of $x$. In this
+              situation a decimal representation of $\negative{x}$ is just
+              $$\negative{d _ n}d _ {n-1}\cdots d _ 0.d _ {\negative{1}}d _
+              {\negative{2}}d _ {\negative{3}}\cdots$$</p
+            >
+          </div>
+          <h1>Problems</h1>
+          <p>Prove the following theorems about the real numbers.</p>
+          <div class="question">
+            <p
+              ><span class="thm">Finite Geometric Series</span> For every
+              natural number $n$ and every real number $r$ other than $1$,
+              $$\sum _ {k=0}^n r^k = \frac{1-r^{n+1}}{1-r}$$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Geometric Series</span> For every every real
+              number $r$, if $\negative{1}&lt;r&lt;1$ then $$\sum _ {k=0}^\infty
+              r^k = \frac{1}{1-r}$$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">One third</span> The decimal representation of
+              $\frac{1}{3}$ is $0.333333…$, i.e., $d _ 0=0$ and $d _ k=3$ for
+              all negative integers $k$.</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm">Decimal representation of rationals</span> We
+              say a decimal representation $$d _ nd _ {n-1}\cdots d _ 0.d _
+              {\negative{1}}d _ {\negative{2}}d _ {\negative{3}}\cdots$$ (or its
+              additive inverse) is <em>eventually repeating</em> if there exists
+              positive integers $k$ and $p$ such that for all $j$ greater than
+              $k$, $d _ {\negative{j}}=d _ {\negative{(j+p)}}$. The decimal
+              representation of a real number $x$ is eventually repeating if and
+              only if $x$ is a rational number.</p
+            >
+          </div>
+          <h2>Famous Sets of Numbers</h2>
+          <p
+            >We can now define constants to represent sets containing all
+            numbers of a certain type.</p
+          >
+          <div class="table-block">
+            <p class="table-title">Famous Sets of Numbers</p>
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align: left">Name</th>
+                  <th style="text-align: left">Notation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: left">The Natural Numbers</td>
+                  <td style="text-align: left"
+                    >$\bbN =\Set{ 0,1,2,3,4,\ldots } $</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">The Integers</td>
+                  <td style="text-align: left"
+                    >$\bbZ =\Set{ \ldots,-3,-2,-1,0,1,2,3,\ldots } $</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">The Rational Numbers</td>
+                  <td style="text-align: left"
+                    >$\bbQ = \Set{ \frac{a}{b}:a,b\in\bbZ\xand b\neq 0 } $</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">The Real Numbers</td>
+                  <td style="text-align: left"
+                    >$\bbR = \Set{ x : x\text{ can be expressed as a decimal
+                    number} } $</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">The Complex Numbers</td>
+                  <td style="text-align: left"
+                    >$\bbC = \Set{ x+yi : x,y\in\bbR } $ where $i^{2}=-1$</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">The positive real numbers</td>
+                  <td style="text-align: left"
+                    >$\bbR^{+}=\Set{ x : x\in\bbR\xand x&gt;0 } $</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left">The negative real numbers</td>
+                  <td style="text-align: left"
+                    >$\bbR^{-}=\Set{ x : x\in\bbR\xand x&lt;0 } $</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left"
+                    >The positive reals in a set $A$</td
+                  >
+                  <td style="text-align: left">$A^{+}=A\cap\bbR^{+}$</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left"
+                    >The negative reals in a set $A$</td
+                  >
+                  <td style="text-align: left">$A^{-}=A\cap\bbR^{-}$</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left"
+                    >The first $n$ positive integers</td
+                  >
+                  <td style="text-align: left"
+                    >$\mathbb{I} _ {n}=\Set{ 1,2,\ldots,n } $</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align: left"
+                    >The first $n+1$ natural numbers</td
+                  >
+                  <td style="text-align: left"
+                    >$\mathbb{O} _ {n}=\Set{ 0,1,2,\ldots,n } $</td
+                  >
+                </tr>
+              </tbody>
+            </table>
+            <!-- table-block -->
+          </div>
+          <p
+            ><em>Remarks</em>: The sets $\bbN$, $\bbZ$, $\bbQ$, $\bbR$, and
+            $\bbC$ are all closed under addition and multiplication, and all
+            except $\bbN$ are closed under subtraction (i.e., there is an
+            additive inverse for every number). Thus, for example, if you know
+            that $a,b\in\bbC$ you can say that $a\cdot b\in\bbC$ by closure of
+            multiplication. All of the nonzero numbers in $\bbQ$, $\bbR$, and
+            $\bbC$ are <em>invertible</em>, i.e., they have a reciprocal.</p
+          >
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

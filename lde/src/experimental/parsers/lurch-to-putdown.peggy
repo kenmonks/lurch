@@ -473,6 +473,7 @@ Declare = 'declare'i __ a:DeclareSeq { return `declare> :[${a}]` }
 // ForSome declaration (always a claim)
 // We also allow the special shorthand `for some x in A` since it is so common.
 // upgrade some> to a shorthand to allow environment bodies
+// TODO: upgrade this to support `for some x in A, y in B`
 ForSome = 'for'i __ 'some'i __ a:(Symbol)|1..,comma| __ 'in'i __ b:Expression 
             { return `some> [${a.join(' ')},{ ${a.map(x=>`(∈ ${x} ${b})`).join(' ')} }]` } /
           'for'i __ 'some'i __ a:SymbolSeq 
