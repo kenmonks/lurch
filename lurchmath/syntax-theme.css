@@ -121,7 +121,6 @@
   --nested-pad: 0.25rem;
   /* paragraph top margins inside of unindented shells */
   --line-height: 1.2 /* 1.15; */
-  /* Try this yellow for hover background:  */
 }
 
 /***********************************************************************/
@@ -153,6 +152,16 @@ body {
 body {
   max-width: 51rem;
   padding: 4rem 6rem 6rem 6rem;
+}
+
+/* toggle the borders for narrow views and presentations on a projector */
+body.presentation-mode {
+  box-sizing: border-box;
+  max-width: 51rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  padding-block: 4rem 6rem;
+  /* font-size: 1.1rem; */
 }
 
 /* Paragraphs and Items */

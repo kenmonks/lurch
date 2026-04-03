@@ -285,7 +285,15 @@ window.Lurch = {
                               editor.getBody().classList.toggle('shell-labels') 
                               editor.focus()
                             }
-                        })                      
+                        })
+                        editor.ui.registry.addMenuItem('toggleMargins', {
+                            text: 'Toggle page margins',
+                            tooltip: 'Display or omit the side margins of the document.',
+                            onAction: () => { 
+                              editor.getBody().classList.toggle('presentation-mode') 
+                              editor.focus()
+                            }
+                        })
                         editor.ui.registry.addMenuItem('enterFullscreen', {
                           text: 'Enter fullscreen',
                           onAction: () => editor.execCommand('mceFullScreen')
@@ -294,7 +302,7 @@ window.Lurch = {
                           text: 'Exit fullscreen',
                           onAction: () => editor.execCommand('mceFullScreen')
                         })
-                        editor.lurchBaseMenu = () => 'shellLabels'
+                        editor.lurchBaseMenu = () => 'shellLabels toggleMargins'
                     }
 
                     // Save the options object for any part of the app to reference:
