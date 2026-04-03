@@ -95,11 +95,19 @@
         >
         <ul class="square">
           <li
-            ><strong>Added Quantification Type support</strong> - Lurch now
-            supports the notation $\forall x\in A.P(x)$ and $\exists x\in
-            A.P(x)$, and expands them automatically under the hood to $\forall
-            x.x\in A \implies P(x)$ and $\exists x.x\in A \xand P(x)$,
-            respectively.</li
+            ><strong>Toggle editor margins</strong> - there is now a context
+            menu item to toggle the document side margins on and off. This is
+            useful for opening both a document and its context side-by-side (see
+            <em>Open Context in new document</em> below), especially in
+            presentations on a classroom projector. It is also useful if some
+            math expressions in your proof are wider than the default content
+            width.</li
+          >
+          <li
+            ><strong>Quantification Type support</strong> - Lurch now supports
+            the notation $\forall x\in A.P(x)$ and $\exists x\in A.P(x)$, and
+            expands them automatically under the hood to $\forall x.x\in A
+            \implies P(x)$ and $\exists x.x\in A \xand P(x)$, respectively.</li
           >
           <li
             ><strong>NoMatrixOps flavor of the Algebra Rule</strong> - In
@@ -108,8 +116,8 @@
             algebra rule as <code>AlgebraRule(NoMatrixOps)</code>.</li
           >
           <li
-            ><strong>Added Matrix support for the Algebra Rule</strong> - you
-            can now justify any identity that can be validated by
+            ><strong>Matrix support for the Algebra Rule</strong> - you can now
+            justify any identity that can be validated by
             <a href="http://algebrite.org">Algebrite</a>, including identities
             involving matrices. The input for the expression must be valid
             Algebrite syntax (with the exception that <code>=</code> must be
