@@ -124,7 +124,7 @@ export const install = editor => {
                 // update the progress meter %
                 const progress = Math.round(message.get('complete') || 0)
                 const meter = editor.progressDialog?.querySelector('#progress-text')
-                const gap = (progress<10)?'  ;':' '
+                const gap = (progress<10)?'  ':' '
                 if (meter)
                   meter.textContent = `Validating...${gap}${progress}%`
             } else if ( message.is( 'done' ) ) {
