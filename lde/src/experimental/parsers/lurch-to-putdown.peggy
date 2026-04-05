@@ -838,7 +838,7 @@ Algebraic = Choose / Sum / Product / IndexedUnion / IndexedIntersect
     // If we made it to here, we are at the bottom of the food chain for
     // compound expressions, so it's ok to return a symbol or other atomic at
     // this point.
-    Exp = a:Atomic _'^'_ b:(Atomic / '-') { return lispBinary('^',a,b) } 
+    Exp = a:Atomic _'^'_ b:(Atomic / '-' / '+') { return lispBinary('^',a,b) } 
 
     // A generic high precedence infix operator
     Star = a:StarArgs|2..,(_'★'_/_'star'_x)  | { return lispSeq('★',a) } /

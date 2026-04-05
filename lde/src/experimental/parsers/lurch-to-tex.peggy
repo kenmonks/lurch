@@ -1047,7 +1047,7 @@ Prefix =  // LDE EFA's first
     // compound expressions, so it's ok to return a symbol or other atomic at
     // this point. Exp also passes Prefix, Inverse and Factorial up to Product,
     // Denom, and Negated.
-    Exp = a:Atomic _'^'_ b:(Atomic / '-')
+    Exp = a:Atomic _'^'_ b:(Atomic / '-' / '+' )
             { return `{${a}}^{${nopar(b)}}` }
 
     // An arbitrary high precedence infix operator
