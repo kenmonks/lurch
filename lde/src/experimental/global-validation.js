@@ -1356,16 +1356,12 @@ const processArithmetic = doc => {
   // check options
   if (!LurchOptions.processArithmetic) return
   
-  // check if the ArithmeticRule(x) is around and use the first one found
-  // even if there are multiple such rules
-  // TODO: eventually upgrade to allow more than one per document
-  const rule=doc.find(
-    x=>(x.isA('Rule') || x.isA('Inst')) && x.numChildren()==1 && 
-       x.child(0) instanceof Application &&
-       x.child(0).numChildren()==2 &&
-       x.child(0,0).matches('Arithmetic') &&
-       x.child(0,1).matches('ℕ|ℤ|ℚ'),
-    x=>!(x.isA('Rule') || x.isA('Inst') || x===doc))
+  // check if the ArithmeticRule(x) is around and use the last one found even if
+  // there are multiple such rules.  The reason to choose the last one is that
+  // the typical use case is that you have a context, with say, Arithmetic(NN)
+  // in it and want to add Arithmetic(QQ) to it without having to delete the
+  // weaker previous one.
+  const rule = doc.index.get('Arithmetic rules').last()
   // if there is no Arithmetic Rule loaded we are done
   if (!rule) return
 

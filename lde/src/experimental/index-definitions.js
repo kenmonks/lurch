@@ -121,7 +121,7 @@ export const addLurchIndices = (indexer, phase) => {
       )
     )
 
-    // // define( 'Decs', x => x instanceof Declaration && !x.isA('Declare') )
+    // define( 'Decs', x => x instanceof Declaration && !x.isA('Declare') )
 
     define( 'Decs with body', x => 
       x instanceof Declaration && !x.isA('Declare') && x.body() )
@@ -137,6 +137,16 @@ export const addLurchIndices = (indexer, phase) => {
 
     define( 'Formulas', x =>
        (x.isA('Rule') || x.isA('Part')) && !(x.finished)
+    )
+
+    // Find all of the Arithmetic rules so that during interpretation we can
+    // delete all but the most general one (ℕ<ℤ<ℚ).
+    define( 'Arithmetic rules', x=> 
+      (x.isA('Rule') || x.isA('Inst')) && x.numChildren()==1 && 
+       x.child(0) instanceof Application &&
+       x.child(0).numChildren()==2 &&
+       x.child(0,0).matches('Arithmetic') &&
+       x.child(0,1).matches('ℕ|ℤ|ℚ')
     )
 
   } else {
