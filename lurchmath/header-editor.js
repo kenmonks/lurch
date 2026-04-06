@@ -328,6 +328,9 @@ export const install = editor => {
             // Define what happens when the dialog is closed, then show it
             dialog.show().then( userHitOK => {
                 if ( !userHitOK ) return
+                // if there is an exiting context shown, remove it because it's out of date
+                editor.getBody().querySelector('#context')?.remove()
+
                 // Ensure the document has a header, even if it's empty.
                 if ( !header ) {
                     setHeader( editor, '' )
