@@ -1531,14 +1531,14 @@ body.course {
 .course .problems .question > :last-child  { margin-bottom: 0; }
 
 /* theorem-question label: first span in first paragraph */
-.course #content-block.problems .question .thm {
+.course #content-block.problems .question .thm-label {
   margin-right: 1em;
   font-style: italic;
 }
-.course #content-block.problems .question .thm::after {
+.course #content-block.problems .question .thm-label::after {
   content: ')'
 }
-.course #content-block.problems .question .thm::before {
+.course #content-block.problems .question .thm-label::before {
   content: '('
 }
 

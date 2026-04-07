@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'https://lurch.plus/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -16,13 +16,11 @@
 <p style="text-align: left;">&nbsp;</p>
 <p style="text-align: left;">(entered as&nbsp;<code>a=b=c=d</code>).&nbsp; It automates the application of the substitution and reflexive rules of equality, the derived properties of symmetry and transitivity, and checks each pair in the chain for both direct equality, and equality via a single substitution.&nbsp; This topic includes everything from the Number Theory topic.</p>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
-<p><strong>Equations Rule</strong>&nbsp; &nbsp;We allow the <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;\&quot;equations rule\&quot;&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">equations rule</span></span></span></span></span>.</p>
+<p><strong>Equations Rule</strong>&nbsp; &nbsp;We allow the <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;\&quot;equations rule\&quot;&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">equations rule</span></span></span></span></span> to justify substitution and the symmetry and transitivity of equality in chains of equations and inequalities.</p>
 </div>
 <hr>
 <p>We can also add some convenient rules to avoid the need for explicitly citing 'by substitution' in common situations.</p>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
 <p><strong>Substitution for is:</strong> <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;If x=y, x is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">If </span><span class="ML__mathit">x</span><span class="ML__cmr">=</span><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span style="color: #000000;"><span class="ML__text"> and </span></span><span class="ML__mathit">x</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span> then <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;y is P&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__mathit" style="margin-right: 0.04em;">y</span><span class="ML__text"> is </span><span class="ML__mathit" style="margin-right: 0.14em;">P</span></span></span></span></span>.</p>
-</div>
-<p>&nbsp;</p>
-<h1>&nbsp;</h1></div>
+</div></div>
         
