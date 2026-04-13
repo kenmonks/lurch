@@ -118,11 +118,28 @@ body:not(.fullscreen) #editor-container {
   text-decoration: none;
 }
 
-/* The text area for the advanced mode expression editor  */
+/* We need to tell the outermost dialog wrapper to allow the textarea to be
+resized manually, but only want to target it for the dialog that contains the
+advancedTextArea */
+.tox .tox-dialog:has(.advancedTextArea) {
+  width: auto;
+  max-width: 95vw;
+  min-width: 480px;
+}
+/* The text area for the advanced mode expression editor should be resizable. */
 .tox .tox-textarea-wrap .tox-textarea.advancedTextArea:focus,
 .tox .tox-textarea-wrap .tox-textarea.advancedTextArea {
-  resize: auto;
-  font-family: "Roboto Mono"
+  resize: both;
+  font-family: "Roboto Mono", monospace;
+  overflow: auto;
+  box-sizing: border-box;
+}
+/* we also want the preview div below the text area to scroll horizontally when necessary */
+/* The preview itself should scroll horizontally instead of forcing the dialog wider. */
+.tox .tox-dialog:has(.advancedTextArea) #math-latex {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 /* The text area for the advanced mode expression editor with bad syntax */

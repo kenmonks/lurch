@@ -507,7 +507,9 @@ body.shell-style-minimal
 body.shell-style-minimal #context [data-metadata_type*="rule"] .lurch-atom,
 body.shell-style-boxed 
   [data-metadata_type*="rule"]:not(.atom-is-selected, :hover) 
-  span.lurch-atom:not([data-metadata_type*="premise"] span.lurch-atom) {
+  span.lurch-atom:not(
+    [data-metadata_type*="premise"] span.lurch-atom,
+    [data-metadata_type*="subproof"] span.lurch-atom ) {
   background-color: var(--rule-color);
   border-color: var(--rule-color);
 }

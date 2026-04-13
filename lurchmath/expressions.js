@@ -627,51 +627,130 @@ export class Expression extends Atom {
         const lurchInputElement = dialog.querySelector( 'textarea' )
         if ( lurchInputElement ) {
             lurchInputElement.classList.add( 'advancedTextArea' )
-            // set the initial height based on the number of current lines
-            // of text in the initial value, plus wordwrap at 45 chars
-            const computeHeight = s => 10 + 24 * Math.max( 1,
-                s.split( '\n' ).reduce( ( total, line ) => 
-                    total + Math.max( 1, Math.ceil( line.length / 45 ) ), 0 ) )
-            lurchInputElement.style.height = computeHeight( lurchNotation ) + 'px'
-            // it should be valid to start since it was saved in the first place
-            lurchInputElement.classList.remove('badsyntax')
-
+            lurchInputElement.classList.remove( 'badsyntax' )
+        
+            // Ensure the textarea starts as a true one-line control when content is short.
+            lurchInputElement.rows = 1
+        
+            // Measure the rendered width of one specific line of text using the same
+            // font properties as the textarea.
+            const measureLineWidth = line => {
+                const probe = document.createElement( 'div' )
+                const style = getComputedStyle( lurchInputElement )
+        
+                probe.textContent = line || 'M'
+                probe.style.position = 'absolute'
+                probe.style.visibility = 'hidden'
+                probe.style.whiteSpace = 'pre'
+                probe.style.font = style.font
+                probe.style.letterSpacing = style.letterSpacing
+                probe.style.textTransform = style.textTransform
+                probe.style.padding = '0'
+                probe.style.border = '0'
+                probe.style.margin = '0'
+                probe.style.boxSizing = 'content-box'
+        
+                document.body.appendChild( probe )
+                const width = probe.getBoundingClientRect().width
+                probe.remove()
+                return width
+            }
+            // fetch the longest line in the input text
+            const longestLine = text =>
+                text.split( '\n' ).reduce(
+                    ( longest, line ) => line.length > longest.length ? line : longest,
+                    ''
+                )
+            // Compute the maximum width available to the textarea inside the dialog.
+            const maxTextareaWidthPx = () => {
+                const toxDialog = lurchInputElement.closest( '.tox-dialog' )
+                const dialogMaxPx = toxDialog
+                    ? parseFloat( getComputedStyle( toxDialog ).maxWidth ) || window.innerWidth * 0.95
+                    : window.innerWidth * 0.95
+        
+                // Allow for dialog/body/wrapper padding and borders.  I looked this up in dev tools
+                const chromePx = 34
+                return dialogMaxPx - chromePx
+            }
+        
+            // the default minimum test area width
+            const minTextareaWidthPx = 446
+        
+            // Width only ever grows automatically.  It never shrinks.
+            const autoSizeWidth = () => {
+                const text = lurchInputElement.value
+                const longest = longestLine( text )
+                const desiredWidthPx = Math.max(
+                    minTextareaWidthPx,
+                    Math.min( measureLineWidth( longest ) + 16, maxTextareaWidthPx() )
+                )
+        
+                const currentWidthPx = lurchInputElement.getBoundingClientRect().width
+                if ( desiredWidthPx > currentWidthPx + 1 ) {
+                    lurchInputElement.style.width = `${desiredWidthPx}px`
+                }
+            }
+        
+            // Height always recomputes from actual wrapped content at the current width.
+            const autoSizeHeight = () => {
+                lurchInputElement.style.height = 'auto'
+                const maxHeightPx = window.innerHeight - 140
+                lurchInputElement.style.height =
+                    `${Math.min( maxHeightPx, lurchInputElement.scrollHeight )}px`
+            }
+        
+            const autoSize = () => {
+                autoSizeWidth()
+                autoSizeHeight()
+            }
+        
+            // Apply initial size based on the stored notation.
+            autoSize()
+        
             // give it focus, but if it ever loses focus, close the dialog if they won't 
             // lose changes, otherwise show instructions how to close the dialog
             lurchInputElement.focus()
             const helpFooter = dialog.querySelector( '#shortcut-footer' )
             lurchInputElement.addEventListener( 'blur', () => {
-              if (lurchInputElement.value.trim() === lurchNotation.trim()) 
+              if ( lurchInputElement.value.trim() === lurchNotation.trim() ) 
                 setTimeout( () => dialog.close() )
               else {
-                // display the footer
-                helpFooter?.classList.add('visible')
+                helpFooter?.classList.add( 'visible' )
                 lurchInputElement.focus()
               }
             } )
-
-            lurchInputElement.addEventListener('input', () =>
-                lurchInputElement.style.height = 
-                    computeHeight (lurchInputElement.value ) + 'px' )
-
+        
+            // While typing/deleting:
+            //  - width may grow if needed to prevent wrapping
+            //  - width never shrinks automatically
+            //  - height always recomputes
+            lurchInputElement.addEventListener( 'input', autoSize )
+        
+            // Recompute if the browser window changes size while the dialog is open.
+            const onWindowResize = () => autoSize()
+            window.addEventListener( 'resize', onWindowResize )
+        
             // listen for the Enter and Shift+Enter keys        
             lurchInputElement.addEventListener( 'keydown', event => {
                 if ( event.key == 'Enter' ) {
                     if ( event.shiftKey ) {
                         // allow Shift+Enter to add a line
-                    } else if ( !!(convertToLatex() && convertToLC()) ) {
-                        // Plain enter submits if the input is valid
+                    } else if ( !!( convertToLatex() && convertToLC() ) ) {
                         dialog.querySelector( 'button[title="OK"]' ).click()
                         event.preventDefault()
                         event.stopPropagation()
                     } else {
-                        // Plain enter does nothing if the input is invalid
                         event.preventDefault()
                         event.stopPropagation()
                     }
                 }
             } )
+        
+            result.finally( () => {
+                window.removeEventListener( 'resize', onWindowResize )
+            } )
         }
+
         return result
     }
 
