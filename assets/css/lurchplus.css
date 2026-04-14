@@ -546,6 +546,9 @@ body.nav-ready #wrap {
   :is(.Rule,.Proof,.Subproof,.Def,.Premise,.Theorem) {
   margin-top: var(--tight-block-skip);
 }
+.course #content-block .Proof.traditional p:not(:first-of-type) {
+  margin-top: 1rem;
+}
 /* ************************** */
 
 /* make the menu scrollable on short screens */
@@ -922,6 +925,22 @@ or
 /* keep table centered within wrapper */
 .course #content-block .table-block table {
   margin: 0 auto;
+}
+/* insert a blank row in a table */
+.table-gap {
+  display: inline-block;
+  width: 0;
+  height: 24pt;
+}
+/* Put a .table-section span in the first column */ 
+.table-section {
+  display: inline-block;
+  position: relative;
+  top: -0.2em;
+  left: -1em;
+  font-weight: 500;
+  font-style: italic;
+  color: #444;
 }
 
 #content-block .example-box {
@@ -1836,6 +1855,71 @@ iframe.lurch-embed {
   margin-bottom: 0;
   margin-top: 1rem;
 }
+
+/* =========================
+   Guideline groups
+   ========================= */
+.course #content-block .guideline-group {
+  margin-bottom: 2rem;
+}   
+.course #content-block .guideline {
+  margin: 1rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.course #content-block .guideline-group .guideline:first-of-type {
+  border:none;
+  padding-top: 0.4rem;
+}
+.course #content-block .guideline-title {
+  display: inline-block;
+  margin: 0 0 0.35rem 0;
+  font-style: italic;
+  font-weight: 600;
+  color: #333;
+}
+.course #content-block {
+  counter-reset: guideline;
+}
+.guideline {
+  counter-increment: guideline;
+}
+.guideline-title::before {
+  content: counter(guideline) ". ";
+  font-style: normal;
+  font-weight: 600;
+}
+.course #content-block .guideline-examples {
+  margin: 0.65rem 0 0 1rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid rgba(0,0,0,0.12);
+}
+/* vertical spacing */
+.course #content-block {
+  .guideline p { margin: 0.5rem 0 0 0; } 
+  .guideline > p:has(.guideline-title) + p { margin-top: 0.35rem; }
+  .guideline > p + p { margin-top: 1rem; }
+  .guideline > .guideline-examples { margin-top: 0.8rem; }
+  .guideline > .guideline-examples + p { margin-top: 0.8rem; }
+}
+/* the good, the bad, and the... */
+.course #content-block .guideline-examples .bad {
+  font-weight: 600;
+  color: #8b0000;
+  margin-right: 0.4rem;
+}
+.course #content-block .guideline-examples .good {
+  font-weight: 600;
+  color: #2e7d32;
+  margin-right: 0.4rem;
+}
+.course #content-block .guideline-examples .okay {
+  font-weight: 600;
+  color: #c3982b;
+  margin-right: 0.4rem;
+}
+/* end guidelines */
+
 
 /* hide the contents of the divs that are be replaced by the lurch app iframe
    before they are replaced*/

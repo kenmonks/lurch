@@ -1,0 +1,843 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Combinatorial Proofs</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li> <a href="/learn/proofs/">1: Introduction</a> </li
+          ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
+          ><li>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch04/"
+              >4: Reasoning about Mathematics</a
+            > </li
+          ><li> <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li
+          ><li>
+            <a href="/learn/proofs/ch06/"
+              >6: Predicate Logic and Equality</a
+            > </li
+          ><li> <a href="/learn/proofs/ch07/">7: Natural Numbers</a> </li
+          ><li> <a href="/learn/proofs/ch08/">8: Sequences</a> </li
+          ><li> <a href="/learn/proofs/ch09/">9: Sets</a> </li
+          ><li>
+            <a href="/learn/proofs/ch10/"
+              >10: Integer, Rational, and Real Numbers</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch11/">11: Functions and Relations</a> </li
+          ><li> <a href="/learn/proofs/ch12/">12: Expository Proofs</a> </li
+          ><li class="active">
+            <a href="/learn/proofs/ch13/">13: Combinatorial Proofs</a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: '13'">
+        <div class="title-box">
+          <h1>Chapter 13: Combinatorial Proofs</h1>
+        </div>
+        <h2>Combinatorics</h2>
+        <p
+          ><em>Combinatorics</em> (or more precisely
+          <em>enumerative combinatorics</em>) is the branch of mathematics that
+          studies counting. One way to try to integrate this topic into the
+          mathematical infrastructure of logic and set theory we have discussed
+          so far is to define the number of elements in a finite set $S$ to be
+          $n$ if and only if there exists a bijection between $S$ and $\bbI _
+          n$.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong>
+            Let $S$ be a set and $n\in\bbN$. We say that $S$ has
+            <em>cardinality</em> $n$ if and only if there exists a bijection
+            $f\colon \Set{ 1,2,\ldots,n }\to S$. In this case, we write
+            $\left|S\right|$ for the cardinality of $S$.</p
+          >
+        </div>
+        <p
+          >Note that $\bbI _ n=\Set{ 1,2,\ldots,n }$ is the empty set when
+          $n=0$.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> With
+            this definition, we can prove that $\left|\Set{ 😃 }\right|=1$.</p
+          >
+          <div class="Proof traditional">
+            <p
+              ><strong>Proof.</strong><br />
+              Define $f\colon \Set{ 1 } \to \Set{ 😃 }$ by $f(1)=😃$.</p
+            >
+            <p
+              >Let $x,y \in \Set{ 1 }$ and assume $f(x)=f(y)$. Then $x=1$ and
+              $y=1$ by the definition of finite set notation. Since $1=y$ by
+              symmetry, we see that $x=y$ by substitution.</p
+            >
+            <p>Thus $f$ is injective.</p>
+            <p
+              >To see that $f$ is surjective, let $b\in\Set{😃}$. Then $b=😃$ by
+              the definition of finite set notation. Hence,</p
+            >
+            <p>$$ \begin{align} f(1) &amp;=😃 \\ &amp;= b \end{align} $$</p>
+            <p
+              >by substitution and $1 \in \Set{ 1 }$ by the definition of finite
+              set notation.</p
+            >
+            <p>Thus, $f$ is surjective.</p>
+            <p
+              >Since $f$ is both injective and surjective, it is bijective. So
+              $\left|\Set{ 😃 }\right|=1$ as desired.<br />
+              $\square$</p
+            >
+          </div>
+        </div>
+        <p
+          >This definition leaves a bit to be desired, however. One of the first
+          things that any preschooler learns about mathematics is the difference
+          between none, one, and several. Fortunately, there is another kind of
+          mathematical proof that is accepted in journals and by mathematicians
+          as a valid proof that is better suited to this task.</p
+        >
+        <h2 id="sec-expressions">Combinatorial Collections and Expressions</h2>
+        <p
+          >We begin by defining the language of a different kind of proof system
+          that is distinct from the formal axiom system kinds of proofs that we
+          have discussed so far. This form of proof will be based on counting,
+          and so we need something to count.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong> A
+            <em>combinatorial collection</em> is anything that can be counted.
+            Each combinatorial collection has a property called its
+            <em>count</em> (or <em>cardinality</em> or <em>size)</em> which
+            represents the number of entities comprising the collection. Two
+            combinatorial collections are said to be <em>equivalent</em> if they
+            have the same count. If $A$ is a combinatorial collection then we
+            write $\#A$ or $\left|A\right|$ for the count of $A$.</p
+          >
+        </div>
+        <p
+          >Anything we can count is an example of a combinatorial collection.
+          For example, we can count the number of elements in a finite set, or
+          the number of ways we can accomplish some task, the number of possible
+          outcomes from some activity, or the number of choices we have in
+          making some decision. In each case the count can be represented by a
+          symbolic expression.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong> A
+            <em>combinatorial expression</em> is an expression that represents
+            the cardinality of a combinatorial collection.</p
+          >
+        </div>
+        <p
+          >Naturally, we can define an expression for any combinatorial
+          collection we might have. Here are some common combinatorial
+          expressions that we will use in what follows.</p
+        >
+        <div class="table-block">
+          <p class="table-title">Combinatorial Expressions</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Expression</th>
+                <th style="text-align: left"
+                  >Combinatorial definition (what it counts)</th
+                >
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">$0,1,2,3,\ldots$</td>
+                <td style="text-align: left"
+                  >Any collection of one, two, three, $\ldots$ things
+                  respectively.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$n$</td>
+                <td style="text-align: left"
+                  >A collection of $n$ things where $n$ is one of $0, 1, 2, 3,
+                  \ldots$ .</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$a+b$</td>
+                <td style="text-align: left"
+                  >A collection that can be partitioned into two disjoint
+                  collections having size $a$ and $b$ respectively.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$a _ 1+a _ 2+\cdots+a _ n$</td>
+                <td style="text-align: left"
+                  >A collection that can be partitioned into $n$ disjoint
+                  collections of size $a _ 1, a _ 2, \ldots , a _ n$
+                  respectively.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$a\cdot b$</td>
+                <td style="text-align: left"
+                  >The number of ways of choosing two things in order if there
+                  are $a$ ways to choose the first and $b$ ways to choose the
+                  second.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  >$a _ 1\cdot a _ 2\cdot a _ 3\cdots a _ n$</td
+                >
+                <td style="text-align: left"
+                  >The number of ways of choosing $n$ things in order if there
+                  are $a _ 1$ ways</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$n!$</td>
+                <td style="text-align: left"
+                  >The number of ways to permute (rearrange) $n$ distinct things
+                  in some order.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$n^k$</td>
+                <td style="text-align: left"
+                  >The number of ways to choose $k$ things from $n$ things where
+                  repetition is allowed and order matters.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$(n) _ k$</td>
+                <td style="text-align: left"
+                  >The number of ways to choose $k$ things from $n$ things where
+                  repetition is not allowed and order matters.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$\binom{n}{k}$</td>
+                <td style="text-align: left"
+                  >The number ways to choose $k$ things from $n$ things where
+                  repetition is not allowed and order doesn’t matter.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$\multichoose{n}{k}$</td>
+                <td style="text-align: left"
+                  >The number of ways of choosing $k$ things from $n$ things
+                  where repetition is allowed and order doesn’t matter.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">$F _ n$</td>
+                <td style="text-align: left"
+                  >The number of ways to partition an ordered list of $n$ items
+                  into singletons and pairs (of consecutive items).</td
+                >
+              </tr>
+            </tbody>
+          </table>
+          <!-- table-block -->
+        </div>
+        <div class="wrap-smallskip">
+          <p><em>Remarks</em></p>
+          <p
+            >Some of the combinatorial expressions given in the previous table
+            have common names and alternate notation in mathematics.</p
+          >
+        </div>
+        <ul class="disc">
+          <li>The expression $n!$ is called “<em>$n$-factorial</em>”.</li>
+          <li
+            >The expression $(n) _ k$ is sometimes denoted $ _ nP _ k$ is read
+            “$n$ <em>permute</em> $k$” and counts the number of
+            <em>$k$-permutations</em> of $n$ things.</li
+          >
+          <li
+            >The expression $\binom{n}{k}$ is called a
+            <em>binomial coefficient</em> and is sometimes denoted $ _ nC _ k$.
+            It is read “$n$ <em>choose</em> $k$” and counts the number of
+            <em>$k$-combinations</em> of $n$ things.</li
+          >
+        </ul>
+        <p
+          >Finally, we need some statements that we can prove with our new kind
+          of proof. The simplest such statements are called combinatorial
+          identities.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong> A
+            <em>combinatorial identity</em> is a expression of the form $$A=B$$
+            where $A$ and $B$ are combinatorial expressions.</p
+          >
+        </div>
+        <h2>Combinatorial Proofs</h2>
+        <p
+          >The fundamental assumption on which the validity of all counting
+          relies, is that no matter how you count the same collection, if you do
+          it correctly, you will obtain the same result. This simple idea is the
+          foundation for a kind of mathematical proof called a
+          <em>combinatorial argument</em>.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong> A
+            <em>combinatorial proof</em> (or <em>combinatorial argument</em>) is
+            proof of a combinatorial identity obtained by counting the same
+            thing (or two equivalent things) in two different ways.</p
+          >
+        </div>
+        <p
+          >It is truly amazing the extent to which we can build up much of
+          algebra from a combinatorial perspective, and give combinatorial
+          proofs of many algebraic identities. Often, combinatorial
+          interpretations are considered to be easier and more intuitive
+          explanations of a given fact than algebraic or inductive proofs.</p
+        >
+        <div class="example-box">
+          <p
+            ><strong class="qu">Example <span class="thm"></span>.</strong> The
+            fact that $$5\cdot (3+2)=3\cdot 5+2\cdot 5$$ can be verified by
+            invoking the distributive law and commutative law of multiplication,
+            but that doesn’t give us a sense of what the identity says about
+            counting.</p
+          >
+          <p
+            >Using a combinatorial argument, however, we can say that the left
+            hand side counts the total number of squares in a collection
+            consisting of $5$ collections, each of which is comprised of two
+            disjoint collections having $3$ things and $2$ things respectively
+            (as illustrated in the left figure below), and the right hand side
+            counts the same collection of squares partitioned into two
+            collections, one consisting of $3$ collections of $5$ squares (the
+            blue ones) and another consisting of $2$ collections of $5$ squares
+            (the orange ones, as illustrated in the right figure below). Since
+            we are counting the same collection of little squares in two
+            different ways, this is a combinatorial proof of the identity
+            above.</p
+          >
+          <!-- insert counting image (was asymptote)-->
+        </div>
+        <p
+          >Proofs similar to the one in the above example can be generalized to
+          give combinatorial proofs of the algebraic properties of numbers given
+          in the axioms for the real numbers.</p
+        >
+        <p
+          >In this context, rather than starting with algebraic axioms such as
+          the distributive law, we can start with tactile meanings of numbers,
+          addition, multiplication, division, and so on. These arguments can
+          then be pasted together to deduce all the algebraic axioms we usually
+          work with.</p
+        >
+        <p
+          >While it is possible to give purely combinatorial proofs of many
+          combinatorial identities, it is also commonplace to use both
+          combinatorial and axiomatic algebraic arguments in the same
+          mathematical proof. Thus, we can use combinatorial arguments even as
+          just one part of a larger proof involving many techniques.</p
+        >
+        <h2>Combinatorial subtraction, division, and inequality</h2>
+        <p
+          >Just as in algebra, it is often convenient to be able to discuss the
+          difference or quotient of two combinatorial expressions. The problem
+          with doing that from a combinatorial perspective is that the
+          difference or quotient of two combinatorial expressions is not always
+          a combinatorial expression. So we have to take some care when defining
+          them to take that into account.</p
+        >
+        <div class="Def">
+          <p
+            ><strong class="qu">Definition <span class="thm"></span>.</strong>
+            Let $k$, $m$, and $n$ be combinatorial expressions.</p
+          >
+          <ul class="disc">
+            <li
+              >If $k+m=n$ then $k\leq n$. Also, if $k\leq n$ and $k\neq n$ then
+              $k&lt;n$.</li
+            >
+            <li>If $k+m=n$ then we define $n-k$ to be $m$.</li>
+            <li
+              >If $k\cdot m=n$ and $k\neq 0$ then we define $n/k$ to be $m$.</li
+            >
+          </ul>
+        </div>
+        <p
+          >In general, whenever we use such an expression we are assuming it is
+          defined for the expression to make sense. Thinking of these
+          expressions as natural numbers for a moment, we can say that $n-k$ to
+          be defined it is sufficient for $k$ to be less than or equal to $n$.
+          But for $n/k$ to be defined $k$ must be a divisor of $n$. In order to
+          avoid this problem we avoid using division and subtraction wherever
+          possible in combinatorial proofs, except when we need to refer to
+          arbitrary sequences like $1, 2, \ldots, n-2, n-1, n$.</p
+        >
+        <h2>Problems</h2>
+        <h3>Basic Combinatorial Identities</h3>
+        <p
+          >The following combinatorial identities can all be proved using a
+          combinatorial proof using only the definitions given in this chapter.
+          If we were defining combinatorics in an algebraic setting (as you
+          might find in a course on discrete mathematics or combinatorics),
+          these identities are often taken to be the definition of the symbols
+          themselves. From the perspective of combinatorial proofs, these
+          identities are all theorems that we prove by counting the same
+          collection in two different ways.</p
+        >
+        <p
+          >In the following identities, all variables are combinatorial
+          expressions. Use a purely combinatorial proof to prove the theorems in
+          this section.</p
+        >
+        <div class="question">
+          <p><span class="thm-label">zero power</span> $n^0=1$</p>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label"
+              >alternate definition of multiplication</span
+            >
+            $k\cdot n = \underbrace{n+n+\cdots+n} _ {k \text{ summands}} =
+            \underbrace{k+k+\cdots+k} _ {n \text{ summands}} = n\cdot k$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">alternate definition of factorial</span>
+            $n! = n\cdot (n-1)\cdots 3\cdot 2\cdot 1$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">alternate definition of power</span> $n^k =
+            \underbrace{n\cdot n \cdots n} _ {k \text{ factors}}$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">alternate definition of permutation</span>
+            $(n) _ k=n\cdot(n-1)\cdot(n-2)\cdots(n-k+1)$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">alternate definition of permutation</span>
+            $(n) _ k\cdot (n-k)!=n!$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">alternate definition of choose</span>
+            $\binom{n}{k}\cdot k! \cdot (n-k)! = n!$</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">alternate definition of multichoose</span>
+            $\multichoose{n}{k} = \binom{n-1+k}{k}$</p
+          >
+        </div>
+        <div class="">
+          <h3>Other combinatorial identities</h3>
+          <p
+            >Some of the usual properties of these expressions that can be
+            derived from these by induction and/or algebra often have
+            interesting combinatorial proofs as well.</p
+          >
+          <div class="question">
+            <p
+              ><span class="thm-label">our favorite theorem redux</span>
+              $1+1=2$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">counting over computing</span>
+              $\binom{6}{2}\cdot\binom{4}{3}=\binom{6}{3}\cdot\binom{3}{2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">more counting over computing</span>
+              $\multichoose{8}{3}=\multichoose{4}{7}$</p
+            >
+          </div>
+          <div class="question">
+            <p><span class="thm-label">terrible twos</span> $n^2=(n) _ 2+n$</p>
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">binomial complement</span>
+              $\binom{m+n}{m}=\binom{m+n}{n}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">multichoose complement</span>
+              $\multichoose{n+1}{k}=\multichoose{k+1}{n}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">choose vs permute</span> $(n) _
+              k=\binom{n}{k}\cdot k!$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">ordered choice</span>
+              $\binom{n}{k}\cdot\binom{n-k}{j}=\binom{n}{j}\cdot\binom{n-j}{k}=\binom{n}{k+j}\cdot\binom{k+j}{k}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">good things come in pairs</span>
+              $\binom{2n+2}{k}
+              =\binom{2n}{k}+2\cdot\binom{2n}{k-1}+\binom{2n}{k-2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">good things come in pairs</span> $F _
+              {n+3}+F _ n=2\cdot F _ {n+2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">hockey stick redux</span>
+              $\binom{k}{k}+\binom{k+1}{k}+\binom{k+2}{k}+\cdots+\binom{n-1}{k}+\binom{n}{k}=\binom{n+1}{k+1}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">multichoose hockey stick</span>
+              $\multichoose{n}{0}+\multichoose{n}{1}+\multichoose{n}{2}+\cdots+\multichoose{n}{k-1}+\multichoose{n}{k}=\multichoose{n+1}{k}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">another multichoose hockey stick</span>
+              $\multichoose{1}{k}+\multichoose{2}{k}+\cdots+\multichoose{n-1}{k}+\multichoose{n}{k}=\multichoose{n}{k+1}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">another ordered choice</span> $(k+1)\cdot
+              \binom{n+1}{k+1} =(n+1)\cdot \binom{n}{k}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">factorial recursion</span>
+              $(n+1)!=(n+1)\cdot n!$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">power recursion</span> $n^{k+1}=n\cdot
+              n^k$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">permutations recursion</span> $(n+1) _
+              {k+1}=(n+1)\cdot(n) _ k$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">combination recursion</span>
+              $\binom{n+1}{k+1}=\binom{n}{k}+\binom{n}{k+1}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">Fibonacci recursion</span> $F _ n+F _
+              {n+1}=F _ {n+2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">multichoose recursion</span>
+              $\multichoose{n+1}{k}=\multichoose{n}{k}+\multichoose{k}{n}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">another permutations recursion</span>
+              $(n+1) _ {k+1}=(n) _ {k+1}+(k+1)\cdot(n) _ k$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">another Gauss’ formula</span>
+              $1+2+3+\cdots+n = \binom{n+1}{2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">Fibonacci sum</span> $1+F _ 1+F _
+              2+\cdots+F _ n=F _ {n+2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">sum of squares</span>
+              $3\cdot(1^2+2^2+3^2+\cdots+(n-1)^2+n^2) =
+              (2n+1)\cdot\binom{n+1}{2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">sum of cubes</span> $
+              1^3+2^3+3^3+\cdots+n^3= \binom{n+1}{2}^2 $</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">Vandermonde’s identity</span>
+              $\binom{m}{0}\cdot\binom{n}{k}+\binom{m}{1}\cdot\binom{n}{k-1}+\ldots+\binom{m}{k-1}\cdot\binom{n}{1}+\binom{m}{k}\cdot\binom{n}{0}=\binom{m+n}{k}
+              $</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">multichoose Vandermonde</span>
+              $\multichoose{m}{0}\cdot\multichoose{n}{k}+\multichoose{m}{1}\cdot\multichoose{n}{k-1}+\ldots+\multichoose{m}{k-1}\cdot\multichoose{n}{1}+\multichoose{m}{0}\cdot\multichoose{n}{k}=\multichoose{m+n}{k}
+              $</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">binomial theorem</span> $
+              \binom{n}{0}\cdot x^n\cdot y^0+\binom{n}{1}\cdot x^{n-1}\cdot
+              y^1+\binom{n}{2}\cdot x^{n-2}\cdot y^2+\cdots+ \binom{n}{n}\cdot
+              x^0\cdot y^n=(x+y)^n$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">sum of row of Pascal’s triangle</span>
+              $\binom{n}{0}+\binom{n}{1}+\cdots + \binom{n}{n}=2^n$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">Fibonacci as binomials</span>
+              $\binom{2n}{0}+\binom{2n-1}{1}+\binom{2n-2}{2}+\cdots +
+              \binom{n}{n}=F _ {2n}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">Fibonacci and binomials</span>
+              $\binom{n}{0}\cdot F _ 0+\binom{n}{1}\cdot F _ 1+\binom{n}{2}\cdot
+              F _ 2+\cdots + \binom{n}{n}\cdot F _ n=F _ {2n}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">sum of row of Pascal’s triangle</span>
+              $\binom{n}{0}+\binom{n}{1}+\cdots + \binom{n}{n}=2^n$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">the next row down</span>
+              $\binom{2n+1}{1}+\binom{2n+1}{3}+\cdots +
+              \binom{2n+1}{2n+1}=4^n$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label"
+                >linear sum of row of Pascal’s triangle</span
+              >
+              $0\cdot \binom{n}{0}+1\cdot\binom{n}{1}+2\cdot \binom{n}{2}+3\cdot
+              \binom{n}{3}+\cdots +n\cdot \binom{n}{n}=n\cdot 2^{n-1}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label">another linear sum of a row</span>
+              $0^2\cdot \binom{n}{0}+1^2\cdot\binom{n}{1}+2^2\cdot
+              \binom{n}{2}+3^2\cdot \binom{n}{3}+\cdots +n^2\cdot \binom{n}{n}=
+              2^{n+1}\cdot\binom{n+1}{2}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label"
+                >sum of squares of row of Pascal’s triangle</span
+              >
+              $\binom{n}{0}^2+\binom{n}{1}^2+\ldots+\binom{n}{n-1}^2+\binom{n}{n}^2=\binom{2n}{n}$</p
+            >
+          </div>
+          <div class="question">
+            <p
+              ><span class="thm-label"
+                >linear sum of squares of row of Pascal’s triangle</span
+              >
+              $$0\cdot \binom{n}{0}^2+1\cdot\binom{n}{1}^2+2\cdot
+              \binom{n}{2}^2+3\cdot \binom{n}{3}^2+\cdots +n\cdot
+              \binom{n}{n}^2=n\cdot \binom{2n-1}{n-1}$$</p
+            >
+          </div>
+        </div>
+        <h3>Combinatorial identities and problem solving</h3>
+        <p
+          >We can apply the method of combinatorial proof to solve counting
+          problems by defining new combinatorial expressions, and then proving
+          identities involving them by counting in two ways.</p
+        >
+        <div class="question">
+          <p
+            ><span class="thm-label">Frog hopping a staircase</span> Froggy Frog
+            is at the bottom of a staircase with $n$ stairs and wants to get to
+            the top. He can only jump 1 or 2 stairs at a time and never
+            backtracks. Let $W _ n$ be the number of ways Froggy can jump from
+            the bottom of the stairs to the top.</p
+          >
+          <div class="parts">
+            <ol>
+              <li
+                >Find a combinatorial formula for $W _ n$ in terms of the
+                expressions defined in section \ref{sec:expressions}.</li
+              >
+              <li
+                >How many ways can Froggy climb a staircase with $20$
+                stairs?</li
+              >
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

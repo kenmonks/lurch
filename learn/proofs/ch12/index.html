@@ -1,0 +1,894 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Expository Proofs</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li> <a href="/learn/proofs/">1: Introduction</a> </li
+          ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
+          ><li>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch04/"
+              >4: Reasoning about Mathematics</a
+            > </li
+          ><li> <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li
+          ><li>
+            <a href="/learn/proofs/ch06/"
+              >6: Predicate Logic and Equality</a
+            > </li
+          ><li> <a href="/learn/proofs/ch07/">7: Natural Numbers</a> </li
+          ><li> <a href="/learn/proofs/ch08/">8: Sequences</a> </li
+          ><li> <a href="/learn/proofs/ch09/">9: Sets</a> </li
+          ><li>
+            <a href="/learn/proofs/ch10/"
+              >10: Integer, Rational, and Real Numbers</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch11/">11: Functions and Relations</a> </li
+          ><li class="active">
+            <a href="/learn/proofs/ch12/">12: Expository Proofs</a> </li
+          ><li> <a href="/learn/proofs/ch13/">13: Combinatorial Proofs</a> </li>
+        </ul>
+      </div>
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: '12'">
+        <div class="title-box">
+          <h1>Chapter 12: Expository Proofs</h1>
+        </div>
+        <p
+          >We are now ready to make the final transition to the traditional
+          expository proofs found in most textbooks and articles about
+          mathematics.</p
+        >
+        <p
+          >Until now we have been using formal and semiformal proofs. These
+          proofs satisfy the first goal of a proof - they are objectively
+          verifiable by a computer.</p
+        >
+        <p
+          >In practice, formal proofs of all but the most trivial theorems can
+          be very long and tedious, and not as easy to read or understand by a
+          human as we might like. As a result, we introduced a number of
+          shortcuts in along the way to eliminate tedious, repetitive steps,
+          shorten the proof, and emphasize the aspects of the proof that would
+          make it more readable to a human without sacrificing the objective
+          correctness of the proof. This gave us what we refer to as semiformal
+          proofs.</p
+        >
+        <p
+          >It is now time to make the final transition to the far right end of
+          the proof spectrum illustrated by the bridge in Chapter 2. We will
+          refer to these proofs as <em>expository proofs</em> or
+          <em>traditional proofs</em> or <em>informal proofs</em>.</p
+        >
+        <h2>Traditional Proofs</h2>
+        <p
+          >Because they are informal by design, and their goal is exposition, it
+          is not easy to define precisely what constitutes a traditional proof
+          as distinct from a formal or semiformal proof. Indeed, since the main
+          goal of a traditional proof is exposition for human readers, defining
+          it precisely is equivalent to defining what constitutes good
+          expository writing in general.</p
+        >
+        <p
+          >That having been said, a traditional proof can be thought of as a
+          proof obtained if you start with a semiformal proof, and modify it to
+          conform to the following principles.</p
+        >
+        <h3>Requirements of a Traditional Proof</h3>
+        <ul class="disc">
+          <li
+            >The proof must conform to all of the usual rules of grammar,
+            punctuation, and spelling, for writing in English (or whatever
+            language you are writing the proof in).</li
+          >
+          <li
+            >The proof should be written at the appropriate level for the
+            intended audience. In particular, premises may be omitted or left
+            unjustified if the intended reader will be able to fill them in
+            themselves.</li
+          >
+          <li>The wording of the proof should have an unambiguous meaning.</li>
+          <li
+            >The proof can contain extra explanations and commentary that is not
+            required for the proof to be objectively correct, but aid the reader
+            in understanding the proof.</li
+          >
+        </ul>
+        <h2>Specific Rules for Mathematical Writing</h2>
+        <p
+          >Mathematical writing has many features that distinguish it from other
+          types of writing. The following is a list of guidelines to keep in
+          mind that will help you to express your mathematical ideas in ways
+          that will help others to more easily understand what you are trying to
+          say.</p
+        >
+        <h3>Notation</h3>
+        <p
+          >An important part of making mathematical writing unambiguous and easy
+          to understand is to choose good notation for the things you are
+          writing about, and to carefully explain this notation to your readers.
+          Some guidelines to keep in mind concerning mathematical notation are
+          as follows.</p
+        >
+        <div class="guideline-group">
+          <div class="guideline">
+            <p
+              ><span class="guideline-title"
+                >Always clearly define new notation as it is introduced</span
+              ></p
+            >
+            <p
+              >Even if the notation seems obvious to you, it is not a good idea
+              to assume that your reader knows what you mean by it. In
+              particular, you should always declare new variables and constants
+              when they are first used in the proof.</p
+            >
+            <div class="guideline-examples">
+              <p
+                ><span class="bad">Bad.</span> We can see that $n$ is odd, so $n
+                = 2k + 1$.</p
+              >
+              <p
+                ><span class="good">Good.</span> We can see that $n$ is odd, so
+                $n = 2k + 1$ for some integer $k$.</p
+              >
+              <p
+                ><span class="bad">Bad.</span> If a continuous function $f$
+                satisfies $f(nx) = f(x)^n$ for all $x, n$, is it true that $f$
+                is an exponential function?</p
+              >
+              <p
+                ><span class="good">Good.</span> If a continuous function $f$
+                satisfies $f(nx) = f(x)^n$ for all real $x$ and all positive
+                integers $n$, is it true that $f$ is an exponential function?</p
+              >
+            </div>
+          </div>
+          <div class="guideline">
+            <p
+              ><span class="guideline-title"
+                >Use standard notation for common types of objects</span
+              ></p
+            >
+            <p
+              >For instance, $m$ and $n$ are often used to denote integers, $p$
+              denotes a prime, $x$ can be a real number, $f$ and $g$ describe
+              functions, and so on.</p
+            >
+            <p
+              >The standard notation may depend on the context of your writing.
+              For instance, in complex analysis, $z$ is often used to denote a
+              complex number, while in analytic number theory, $s$ is more
+              common. Use the notation that your readers will most readily
+              recognize.</p
+            >
+          </div>
+          <div class="guideline">
+            <p
+              ><span class="guideline-title"
+                >Use consistent symbols for similar objects</span
+              ></p
+            >
+            <p
+              >For example, when choosing new symbols that have a similar
+              meaning, we should choose them from the same alphabet, use the
+              same case, and the same font. When naming several variables with a
+              similar meaning at the same time it often helps to make them
+              consecutive symbols in the alphabet, like, $a,b,c$ or $i,j,k$.
+              This helps the reader remember the intended meaning of similar
+              mathematical expressions.</p
+            >
+            <div class="guideline-examples">
+              <p
+                ><span class="bad">Bad.</span> Let $x, u, \xi$ be real
+                numbers.</p
+              >
+              <p
+                ><span class="good">Good.</span> Let $x, y, z$ be real
+                numbers.</p
+              >
+            </div>
+            <p
+              >One exception to this guideline is that inconsistent symbols can
+              be useful to denote objects that you want to distinguish in
+              meaning to the reader:</p
+            >
+            <div class="guideline-examples">
+              <p
+                ><span class="okay">Okay.</span> Let $m, b$ be real numbers.
+                Then the function $f\colon \bbR \to \bbR$ satisfying $f(x) = mx
+                + b$ for all real numbers $x$ is linear.</p
+              >
+            </div>
+          </div>
+          <div class="guideline">
+            <p
+              ><span class="guideline-title"
+                >Do not use the same notation for different objects in the same
+                scope</span
+              ></p
+            >
+            <p
+              >Aside from being confusing to the reader, this usually will
+              result in incorrect proofs.</p
+            >
+            <div class="guideline-examples">
+              <p
+                ><span class="bad">Bad.</span> To show that the product of any
+                two even integers is divisible by 4, suppose $a$ and $b$ are
+                even. Then $a = 2k$ and $b = 2k$ for some integer $k$. Thus $ab
+                = 2k \cdot 2k = 4k^2$ is divisible by 4.</p
+              >
+              <p
+                ><span class="good">Good.</span> To show that the product of any
+                two even integers is divisible by 4, suppose $a$ and $b$ are
+                even. Then $a = 2j$ for some integer $j$ and $b = 2k$ for some
+                integer $k$. Thus $ab = 2j \cdot 2k = 4jk$ is divisible by 4.</p
+              >
+            </div>
+            <p
+              >Notice that the first “proof” could likewise be used to prove
+              that the product of any two even integers is a square, a claim
+              that is obviously not true.</p
+            >
+          </div>
+          <div class="guideline">
+            <p
+              ><span class="guideline-title"
+                >Avoid convoluted or overloaded notation</span
+              ></p
+            >
+            <p
+              >Use several simple expressions rather than a single convoluted
+              expression to increase clarity. Sometimes written prose can be
+              more clear than symbolic expressions.</p
+            >
+            <div class="guideline-examples">
+              <p><span class="bad">Bad.</span> Let $0 &lt; n \in \bbZ$.</p>
+              <p
+                ><span class="good">Good.</span> Let $n \in \bbZ$ such that $0
+                &lt; n$.</p
+              >
+              <p
+                ><span class="good">Better.</span> Let $n$ be a positive
+                integer.</p
+              >
+            </div>
+          </div>
+          <!-- guideline-group -->
+        </div>
+        <h3>Syntax</h3>
+        <p
+          >Mathematical symbols are a short and precise way to express
+          mathematical ideas, but it’s important to use them in ways that don’t
+          interfere with communication:</p
+        >
+        <div class="guideline-group">
+          <div class="guideline">
+            <p
+              ><span class="guideline-title"
+                >Don’t begin a sentence with a symbol</span
+              ></p
+            >
+            <p
+              >Every sentence in your proof should begin with an English word,
+              even if that word is meaningful (e.g.,
+              <span class="m">Let</span> or <span class="m">Declare</span>) and
+              should be capitalized just like any word at the start of a
+              sentence. A sentence should not start with a variable, constant,
+              number, or compound mathematical expression.</p
+            >
+            <div class="guideline-examples">
+              <p
+                ><span class="bad">Bad.</span> $x$ is a global maximum of $f$,
+                so we have $f(y) \leq f(x)$ for every $y \in \bbR$.</p
+              >
+              <p
+                ><span class="good">Good.</span> Since $x$ is a global maximum
+                of $f$, we have $f(y) \leq f(x)$ for every $y \in \bbR$.</p
+              >
+              <p
+                ><span class="bad">Bad.</span> Let $a$ be a quadratic residue.
+                $a = b^2$ for some $b \in \bbZ_n$.</p
+              >
+              <p
+                ><span class="good">Good.</span> Let $a$ be a quadratic residue.
+                Then $a = b^2$ for some $b \in \bbZ_n$.</p
+              >
+            </div>
+            <div class="guideline">
+              <p
+                ><span class="guideline-title"
+                  >Don’t needlessly mix symbols with prose</span
+                ></p
+              >
+              <p
+                >Many mathematical symbols have a spoken English equivalent, so
+                it can be tempting to cleverly substitute the symbol for the
+                corresponding English word in mathematical writing. However,
+                this usually distracts from the meaning of the sentence and
+                makes writing less understandable.</p
+              >
+              <div class="guideline-examples">
+                <p
+                  ><span class="bad">Bad.</span> Clearly, $0 &lt; x^2 + y^2
+                  \implies x\neq 0 \vee y \neq 0$.</p
+                >
+                <p
+                  ><span class="good">Good.</span> Clearly, if $0 &lt; x^2 +
+                  y^2$ then either $x\neq 0$ or $y \neq 0$.</p
+                >
+                <p
+                  ><span class="bad">Bad.</span> There are exactly eight primes
+                  $&lt; 20$.</p
+                >
+                <p
+                  ><span class="good">Good.</span> There are exactly eight
+                  primes less than 20.</p
+                >
+              </div>
+              <p
+                >The logical connectors and quantifiers $\vee$, $\wedge$,
+                $\neg$, $\implies$, $\iff$, $\forall$, $\exists$ are very easy
+                to misuse in this way. In general, use these only in contexts
+                where you are discussing mathematical logic, or as part of
+                longer symbolic expressions.</p
+              >
+              <div class="guideline-examples">
+                <p
+                  ><span class="bad">Bad.</span> It is true $\forall$ integers
+                  that $\exists$ an even larger integer.</p
+                >
+                <p
+                  ><span class="good">Good.</span> It is true for all integers
+                  that there exists an even larger integer.</p
+                >
+                <p
+                  ><span class="okay">Okay.</span> Thus we can express this in
+                  formal logic as $\forall x. P(x) \wedge \neg Q(x)$.</p
+                >
+                <p
+                  ><span class="good">Good.</span> Thus, for any $x$ both $P(x)$
+                  and $\neg Q(x)$ are true.</p
+                >
+                <p
+                  ><span class="okay">Okay.</span> Let $Z = \Set{ n\in\bbZ :
+                  \forall k \in \bbZ,k \mid n }$.</p
+                >
+                <p
+                  ><span class="good">Good.</span> Let $Z$ be the set of all
+                  integers that are divisible by every integer.</p
+                >
+              </div>
+            </div>
+            <div class="guideline">
+              <p
+                ><span class="guideline-title"
+                  >Don’t use unnecessary variable names in theorem
+                  statements</span
+                ></p
+              >
+              <p
+                >If an object needs a name in a proof, declare it in the body of
+                the proof rather than in the theorem statement.</p
+              >
+              <div class="guideline-examples">
+                <p
+                  ><span class="bad">Bad.</span> Any continuous function $f$ on
+                  the interval $[0, 1]$ is uniformly continuous.</p
+                >
+                <p
+                  ><span class="good">Good.</span> Any continuous function on
+                  the interval $[0, 1]$ is uniformly continuous.</p
+                >
+              </div>
+              <p>This also applies for claims made in the middle of a proof.</p>
+            </div>
+            <div class="guideline">
+              <p
+                ><span class="guideline-title"
+                  >When possible, use words to separate symbols which are not in
+                  a list</span
+                ></p
+              >
+              <p>This can often make statements more readable.</p>
+              <div class="guideline-examples">
+                <p
+                  ><span class="bad">Bad.</span> If the congruence equation $n^2
+                  \xcong{p} a$ has a solution $n = \overline{b}$, $n =
+                  \overline{p}-\overline{b}$ is the only other solution of the
+                  equation.</p
+                >
+                <p
+                  ><span class="good">Good.</span> If the congruence equation
+                  $n^2 \xcong{p} a$ has a solution $n = \overline{b}$, then $n =
+                  \overline{p}-\overline{b}$ is the only other solution of the
+                  equation.</p
+                >
+              </div>
+            </div>
+            <div class="guideline">
+              <p
+                ><span class="guideline-title"
+                  >Write out integers used as adjectives, and use Arabic
+                  numerals to write integers describing numerical values</span
+                ></p
+              >
+              <p
+                >The rule of thumb is adjectives are written out but nouns are
+                not. If you have a number that is excessively long to write out
+                as an adjective, consider rewording the sentence to make it a
+                noun.</p
+              >
+              <div class="guideline-examples">
+                <p
+                  ><span class="good">Good.</span> There are exactly twenty-four
+                  elements in the symmetric group on four symbols.</p
+                >
+                <p
+                  ><span class="good">Good.</span> The first three positive
+                  powers of $2$ are $2$, $4$, and $8$.</p
+                >
+                <p
+                  ><span class="good">Good.</span> The set of prime numbers less
+                  than $20$ has eight elements.</p
+                >
+              </div>
+              <!-- guideline-group -->
+            </div>
+            <h2>Equations and Formulas</h2>
+            <p
+              >Equations and formulas play an important role in many types of
+              mathematical writing, so it is a good idea to present them in as
+              clear a manner as possible. Some considerations to keep in mind
+              are to:</p
+            >
+            <div class="guideline-group">
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Place important equations or formulas on their own
+                    line</span
+                  ></p
+                >
+                <p
+                  >This makes the expression more visible, and indicates its
+                  importance in the writing. Such typesetting is sometimes
+                  called a <em>display</em> style. If you need to reference the
+                  expression later in the text, give it a numbered label, as in
+                  \begin{equation} x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+                  \tag{12.1} \end{equation} In general, don’t label an
+                  expression like this if you don’t plan to reference it later
+                  in the writing. If you only reference an expression in the few
+                  preceding or following lines, consider instead using language
+                  such as “<em>in the following expression</em>” or “<em
+                    >by the above equation</em
+                  >”.</p
+                >
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >When writing out extended computations in a display style,
+                    use transitive chain notation</span
+                  ></p
+                >
+                <p
+                  >This will avoid lengthy inline expressions that are difficult
+                  to read, and the clutter introduced by repeating the same
+                  expression unnecessarily.</p
+                >
+                <div class="guideline-examples">
+                  <p
+                    ><span class="bad">Bad.</span> $(a+b)^3 = (a+b)(a+b)^2 =
+                    (a+b)(a^2 + 2ab + b^2) = a^3 + 3a^2 b + 3a b^2 + b^3$</p
+                  >
+                  <p
+                    ><span class="bad">Bad.</span> $$\begin{align*} (a+b)^3
+                    &amp;= (a+b)(a+b)^2 \\ (a+b)^3 &amp;= (a+b)(a^2 + 2ab + b^2)
+                    \\ (a+b)^3 &amp;= x^3 + 3x^2 + 3x + 1 \end{align*}$$</p
+                  >
+                  <p
+                    ><span class="bad">Bad.</span> $$\begin{align*} (a+b)^3
+                    &amp;= (a+b)(a+b)^2 \\ (a+b)(a+b)^2 &amp;= (a+b)(a^2 + 2ab +
+                    b^2) \\ (a+b)(a^2 + 2ab + b^2) &amp;= x^3 + 3x^2 + 3x + 1
+                    \end{align*}$$</p
+                  >
+                  <p
+                    ><span class="good">Good.</span> $$\begin{align*} (a+b)^3
+                    &amp;= (a+b)(a+b)^2 \\ &amp;= (a+b)(a^2 + 2ab + b^2) \\
+                    &amp;= a^3 + 3a^2 b + 3a b^2 + b^3 \end{align*}$$</p
+                  >
+                </div>
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Use consistent punctuation after display style
+                    expressions</span
+                  ></p
+                >
+                <p
+                  >Some mathematicians treat display style expressions as part
+                  of the surrounding sentence structure, ending with a comma or
+                  a period as appropriate in the writing, while others omit all
+                  punctuation after display style expressions. In these notes,
+                  for instance, we chose to omit punctuation. Either way is
+                  acceptable, but be consistent with your choice in a given
+                  piece of writing.</p
+                >
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Avoid pointless parentheses in mathematical
+                    expressions</span
+                  ></p
+                >
+                <p
+                  >In general, if you can make use of the precedence of
+                  operation to eliminate extra parentheses, and omit other parts
+                  of a math expression when they are clear from context, you
+                  should do so to keep things simple and clean.</p
+                >
+                <div class="guideline-examples">
+                  <p
+                    ><span class="bad">Bad.</span> $(x-1)^2 = (x^2 - 2x + 1)$</p
+                  >
+                  <p
+                    ><span class="good">Good.</span> $(x-1)^2 = x^2 - 2x + 1$</p
+                  >
+                </div>
+                <p
+                  >Extra parentheses are fine if they are serving to emphasize a
+                  part of the expression to the reader as being special or
+                  grouped together. For instance, the following example
+                  indicates to the reader that the grouping of the terms on the
+                  right side deserves special attention:</p
+                >
+                <div class="guideline-examples">
+                  <p
+                    ><span class="okay">Okay.</span> $(a+b)^3 = (a^3 + b^3) +
+                    3(a^2 b + a b^2)$</p
+                  >
+                </div>
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Use parentheses to clarify between subtraction and negative
+                    signs</span
+                  ></p
+                >
+                <p
+                  >Also consider whether using concatenation for multiplication
+                  is clear from context or whether it should be indicated
+                  explicitly.</p
+                >
+                <div class="guideline-examples">
+                  <p
+                    ><span class="bad">Bad.</span> $(x+y) \cdot -z = -xz -
+                    yz$</p
+                  >
+                  <p><span class="good">Good.</span> $(x+y)(-z) = -xz - yz$</p>
+                  <p
+                    ><span class="good">Good.</span> $(x+y)\cdot (-z) = -x\cdot
+                    z - y\cdot z$</p
+                  >
+                </div>
+              </div>
+              <!-- guideline-group -->
+            </div>
+            <h2>Writing Technique</h2>
+            <p
+              >Writing mathematics is similar in many ways to any other type of
+              writing you might do! It’s about distilling your ideas down into a
+              simple and organized form, and communicating these ideas to your
+              readers clearly and efficiently. This is, by its nature, a
+              somewhat messy process, but some things to keep in mind
+              include:</p
+            >
+            <div class="guideline-group">
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Tell the reader where you are going</span
+                  ></p
+                >
+                <p
+                  >As you are explaining the steps of your proof, include a few
+                  words to describe the bigger picture of your argument or the
+                  strategy you are using. This allows the reader to anticipate
+                  the specifics of your proof more accurately, and can greatly
+                  increase their understanding of how the pieces of your proof
+                  fit together to form a cohesive argument.</p
+                >
+                <div class="guideline-examples">
+                  <p
+                    ><span class="good">Good.</span> We will prove this claim by
+                    induction on $n$.</p
+                  >
+                  <p
+                    ><span class="good">Good.</span> We now consider the
+                    converse direction.</p
+                  >
+                  <p
+                    ><span class="good">Good.</span> The following will make use
+                    of compactness of the space $X$.</p
+                  >
+                </div>
+                <p
+                  >Four common situations where such comments can be valuable
+                  are as follows.</p
+                >
+                <ol>
+                  <li
+                    >Announcing that you will be proving something by
+                    <code>contradiction</code>.</li
+                  >
+                  <li
+                    >Announcing you are proving something by
+                    <code>induction</code>, announcing the
+                    <code>base case</code>, and announcing the
+                    <code>inductive hypothesis</code> or step.</li
+                  >
+                  <li
+                    >Announcing which direction ($\implies$ or $\xif$) you are
+                    starting to prove in the proof of a logical equivalence
+                    (i.e., the proof of an
+                    <code>if and only if</code> statement),</li
+                  >
+                  <li
+                    >Announcing that you will be proving something by
+                    <code>cases</code>, and announcing the start of the proof of
+                    each case.</li
+                  >
+                </ol>
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Use key phrases to explain your reasoning</span
+                  ></p
+                >
+                <p
+                  >Expressions like <code>since</code>, <code>because</code>,
+                  <code>on the other hand</code>, <code>observe</code>, and
+                  <code>note</code> help guide the reader’s attention and
+                  elaborate on the relations between different statements. Vary
+                  your word choices to avoid monotonous writing. Notice that
+                  unlike semiformal or formal proofs, we generally do not
+                  usually cite the rules of inference for logic in traditional
+                  expository proofs, although we may refer to the overall
+                  strategy being used (induction, proof by contradiction, proof
+                  by cases, etc.).</p
+                >
+                <div class="guideline-examples">
+                  <p
+                    ><span class="bad">Bad.</span> Suppose 5 divides $b^3$ and 3
+                    divides $b^3$. We showed that if a prime $p$ divides a power
+                    $a^k$, then $p$ divides $a$. Thus, 5 divides $b$. Thus, 3
+                    divides $b$. Thus, 15 divides $b$.</p
+                  >
+                  <p
+                    ><span class="good">Good.</span> Suppose $3$ divides $b^3$
+                    and $5$ divides $b^5$. We showed that any prime that divides
+                    a power of a natural number, $n$, must also divide $n$.
+                    Thus, as $3$ and $5$ are both prime, they both divide $b$.
+                    Therefore their product, $15$, must also divide $b$.</p
+                  >
+                </div>
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Plan enough time to write</span
+                  ></p
+                >
+                <p
+                  >Any form of writing takes time, and the rigor and attention
+                  to detail needed in mathematical writing only magnifies this
+                  requirement.</p
+                >
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Outline your ideas before you begin writing</span
+                  ></p
+                >
+                <p
+                  >When writing down a mathematical proof or mathematical
+                  exposition in general, it helps to have a clear idea of what
+                  you want to say, and in what order. This gives you an
+                  opportunity to look at the big picture and make changes in the
+                  structure before you spend a lot of time hammering out the
+                  little details. Although it might feel better to just dive
+                  right into the writing phase, you’ll save time and produce
+                  significantly better exposition by planning ahead.</p
+                >
+              </div>
+              <div class="guideline">
+                <p><span class="guideline-title">Proofread!</span></p>
+                <p
+                  >When time is short, it may be tempting to finish the last
+                  line of your proof, throw on a quick Q.E.D., and hand in your
+                  writing, but this is a terrible idea. Math is hard to write,
+                  and it is nearly impossible to write it without at least a few
+                  typos. When you look back on what you’ve written, you’ll be
+                  able to correct any small errors that you made, and you might
+                  also gain some additional insight into the math you were
+                  writing about, or come up with a better way of expressing the
+                  solution. Writing is an iterative process, so make sure to
+                  give your work at least a second look over to improve its
+                  quality.</p
+                >
+              </div>
+              <div class="guideline">
+                <p
+                  ><span class="guideline-title"
+                    >Check your spelling, grammar, and punctuation</span
+                  ></p
+                >
+                <p
+                  >People reading mathematical proofs are usually intelligent
+                  and easily bothered by spelling errors, improper use of
+                  contractions, incorrect homophones, and general grammatical
+                  sloppiness. These sorts of flaws can distract from the content
+                  of your proof, so make sure you pay attention to these kinds
+                  of errors as well when you’re proofreading your work!</p
+                >
+              </div>
+              <!-- guideline-group -->
+            </div>
+            <h2>Mathematical Typesetting</h2>
+            <p
+              >In addition to the special rules for mathematical writing
+              mentioned in the previous section, the requirements of correctly
+              typesetting mathematical expressions are a challenge for most
+              modern word processors and text editors. As a result, the de facto
+              standard for mathematical typesetting that all mathematicians use
+              is based on a language called $\LaTeX$.</p
+            >
+            <p
+              >There are many great $\LaTeX$ tutorials on the internet, and in
+              most cases doing a search for the thing you are trying to do will
+              immediately answer any question that comes up. (See our course
+              website for details.)</p
+            >
+            <p
+              >There are many do’s and don’ts when using $\LaTeX$ itself, which
+              you will learn with time and experience (usually because what you
+              typed ends up looking terrible). But there is one beginner mistake
+              that we will mention for you to be aware of. Resist the urge to
+              manually format your compiled document by hand.</p
+            >
+          </div>
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

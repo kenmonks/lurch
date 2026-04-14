@@ -85,7 +85,10 @@
             <a href="/learn/proofs/ch10/"
               >10: Integer, Rational, and Real Numbers</a
             > </li
-          ><li class="active"> <a href="/learn/proofs/ch11/">11: Sets</a> </li>
+          ><li class="active">
+            <a href="/learn/proofs/ch11/">11: Functions and Relations</a> </li
+          ><li> <a href="/learn/proofs/ch12/">12: Expository Proofs</a> </li
+          ><li> <a href="/learn/proofs/ch13/">13: Combinatorial Proofs</a> </li>
         </ul>
       </div>
       <div class="sidebar-powered">
@@ -107,27 +110,17 @@
     <div id="wrap">
       <div id="content-block" class="problems" style="--chapter: '11'">
         <div class="title-box">
-          <h1>Chapter 11: Sets</h1>
+          <h1>Chapter 11: Functions and Relations</h1>
         </div>
+        <h2>Functions</h2>
         <p
-          >As we have seen, sequences are ordered lists of items. They are
-          fundamental building blocks in mathematics. Another such fundamental
-          object is a collection of items that in unordered is called a
-          <em>set</em>.</p
-        >
-        <h2>Basic Definitions from Set theory</h2>
-        <p
-          >We can extend the language of mathematics we have developed thus far
-          by including a new constant $\in$ which is called “is an element of”
-          (or “is a member of” or “is in”) and a new variable and constant type
-          called a <em>set</em>. The expression $x\in A$ is a statement is read
-          “$x$ is an element of $A$” where $A$ is a set and $x$ can have any
-          type. The set containing no elements is called the <em>empty set</em>.
-          Many of the definitions below are informal definitions that are
-          sufficient for our purposes.</p
+          >In addition to sequences and sets, another fundamental building block
+          of much of mathematics is a <em>function</em>. In the following
+          definitions, $A$,$B$,$C$,$S$ are sets and $f,g,h$ are the lambda
+          expressions.</p
         >
         <div class="table-block">
-          <p class="table-title">Basic Set Notation and Operations</p>
+          <p class="table-title">Functions</p>
           <table>
             <thead>
               <tr>
@@ -137,160 +130,140 @@
             </thead>
             <tbody>
               <tr>
-                <td style="text-align: left">Finite set notation</td>
+                <td style="text-align: left">Def of function</td>
                 <td style="text-align: left"
-                  >$x\in\Set{ x _ {1},\ldots,x _ {n} } \iff x=x _
-                  {1}\xor\cdots\xor\,x=x _ {n}$</td
+                  >$(f,A,B) \text{ is a function }\iff \forall a\in A, f(a)\in
+                  B$</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Set builder notation</td>
+                <td style="text-align: left">Mapping notation</td>
                 <td style="text-align: left"
-                  >$x\in\Set{ y : P(y) } \iff P(x)$</td
+                  >$f\colon A\to B \iff (f,A,B)$ is a function</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Subset</td>
+                <td style="text-align: left">Alt. function notation</td>
                 <td style="text-align: left"
-                  >$A\subseteq B\iff\forall x.x\in A\implies x\in B$</td
+                  >$A\overset{f}{\to}B\iff f\colon A\to B$</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Set equality</td>
+                <td style="text-align: left">Domain | Codomain</td>
                 <td style="text-align: left"
-                  >$A=B\iff A\subseteq B\xand B\subseteq A$</td
+                  >$\xdomain\left(f\right)=A\xand\xcodomain\left(f\right)=B\iff
+                  f\colon A\to B$</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Empty set</td>
+                <td style="text-align: left">Function equality</td>
                 <td style="text-align: left"
-                  >$A=\Set{}\iff\forall x.x\notin A$</td
+                  >$f=g \iff f:A\to B \xand g:A\to B \xand \forall x\in
+                  A.f(x)=g(x)$</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Nonempty</td>
+                <td style="text-align: left">Graph of a function</td>
                 <td style="text-align: left"
-                  >$A$ is nonempty $\iff\, \exists c.c\in A$</td
+                  >$f\colon\!A\to B\implies \xgraph _ f = \Set{ z : z= \langle
+                  x,f(x)\rangle \text{ for some }x\in A }$</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Power set</td>
+                <td style="text-align: left">Alt. def of graph</td>
                 <td style="text-align: left"
-                  >$\mathscr{P}\left(A\right)=\Set{ B : B\subseteq A } $</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">Intersection</td>
-                <td style="text-align: left"
-                  >$x\in A\cap B\iff x\in A\xand x\in B$</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">Union</td>
-                <td style="text-align: left"
-                  >$x\in A\cup B\iff x\in A\xor x\in B$</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">Relative Complement</td>
-                <td style="text-align: left"
-                  >$x\in B-A\iff x\in B\xand x\notin A$</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">Complement</td>
-                <td style="text-align: left">$x\in A’\iff x\notin A$</td>
-              </tr>
-              <tr>
-                <td style="text-align: left">Indexed Union</td>
-                <td style="text-align: left"
-                  >$x\in\bigcup\limits _ {i\in I}A _ {i}\iff\exists i.i\in
-                  I\xand x\in A _ {i}$</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">Indexed Intersection</td>
-                <td style="text-align: left"
-                  >$x\in\bigcap\limits _ {i\in I}A _ {i}\iff\forall i.i\in
-                  I\implies x\in A _ {i}$</td
+                  >$\left\langle x,y\right\rangle\in \xgraph _ f \iff x\in
+                  A\xand y=f(x)$</td
                 >
               </tr>
               <tr>
                 <td style="text-align: left"
-                  >Cartesian Product [see
-                  <a href="#extended-set-builder">1</a>]</td
+                  >Image (of a subset of the domain)</td
                 >
                 <td style="text-align: left"
-                  >$A\times B=\Set{ \left\langle x,y\right\rangle : x\in A\xand
-                  y\in B } $</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left"
-                  >Cartesian Product [see
-                  <a href="#extended-set-builder">1</a>]</td
-                >
-                <td style="text-align: left"
-                  >$A _ {1}\times\cdots\times A _ {n}=\Set{ \left\langle x _
-                  {1},\ldots,x _ {n}\right\rangle : x _ {1}\in A _
-                  {1}\xand\cdots\xand,x _ {n}\in A _ {n} } $</td
+                  >$y\in f\left(S\right)\iff \exists x\in S,
+                  y=f\left(x\right)$</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Cartesian Product</td>
+                <td style="text-align: left">Range (or Image of $f$)</td>
                 <td style="text-align: left"
-                  >$A^n=\underbrace{A\times \cdots \times A}_n$ where $A$ is a
-                  set and $1\leq n$</td
+                  >$\xrange\left(f\right)=f\left(\xdomain\left(f\right)\right)$</td
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Two convenient abbreviations</td>
+                <td style="text-align: left">Identity Map</td>
                 <td style="text-align: left"
-                  >$\left(\forall x\in A.P\left(x\right)\right)\iff\forall
-                  x.x\in A\implies P (x)$ <br />
-                  $\left(\exists x\in A.P\left(x\right)\right)\iff\exists x.x\in
-                  A\xand P(x)$</td
+                  >$\xid _ {A}:A\to A\xand\forall x.\xid _
+                  {A}\left(x\right)=x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Composition</td>
+                <td style="text-align: left"
+                  >$A\overset{f}{\to}B\xand B\overset{g}{\to}C\implies
+                  A\overset{g\circ f}{\longrightarrow} C\xand\forall
+                  x.\left(g\circ
+                  f\right)\left(x\right)=g\left(f\left(x\right)\right)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Injective (one-to-one)</td>
+                <td style="text-align: left"
+                  >$f$ is injective $\iff~\,\forall x.\forall
+                  y.f\left(x\right)=f\left(y\right)\implies x=y$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Surjective (onto)</td>
+                <td style="text-align: left"
+                  >$f$ is surjective $\iff \forall y.\exists
+                  x.y=f\left(x\right)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Bijective</td>
+                <td style="text-align: left"
+                  >$f$ is bijective $\iff$ $f$ is injective and $f$ is
+                  surjective</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Inverse</td>
+                <td style="text-align: left"
+                  >If $f\colon A\to B$ and $f$ is bijective then $f^{-1}:B\to A$
+                  and $f\circ f^{-1}=\xid _ {B}$ and $f^{-1}\circ f=\xid _
+                  {A}$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Inverse Image</td>
+                <td style="text-align: left"
+                  >$f\colon A\to B$ and $S\subseteq B\implies f^{\xinv}(S)=\Set{
+                  x\in A : f(x)\in S } $</td
                 >
               </tr>
             </tbody>
           </table>
           <!-- table-block -->
         </div>
-        <p><em>Remarks:</em></p>
-        <ul class="disc">
-          <li
-            >Set complement has a higher precedence than all other set
-            operations, so that, e.g., $A\cap B’$ means $A\cap (B’)$ and not
-            $(A\cap B)'$.</li
-          >
-          <li
-            >We will write $x\notin A$ as an abbreviation for $\neg\left(x\in
-            A\right)$.</li
-          >
-          <li
-            >The expression “<em>Let $x\in A$</em>” is an abbreviation for “<em
-              >Let x be such that $x\in A$</em
-            >”. Thus, there is a hidden assumption to keep track of when using
-            this shortcut. Rules treat these nested subproofs as a single
-            subproof block.</li
-          >
-          <li
-            >The expression <em>For some $x\in A$ and $y\in B$</em> is an
-            abbreviation for two applications of the $\exists-$ rule, namely it
-            is declaring two constants $x,y$ and further declaring that they are
-            elements of set $A$ and set $B$ respectively.</li
-          >
-        </ul>
         <p
-          >As usual, in addition to using the above definitions in our proofs,
-          we can also derive many useful rules of inference from them.</p
+          >When deriving rules of inference from these definitions, it is
+          helpful to note the following important theorem about inverse
+          functions and bijections.</p
         >
+        <div class="Theorem">
+          <p
+            ><span class="nm">Theorem.</span> A function has an inverse function
+            if and only if it is bijective.</p
+          >
+        </div>
         <div class="rule-set">
           <div class="rule-set-head">
-            <p>Basic Set Theory</p>
+            <p>Functions</p>
             <p
               ><a
-                href="../../../student.html?load=learn/proofs/rules/Sets.lurch"
+                href="../../../student.html?load=learn/proofs/rules/Functions.lurch"
                 class="lurch-open lurch-link"
                 target="_blank"
                 rel="noopener"
@@ -304,524 +277,985 @@
           </div>
           <p
             ><span class="m"
-              >Declare $\in$, nonempty, $\subseteq,\cap, \cup,\, ', \setminus,
-              \mathscr{P}, \times,$ set, Union, Intersect</span
-            >
-            and <span class="m">setbuilder</span> to be constants.</p
+              >Declare maps, inv, $\circ$, injective, surjective,
+              bijective</span
+            ></p
           >
           <div class="rule-grid cols-2">
             <div class="Rule">
               <p
-                ><span class="nm">Empty Set</span>
-                <span class="m">$x \notin \Set{}$</span></p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Nonempty</span>
-                <span class="m"
-                  >$A$ is nonempty $\equiv \exists x.x \in A$</span
-                ></p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Set Builder</span>
-                <span class="m"
-                  >$x \in \Set{ z : \mc{P}(z) } \equiv \mc{P}(x)$</span
-                ></p
-              >
-            </div>
-            <div class="rule-heading">
-              <p>Finite Sets</p>
-            </div>
-            <div class="Rule">
-              <p><span class="m">$x \in \Set{a}$ $\equiv$ $x=a$</span></p>
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="m"
-                  >$x \in \Set{a,b}$ $\equiv$ $x=a\xor x=b$</span
-                ></p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="m"
-                  >$x \in \Set{a,b,c}$ $\equiv$ <br />
-                  $\qquad x=a\xor x=b\xor x=c$</span
-                ></p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="m"
-                  >$x \in \Set{a,b,c,d}$ $\equiv$ <br />
-                  $\qquad x=a\xor x=b\xor x=c\xor x=d$</span
-                ></p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Useful trivial theorems</span><br />
-                <span class="m">$a \in \Set{a}$</span>,<br />
-                <span class="m">$a \in \Set{a,b}$</span>,
-                <span class="m">$b \in \Set{a,b}$</span>,<br />
-                <span class="m">$a \in \Set{a,b,c}$</span>,
-                <span class="m">$b \in \Set{a,b,c}$</span>,
-                <span class="m">$c \in \Set{a,b,c}$</span>,<br />
-                <span class="m">$a \in \Set{a,b,c,d}$</span>,
-                <span class="m">$b \in \Set{a,b,c,d}$</span>,
-                <span class="m">$c \in \Set{a,b,c,d}$</span> and
-                <span class="m">$d \in \Set{a,b,c,d}$</span></p
-              >
-            </div>
-            <div class="rule-heading">
-              <p>Set Relations</p>
-            </div>
-            <div class="Rule">
-              <p><span class="nm">Subset+</span></p>
-              <div class="Premise">
-                <p><em>Given</em></p>
-                <div class="Subproof">
-                  <p
-                    ><span class="m">Let $x \in A$</span><br />
-                    <span class="m">$x\in B$</span></p
-                  >
-                </div>
-              </div>
-              <p><em>Conclude</em> <span class="m">$A\subseteq B$</span></p>
-            </div>
-            <div class="Rule">
-              <p><span class="nm">Set equality</span></p>
-              <div class="Premise">
-                <p><em>Given</em></p>
-                <div class="Subproof">
-                  <p
-                    ><span class="m">Let $x \in A$</span><br />
-                    <span class="m">$x\in B$</span></p
-                  >
-                </div>
-                <div class="Subproof">
-                  <p
-                    ><span class="m">Let $x \in B$</span><br />
-                    <span class="m">$x\in A$</span></p
-                  >
-                </div>
-              </div>
-              <p><em>Conclude</em> <span class="m">$A=B$</span></p>
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Subset-</span>
-                <span class="m">If $A\subseteq B$</span> and
+                ><span class="nm">Function Application</span>
+                <span class="m">If $f\colon A\to B$</span> and
                 <span class="m">$x\in A$</span> then
-                <span class="m">$x\in B$</span>.</p
-              >
-            </div>
-            <div class="rule-heading">
-              <p>Set from other sets</p>
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Power set</span>
-                <span class="m"
-                  >$A\in \mathscr{P}(B) \equiv A\subseteq B$</span
-                ></p
+                <span class="m">$f(x)\in B$</span>.</p
               >
             </div>
             <div class="Rule">
               <p
-                ><span class="nm">Intersection</span>
-                <span class="m">$x\in A\cap B \equiv x\in A , x\in B$</span></p
+                ><span class="nm">Function Rule</span>
+                <span class="m">If $f=x\mapsto\mc{P}(x)$</span> then
+                <span class="m">$f(z)=\mc{P}(z)$</span>.</p
               >
             </div>
             <div class="Rule">
-              <p
-                ><span class="nm">Union</span>
-                <span class="m"
-                  >$x\in A\cup B \equiv x\in A \xor x\in B$</span
-                ></p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Relative Complement</span>
-                <span class="m"
-                  >$x\in A\setminus B \equiv x\in A \xor x\notin B$</span
-                ></p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Complement</span>
-                <span class="m">$x\in B’ \equiv x\notin B$</span></p
-              >
-            </div>
-            <div class="rule-heading">
-              <p>Cartesian product</p>
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Binary $\times$</span>
-                <span class="m">If $z\in A\times B$</span> then <span class="m"
-                  >$z=\langle a,b\rangle$, $a\in A$, $b\in B$ for some $a$ and
-                  $b$</span
-                >.</p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Binary $\times$</span><br />
-                <span class="m"
-                  >$\langle a,b\rangle \in A\times B$ $\equiv$ $a\in A$,  $b\in
-                  B$</span
-                >.</p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Ternary $\times$</span>
-                <span class="m">If $z\in A\times B\times C$</span> then
-                <span class="m"
-                  >$z=\langle a,b,c\rangle$, $a\in A$, $b\in B$, $c\in C$ for
-                  some $a$, $b$, and $c$</span
-                >.</p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Ternary $\times$</span><br />
-                <span class="m"
-                  >$\langle a,b,c\rangle \in A\times B\times C$ $\equiv$ $a\in
-                  A$, $b\in B$, $c\in C$</span
-                ></p
-              >
-            </div>
-            <div class="rule-heading">
-              <p>Indexed Union and Intersection</p>
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Indexed Union+</span><br />
-                <span class="m">If $x\in A_j$</span> and
-                <span class="m">$j\in I$</span> then
-                <span class="m">$\displaystyle x\in\bigcup_{i\in I} A_i$</span
-                >.</p
-              >
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Indexed Union-</span><br />
-                <span class="m"
-                  >If $\displaystyle x\in\bigcup_{i\in I} A_i$</span
+              <p><span class="nm">Function Equality</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$f\colon A \to B$</span>
+                  <span class="m">$g\colon A \to B$</span></p
                 >
-                then <span class="m">$x\in A_j$ for some $j\in I$</span>.</p
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let x in A</span>
+                    <span class="m">$f(x)=g(x)$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$f=g$</span></p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Image of a Set</span>
+                <span class="m">If $x\in S$</span> then <span class="m"
+                  >$f(x)\in f(S)$</span
+                >.</p
               >
             </div>
             <div class="Rule">
-              <p><span class="nm">Indexed Intersection+</span></p>
+              <p
+                ><span class="nm">Image of a Set</span>
+                <span class="m">If $y\in f(S)$</span> then
+                <span class="m">$y=f(x)$ for some $x\in S$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Identity Map</span>
+                <span class="m">$\xid_A\colon A\to A$</span> and
+                <span class="m">$\xid_A(x)=x$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Composition</span>
+                <span class="m">If $f\colon A\to B$</span> and
+                <span class="m">$g\colon B\to C$</span> then
+                <span class="m">$g\circ f\colon A\to C$</span> and
+                <span class="m">$(g\circ f)(x)=g(f(x))$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Injective</span>
+                <span class="m">If $f$ is injective</span> and
+                <span class="m">$f(x)=f(y)$</span> then
+                <span class="m">$x=y$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Injective</span></p>
               <div class="Premise">
                 <p><em>Given</em></p>
                 <div class="Subproof">
                   <p
-                    ><span class="m">Let $j\in I$</span><br />
-                    <span class="m">$x\in A_j$</span></p
+                    ><span class="m">Let $x, y$ be such that $f(x)=f(y)$</span
+                    ><br />
+                    <span class="m">$x=$</span></p
                   >
                 </div>
               </div>
+              <p><em>Conclude</em> <span class="m">$f$ is injective</span></p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Surjective</span></p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $b\in B$</span>
+                    <span class="m">$b=f(a)$</span> for some
+                    <span class="m">$a\in A$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$f$ is surjective</span></p>
+            </div>
+            <div class="Rule">
               <p
-                ><em>Conclude</em>
-                <span class="m"
-                  >$\displaystyle x\in\bigcap_{i\in I} A_i$</span
-                ></p
+                ><span class="nm">Surjective</span>  <span class="m"
+                  >If $f\colon A\to B$, $f$ is surjective</span
+                >
+                and <span class="m">$b\in B$</span> then <span class="m"
+                  >$b=f(a)$ for some $a\in A$</span
+                >.</p
               >
             </div>
             <div class="Rule">
               <p
-                ><span class="nm">Indexed Intersection-</span><br />
-                <span class="m"
-                  >If $\displaystyle x\in\bigcap_{i\in I} A_i$</span
-                >
-                and <span class="m">$j\in I$</span> then
-                <span class="m">$x\in A_j$</span>.</p
+                ><span class="nm">Bijective</span><br />
+                <span class="m">$f$ is bijective $\equiv f$ is injective</span>
+                , <span class="m">$f$ is surjective</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Inverse Map</span>
+                <span class="m">If $f\colon A\to B$</span> and
+                <span class="m">$f$ is bijective</span> then
+                <span class="m">$f^{-1}\colon B \to A$, $f^{-1}(a)=a$</span> and
+                <span class="m">$f(f^{-1}(b))=b$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Inverse Image</span>
+                <span class="m">$a\in f^\xinv(S) \equiv f(a)\in S$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Inverse Image</span>
+                <span class="m">If $f\colon A\to B$</span> and
+                <span class="m">$U\subseteq B$</span> then
+                <span class="m">$f^\xinv(U)\subseteq A$</span>.</p
               >
             </div>
             <!-- rule-grid -->
           </div>
+          <div class="rule-set-remarks">
+            <p class="smallskip"><em>Remarks:</em></p>
+            <ul class="disc">
+              <li
+                >The alternate function notation $A\overset{f}{\to}B$ and
+                standard function notation $f\colon A\to B$ can be used
+                interchangeably without a rule of inference as a shortcut.</li
+              >
+            </ul>
+            <!-- rule-set-remarks -->
+          </div>
           <!-- rule-set -->
         </div>
-        <h2 id="extended-set-builder">Extended Set-Builder Notation</h2>
-        <p
-          >In addition to set builder notation, $\Set{ x : P(x) }$ where $P$ is
-          a predicate, it is quite common practice in mathematics to write sets
-          in the form $$\Set{ E(x _ 0,\ldots,x _ n) : P(x _ 0,\ldots,x _ n) }$$
-          where $E(x _ 0,\ldots,x _ n)$ is an expression containing the free
-          variables $x _ 0,\ldots,x _ n$ and $P$ is a predicate. This is defined
-          to be a shorthand for $$\Set{ x : \exists x _ 0,\ldots,x _ n, x=E(x _
-          0,\ldots,x _ n) \xand P(x _ 0,\ldots,x _ n) }.$$</p
-        >
-        <div class="example-box">
-          <p
-            ><strong>Example <span class="thm"></span></strong><br />
-            When we write $$\bbC = \Set{ a+bi : a,b\in\bbR}$$ this is an
-            abbreviation for $$\bbC = \Set{ x : \exists a.b.x=a+bi \xand
-            a,b\in\bbR }$$ or equivalently $$\bbC = \Set{ x : \exists
-            a.b\in\bbR.x=a+bi }$$</p
-          >
-          <p
-            >Thus, if you need to pick an arbitrary element of $\bbC$ in your
-            proof you should do it like this.</p
-          >
-          <div class="Subproof">
-            <p
-              >Let $z\in \bbC$<br />
-              $z = a+bi \forsome a\in\RR \xand b\in\RR$<br />
-              $\qquad\vdots$</p
-            >
-          </div>
-          <!-- example-box -->
-        </div>
-        <p>The derived rules do this for you automatically.</p>
-        <h1>Problems</h1>
-        <p
-          >In the following problems, capital letters represent sets which are
-          all subsets of a universal set $\mathcal{U}$.</p
-        >
+        <h2>Problems</h2>
+        <p>In the following problems, capital letters represent sets.</p>
         <div class="question">
           <p
-            ><span class="thm-label">easy warmup</span> If $x\in\Set{a}$ and
-            $y\in\Set{a}$ then $x=y$</p
+            ><span class="thm-label">Composition is associative</span> If
+            $h\colon A\to B$, $g\colon B\to C$, and $f\colon C\to D$ then</p
+          >
+        </div>
+        <p>$$f\circ (g\circ h)=(f\circ g)\circ h$$</p>
+        <div class="question">
+          <p
+            ><span class="thm-label">Nonsurjective injection</span> Suppose
+            $f\colon \bbN\to\bbN$ and for all $n\in\bbN, f(n)=3n+1$. Then $f$ is
+            injective but not surjective.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Order doesn’t matter</span> $\Set{a,b} =
-            \Set{b,a}$</p
+            ><span class="thm-label">Yet this is both</span> Suppose $f\colon
+            \bbR\to\bbR$ and $f(x)=3x+1$ for all $x\in\bbR$. Then $f$ is
+            bijective.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Order does matter</span> $\langle
-            a,b\rangle = \langle b,a\rangle$ if and only if $a=b$</p
-          >
-        </div>
-        <div class="question">
-          <p><span class="thm-label">excluded middle</span> $x\in A\cup A’$</p>
-        </div>
-        <div class="question">
-          <p><span class="thm-label">double negative</span> $A’'=A$</p>
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">ordered pair inequality</span> $x\neq y$ if
-            and only if $\langle x,y\rangle \neq\langle y,x\rangle$</p
+            ><span class="thm-label">Noninjective</span> Suppose $f\colon
+            \bbQ\to\bbQ$ and $f( r )=r^2$ for all rational numbers $r$. Then $f$
+            is not injective.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">A set of sets</span> $\Set{1,2} \in \Set{ A
-            : \Set{1} \subseteq A }$</p
+            ><span class="thm-label">Tiny function</span> If $A=\Set{1}$ and
+            $G=\Set{(1,1)}$ then there exists a function $f:A\to A$ such that
+            $G$ is the graph of $f$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Cartesian calculation</span> $\Set{2}
-            \times \Set{ 3,5 } = \Set{ \langle 2,3\rangle, \langle 2,5\rangle
-            }$</p
+            ><span class="thm-label">Image of subsets</span> If $f\colon A \to
+            B$ and $S\subseteq T$ and $T\subseteq A$ then $f(S)\subseteq
+            f(T)$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Subset is reflexive</span> $A\subseteq
-            A$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">alternate definition of subset</span>
-            $A\subseteq B$ if and only if for all $x$, either $x\notin A$ or
-            $x\in B$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Transitivity of $\subseteq$</span>
-            $A\subseteq B\xand B\subseteq C \implies A\subseteq C$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Double negative</span> $A - (B - A) = A$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Substraction lessens</span> $A - B
-            \subseteq A$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Contravariance of complement</span> $A
-            \subseteq B \iff B’ \subseteq A’$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Idempotency of $\cap$</span> $A \cap A =
-            A$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Idempotency of $\cup$</span> $A \cup A =
-            A$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Commutativity of $\cap$</span> $A \cap B =
-            B\cap A$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Commutativity of $\cup$</span> $A \cup B =
-            B\cup A$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Associativity of $\cap$</span> $(A \cap B)
-            \cap C = A\cap (B\cap C)$</p
-          >
-        </div>
-        <div class="question">
-          <p
-            ><span class="thm-label">Associativity of $\cup$</span> $(A \cup B)
-            \cup C = A\cup (B\cup C)$</p
+            ><span class="thm-label">A bijection with a proper subset</span> Let
+            $E=\Set{ n\in\bbN : n\text{ is even}}$, and define $f\colon \bbN\to
+            E$ such that $f(n)=2n$ for all $n\in\bbN$. Then $f$ is a
+            bijection.</p
           >
         </div>
         <div class="question">
           <p
             ><span class="thm-label"
-              >Relative complement is not associative</span
+              >Composition of injective is injective</span
             >
-            If $x\in A\cap B\cap C$ then $x\in A-(B-C)$ and $x\notin
-            (A-B)-C$.</p
+            If $f\colon A\to B$ and $g\colon B\to C$ are both injective then
+            $g\circ f$ is injective.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Distributivity of $\cap$ over $\cup$</span>
-            $A \cap (B \cup C) = (A\cap B) \cup (A\cap C))$</p
+            ><span class="thm-label"
+              >Composition of surjective is surjective</span
+            >
+            If $f\colon A\to B$ and $g\colon B\to C$ are both surjective then
+            $g\circ f$ is surjective.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Distributivity of $\cup$ over $\cap$</span>
-            $A \cup (B \cap C) = (A\cup B) \cap (A\cup C))$</p
+            ><span class="thm-label"
+              >Composition of bijective is bijective</span
+            >
+            If $f\colon A\to B$ and $g\colon B\to C$ are both bijective then
+            $g\circ f$ is bijective.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">De Morgan</span> $(A \cap B)’ = A’\cup
-            B’$</p
+            ><span class="thm-label">Complement is bijective</span> Let $A$ be a
+            set and define $f\colon \mathcal{P}(A)\to \mathcal{P}(A)$ such that
+            $f(X)=X’$ for all $X\in\mathcal{P}(A)$. Then $f$ is a bijection.
+            Note that in this situation $X’$ refers to $A-X$, i.e., $A$ is the
+            universal set.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">De Morgan</span> $(A \cup B)’ = A’\cap
-            B’$</p
+            ><span class="thm-label">Inverse of a composition</span> If $f\colon
+            A\to B$ and $g\colon B\to C$ are both bijective then $$(g\circ
+            f)^{-1}=f^{-1}\circ g^{-1}$$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">More De Morgan</span> $A-(B \cap C) =
-            (A-B)\cup (A-C)$</p
+            ><span class="thm-label">Identity maps are bijective</span> The
+            function $\xid _ A$ is bijective.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">More De Morgan</span> $A-(B \cup C) =
-            (A-B)\cap (A-C)$</p
+            ><span class="thm-label">Inverse image of codomain</span> If
+            $f\colon A\to B$ then $f^{\xinv}(B)=A$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Even more De Morgan</span> $$\left(\bigcap
-            _ {i\in I} A _ i\right)’ = \bigcup _ {j\in I} A _ j’$$</p
+            ><span class="thm-label">Image of the inverse image</span> If
+            $f\colon A\to B$ is surjective and $S\subseteq B$ then
+            $f(f^{\xinv}(S))=S$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Even more De Morgan</span> $$\left(\bigcup
-            _ {i\in I} A _ i\right)’ = \bigcap _ {j\in I} A _ j’$$</p
+            ><span class="thm-label">Inverse image of the image</span> If
+            $f\colon A\to B$ is injective and $S\subseteq A$ then
+            $f^{\xinv}(f(S))=S$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Not a subset</span> If $A$ is nonempty and
-            $\neg(A\subseteq B)$ then $\exists x.x\in A\cap B’$</p
+            ><span class="thm-label">Identity for composition</span> If $f\colon
+            A\to A$ then $f\circ \xid _ A=f$ and $\xid _ A\circ f=f$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Always in the power set</span>
-            $\emptyset\in\mathcal{P}(A)$</p
+            ><span class="thm-label">linear bijections</span> A linear function
+            is bijective if and only if it has nonzero slope. Here we define a
+            linear function to be a map $f\colon \bbR\to\bbR$ such that for some
+            $m,b\in\bbR$, $$f(x)=m\cdot x+b$$ In this situation we say that $m$
+            is the slope of $f$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Always in the power set</span>
-            $A\in\mathcal{P}(A)$</p
+            ><span class="thm-label">a real example</span> Define
+            $\left(,0…1\right]$ to be the set $\Set{x\in\bbR : 0&lt;x\leq 1}$
+            and let $f\colon \bbR\to\left(,0…1\right]$ be the function such that
+            for all real numbers $x$, $$f(x)=\frac{1}{1+x^2}$$ Then $f$ is
+            surjective but not injective.</p
+          >
+        </div>
+        <h2>Relations</h2>
+        <p
+          >We often identify a function with its graph. From that perspective, a
+          function $f\colon A\to B$ is a subset of $A\times B$ that satisfies
+          certain conditions. We can generalize this concept to other subsets of
+          $A\times B$. Such a set is called a <em>relation</em> from $A$ to $B$.
+          In the case where $A=B$ we say that such a set defines a
+          <em>relation on $A$</em>. Relations are often categorized by the
+          properties they satisfy. Some of the more common properties of
+          relations are described in the following table.</p
+        >
+        <p
+          >While we can have relations between any two sets, one of the most
+          important special cases is the situation where a relation is from a
+          set to itself. This provides a convenient way to describe
+          relationships between the elements of the set. In the following $A$,
+          $B$, $S$ and $T$ are sets.</p
+        >
+        <div class="table-block">
+          <p class="table-title">Relations</p>
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align: left">Name</th>
+                <th style="text-align: left">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left">Def of relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is a relation from $A$ to $B~\iff\,\sim\subseteq
+                  A\times B$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Infix notation</td>
+                <td style="text-align: left"
+                  >$x\sim y~\iff\,\tuple{x,y}\in\,\sim$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Relation on a set</td>
+                <td style="text-align: left"
+                  >$\sim$ is a relation on $A~\iff\,\sim\,\subseteq A\times
+                  A$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  ><span class="table-gap"></span
+                  ><span class="table-section">Equivalence Relations</span></td
+                >
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">Reflexive relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is reflexive $\iff~\forall x\in A,x\sim x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Symmetric relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is symmetric $\iff~\forall x\in A,\forall y\in A,x\sim
+                  y\ximplies y\sim x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Transitive relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is transitive $\iff~\forall x\in A,\forall y\in
+                  A,\forall z\in A, x\sim y\xand y\sim z\ximplies x\sim z$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Equivalence Relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is an equivalence relation $\iff~\sim $ is reflexive,
+                  symmetric, and transitive.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Equivalence Class</td>
+                <td style="text-align: left"
+                  >$\sim$ is an equivalence relation and $a\in
+                  A\ximplies\left[a\right] _ {\sim } =\Set{ x\in A : x\sim a }
+                  $</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Partition of a set</td>
+                <td style="text-align: left"
+                  >$P$ is a partition of $A~\equiv$ <br />
+                  <span class="qquad"></span> (a) $P\subseteq\mathscr{P}(A)$<br />
+                  <span class="qquad"></span> (b) $\Set{}\notin P$ <br />
+                  <span class="qquad"></span> (c) $A=\bigcup\limits _{S\in P}S$
+                  <br />
+                  <span class="qquad"></span> (d) $\forall S\in P,\forall T\in
+                  P,S=T\xor S\cap T=\emptyset$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">congruent mod $m$</td>
+                <td style="text-align: left"
+                  >if $m\in\bbN^+$ and $a,b\in\bbZ$ then $a \xcong{m} b\iff
+                  m\mid a-b$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  ><span class="table-gap"></span
+                  ><span class="table-section">Properties</span></td
+                >
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">Irreflexive relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is irreflexive $\iff~\forall x\in A,\neg(x\sim x)$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Antisymmetric relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is antisymmetric $\iff~\forall x\in A,\forall y\in
+                  A,x\sim y\xand y\sim x\ximplies x=y$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Total relation</td>
+                <td style="text-align: left"
+                  >$\sim$ is total$\iff~\forall x\in A,\forall y\in A,x\sim
+                  y\xor y\sim x$</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left"
+                  ><span class="table-gap"></span
+                  ><span class="table-section">Order</span></td
+                >
+                <td style="text-align: left"></td>
+              </tr>
+              <tr>
+                <td style="text-align: left">Partial order</td>
+                <td style="text-align: left"
+                  >$\sim$ is a partial order $\iff~\sim $ is reflexive,
+                  antisymmetric, and transitive.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Strict Partial order</td>
+                <td style="text-align: left"
+                  >$\sim$ is a strict partial order $\iff~\sim $ is irreflexive,
+                  antisymmetric, and transitive.</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align: left">Total Order</td>
+                <td style="text-align: left"
+                  >$\sim$ is total order $\iff~\sim $ is antisymmetric,
+                  transitive, and total.</td
+                >
+              </tr>
+            </tbody>
+          </table>
+          <!-- table-block -->
+        </div>
+        <p
+          >We often abbreviate $\left[a\right] _ {\sim}$ by $\left[a\right]$
+          when the relation $\sim$ is clear from context. There is a close
+          relationship between equivalence relatins, equivalence classes, and
+          partitions give by the following theorem.</p
+        >
+        <div class="Theorem">
+          <p
+            ><span class="nm">Theorem</span> Let $\sim\,\subseteq A\times A$ be
+            an equivalence relation and $a,b\in A$. Then
+            $$\left[a\right]=\left[b\right]\iff a\sim b$$</p
+          >
+        </div>
+        <div class="Theorem">
+          <p
+            ><span class="nm">Corollary</span> Let $\sim\,\subseteq A\times A$
+            be an equivalence relation. Then $A$ is a disjoint union of
+            equivalence classes, i.e. $$A=\bigcup _ {a\in A}\left[a\right]$$ and
+            $$\forall a.b\in
+            A,\left[a\right]=\left[b\right]\xor\left[a\right]\cap\left[b\right]=\emptyset$$</p
+          >
+        </div>
+        <p
+          >Thus, the set of equivalence classes of an equivalence relation on
+          $A$ is a partition of $A$. Furthermore, every partition $P$ of $A$ is
+          the set of equivalence classes for the equivalence relation $\sim$ on
+          $A$ defined by $$\forall x.y\in A,x\sim y\iff\exists S\in P,x\in
+          S\xand y\in S$$.</p
+        >
+        <div class="rule-set">
+          <div class="rule-set-head">
+            <p>Relations</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/relations.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+            <!-- rule-set-head -->
+          </div>
+          <p
+            ><span class="m"
+              >Declare $\sim$, reflexive, symmetric, transitive, irreflexive,
+              antisymmetric, total, class, partial order, strict partial order,
+              total order, equivalence relation</span
+            >
+            and <span class="m">partition</span> to be constants.</p
+          >
+          <div class="rule-grid cols-2">
+            <div class="Rule">
+              <p
+                ><span class="nm">Relations as sets of pairs</span><br />
+                <span class="m"
+                  >$x\sim y ~\equiv~ \langle x,y\rangle\in\,\sim$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Relation on a set</span><br />
+                <span class="m"
+                  >$\sim$ is a relation on $A~ \equiv ~\sim \,\subseteq A\times
+                  A$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Relation on a set</span><br />
+                <span class="m">If $\sim$ is a relation on $A$</span> and
+                <span class="m">$x\sim y$</span> then
+                <span class="m">$x\in A$</span> and
+                <span class="m">$y\in A$</span>.</p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Equivalence Relations</p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Reflexive</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$\sim$ is a relation on $A$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $x\in A$</span><br />
+                    <span class="m">$x\sim x$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em> <span class="m">$\sim$ is reflexive</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Symmetric</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$\sim$ is a relation on $A$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $x,y$ be such that x\sim y$</span
+                    ><br />
+                    <span class="m">$y\sim x$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em> <span class="m">$\sim$ is symmetric</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Reflexive</span>
+                <span class="m">If $\sim$ is a relation on $A$</span> and
+                <span class="m">$\sim$ is reflexive</span> then
+                <span class="m">$x\sim x$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Symmetric</span>
+                <span class="m"
+                  >If $\sim$ is a relation on $A$, $\sim$ is symmetric</span
+                >
+                and <span class="m">$x\sim y$</span> then
+                <span class="m">$y\sim x$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Transitive</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$\sim$ is a relation on $A$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m"
+                      >Let $x,y,z$ be such that $x\sim y$ and $y\sim z$</span
+                    ><br />
+                    <span class="m">$x\sim z$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em>
+                <span class="m">$\sim$ is transitive</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Equivalence Relation</span>
+                <span class="m">If $\sim$ is a relation on $A$</span></p
+              >
+              <div class="Subproof">
+                <p
+                  ><span class="m"
+                    >$\sim$ is an equivalence relation $\equiv$</span
+                  ><br />
+                  (a) <span class="m">$\sim$ is reflexive,</span><br />
+                  (b) <span class="m">$\sim$ is symmetric,</span><br />
+                  (c) <span class="m">$\sim$ is transitive</span></p
+                >
+              </div>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Transitive</span>
+                <span class="m"
+                  >If $\sim$ is a relation on $A$, $\sim$ is transitive, $x\sim
+                  y$
+                </span>
+                and <span class="m">$y\sim z$</span> then
+                <span class="m">$x\sim z$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Equivalence Class</span><br />
+                <span class="m">If $\sim$ is an equivalence relation</span>
+                then</p
+              >
+              <div class="Subproof display">
+                <p><span class="m">$x \sim a ~ \equiv ~ x\in [a]$</span></p>
+              </div>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Partition</span>
+                <span class="m">If $P$ is a partition of $A$</span> then<br />
+                <span class="m">$P\subseteq \mathscr{P}$</span> and
+                <span class="m">$\displaystyle A=\bigcup_{S\in P} S$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Partition</span>
+                <span class="m">If $P$ is a partition of $A$, $~S\in P$</span>
+                and <span class="m">$T\in P$</span> then
+                <span class="m">$S = T \xor S\cap T = \Set{}$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Partition</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$A=\bigcup_{S\in P} S$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m"
+                      >Let $S, T$ be such that $S\in P$ and $T\in P$</span
+                    ><br />
+                    <span class="m">$S = T \xor S\cap T = \Set{}$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em>
+                <span class="m">$P$ is a partition of $A$</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Congruence mod $m$</span>
+                <span class="m">$a \xcong{m} b~\equiv~ m\mid a-b$</span></p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Other Properties of Relations on a Set</p>
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Irreflexive</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$\sim$ is a relation on $A$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $x\in A$</span><br />
+                    <span class="m">not $x\sim x$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em>
+                <span class="m">$\sim$ is irreflexive</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Antisymmetric</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$\sim$ is a relation on $A$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m"
+                      >Let $x,y$ be such that $x\sim y$ and $y \sim x$</span
+                    ><br />
+                    <span class="m">$x=y$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em>
+                <span class="m">$\sim$ is antisymmetric</span></p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Irreflexive</span>
+                <span class="m"
+                  >If $\sim$ is a relation on $A$, $\sim$ is irreflexive,</span
+                >
+                and <span class="m">$x\in A$</span> then
+                <span class="m">not $x\sim x$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Antisymmetric</span>
+                <span class="m"
+                  >If $\sim$ is a relation on $A$, $\sim$ is antisymmetric,
+                  $x\sim y$</span
+                >
+                and <span class="m">$y \sim x$</span> then
+                <span class="m">$x=y$</span>.</p
+              >
+            </div>
+            <div class="Rule">
+              <p><span class="nm">Total</span></p>
+              <div class="Premise">
+                <p
+                  ><em>Given</em><br />
+                  <span class="m">$\sim$ is a relation on $A$</span></p
+                >
+                <div class="Subproof">
+                  <p
+                    ><span class="m"
+                      >Let $x,y$ be such that $x\in A$ and $y \in A$</span
+                    ><br />
+                    <span class="m">$x\sim y$ or $y\sim x$</span></p
+                  >
+                </div>
+              </div>
+              <p><em>Conclude</em> <span class="m">$\sim$ is total</span></p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Total</span>
+                <span class="m"
+                  >If $\sim$ is a relation on $A$, $\sim$ is total, $x\sim
+                  y$</span
+                >
+                and <span class="m">$y \sim x$</span> then
+                <span class="m">$x=y$</span>.</p
+              >
+            </div>
+            <div class="rule-heading">
+              <p>Orders</p>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Partial Order</span>
+                <span class="m">If $\sim$ is a relation on $A$</span></p
+              >
+              <div class="Subproof">
+                <p
+                  ><span class="m">$\sim$ is a partial order $\equiv$</span
+                  ><br />
+                  (a) <span class="m">$\sim$ is reflexive,</span><br />
+                  (b) <span class="m">$\sim$ is antisymmetric,</span><br />
+                  (c) <span class="m">$\sim$ is transitive</span></p
+                >
+              </div>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Strict Partial Order</span>
+                <span class="m">If $\sim$ is a relation on $A$</span></p
+              >
+              <div class="Subproof">
+                <p
+                  ><span class="m"
+                    >$\sim$ is a strict partial order $\equiv$</span
+                  ><br />
+                  (a) <span class="m">$\sim$ is irreflexive,</span><br />
+                  (b) <span class="m">$\sim$ is antisymmetric,</span><br />
+                  (c) <span class="m">$\sim$ is total</span></p
+                >
+              </div>
+            </div>
+            <div class="Rule">
+              <p
+                ><span class="nm">Total Order</span>
+                <span class="m">If $\sim$ is a relation on $A$</span></p
+              >
+              <div class="Subproof">
+                <p
+                  ><span class="m">$\sim$ is an total order $\equiv$</span
+                  ><br />
+                  (a) <span class="m">$\sim$ is antisymmetric,</span><br />
+                  (b) <span class="m">$\sim$ is transitive,</span><br />
+                  (c) <span class="m">$\sim$ is total</span></p
+                >
+              </div>
+            </div>
+            <!-- rule-grid -->
+          </div>
+          <!-- rule-set -->
+        </div>
+        <h1>Problems</h1>
+        <p>In the following problems, capital letters represent sets.</p>
+        <div class="question">
+          <p
+            ><span class="thm-label">Not an equivalence relation</span> Suppose
+            $\sim$ is the set $$\sim = \Set{
+            \langle1,1\rangle,\langle2,2\rangle,\langle3,3\rangle,\langle1,2\rangle,\langle2,1\rangle,\langle1,3\rangle,\langle3,1\rangle}$$
+            Then $\sim$ is not an equivalence relation on the set
+            $\Set{1,2,3}$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Power sets of subsets</span> $A\subseteq
-            B\implies \mathcal{P}(A)\subseteq\mathcal{P}(B)$</p
+            ><span class="thm-label">Not not an equivalence relation</span> If
+            $\sim$ is a relation on $\bbZ$ such that for all $x,y\in\bbZ$,
+            $$x\sim y\iff x=y \xor x=\negative{y}$$ then $\sim$ is an
+            equivalence relation.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Power sets of complements</span>
-            $A\subseteq B\implies \mathcal{P}(B’)\subseteq\mathcal{P}(A’)$</p
+            ><span class="thm-label"
+              >equivalence relation induced by a function</span
+            >
+            If $f\colon A\to B$ and $\sim$ is a relation on $A$ such that for
+            all $x,y\in A$, $$x\sim y\iff f(x)=f(y)$$ then $\sim$ is an
+            equivalence relation.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">$\times$ is not commutative</span> If
-            $A\times B$ is non-empty, then $A\times B=B\times A$ if and only if
-            $A=B$</p
+            ><span class="thm-label">an equivalence relation?</span> Let $\sim$
+            be the relation on $\mathcal{P}(\bbZ)$ such that for all
+            $A,B\in\mathcal{P}(\bbZ)$, $$A\sim B\iff \exists z\in \bbZ,z\in
+            A\cap B$$ Prove your answer to the following questions.</p
+          >
+          <div class="parts">
+            <ol>
+              <li>Is $\sim$ reflexive?</li>
+              <li>Is $\sim$ symmetric?</li>
+              <li>Is $\sim$ transitive?</li>
+            </ol>
+          </div>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">an equivalence relation?</span> Let
+            $z\in\bbZ$. Define $\sim _ z$ be the relation on $\mathcal{P}(\bbZ)$
+            such that for all $A,B\in\mathcal{P}(\bbZ)$, $$A\sim _ z B\iff z\in
+            A\cap B$$ Prove your answer to the following questions.</p
+          >
+          <div class="parts">
+            <ol>
+              <li>Is $\sim _ z$ reflexive?</li>
+              <li>Is $\sim _ z$ symmetric?</li>
+              <li>Is $\sim _ z$ transitive?</li>
+            </ol>
+          </div>
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label"
+              >Congruence is an equivalence relation</span
+            >
+            Let $m$ be a positive integer. The relation $\xcong{m}$ is an
+            equivalence relation on any set of integers.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Subsets are contagious</span> $A\subseteq C
-            \xand B\subseteq D\implies A\times B\subseteq C\times D$</p
+            ><span class="thm-label">class representatives mod $m$</span> Let
+            $m$ be a positive integer. For any integer $n$ there exists a unique
+            integer $k$ with $0\leq k&lt;m$ such that $n\xcong{m} k$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Alternate definition of subset</span> $A
-            \subseteq B$ if and only if $\forall x. x\notin A \xor x\in B$</p
+            ><span class="thm-label">moduli are zeroish</span> Let $m\in\bbN^+$
+            and $a,k\in\bbZ$. Then $a\xcong{m}a+k\cdot m$</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Power set and union</span>
-            $\mathcal{P}(A)\cup\mathcal{P}(B)\subseteq\mathcal{P}(A\cup B)$</p
+            ><span class="thm-label">modular addition</span> Let $m\in\bbN^+$
+            and $a,b,c,d\in\bbZ$. If $a\xcong{m}b$ and $c\xcong{m}d$ then
+            $a+c\xcong{m}b+d$.</p
           >
         </div>
         <div class="question">
           <p
-            ><span class="thm-label">Power set and intersection</span>
-            $\mathcal{P}(A)\cap\mathcal{P}(B) = \mathcal{P}(A\cap B)$</p
+            ><span class="thm-label">modular multiplication</span> Let
+            $m\in\bbN^+$ and $a,b,c,d\in\bbZ$. If $a\xcong{m}b$ and
+            $c\xcong{m}d$ then $a\cdot c\xcong{m}b\cdot d$.</p
           >
         </div>
-        <div class=""></div>
+        <div class="question">
+          <p
+            ><span class="thm-label">Equivalence classes are disjoint</span> If
+            $\sim$ is an equivalence relation on a set $A$ and $x,y\in A$ then
+            either $[x]=[y]$ or $[x]\cap [y]=\Set{}$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">A partial order</span> Let $A$ be a set and
+            $\sim$ be the relation on $\mathcal{P}(A)$ such that for every
+            $S,T\in\mathcal{P}(A)$, $$S\sim T \iff S\subseteq T$$ Then $\sim$ is
+            a partial order.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">A strict partial order</span> Define
+            $A=\Set{ X\subseteq\bbN : 0\in X }$. For any $S\in A$ and $n\in\bbN$
+            we say $S$ is $n$-<em>complete</em> if and only if $\bbO _ n$ is a
+            subset of $S$ and $\bbO _ {n+1}$ is not a subset of $S$. Let $\sim$
+            be a relation on $A$ such that for all $S,T\in A$, $$S\sim
+            T\iff\exists m.\exists n.m&lt;n\xand S\text{ is $m$-complete}\xand
+            T\text{ is $n$-complete}$$ Then $\sim$ is a strict partial order.</p
+          >
+        </div>
       </div>
 
       <div id="footer-block">
