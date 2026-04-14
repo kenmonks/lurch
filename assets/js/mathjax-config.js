@@ -115,6 +115,7 @@
           surreal: ["\\left\\langle #1 : #2 \\right\\rangle", 2],
           Sym: "{\\operatorname{Sym}}",
           true: "{\\operatorname{true}}",
+          tuple: ["\\left\\langle{#1}\\right\\rangle", 1],
           Units: ["\\mathcal{U}\\left(#1\\right)", 1],
           xaffine: "{\\operatorname{affine}}",
           xAffine: "{\\operatorname{Affine}}",
