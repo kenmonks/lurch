@@ -4,7 +4,7 @@
                 <script language="javascript">
                     const link = document.querySelector( '#loadlink > p > a' )
                     const thisURL = encodeURIComponent( window.location.href )
-                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                    link?.setAttribute( 'href', 'https://lurch.plus/student.html?load=' + thisURL )
                 </script>
             </div>
         
@@ -721,15 +721,6 @@
 <div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
 <p><strong>Proof:</strong>&nbsp;</p>
 <p>&nbsp;</p>
-<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
-</div>
-<hr>
-<p><span style="background-color: rgb(45, 194, 107); color: rgb(236, 240, 241);">&nbsp; Problem 3.<strong> </strong></span>&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\star&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">⋆</span></span></span></span></span><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\star&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">⋆</span></span></span></span></span><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\star&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">⋆</span></span></span></span></span></p>
-<div class="lurch-atom" data-metadata_type="&quot;theorem&quot;" data-shell_title="Theorem:">
-<p><strong>Theorem (another real number).</strong> &nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;exists x.0&lt;x and x&lt;1&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__cmr">&exist;</span><span class="ML__mathit">x</span><span class="ML__cmr">.</span><span class="ML__cmr">0</span><span class="ML__cmr">&lt;</span><span class="ML__mathit">x</span><span class="ML__text"> and </span><span class="ML__mathit">x</span><span class="ML__cmr">&lt;</span><span class="ML__cmr">1</span></span></span></span></span></p>
-</div>
-<div class="lurch-atom" data-metadata_type="&quot;proof&quot;" data-shell_title="Proof:">
-<p><strong>Proof:</strong>&nbsp;<br><br></p>
 <p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expositorymath&quot;" data-metadata_latex="&quot;\\square&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__ams">□</span></span></span></span></span></p>
 </div>
 <hr>
