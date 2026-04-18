@@ -356,34 +356,6 @@
                 >
               </tr>
               <tr>
-                <td style="text-align: left">increasing</td>
-                <td style="text-align: left"
-                  >$\langle a _ n\rangle _ {n=0}^\infty$ is increasing $\iff~
-                  \forall k.a _ k&lt;a _ {k+1}$</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">nondecreasing</td>
-                <td style="text-align: left"
-                  >$\langle a _ n\rangle _ {n=0}^\infty$ is nondecreasing $\iff~
-                  \forall k.a _ k\leq a _ {k+1}$</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">decreasing</td>
-                <td style="text-align: left"
-                  >$\langle a _ n\rangle _ {n=0}^\infty$ is decreasing $\iff~
-                  \forall k.a _ {k+1}&lt;a _ k$</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align: left">nonincreasing</td>
-                <td style="text-align: left"
-                  >$\langle a _ n\rangle _ {n=0}^\infty$ is nonincreasing $\iff~
-                  \forall k.a _ {k+1}\leq a _ k$</td
-                >
-              </tr>
-              <tr>
                 <td style="text-align: left">absolute value</td>
                 <td style="text-align: left"
                   >$\lvert x\rvert =\begin{cases} x &amp; \text{if }0\leq x \\
@@ -903,32 +875,6 @@
               $$z^{-n}=(z^n)^-$$</p
             >
           </div>
-          <!-- Many of the definitions for natural numbers can be extended to include all integers, along with adding some new definitions that apply to integers only.  In the following, all single letter variables have type integer unless otherwise specified.
-
-::: table-block
- Extended Definitions for Integers {.table-title}
-
- | Name | Definition |
- |:-----|:-----------|
- | Division Algorithm Theorem | $\forall a.\forall b.0<b\implies\exists!q,\exists! r,a=qb+r\xand 0\leq r<b$
- | Quotient | $q=\left(a \xquo b\right) \equiv \forall a.\forall b.b\neq 0\implies\forall q.\forall r.a=qb+r\xand0\leq r<b$ |
- | Remainder | $r=\left(a \xmod b\right) \equiv \forall a.\forall b\neq0,\forall q.\forall r.a=qb+r\xand0\leq r<b$ |
- | Divides | $\forall a.b, a\mid b\iff\exists q.b=a\cdot q$ |
- | Divisor (or factor) | $a$ is a divisor (or factor) of $b\iff a\mid b$ |
- | Even | $a\text{ is even}\iff 2\mid a$ |
- | Odd | $a\text{ is odd}\iff a \text{ is not even}$ |
- | Prime | $p$ is prime $\iff \lvert p\rvert \gt 1 \xand \forall a.a\mid p \ximplies \lvert a\rvert = 1 \xor \lvert a\rvert = \lvert p\rvert$ |
- | Composite | $n$ is composite $\iff\exists a. a\mid n\xand1<a<\lvert n\rvert$ |
- | Greatest Common Divisor | $d=\xgcd\left(a,b\right)\iff$ <br> $0<d \xand d\mid a\xand d\mid b\xand\forall c>,c\mid a\xand c\mid b\ximplies c\leq d$ |
- | Least Common Multiple | $d=\xlcm\left(a,b\right)\iff$ <br> $d>0\xand a\mid d\xand b\mid d\xand\forall c>0,a\mid c\xand b\mid c\ximplies d\leq c$ |
- | GCD (alt version) | $d=\xgcd\left(a,b\right)\iff$ <br> $d>0\xand d\mid a\xand d\mid b\xand\forall c>0,c\mid a\xand c\mid b\ximplies c\mid d$ |
- | LCM (alt version) | $d=\xlcm\left(a,b\right)\iff$ <br> $d>0\xand a\mid d\xand b\mid d\xand\forall c>0,a\mid c\xand b\mid c\ximplies d\mid c$ |
- | Relatively Prime | $a,b$ are relatively prime $\iff\xgcd\left(a,b\right)=1$ |
- | Congruent mod $m$ | $\forall m.\forall a.b,a\xcong{m} b\iff m\mid\left(a-b\right)$ | -->
-          <!-- table-block -->
-          <!-- :::
-
-*Remarks:* It is also commonplace to require that prime numbers and composite numbers be positive. -->
           <h2>Rational numbers</h2>
           <p
             >But there are many more real numbers besides the integers. For
@@ -1234,8 +1180,8 @@
           <div class="question">
             <p
               ><span class="thm-label">Every natural is real</span> The terms of
-              the sequence $N$, $0$, $+$, $\cdot$, $&lt;$ and $\sigma$ together
-              satisfy the Peano Axioms.</p
+              the sequence $\NN$, $0$, $+$, $\cdot$, $\leq$ and $\sigma$
+              together satisfy the Peano Axioms.</p
             >
           </div>
           <div class="question">
