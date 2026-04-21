@@ -1,0 +1,729 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Appendix</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/proofs/"
+            target="lurchplus"
+            aria-label="Go to course home"
+            >Introduction to Mathematical Proof</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li> <a href="/learn/proofs/">1: Introduction</a> </li
+          ><li> <a href="/learn/proofs/ch02/">2: What is a proof?</a> </li
+          ><li>
+            <a href="/learn/proofs/ch03/"
+              >3: The Language of Mathematics</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch04/"
+              >4: Reasoning about Mathematics</a
+            > </li
+          ><li> <a href="/learn/proofs/ch05/">5: Propositional Logic</a> </li
+          ><li>
+            <a href="/learn/proofs/ch06/"
+              >6: Predicate Logic and Equality</a
+            > </li
+          ><li> <a href="/learn/proofs/ch07/">7: Natural Numbers</a> </li
+          ><li> <a href="/learn/proofs/ch08/">8: Sequences</a> </li
+          ><li> <a href="/learn/proofs/ch09/">9: Sets</a> </li
+          ><li>
+            <a href="/learn/proofs/ch10/"
+              >10: Integer, Rational, and Real Numbers</a
+            > </li
+          ><li>
+            <a href="/learn/proofs/ch11/">11: Functions and Relations</a> </li
+          ><li> <a href="/learn/proofs/ch12/">12: Expository Proofs</a> </li
+          ><li> <a href="/learn/proofs/ch13/">13: Combinatorial Proofs</a> </li
+          ><li class="active">
+            <a href="/learn/proofs/appendix/">Appendix: Lurch Contexts</a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-powered">
+        <a
+          href="/"
+          class="powered-link"
+          target="lurchplus"
+          rel="noopener noreferrer">
+          <span class="powered-label">powered by</span>
+          <img
+            src="/assets/media/lurchlogo.png"
+            alt="Lurch"
+            class="powered-logo" />
+        </a>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: '14'">
+        <div class="title-box">
+          <h1>Appendix: Lurch Contexts</h1>
+        </div>
+        <h2>Lurch Contexts</h2>
+        <p
+          >Here we summarize all of the Lurch contexts and rules used in these
+          notes in one place for convenient access and reference. They are
+          organized by topic as follows.</p
+        >
+        <ul class="circle">
+          <li
+            ><a href="#foundation">Foundation: Logic and Equality</a> (from
+            Chapters 5, 6)</li
+          >
+          <li
+            ><a href="#unit1"
+              >Peano Axioms, Induction, Number Theory, and Recursive
+              Sequences</a
+            >
+            (from Chapters 7, 8)</li
+          >
+          <li
+            ><a href="#unit2"
+              >Set Theory, Real Numbers, Functions, and Relations</a
+            >
+            (from Chapters 9, 10, 11)</li
+          >
+          <li><a href="#misc">Other Useful Contexts</a></li>
+        </ul>
+        <h2 id="foundation">Foundation: Logic and Equality</h2>
+        <p
+          >Each of the contexts in this section includes the rules defined in
+          the contexts above it.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Propositional Logic</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Prop.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>and</code>, <code>or</code>, <code>not</code>,
+            <code>implies</code>, <code>iff</code>, and
+            <code>contradiction</code>.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Prop-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Predicate Logic with Equality</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Pred.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>forall</code> $\left(\forall\right)$,
+            <code>exists</code> $\left(\exists\right)$ and
+            <code>equality</code> $\left(=\right)$.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Pred-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Logic Theorems</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Logic-theorems.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Provides some common theorems about logic. (<span
+              class="context-includes"
+              >Includes: Equations</span
+            >)
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Pred-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <h2 id="unit1"
+          >Peano Axioms, Induction, Number Theory, and Recursive Sequences</h2
+        >
+        <p
+          >Each of the contexts in this section includes the rules defined in
+          the contexts above it in this section, and all of the rules from the
+          Foundation section above.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Natural Numbers</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Peano.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >The Peano Axioms for the Natural Numbers.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Peano-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Number Theory Definitions</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Number-theory.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>less than</code> $\left(\lt\right)$,
+            <code>divides</code> $\left(\mid\right)$, <code>prime</code>,
+            <code>even</code> and <code>odd</code>.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Number-theory-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Number Theory Theorems</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Number-theory-theorems.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Provides some useful theorems from Number Theory that are provable
+            from the Peano Axioms.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Number-theory-theorems-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Sequences and Recursion</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Sequences.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>summation</code> $\left(\sum\right)$,
+            <code>Fibonacci numbers</code> $\left(F_n\right)$,
+            <code>factorial</code> $\left(!\right)$,
+            <code>multinomial coefficients</code> $\left(m,n\right)$,
+            <code>binomial coefficients</code> $\binom{n}{k}$ and
+            <code>exponentiation</code> $\left(z^n\right)$. (<span
+              class="context-includes"
+              >Includes: Arithmetic in $\NN$</span
+            >)
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Sequences-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <h2 id="unit2">Set Theory, Real Numbers, Functions, and Relations</h2>
+        <p
+          >Each of the contexts in this section includes the rules defined in
+          the contexts above it in this section, and all of the rules from the
+          Foundation section above, but not the rules in the previous
+          section.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Set Theory</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Sets.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>in</code> $\left(\in\right)$,
+            <code>subset</code> $\left(\subseteq\right)$,
+            <code>intersection</code> $\left(\cap\right)$,
+            <code>union</code> $\left(\cup\right)$,
+            <code>complement</code> $\left('\right)$,
+            <code>set difference</code> $\left(\setminus\right)$,
+            <code>power set</code> $\left(\mathscr{P}\right)$,
+            <code>Cartesian product</code> $\left(\times\right)$,
+            <code>finite set</code> $\left\{ \ldots \right\}$,
+            <code>tuple</code> $\langle\ldots\rangle$,
+            <code>Indexed Union</code> $\left(\bigcup\right)$,
+            <code>Indexed Intersection</code> $\left(\bigcap\right)$ and
+            <code>Set Builder notation</code> $\left\{ z :\ldots \right\}$.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Sets-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Real Numbers</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Reals.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines the field axioms for the Real Numbers.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Reals-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Number Systems</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Number-systems.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines the sets $\NN$, $\ZZ$, and $\QQ$, and some basic theorems
+            about them including induction, strong induction, and induction from
+            $a$ in $\NN$. (<span class="context-includes"
+              >Includes: Arithmetic in $\QQ$</span
+            >)
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Number-systems-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Functions</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Functions.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>maps</code> $\left(f\colon A \to B\right)$,
+            <code>function application</code> $\left(f(x)\right)$,
+            <code>maps to</code> $\left(\mapsto\right)$,
+            <code>image</code> $\left(f(U)\right)$,
+            <code>identity map</code> $\left(\text{id}_A\right)$
+            <code>inverse image</code> $\left(f^\text{inv}(U)\right)$,
+            <code>composition</code> $\left(\circ\right)$,
+            <code>inverse function</code> $\left(f^{-1}\right)$,
+            <code>injective</code>, <code>surjective</code> and
+            <code>bijective</code>.<br />
+            (<span class="context-includes">Includes: Algebra</span>)
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Functions-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Relations</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Relations.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>reflexive</code>, <code>symmetric</code>,
+            <code>transitive</code>, <code>irreflexive</code>,
+            <code>antisymmetric</code>, <code>total</code>,
+            <code>partial order</code>, <code>strict partial order</code>,
+            <code>total order</code>, <code>equivalence relation</code>,
+            <code>partition</code>, <code>equivalence class</code> $[a]$
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Relations-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <h2 id="misc">Other Useful Contexts</h2>
+        <p
+          ><strong>Additional Rules.</strong> The following rules can be
+          optionally added by the instructor to any particular document. They
+          have no context of their own.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Equations</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Equations.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines a single ‘rule’ that enables Lurch to validate transitive
+            chains of equalities without needing substitution, reflexivity,
+            symmetry, or transitivity
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Equations-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Arithmetic in the Natural Numbers</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Arithmetic-naturals.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Allows the user to say <code>'by</code>
+            <code>arithmetic'</code> after an expression to try to justify it
+            using a CAS. The expression can only contain natural number
+            constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$, and
+            $\text{^}$, and the relations $=$, $\neq$, $\leq$, and $\lt$.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Arithmetic-naturals-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Arithmetic in the Integers</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Arithmetic-integers.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Allows the user to say <code>'by</code>
+            <code>arithmetic'</code> after an expression to try to justify it
+            using a CAS. The expression can only contain natural number
+            constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$,
+            $\text{^}$, and $-$ and the relations $=$, $\neq$, $\leq$, and
+            $\lt$. Exponents cannot be negative.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Arithmetic-integers-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Arithmetic in the Rationals</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Arithmetic-rationals.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Allows the user to say <code>'by</code>
+            <code>arithmetic'</code> after an expression to try to justify it
+            using a CAS. The expression can only contain natural number
+            constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$,
+            $\text{^}$, $-$, and $/$, and the relations $=$, $\neq$, $\leq$, and
+            $\lt$. Exponents must be integers and you cannot divide by zero.
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Arithmetic-rationals-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Algebra</p>
+            <p
+              ><a
+                href="../../../student.html?load=learn/proofs/rules/Algebra.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Allows the user to say <code>'by</code> <code>algebra'</code> after
+            an equation to try to justify it using a CAS. There are no
+            restrictions on what the equation can contain, so use at your own
+            discretion. The identity is evaluated using
+            <a href="http://algebrite.org" target="_blank">Algebrite</a>. This
+            rule also validates inequalities that can be validated by the
+            previous rule (Arithmetic in the Rationals).
+            <a
+              href="../../../instructor.html?load=learn/proofs/rules/Algebra-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            >
+            <a
+              href="../../../student.html?load=help/algebra-rule-examples.lurch"
+              class="contex-link"
+              >examples</a
+            >.</p
+          >
+        </div>
+        <hr />
+        <div class="appendix-note">
+          <p
+            >For additional information about Lurch, see<br />
+            <a href="https://lurch.plus">lurch.plus</a></p
+          >
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'intro-to-proof'</script
+    ><script src="../../../assets/js/utils.js"></script>
+    <script src="../../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

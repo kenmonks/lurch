@@ -1920,6 +1920,136 @@ iframe.lurch-embed {
 }
 /* end guidelines */
 
+/* =========================
+   Appendix context entries
+   ========================= */
+
+/* each entry */
+.course #content-block .context-entry {
+  margin: 1.35rem 0 0;
+  padding-top: 0;
+}
+
+/* first one sits a bit closer to the section intro */
+.course #content-block .context-entry:first-of-type {
+  margin-top: 0.6rem;
+}
+
+/* lightweight header, same left/right logic as rule-set-head */
+.course #content-block .context-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: none;
+}
+
+/* title = first child in the header */
+.course #content-block .context-head > :first-child {
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: #222;
+  margin: 0;
+}
+
+/* right side (typically the Use in Lurch link) */
+.course #content-block .context-head > :last-child {
+  margin: 0;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+/* context links */
+.course #content-block .context-entry .context-link {
+  font-size: 0.82rem;
+}
+.course #content-block .context-entry .context-link::before {
+  content: '(';
+  color: black;
+  font-size: 0.82rem;
+}
+.course #content-block .context-entry .context-link::after {
+  content: ')';
+  color: black;
+  font-size: 0.82rem;
+}
+
+/* indent everything below the header */
+.course #content-block .context-entry > :not(.context-head) {
+  margin-left: 1.15rem;
+}
+
+/* includes line */
+.course #content-block .context-includes {
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+  font-size: 0.82rem;
+  color: #666;
+}
+
+/* direct paragraphs in the entry */
+.course #content-block .context-entry > p {
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+}
+
+/* if multiple paragraphs or blocks follow, keep the rhythm compact */
+.course #content-block .context-entry > * + * {
+  margin-top: 0.2rem;
+}
+
+/* but keep the gap below the header slightly tighter */
+.course #content-block .context-head + * {
+  margin-top: 0.2rem;
+}
+
+/* links in the right side of the header */
+.course #content-block .context-head > :last-child a {
+  text-decoration: none;
+}
+
+/* =========================
+   Appendix closing note
+   ========================= */
+
+/* basic markdown hr stying 
+ * (enter three dashes on a line by themselves)
+ * ---
+ */
+.course #content-block hr {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+  margin: 1.6rem auto 1.6rem auto;
+
+  width: 60%;
+  max-width: 28rem;
+
+  opacity: 0.9;
+}
+
+/*  the see Lurch footer  */
+.course #content-block .appendix-note {
+  margin: 1.2rem auto 0;
+  max-width: 28rem;
+
+  text-align: center;
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  color: #666;
+  font-size: 0.88rem;
+
+  color: #777;
+
+  opacity: 0.9;
+}
 
 /* hide the contents of the divs that are be replaced by the lurch app iframe
    before they are replaced*/
