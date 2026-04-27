@@ -242,10 +242,27 @@
   // This is only called if the user included a newline after or before one
   // of the chain operators
   const texChain = (a,x) => {
-    // add the 'by's
+    const isMeaningful = s => 
+      ['algebra','arithmetic','cases','substitution'].includes(s.trim().toLowerCase())
+    // add the 'by's and comments
     x.forEach( entry => {
       if (entry.length === 3 && entry[2]!==null) {
-        entry[2]='\\text{ by }'+entry[2]
+
+        if (entry[2]?.kind == 'by') {
+          if (isMeaningful(entry[2].text)) {
+            // meaningful reasons are syntax highlighted
+            entry[2]=`\\text{ by ${entry[2].text}}`
+          } else {
+            // non-meaningful 'by' reasons are rejected to keep expository vs meaningful concept separate
+            error("Expected one of: by algebra, by arithmetic, by substitution, by cases", location())
+          }
+        } else {
+          // non-meaningful comments are printed in black
+          entry[2]=`\\textcolor{black}{\\text{ ${entry[2].text}}}`
+        }
+        // insert the align environment ampersands if more than one line
+        if (x.length > 1) entry[2]='&&'+entry[2]
+
       }
     })
     if (x.length === 1) { return a+x.flat().join('') }
@@ -431,11 +448,11 @@
   // Comments
   //
   // Comments are defined to start at // and continue to the end of the line.
-  // Delete comments first, but leave any \n's to keep the line counts right for
-  // debugging.
-  input = input.replace(/\/\/[^\n\r]*(\n|\r|$)/g, '\n')
-  // Look for lines containing only a ➤ and whitespace, and replace them
-  // with (➤ " ") to act as a line break in the output in Lode
+  // They are used for providing expository reasons inside transitive chains so
+  // we keep there here but delete them in the semantic parser.
+  //
+  // Look for lines containing only a ➤ and whitespace, and replace them with (➤
+  // " ") to act as a line break in the output in Lode
   input = input.replace(/^([ \t]*)➤[ \t]*$/mg, '$1➤ " " \n')
 
   // Tabs and Spaces
@@ -475,9 +492,9 @@
   input = input.replace(/:([Ll]et )/g, '$1')
 
   // Division '/' to product ' cdot /'
-  //
-  // Replace all '/' with ' cdot /'
-  input = input.replace(/(?<!«[^«»]*)\/(?![^«»]*»)/g,' cdot /')
+  // Replace all '/' with ' cdot /' except when it appears inside «» or in `//`
+  input = input.replace(/(?<!«[^«»]*)(?<!\/)\/(?!\/)(?![^«»]*»)/g, ' cdot /')
+  
 
   // Remove any double spaces that were created
   input = shrink(input)
@@ -749,10 +766,12 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                  { return `${a}\\in ${b}`  }
   Divides    = a:RelArg _('|'_ / 'divides'_x) b:RelArg
                  { return `${a}\\mid ${b}` }
-  Chain      = a:(Binding/RelArg) b:( sChainOp (Binding/RelArg) (__ 'by'i __ @Symbol)? )*
-                                  c:( nChainOp (Binding/RelArg) (__ 'by'i __ @Symbol)? )
-                                  d:( _ @ChainOp _ @(Binding/RelArg) @(__ 'by'i __ @Symbol)? )*
+  Chain      = a:(Binding/RelArg) b:( sChainOp (Binding/RelArg) (__s_ @ChainComment)? )*
+                                  c:( nChainOp (Binding/RelArg) (__s_ @ChainComment)? )
+                                  d:( _ @ChainOp _ @(Binding/RelArg) @(__s_ @ChainComment)? )*
                  { return texChain(a,[...b,c,...d]) } /
+               a:(Binding/RelArg) b:( _ @ChainOp _ @(Binding/RelArg) @(__s_ @ChainComment) )
+                 { return texChain(a,[b]) } /
                a:(Binding/RelArg) b:( _ @ChainOp _ @(Binding/RelArg) )+
                  { return a+b.flat().join('')}
   NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg
@@ -1145,6 +1164,11 @@ ReservedWord  = $(
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' /
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / '^')
 
+// comments, to allow expository reasons in transitive chains
+ByReason =  'by'i __s_ a:([^\r\n]*) { return { kind: 'by', text: a.join('').trim() } }
+LineComment= '//' a:([^\r\n]*)     { return { kind: 'comment', text: a.join('').trim() } }
+ChainComment = ByReason / LineComment
+
 // To check for newlines in the chain input we need flavors of the chain operators
 nChainOp = _n_ @ChainOp _ / _ @ChainOp _n_     // must have a \n on one side or the other
 sChainOp = _s_ @ChainOp _s_                    // cannot have a newline on either side
@@ -1171,7 +1195,8 @@ _x = !alphanum _ { return undefined }
 // commas, periods, and spaces
 comma  =  _ ',' _
 period =  '.'
-_n_ = _s_'\n'_   // a string of whitespace that must contain at least one \n
-_s_ = [ \t]*     // a string of spaces and tabs of any length (even zero)
-__  = [ \t\n\r]+ // a string of whitespace of positive length
-_   = [ \t\n\r]* // a string of whitespace of any length (even zero)
+_n_  = _s_'\n'_   // a string of whitespace that must contain at least one \n
+_s_  = [ \t]*     // a string of spaces and tabs of any length (even zero)
+__s_ = [ \t]+     // a string of spaces and tabs of any positive length
+__   = [ \t\n\r]+ // a string of whitespace of positive length
+_    = [ \t\n\r]* // a string of whitespace of any length (even zero)
