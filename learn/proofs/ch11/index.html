@@ -140,9 +140,10 @@
                 >
               </tr>
               <tr>
-                <td style="text-align: left">Def of function</td>
+                <td style="text-align: left">Function existence</td>
                 <td style="text-align: left"
-                  >$f\colon A\to B \iff \forall a\in A, f(a)\in B$</td
+                  >If $\forall a \in A.\exists! b \in B.\mc{P}(a,b)$ then
+                  $\exists f.f:A\to B \xand \forall x \in A.\mc{P}(x,f(x))$</td
                 >
               </tr>
               <tr>
@@ -307,6 +308,25 @@
               >
             </div>
             <div class="Rule">
+              <p><span class="nm">Function existence</span></p>
+              <div class="Premise">
+                <p><em>Given</em></p>
+                <div class="Subproof">
+                  <p
+                    ><span class="m">Let $a\in A$</span><br />
+                    <span class="m">$\exists! b \in B. \mc{P}(a,b)$</span></p
+                  >
+                </div>
+              </div>
+              <p
+                ><em>Conclude</em>
+                <span class="m"
+                  >$\exists f.f\colon A\to B \xand \forall x \in
+                  A.\mc{P}(x,f(x))$</span
+                ></p
+              >
+            </div>
+            <div class="Rule">
               <p><span class="nm">Function Equality</span></p>
               <div class="Premise">
                 <p
@@ -363,6 +383,16 @@
               >
             </div>
             <div class="Rule">
+              <p
+                ><span class="nm">Surjective</span>  <span class="m"
+                  >If $f\colon A\to B$, $f$ is surjective</span
+                >
+                and <span class="m">$b\in B$</span> then <span class="m"
+                  >$b=f(a)$ and $a\in A$ for some $a$</span
+                >.</p
+              >
+            </div>
+            <div class="Rule">
               <p><span class="nm">Injective</span></p>
               <div class="Premise">
                 <p><em>Given</em></p>
@@ -389,16 +419,6 @@
                 </div>
               </div>
               <p><em>Conclude</em> <span class="m">$f$ is surjective</span></p>
-            </div>
-            <div class="Rule">
-              <p
-                ><span class="nm">Surjective</span>  <span class="m"
-                  >If $f\colon A\to B$, $f$ is surjective</span
-                >
-                and <span class="m">$b\in B$</span> then <span class="m"
-                  >$b=f(a)$ and $a\in A$ for some $a$</span
-                >.</p
-              >
             </div>
             <div class="Rule">
               <p
