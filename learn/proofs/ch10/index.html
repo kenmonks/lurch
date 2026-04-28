@@ -685,6 +685,25 @@
           >
         </div>
         <div class="question">
+          <p
+            ><span class="thm-label">Multiplicative inverse is nonzero</span> If
+            $x \neq 0$ then $(x^-) \neq 0$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">Multiplicative inverse and products</span>
+            If $x\neq 0$ and $y \neq 0$ then $(x^-)\cdot(y^-)=(x\cdot y)^-$.</p
+          >
+        </div>
+        <div class="question">
+          <p
+            ><span class="thm-label">Multiplying fractions</span> If $b\neq 0$
+            and $d \neq 0$ then $$\frac{a}{b}\cdot\frac{c}{d}=\frac{a\cdot
+            c}{b\cdot d}$$</p
+          >
+        </div>
+        <div class="question">
           <p class="noskip"
             ><span class="thm-label">Trichotomy Law</span> For all real numbers
             $x,y$ exactly one of the following is true:</p
@@ -874,7 +893,7 @@
                 >Definition <span class="thm"></span> (negative integer
                 exponents).</strong
               >
-              If $z$ is a real number and $n$ is a natural number then
+              If $z$ is a nonzero real number and $n$ is a natural number then
               $$z^{-n}=(z^n)^-$$</p
             >
           </div>
@@ -1039,8 +1058,95 @@
                   ></p
                 >
               </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Irrational</span>  <span class="m"
+                    >$x$ is irrational $\equiv$ $x$ is not rational</span
+                  ></p
+                >
+              </div>
               <div class="rule-heading">
-                <p>Closure</p>
+                <p>Relationships between the sets</p>
+              </div>
+              <div class="Rule">
+                <p><span class="nm">Natural Numbers</span></p>
+                <ol>
+                  <li><span class="m">$0\in\NN$</span></li>
+                  <li><span class="m">$-1\notin\NN$</span></li>
+                  <li
+                    ><span class="m">If $n\in\NN$</span> then
+                    <span class="m">$n+1\in\NN$</span>.</li
+                  >
+                  <li
+                    >If $\mc{P}(0)$ and $∀k\in\NN.\mc{P}(k)⇒\mc{P}(k+1)$ then
+                    $∀n\in\NN.\mc{P}(n)$.  (see the rules for induction)</li
+                  >
+                </ol>
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Integers</span>
+                  <span class="m"
+                    >$n\in\ZZ \equiv n\in\NN \xor −n\in\NN$</span
+                  ></p
+                >
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Rational Numbers</span>
+                  <span class="m">If $x=\frac{a}{b}, a\in\ZZ$</span> and
+                  <span class="m">$b\in\ZZ$</span> then
+                  <span class="m">$x\in\QQ$</span>.</p
+                >
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Rational Numbers</span>
+                  <span class="m">If $r\in\QQ$</span> then
+                  <span class="m"
+                    >$r=\frac{a}{b}\xand a\in\ZZ\xand b\in\ZZ$ for some
+                    $a$</span
+                  >
+                  and <span class="m">$b$</span>.</p
+                >
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Positives</span>
+                  <span class="m">$x\in A^+ \equiv x\in A, 0&lt;x$</span></p
+                >
+              </div>
+              <div class="rule-heading">
+                <p>Extended Definitions</p>
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Integer Exponents</span>
+                  <span class="m">If $z\neq 0$</span> and
+                  <span class="m">$n\in\NN$</span> then
+                  <span class="m">$z^0=1$</span>,
+                  <span class="m">$z^{n+1}=z\cdot z^n$</span> and furthermore
+                  <span class="m">if $z \neq 0$</span> then
+                  <span class="m">$z^{-n}=\frac{1}{z^n}$</span>.</p
+                >
+              </div>
+              <div class="rule-heading">
+                <p>Theorems</p>
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Inclusions</span>
+                  <span class="m">If $-n\in\NN$</span> then
+                  <span class="m">$n\in\ZZ$</span>.</p
+                >
+              </div>
+              <div class="Rule">
+                <p
+                  ><span class="nm">Inclusions.</span>
+                  <span class="m">$\NN\subseteq\ZZ$</span>,
+                  <span class="m">$\ZZ\subseteq\QQ$</span> and
+                  <span class="m">$\NN\subseteq\QQ$</span>.</p
+                >
               </div>
               <div class="Rule">
                 <p
@@ -1070,81 +1176,71 @@
                 >
               </div>
               <div class="rule-heading">
-                <p>Relationships between the sets</p>
+                <p>Induction</p>
               </div>
               <div class="Rule">
-                <p><span class="nm">Natural Numbers</span></p>
-                <ol>
-                  <li><span class="m">$0\in\NN$</span></li>
-                  <li><span class="m">$-1\notin\NN$</span></li>
-                  <li>If $n\in\NN$ then $n+1\in\NN$ (see closure above).</li>
-                  <li
-                    >If $\mc{P}(0)$ and $∀k\in\NN.\mc{P}(k)⇒\mc{P}(k+1)$ then
-                    $∀n\in\NN.\mc{P}(n)$.  (see the rules for induction)</li
+                <p><span class="nm">Induction</span></p>
+                <div class="Premise">
+                  <p
+                    ><em>Given</em><br />
+                    <span class="m">$\mc{P}(0)$</span></p
                   >
-                </ol>
-              </div>
-              <div class="Rule">
+                  <div class="Subproof">
+                    <p
+                      ><span class="m quad"
+                        >Let $k$ be such that $k\in\NN\xand\mc{P}(j)$</span
+                      ><br />
+                      <span class="m">$\mc{P}(k+1)$</span></p
+                    >
+                  </div>
+                </div>
                 <p
-                  ><span class="nm">Integers</span>
-                  <span class="m"
-                    >$n\in\ZZ \equiv n\in\NN \xor −n\in\NN$</span
-                  ></p
+                  ><em>Conclude</em>
+                  <span class="m">$\forall n\in\NN.\mc{P}(n)$</span></p
                 >
               </div>
               <div class="Rule">
+                <p><span class="nm">Strong Induction</span></p>
+                <div class="Premise">
+                  <p
+                    ><em>Given</em><br />
+                    <span class="m">$\mc{P}(0)$</span></p
+                  >
+                  <div class="Subproof">
+                    <p
+                      ><span class="m quad"
+                        >Let $k$ be such that $k\in\NN\xand (\forall j.j\leq k
+                        \implies \mc{P}(j))$</span
+                      ><br />
+                      <span class="m">$\mc{P}(k+1)$</span></p
+                    >
+                  </div>
+                </div>
                 <p
-                  ><span class="nm">Rational Numbers</span>
-                  <span class="m">If $x=\frac{a}{b}, a\in\ZZ$</span> and
-                  <span class="m">$b\in\ZZ$</span> then
-                  <span class="m">$x\in\QQ$</span>.</p
+                  ><em>Conclude</em>
+                  <span class="m">$\forall n\in\NN.\mc{P}(n)$</span></p
                 >
               </div>
               <div class="Rule">
+                <p><span class="nm">Induction from $a$</span></p>
+                <div class="Premise">
+                  <p
+                    ><em>Given</em><br />
+                    <span class="m">$\mc{P}(0)$</span></p
+                  >
+                  <div class="Subproof">
+                    <p
+                      ><span class="m quad"
+                        >Let $k$ be such that $\forall j.j\leq k \implies
+                        \mc{P}(j)$</span
+                      ><br />
+                      <span class="m">$\mc{P}(\sigma(k))$</span></p
+                    >
+                  </div>
+                </div>
                 <p
-                  ><span class="nm">Rational Numbers</span>
-                  <span class="m">If $r\in\QQ$</span> then
-                  <span class="m"
-                    >$r=\frac{a}{b}\xand a\in\ZZ\xand b\in\ZZ$ for some $a$ and
-                    $b$</span
-                  >.</p
-                >
-              </div>
-              <div class="Rule">
-                <p
-                  ><span class="nm">Positives</span>
-                  <span class="m">$x\in A^+ \equiv x\in A, 0&lt;x$</span></p
-                >
-              </div>
-              <div class="rule-heading">
-                <p>Extended Definitions</p>
-              </div>
-              <div class="Rule">
-                <p
-                  ><span class="nm">Integer Exponents</span>
-                  <span class="m">If $z\neq 0$</span> and
-                  <span class="m">$n\in\NN$</span> then
-                  <span class="m">$z^0=1$</span>,
-                  <span class="m">$z^{n+1}=z\cdot z^n$</span> and
-                  <span class="m">$z^{-n}=\frac{1}{z^n}$</span>.</p
-                >
-              </div>
-              <div class="rule-heading">
-                <p>Theorems</p>
-              </div>
-              <div class="Rule">
-                <p
-                  ><span class="nm">Inclusions</span>
-                  <span class="m">If $-n\in\NN$</span> then
-                  <span class="m">$n\in\ZZ$</span>.</p
-                >
-              </div>
-              <div class="Rule">
-                <p
-                  ><span class="nm">Inclusions.</span>
-                  <span class="m">$\NN\subseteq\ZZ$</span>,
-                  <span class="m">$\ZZ\subseteq\QQ$</span> and
-                  <span class="m">$\NN\subseteq\QQ$</span>.</p
+                  ><em>Conclude</em>
+                  <span class="m">$\forall n.\mc{P}(n)$</span></p
                 >
               </div>
               <!-- rule-grid -->
@@ -1212,6 +1308,9 @@
               are nonzero integers, the $$\frac{k\cdot m}{k\cdot
               n}=\frac{m}{n}$$</p
             >
+          </div>
+          <div class="question">
+            <p><span class="thm-label">Squaring</span> $x^2 = x\cdot x$</p>
           </div>
           <div class="question">
             <p

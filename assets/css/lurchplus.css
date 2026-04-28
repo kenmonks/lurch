@@ -857,6 +857,20 @@ Example:
 .course #content-block table tbody tr:last-child td {
   padding-bottom: 0.7rem;
 }
+/* don't word wrap the first column if the class .nowrap is on the table-block*/
+.course #content-block .table-block.nowrap table th:first-child,
+.course #content-block .table-block.nowrap table td:first-child {
+  white-space: nowrap;
+}
+.course #content-block td.top {
+  vertical-align: top;
+}
+.course #content-block td.middle {
+  vertical-align: middle;
+}
+.course #content-block td.bottom {
+  vertical-align: bottom;
+}
 
 /* a compact variant for when the spacing is too much 
 
@@ -2032,7 +2046,6 @@ iframe.lurch-embed {
 
   opacity: 0.9;
 }
-
 /*  the see Lurch footer  */
 .course #content-block .appendix-note {
   margin: 1.2rem auto 0;
