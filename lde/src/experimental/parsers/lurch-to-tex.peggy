@@ -373,7 +373,7 @@
     '∖' : 'setminus'   ,  '∘' : 'circ'      , '∧' : 'wedge'  , '∨' : 'vee'       ,
     '≡' : 'equiv'      ,  '↦' : 'mapsto'    , '≈' : 'approx' , '∀' : 'forall'    ,
     '∃' : 'exists'     ,  '⟨' : 'langle'    , '⟩' : 'rangle' , '➤' : 'comment'   ,
-    '°' : 'complement' ,  '≅' : 'cong'      , '\\': ' '      , '!' : 'factorial'
+    '°' : 'complement' ,  '≅' : 'cong'      , '!' : 'factorial'
   }
 
   const internalNames = {
@@ -404,22 +404,27 @@
     return shrink(s)
   }
 
-  // then remove the unicodes
-  const replaceUnicode = s => {
-    // first, replace toxic unicode chars with their ascii synonym
-    s = s.replace(/𝜎/g  , ' sigma'    ) // usually used as a function so no following space
-         .replace(/𝜆/g  , '@'         ) // for "LDE EFA"
-         .replace(/≠/g  , ' neq '     )
-         .replace(/∉/g  , ' notin '   )
-         .replace(/⁻/g  , '^-'        ) // no need to declare this.. declare - instead
-         .replace(/𝒫/g  , ' powerset' ) // usually used as a function so no following space
-    // now replace the given unicode characters that do not appear in strings or
-    // putdown
-    const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'
-    const regex = new RegExp(`(?<!«[^«»]*)(?<!^[^"]*"[^"]*)${chars}(?![^«»]*»)`,'mg')
-    const ans = shrink(s.replace(regex, c => { return ` ${UnicodeNames[c]} ` } ) )
-    return ans
-  }
+  // then remove the unicodes outside of line comments // 
+  const mapOutsideLineComments = (s, f) =>
+    s.split(/(\/\/[^\r\n]*)/g).map(part =>
+      part.startsWith('//') ? part : f(part)
+    ).join('')
+  const replaceUnicode = s =>
+    mapOutsideLineComments(s, t => {
+      // first, replace toxic unicode chars with their ascii synonym
+      t = t.replace(/𝜎/g  , ' sigma'    ) // usually used as a function so no following space
+           .replace(/𝜆/g  , '@'         ) // for "LDE EFA"
+           .replace(/≠/g  , ' neq '     )
+           .replace(/∉/g  , ' notin '   )
+           .replace(/⁻/g  , '^-'        ) // no need to declare this.. declare - instead
+           .replace(/𝒫/g  , ' powerset' ) // usually used as a function so no following space
+      // now replace the given unicode characters that do not appear in strings or
+      // putdown
+      const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'
+      const regex = new RegExp(`(?<!«[^«»]*)(?<!^[^"]*"[^"]*)${chars}(?![^«»]*»)`,'mg')
+      const ans = shrink(t.replace(regex, c => { return ` ${UnicodeNames[c]} ` } ) )
+      return ans
+    })
 
   // for debugging, say where you are in the parse and what you are seeing
   const debug = (name,...args) => {
@@ -605,7 +610,8 @@ LC = Meta / Given / Environment / Declaration / Expression
 Putdown = '«' @$([^»]*) '»'
 // Insert a comment that gets echoed in Lode
 Comment = ( '%' / 'Comment'i ) __ a:StringLiteral
-            { return a.replace(/"([^"]*)"/,"\\text{``$1''}") }
+            { return a.replace(/"([^"]*)"/,"\\text{``$1''}") } / 
+          a:LineComment { return `\\textcolor{black}{\\text{ ${a.text}}}` }
 
 // A string literal is anything enclosed in double quotes
 // Currently only used for comments
