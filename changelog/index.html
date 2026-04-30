@@ -95,6 +95,21 @@
         >
         <ul class="square">
           <li
+            ><strong>Comments in expressions</strong> - you can now add comments
+            at the end of any meaningful expression by appending
+            <code>//</code> followed by plain text for the comment you want to
+            add which continues until the end of the expression dialog, even
+            when it is not a transitive chain. The plain text of the comment can
+            include expository LaTeX math expressions. For example you can have
+            a meaningful expression dialog entry like
+            <code>contradiction // since we showed $x\neq 0$ and $x=0$</code>.
+            This mechanism is not really necessary because you can just end the
+            dialog with the meaningful content and simply type the comment in
+            the editor direction, including the LaTeX expressions using the
+            expository math dialog, but we allow it for consistency with the
+            same mechanism available in transitive chains for convenience.</li
+          >
+          <li
             ><strong>Comments in transitive chains</strong> - you can now
             optionally add expositional comments after individual lines of a
             transitive chain by appending <code>//</code> followed by any plain

@@ -373,7 +373,7 @@
     '∖' : 'setminus'   ,  '∘' : 'circ'      , '∧' : 'wedge'  , '∨' : 'vee'       ,
     '≡' : 'equiv'      ,  '↦' : 'mapsto'    , '≈' : 'approx' , '∀' : 'forall'    ,
     '∃' : 'exists'     ,  '⟨' : 'langle'    , '⟩' : 'rangle' , '➤' : 'comment'   ,
-    '°' : 'complement' ,  '≅' : 'cong'      , '!' : 'factorial'
+    '°' : 'complement' ,  '≅' : 'cong'      , '\\' : ' '     , '!' : 'factorial'
   }
 
   const internalNames = {
