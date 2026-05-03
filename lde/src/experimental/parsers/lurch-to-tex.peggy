@@ -223,7 +223,8 @@
       basket  : '🧺'        , tree     : '🌳'           , apple      : '🍎'           ,
       cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       ,
       oplus   : '\\oplus'   , otimes   : '\\otimes'    , odot       : '\\odot'       ,
-      infty   : '\\infty'   , infinity : '\\infty'     , 
+      infty   : '\\infty'   , infinity : '\\infty'     , rel        : '\\backsim'    ,
+      sim     : '\\sim'     , backsim  : '\\backsim' ,
       Union               : '\\bigcup'                     ,
       Intersect           : '\\bigcap'                     ,
       iff                 : '\\Leftrightarrow'             ,
@@ -272,7 +273,8 @@
     return ans
   }
 
-  // convert prefix function application to lisp
+  // convert prefix function application to tex, taking into account the
+  // optional underscore for subscripting
   const texPrefix = (op,args) => {
       // write(op)
       // write(args)
@@ -782,21 +784,25 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                  { return a+b.flat().join('')}
   NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg
                  { return `${a}\\neq ${b}` }
-  Relation   = a:(Binding/RelArg)|2..,_'~'_|
-                { return a.join('\\sim ')  }
+  Relation   = a:RelArg _ '~_(' s:(ExpressionSeq) ')'_  b:RelArg      
+                 { return `${a}\\sim_{${s}}${b}` } /
+               a:(Binding/RelArg)|2..,_('~'/'sim')_|
+                 { return a.join('\\sim ')  } /
+               a:(Binding/RelArg)|2..,_'rel'_|
+                 { return a.join('\\backsim ')  }
   Loves      = a:RelArg _ b:('loves'/'love')_x c:RelArg
-                { return `${a}${txt(' '+b)}${c}` }
+                 { return `${a}${txt(' '+b)}${c}` }
   Fears      = a:RelArg _ b:('fears'/'fear')_x c:RelArg
-                { return `${a}${txt(' '+b)}${c}` }
+                 { return `${a}${txt(' '+b)}${c}` }
   Is         = a:RelArg _ b:('is' __ 'not' __ 'an' __ /
                              'is' __ 'not' __ 'a' __  /
                              'is' __ 'not' __         /
                              'are'__ 'not' __ ) c:RelArg
-                { return `${a}\\text{ ${b.filter(Boolean).join(' ').replace(/\s+/g,' ').trim()} }${c}` } /
+                 { return `${a}\\text{ ${b.filter(Boolean).join(' ').replace(/\s+/g,' ').trim()} }${c}` } /
                a:RelArg _ b:('is' __ 'an' __/'is' __ 'a' __/'is' __ 'the'__/'is' __/'are'__) c:RelArg
-                { return (b.length==4)
-                  ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
-                  : `${a}\\text{ ${b[0]} }${c}` }
+                 { return (b.length==4)
+                   ? `${a}\\text{ ${b[0]} ${b[2]} }${c}`
+                   : `${a}\\text{ ${b[0]} }${c}` }
 
 
 ///////////////////////////////////////////////////////////////////////////////

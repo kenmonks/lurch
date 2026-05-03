@@ -88,7 +88,7 @@
       return args.reduce( (ans,expr) => { return `(${ans} ${expr})` } , op )
   }
   
-  // convert a transitive chain to the correct putdown a is the leading
+  // convert a transitive chain to the correct putdown. a is the leading
   // expression, and b is a sequence of triples [op, arg, byname] where op is
   // the relational operator, arg is it's RHS.  If arg is optionally followed by
   // 'by algebra' (or some other symbol) byname will be 'algebra', otherwise it
@@ -576,8 +576,16 @@ Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
                  { return lispChain(a,b) }
   NotEqual   = a:RelArg _('neq'/'ne')_x b:RelArg   
                  { return `(¬ ${lispBinary('=',a,b)})` }
-  Relation   = a:(Binding/RelArg)|2..,_'~'_|       
-                { return lispSeq('~',a) }             
+  Relation   = a:RelArg _ '~_(' n:(ExpressionSeq) ')'_  b:RelArg      
+                 { return lispBinary(`(~ ${n} )`,a,b) } /  
+               a:(Binding/RelArg)|2..,_'~'_|
+                 { return lispSeq('~',a) } /
+               a:RelArg __ 'sim' __  b:RelArg 
+                 { return lispBinary('sim',a,b) } /
+               a:(Binding/RelArg)|2..,_'rel'_|
+                 { return lispSeq('rel',a)  }
+
+
   Loves      = a:RelArg _('loves'/'love')_x b:RelArg
                 { return lispBinary('loves',a,b) }
   Fears      = a:RelArg _('fears'/'fear')_x b:RelArg
