@@ -415,3 +415,16 @@ Theorem { Iamatheorem }
 Lemma: { SoamI }
 Thm { Metoo }
 Corollary { Andme }
+
+// Relations
+x ~ y
+x ~_(1) y
+x ~_(1)y
+x~_(1)y
+x ~_(1,2,3) y
+(x+1) ~ (y-1)
+x rel y
+x sim y
+x~y~z
+x ~y~ z
+x ~ y ~ z

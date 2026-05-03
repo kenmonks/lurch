@@ -95,6 +95,27 @@
         >
         <ul class="square">
           <li
+            ><strong
+              >Subscripted constant relations and relation variables</strong
+            >
+            - in order to support an infinite family of infix relations, you can
+            declare <code>~</code> to be a constant, and optionally subscript it
+            with natural numbers (or a sequence of natural numbers), e.g.,
+            <code>~</code>, <code>~_(0)</code>, <code>~_(1,2)</code> etc. But in
+            the rules that define the properties of general relations (symmetry,
+            transitivity, etc.) we also need an infix operator that is not
+            declared as a constant (so it can be a metavariable in the rules).
+            For this you can now enter <code>rel</code> which formats as
+            $\backsim$ so it looks *very much like a generic infix relation and
+            $\sim$ but can easily be distinguished visually by an instructor
+            when creating rules and contexts. The implemented rules can be seen
+            in the
+            <a
+              href="../instructor.html?load=learn/proofs/rules/Relations-Rules.lurch"
+              >Relations-Rules context</a
+            >.</li
+          >
+          <li
             ><strong>Comments in expressions</strong> - you can now add comments
             at the end of any meaningful expression by appending
             <code>//</code> followed by plain text for the comment you want to
