@@ -173,6 +173,17 @@ const isNaturalArithmetic = e => {
     // .. and the rest of the arguments are natural expressions
     e.children().slice(1).every(c=>isNatural(c))
 }
+// Check if this expression is of the form `a∈ℕ` where `a` is a
+// NaturalArithmetic expression
+export const isNaturalType = e => {
+  // it must be an application with three children...
+  return e instanceof Application && e.numChildren() === 3 &&
+    // and it's operator must be ∈ and third must be ℕ...
+    e.child(0).matches('∈') && e.child(2).matches('ℕ') &&
+    // .. and the first argument is a natural expression
+    isNatural(e.child(1))
+}
+
 
 // Integers
 //
@@ -214,6 +225,16 @@ const isIntegerArithmetic = e => {
     NumericRelns.some( reln => e.child(0).matches(reln)) &&
     // .. and the rest of the arguments are natural expressions
     e.children().slice(1).every(c=>isInteger(c))
+}
+// Check if this expression is of the form `a∈ℤ` where `a` is a
+// IntegerArithmetic expression.
+export const isIntegerType = e => {
+  // it must be an application with three children...
+  return e instanceof Application && e.numChildren() === 3 &&
+    // and it's operator must be ∈ and third must be ℤ...
+    e.child(0).matches('∈') && e.child(2).matches('ℤ') &&
+    // .. and the first argument is an integer expression
+    isInteger(e.child(1))
 }
 
 // Rational
@@ -262,6 +283,16 @@ const isRationalArithmetic = e => {
     NumericRelns.some( reln => e.child(0).matches(reln)) &&
     // .. and the rest of the arguments are natural expressions
     e.children().slice(1).every(c=>isRational(c))
+}
+// Check if this expression is of the form `a∈ℚ` where `a` is a
+// RationalArithmetic expression
+export const isRationalType = e => {
+  // it must be an application with three children...
+  return e instanceof Application && e.numChildren() === 3 &&
+    // and it's operator must be ∈ and third must be ℚ...
+    e.child(0).matches('∈') && e.child(2).matches('ℚ') &&
+    // .. and the first argument is a rational expression
+    isRational(e.child(1))
 }
 
 // Since naturals and integers are special cases of rationals, they are all numerics
@@ -857,8 +888,9 @@ export const processShorthands = L => {
 }
 
 export default {
-  isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger, isRational,
-  isNumeric, isNaturalArithmetic,  isIntegerArithmetic, isRationalArithmetic, 
-  hasMatrixOps, numericToCAS, parseLines, makeParser
+  isNonnegative, isNonzero, isNaturalNumber, isNatural, isNaturalType, isInteger, 
+  isIntegerType, isRational, isRationalType, isNumeric, isNaturalArithmetic, 
+  isIntegerArithmetic, isRationalArithmetic, hasMatrixOps, numericToCAS, 
+  parseLines, makeParser
 }
 ///////////////////////////////////////////////////////////////////////////////

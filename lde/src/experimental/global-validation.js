@@ -121,7 +121,8 @@ import {
   LogicConcept, Expression, Declaration, Environment, LurchSymbol,
   Matching, Formula, Scoping, Validation, Application, BindingExpression
 } from '../index.js'
-import { isArithmetic, arithmeticToCAS, isNegationOfArithmetic, hasMatrixOps } from './parsing.js'
+import { isArithmetic, arithmeticToCAS, isNegationOfArithmetic, 
+         isNaturalType, isIntegerType, isRationalType, hasMatrixOps } from './parsing.js'
 
 const Problem = Matching.Problem
 const isAnEFA = Matching.isAnEFA
@@ -1351,7 +1352,9 @@ const processCAS = doc => {
   })
 }
 
-// This is a prototype of the Arithmetic Tool for naturals, integers, and rationals
+// This is the Arithmetic Tool for naturals, integers, and rationals. It handles
+// equations, inequalities, and type checking of constants and constant
+// expressions.
 const processArithmetic = doc => {
   // check options
   if (!LurchOptions.processArithmetic) return
@@ -1371,9 +1374,22 @@ const processArithmetic = doc => {
 
   // we found one so get the ring
   const ring = rule.child(0,1).text()
-  
   // check each expression that is by arithmetic
-  userArithmetics.forEach( c => { 
+  userArithmetics.forEach( c => {
+
+    // first case: is it a type-check. If valid say so, otherwise let it fail as
+    // inapplicable in the next case.
+    if ( 
+        ring=='ℚ' && isRationalType(c) ||
+        (ring=='ℤ' || ring=='ℚ') && isIntegerType(c) ||
+        (ring=='ℕ' || ring=='ℤ' || ring=='ℚ') && isNaturalType(c)
+      ) { 
+      c.setResult('arithmetic', 'valid' , 'CAS')
+      insertInstantiation( new Environment(c.copy()) , rule, c)
+
+    // second case: it's an equation or inequality or its negation.
+    } else {
+
     // if it's not allowed arithmetic or the negation of one it's not 'invalid',
     // it's 'not applicable' (but you can't have a space in a class name)
     if (!isArithmetic[ring](c) && !isNegationOfArithmetic(c,ring)) {
@@ -1386,9 +1402,11 @@ const processArithmetic = doc => {
     const ans = ( (compute(arithmeticToCAS(e))==='1' && !negate) ||
                   (compute(arithmeticToCAS(e))==='0' && negate) )
                 ? 'valid' : 'invalid'
+
     c.setResult('arithmetic', ans , 'CAS')
     if (ans === 'valid')
       insertInstantiation( new Environment(c.copy()) , rule, c)
+    }
 
   })
 }
