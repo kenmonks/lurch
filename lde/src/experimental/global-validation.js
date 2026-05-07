@@ -122,7 +122,7 @@ import {
   Matching, Formula, Scoping, Validation, Application, BindingExpression
 } from '../index.js'
 import { isArithmetic, arithmeticToCAS, isNegationOfArithmetic, 
-         isNaturalType, isIntegerType, isRationalType, hasMatrixOps } from './parsing.js'
+         isNumberType, hasMatrixOps } from './parsing.js'
 
 const Problem = Matching.Problem
 const isAnEFA = Matching.isAnEFA
@@ -1378,12 +1378,14 @@ const processArithmetic = doc => {
   userArithmetics.forEach( c => {
 
     // first case: is it a type-check. If valid say so, otherwise let it fail as
-    // inapplicable in the next case.
-    if ( 
-        ring=='ℚ' && isRationalType(c) ||
-        (ring=='ℤ' || ring=='ℚ') && isIntegerType(c) ||
-        (ring=='ℕ' || ring=='ℤ' || ring=='ℚ') && isNaturalType(c)
-      ) { 
+    // inapplicable in the next case.  Note that we don't care what the ring is
+    // for type checking, since you're explicitly making a claim about a type
+    // which may or may not be defined in your context.  For equations and
+    // inequalities we do care about the ring because we may be working
+    // implicitly in, say, the natural numbers and don't want an identity like
+    // `-1<0 by arithmetic` to validate because that would let us prove that
+    // there exists a number whose successor is 0, for example.
+    if ( isNumberType(c) ) { 
       c.setResult('arithmetic', 'valid' , 'CAS')
       insertInstantiation( new Environment(c.copy()) , rule, c)
 

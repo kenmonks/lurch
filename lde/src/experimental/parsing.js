@@ -173,16 +173,6 @@ const isNaturalArithmetic = e => {
     // .. and the rest of the arguments are natural expressions
     e.children().slice(1).every(c=>isNatural(c))
 }
-// Check if this expression is of the form `a∈ℕ` where `a` is a
-// NaturalArithmetic expression
-export const isNaturalType = e => {
-  // it must be an application with three children...
-  return e instanceof Application && e.numChildren() === 3 &&
-    // and it's operator must be ∈ and third must be ℕ...
-    e.child(0).matches('∈') && e.child(2).matches('ℕ') &&
-    // .. and the first argument is a natural expression
-    isNatural(e.child(1))
-}
 
 
 // Integers
@@ -225,16 +215,6 @@ const isIntegerArithmetic = e => {
     NumericRelns.some( reln => e.child(0).matches(reln)) &&
     // .. and the rest of the arguments are natural expressions
     e.children().slice(1).every(c=>isInteger(c))
-}
-// Check if this expression is of the form `a∈ℤ` where `a` is a
-// IntegerArithmetic expression.
-export const isIntegerType = e => {
-  // it must be an application with three children...
-  return e instanceof Application && e.numChildren() === 3 &&
-    // and it's operator must be ∈ and third must be ℤ...
-    e.child(0).matches('∈') && e.child(2).matches('ℤ') &&
-    // .. and the first argument is an integer expression
-    isInteger(e.child(1))
 }
 
 // Rational
@@ -284,15 +264,37 @@ const isRationalArithmetic = e => {
     // .. and the rest of the arguments are natural expressions
     e.children().slice(1).every(c=>isRational(c))
 }
-// Check if this expression is of the form `a∈ℚ` where `a` is a
-// RationalArithmetic expression
-export const isRationalType = e => {
-  // it must be an application with three children...
-  return e instanceof Application && e.numChildren() === 3 &&
-    // and it's operator must be ∈ and third must be ℚ...
-    e.child(0).matches('∈') && e.child(2).matches('ℚ') &&
-    // .. and the first argument is a rational expression
-    isRational(e.child(1))
+
+// In additiona to checking equations and inequalities in the specified number
+// system, if any Arithmetic rule is present in the context, you can use `by
+// Arithmetic` to justify statements of the form `x in S` where S is one of ℕ,
+// ℤ, ℚ, ℝ, or ℂ. This is independent of what number system is specified by the
+// rule.  The kinds of expressions it will assert are elements of the given
+// number system are exactly those tested by the isNatural(), isInteger(), and
+// isRational() routines above.  Therefore it is guaranteed to be correct when
+// valid, but not exhaustive.  It cannot justify, e.g. `sqrt(2) in ℝ` or even
+// that `6/2 in NN` because it does no simplification of the expression.. it
+// only checks expressions it knows from form are in the system.  Note that all
+// arithmetic operators are binary so parentheses are required.
+export const isNumberType = e => {
+  // must be in subset order
+  const types = ['ℕ','ℤ','ℚ','ℝ','ℂ']
+  // check that it has the right form
+  if (e instanceof Application && 
+      e.numChildren() === 3 &&
+      e.child(0).matches('∈') && 
+      types.some(r => e.child(2).matches(r))) { 
+    // what type are they asserting  
+    const ring = types.findIndex(x=>e.child(2).matches(x))
+    // get the constant expression
+    const c = e.child(1)
+    // return true if the ring has larger index than the smallest index we can
+    // verify the type of
+    return (isNatural(c)              ||
+            isInteger(c)  && 0 < ring ||
+            isRational(c) && 1 < ring
+           )
+  } 
 }
 
 // Since naturals and integers are special cases of rationals, they are all numerics
@@ -888,8 +890,8 @@ export const processShorthands = L => {
 }
 
 export default {
-  isNonnegative, isNonzero, isNaturalNumber, isNatural, isNaturalType, isInteger, 
-  isIntegerType, isRational, isRationalType, isNumeric, isNaturalArithmetic, 
+  isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger, 
+  isRational, isNumeric, isNumberType, isNaturalArithmetic, 
   isIntegerArithmetic, isRationalArithmetic, hasMatrixOps, numericToCAS, 
   parseLines, makeParser
 }
