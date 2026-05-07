@@ -24,10 +24,14 @@
 
 // REPL and file system utilities (non-Lurch modules)
 
-import repl from 'repl'
-import fs, { write } from 'fs'
-import { execSync } from 'child_process'
-import util from 'util'
+import repl from 'node:repl'
+import os from 'node:os'
+import path from 'node:path'
+import fs from 'node:fs'
+// import fs, { write } from 'node:fs'
+// import readline from 'node:readline'
+import { execSync } from 'node:child_process'
+import util from 'node:util'
 import peggy from 'peggy'
 import yaml from 'js-yaml'
 import mdIt from 'markdown-it'
@@ -47,8 +51,6 @@ import { XMLParser } from 'fast-xml-parser'
 global.xml = (s) => new XMLParser({ ignoreAttributes:false }).parse(s)
 // import asciimath2latex from './parsers/asciimath-to-latex.js'
 import { latexToLurch } from './parsers/tex-to-lurch.js'
-// import readline utility for interactive Lode utilities
-import readline from 'readline'
 
 // import * as MathLive from 'mathlive'
 // import { getConverter } from './utils/math-live.js'
@@ -533,6 +535,13 @@ const rpl = repl.start( {
     return format(expr)
   }
 } )
+
+const historyFile = path.join(os.homedir(), '.lode_history')
+
+rpl.setupHistory(historyFile, err => {
+  if (err) console.error(`Could not load Lode history: ${err.message}`)
+})
+
 ////////////////////////////////////////////////////////////////////////////
   
 // define the .features command
@@ -881,7 +890,8 @@ rpl.defineCommand("step", {
       //   throw new Error(`Function not found: ${fnName}`)
       // })
 
-      runStepByStep(funcs, doc).then(() => this.displayPrompt())
+      // runStepByStep(funcs, doc).then(() => this.displayPrompt())
+      runStepByStep(funcs, doc)
     } catch (err) {
       console.error('Error starting step-through:', err.message)
       this.displayPrompt()
@@ -896,7 +906,8 @@ global.write = s => console.log(rpl.writer(s))
 // to it if you want to benchmark e.g. number of times a routine is called,
 // total time, number of instantiations created, etc.
 global.Accumulator = { }
-global.clearAccumulator = () => Accumulator = { }
+// global.clearAccumulator = () => Accumulator = { }
+global.clearAccumulator = () => { global.Accumulator = {} }
 
 // if there is an argument to lode.js, i.e., if someone runs this script as
 //
