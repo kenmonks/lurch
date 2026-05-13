@@ -957,6 +957,29 @@ or
   color: #444;
 }
 
+/* figures */
+.course #content-block .figure {
+  margin: 1.4rem auto;
+  text-align: center;
+}
+.course #content-block .figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.course #content-block .figure.medium img {
+  max-width: 34rem;
+}
+.course #content-block .figure-caption {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.35;
+}
+
+
 #content-block .example-box {
   border-left: 10px solid var(--nav-link-color);
   padding: 1rem;

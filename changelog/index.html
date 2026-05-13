@@ -95,6 +95,17 @@
         >
         <ul class="square">
           <li
+            ><strong>Type checking of numeric constants</strong> - the built in
+            Arithmetic rules can now validate statements of the form $x \in
+            \NN$, $x \in\ZZ$, $x \in \QQ$, $x\in \RR$, and $x \in \CC$ where $x$
+            is a numeric constant expression that is allowed by the Arithmetic
+            rule for the corresponding number system. It also assumes
+            $\NN\subseteq\ZZ\subseteq\QQ\subseteq\RR\subseteq\CC$. For example,
+            it will validate $42\in\NN$ and $42\in\RR$ but not $-42\in\NN$. It
+            doesn’t matter what number system the Arithmetic rule itself
+            specified, as these are explicit type declarations.</li
+          >
+          <li
             ><strong
               >Subscripted constant relations and relation variables</strong
             >

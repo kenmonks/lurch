@@ -567,6 +567,7 @@ rpl.defineCommand( "features", {
       ${itemPen('X.inspect(x,d)')}: prints the object structure of X to depth d. If d
                       is omitted the default is 1
       ${itemPen('.list')}         : show the list of known libs and proofs
+      ${itemPen('.history')}      : show the Lode history file name
       ${itemPen('.test')}         : run the acidtests script
       ${itemPen('.makedocs')}     : make the jsdoc docs
       ${itemPen('.showdocs')}     : open the jsdoc docs in the browser
@@ -599,6 +600,15 @@ rpl.defineCommand( "list", {
   help: "List currently available Lode libraries and proofs",
   action() { 
     list()
+    this.displayPrompt()
+  }
+})
+
+// define the Lode .history command
+rpl.defineCommand('history', {
+  help: 'Show the Lode history file location.',
+  action() {
+    console.log(historyFile)
     this.displayPrompt()
   }
 })
