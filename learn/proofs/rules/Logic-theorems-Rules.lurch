@@ -266,7 +266,7 @@
 <p>This is a basic library of the rules that are theorems provable in the system defined by the rules in the Predicate Logic with Equality, and the definition of unique existence.&nbsp; This also includes the Equations rule for transitive chain.</p>
 <hr>
 <h3>Constants</h3>
-<p>No additional constants are required.&nbsp;</p>
+<p><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Declare exists!&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Declare </span><span class="ML__cmr">&exist;!</span></span></span></span></span> to be a constant.</p>
 <h3>Unique Existence</h3>
 <div>
 <div class="lurch-atom" data-metadata_type="&quot;rule&quot;" data-shell_title="Rule:">
