@@ -124,7 +124,7 @@
         <p
           >No matter how trivial or well known a claimed expression might be, in
           absence of any other information about the formal system we are
-          considering we have no way of knowing if it is a theorem or not.</p
+          considering, we have no way of knowing if it is a theorem or not.</p
         >
         <div class="example-box">
           <p
@@ -171,12 +171,12 @@
           <p
             ><strong class="qu">Example <span class="thm"></span></strong> The
             following document environment has a Subproof environment on line 3,
-            and expressions on lines 1,2,4,5. There are only two different
-            statements in the entire proof
+            and expressions on lines 1, 2, 4, and 5. There are only two
+            different statements in the entire proof:
             <span class="m">$n$ is even</span> and
             <span class="m">$m$ is odd</span>. The first statement is assumed on
             line 1, and therefore valid as a claim everywhere after line 1. The
-            second is assumed on line 3(a) inside the Subproof on line 3, and
+            second is assumed on line 3.a inside the Subproof on line 3, and
             therefore is only valid until the end of that subproof (as seen on
             line 3.c), but no longer valid after that (as seen on line 5).
             Notice that the statements on lines 1 and 3.a do not get validity
@@ -374,18 +374,18 @@
         >
         <h3>Reasoning with Proof and Subproof environments</h3>
         <p
-          >Proof and Subproof environment are exactly the same as far as
+          >Proof and Subproof environments are exactly the same as far as
           validation goes. A Subproof is just a proof environment inside of
           another Proof environment, so from now on when we refer to a Proof
-          environment it whatever we say also applies to Subproof environments.
+          environment whatever we say also applies to Subproof environments.
           Proof environments are claims.</p
         >
         <p
           >A Proof environment that has only claims as children is unnecessary
           because it will not affect the validity of the proof. It’s like
-          putting extra parentheses around and expression that doesn’t need
-          them, e.g., $((x^2)+(x))$ instead of just $x^2+x$. Such an environment
-          is just claiming that its children are all valid. It will be marked as
+          putting extra parentheses around an expression that doesn’t need them,
+          e.g., $((x^2)+(x))$ instead of just $x^2+x$. Such an environment is
+          just claiming that its children are all valid. It will be marked as
           valid only if all of its children are valid.</p
         >
         <div class="example-box">
@@ -555,7 +555,7 @@
           >An if-then Premise environment can be thought of as assuming that its
           conclusions are valid if its premises are. With such an assumption if
           we assume or can prove that all of its premises are valid, then we can
-          conclude that it’s conclusions are as well.</p
+          conclude that its conclusions are as well.</p
         >
         <div class="example-box">
           <p

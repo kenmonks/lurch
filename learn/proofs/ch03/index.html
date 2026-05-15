@@ -166,11 +166,11 @@
           constants, $=$, $+$, and $1$.</p
         >
         <p
-          >In addition to indentifiers, mathematical expressions often use
+          >In addition to identifiers, mathematical expressions often use
           punctuation and formatting to form expressions that are easier to
           read, or to distinguish or identify two expressions. Common
-          punctuations used in mathematical expressions include parentheses,
-          elipses, periods, and commas. Common formatting used includes
+          punctuation used in mathematical expressions includes parentheses,
+          ellipses, periods, and commas. Common formatting used includes
           superscripts, subscripts, and arranging expressions into columns or
           grids in various ways. For example, we use expressions like
           $$\binom{n}{n}x^n+\binom{n}{n-1}x^{n-1}+\cdots+\binom{n}{0}$$
@@ -183,7 +183,7 @@
           by an expression like $$T(n)=\begin{cases} \frac{n}{2} &amp; \text{if
           $n$ is even} \\ \frac{3n+1}{2} &amp; \text{otherwise} \end{cases}$$
           Indeed, many mathematical expressions will consist entirely of English
-          words. For example,“<em
+          words. For example, “<em
             >The hypotenuse is the longest side of a right triangle.</em
           >” is one such expression.</p
         >
@@ -227,8 +227,8 @@
         <ul class="disc">
           <li
             ><em>Prefix notation</em> The arguments are separated by commas,
-            wrapped in parentheses, and placed to right of the operator (or as
-            subscripts without the parenthesis), e.g., $\xop{op}({arg} _
+            wrapped in parentheses, and placed to the right of the operator (or
+            as subscripts without the parenthesis), e.g., $\xop{op}({arg} _
             1,\ldots,{arg} _ n)$ , or as $\xop{op} _ { {arg} _ 1,\ldots,{arg} _
             n }$.</li
           >
@@ -237,11 +237,11 @@
             (with spaces on both sides) e.g., $({arg}_1 \mathbin{\xop{op}}
             {arg}_2 \mathbin{\xop{op}} \cdots \mathbin{\xop{op}} {arg}_n)$. The
             outer parentheses can be omitted in cases where it is
-            unambigous.</li
+            unambiguous.</li
           >
           <li
             ><em>List notation</em> The operator and arguments are separated by
-            spaces with the operator listed fist, and the entire thing is
+            spaces with the operator listed first, and the entire thing is
             wrapped in parentheses, e.g., $(\xop{op}\xs \xop{arg}_1\xs \ldots\xs
             \xop{arg}_n)$.</li
           >
@@ -356,7 +356,7 @@
           an expression to one or more expressions via function application, as
           illustrated in the table. Notice that the exponentiation operator
           $\text{^}$ is usually omitted and formatted with the second argument
-          as a superscript in traditional math notation. Similarly, is also
+          as a superscript in traditional math notation. Similarly, it is also
           commonplace in mathematics to omit explicit multiplication symbols in
           algebraic expressions like $3x^3+2x-1$, but in this course we will
           always write it explicitly, like $3\cdot x^3+2\cdot x-1$.</p
@@ -367,8 +367,8 @@
           unambiguous, but compound expressions that combine different infix
           operators sometimes require parentheses to disambiguate them. For
           example, if $\star$ and $\diamond$ are infix operators and we write $a
-          \star b \diamond c$ does that mean $(a \star b) \diamond c$ or $a
-          \star (b \diamond c)$. In list notation, the former is $(\diamond\xs
+          \star b \diamond c$, does that mean $(a \star b) \diamond c$ or $a
+          \star (b \diamond c)$? In list notation, the former is $(\diamond\xs
           (\star\xs a\xs b)\xs c)$ whereas the latter is $(\star \xs a\xs
           (\diamond\xs b\xs c))$. In such a situation, we can use parentheses to
           disambiguate which one we mean.</p
@@ -384,7 +384,7 @@
           expression is ambiguous and therefore syntactically invalid.</p
         >
         <p
-          >Some operators have universally accepted precedence, for example in
+          >Some operators have universally accepted precedence; for example in
           elementary arithmetic, multiplication $\cdot$ has higher precedence
           than addition $+$, so that $3\cdot x+1$ is interpreted as $(3\cdot
           x)+1$, not $3\cdot(x+1)$. Other choices of precedence are not as
@@ -521,10 +521,10 @@
         <h2>Environments</h2>
         <p
           >The statements in the formal systems used in mathematics generally
-          consists of some syntactically well-defined collection of expressions
+          consist of some syntactically well-defined collection of expressions
           and sentences. While some statements and theorems might consist of a
           single expression like $n+0=n$, much of everyday mathematics is
-          expressed with statements and theorems that are comprised of multiple
+          expressed with statements and theorems that are composed of multiple
           expressions arranged in nested structures according to a grammar
           involving keywords and punctuation.</p
         >
@@ -534,7 +534,7 @@
           sections, subsections, and so on. Similarly, statements in mathematics
           are also frequently organized by placing them into nested hierarchical
           structures called <strong>environments</strong>. Like other books, a
-          math textbook can have environments such as chapters, sections,
+          math textbook can have environments such as chapters, sections, and
           subsections, but will also frequently contain other more specialized
           mathematical environments, such as theorems, proofs, subproofs,
           definitions, declarations, examples, and many others.</p
@@ -553,10 +553,10 @@
             >
           </div>
           <p
-            >Notice that this theorem statement is an English sentence,
-            comprised of multiple expressions arranged inside the enclosing box
-            according to a certain grammar. The grey box containing the theorem
-            is an example of an environment.</p
+            >Notice that this theorem statement is an English sentence, composed
+            of multiple expressions arranged inside the enclosing box according
+            to a certain grammar. The grey box containing the theorem is an
+            example of an environment.</p
           >
         </div>
         <p
@@ -582,7 +582,7 @@
           <em>Proofs</em>, <em>Rules</em>, and <em>Premises</em> (capitalized
           when we want to refer to an environment of that type). A Proof
           environment that is inside of another environment is called a
-          <em>Subproof</em> environment. Rather than lableing them, we will
+          <em>Subproof</em> environment. Rather than labeling them, we will
           distinguish the four environment types visually by their background
           color (Rule – blue, Premise – cream, Theorem – grey, Proof – white) as
           shown.</p
@@ -619,7 +619,7 @@
           formal system. Namely, the system has the property that if
           <code>math</code> were a theorem then <code>cool</code> would be a
           theorem, too. Its proof shows why that claim is objectively valid.
-          Indeed the proof shows something more general - that the Theorem holds
+          Indeed the proof shows something more general: that the Theorem holds
           in any formal system that satisfies Rule 1 and has
           <code>math</code> as a theorem.</p
         >
@@ -670,7 +670,7 @@
         <h3>Meaningful content vs expository content</h3>
         <p
           >Since we want our proofs to both be objectively verifiable and
-          expository, we will have two kinds of content in our document -
+          expository, we will have two kinds of content in our document:
           <em>meaningful</em> and <em>expository</em>. Meaningful content will
           contribute to the objective validity of the document. The expository
           content is purely for commentary and communication that can help the
@@ -687,7 +687,7 @@
           >
           <div class="Proof half fit">
             <p
-              >This black text is just commmentary but expressions in gold text
+              >This black text is just commentary but expressions in gold text
               such as <span class="m">Gina loves mocha</span> or
               <span class="m">$1+1=2$</span> are meaningful.</p
             >
