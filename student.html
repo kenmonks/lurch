@@ -11,6 +11,8 @@
   </script>
   <script type="module" src="lurchmath/editor.js"></script>
   <script type="module" src="lde/src/experimental/lde-debug.js"></script>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/lurch-180.png">
   <link rel="shortcut icon" href="lurchmath/favicon.ico">
   <link rel="stylesheet" href="lurchmath/main-app-styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -86,12 +88,12 @@
             url: 'student.html?load=help/example-proofs.lurch'
           },
           {
-            title: 'Lurch Math Reference',
-            url: 'lde/src/experimental/parsers/lurch-parser-docs.html'
-          },
-          {
             title: 'Algebra Rule Examples',
             url: 'student.html?load=help/algebra-rule-examples.lurch'
+          },
+          {
+            title: 'Lurch Math Reference',
+            url: 'lde/src/experimental/parsers/lurch-parser-docs.html'
           }
         ],
         // fileOpenTabs can be any subset of:
@@ -140,7 +142,7 @@
       // temp file so you don't get an error if you try to reload the page.
       Lurch.createApp(document.getElementById('editor-container'), options)
         .then(editor => {
-    
+
         const params = new URLSearchParams(window.location.search)
         const load = params.get('load') || ''
         const isTempLoad = /^temp_file_\d+$/.test(load)
@@ -167,7 +169,7 @@
     
         requestAnimationFrame(waitForDeletion)
       })      
-    } )
+    })
   </script>
 </body>
 

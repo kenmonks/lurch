@@ -1,0 +1,5 @@
+
+for size in 16 32 48 72 96 128 180 192 256 384 512
+do
+    magick lurch-master.png -resize ${size}x${size} lurch-${size}.png
+done

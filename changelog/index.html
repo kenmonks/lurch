@@ -52,10 +52,26 @@
         <li
           ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
         >
-        <li><a href="../getlurch">Get Lurch!</a></li>
+        <li><a href="../getting-started">Getting Started</a></li>
+        <li
+          ><a href="../learn/proofs" target="lurchproofs"
+            >Introduction to Proof</a
+          ></li
+        >
+        <li><a href="../practice">Practice Proofs with Lurch</a></li>
         <li><a href="../teaching">Teaching with Lurch</a></li>
-        <li><a href="../theory">Documentation and Theory</a></li>
-        <li><a href="../talks">Lurch Talk Slides</a></li>
+        <li><a href="../theory">Lurch Design and Theory</a></li>
+        <li
+          ><span class="has-submenu"
+            ><i class="fa-solid fa-caret-down"></i>Resources</span
+          >
+          <ul class="submenu">
+            <li><a href="../resources">Resources overview</a></li>
+            <li><a href="../getlurch">Install/Customize Lurch</a></li>
+            <li><a href="../changelog">Changelog</a></li>
+            <li><a href="../talks">Talk Slides</a></li>
+          </ul></li
+        >
         <li><a href="../100">100 Theorem Challenge!</a></li>
         <li><a href="../about">About Lurch</a></li>
       </ul>
@@ -156,7 +172,7 @@
           <li
             ><strong>Expression editor expands horizontally</strong> - the text
             input area of the expression dialog (both meaningful and expository)
-            now can will automatically increase its width to accommodate its
+            now will automatically increase its width to accommodate its
             contents in addition to adjusting vertically. The user can also
             manually resize the input area with their mouse as well.</li
           >
@@ -212,10 +228,10 @@
           >
           <li
             ><strong>Open Context in new document</strong> - added the ability
-            to open the context in a separate document to facility split screen
-            viewing of the document and its context at the same time.
-            Implemented this as part of the context menu (pardon the pun) that
-            comes up when you right-click (or two finger tap on Mac) on the
+            to open the context in a separate document to facilitate
+            split-screen viewing of the document and its context at the same
+            time. Implemented this as part of the context menu (pardon the pun)
+            that comes up when you right-click (or two finger tap on Mac) on the
             visible context in the document. Adjusted the placement of the logo
             for narrow screens that can occur when using it split-screen. This
             is useful for in-lecture presentations.</li
@@ -256,9 +272,9 @@
             <a
               href="/student.html?load=math/examples/Linear-Algebra-Examples.lurch"
               >linear algebra examples #2 and #3</a
-            >, where you want to want to define a formula (i.e., a single
-            expression rule) temporarily for a particular problem (as opposed to
-            adding it to the context).</li
+            >, where you want to define a formula (i.e., a single expression
+            rule) temporarily for a particular problem (as opposed to adding it
+            to the context).</li
           >
           <li
             ><strong>Environment labels</strong> - can be customized and toggled
@@ -272,8 +288,8 @@
           >
           <li
             ><strong>Group Theory and Linear Algebra examples</strong> - added
-            to the <a href="/#examples">examples gallery</a> on the home page.
-            The group theory example uses the Linear Algebra context.</li
+            to the <a href="/practice/#gallery">examples gallery</a>. The group
+            theory example uses the Linear Algebra context.</li
           >
           <li
             ><strong>Linear Algebra Context</strong> - added a
@@ -286,8 +302,8 @@
             future.</li
           >
           <li
-            ><strong>Friendly Rule Name Options</strong> - the the Algebra Rule
-            can now be specified by entering
+            ><strong>Friendly Rule Name Options</strong> - the Algebra Rule can
+            now be specified by entering
             <code>&quot;algebra rule&quot;</code> (case insensitive, double
             quotes are required) as a single expression in a rule environment,
             instead of <code>AlgebraRule</code> (case sensitive). Similarly,
@@ -308,7 +324,7 @@
           >
           <li
             ><strong>Algebra Rule includes Arithmetic($\mathbb{Q}$)</strong> -
-            the Algebra Rule now validates inequalites which can be checked by
+            the Algebra Rule now validates inequalities which can be checked by
             the Arithmetic($\mathbb{Q}$) rule.</li
           >
           <li
@@ -373,8 +389,8 @@
           >
           <li
             ><strong>Algebra Rule Support in Transitive Chains</strong> - Users
-            can now use cite ‘by algebra’ after any equation within a transitive
-            chain when the Algebra Rule is available to check simple algebric
+            can now cite ‘by algebra’ after any equation within a transitive
+            chain when the Algebra Rule is available to check simple algebraic
             identities by CAS.</li
           >
           <li
@@ -383,7 +399,7 @@
             2024. Multiple things contributed, but the main one was only
             instantiating one expression per pass for a given rule to avoid lots
             of duplicates. There is quite a bit of finesse required to do that
-            in a way that doesn’t avoid instaitiations.</li
+            in a way that doesn’t avoid instantiations.</li
           >
           <li
             ><strong>Expression editor checks both parsers</strong> - upgraded
@@ -470,8 +486,8 @@
           </li>
           <li
             ><strong>Added MathLive and KaTeX locally</strong> to the Lurch
-            repository to prevent Lurch rendering from breaking when the cdn
-            doesn’t deliver MathLive (as happened with the upkg and the current
+            repository to prevent Lurch rendering from breaking when the CDN
+            doesn’t deliver MathLive (as happened with the unpkg and the current
             version used by Lurch)</li
           >
           <li
@@ -549,7 +565,7 @@
               <div class="col-xs-12">
                 <h3>
                   <a href="http://monks.scranton.edu/" target="_blank"
-                    >Dr. Kenneth G. Monks</a
+                    >Kenneth G. Monks</a
                   >
                 </h3>
                 Department of Mathematics<br />

@@ -292,6 +292,10 @@ div.tox .tox-toolbar__overflow {
   background-image: linear-gradient(#e3e3e3 0 1px, transparent 1px 39px);
 }
 
+/* toggle instructor menu */
+.tox.hide-instructor-menu .lurch-instructor-menu-button {
+    display: none;
+}
  
 /* Document File Name */
 /* Commenting this out for now until we design something better */

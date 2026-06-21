@@ -1,0 +1,300 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Lurch Resources</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/monks.css" />
+    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body>
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <a href="/" target="lurchplus" rel="noopener noreferrer">
+        <img
+          src="../assets/media/lurchlogo.png"
+          style="margin: 0px; border-radius: 5px; display: block"
+          width="190px" />
+      </a>
+
+      <ul class="menu-root">
+        <li
+          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
+        >
+        <li><a href="../getting-started">Getting Started</a></li>
+        <li
+          ><a href="../learn/proofs" target="lurchproofs"
+            >Introduction to Proof</a
+          ></li
+        >
+        <li><a href="../practice">Practice Proofs with Lurch</a></li>
+        <li><a href="../teaching">Teaching with Lurch</a></li>
+        <li><a href="../theory">Lurch Design and Theory</a></li>
+        <li
+          ><span class="has-submenu"
+            ><i class="fa-solid fa-caret-down"></i>Resources</span
+          >
+          <ul class="submenu">
+            <li><a href="../resources">Resources overview</a></li>
+            <li><a href="../getlurch">Install/Customize Lurch</a></li>
+            <li><a href="../changelog">Changelog</a></li>
+            <li><a href="../talks">Talk Slides</a></li>
+          </ul></li
+        >
+        <li><a href="../100">100 Theorem Challenge!</a></li>
+        <li><a href="../about">About Lurch</a></li>
+      </ul>
+
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank"
+            >monks.scranton.edu</a
+          >
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
+        <div>
+          <a href="https://github.com/kenmonks/lurch" target="_blank"
+            >github.com/kenmonks/lurch</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1>Lurch Resources</h1>
+          <h2
+            >Reference, installation, source code, talks, and advanced tools</h2
+          >
+        </div>
+        <p
+          >Most people should begin with
+          <a href="../getting-started/">Getting Started</a>, the
+          <a href="../learn/proofs/" target="'lurchproofs'"
+            >Introduction to Proof</a
+          >, or <a href="../practice/">Practice Proofs with Lurch</a>. This page
+          collects more specialized links for instructors, developers, and
+          advanced users.</p
+        >
+        <h2 id="reference">Reference</h2>
+        <ul class="disc strong-tags dash-after">
+          <li
+            ><a href="../getting-started/#guides">Quick-start guides</a> short
+            interactive documents for students and instructors.</li
+          >
+          <li
+            ><a
+              href="../lde/src/experimental/parsers/lurch-parser-docs.html"
+              target="'_blank'"
+              >Lurch Syntax</a
+            >
+            a quick reference for typing mathematical expressions in Lurch.</li
+          >
+          <li
+            ><a href="../learn/proofs/appendix/" target="'lurchproofs'"
+              >Course contexts and rule documents</a
+            >
+            the contexts used by the Introduction to Proof notes with links to
+            the relevant chapters. Additional contexts can be found on the
+            <a href="../getting-started/">Getting Started</a> page.</li
+          >
+          <li
+            ><a href="../theory/">Lurch Design and Theory</a> a high-level
+            explanation of the validation approach behind Lurch.</li
+          >
+          <li
+            ><a href="../instructor.html?load=help/theory.lurch"
+              >Validation in Lurch (slides)</a
+            >
+            talk slides about the super-natural deduction validation
+            algorithm.</li
+          >
+          <li
+            ><a
+              href="../student.html?load=help/talks/code4math/intro-no-theory-top.lurch"
+              >Introduction to Lurch Plus (slides)</a
+            >
+            slides from a recent talk on Lurch Plus.</li
+          >
+        </ul>
+        <h2 id="using">Using Lurch</h2>
+        <ul class="disc strong-tags dash-after">
+          <li
+            ><a href="../getting-started/#use">Start Lurch</a> open a blank
+            document with one of several common mathematical contexts.</li
+          >
+          <li
+            ><a href="../teaching/#overview">Instructor file-handling notes</a>
+            background on static contexts, dynamic contexts, and browser
+            restrictions.</li
+          >
+          <li
+            ><a href="../getlurch/">Install or customize Lurch</a> instructions
+            for installing Lurch as an app, or customizing obtaining your own
+            copy of Lurch and this site.</li
+          >
+          <li
+            ><a href="../getlurch-local/">Install Lurch locally</a> a brief
+            guide for hosting a local copy of this site on your own computer.
+            Mainly for developers.</li
+          >
+        </ul>
+        <h2 id="project">Project</h2>
+        <ul class="disc strong-tags dash-after">
+          <li
+            ><a href="../changelog/">Changelog</a> recent changes and updates to
+            the Lurch app and site.</li
+          >
+          <li
+            ><a href="https://github.com/kenmonks/lurch" target="'_blank'"
+              >Official Lurch source code on GitHub</a
+            >
+            the source code and content for this repository.</li
+          >
+          <li
+            ><a href="../lde/src/experimental/docs/" target="'_blank'"
+              >Validation Algorithm</a
+            >
+            the code-level nitty gritty documentation for the implementation of
+            the Lurch validation algorithm.</li
+          >
+          <li
+            ><a href="../lde/docs/" target="'_blank'">Lurch Concepts</a> the
+            data structure and utilities used by Lurch to formalize mathematics.
+            Also called <em>Logic Concepts</em> in the code.</li
+          >
+          <li
+            ><a
+              href="https://github.com/kenmonks/lurch/blob/main/lde/src/experimental/parsers/lurch-to-tex.peggy"
+              target="_blank"
+              >Peggy LaTeX Parser Grammar</a
+            >
+            this is the full Peggy source code for the tex parser.</li
+          >
+          <li
+            ><a
+              href="https://github.com/kenmonks/lurch/blob/main/lde/src/experimental/parsers/lurch-to-putdown.peggy"
+              target="_blank"
+              >Peggy Putdown Parser Grammar</a
+            >
+            this is corresponding Peggy source code for the putdown parser.</li
+          >
+        </ul>
+        <h2 id="archive">Archive</h2>
+        <ul class="disc strong-tags dash-after">
+          <li
+            ><a href="../talks/">All talk slides</a> slides from past Lurch
+            talks and workshops.</li
+          >
+          <li
+            ><a href="../contexts-2024">2024 contexts</a> the contexts used for
+            the <a href="../practice/#2024">2024 assignments</a>.</li
+          >
+          <li
+            ><a
+              href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf"
+              target="'_blank'"
+              rel="'noopener"
+              noreferrer=""
+              >2024 lecture notes</a
+            >
+            the previous PDF lecture notes used by some older assignments.</li
+          >
+        </ul>
+      </div>
+
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <h3>
+                  <a href="http://monks.scranton.edu/" target="_blank"
+                    >Kenneth G. Monks</a
+                  >
+                </h3>
+                Department of Mathematics<br />
+                University of Scranton<br />
+                Scranton, PA 18510
+              </div>
+            </div>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="../assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank"
+                  >monks@scranton.edu</a
+                >
+              </div>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
+              </div>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="../assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank"
+                  >Prove it!&nbsp;Math Academy</a
+                >
+              </div>
+            </div>
+            <!-- row -->
+            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'lurchplus'</script
+    ><script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

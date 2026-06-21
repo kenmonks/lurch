@@ -1,0 +1,543 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Contexts 2024</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/monks.css" />
+    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body>
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <a href="/" target="lurchplus" rel="noopener noreferrer">
+        <img
+          src="../assets/media/lurchlogo.png"
+          style="margin: 0px; border-radius: 5px; display: block"
+          width="190px" />
+      </a>
+
+      <ul class="menu-root">
+        <li
+          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
+        >
+        <li><a href="../getting-started">Getting Started</a></li>
+        <li
+          ><a href="../learn/proofs" target="lurchproofs"
+            >Introduction to Proof</a
+          ></li
+        >
+        <li><a href="../practice">Practice Proofs with Lurch</a></li>
+        <li><a href="../teaching">Teaching with Lurch</a></li>
+        <li><a href="../theory">Lurch Design and Theory</a></li>
+        <li
+          ><span class="has-submenu"
+            ><i class="fa-solid fa-caret-down"></i>Resources</span
+          >
+          <ul class="submenu">
+            <li><a href="../resources">Resources overview</a></li>
+            <li><a href="../getlurch">Install/Customize Lurch</a></li>
+            <li><a href="../changelog">Changelog</a></li>
+            <li><a href="../talks">Talk Slides</a></li>
+          </ul></li
+        >
+        <li><a href="../100">100 Theorem Challenge!</a></li>
+        <li><a href="../about">About Lurch</a></li>
+      </ul>
+
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank"
+            >monks.scranton.edu</a
+          >
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
+        <div>
+          <a href="https://github.com/kenmonks/lurch" target="_blank"
+            >github.com/kenmonks/lurch</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1>Example Definitions, Rules, and Theorems</h1>
+          <h2
+            >Introduction to Mathematical Proof, University of Scranton,
+            2024</h2
+          >
+        </div>
+        <p
+          >Lurch was used successfully in my undergraduate bridge course for
+          math majors, Math 299 at the University of Scranton, Spring 2024.
+          These definitions and notes are very specific to my course, but are
+          included here for instructors who want to use or modify them. Thus,
+          these are not any sort of ‘official’ contexts or math content built
+          into Lurch itself, but rather are just one example of specific content
+          made by a specific instructor for a specific course.</p
+        >
+        <p
+          >These context are the ones used in the example
+          <a href="../practice/#2024">Assignments from 2024</a> and so are
+          provided here for reference. Many have been revised since then. The
+          latest versions are available on the
+          <a href="../getting-started/#contexts">Getting Started page</a> and in
+          the
+          <a href="../learn/proofs/appendix"
+            >appendix of the Intro to Proof notes</a
+          >.</p
+        >
+        <div class="blue-box">
+          <p
+            ><strong class="bigfont">Cumulative Topics</strong> – each link
+            opens a blank Lurch document whose context consists of the rules for
+            that topic, and those from the topics above it. The Theorem numbers
+            refer to exercises in the draft of the
+            <a href="">course lecture notes</a>.</p
+          >
+          <dl>
+            <dt
+              ><a href="../instructor.html?load=math/Prop.lurch"
+                >Propositional Logic</a
+              ></dt
+            >
+            <dd
+              >defines <code>and</code>, <code>or</code>, <code>not</code>,
+              <code>implies</code>, <code>iff</code>, and
+              <code>contradiction</code> (<a
+                href="../instructor.html?load=math/Prop-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Pred.lurch"
+                >Predicate Logic with Equality</a
+              ></dt
+            >
+            <dd
+              >defines <code>forall</code> $\left(\forall\right)$,
+              <code>exists</code> $\left(\exists\right)$,
+              <code>equality</code> $\left(=\right)$,
+              <code>unique existence</code> $\left(\exists!\right)$ (<a
+                href="../instructor.html?load=math/Pred-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Logic-theorems.lurch"
+                >Logic Theorems</a
+              ></dt
+            >
+            <dd
+              >provides some common theorems from Logic (<a
+                href="../instructor.html?load=math/Logic-theorems-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Peano.lurch"
+                >Natural Numbers</a
+              ></dt
+            >
+            <dd
+              >the Peano Axioms for the Natural Numbers (<a
+                href="../instructor.html?load=math/Peano-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Number-theory.lurch"
+                >Number Theory Definitions</a
+              ></dt
+            >
+            <dd
+              >defines <code>less than</code> $\left(\lt\right)$,
+              <code>divides</code> $\left(\mid\right)$, <code>prime</code>,
+              <code>even</code>, <code>odd</code> (<a
+                href="../instructor.html?load=math/Number-theory-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Equations.lurch"
+                >Equations</a
+              ></dt
+            >
+            <dd
+              >defines a single ‘rule’ that enables Lurch to validate transitive
+              chains of equalities without needing substitution, reflexivity,
+              symmetry, or transitivity (<a
+                href="../instructor.html?load=math/Equations-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a
+                href="../instructor.html?load=math/Number-theory-theorems.lurch"
+                >Number Theory Theorems</a
+              ></dt
+            >
+            <dd
+              >provides some useful theorems from Number Theory that are
+              provable from the Peano Axioms (<a
+                href="../instructor.html?load=math/Number-theory-theorems-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Sequences.lurch"
+                >Sequences and Recursion</a
+              ></dt
+            >
+            <dd
+              >defines <code>summation</code> $\left(\sum\right)$,
+              <code>Fibonacci numbers</code> $\left(F_n\right)$,
+              <code>factorial</code> $\left(!\right)$,
+              <code>multinomial coefficients</code> $\left(m,n\right)$,
+              <code>binomial coefficients</code> $\binom{n}{k}$,
+              <code>exponentiation</code> $\left(z^n\right)$ (<a
+                href="../instructor.html?load=math/Sequences-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Reals.lurch"
+                >Real Numbers</a
+              ></dt
+            >
+            <dd
+              >defines the field axioms for the Real Numbers (<a
+                href="../instructor.html?load=math/Reals-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Sets.lurch"
+                >Set Theory</a
+              ></dt
+            >
+            <dd
+              >defines <code>in</code> $\left(\in\right)$,
+              <code>subset</code> $\left(\subseteq\right)$,
+              <code>intersection</code> $\left(\cap\right)$,
+              <code>union</code> $\left(\cup\right)$,
+              <code>complement</code> $\left('\right)$,
+              <code>set difference</code> $\left(\setminus\right)$,
+              <code>powerset</code> $\left(\mathscr{P}\right)$,
+              <code>Cartesian product</code> $\left(\times\right)$,
+              <code>finite set</code> $\left\{ \ldots \right\}$,
+              <code>tuple</code> $\langle\ldots\rangle$,
+              <code>Indexed Union</code> $\left(\bigcup\right)$,
+              <code>Indexed Intersection</code> $\left(\bigcap\right)$,
+              <code>Set Builder notation</code> $\left\{ z :\ldots \right\}$ (<a
+                href="../instructor.html?load=math/Sets-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Functions.lurch"
+                >Functions</a
+              ></dt
+            >
+            <dd
+              >defines <code>maps</code> $\left(f\colon A \to B\right)$,
+              <code>function application</code> $\left(f(x)\right)$,
+              <code>maps to</code> $\left(\mapsto\right)$,
+              <code>image</code> $\left(f(U)\right)$,
+              <code>identity map</code> $\left(\text{id}_A\right)$
+              <code>inverse image</code> $\left(f^\text{inv}(U)\right)$,
+              <code>composition</code> $\left(\circ\right)$,
+              <code>inverse function</code> $\left(f^{-1}\right)$,
+              <code>injective</code>, <code>surjective</code>,
+              <code>bijective</code> (<a
+                href="../instructor.html?load=math/Functions-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Relations.lurch"
+                >Relations</a
+              ></dt
+            >
+            <dd
+              >defines <code>reflexive</code>, <code>symmetric</code>,
+              <code>transitive</code>, <code>irreflexive</code>,
+              <code>antisymmetric</code>, <code>total</code>,
+              <code>partial order</code>, <code>strict partial order</code>,
+              <code>total order</code>, <code>equivalence relation</code>,
+              <code>partition</code>, <code>equivalence class</code> $[a]$ (<a
+                href="../instructor.html?load=math/Relations-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+          </dl>
+        </div>
+        <!-- blue-box -->
+        <!-- ----------------------------------------------------- -->
+        <h2 id="contexts">Other Useful Contexts</h2>
+        <div class="blue-box">
+          <p
+            ><strong>Additional Rules.</strong> The following rules can be
+            optionally added by the instructor to any context above in a
+            particular document. Currently, only one of the three Arithmetic
+            rules can be used in a single document.</p
+          >
+          <dl>
+            <dt
+              ><a href="../instructor.html?load=math/Arithmetic-naturals.lurch"
+                >Arithmetic in the Natural Numbers</a
+              ></dt
+            >
+            <dd
+              >Allows the user to say <code>'by</code>
+              <code>arithmetic'</code> after an expression to try to justify it
+              using a CAS. The expression can only contain natural number
+              constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$,
+              and $\text{^}$, and the relations $=$, $\neq$, $\leq$, and $\lt$.
+              (<a
+                href="../instructor.html?load=math/Arithmetic-naturals-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Arithmetic-integers.lurch"
+                >Arithmetic in the Integers</a
+              ></dt
+            >
+            <dd
+              >Allows the user to say <code>'by</code>
+              <code>arithmetic'</code> after an expression to try to justify it
+              using a CAS. The expression can only contain natural number
+              constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$,
+              $\text{^}$, and $-$ and the relations $=$, $\neq$, $\leq$, and
+              $\lt$. Exponents cannot be negative. (<a
+                href="../instructor.html?load=math/Arithmetic-integers-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Arithmetic-rationals.lurch"
+                >Arithmetic in the Rationals</a
+              ></dt
+            >
+            <dd
+              >Allows the user to say <code>'by</code>
+              <code>arithmetic'</code> after an expression to try to justify it
+              using a CAS. The expression can only contain natural number
+              constants (e.g. $0$, $1$, $2$, etc) the operators $+$, $\cdot$,
+              $\text{^}$, $-$, and $/$, and the relations $=$, $\neq$, $\leq$,
+              and $\lt$. Exponents must be integers and you cannot divide by
+              zero. (<a
+                href="../instructor.html?load=math/Arithmetic-rationals-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Algebra.lurch"
+                >Algebra</a
+              ></dt
+            >
+            <dd
+              >Allows the user to say <code>'by</code>
+              <code>algebra'</code> after an equation to try to justify it using
+              a CAS. There are no restrictions on what the equation can contain,
+              so use at your own discretion. The identity is evaluated using
+              <a href="http://algebrite.org" target="_blank">Algebrite</a>. This
+              rule also validates inequalities that can be validated by the
+              previous rule (Arithmetic in the Rationals). (<a
+                href="../instructor.html?load=math/Algebra-Rules.lurch"
+                >view rules</a
+              >) (<a
+                href="../student.html?load=help/algebra-rule-examples.lurch"
+                >examples</a
+              >).</dd
+            >
+          </dl>
+          <p
+            ><strong>Useful Cumulative Contexts.</strong> These contexts combine
+            some proper subsets of the cumulative Math 299 contexts listed
+            above.</p
+          >
+          <dl>
+            <dt
+              ><a href="../instructor.html?load=math/Equations-Only.lurch"
+                >Equations Only</a
+              ></dt
+            >
+            <dd
+              >Only the Equations rule and nothing else. Defines $=$. (<a
+                href="../instructor.html?load=math/Equations-Only-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Equations-Logic.lurch"
+                >Equations and Logic Only</a
+              ></dt
+            >
+            <dd
+              >Equations, Logic Theorems, Predicate Logic, Propositional Logic.
+              (<a
+                href="../instructor.html?load=math/Equations-Logic-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Sets-Equations-Logic.lurch"
+                >Sets, Equations, and Logic</a
+              ></dt
+            >
+            <dd
+              >Set Theory, Equations, Logic Theorems, Predicate Logic,
+              Propositional Logic. This does not include Set Theory Theorems.
+              (<a
+                href="../instructor.html?load=math/Sets-Equations-Logic-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a
+                href="../instructor.html?load=math/Functions-Sets-Equations-Logic.lurch"
+                >Functions, Sets, Equations, and Logic</a
+              ></dt
+            >
+            <dd
+              >Functions, Set Theory Theorems, Set Theory, Equations, Logic
+              Theorems, Predicate Logic, Propositional Logic. (<a
+                href="../instructor.html?load=math/Functions-Sets-Equations-Logic-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Topology.lurch"
+                >Topology</a
+              ></dt
+            >
+            <dd
+              >Defines <code>topological space</code>, <code>open</code>,
+              <code>closed</code>, and <code>continuous</code> (in a toplogical
+              space). Includes the Functions library above. (<a
+                href="../instructor.html?load=math/Topology-Rules.lurch"
+                >view rules</a
+              >)</dd
+            >
+            <dt
+              ><a href="../instructor.html?load=math/Linear-Algebra.lurch"
+                >Linear Algebra</a
+              ></dt
+            >
+            <dd
+              >Defines <code>linear</code>, <code>subspace</code>,
+              <code>closed under addition</code>,
+              <code>closed under multiplication</code>, <code>nonempty</code>,
+              vectors, vector addition, and scalar multiplication (in
+              $\mathbb{R}^2$ and $\mathbb{R}^3$). Includes the Functions, Sets,
+              Equations, and Logic library above. (<a
+                href="../instructor.html?load=math/Linear-Algebra-Rules.lurch"
+                >view rules</a
+              >) (<a
+                href="../student.html?load=math/examples/Linear-Algebra-Examples.lurch"
+                >examples</a
+              >).</dd
+            >
+          </dl>
+        </div>
+        <!-- blue-box -->
+      </div>
+
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <h3>
+                  <a href="http://monks.scranton.edu/" target="_blank"
+                    >Kenneth G. Monks</a
+                  >
+                </h3>
+                Department of Mathematics<br />
+                University of Scranton<br />
+                Scranton, PA 18510
+              </div>
+            </div>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="../assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank"
+                  >monks@scranton.edu</a
+                >
+              </div>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
+              </div>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="../assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank"
+                  >Prove it!&nbsp;Math Academy</a
+                >
+              </div>
+            </div>
+            <!-- row -->
+            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'lurchplus'</script
+    ><script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

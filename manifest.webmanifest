@@ -1,0 +1,21 @@
+{
+  "name": "Lurch",
+  "short_name": "Lurch",
+  "description": "A math editor for writing and checking proofs in standard mathematical notation.",
+  "start_url": "/instructor/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/assets/media/icons/lurch-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/media/icons/lurch-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

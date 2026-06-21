@@ -1,0 +1,1506 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Practice Proofs with Lurch</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/monks.css" />
+    <link rel="stylesheet" href="../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body>
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <a href="/" target="lurchplus" rel="noopener noreferrer">
+        <img
+          src="../assets/media/lurchlogo.png"
+          style="margin: 0px; border-radius: 5px; display: block"
+          width="190px" />
+      </a>
+
+      <ul class="menu-root">
+        <li
+          ><a href="../"><i class="fa-solid fa-house"></i>Home</a></li
+        >
+        <li><a href="../getting-started">Getting Started</a></li>
+        <li
+          ><a href="../learn/proofs" target="lurchproofs"
+            >Introduction to Proof</a
+          ></li
+        >
+        <li
+          ><span class="has-submenu"
+            ><i class="fa-solid fa-caret-right"></i>Practice Proofs with
+            Lurch</span
+          >
+          <ul class="submenu hidden">
+            <li><a href="#gallery">Proof Gallery</a></li>
+            <li><a href="#assignments">Assignments</a></li>
+          </ul></li
+        >
+        <li><a href="../teaching">Teaching with Lurch</a></li>
+        <li><a href="../theory">Lurch Design and Theory</a></li>
+        <li><a href="../resources">Resources</a></li>
+        <li><a href="../100">100 Theorem Challenge!</a></li>
+        <li><a href="../about">About Lurch</a></li>
+      </ul>
+
+      <div id="contact">
+        <div>
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+        <div>
+          <a href="https://monks.scranton.edu" target="_blank"
+            >monks.scranton.edu</a
+          >
+        </div>
+        <div>
+          <a href="https://proveitmath.org" target="_blank">proveitmath.org</a>
+        </div>
+        <div>
+          <a href="https://github.com/kenmonks/lurch" target="_blank"
+            >github.com/kenmonks/lurch</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block">
+        <div class="title-box">
+          <h1>Practice Proofs with Lurch</h1>
+          <h2>Proofs, assignments, and materials to imitate or try</h2>
+        </div>
+        <p
+          >Try your hand at writing your own proofs, and have Lurch verify them!
+          Just click on any assignment below. They assume familiarity with the
+          <a href="../getting-started/#guides">quick-start guides</a>.</p
+        >
+        <h2 id="gallery">Proof Gallery</h2>
+        <p
+          >Here are a few example proofs done in Lurch using a variety of topics
+          and styles.</p
+        >
+        <ul class="disc strong-tags dash-after">
+          <li
+            ><a
+              href="../student.html?load=math/examples/Topo-logical%20-%20soln.lurch"
+              >Topo-logical</a
+            >
+            a proof that the composition of continuous functions is continuous
+            in Topology.</li
+          >
+          <li
+            ><a
+              href="../student.html?load=math/examples/Mar%2026%20-%20in%20class.lurch"
+              >Double induction</a
+            >
+            a proof of a binomial coefficient identity done in class using
+            double induction.</li
+          >
+          <li
+            ><a
+              href="../student.html?load=math/examples/Linear-Algebra-Examples.lurch"
+              >Linear Algebra</a
+            >
+            three proofs illustrating linear algebra features of Lurch involving
+            linear transformations and subspaces.</li
+          >
+          <li
+            ><a href="../student.html?load=math/examples/group-example.lurch"
+              >Group Theory</a
+            >
+            an example proof from group theory using the Linear Algebra context
+            and the definition of a group.</li
+          >
+          <li
+            ><a href="../student.html?load=help/example-proofs.lurch"
+              >Proof Style Sampler</a
+            >
+            a smorgasbord of proofs in Lurch using a variety of topics and
+            styles.</li
+          >
+          <li
+            ><a href="../100">100 Famous Theorems Challenge!</a> Lurch’s status
+            in verifying the proofs of theorems on the 100 famous theorems
+            challenge list.</li
+          >
+        </ul>
+        <h2 id="assignments">Example Assignments</h2>
+        <p
+          >These assignments are shared as example documents for instructors to
+          imitate or adapt, and for students to try on their own for self-study.
+          They come from Math 299 at the University of Scranton and may be
+          revised as the course materials are updated.</p
+        >
+        <h3 id="2026">Assignments from Math 299, Spring 2026</h3>
+        <p
+          >These assignments refer to the problems and problem numbers in the
+          <a href="/learn/proofs" target="lurchproofs">course lecture notes</a
+          >.</p
+        >
+        <div class="blue-box thmlist">
+          <dl>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-06.lurch"
+                >Assignment #06</a
+              >
+              <a
+                href="/learn/proofs/ch05"
+                class="course-ref"
+                target="lurchproofs"
+                >Propositional Logic</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (why there’s no contradiction- rule).</strong
+                  >  $\xcont\implies \text{anything}$</li
+                >
+                <li
+                  ><strong>Theorem (double negative).</strong> $A\iff \xnot
+                  (\xnot A)$</li
+                >
+                <li
+                  ><strong>Theorem (negating an implication).</strong> 
+                  $\neg(R\implies S)\implies R \xand \neg S$</li
+                >
+                <li
+                  ><strong>Theorem (another De Morgan).</strong>  $\xnot (P \xor
+                  Q)\ximplies \xnot P \xand \xnot Q$</li
+                >
+                <li
+                  ><strong>Theorem (excluded middle).</strong>  $n$ is prime or
+                  $n$ is not prime</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-07.lurch"
+                >Assignment #07</a
+              >
+              <a
+                href="/learn/proofs/ch06"
+                class="course-ref"
+                target="lurchproofs"
+                >Predicate Logic</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (sometimes the same).</strong>  $(\forall
+                  x.\forall y.P(x,y))\implies (\forall z.P(z,z))$</li
+                >
+                <li
+                  ><strong>Theorem (alternate or-).</strong> $(\forall x.\neg
+                  L(x))\iff \neg (\exists x.L(x))$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-08.lurch"
+                >Assignment #08</a
+              >
+              <a
+                href="/learn/proofs/ch07"
+                class="course-ref"
+                target="lurchproofs"
+                >Peano arithmetic and induction</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong
+                    >Theorem 7.2 (no number is its own successor).</strong
+                  >
+                    $\forall n.n\neq\sigma(n)$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 7.3 (alternate definition of $\sigma$).</strong
+                  >
+                  $\forall n.\sigma(n)=n+1$</li
+                >
+                <li
+                  ><strong>Theorem 7.5 (additive identity, part 2).</strong>
+                  $\forall n.0+n=n$</li
+                >
+                <li
+                  ><strong>Theorem 7.6 (commutativity of adding $1$).</strong
+                  > $\forall n.1+n=n+1$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-09.lurch"
+                >Assignment #09</a
+              >
+              <a
+                href="/learn/proofs/ch07"
+                class="course-ref"
+                target="lurchproofs"
+                >Peano arithmetic and induction</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 7.7 (commutativity of addition).</strong> 
+                   $\forall m.\forall n.m+n=n+m$</li
+                >
+                <li
+                  ><strong>Theorem 7.11 (multiplicative identity).</strong> 
+                   $\forall n.1\cdot n=n \xand n\cdot 1=n$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-10.lurch"
+                >Assignment #10</a
+              >
+              <a
+                href="/learn/proofs/ch06"
+                class="course-ref"
+                target="lurchproofs"
+                >Ch. 6</a
+              ><a
+                href="/learn/proofs/ch07"
+                class="course-ref"
+                target="lurchproofs"
+                >Ch. 7</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 6.12 (quantifier fun).</strong>   $(\forall
+                  x.P(x) \xor Q(x)) \xand (\exists y.\neg P(y)) \implies
+                  (\exists z.Q(z))$</li
+                >
+                <li
+                  ><strong>Theorem 7.12 (left distributive law).</strong> 
+                  $\forall m.\forall n.\forall p.p\cdot(m+n)=p\cdot m+p\cdot
+                  n$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-11.lurch"
+                >Assignment #11</a
+              >
+              <a
+                href="/learn/proofs/ch07"
+                class="course-ref"
+                target="lurchproofs"
+                >Peano arithmetic and induction</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 7.19 (successors are bigger).</strong>
+                  $\forall n.n\lt\sigma(n)$</li
+                >
+                <li
+                  ><strong>Theorem 7.33 (everything divides zero).</strong>
+                  $\forall n.n\mid 0$</li
+                >
+                <li
+                  ><strong>Theorem (product with even is even).</strong>
+                  $\forall m.\forall n.n\text{ is even}\implies m\cdot n\text{
+                  is even}$</li
+                >
+                <li
+                  ><strong>Theorem (successors of evens are odd).</strong>
+                  $\forall n.2\cdot n+1\text{ is odd}$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-12.lurch"
+                >Assignment #12</a
+              >
+              <a
+                href="/learn/proofs/ch05"
+                class="course-ref"
+                target="lurchproofs"
+                >Ch. 5</a
+              ><a
+                href="/learn/proofs/ch06"
+                class="course-ref"
+                target="lurchproofs"
+                >Ch. 6</a
+              ><a
+                href="/learn/proofs/ch07"
+                class="course-ref"
+                target="lurchproofs"
+                >Ch. 7</a
+              ><a
+                href="/learn/proofs/ch08"
+                class="course-ref"
+                target="lurchproofs"
+                >Recursive Sequences</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (prop warm up).</strong> $((S\implies T\text{
+                  or }\neg U)\implies S)\implies S$</li
+                >
+                <li
+                  ><strong>Theorem 6.17 (de-quantify).</strong> $(\forall
+                  x.Q(x)\implies P)\iff(\exists x.Q(x))\implies P$</li
+                >
+                <li
+                  ><strong>Theorem 7.16 (zero divisors).</strong> $\forall
+                  m.\forall n.m\cdot n=0\implies m=0\text{ or }n=0$</li
+                >
+                <li
+                  ><strong>Theorem 7.21 (minimum difference).</strong> $\forall
+                  m.\forall n.m\lt n\iff\sigma(m)\leq n$</li
+                >
+                <li
+                  ><strong>Theorem 7.37 (common divisors divide sums).</strong>
+                  If $p\mid m$ and $p\mid n$, then $p\mid(m+n)$</li
+                >
+                <li
+                  ><strong>Theorem 8.3 (c) (power laws).</strong>
+                  $(z^m)^n=z^{m\cdot n}$</li
+                >
+                <li
+                  ><strong>Theorem 8.6 (b) (distributive law).</strong>
+                  $\displaystyle\sum_{k=0}^n s\cdot a_k=s\cdot\sum_{k=0}^n
+                  a_k$</li
+                >
+                <li
+                  ><strong>Theorem (simple fact. fact).</strong> If $0\lt n$,
+                  then $n\mid n!$</li
+                >
+                <li
+                  ><strong>Theorem (successors of evens are odd).</strong>
+                  $2\cdot n+1\text{ is odd}$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-13.lurch"
+                >Assignment #13</a
+              >
+              <a
+                href="/learn/proofs/ch08"
+                class="course-ref"
+                target="lurchproofs"
+                >Recursive Sequences</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 8.4 (c).</strong> $(n+1)^2=n^2+(2\cdot
+                  n+1)$</li
+                >
+                <li
+                  ><strong>Theorem 8.16 (sum of the first n Fibs).</strong> For
+                  any natural number $n$, $\displaystyle 1+\sum_{k=0}^n
+                  F_k=F_{n+2}$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 8.13 (closed formula for binomial
+                    coefficients).</strong
+                  >
+                  For any natural numbers $m$ and $n$, $\displaystyle (m!\cdot
+                  n!)\cdot\binom{m+n}{n}=(m+n)!$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-14.lurch"
+                >Assignment #14</a
+              >
+              <a
+                href="/learn/proofs/ch08"
+                class="course-ref"
+                target="lurchproofs"
+                >Ch. 8</a
+              ><a
+                href="/learn/proofs/ch09"
+                class="course-ref"
+                target="lurchproofs"
+                >Set Theory</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 9.9 (subset is reflexive).</strong> For any
+                  set $A$, $A\subseteq A$</li
+                >
+                <li
+                  ><strong>Theorem (everyone’s subset).</strong> For any set
+                  $A$, ${}\subseteq A$</li
+                >
+                <li
+                  ><strong>Theorem 9.11 (subset is transitive).</strong> For any
+                  sets $A$, $B$, and $C$, if $A\subseteq B$ and $B\subseteq C$,
+                  then $A\subseteq C$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 8.10 (sum of the first n odd numbers).</strong
+                  >
+                  For any natural number $n$, $\displaystyle\sum_{k=0}^n(2\cdot
+                  k+1)=(n+1)^2$</li
+                >
+                <li
+                  ><strong>Theorem 8.25.</strong> If $a_0=0$ and $\forall
+                  n.a_{n+1}=3\cdot a_n+2$, then for any natural number $n$,
+                  $a_n+1=3^n$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-15.lurch"
+                >Assignment #15</a
+              >
+              <a
+                href="/learn/proofs/ch09"
+                class="course-ref"
+                target="lurchproofs"
+                >Set Theory</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 9.5 (double negative).</strong> $(A’)'=A$</li
+                >
+                <li
+                  ><strong>Theorem 9.7 (a set of sets).</strong>
+                  ${1,2}\in{A:{1}\subseteq A}$</li
+                >
+                <li
+                  ><strong>Theorem 9.8 (Cartesian calculation).</strong>
+                  ${2}\times{3,5}={[2,3],[2,5]}$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 9.22 (relative complement is not
+                    associative).</strong
+                  >
+                  If $x\in A\cap(B\cap C)$, then $A\setminus(B\setminus
+                  C)\neq(A\setminus B)\setminus C$</li
+                >
+                <li
+                  ><strong>Theorem 9.30 (even more De Morgan).</strong>
+                  $\displaystyle\left(\bigcup_{i\in I}A_i\right)‘=\bigcap_{j\in
+                  I}A_j’$</li
+                >
+                <li
+                  ><strong>Theorem 9.34 (power set of complements).</strong> If
+                  $A\subseteq B$, then
+                  $\mathscr{P}(B’)\subseteq\mathscr{P}(A’)$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-16.lurch"
+                >Assignment #16</a
+              >
+              <a
+                href="/learn/proofs/ch09"
+                class="course-ref"
+                target="lurchproofs"
+                >Set Theory</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 9.14 (contravariance).</strong> If
+                  $A\subseteq B$, then $B’\subseteq A’$</li
+                >
+                <li
+                  ><strong>Theorem 9.30 (not a subset).</strong> If
+                  $\neg(A\subseteq B)$, then $\exists x.x\in A\cap B’$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-17.lurch"
+                >Assignment #17</a
+              >
+              <a
+                href="/learn/proofs/ch10"
+                class="course-ref"
+                target="lurchproofs"
+                >Real Numbers</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.2 (a) (shortest proof ever).</strong>
+                  $-0=0$</li
+                >
+                <li
+                  ><strong>Theorem 10.2 (b) (double negative).</strong> $-1\cdot
+                  -1=1$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 10.2 (c) (the only two real numbers we know so
+                    far).</strong
+                  >
+                  $0\lt 1$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 10.4 (cancellation for multiplication).</strong
+                  >
+                  If $z\neq 0$ and $z\cdot x=z\cdot y$, then $x=y$</li
+                >
+                <li
+                  ><strong>Theorem 10.9 (inverse inverse).</strong> If $x\neq
+                  0$, then $(x^{-1})^{-1}=x$</li
+                >
+                <li
+                  ><strong>Theorem 10.17 (asymmetry).</strong> If $x\lt y$, then
+                  $\neg(y\lt x)$</li
+                >
+                <li
+                  ><strong>Theorem 10.18 (adding inequalities).</strong> If
+                  $w\lt x$ and $y\lt z$, then $w+y\lt x+z$</li
+                >
+                <li
+                  ><strong>Theorem 10.21 (negating an inequality).</strong> If
+                  $x\lt y$, then $-y\lt -x$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-18.lurch"
+                >Assignment #18</a
+              >
+              <a
+                href="/learn/proofs/ch10"
+                class="course-ref"
+                target="lurchproofs"
+                >Real Numbers</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.2 (d) (a third real number?).</strong>
+                  $-1\neq 1$ and $-1\neq 0$</li
+                >
+                <li
+                  ><strong>Theorem 10.14 (signed products).</strong>
+                  $(-x)\cdot(-y)=x\cdot y$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-19.lurch"
+                >Assignment #19</a
+              >
+              <a
+                href="/learn/proofs/ch10"
+                class="course-ref"
+                target="lurchproofs"
+                >Real Numbers</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem ($\leq$ is transitive).</strong> If $x\leq y$
+                  and $y\leq z$, then $x\leq z$</li
+                >
+                <li
+                  ><strong>Theorem (translation for $\leq$).</strong> If $x\leq
+                  y$, then $x+z\leq y+z$</li
+                >
+                <li
+                  ><strong>Lemma (zero is smallest).</strong> If
+                  $n\in\mathbb{N}$, then $0\leq n$</li
+                >
+                <li
+                  ><strong>Corollary (seriously, it’s smallest).</strong> If
+                  $m\in\mathbb{N}$ and $m\leq 0$, then $m=0$</li
+                >
+                <li
+                  ><strong>Theorem (natural differences).</strong> If
+                  $m\in\mathbb{N}$, $n\in\mathbb{N}$, and $m\leq n$, then
+                  $n-m\in\mathbb{N}$</li
+                >
+                <li
+                  ><strong>Theorem (Peano Axiom I $\Leftarrow$).</strong> If
+                  $0\leq k$ and $m+k=n$, then $m\leq n$</li
+                >
+                <li
+                  ><strong>Theorem (Peano Axiom I $\Rightarrow$).</strong> If
+                  $m\in\mathbb{N}$, $n\in\mathbb{N}$, and $m\leq n$, then
+                  $\exists k\in\mathbb{N}.m+k=n$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-20.lurch"
+                >Assignment #20</a
+              >
+              <a
+                href="/learn/proofs/ch10"
+                class="course-ref"
+                target="lurchproofs"
+                >Real Numbers</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (nonzero products and inverses).</strong> If
+                  $x\neq 0$ and $y\neq 0$, then $x^{-1}\neq 0$ and $x\cdot y\neq
+                  0$</li
+                >
+                <li
+                  ><strong>Theorem (product of inverses).</strong> If $x\neq 0$
+                  and $y\neq 0$, then $x^{-1}\cdot y^{-1}=(x\cdot y)^{-1}$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-21.lurch"
+                >Assignment #21</a
+              >
+              <a
+                href="/learn/proofs/ch10"
+                class="course-ref"
+                target="lurchproofs"
+                >Real Numbers</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.20 (d) (signed products).</strong> If
+                  $x\lt 0$ and $0\lt y$, then $x\cdot y\lt 0$</li
+                >
+                <li
+                  ><strong>Theorem (another real number).</strong> There is a
+                  real number strictly between 0 and 1, i.e., $\exists r.0\lt
+                  r\text{ and }r\lt 1$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-22.lurch"
+                >Assignment #22</a
+              >
+              <a
+                href="/learn/proofs/ch10"
+                class="course-ref"
+                target="lurchproofs"
+                >Ch. 10</a
+              ><a
+                href="/learn/proofs/ch11"
+                class="course-ref"
+                target="lurchproofs"
+                >Functions</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 11.1 (composition is associative).</strong>
+                  If $h:A\to B$, $g:B\to C$, and $f:C\to D$, then $f\circ(g\circ
+                  h)=(f\circ g)\circ h$</li
+                >
+                <li
+                  ><strong>Theorem 10.46 (image of subsets).</strong> If $f:A\to
+                  B$, $S\subseteq T$, and $T\subseteq A$, then $f(S)\subseteq
+                  f(T)$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-23.lurch"
+                >Assignment #23</a
+              >
+              <a
+                href="/learn/proofs/ch11"
+                class="course-ref"
+                target="lurchproofs"
+                >Functions</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong
+                    >Theorem 11.13 (a) (identity maps are injective).</strong
+                  >
+                  The map $\mathrm{id}_A$ is injective</li
+                >
+                <li
+                  ><strong
+                    >Theorem 11.13 (b) (identity maps are surjective).</strong
+                  >
+                  The map $\mathrm{id}_A$ is surjective</li
+                >
+                <li
+                  ><strong
+                    >Theorem 11.8 (composition of injective maps is
+                    injective).</strong
+                  >
+                  If $f:A\to B$, $g:B\to C$, $f$ is injective, and $g$ is
+                  injective, then $g\circ f$ is injective</li
+                >
+                <li
+                  ><strong
+                    >Theorem 11.9 (composition of surjective maps is
+                    injective).</strong
+                  >
+                  If $f:A\to B$, $g:B\to C$, $f$ is surjective, and $g$ is
+                  surjective, then $g\circ f$ is surjective</li
+                >
+                <li
+                  ><strong>Theorem 11.15 (image of inverse image).</strong> If
+                  $f:A\to B$, $S\subseteq B$, and $f$ is surjective, then
+                  $f(f^\mathrm{inv}(S))=S$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a
+                href="../student.html?load=assignments/2026/assignment-24.lurch"
+                >Assignment #24</a
+              >
+              <a
+                href="/learn/proofs/ch11"
+                class="course-ref"
+                target="lurchproofs"
+                >Functions and Relations</a
+              ></dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong
+                    >Theorem 11.22 (equivalence induced by a function).</strong
+                  >
+                  If $x\sim_1 y\iff f(x)=f(y)$, then $\sim_1$ is an equivalence
+                  relation</li
+                >
+                <li
+                  ><strong>Theorem 11.31 (a partial order).</strong> If $S\sim_2
+                  T\iff S\subseteq T$, then $\sim_2$ is a partial order</li
+                >
+              </ol>
+            </dd>
+          </dl>
+        </div>
+        <h3 id="2024">Assignments from Math 299, Spring 2024</h3>
+        <p
+          >These assignments refer to the problems and problem numbers in the
+          <a
+            href="https://monks.scranton.edu/files/courses/Math299/math-299-lecture.pdf"
+            rel="noopener noreferrer"
+            target="_blank"
+            >2024 course lecture notes</a
+          >.</p
+        >
+        <div class="blue-box thmlist">
+          <dl>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-06.lurch"
+                >Assignment #06</a
+              >
+              Propositional logic</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (Iff is stronger):</strong>
+                  $(P\Leftrightarrow Q)\Rightarrow(Q\Rightarrow P)$</li
+                >
+                <li
+                  ><strong>Theorem (the other way around):</strong> $\neg(\neg
+                  A)\Rightarrow A$</li
+                >
+                <li
+                  ><strong>Theorem (Modus Tollens):</strong> $(S \Rightarrow
+                  T)\text{ and } \neg T \Rightarrow \neg S$</li
+                >
+                <li
+                  ><strong
+                    >Theorem (atomic statements don’t have to be
+                    variables):</strong
+                  >
+                  $0 \lt x\text{ or }x\lt 10 \Rightarrow x\lt 10\text{ or } 0\lt
+                  x$</li
+                >
+                <li
+                  ><strong>Theorem (excluded middle):</strong> $K\text{ or }
+                  \neg K$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-07.lurch"
+                >Assignment #07</a
+              >
+              Propositional logic</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (implies is transitive):</strong>
+                  $((P\Rightarrow Q)\text{ and }(Q \Rightarrow R)) \Rightarrow
+                  (P \Rightarrow R)$</li
+                >
+                <li
+                  ><strong>Theorem (alternate or-):</strong> $(S\text{ or }
+                  T)\text{ and } \neg S \Rightarrow T$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-08.lurch"
+                >Assignment #08</a
+              >
+              Predicate logic with Equality</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (alpha equivalence warm up):</strong>
+                  $(\forall x.P(x)) \Rightarrow (\forall y.P(y))$</li
+                >
+                <li
+                  ><strong>Theorem (same thing but for exists):</strong>
+                  $(\exists x.P(x)) \Rightarrow (\exists y.P(y))$</li
+                >
+                <li
+                  ><strong>Theorem (commuting quantifiers):</strong> $(\forall
+                  x.\forall y.x\text{ loves }y) \Rightarrow (\forall y.\forall
+                  x.x\text{ loves }y)$</li
+                >
+                <li
+                  ><strong>Theorem (same thing for exists):</strong> $(\exists
+                  x.\exists y.x\text{ loves }y) \Rightarrow (\exists y.\exists
+                  x.x\text{ loves }y)$</li
+                >
+                <li
+                  ><strong>Theorem (De Morgan):</strong> $\neg (S\text{ and }T)
+                  \Rightarrow \neg S\text{ or } \neg T$</li
+                >
+                <li
+                  ><strong>Theorem (De Morgan):</strong> $\neg (\forall x.R(x))
+                  \Rightarrow (\exists x.\neg R(x))$</li
+                >
+                <li
+                  ><strong>Theorem ($=$ is transitive):</strong> $x=y\text{ and
+                  }y=z \Rightarrow x=z$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-09.lurch"
+                >Assignment #09</a
+              >
+              Logic theorems</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 5.10 (some are the same):</strong> $(\forall
+                  x.\forall y.P(x,y)) \Rightarrow (\forall z.P(z,z))$</li
+                >
+                <li
+                  ><strong>Theorem 5.16 (excluded middle):</strong> $(\forall
+                  x.Q(x))\text{ or } (\exists x.\neg Q(x))$</li
+                >
+                <li
+                  ><strong>Theorem 4.22 (alternate $\Rightarrow$):</strong> $(R
+                  \Rightarrow S) \Rightarrow \neg R\text{ or }S$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-10.lurch"
+                >Assignment #10</a
+              >
+              Logic review</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (ex falso quodlibet):</strong> If Dracula
+                  fears Alice and Dracula does not fear Alice then Bob loves
+                  Alice.</li
+                >
+                <li
+                  ><strong>Theorem 4.29 (the most beautiful?):</strong> $S
+                  \Rightarrow (S \Leftrightarrow S\text{ or }(\neg S \text{ and
+                  } S))$</li
+                >
+                <li
+                  ><strong>Theorem 4.25 (shunting):</strong> $((P \text{ and }
+                  Q) \Rightarrow R) \Leftrightarrow (P \Rightarrow (Q
+                  \Rightarrow R))$</li
+                >
+                <li
+                  ><strong>Theorem 5.21 (avoiding vacuous domains):</strong>
+                  $(\exists x. x = x)\text{ and }(\forall y. T(y)) \Rightarrow
+                  (\exists z. T(z))$</li
+                >
+                <li
+                  ><strong>Theorem 5.5 (distributivity):</strong> $(\exists x.
+                  A(x) \Rightarrow B(x)) \Leftrightarrow (\forall y. A(y))
+                  \Rightarrow (\exists z. B(z))$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-11.lurch"
+                >Assignment #11</a
+              >
+              Logic review</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (Pierce’s Law):</strong> $((S \Rightarrow T)
+                  \Rightarrow S) \Rightarrow S$</li
+                >
+                <li
+                  ><strong>Theorem (quantifier fun):</strong> $(\forall
+                  x.\exists y.\forall z.A(x,y,z)) \Rightarrow (\forall z.\forall
+                  x.\exists y.A(x,y,z))$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-12.lurch"
+                >Assignment #12</a
+              >
+              Peano arithmetic and Induction</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong
+                    >Theorem 7.3 (no number is its own successor):</strong
+                  >
+                  $n\neq\sigma(n)$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 7.4 (alternate definition of $\sigma$):</strong
+                  >
+                  $\sigma(n)=n+1$</li
+                >
+                <li
+                  ><strong>Theorem 7.5 (associativity of addition):</strong>
+                  $(m+n)+p=m+(n+p)$</li
+                >
+                <li
+                  ><strong>Theorem 7.6 (additive identity, part 2):</strong>
+                  $0+n=n$</li
+                >
+                <li
+                  ><strong>Theorem 7.7 (commutativity of adding $1$):</strong>
+                  $1+n=n+1$</li
+                >
+                <li
+                  ><strong>Theorem 7.8 (commutativity of addition):</strong>
+                  $m+n=n+m$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-13.lurch"
+                >Assignment #13</a
+              >
+              Peano arithmetic and Induction</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 7.11 (left multiplication by zero):</strong>
+                  $0\cdot m=0$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 7.19 (nonzero naturals are positive):</strong
+                  >
+                  <ul>
+                    <li>(a) $0\leq n$</li>
+                    <li>(b) $0\lt n \Leftrightarrow n\neq 0$</li>
+                  </ul>
+                </li>
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-14.lurch"
+                >Assignment #14</a
+              >
+              Sequences, Recursion, and Induction</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 8.3 (a) (a useful identity):</strong>
+                  $n^2=n\cdot n$</li
+                >
+                <li
+                  ><strong>Theorem 8.3 (b) (useful identity):</strong> $2\cdot
+                  n=n+n$</li
+                >
+                <li
+                  ><strong>Theorem 8.2 (b) (power law):</strong> $z^m\cdot
+                  z^n=z^{m+n}$</li
+                >
+                <li
+                  ><strong>Theorem 8.2 (c) (power law):</strong>
+                  $(z^m)^n=z^{m\cdot n}$</li
+                >
+                <li
+                  ><strong>Theorem 8.4 (quadratic beats linear):</strong> If
+                  $a+b\leq n$ then $a\cdot n+b\leq n^2$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-15.lurch"
+                >Assignment #15</a
+              >
+              Sequences, Recursion, and Induction</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 8.7 (Fib fun):</strong> $F_{n+3}+F_n=2\cdot
+                  F_{n+2}$</li
+                >
+                <li
+                  ><strong>Theorem 8.5 (b) (basic sum property):</strong>
+                  $\displaystyle \sum_{i=0}^n s\cdot a_i = s\cdot \sum_{i=0}^n
+                  a_i$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 8.11 (closed formula for binomial
+                    coefficients):</strong
+                  >
+                  $\displaystyle(m!\cdot n!)\cdot \binom{n+m}{m}=(n+m)!$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-16.lurch"
+                >Assignment #16</a
+              >
+              Real numbers and Field axioms</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 9.3 (cancellation for addition):</strong> If
+                  $x+z=y+z$ then $x=y$</li
+                >
+                <li
+                  ><strong>Theorem 9.2 (b) (signed product):</strong>
+                  $(-1)\cdot(-1)=1$</li
+                >
+                <li
+                  ><strong>Theorem 9.2 (c) (harder than it looks):</strong>
+                  $0\lt 1$</li
+                >
+                <li
+                  ><strong>Theorem 9.2 (d) (not mod 2):</strong> $-1\neq 1$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-17.lurch"
+                >Assignment #17</a
+              >
+              Real numbers and Field axioms</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong
+                    >Theorem 9.4 (cancellation for multiplication):</strong
+                  >
+                  If $z\neq 0$ and $z\cdot x=z\cdot y$ then $x=y$.</li
+                >
+                <li
+                  ><strong
+                    >Theorem 9.6 (multiplicative inverses are unique):</strong
+                  >
+                  If $z\cdot x=1$ and $z\cdot y=1$ then $x=y$.</li
+                >
+                <li
+                  ><strong>Theorem 9.10 (alternate additive inverse):</strong>
+                  $-x=-1\cdot x$</li
+                >
+                <li
+                  ><strong>Theorem 9.18 (adding inequalities):</strong> If $w\lt
+                  y$ and $x\lt z$ then $w+x\lt y+z$.</li
+                >
+                <li
+                  ><strong>Theorem 9.23 (scaling by a negative):</strong> If
+                  $z\lt 0$ and $x\lt y$ then $z\cdot y\lt z\cdot x$.</li
+                >
+                <li
+                  ><strong>Theorem (between):</strong> There exists a real
+                  number strictly between 0 and 1, i.e., $\exists r.0\lt r
+                  \text{ and }r\lt 1$.</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-18.lurch"
+                >Assignment #18</a
+              >
+              Elementary Set Theory</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.5 (double negative):</strong>
+                  $\left(A’\right)'=A$</li
+                >
+                <li
+                  ><strong>Theorem 10.32 (always in the power set):</strong>
+                  $\{~~\}\in \mathscr{P}(A)$</li
+                >
+                <li
+                  ><strong>Theorem 10.34. (power sets of subsets):</strong> If
+                  $A\subseteq B$ then
+                  $\mathscr{P}(A)\subseteq\mathscr{P}(B)$.</li
+                >
+                <li
+                  ><strong
+                    >Theorem 10.38 (relative complement is not
+                    associative):</strong
+                  >
+                  If $x\in A$, $x\in B$, and $x\in C$ then $(A\setminus
+                  B)\setminus C\neq A\setminus (B\setminus C)$.</li
+                >
+                <li
+                  ><strong>Theorem 10.7 (a set of sets):</strong>
+                  $\{\,1,2\,\}\in\left\{\,Y:\{\,1\,\}\subseteq Y\right\}$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-19.lurch"
+                >Assignment #19</a
+              >
+              Elementary Set Theory</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.23(b) (∩ distributes over ∪):</strong> $A
+                  \cap (B \cup C) \subseteq (A \cap B) \cup (A \cap C)$</li
+                >
+                <li
+                  ><strong>Theorem 10.37 (subsets are contagious):</strong> If
+                  $A \subseteq C$ and $B\subseteq D$ then $A\times B\subset
+                  C\times D$.</li
+                >
+                <li
+                  ><strong>Theorem 10.31 (not a subset):</strong> $A \nsubseteq
+                  B$ if and only if $\exists x.x \in A \cap B’$</li
+                >
+                <li
+                  ><strong>Theorem 10.27 (Baby De Morgan):</strong> $A \setminus
+                  (B \cap C) = (A \setminus B) \cup (A \setminus C)$</li
+                >
+                <li
+                  ><strong>Theorem 10.29 (Papa De Morgan):</strong>
+                  $\displaystyle\left(\bigcap_{i \in I} A_i\right)’ =
+                  \bigcup_{j\in I} A_j’$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-20.lurch"
+                >Assignment #20</a
+              >
+              Functions and Composition</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.41 (composition is associative):</strong>
+                  If $h\colon A \to B$, $g\colon B \to C$, $f\colon C \to D$
+                  then $$f\circ(g\circ h)=(f\circ g)\circ h.$$</li
+                >
+                <li
+                  ><strong
+                    >Theorem 10.53 (a) (identity maps are injective):</strong
+                  >
+                  The map $\mathrm{id}_A$ is injective.</li
+                >
+                <li
+                  ><strong
+                    >Theorem 10.53 (b) (identity maps are surjective):</strong
+                  >
+                  The map $\mathrm{id}_A$ is surjective.</li
+                >
+                <li
+                  ><strong>Theorem 10.46 (image of subsets):</strong> If
+                  $f\colon A \to B$, $S \subseteq T$, and $T \subseteq A$ then
+                  $f(S)\subseteq f(T)$.</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-21.lurch"
+                >Assignment #21</a
+              >
+              Functions and Composition</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.43 (a linear bijection):</strong> If
+                  $f\colon \mathbb{R} \to \mathbb{R}$ and $\forall x.f(x)=3\cdot
+                  x+1$ then $f$ is bijective.</li
+                >
+                <li
+                  ><strong
+                    >Theorem (inverse images respect intersection):</strong
+                  >
+                  If $f\colon A \to B$, $S \subseteq B$, $T \subseteq B$ then
+                  $$f^\mathrm{inv}(S \cap T)=f^\mathrm{inv}(S) \cap
+                  f^\mathrm{inv}(T)$$</li
+                >
+                <li
+                  ><strong>Theorem (inverse functions are bijective):</strong>
+                  If $f\colon A \to B$ and $f$ is bijective then $f^{-1}$ is
+                  bijective.</li
+                >
+                <li
+                  ><strong>Theorem 10.52 (inverse of a composition):</strong> If
+                  $f\colon A \to B$, $g\colon B \to C$, $f$ is bijective, and
+                  $g$ is bijective then $$(g \circ f)^{-1} = f^{-1} \circ
+                  g^{-1}$$</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-22.lurch"
+                >Assignment #22</a
+              >
+              Equivalence relations and Partial Orders</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem (integer associates)</strong> Define $\sim$
+                  to be the relation on $\mathbb{Z}$ such that for all $x,y\in
+                  \mathbb{Z}$, $$x\sim y\text{ if and only if }y=x\text{ or
+                  }y=−x$$ Then $\sim$ is an equivalence relation.</li
+                >
+                <li
+                  ><strong>Theorem ($\subseteq$ is a partial order)</strong> Let
+                  $A$ be a set and suppose $\sim$ is a relation on
+                  $\mathscr{P}(A)$ such that for all $S,T\in\mathscr{P}(A)$
+                  $$S\sim T\text{ if and only if }S\subseteq T$$ Then $\sim$ is
+                  a partial order.</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-23.lurch"
+                >Assignment #23</a
+              >
+              Equivalence relations and Partial Orders</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.65</strong> Congruence mod $m$ is an
+                  equivalence relation on the set of integers.</li
+                >
+                <li
+                  ><strong>Theorem 10.66 (class representatives):</strong> Every
+                  integer $a$ is congruent mod $m$ to a unique natural number
+                  that is less than $m$.</li
+                >
+              </ol>
+            </dd>
+            <dt
+              ><a href="../student.html?load=assignments/assignment-24.lurch"
+                >Assignment #24</a
+              >
+              Modular arithmetic</dt
+            >
+            <dd>
+              <ol>
+                <li
+                  ><strong>Theorem 10.68 (modular addition):</strong> For any
+                  integers $a,b,c,d$, if $a \underset{m}{\equiv} b$ and $c
+                  \underset{m}{\equiv} d$ then $a+c \underset{m}{\equiv}
+                  b+d$</li
+                >
+                <li
+                  ><strong>Theorem 10.69 (modular multiplication):</strong> For
+                  any integers $a,b,c,d$, if $a \underset{m}{\equiv} b$ and $c
+                  \underset{m}{\equiv} d$ then $a\cdot c \underset{m}{\equiv}
+                  b\cdot d$</li
+                >
+              </ol>
+            </dd>
+          </dl>
+          <p
+            ><strong>Final Exam!</strong>– try your hand at the Math 299 Final
+            Exam from Spring 2024.</p
+          >
+          <ul class="strong-tags">
+            <li class="nodash"
+              ><a
+                href="../student.html?load=math/examples/A.%20The%20Logic%20of%20Love.lurch"
+                >A. The Logic of Love</a
+              ></li
+            >
+            <li class="nodash"
+              ><a
+                href="../student.html?load=math/examples/B.%20Nostalgia%20for%20Calculus.lurch"
+                >B. Nostalgia for Calculus</a
+              ></li
+            >
+            <li class="nodash"
+              ><a
+                href="../student.html?load=math/examples/C.%20Putnam%20Practice.lurch"
+                >C. Putnam Practice</a
+              ></li
+            >
+            <li class="nodash"
+              ><a
+                href="../student.html?load=math/examples/D.%20Topo-logical.lurch"
+                >D. Topo-logical</a
+              ></li
+            >
+          </ul>
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <h3>
+                  <a href="http://monks.scranton.edu/" target="_blank"
+                    >Kenneth G. Monks</a
+                  >
+                </h3>
+                Department of Mathematics<br />
+                University of Scranton<br />
+                Scranton, PA 18510
+              </div>
+            </div>
+            <div class="row" id="more-contact-info">
+              <div class="col-xs-12 col-md-4" id="email-footer">
+                <img
+                  src="../assets/media/envelope.svg"
+                  style="vertical-align: middle; padding-right: 0.2em" />
+                <a href="mailto:monks@scranton.edu" target="_blank"
+                  >monks@scranton.edu</a
+                >
+              </div>
+              <div class="col-xs-12 col-md-4 center" id="lurch-footer">
+                <span class="checkmark" style="padding-right: 0.2em">✓</span>
+                <a href="http://lurch.plus">lurch.plus</a>
+              </div>
+              <div class="col-xs-12 col-md-4" id="proveit-footer">
+                <img
+                  src="../assets/media/therefore.svg"
+                  style="
+                    vertical-align: middle;
+                    padding-right: 0.2em;
+                    height: 0.8em;
+                  " />
+                <a href="https://proveitmath.org" target="_blank"
+                  >Prove it!&nbsp;Math Academy</a
+                >
+              </div>
+            </div>
+            <!-- row -->
+            <div id="copyright"> Copyright &copy; Kenneth G. Monks </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'lurchplus'</script
+    ><script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

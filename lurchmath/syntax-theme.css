@@ -173,12 +173,10 @@ p {
 }
 /* remove left padding and margins for paragraphs and list items inside shells
    as those are handled by the shells themselves */
-div.lurch-atom {
-  p,li {
+div.lurch-atom > p, div.lurch-atom li {
     margin: 0;
     padding: 0;
     line-height: var(--line-height);
-  }
 }
 /* ...but inside an unindented-subproof shell separate paragraphs by a gap */
 .unindented p {

@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="module" src="lurchmath/editor.js"></script>
   <script type="module" src="lde/src/experimental/lde-debug.js"></script>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/assets/media/icons/lurch-180.png">
   <link rel="shortcut icon" href="lurchmath/favicon.ico">
   <link rel="stylesheet" href="lurchmath/main-app-styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -100,12 +102,12 @@
             url: 'student.html?load=help/example-proofs.lurch'
           },
           {
-            title: 'Lurch Math Reference',
-            url: 'lde/src/experimental/parsers/lurch-parser-docs.html'
-          },
-          {
             title: 'Algebra Rule Examples',
             url: 'student.html?load=help/algebra-rule-examples.lurch'
+          },
+                    {
+            title: 'Lurch Math Reference',
+            url: 'lde/src/experimental/parsers/lurch-parser-docs.html'
           }
         ],
         // fileOpenTabs can be any subset of:
@@ -150,12 +152,50 @@
         title: 'Instructor',
         items: 'editdependencyurls | extractheader embedheader | redpen | docsettings preferences | downloaddocumentcode'
       }
-
+      
       // load the app.  When finished delete the query string if it point to a
       // temp file so you don't get an error if you try to reload the page.
       Lurch.createApp(document.getElementById('editor-container'), options)
         .then(editor => {
+
+        // Considered allowing a student←→instructor right click (secret) toggle
+        // for all the times I want to switch a student mode view to the
+        // instructor mode, but the instructor mode also allows things like the
+        // Table plugin, and we'd have to consider all of those as well.  This
+        // code currently only hides and shows the Instructor menu in instructor
+        // mode, but would need to be upgraded to make it useful and added to student.html.
+        // Leaving the code here for now to upgrade later.
+
+        // const whenInstructorButtonExists = (editor, callback) => {
+        //   const findButton = () => {
+        //     const container = editor.getContainer?.()
+        //     if (!container) return null
+        
+        //     return [...container.querySelectorAll('.tox-menubar .tox-mbtn')]
+        //       .find(btn => btn.textContent.trim() == 'Instructor')
+        //   }
+        
+        //   const tryNow = () => {
+        //     const button = findButton()
+        //     if (button) callback(button, editor.getContainer())
+        //     else requestAnimationFrame(tryNow)
+        //   }
+        
+        //   tryNow()
+        // }      
+
+        // right click toggles the instructor menu
+        // whenInstructorButtonExists(editor, (instructorButton, container) => {
+        //   const header = container.querySelector('.tox-editor-header')
     
+        //   instructorButton.classList.add('lurch-instructor-menu-button')
+    
+        //   header.addEventListener('contextmenu', event => {
+        //     event.preventDefault()
+        //     container.classList.toggle('hide-instructor-menu')
+        //   })
+        // })
+
         const params = new URLSearchParams(window.location.search)
         const load = params.get('load') || ''
         const isTempLoad = /^temp_file_\d+$/.test(load)

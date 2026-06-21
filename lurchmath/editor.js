@@ -196,8 +196,9 @@ window.Lurch = {
                 'viewcontext',
                 'validate clearvalidation',
                 'docsettings togglemeaning'
-            ),
-            help : buildMenu( 'Help', 'aboutlurch' )
+            )
+            // we now add this after adding the custom ones so About is last
+            // help : buildMenu( 'Help', 'aboutlurch' )
         }, options.menuData )
 
         // If the options object specifies default app settings, apply them:
@@ -243,7 +244,10 @@ window.Lurch = {
                 menuData.help = buildMenu( 'Help', `helpfile${index+1}` )
             else
                 menuData.help.items += ' ' + `helpfile${index+1}`
+             
         } )
+        // Add the About item last
+        menuData.help.items += ' aboutlurch'
 
         // Load TinyMCE from its CDN...
         return new Promise( ( resolve, _ ) => loadScript( TinyMCEURL ).then( () => {

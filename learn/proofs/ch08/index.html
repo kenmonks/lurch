@@ -45,7 +45,7 @@
         <h1 class="site-title">
           <a
             href="/learn/proofs/"
-            target="lurchplus"
+            target="lurchproofs"
             aria-label="Go to course home"
             >Introduction to Mathematical Proof</a
           >
@@ -60,7 +60,14 @@
             >monks.scranton.edu</a
           >
         </div>
+
+        <div class="course-home-link">
+          <a href="/" target="lurchplus"
+            ><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a
+          >
+        </div>
       </div>
+
       <div id="menu-scroll">
         <ul class="side-nav"
           ><li> <a href="/learn/proofs/">1: Introduction</a> </li
@@ -126,19 +133,19 @@
         <p
           >A <em>finite sequence of length $n$</em> (also called an
           <em>$n$-tuple</em>) is a numbered list of items, one for each of the
-          natural numbers less than $n$. A <em>infinite sequence</em> is
+          natural numbers less than $n$. A <em>infinite sequence</em> is a
           numbered list of items, one for each of the natural numbers. In both
           cases, we will refer to the number assigned to a given item in the
           sequence as its <em>standard index</em>. Thus, the first item in a
           sequence will always have a standard index of 0.</p
         >
         <p
-          >The items in a sequence are called its <em>terms</em>. The the same
-          item can appear more than once, i.e., terms with different standard
-          indices can be equal. Two sequences are equal if and only if all of
-          their corresponding terms (those with the same standard index) are
-          equal. The <em>length</em> of a finite sequence is the same as the
-          number of terms.</p
+          >The items in a sequence are called its <em>terms</em>. The same item
+          can appear more than once, i.e., terms with different standard indices
+          can be equal. Two sequences are equal if and only if all of their
+          corresponding terms (those with the same standard index) are equal.
+          The <em>length</em> of a finite sequence is the same as the number of
+          terms.</p
         >
         <p
           >One consequence of this is that every sequence that has terms must
@@ -258,7 +265,7 @@
         <div class="Def">
           <p
             ><strong>Definition <span class="thm qu"></span></strong> Let $m,n$
-            be a natural numbers. Then $$\langle a _ k \rangle _
+            be natural numbers. Then $$\langle a _ k \rangle _
             {k=m}^\infty=\langle a _ m,a _ {m+1},a _ {m+2},\ldots
             \rangle=\langle a _ {m+k} \rangle _ {k=0}^\infty$$ Furthermore, if
             $m+j=n$ then $$\langle a _ k \rangle _ {k=m}^n=\langle a _ m,a _
@@ -765,6 +772,20 @@
             x^k$$</p
           >
         </div>
+
+        <div class="course-page-nav" aria-label="Chapter navigation"
+          ><a
+            class="course-page-nav__link course-page-nav__link--prev"
+            href="/learn/proofs/ch07/">
+            <span class="course-page-nav__title"
+              >&larr; 7: Natural Numbers</span
+            > </a
+          ><a
+            class="course-page-nav__link course-page-nav__link--next"
+            href="/learn/proofs/ch09/">
+            <span class="course-page-nav__title">9: Sets &rarr;</span>
+          </a></div
+        >
       </div>
 
       <div id="footer-block">
@@ -805,7 +826,7 @@
     </div>
 
     <script>
-      if (!window.name) window.name = 'intro-to-proof'</script
+      if (!window.name) window.name = 'lurchproofs'</script
     ><script src="../../../assets/js/utils.js"></script>
     <script src="../../../assets/js/mathjax-config.js"></script>
     <script

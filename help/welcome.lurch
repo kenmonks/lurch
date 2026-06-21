@@ -1,0 +1,21 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="settings" data-key="shell style" data-value-type="json">"boxed"</div><div data-category="main" data-key="header" data-value-type="html"></div></div>
+            <div id="document"><h1>Welcome to Lurch!</h1>
+<p>Lurch is an open source math editor that can check your reasoning.&nbsp; Let's do a very simple example together.</p>
+<p style="padding-left: 40px;"><span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Suppose Gina loves chocolate&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Suppose Gina loves chocolate</span></span></span></span></span>.&nbsp; If that is the case then we know that <span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Gina loves chocolate&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Gina loves chocolate</span></span></span></span></span> but we&nbsp;cannot be sure that&nbsp;<span class="lurch-atom" contenteditable="false" data-metadata_type="&quot;expression&quot;" data-metadata_lurch-notation="&quot;Gina loves vanilla&quot;"><span class="lurch-atom-body"><span class="ML__latex"><span class="ML__base"><span class="ML__text">Gina loves vanilla</span></span></span></span></span>.</p>
+<p>To check our reasoning, click the green checkmark on the toolbar above!</p>
+<p>&nbsp;</p>
+<p>Want to learn more?&nbsp; See the Help menu above!</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div>
+        
