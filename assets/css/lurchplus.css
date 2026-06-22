@@ -2780,6 +2780,7 @@ body.landing #footer-block a:focus-visible {
   gap: 0.75rem;
   align-items: center;
   margin-top: 1.6rem;
+  justify-content: center;
 }
 
 .landing-actions p {
