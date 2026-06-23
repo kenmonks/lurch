@@ -748,9 +748,11 @@ Prop = Iff
 ///////////////////////////////////////////////////////////////////////////////
 // Relations
 //
-Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
+Relations = Turnstile /Maps / Partition / Congruent / Subset / ElementOf / NotEltOf /
             Divides / Chain / Relation / NotEqual / Loves / Fears / Is
 
+  Turnstile  = a:RelArg _('proves' _x / '⊢'_ / 'vdash' _x ) b:RelArg      
+                 { return `${a}\\vdash ${b}` }
   Maps       = a:RelArg _':'_ b:RelArg _'to'_x c:RelArg
                  { return `${a}\\colon ${b}\\to ${c}` }
   Partition  = a:(Binding/RelArg) _'is' __ 'a' __ 'partition' __ 'of' __
