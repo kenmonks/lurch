@@ -201,7 +201,7 @@
     'complement': '°' , 'intersect': '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
     'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'cross'        : '×'     ,
     'star'      : '★' , 'division' : '/'  , 'neg'    : '¬'  , 'oplus'        : '⊕'     ,
-    'otimes'    : '⊗' , 'odot'     : '⊙'
+    'otimes'    : '⊗' , 'odot'     : '⊙'  , 'vdash'  : '⊢'  , 'proves'       : '⊢'
   }
 
   // for use in Declare's, look up the internal name of a reserved word or
@@ -546,9 +546,11 @@ Prop = Iff
 ///////////////////////////////////////////////////////////////////////////////
 // Relations
 //
-Relations = Maps / Partition / Congruent / Subset / ElementOf / NotEltOf / 
+Relations = Turnstile / Maps / Partition / Congruent / Subset / ElementOf / NotEltOf / 
             Divides / Chain / Relation / NotEqual / Loves / Fears / Is
 
+  Turnstile  = a:RelArg _('proves' _x / '⊢'_ / 'vdash' _x ) b:RelArg      
+                 { return lispBinary('⊢',a,b) }
   Maps       = a:RelArg _':'_ b:RelArg _'to'_x c:RelArg  
                  { return lispSeq('maps',[a,b,c]) }
   // TODO: combine this with Is, and add the order relations

@@ -13,6 +13,9 @@ const syntax =
 [['P implies Q', 'P⇒Q'               ],`P\\Rightarrow Q`],
 [['P iff Q', 'P⇔Q'                   ],`P\\Leftrightarrow Q`],
 [['contradiction', '→←'              ],`\\rightarrow\\leftarrow`],
+[['lambda proves P', 
+  'lambda vdash P', 
+  'lambda ⊢ P'                       ],`\\lambda\\vdash P`],
 
 'Quantifiers and bindings',
 [['forall x.x leq x+1',
