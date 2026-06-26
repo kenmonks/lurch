@@ -2697,6 +2697,7 @@ body.landing #footer-block a:focus-visible {
   font-weight: bold;
   font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 1.08;
+  color: black;
 }
 
 #landing-content .landing-hero .title-box h2 {
