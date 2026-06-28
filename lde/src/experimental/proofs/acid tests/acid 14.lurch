@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////////
+// Alpha equivalent bindings substitution test
+//
+
+{
+  Declare =, sum, *
+  Rules: 
+  {
+	  SubsRule:
+    :{ :x=y :𝜆P(x) 𝜆P(y) }                 // substitution
+    :{ W = W }                             // reflexive =
+		:{ ( sum j=0 to 0 of 𝜆P(j) ) = 𝜆P(0) } // summation base case
+	}
+
+  ➤ "Nested Bound Variable Substitutions"
+
+  {
+	 (sum j=0 to 0 of (a_(k)*b_(j))) = a_(k)*b_(0) ✔︎
+	 (sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j)))) = (sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j)))) ✔︎
+	 sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j))) = sum k=0 to m of (a_(k)*b_(0)) ✔︎ by substitution
+	}
+
+}
