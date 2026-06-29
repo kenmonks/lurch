@@ -149,6 +149,13 @@ export const addLurchIndices = (indexer, phase) => {
        x.child(0,1).matches('ℕ|ℤ|ℚ')
     )
 
+    // Find the EquationRule or ChainsRule if present
+    define( 'Chains rule', x=> 
+      (x.isA('Rule') || x.isA('Inst')) && 
+      x.numChildren()==1 && 
+      (x.child(0).matches('EquationsRule') || x.child(0).matches('ChainsRule'))
+    )
+
   } else {
 
   }

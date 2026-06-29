@@ -642,12 +642,15 @@ const processChains = doc => {
   // those split from chains, with .equation=true
   splitChains(doc)
 
-  // check if the ChainsRule is around, if not, we're done
-  const rule=doc.find(
-    x=>(x.isA('Rule') || x.isA('Inst')) && x.numChildren()==1 && 
-       x.child(0) instanceof LurchSymbol && 
-       (x.child(0).text()==='EquationsRule' || x.child(0).text()==='ChainsRule'),
-    x=>!(x.isA('Rule') || x.isA('Inst') || x===doc))
+  // // check if the ChainsRule is around, if not, we're done
+  // const rule=doc.find(
+  //   x=>(x.isA('Rule') || x.isA('Inst')) && 
+  //       x.numChildren()==1 && 
+  //       x.child(0) instanceof LurchSymbol && 
+  //      (x.child(0).text()==='EquationsRule' || x.child(0).text()==='ChainsRule'),
+  //   x=>!(x.isA('Rule') || x.isA('Inst') || x===doc)
+  // )
+  const rule = doc.index.get('Chains rule')[0]
   // if there is no Chains Rule loaded we are done
   if (!rule) return
 
