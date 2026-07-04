@@ -3,7 +3,7 @@
 //
 
 {
-  Declare =, sum, *
+  Declare =, sum, *, forall, ^, +
   Rules: 
   {
 	  SubsRule:
@@ -12,12 +12,42 @@
 		:{ ( sum j=0 to 0 of 𝜆P(j) ) = 𝜆P(0) } // summation base case
 	}
 
-  ➤ "Nested Bound Variable Substitutions"
+  ➤ "Variable Capture in Substitutions"
 
   {
-	 (sum j=0 to 0 of (a_(k)*b_(j))) = a_(k)*b_(0) ✔︎
-	 (sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j)))) = (sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j)))) ✔︎
-	 sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j))) = sum k=0 to m of (a_(k)*b_(0)) ✔︎ by substitution
+		➤
+    ➤ "Free z in x becomes bound when substituted for t"
+    // x := z^0
+    // y := 1
+    // P(t) := ∀z.z=t  // no free z in y, but free z in x
+    :z^0=1
+	  :∀z.z=z
+	   ∀z.z=1 ✗ by substitution
+    ➤
+		➤ "Neither x nor y has a free z"
+		// x := 𝛼
+    // y := 1
+    // P(t) := ∀z.z=t  // no free z in x or y
+    :alpha = 1
+	  :∀z.z=alpha
+	   ∀z.z=1 ✔︎ by substitution
+    ➤
+    ➤ "Free k in both x and y becomes bound when substituted for t"
+    // x := A(k)
+    // y := B(k)
+    // P(t) := ∀k.A(k)=t
+    :A(k)=B(k)
+    :∀k.A(k)=A(k)
+    ∀k.A(k)=B(k) ✗ by substitution
+    ➤
+    ➤ "Free k in both x and y becomes bound when substituted for t"
+    // x := sum j=0 to 0 of (a_(k)*b_(j))
+    // y := a_(k)*b_(0)
+    // P(t) := sum k=0 to m of t 
+	  (sum j=0 to 0 of (a_(k)*b_(j))) = a_(k)*b_(0) ✔︎
+	  (sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j)))) = (sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j)))) ✔︎
+	  sum k=0 to m of (sum j=0 to 0 of (a_(k)*b_(j))) = sum k=0 to m of (a_(k)*b_(0)) ✗ by substitution
+
 	}
 
 }

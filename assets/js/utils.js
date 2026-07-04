@@ -42,6 +42,21 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
+// enable clicking anywhere on landing page gallery cards
+document.addEventListener('DOMContentLoaded', function () {
+  const cards = document.querySelectorAll('.gallery-card, .landing-card')
+  cards.forEach(card => {
+    console.log(card)
+    const link = card.querySelector('a.lurch-link, a.card-link')
+    if (!link) return
+
+    card.addEventListener('click', event => {
+      if (event.target.closest('a')) return
+      link.click()
+    })
+  })
+})
+
 // make nav bar collapsable on narrow screens
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body

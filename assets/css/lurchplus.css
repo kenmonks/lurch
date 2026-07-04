@@ -2970,6 +2970,11 @@ body.landing #footer-block a:focus-visible {
   box-shadow: 0 12px 32px var(--landing-card-shadow);
 }
 
+.landing-card:has(a.card-link),
+.gallery-card:has(a.lurch-link) {
+  cursor: pointer;
+}
+
 #landing-content .landing-card h3,
 #landing-content .gallery-card h3 {
   margin-top: 0;
