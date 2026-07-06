@@ -173,6 +173,40 @@ body {
 
 body.course {
   font-family: Roboto, Arial, Helvetica, sans-serif;
+  --nav-background-color: #fafafa;
+  --nav-link-color: #025d8c;
+  --nav-plain-color: #444;
+  --book-borders: #ddd;
+}
+
+body.course #leftnav {
+  background: var(--nav-background-color);
+  color: var(--black-font);
+  border-right: 1px solid #ddd;
+  box-shadow: none;
+}
+
+body.course #courseinfo {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  color: var(--black-font);
+  box-shadow: 0 2px 8px rgba(16, 27, 39, 0.08);
+}
+
+body.course #courseinfo h1 {
+  color: var(--accent-color);
+}
+
+body.course #leftnav li:not(:has(ul)):hover,
+body.course #leftnav li:not(:has(ul)):hover a {
+  background-color: #eef5f9;
+  color: var(--accent-color);
+}
+
+body.course #leftnav li.active > a {
+  border-left-color: var(--accent-color);
+  color: var(--accent-color);
+  font-weight: 600;
 }
 
 /* -------------------------
@@ -3060,6 +3094,23 @@ body.landing #footer-block a:focus-visible {
 
 .course #courseinfo .course-home-link a:hover {
   text-decoration: underline;
+}
+
+.course #courseinfo :is(.byline, .site, .course-home-link) a,
+.course #courseinfo :is(.byline, .site, .course-home-link) a:visited {
+  display: inline-block;
+  width: auto;
+  margin-left: -0.25rem;
+  padding: 0.12rem 0.25rem;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.course #courseinfo :is(.byline, .site, .course-home-link) a:hover,
+.course #courseinfo :is(.byline, .site, .course-home-link) a:focus-visible {
+  background-color: #eef5f9;
+  color: var(--accent-color);
+  text-decoration: none;
 }
 
 @media (max-width: 820px) {
