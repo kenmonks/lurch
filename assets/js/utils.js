@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
   const cards = document.querySelectorAll('.gallery-card, .landing-card')
   cards.forEach(card => {
-    console.log(card)
     const link = card.querySelector('a.lurch-link, a.card-link')
     if (!link) return
 
