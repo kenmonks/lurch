@@ -130,7 +130,7 @@ const loadAcidTests = () => {
   if (LurchOptions.onetest !== undefined) {
     loadTest(`acid ${LurchOptions.onetest}`)
   } else {
-    Array.seq(k => k, 0, 14).forEach(k => loadTest(`acid ${k}`))
+    Array.seq(k => k, 0, 15).forEach(k => loadTest(`acid ${k}`))
     ;[
       'Transitive Chains', 'Cases', 'BIH Cases', 'user-thms',
       'ArithmeticNatural', 'ArithmeticInteger', 'ArithmeticRational',

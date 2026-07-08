@@ -2334,9 +2334,8 @@ LogicConcept.prototype.irrelevantTo = function (target) {
   // rename them with their index in the lookup array
   allProps.forEach( s => { 
     const pname = s.getAttribute('ProperName')
-    const tick = (pname.endsWith("'")) ? "'" : ''
     s.setAttribute('ProperName', 
-      pname.replace(/([^#]+)#(.+)/,`$1#${lookup.indexOf(pname)}`+tick))
+      pname.replace(/([^#]+)#(.+)/,`$1#${lookup.indexOf(pname)}`))
   })
 }
 

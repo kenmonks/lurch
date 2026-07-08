@@ -696,15 +696,18 @@ Expression.prototype.allProps = function ( ) {
     let ans = new Set(mylets.map( (x,k) => this.prop(mylets.slice(k))))
     ans.add(this.prop())
     return ans
-  // but if it is in an instantiation and has any undeclared tick marks, check
+  // but if it is in an instantiation and has any undeclared symbols whose
+  // proper names came from Let declarations, check
   // it against every possible scope 
   //
   // TODO: is it more efficient to eliminate any scopes not involving any of the
-  // tick-marked symbols in this expression, or would that take more time than
+  // Let-renamed symbols in this expression, or would that take more time than
   // simply checking against all of the scopes?
   } else if (this.some( x => 
     x instanceof LurchSymbol && 
-    x.properName().endsWith("'") &&
+    this.root().letScopes?.some( scope => scope.some( decl =>
+      decl.symbols().some( s => s.properName()===x.properName() )
+    )) &&
     !x.constant
   ) ) {
     // get the cached value of all of the let-scopes
@@ -915,7 +918,7 @@ LogicConcept.prototype.attributes = function ( ) {
 /**
  * Defined a getter as a shorthand synonym for `.attributes() for use in Lode
  */
-Object.defineProperty(LogicConcept.prototype, 'props', {
+Object.defineProperty(LogicConcept.prototype, 'atts', {
   get() { return this.attributes() }
 })
 

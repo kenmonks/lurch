@@ -38,8 +38,7 @@
 // import { Formula } from '../formula.js'
 // import { BindingExpression } from '../binding-expression.js'
 import {
-  Application, Environment, Expression, Declaration, LurchSymbol,
-  BindingExpression, Formula
+  Environment, Expression, Declaration, LurchSymbol, BindingExpression, Formula
 } from '../index.js'
 
 import { addIndex } from './index-definitions.js'
@@ -268,6 +267,7 @@ const processLetEnvironments = doc => {
 const processBindings = doc => {
   doc.index.update('Statements')
   doc.index.get('Statements').forEach( expr => renameBindings( expr ))
+  doc.declarations(true).forEach( decl => renameBindings( decl.body() ))
   return doc
 }
 
@@ -408,66 +408,93 @@ const splitConclusions = doc => {
 /**
  * Assign Proper Names
  * 
- * Rename any symbol declared by a declaration with body by appending the putdown
- * form of their body. Rename any symbol in the scope of a Let-without body by
- * appending a tick mark.
+ * Rename any non-constant free symbol declared by a declaration by appending a
+ * `#`, followed by a canonical form of the body if it has one.
  * 
  * For bodies that have a binding we want to use the alpha-equivalent canonical
  * form.
  */
 const assignProperNames = doc => {
-    
-  // get the declarations with a body (hence the 'true') which is an expression
-  let declarations = doc.declarations(true)
-  
-  // rename all of the declared symbols with body that aren't metavars
-  declarations.forEach( decl => {
-    // write(`Decl:`)
-    // write(decl)
-    decl.symbols().filter(s=>!s.isA('Metavar')).forEach( c => {
-    // write(`c:`)
-    // write(c)
-      // Compute the new ProperName
-      c.setAttribute('ProperName',
-        c.text()+'#'+decl.body().toPutdown((L,S,A)=>S)) //.prop())
-      // apply it to all c's in it's scope
-      decl.scope().filter( x => x instanceof LurchSymbol && x.text()===c.text())
-        .forEach(s => s.setAttribute('ProperName',c.getAttribute('ProperName')))
+  // get all the declarations we need to process
+  const declarations = doc.declarations()
+  // cache the proper names as we compute them, and track any recursive calls
+  const properNames = new Map()
+  const computing = new Set()
+  // only non-constant, non-numeric, non-metavariable symbols get new names
+  const isNumeric = s => /^\d+$|^\d+\.\d*(\[\d+\])?$/.test(s.text())
+  const shouldRename = s => !s.isA('Metavar') && !s.constant && !isNumeric(s)
+  // check whether one LC occurs inside another
+  const contains = (ancestor, descendant) =>
+    descendant.hasAncestorSatisfying(x => x === ancestor)
+  // get the declared names that will actually receive new ProperNames
+  const declaredNames = decl => new Set(
+    decl.symbols().filter(shouldRename).map(s => s.text())
+  )
+  // find the declaration, if any, that controls this free symbol
+  const localDeclarationFor = (symbol, currentDecl) => {
+    let result
+    declarations.forEach( decl => {
+      // don't use the declaration itself, or declarations inside its own body
+      if (decl === currentDecl) return
+      if (currentDecl.body() && contains(currentDecl.body(), decl)) return
+      if (!declaredNames(decl).has(symbol.text())) return
+      if (!decl.scope().includes(symbol)) return
+      result = decl
     })
-  })
-
-  // if it is an instantiation it is possible that some of the declarations
-  // without bodies have been instantiated with ProperNames already (from the
-  // user's expressions) that are not the correct ProperNames for the
-  // instantiation, so we fix them.  
-  //
-  // TODO: merge this with the code immediately above.
-  declarations = doc.declarations().filter( x => x.body()===undefined )
-  declarations.forEach( decl => {
-    decl.symbols().filter(s=>!s.isA('Metavar')).forEach( c => {
-      // Compute the new ProperName
-      c.setAttribute('ProperName', c.text())
-      // apply it to all c's in it's scope
-      decl.scope().filter( x => x instanceof LurchSymbol && x.text()===c.text())
-        .forEach(s => s.setAttribute('ProperName',c.getAttribute('ProperName')))
+    return result
+  }
+  // compute the body suffix for a declaration with body
+  const bodyName = decl => {
+    const body = decl.body()
+    const myNames = declaredNames(decl)
+    return body.toPutdown((L,S,A) => {
+      if (!(L instanceof LurchSymbol)) return S
+      // constants and numbers keep their ordinary names
+      if (L.constant || isNumeric(L)) return S
+      // bound symbols already have canonical ProperNames for alpha equivalence
+      if (!L.isFree(body)) return L.properName()
+      // occurrences of symbols declared by this same declaration stay raw
+      if (myNames.has(L.text())) return S
+      // other declared free symbols use their recursively computed names
+      const localDecl = localDeclarationFor(L,decl)
+      if (!localDecl) return L.properName()
+      return properNamesFor(localDecl).get(L.text()) || L.properName()
     })
-  })
-
-  // Now add tick marks for all symbols declared with Let's.
-  doc.lets().forEach( decl => {
-    decl.symbols().filter(s=>!s.isA('Metavar')).forEach( c => {
-      // Compute the new ProperName
-      let cname = c.properName()
-      if (!cname.endsWith("'")) c.setAttribute( 'ProperName' , cname + "'" )
-      c.declaredBy = decl
-      // apply it to all c's in it's scope
-      decl.scope().filter( x => x instanceof LurchSymbol && x.text()===c.text())
+  }
+  // compute and cache the ProperNames for a declaration
+  const properNamesFor = decl => {
+    if (properNames.has(decl)) return properNames.get(decl)
+    if (computing.has(decl)) return new Map()
+    computing.add(decl)
+    const names = new Map()
+    const suffix = decl.body() ? bodyName(decl) : ''
+    decl.symbols().filter(shouldRename)
+      .forEach( c => names.set(c.text(), c.text()+'#'+suffix) )
+    properNames.set(decl,names)
+    computing.delete(decl)
+    return names
+  }
+  // assign the computed ProperNames throughout the declaration's scope
+  const applyDeclarationNames = decl => {
+    const names = properNamesFor(decl)
+    decl.symbols().filter(shouldRename).forEach( c => {
+      const name = names.get(c.text())
+      if (!name) return
+      c.setAttribute('ProperName',name)
+      if (decl.isALet()) c.declaredBy = decl
+      // only rename free occurrences, so bound variables keep alpha names
+      decl.scope(false)
+        .filter( x => x instanceof LurchSymbol &&
+                      x.text()===c.text() &&
+                      x.isFree() )
         .forEach( s => {
-          s.declaredBy = decl
-          s.setAttribute('ProperName',c.getAttribute('ProperName'))
-      })
+          if (decl.isALet()) s.declaredBy = decl
+          s.setAttribute('ProperName',name)
+        })
     })
-  })
+  }
+
+  declarations.forEach(applyDeclarationNames)
 
   return doc
 }
@@ -524,10 +551,9 @@ const canonicalizeBindings = (expr, symb, ProperNameOnly = false) => {
       counter--
       pop()
     }
-    // Applications just process the children recursvely
-    if (e instanceof Application)
+    // Any non-binding LC just processes its children recursively.
+    if (!(e instanceof BindingExpression) && !(e instanceof LurchSymbol))
       e.children().forEach(c => solve(c))
-    // Note that we don't allow a declaration inside a binding currently.
   }
 
   solve(expr)

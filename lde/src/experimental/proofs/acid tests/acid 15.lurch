@@ -1,0 +1,27 @@
+////////////////////////////////////////////////////////////////////
+// Strong Induction
+//
+
+{
+  Declare forall, implies, in, +
+  Rule: 
+  {
+	  :@P(0)
+		:{ Let k be such that k in NN and (forall j in NN.j leq k implies @P(j)) 
+		   @P(k+1)
+		}
+		forall n in NN.@P(n)
+	}
+
+  ➤ "Strong Induction"
+
+  {
+		:S(0)
+		:{
+			Let k be such that k in NN and (forall j in NN.j leq k implies S(j))
+      S(k+1)
+		}
+		forall n in NN.S(n) ✔︎
+	}
+
+}
