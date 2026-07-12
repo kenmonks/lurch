@@ -503,6 +503,8 @@ const forbiddenWeeny = L =>
   (
     // it's an Environment
     ( L instanceof Environment ) || 
+    // or it's a declaration with environment body (which can't be matched currently)
+    ( L instanceof Declaration && L.body() && L.body() instanceof Environment ) ||
     // or we are avoiding lone metavars and it is one
     ( LurchOptions.avoidLoneMetavars && 
       (L instanceof LurchSymbol)
