@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Declarations with Environment Bodies
+//
+// A ForSome (or Let) whose body is an environment rather than a single
+// expression, e.g.
+//
+//     n in A for some n in NN     parses as     [n , { (∈ n A) (∈ n ℕ) }]
+//
+// In the Rule below the ForSome conclusion is the maximal Weeny (it alone
+// carries both metavariables A and n; the premise carries only A). Before
+// declarations with environment bodies were flagged by forbiddenWeeny, the
+// Weeny loop tried to match that declaration first, reached the case in
+// matchPropositions that hands the two bodies to the (expression-only) Matching
+// package, threw, and was swallowed silently - so the Rule never fired and the
+// conclusion did not validate. With environment-bodied declarations flagged as
+// forbidden Weenies, the declaration is instantiated as a side effect of
+// matching the premise, and the conclusion validates as it should.
+
+➤ "ForSome with an environment body: n in A for some n in NN"
+{
+  Declare is, nonempty, in
+  Rule: :{ If A is nonempty   n in A for some n in NN }
+  Assume W is nonempty
+  w in W for some w in NN
+} ✔︎

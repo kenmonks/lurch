@@ -1,0 +1,40 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Environment-Bodied Declarations - Atom Identity & Preemie Sweep
+//
+// A ForSome whose body is a Let-environment is the atomized form of an
+// existential-universal statement: the Rule below concludes ∃x.∀z.P(x,z)
+// without using either formal quantifier.
+//
+// This file guards two fixes.
+//
+// 1. (atom identity) The body signature used to compute the ProperName of a
+//    declared symbol must be a pure function of the body's structure.  It
+//    formerly rendered symbols declared by declarations nested inside the body
+//    (here, the Let z) via their current ProperName, which is unassigned when
+//    the user's document is interpreted but already assigned on symbols
+//    arriving in an instantiation via matching.  The user's ForSome and the
+//    Rule instantiation's ForSome therefore received different atoms, and the
+//    marked ForSome below was indeterminate.  Body-internal declared symbols
+//    now render by their raw names, the atoms align, and it validates.
+//
+// 2. (preemie sweep) The preemie check formerly swept Lets nested inside
+//    declaration bodies (here, the Let z inside the ForSome itself).  The
+//    interior of a declaration is propositionally atomic and never separately
+//    validated, so its conclusions have no validation results and the sweep
+//    crashed validation with a TypeError (after first falsely marking the
+//    document as a preemie).  Such Lets are now skipped, and their scope is
+//    covered by the copy of the body inserted after the declaration.  Loading
+//    this file at all regression-tests the crash.
+//
+// Note: the conclusion P(w,z) inside the user's Let-environment below is
+// currently marked as a preemie - a known false positive for atomized ∀-facts
+// that is the subject of the ongoing preemie redesign - so this file
+// deliberately places no expectation marker on it.
+
+➤ "∃∀: a ForSome whose body is a Let-environment"
+{
+  Declare Trig, P
+  Rule: :{ :Trig(y)  { Let z  P(x,z) } for some x }
+  Assume Trig(c)
+  { Let z  P(w,z) } for some w ✔︎
+}

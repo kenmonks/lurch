@@ -132,6 +132,9 @@ const loadAcidTests = () => {
   } else {
     Array.seq(k => k, 0, 15).forEach(k => loadTest(`acid ${k}`))
     ;[
+      'Environment Body Declarations',
+      'Environment Body Identity',
+      'Environment Body Forms',
       'Transitive Chains', 'Cases', 'BIH Cases', 'user-thms',
       'ArithmeticNatural', 'ArithmeticInteger', 'ArithmeticRational',
       ['prop', 'math299'], ['pred', 'math299'], ['peanoBIH', 'math299'],

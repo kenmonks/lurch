@@ -447,6 +447,17 @@ const assignProperNames = doc => {
   const bodyName = decl => {
     const body = decl.body()
     const myNames = declaredNames(decl)
+    // names declared by declarations nested inside the body itself.  Such
+    // symbols have their entire scope inside the body, so their raw name is
+    // already canonical for identity purposes.  We must not render them via
+    // L.properName() because that value is stateful: it is unassigned when the
+    // user's document is interpreted but already assigned on symbols arriving
+    // in an instantiation via matching, which would give the same declaration
+    // two different body signatures (and thus two different atoms).  The
+    // signature must be a pure function of the body's structure.
+    const innerNames = new Set()
+    body.descendantsSatisfying( d => d instanceof Declaration && !d.isA('Declare') )
+        .forEach( d => d.symbols().forEach( s => innerNames.add(s.text()) ) )
     return body.toPutdown((L,S,A) => {
       if (!(L instanceof LurchSymbol)) return S
       // constants and numbers keep their ordinary names
@@ -455,6 +466,8 @@ const assignProperNames = doc => {
       if (!L.isFree(body)) return L.properName()
       // occurrences of symbols declared by this same declaration stay raw
       if (myNames.has(L.text())) return S
+      // symbols declared by declarations inside the body stay raw as well
+      if (innerNames.has(L.text())) return S
       // other declared free symbols use their recursively computed names
       const localDecl = localDeclarationFor(L,decl)
       if (!localDecl) return L.properName()
