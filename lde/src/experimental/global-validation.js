@@ -503,6 +503,8 @@ const forbiddenWeeny = L =>
   (
     // it's an Environment
     ( L instanceof Environment ) || 
+    // or it's a declaration with environment body (which can't be matched currently)
+    ( L instanceof Declaration && L.body() && L.body() instanceof Environment ) ||
     // or we are avoiding lone metavars and it is one
     ( LurchOptions.avoidLoneMetavars && 
       (L instanceof LurchSymbol)
@@ -2250,13 +2252,21 @@ Environment.prototype._validateall = function ( target = this,
 
     // get the set of all Lets in inference let environments of this environment
     // unless their parent has no conclusions or if the let is inside a proof
-    // marked with attribute 'target:true'. 
+    // marked with attribute 'target:true'.
     let lets = this.lets().filter( x => {
+      // skip Lets inside declaration bodies (e.g. inside a ForSome whose body is
+      // a Let-environment).  The interior of a declaration is propositionally
+      // atomic - it is never separately validated, so its conclusions have no
+      // validation results - and its propositional content is carried by the
+      // copy of the body inserted after the declaration, whose Lets are swept
+      // in the usual way.
+      if ( x.hasAncestorSatisfying( a => a !== x && a instanceof Declaration ) )
+        return false
       const doc=target.root()
       if ( doc.targetproof ) {
          return x.ancestors().includes(doc.targetproof)
       } else {
-        return !x.parent().ancestors().some( y => y.isA('given') ) 
+        return !x.parent().ancestors().some( y => y.isA('given') )
       }
     } )
 

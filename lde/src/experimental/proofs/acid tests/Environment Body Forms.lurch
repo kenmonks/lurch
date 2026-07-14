@@ -1,0 +1,102 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Environment Body Forms
+//
+// Declaration bodies may be environments, giving atomized forms of the
+// formal operators inside the body:
+//
+//   conjunction    Let s be such that { N(s) M(s) }
+//   implication    Let s be such that { :A(s) B(s) }
+//   mixed/nested   { { :A(c) B(c) } { :B(c) A(c) } } for some c   (iff-style)
+//
+// in any combination, for both Lets (typed declarations) and ForSomes, in
+// user assumptions, Let-environment rule premises (the induction-rule
+// shape), and ForSome rule conclusions.
+//
+// By design, declaration bodies may NOT contain other declarations - the
+// scope of such an inner declaration is not legible to a user (it depends
+// on the placement of the invisible body copy).  Quantified properties in
+// a body should use the formal quantifiers instead, e.g.
+// Let S be such that { S⊆ℕ  ∃m.m∈S }.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "conjunction body: typed Let, extract conjuncts, drive a rule"
+{
+  Declare N, M, G
+  Rule: :{ :N(x) :M(x)  G(x) }
+  Let s be such that { N(s) M(s) }
+  N(s) ✔︎
+  M(s) ✔︎
+  G(s) ✔︎
+}
+
+➤ "conjunction body: induction-style Let-env premise with env-body typed Let"
+{
+  Declare P, Q, C, K
+  Rule: :{ :{ Let k be such that { P(k) Q(k) }  C(k) }  K }
+  Rule: :{ :P(u) :Q(u)  C(u) }
+  { Let k be such that { P(k) Q(k) }
+    P(k) ✔︎
+    Q(k) ✔︎
+    C(k) ✔︎
+  }
+  K ✔︎
+}
+
+➤ "implication body: ForSome rule conclusion, then use the implication"
+{
+  Declare A, B, T
+  Rule: :{ :T(y)  { :A(c) B(c) } for some c }
+  Assume T(t)
+  { :A(c) B(c) } for some c ✔︎
+  { :A(c)
+    B(c) ✔︎
+  }
+}
+
+➤ "implication body: typed Let, use the implication from the copy"
+{
+  Declare D, E, F
+  Rule: :{ :E(x)  F(x) }
+  Let u be such that { :D(u) E(u) }
+  Assume D(u)
+  E(u) ✔︎
+  F(u) ✔︎
+}
+
+➤ "mixed body (iff-style): ForSome rule conclusion with two implication envs"
+{
+  Declare U, V, W
+  Rule: :{ :W(y)  { { :U(d) V(d) } { :V(d) U(d) } } for some d }
+  Assume W(t)
+  { { :U(d) V(d) } { :V(d) U(d) } } for some d ✔︎
+  { :U(d)
+    V(d) ✔︎
+  }
+  { :V(d)
+    U(d) ✔︎
+  }
+}
+
+➤ "nested mixed body: conjunction containing an implication environment"
+{
+  Declare J, R, L, O
+  Rule: :{ :J(x) :L(x)  O(x) }
+  Let w be such that { J(w) { :R(w) L(w) } }
+  Assume R(w)
+  J(w) ✔︎
+  L(w) ✔︎
+  O(w) ✔︎
+}
+
+➤ "guard: a conjunction body must not satisfy an implication-body premise"
+{
+  Declare X, Y, Z, H
+  Rule: :{ :{ Let m be such that { :X(m) Y(m) }  Z(m) }  H }
+  Rule: :{ :Y(v)  Z(v) }
+  { Let m be such that { X(m) Y(m) }
+    Z(m)
+  }
+  H ✗
+}
