@@ -21,7 +21,17 @@
 // properties in a body use the formal quantifiers instead. The [GOAL] cases
 // below involving inner declarations are therefore OUT OF SCOPE and kept only
 // as a record of that frontier (their root causes are documented in the
-// project notes); proper user feedback for such input is a separate task.
+// project notes).
+//
+// UPDATE (2026-07-14): such declarations are now flagged 'unsupported' during
+// interpretation - no body copy is inserted (their content is inert), they
+// get an 'inapplicable' (⊘) validation result and a scoping error, and they
+// no longer crash validation. See the acid test file
+// 'Unsupported Declarations.lurch'. Consequently every case below that puts a
+// declaration inside a declaration body (C03-C07b, C13, and the old [CERT]
+// case C06's typed Let) now reports the ⊘ behavior rather than its historical
+// outcome, and its expectation markers are NOT updated - the failures are the
+// design speaking, not regressions.
 //
 // This file is intentionally not wired into the acid test suite - it is an
 // exploratory battery.
@@ -134,9 +144,10 @@ const cases = [
 }` },
 
 { name: 'C11 [GUARD] quantifier shift: ∀∃ fact must not give ∃∀ claim',
+  note: 'the ∃∀ claim is now flagged ⊘ unsupported (decl-in-body) before the question even arises; either way it must not be valid',
   src: `{ Declare P
   «:{ :[x] [m , (P x m)] }»
-  { Let z  P(w,z) } for some w ✗
+  { Let z  P(w,z) } for some w ⊘
 }` },
 
 { name: 'C12 [GUARD] AGENTS2 premise-assembly abuse stays preemie-invalid',

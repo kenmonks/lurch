@@ -78,6 +78,26 @@ const getValidationResults = LC => {
     const results = [ ]
     // Scope errors are highest priority
     const scopeErrors = LDE.Scoping.scopeErrors( LC )
+    if ( scopeErrors && ( scopeErrors.unnecessary || scopeErrors.unsupported ) ) {
+        const result = {
+            type : 'scoping',
+            // the same marker used when the CAS is given syntax it does not
+            // support - both are unsupported input that passed the parsing gate
+            result : 'inapplicable',
+            reason : scopeErrors.unnecessary ?
+                'This declaration is unnecessary' :
+                'Lurch does not support this kind of declaration'
+        }
+        if ( scopeErrors.unnecessary )
+            result.unnecessary = scopeErrors.unnecessary
+        if ( scopeErrors.unsupported )
+            result.unsupported = scopeErrors.unsupported
+        // include a redeclaration error on the same declaration, if any, so the
+        // single feedback message shown for its atom can mention both errors
+        if ( scopeErrors.redeclared )
+            result.redeclared = scopeErrors.redeclared
+        results.push( result )
+    }
     if ( scopeErrors && scopeErrors.redeclared )
         results.push( {
             type : 'scoping',

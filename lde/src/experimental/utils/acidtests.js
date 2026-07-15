@@ -78,7 +78,7 @@ const loadTest = (name, folder = 'acid tests', ext = 'lurch', language = 'lurch'
   const label = `${displayIndex}. Loading ${folder}/${name}`
 
   if (showFile && singleTestIndex === null) 
-    process.stdout.write(defaultPen(label.padEnd(50, '.')))
+    process.stdout.write(defaultPen(label.padEnd(55, '.')))
   const lastTime = Date.now()
 
   try {
@@ -133,8 +133,9 @@ const loadAcidTests = () => {
     Array.seq(k => k, 0, 15).forEach(k => loadTest(`acid ${k}`))
     ;[
       'Environment Body Declarations',
-      'Environment Body Identity',
       'Environment Body Forms',
+      'Unnecessary Declarations',
+      'Unsupported Declarations',
       'Transitive Chains', 'Cases', 'BIH Cases', 'user-thms',
       'ArithmeticNatural', 'ArithmeticInteger', 'ArithmeticRational',
       ['prop', 'math299'], ['pred', 'math299'], ['peanoBIH', 'math299'],

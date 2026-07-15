@@ -314,9 +314,11 @@ const formatter = ( options=defaultOptions ) => {
         // isn't necessary when there's a gold star, but we now treat them as
         // independent since so the user sees both kinds of feedback.
         ans += greencheck
-        // Propositionally invalid ones. Add a red x even if it's a BIH  
+        // Propositionally invalid ones. Add a red x even if it's a BIH
       } else if ((Validation.result(L) && Validation.result(L).result!=='valid')) {
-        ans += (Validation.result(L).reason==='preemie') ? preemiex : redx
+        ans += (Validation.result(L).reason==='preemie') ? preemiex :
+               (Validation.result(L).result==='inapplicable') ? xPen(inapplicable) :
+               redx
       }
     }
     // mark redeclared symbols

@@ -189,6 +189,13 @@ const processTheorems = doc => {
         // just move the proof where the theorem is
         parent.insertChild(thm.nextSibling(),i)
       }
+      // a Theorem may not begin with a Let declaration (its free variables are
+      // already implicitly universal in the Rule copy).  Rather than crash,
+      // flag the Let as 'unnecessary' - it is neutralized during validation
+      // and reported to the user as a scoping error.  The flag is an LC type
+      // attribute so the Rule copy below, and any instantiations made from it,
+      // inherit it.
+      if ( thm.isALetEnvironment() ) thm.firstChild().makeIntoA('unnecessary')
       // make a formula copy of the thm
       let thmrule = Formula.from(thm)
       // if it doesn't have any metavars there's no need for it
@@ -217,14 +224,30 @@ const processTheorems = doc => {
  * Append a copy of the bodies of all declarations immediately after its Declaration.
  */
 const processDeclarationBodies = doc => {
-  // get the declarations with a body (hence the 'true') that don't contain 
+  // get the declarations with a body (hence the 'true') that don't contain
   // metavariables (do this before converting a Rule to a formula)
   const decs = doc.index.get('Decs with body').filter( dec => Formula.domain(dec).size===0)
   // insert a copy of the body after the declaration and mark where it came from
   // with the js attribute .bodyOf, unless it's already there
   decs.forEach( dec => {
+    // skip declarations nested inside another declaration - inserting a copy
+    // there would corrupt the outer declaration's structure (its symbols()
+    // would no longer be all but its last child).  Such content is unsupported
+    // and inert, since the outer declaration below gets no body copy either.
+    if ( dec.hasAncestorSatisfying( a => a !== dec && a instanceof Declaration ) )
+      return
+    // a declaration body may not contain another declaration (the scope of the
+    // inner declaration is not legible to a user).  Flag it as 'unsupported' -
+    // it keeps its atomic propositional form, but no copy of its body is
+    // inserted, so its content is inert, and markFlaggedDeclarations() gives
+    // the user feedback about it during validation
+    if ( dec.body() instanceof Declaration ||
+         dec.body().hasDescendantSatisfying( d => d instanceof Declaration ) ) {
+      dec.makeIntoA('unsupported')
+      return
+    }
     // if its already there, we're done
-    if ( dec.nextSibling()?.bodyOf === dec ) { return } 
+    if ( dec.nextSibling()?.bodyOf === dec ) { return }
     let decbody = dec.body().copy()
     if (dec.isA('given')) decbody.makeIntoA('given')
     decbody.bodyOf = dec
@@ -284,11 +307,19 @@ const processBindings = doc => {
 const processRules = doc => {
   // get all of the Rules
   doc.index.get('Rules').forEach( f => {
-    // check if f is not an Environment, or is a Let-environment, and throw
-    // an error either way
-    if (!f instanceof Environment || f.isALetEnvironment() )
-      throw new Error('A rule must be an environment that is not a Let-environment.')
-    // it's not, so convert it to a formula
+    // a Rule must be an environment
+    if ( !(f instanceof Environment) )
+      throw new Error('A rule must be an environment.')
+    // a Rule may not begin with a Let declaration (its free variables are
+    // already implicitly universal).  Rather than crash, flag the Let as
+    // 'unnecessary' - it is neutralized during validation and reported to the
+    // user as a scoping error.  The flag is an LC type attribute so
+    // instantiations of this rule inherit it.  Note that if the Let has a
+    // body, the copy of the body inserted by processDeclarationBodies()
+    // remains as a given, so the rule still means the typed universal closure
+    // the author presumably intended.
+    if ( f.isALetEnvironment() ) f.firstChild().makeIntoA('unnecessary')
+    // convert it to a formula
     // the second arg specifies it should be done in place
     Formula.from(f,true)
     // if it has metavariables, ignore it as a proposition
@@ -415,8 +446,10 @@ const splitConclusions = doc => {
  * form.
  */
 const assignProperNames = doc => {
-  // get all the declarations we need to process
-  const declarations = doc.declarations()
+  // get all the declarations we need to process, skipping unnecessary ones
+  // (leading Lets of Rules or Theorems), which validation ignores as if they
+  // were deleted, so they must not rename the symbols in their scope
+  const declarations = doc.declarations().filter( d => !d.isA('unnecessary') )
   // cache the proper names as we compute them, and track any recursive calls
   const properNames = new Map()
   const computing = new Set()
