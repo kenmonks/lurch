@@ -1,0 +1,48 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Unsupported Declarations
+//
+// A declaration body may not contain another declaration - the scope of such
+// an inner declaration is not legible to a user, since it depends on the
+// placement of the invisible body copy.  Quantified properties in a body
+// should use the formal quantifiers instead.
+//
+// This input used to crash validation when the body was a bare declaration
+// (the inner declaration's body copy was inserted inside the outer
+// Declaration node, corrupting its structure).  Now such declarations are
+// flagged 'unsupported' during interpretation:
+//
+//   - no copy of their body is inserted, so their content is inert (they
+//     keep only their atomic propositional form);
+//   - they receive an 'inapplicable' validation result with reason
+//     'unsupported declaration' (the ⊘ marker in Lode and the web UI) and a
+//     scoping error { unsupported: [...] } (the web UI hover message);
+//   - the rest of the document validates normally around them.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "a bare declaration as a body: flagged, no crash"
+{
+  Declare P
+  «:[s , [m , (P s m)] ]» ⊘
+}
+
+➤ "a declaration nested in an environment body: flagged, no crash"
+{
+  Declare N, Q
+  «:[u , { (N u) [v , (Q u v)] }]» ⊘
+}
+
+➤ "the rest of the document validates normally around an unsupported declaration"
+{
+  Declare R, A, t
+  Rule: :{ R(x) }
+  «:[w , { (A w) [y , (A y)] }]» ⊘
+  R(t) ✔︎
+}
+
+➤ "a ForSome with a Let-environment body: flagged, and the interior Let does not crash the preemie sweep"
+{
+  Declare B
+  «[c , { :[z] (B c z) }]» ⊘
+}

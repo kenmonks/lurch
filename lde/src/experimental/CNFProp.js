@@ -92,8 +92,10 @@ export class CNFProp {
         env.negated = negated
         while ( kids.length > 0 ) {
           let A = kids.pop()
-          // skip it if it's a Declare
-          if (A.isA('Declare')) continue
+          // skip it if it's a Declare, or an unnecessary declaration (the
+          // leading Let of a Rule or Theorem), which validation ignores as if
+          // it were deleted
+          if (A.isA('Declare') || A.isA('unnecessary')) continue
           // skip it if it's a Comment or anything with .ignore.  This eliminates
           // entire subenvironments and everything inside them because of this
           // recursion is top-down.

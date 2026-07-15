@@ -290,7 +290,8 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   ///////////////
   // Scoping
   profile(()=>Scoping.validate(doc, scopingMethod ),'Scoping')
-  
+
+  ///////////////////////////////////
   ///////////////
   // Caching
   //
@@ -322,14 +323,25 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
     if (LurchOptions.checkPreemies) doc._validate( target , true ) 
   }
 
+  ///////////////////////////////////
+  // Flagged Declarations
+  //
+  // Give feedback for declarations flagged during interpretation: leading
+  // Lets of Rules and Theorems ('unnecessary') and declarations whose body
+  // contains another declaration ('unsupported').  This must run after
+  // Scoping.validate, so the scoping pass cannot erase the scope errors we
+  // add, and after propositional validation, so a flagged claim declaration's
+  // 'inapplicable' result is not overwritten by its propositional result.
+  profile(()=>markFlaggedDeclarations(doc),'Flagged Declarations')
+
   // For debugging purposes, before leaving, rename all of the ProperNames to
-  // something human-readable. 
+  // something human-readable.
   // TODO: maybe improve or eliminate this in the future
   // profile(()=>tidyProperNames(doc),'tidy Proper Names')
   // re-cache the catalog, since these are new prop names
   // doc.cat = doc.catalog()
 
-  return doc   
+  return doc
 }
 
 
@@ -502,9 +514,14 @@ const forbiddenWeeny = L =>
   // otherwise check each case 
   (
     // it's an Environment
-    ( L instanceof Environment ) || 
-    // or it's a declaration with environment body (which can't be matched currently)
-    ( L instanceof Declaration && L.body() && L.body() instanceof Environment ) ||
+    ( L instanceof Environment ) ||
+    // or it's a declaration whose body is not a single expression, e.g. an
+    // environment or (unsupported) another declaration, since the Matching
+    // package can only match expression bodies
+    ( L instanceof Declaration && L.body() && !(L.body() instanceof Expression) ) ||
+    // or it's an unnecessary declaration (a leading Let of a Rule or Theorem),
+    // which is ignored by validation as if it were deleted
+    ( L instanceof Declaration && L.isA('unnecessary') ) ||
     // or we are avoiding lone metavars and it is one
     ( LurchOptions.avoidLoneMetavars && 
       (L instanceof LurchSymbol)
@@ -1971,6 +1988,49 @@ const insertInstantiation = ( inst, formula, creator ) => {
 }
 
 /**
+ * Mark Flagged Declarations
+ *
+ * Interpretation flags two kinds of declarations that the validation engine
+ * does not support, rather than crashing on them:
+ *
+ *  * `'unnecessary'` - a Rule or Theorem may not begin with a Let declaration,
+ *    because its free variables are already implicitly universal.  Validation
+ *    ignores such a Let as if it were deleted (it contributes nothing to the
+ *    propositional form, is never a Weeny, does not rename its scope, and is
+ *    disregarded when checking instantiations for bad declarations).
+ *  * `'unsupported'` - a declaration body may not contain another declaration
+ *    (the scope of the inner declaration is not legible to a user).  Such a
+ *    declaration keeps its atomic propositional form but no copy of its body
+ *    is inserted, so its content is inert.
+ *
+ * This routine adds the user-facing feedback for each flagged declaration: a
+ * scoping error (for the web UI's feedback message) and an 'inapplicable'
+ * validation result - the same marker used when the CAS is given syntax it
+ * does not support, since both are unsupported input that passed the parsing
+ * gate.  Declarations inside generated instantiations are skipped, since
+ * feedback belongs on the user's content, not on copies.
+ *
+ * This must be called after `Scoping.validate()` so that the scoping pass
+ * cannot erase the scope errors added here.
+ */
+const markFlaggedDeclarations = doc => {
+  doc.descendantsSatisfying( x => x.isA('unnecessary') || x.isA('unsupported') )
+     .forEach( d => {
+    // skip copies inside generated instantiations, but not inside a
+    // metavariable-free Rule, which processRules marks as its own
+    // instantiation (.rule === itself) yet is still the user's own content
+    if ( d.hasAncestorSatisfying( a => a.isA(instantiation) && a.rule !== a ) )
+      return
+    // add a scoping error listing the declared symbols, keyed by the flag
+    const reason = d.isA('unnecessary') ? 'unnecessary' : 'unsupported'
+    Scoping.addScopeError( d, { [reason]: d.symbols().map( s => s.text() ) } )
+    // and an 'inapplicable' validation result so it gets a ⊘ marker
+    Validation.setResult( d,
+      { result: 'inapplicable', reason: `${reason} declaration` } )
+  })
+}
+
+/**
  * Check a proposed instantiation for bad declarations.
  *
  *  * If it declares a constant, it's bad.
@@ -1979,8 +2039,10 @@ const insertInstantiation = ( inst, formula, creator ) => {
  *
  */
 const isBadInstantiation = ( inst ) => {
-  // get the declarations in this instantiation
-  const decs=inst.declarations()
+  // get the declarations in this instantiation, skipping unnecessary ones
+  // (leading Lets of Rules or Theorems), which validation ignores as if they
+  // were deleted, so what they appear to declare is irrelevant
+  const decs=inst.declarations().filter( d => !d.isA('unnecessary') )
   // check each one to see if it declares a constant
   for (let k = 0; k < decs.length; k++) {
     // get the array of symbols in this declaration

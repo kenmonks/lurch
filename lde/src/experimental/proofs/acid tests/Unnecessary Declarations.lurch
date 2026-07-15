@@ -1,0 +1,51 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Unnecessary Declarations
+//
+// A Rule or Theorem may not begin with a Let declaration, because its free
+// variables are already implicitly universal.  This used to crash validation
+// with an uncaught error from processRules.  Now the leading Let is flagged
+// 'unnecessary' during interpretation and:
+//
+//   - validation ignores it as if it were deleted (it contributes nothing to
+//     the propositional form, is never a Weeny, does not assign ProperNames
+//     to its scope, and is disregarded by isBadInstantiation), so the Rule
+//     still means the universal closure the author presumably intended - and
+//     if the Let has a body, the copy of the body remains as a given, giving
+//     the typed universal closure;
+//   - the Let receives an 'inapplicable' validation result with reason
+//     'unnecessary declaration' (the ⊘ marker in Lode and the web UI - the
+//     same marker used for syntax the CAS does not support) and a scoping
+//     error { unnecessary: [...] } (the web UI hover message, combined with
+//     any redeclaration error on the same Let).
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "a Rule may not start with a Let: flagged, but still usable universally"
+{
+  Declare P, c
+  Rule: :{ Let x ⊘  P(x) }
+  P(c) ✔︎
+}
+
+➤ "a Rule may not start with a typed Let: flagged, typed universal closure"
+{
+  Declare N, Q, d
+  Rule: :{ Let y be such that N(y) ⊘  Q(y) }
+  Assume N(d)
+  Q(d) ✔︎
+}
+
+➤ "a Theorem may not start with a Let: flagged, its Rule copy still usable"
+{
+  Declare R, e
+  Theorem: { Let z ⊘  R(z) }
+  R(e) ✔︎
+}
+
+➤ "a leading Let that also redeclares gets both errors"
+{
+  Declare S
+  Let w
+  Rule: :{ Let w ⊘  S(w) }
+}

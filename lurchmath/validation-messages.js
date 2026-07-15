@@ -407,7 +407,27 @@ export class Message {
             names.length == 2 ? names.join( ' and ' ) :
             names.slice( 0, -1 ).join( ', ' ) + ', and ' + names[names.length - 1]
         if ( data.type == 'scoping' ) {
-            if ( data.hasOwnProperty( 'undeclared' ) ) {
+            if ( data.hasOwnProperty( 'unnecessary' ) ||
+                 data.hasOwnProperty( 'unsupported' ) ) {
+                // an unnecessary declaration (a Rule or Theorem may not begin
+                // with a Let) or an unsupported one (a declaration body may
+                // not contain another declaration); if the same declaration
+                // also redeclares variables, mention both errors in the one
+                // message shown.  These get the 'inapplicable' marker, like
+                // syntax the CAS does not support.
+                return {
+                    type : 'scoping',
+                    result : 'inapplicable',
+                    reason : ( data.hasOwnProperty( 'unnecessary' ) ?
+                          'This declaration is unnecessary' :
+                          'Lurch does not support a declaration inside the body of another declaration' ) +
+                        ( data.hasOwnProperty( 'redeclared' ) ?
+                          `, and you have already used ${listify(data.redeclared)}.` :
+                          '.' ),
+                    code : data.hasOwnProperty( 'unnecessary' ) ?
+                        'unnecessary declaration' : 'unsupported declaration'
+                }
+            } else if ( data.hasOwnProperty( 'undeclared' ) ) {
                 const verb = data.undeclared.length > 1 ? 'are' : 'is'
                 return {
                     type : 'scoping',
