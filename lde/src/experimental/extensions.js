@@ -11,6 +11,7 @@ import { Environment } from '../environment.js'
 import { Symbol as LurchSymbol } from '../symbol.js'
 import { Declaration } from '../declaration.js'
 import { Application } from '../application.js'
+import { BindingExpression } from '../binding-expression.js'
 import { CNFProp } from './CNFProp.js'
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -608,53 +609,68 @@ LogicConcept.prototype.symbols = function () {
 }
 
 /**
+ * Render a symbol's text the way putdown does: unchanged if it contains no
+ * putdown delimiter or whitespace characters, and quoted with the appropriate
+ * escapes otherwise.  This matches the Symbol case of
+ * {@link LogicConcept#toPutdown toPutdown()}.
+ */
+const putdownSymbolText = text =>
+  !/\(|\)|\{|\}|\[|\]|:|\s|"|'/.test( text ) ? text :
+  ( '"' + text.replace( /\\/g, '\\\\' )
+              .replace( /"/g, '\\"' )
+              .replace( /\n/g, '\\n' ) + '"' )
+
+/**
  * Compute the Prop Form string for an expression.  This is the `.putdown` form
  * except that we must use the `ProperName` for symbols instead of their text.
  * For bound symbols, this is their canonical name so alpha equivalent
  * expressions have the same propositional form.  For symbols declared with a
  * body this is the renaming that accounts for the body. Note that the Prop form
- * does not include the leading `:` for givens. 
- *
- * We cache the results in a `.propForms` js attribute and return them if
- * present.
+ * does not include the leading `:` for givens.
  *
  * In order to check for preemies we need a different propositional form in some
  * cases. The optional argument `ignore` is an array of Let's such that if a
  * symbol in the expression is defined by one of the Let's on the list, we use
- * its text name instead of its `ProperName` (i.e., no tick marks).  These are
- * not cached in the `.propform` attribute (when ignore is nonempty).
+ * its text name instead of its `ProperName` (i.e., no tick marks).
+ *
+ * For efficiency this recursion is specialized rather than delegated to
+ * {@link LogicConcept#toPutdown toPutdown()}: inside an Expression only
+ * Symbols, Applications, and BindingExpressions can occur, no attributes are
+ * rendered in a prop form, and no newlines are ever produced, so the generic
+ * putdown machinery (attribute keys, line breaking, given markers) can be
+ * skipped.  This routine is one of the hottest paths in validation.
  *
  * @memberof Extensions
  * @param {LogicConcept[]} [ignore=[]] - an array of Let's to ignore when computing this
  * propositional form.
  */
 Expression.prototype.prop = function ( ignore = [] ) {
-  // determine exactly when to use the proper name
-  return this.toPutdown((L,S,A) => {
-    let ans =
-      // if this is not a Symbol, or
-      ( !(L instanceof LurchSymbol) ||
-        // it is a Symbol, and
-        ( L instanceof LurchSymbol &&   
-            // either declared by one of the ignored lets, or
-          ( (L.declaredBy && ignore.includes(L.declaredBy)) ||
-              // undeclared (e.g. in an instantiation or binding) and 
-            ( !(L.declaredBy) && 
-              // has the same propername as something declared by one of the
-              // ignored lets
-              ignore.some( x => x.symbols().some( x => 
-                x.properName()===L.properName()) 
-              ) 
-            )
-          )
-        )
-      ) 
-      // use it's original name
-      ? S
-      // otherwise use it's properName
-      : L.properName()
-    return ans.replace( /^[:]/, '' )
-  })
+  const propOf = L => {
+    if ( L instanceof LurchSymbol ) {
+      // use the original symbol text exactly when the symbol is declared by
+      // an ignored Let, or is undeclared (e.g. in an instantiation or
+      // binding) but has the same proper name as a symbol declared by an
+      // ignored Let; otherwise use its proper name
+      const useOriginal =
+        ( L.declaredBy && ignore.includes( L.declaredBy ) ) ||
+        ( !L.declaredBy &&
+          ignore.some( x => x.symbols().some( y =>
+            y.properName() === L.properName() ) ) )
+      const ans = useOriginal ? putdownSymbolText( L.text() ) : L.properName()
+      // strip a leading ':' just as the previous toPutdown-based
+      // implementation did to every node's rendering
+      return ans[0] === ':' ? ans.slice( 1 ) : ans
+    }
+    const kids = L.children().map( propOf )
+    if ( L instanceof BindingExpression ) {
+      const last = kids.pop()
+      const first = kids.length > 1 ? '(' + kids.join( ' ' ) + ')' : kids[0]
+      return first + ' , ' + last
+    }
+    // otherwise it is an Application
+    return `(${kids.join( ' ' )})`
+  }
+  return propOf( this )
 }
 
 /**

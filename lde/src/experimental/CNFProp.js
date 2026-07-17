@@ -32,21 +32,30 @@ export class CNFProp {
 
   /**
    * Make a CNFProp from an LC - this is the main purpose of this class.
-   * 
+   *
+   * The last two arguments are only passed internally by the recursion: the
+   * array of Lets to ignore and its address signature are constant for the
+   * entire conversion (they depend only on the target and checkPreemies), so
+   * they are computed once at the top-level call and passed down rather than
+   * being recomputed at every node.
+   *
    * @param {LogicConcept} L
-   * @param {string[]} catalog 
-   * @param {LogicConcept} target 
-   * @param {boolean} checkPreemies 
+   * @param {string[]} catalog
+   * @param {LogicConcept} target
+   * @param {boolean} checkPreemies
+   * @param {LogicConcept[]} [ignores] - internal use only
+   * @param {string} [sig] - internal use only
    * @returns {CNFProp}
    */
-  static fromLC ( L , catalog = L.cat, target = L , checkPreemies = false ) {
-    
+  static fromLC ( L , catalog = L.cat, target = L , checkPreemies = false ,
+                  ignores , sig ) {
+
     catalog = catalog || L.catalog()
 
     // check if it should be negated
     // propositions accessible to the target (nonreflexive) are treated as
     // given when the target is present.
-    const negated = (L.isA('given') || L.isAccessibleTo(target)) 
+    const negated = (L.isA('given') || L.isAccessibleTo(target))
     const sign = negated ? -1 : 1
 
     // Propositions have atomic prop form. ForSome declarations have an atomic
@@ -54,8 +63,10 @@ export class CNFProp {
     // body is added afterwards, and treated like any other LC in the
     // document. Note that .isAProposition ignores anything that is marked
     // .ignore or in the supplied array 'ignores'.
-    const ignores = (checkPreemies) ? target.letAncestors() : []
-    const sig = CNFProp.signature(ignores)
+    if (ignores === undefined) {
+      ignores = (checkPreemies) ? target.letAncestors() : []
+      sig = CNFProp.signature(ignores)
+    }
 
     if ( L.isAProposition( ignores ) ) { 
       let ans
@@ -102,8 +113,8 @@ export class CNFProp {
           if (A.ignore) continue
           // if doing a preemie check, ignore the let ancestors of the target
           if (checkPreemies && ignores.includes(A)) continue
-          // otherwise get it's prop form  
-          let Aprop = CNFProp.fromLC(A,catalog,target,checkPreemies)
+          // otherwise get it's prop form
+          let Aprop = CNFProp.fromLC(A,catalog,target,checkPreemies,ignores,sig)
           if ( Aprop === null ) continue 
           // check if it's given or accessible to the target
           const isNegated = A.isA('given') || A.isAccessibleTo(target)
