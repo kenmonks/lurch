@@ -111,13 +111,37 @@ EventTarget.prototype.emit = function ( type, details = { } ) {
  */
 
 /**
+ * A deep copy of a JSON-encodable value, implemented as a direct recursion
+ * rather than a `JSON.stringify()`/`JSON.parse()` round trip.  This is on a
+ * hot path (every {@link MathConcept#copy MathConcept.copy()} deep-copies its
+ * attribute values through {@link Map#deepCopy Map.deepCopy()}), and the
+ * recursive implementation is several times faster than serialization.
+ *
+ * @param {*} json - the structure to copy, which must be amenable to JSON
+ *   encoding using `JSON.stringify()`
+ * @return {*} if the input is an object, this is a deep copy; if the input
+ *   was atomic, this is the same atomic
+ */
+const deepCopyJson = json => {
+    if ( json === null || typeof json !== 'object' ) return json
+    if ( Array.isArray( json ) ) return json.map( deepCopyJson )
+    const result = { }
+    for ( const key of Object.keys( json ) )
+        result[key] = deepCopyJson( json[key] )
+    return result
+}
+
+/**
  * Extend the built-in JavaScript `Map` class with a deep copy method.  This
  * works only for Maps whose keys and values are all JSON-encodable.
- * 
+ *
  * @return {Map} A new map that is a deep copy of the original.
  */
 Map.prototype.deepCopy = function () {
-    return new Map( JSON.copy( [ ...this ] ) )
+    const result = new Map()
+    for ( const [ key, value ] of this )
+        result.set( key, deepCopyJson( value ) )
+    return result
 }
 
 /**
