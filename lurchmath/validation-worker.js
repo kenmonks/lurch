@@ -143,6 +143,18 @@ const validateDocument = LC => {
     // feedback the validation generated, and send feedback messages about each:
     const queuedFeedback = { }
     const postOrderTraversal = descendant => {
+        // Generated content - instantiations (complete or partial), the hidden
+        // Rule copy of a Theorem, and the inserted copy of a declaration body -
+        // carries the same IDs as the user content it was copied from, so any
+        // feedback about it would reach the user's atoms and clobber their own
+        // feedback (e.g. a "Trying to re-declare c" scoping error on a Let
+        // inside an instantiation used to overwrite the "This declaration is
+        // unnecessary" message on the user's own Let, erasing its hover text).
+        // So we skip such subtrees entirely.  A metavariable-free Rule is
+        // marked as its own instantiation ('LDE CI' with .rule === itself) yet
+        // is still the user's own content, so it is not skipped.
+        if ( ( descendant.isA( 'LDE CI' ) && descendant.rule !== descendant )
+            || descendant.userRule || descendant.bodyOf ) return
         // We're doing a post-order tree traversal, so do the children first:
         descendant.children().forEach( postOrderTraversal )
         // Now that we've done the recursion on children, handle this LC:

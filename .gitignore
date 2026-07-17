@@ -5,6 +5,10 @@
 # ignore the node modules
 node_modules/
 
+# ignore Playwright test artifacts
+test-results/
+playwright-report/
+
 # ignore the output of the line counter extension
 .VSCodeCounter
 
