@@ -449,9 +449,30 @@ table { margin-bottom:1.5rem }
 	padding:0.5rem 1rem;
 }
 
+/* Tighter spacing for dense booktab tables outside course pages. */
+#content-block table.booktab.compact td,
+#content-block table.booktab.compact th {
+  padding:0.22em 0.8rem;
+  line-height:1.2;
+}
+#content-block table.booktab.compact thead tr:first-child th {
+  padding-top:0.5rem;
+  padding-bottom:0.3rem;
+}
+#content-block table.booktab.compact tbody tr:last-child td {
+  padding-bottom:0.5rem;
+}
+
 #content-block table.booktab > caption { 
   padding-bottom:0.5rem;
 	font-size:125%;
+}
+
+/* Optional fixed-width formatting for tables containing code or measurements. */
+#content-block table.technical {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 #content-block .centerlink { 

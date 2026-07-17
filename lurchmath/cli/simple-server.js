@@ -23,8 +23,10 @@ const startServer = ( options = { } ) => {
 
     // Create the server:
     const server = http.createServer( ( req, res ) => {
-        const parsedUrl = url.parse( req.url )
-        let pathname = `${options.root}${parsedUrl.pathname}`
+        // req.url is a path, so give the WHATWG URL parser a base to resolve
+        // against; decode so that filenames containing spaces etc. are served
+        const parsedUrl = new URL( req.url, 'http://localhost' )
+        let pathname = `${options.root}${decodeURIComponent( parsedUrl.pathname )}`
         const extensionToMime = {
             '.ico'   : 'image/x-icon',
             '.html'  : 'text/html',

@@ -109,7 +109,7 @@
           new features added to Lurch in reverse chronological order. This will
           continue to be updated with the most recent changes at the top.</p
         >
-        <ul class="square">
+        <ul class="bigskip square">
           <li>
             <p
               ><strong>Validation algorithm efficiency</strong> - used Claude
@@ -120,7 +120,7 @@
               Spring 2024. The improvements are shown in order in the following
               table.</p
             >
-            <table>
+            <table class="booktab technical compact">
               <thead>
                 <tr>
                   <th>Desc</th>
@@ -217,6 +217,17 @@
                 </tr>
               </tbody>
             </table>
+          </li>
+          <li>
+            <p
+              ><strong>Playwright web UI test suite</strong> - added a test
+              suite for the web UI based on
+              <a href="https://playwright.dev" target="_blank">Playwright</a>.
+              Currently tests that the gallery documents load and validate and
+              only produce green checks (at least one). It also loads some
+              custom test files that check feedback markers against
+              expectations.</p
+            >
           </li>
           <li>
             <p
