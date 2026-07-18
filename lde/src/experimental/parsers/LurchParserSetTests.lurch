@@ -31,3 +31,35 @@ x in {} union x set()
 { n : n is prime and n is odd }
 n in { n : n in { 1,2,3 } }
 S in { { 0 }, { 0 , {0}}, { p : p cong 3 mod 4 } }
+
+////////////////////////////////////////////////////////////////////
+// Extended tests (2026-07), used with the golden-snapshot suite in
+// parsertests.js.  Every line below must parse in BOTH the putdown and
+// tex parsers with the option enableSets:true.
+
+// set literals in expressions
+2 in {1,2,3}
+A = {1,2,3}
+{1,2} union {3}
+{1} cup {2} cup {3}
+{} subset {1}
+x notin {}
+{0,1} times {0,1}
+{x} = {y}
+{ a, b } setminus { b }
+{1,2,3} cap NN
+{ {1}, {1,2} }
+P({1,2})
+𝒫({1,2})
+forall x in {1,2,3}.x leq 3
+
+// set builder
+{ x : x^2 leq 2 }
+x in {n : n is even}
+S = { p : p cong 3 mod 4 }
+
+// labels and refs still use ordinary braces in set mode
+x in A by {membership}
+
+// raw putdown escapes without braces are unaffected by set mode
+«(∈ 2 (set 1 2))»

@@ -1,0 +1,31 @@
+////////////////////////////////////////////////////////////////////
+// Negative tests for the Peggy parsers (2026-07)
+//
+// Every line in this file is expected to FAIL to parse in BOTH the
+// putdown and tex parsers (with default options), locking in the
+// rejection of invalid syntax.  This file is only used by the
+// golden-snapshot suite in parsertests.js, NOT by the .parsertest
+// command in Lode, which requires its files to parse successfully.
+
+// no infix rule exists for approx (yet)
+x ≈ y
+// negation cannot apply directly to another negation without parentheses
+not not P
+// ticks bind too loosely to allow application of a complemented function
+f'(x)
+// exponentiation requires parentheses to disambiguate towers
+x^y^z
+// in default (non-set) mode curly braces are environments, not sets
+2 in {1,2,3}
+// incomplete expressions
+x +
+(x
+x^
+f(
+{ x
+forall x
+Rule {
+{ :P
+// malformed numbers
+0.5.2
+x..y

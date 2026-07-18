@@ -79,7 +79,7 @@
   const letInSet = (vars, set) => {
     let body = vars.map( x => { return lispBinary('∈',x,set) } ).join(' ')
     if (vars.length>1) body = `{ ${body} }`
-    return `:[ ${vars.join(' ')} , ${body} ]`
+    return `:[${vars.join(' ')} , ${body}]`
   }
 
 
@@ -296,7 +296,7 @@
   // The same thing applies to binary operators like '⊕', '⊗',
   // '⊙', '★' in groups or rings.
   input = input.replace(/'~'/g, '(~)')
-  input = input.replace(/'≈'/g, '(approx)')
+  input = input.replace(/'≈'/g, '(≈)')
   
   // Optional Given Colons
   //
@@ -480,11 +480,11 @@ ForSome = 'for'i __ 'some'i __ a:(Symbol)|1..,comma| __ 'in'i __ b:Expression
             { return `some> [${a}]` }
 // the 'given' colon is optional since these are always 'given'. We also 
 // allow the special shorthand `Let x∈A` since it is so common.
-Let = 'Let'i __ a:Symbol __ 'in'i __ b:Expression 
-                            { return `:[${a}, ${lispBinary('∈',a,b)}]` } /
-// // switch to this after the Let instantiation bug is fixed in .testall
-// Let = 'Let'i __ a:(Symbol)|1..,comma| __ 'in'i __ b:Expression
-//                             { return letInSet(a,b) } /
+// Let = 'Let'i __ a:Symbol __ 'in'i __ b:Expression 
+//                             { return `:[${a}, ${lispBinary('∈',a,b)}]` } /
+// switch to this after the Let instantiation bug is fixed in .testall
+Let = 'Let'i __ a:(Symbol)|1..,comma| __ 'in'i __ b:Expression
+                            { return letInSet(a,b) } /
       // upgrade <be to a shorthand to allow environment bodies                      
       'Let'i __ a:SymbolSeq __ ('be'i __)? 'such'i __ 'that'i // __ b:Expression 
                             { return `:[${a}] <be` } /
@@ -840,6 +840,9 @@ Algebraic = Choose / Sum / Product / IndexedUnion / IndexedIntersect
               // allow 'class' to be case insensitive
               'class('i _ b:ExpressionSeq _')'  
                 { return `(class ${b})` } /
+              // convert 'pair' and 'triple' to 'tuple'
+              ('pair('/'triple('/'tuple(') _ b:ExpressionSeq _')' 
+                { return `(tuple ${b})` } /
               // everything else
               a:(Exp / Symbol / Parenthesized) '_'?
               b:( '('_ @ExpressionSeq _')' )+ 
