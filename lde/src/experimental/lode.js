@@ -126,6 +126,9 @@ global.tex = (s,opts)  => {
   }
 }
 
+// load the parser golden-snapshot test suite (used by the .parsertest command)
+import { runParserTests } from './parsers/parsertests.js'
+
 // load the Lurch to putdown parser precompiled for efficiency
 import { parse as lurchToPutdownTrace } from './parsers/lurch-to-putdown-trace.js'
 global.trace = (s, opts = {}) => {
@@ -271,6 +274,11 @@ global.compute = Algebrite.run
 // Run terminal commands from the Lode REPL
 global.exec = command => console.log(String(execSync(command)))
 global.execStr = command => String(execSync(command))
+// like exec, but stream the output live to the terminal as it is produced
+// (for long-running commands like test suites), ignoring stdin so the child
+// cannot swallow keystrokes intended for the Lode REPL
+global.execLive = command =>
+  execSync(command, { stdio: ['ignore', 'inherit', 'inherit'] })
 global.ls = (args='') => {
   const command = `ls -pC ${args}`
   console.log(
@@ -685,34 +693,45 @@ rpl.defineCommand( "compileparser", {
   }
 })
 
-// define the Lode .list command
+// define the Lode .parsertest command
 rpl.defineCommand( "parsertest", {
-  help: "Run the Lurch parser tests.",
-  action() { 
-    try { 
-      const s=lc(parse(loadStr('parsers/LurchParserTest')))
-      parseLines(parse,false)
-      console.log(`${itemPen('Parser Test:')} → ok`)
-    } catch (e) { 
-      console.log(xPen(`ERROR: Parser test failed.`)) 
+  help: "Run the parser golden-snapshot tests (options: --update, --verbose).",
+  action(args) {
+    // check that the whole multiline test document still builds an LC from
+    // its putdown output (the snapshot suite only checks the output string)
+    try {
+      lc(parse(loadStr('parsers/LurchParserTest')))
+      console.log(`${defaultPen('LurchParserTest (LC build):')} ${greencheck} ok`)
+    } catch (e) {
+      console.log(xPen(`✗ LurchParserTest putdown output no longer builds an LC`))
     }
-    try { 
-      parseLines(tex,false)
-      console.log(`${itemPen('Tex Parser Test:')} → ok`)
-    } catch (e) { 
-      console.log(xPen(`ERROR: Tex Parser test failed.`)) 
+    // compare both parsers' outputs on every test line to the snapshots
+    runParserTests( String(args).split(/\s+/).filter(Boolean) )
+    this.displayPrompt()
+  }
+})
+
+// define the Lode .ldetest command
+rpl.defineCommand( "ldetest", {
+  help: "Run the main LDE test suite (npm test in the lde folder).",
+  action() {
+    try {
+      execLive('cd ../.. && npm test')
+    } catch {
+      console.log(xPen('The LDE test suite reported errors.'))
     }
-    try { 
-      parseLines(lurchToPutdown,false,'LurchParserSetTests',{enableSets:true})
-      console.log(`${itemPen('Set Parser Test:')} → ok`)
-    } catch (e) { 
-      console.log(xPen(`ERROR: Parser test failed.`)) 
-    }
-    try { 
-      parseLines(lurchToTex,false,'LurchParserSetTests',{enableSets:true})
-      console.log(`${itemPen('Set Tex Parser Test:')} → ok`)
-    } catch (e) { 
-      console.log(xPen(`ERROR: Tex Parser test failed.`)) 
+    this.displayPrompt()
+  }
+})
+
+// define the Lode .webtest command
+rpl.defineCommand( "webtest", {
+  help: "Run the web UI test suite (npm test in the lurchmath folder).",
+  action() {
+    try {
+      execLive('cd ../../../lurchmath && npm test')
+    } catch {
+      console.log(xPen('The web UI test suite reported errors.'))
     }
     this.displayPrompt()
   }
