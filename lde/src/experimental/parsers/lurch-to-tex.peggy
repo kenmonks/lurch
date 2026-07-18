@@ -97,7 +97,7 @@
 
   // convert indexed products to tex
   const indexedProduct = (E,k,a,b) => {
-    a = a || 1
+    a = a || 0
     return `\\displaystyle\\prod_{${k}=${a}}^{${b}} ${E}`
   }
 
@@ -224,7 +224,7 @@
       cherry  : '🍒'        , blueberry: '🫐'           , star       : '\\star'       ,
       oplus   : '\\oplus'   , otimes   : '\\otimes'    , odot       : '\\odot'       ,
       infty   : '\\infty'   , infinity : '\\infty'     , rel        : '\\backsim'    ,
-      sim     : '\\sim'     , backsim  : '\\backsim' ,
+      sim     : '\\sim'     , backsim  : '\\backsim'   , lt         : '\\lt'         ,
       Union               : '\\bigcup'                     ,
       Intersect           : '\\bigcap'                     ,
       iff                 : '\\Leftrightarrow'             ,
@@ -400,7 +400,7 @@
   // replace phrases first
   const replacePhrases = s => {
     Phrases.forEach( p => {
-      const regex = new RegExp(p[0],'g')
+      const regex = new RegExp(p[0],'gi')
       s = s.replace(regex,` ${p[1]} ` )
     } )
     return shrink(s)
@@ -489,7 +489,7 @@
   // The same thing applies to binary operators like '⊕', '⊗','⊙', '★' in groups
   // or rings.
   input = input.replace(/'~'/g, '(~)')
-  input = input.replace(/'≈'/g, '(approx)')
+  input = input.replace(/'≈'/g, '(≈)')
 
   // Optional Given Colons
   //
@@ -608,8 +608,10 @@ LC = Meta / Given / Environment / Declaration / Expression
 ///////////////////////////////////////////////////////////////////////////////
 // Meta
 //
-// Unprocessed putdown notation (cannot include // comments)
-Putdown = '«' @$([^»]*) '»'
+// Unprocessed putdown notation (cannot include // comments and reverts unicode
+// braces to ordinary ones)
+Putdown = '«' a:$([^»]*) '»' 
+  { return a.replaceAll('｛','{').replaceAll('｝','}') }
 // Insert a comment that gets echoed in Lode
 Comment = ( '%' / 'Comment'i ) __ a:StringLiteral
             { return a.replace(/"([^"]*)"/,"\\text{``$1''}") } / 
@@ -845,7 +847,7 @@ Set = RelativeComp
 
                  BigUnionName '(' _ f:Set comma
                  k:Symbol comma  a:Set _ ')'
-                     { return summation(f,k,a) }
+                     { return union(f,k,a) }
 
   BigIntersectName = 'Intersect'/'Cap'/'bigcap'i
   IndexedIntersect = BigIntersectName __ k:Symbol __ 'in'_x a:Set __ 'of' __ f:Set
@@ -1002,9 +1004,9 @@ Multinomial = 'multinomial('i _ a:Expression comma b:Expression _')'
             { return `\\left(${a},${b}\\right)` }
 // Floor and Ceiling
 Floor = 'floor('i _ a:Expression _')'
-            { return `\\left\\lfloor${a}\\right\\rfloor` }
+            { return `\\left\\lfloor ${a}\\right\\rfloor` }
 Ceiling = 'ceiling('i _ a:Expression _')'
-            { return `\\left\\lceil${a}\\right\\rceil` }
+            { return `\\left\\lceil ${a}\\right\\rceil` }
 
 // For convenience we define special Symbols beginning with '@' so that @P(k)
 // becomes (λ P k) and then replace λ with "LDE EFA" as a shortcut in
@@ -1061,14 +1063,15 @@ Prefix =  // LDE EFA's first
             { return `${a}^{-1}` } /
           // product of two or more matrices (to support Algebrite)
           'dot('i _ a:Expression|2..,comma| _')'
-            { return a.join('\\cdot') } /
+            { return a.join('\\cdot ') } /
           // format 'abs' as | | 
           'abs(' _ b:ExpressionSeq _ ')'
             { return `\\left| ${b} \\right|` } /
           // format 'product(E,k,a,b)' as an indexed product (Algebrite compatible)
           'product' '(' _ E:Expression comma 
-                          k:Symbol comma a:Expression comma b:Expression _ ')'
-            { return `\\displaystyle\\prod_{${k}=${a}}^{${b}} ${E}` } /
+                          k:Symbol comma a:(@Algebraic comma)? b:Expression _ ')'
+            { a = a || 0
+              return `\\displaystyle\\prod_{${k}=${a}}^{${b}} ${E}` } /
           // specifically handle this rule
           'AlgebraRule(NoMatrixOps)' 
              { return '\\text{algebra rule (with no matrix operations)}'} /
@@ -1173,7 +1176,7 @@ Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { re
 ReservedWord  = $(
     'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' / 'lt' /
     'not' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
-    'Cup' / 'Cap' / 'Union' / 'Intersect' / 'bigcup'i / 'bigcup'i /
+    'Cup' / 'Cap' / 'Union' / 'Intersect' / 'bigcup'i / 'bigcap'i /
     'cross' / 'subset' / 'setminus'i / 'circ' / 'wedge' / 'vee' /
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' /
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / '^')

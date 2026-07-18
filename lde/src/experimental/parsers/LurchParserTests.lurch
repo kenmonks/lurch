@@ -428,3 +428,238 @@ x sim y
 x~y~z
 x ~y~ z
 x ~ y ~ z
+
+////////////////////////////////////////////////////////////////////
+// Extended tests (2026-07), used with the golden-snapshot suite in
+// parsertests.js.  Every line below must parse in BOTH the putdown and
+// tex parsers so that the .parsertest command in Lode stays green.
+// A few tex outputs are known to be imperfect (e.g. floor, ceiling,
+// dot); they are included anyway so that any change is detected.
+
+// symbols that begin with reserved words
+formula
+android
+orbit
+into
+summit
+starry
+iffy
+notion
+intersection
+cupcake
+forever
+sums
+
+// renamed symbols and special constants
+NN
+ZZ
+QQ
+RR
+CC
+II
+OO
+infty
+infinity
+pi
+alpha
+lambda
+sigma(n)
+𝒫(A)
+contradiction
+→←
+
+// unicode operator variants
+P ⇒ Q
+P ⇔ Q
+P ∧ Q
+P ∨ Q
+¬P
+¬(P ∧ Q)
+A ∩ B
+A ∪ B
+A ∖ B
+A × B
+A ⊆ B
+x ∈ A ∪ B
+f ∘ g
+a ≤ b
+a ≡ b
+
+// propositional precedence
+P and Q or R
+P or Q and R
+P implies Q implies R
+P iff Q iff R
+P and Q implies R or S
+not P and not Q
+P wedge Q
+P vee Q
+neg P
+neg (P or Q)
+
+// quantifier variants
+for every x.P(x)
+for each x.P(x)
+there exists x.P(x)
+exists! x.P(x)
+exists unique x.P(x)
+∃! x.P(x)
+forall x in A.P(x)
+exists x in NN.P(x)
+exists! x in A.P(x)
+forall x in A cup B.P(x)
+forall x.exists y in A.x = y
+∀ x ∈ A.∃ y ∈ B.x leq y
+
+// bindings and maps
+x mapsto x^2
+x ↦ x^2
+f:A × B → C
+g:NN → NN cup A
+
+// relations
+P proves Q
+P ⊢ Q
+Gamma vdash P
+S is a partition of A
+'~' is a relation on A
+'~' is an equivalence relation
+a cong mod m to b
+A subset B subset C
+x neq y
+x ne y
+x ≠ y
+x ∉ A ∩ B
+n divides m
+n is an integer
+n is not prime
+x is not a widget
+they are not friends
+x is the answer
+epsilon is a "positive real number"
+
+// transitive chains
+x = y = z
+x leq y lt z
+0 lt 1 leq 2 = 2
+x = y by algebra
+x = y = z by substitution
+x^2-1 = (x-1) cdot (x+1) by algebra
+x = y // an expository comment
+
+// more sets
+A cap B cup C
+A times B times C
+x cross y
+f circ g circ h
+(g circ f)(x)
+(g∘f)⁻(x)
+A'
+(A cup B)'
+A' cap B
+bigcup k in NN of A(k)
+Cup k in NN of A(k)
+Union k in NN of A(k)
+Cap k in NN of A(k)
+Intersect k in NN of A(k)
+Union of A(k) for k in NN
+Intersect of A(k) for k in NN
+x ∈ ｛1,2,3｝
+｛1,2,3｝
+｛ n : n in NN ｝
+
+// tuples and matrices
+[1,2,3]
+[x, y+1]
+[1,2]'
+[[1,2],[3,4]]
+[[1,2],[3,4]]'
+langle x, y rangle
+
+// more algebra
+n+1 choose k
+(n choose k)
+n choose k+1
+x^(-1)
+f^(-1)(x)
+2^(x+1)
+sin^2(x)
+sqrt(2)
+sqrt(x+1)
+floor(x)
+ceiling(x)
+multinomial(a,b)
+inv(A)
+dot(A,B)
+tuple(1,2,3)
+abs(-3)
+product(k^2,k,1,n)
+x star y star z
+x!
+(n+1)!
+2^n!
+f(n)!
+1/2 + 1/3
+-(x+y)
+-x^2
+x^2-2 cdot x+1
+(x+y)^2/(x-y)
+sum k=1 to n of k^3
+sum(1/k,k,1,n)
+int x=0 to 1 of x^2
+int(sin(x),x)
+paren(x+1)
+
+// more declarations
+Declare leq
+Declare and, or, not
+Declare +, -, cdot, /
+Declare ^, =, lt
+declare union, intersect, subset
+Let epsilon in RR
+Let x be such that x in A
+Let x such that x in A
+Let u, v, w
+x in A for some x in NN
+a+b=c for some a, b in NN
+P(a,b) for some a,b
+
+// meta: putdown escapes, labels, refs, shorthands
+«(+ 1 2)»
+«[x y , (P x)]»
+label(thm1)
+by(thm1)
+ref(claim1)
+by "the first rule"
+Axiom: { P }
+Definition: { P }
+Theorem: { P }
+Corollary: { P }
+Proof: { P }
+Rules: { {P} {Q} }
+CasesRule: { P }
+SubsRule: { P }
+Recall { P }
+P ≡ Q
+{ :P Q } equiv { :Q P }
+
+// sequences of LCs on one line
+P Q R
+:P :Q
+{ :{ :P Q } { :Q P } }
+Assume x in A, x in B
+
+// function application and subscripts
+f(x+1,g(y))
+id_(A)(x)
+x_(0)
+x_(n+1)
+(f)(x)
+@P(k)
+@P(f(x))
+pair(1,2)
+triple(1,2,3)
+class(a)
+class(a,'~')
+set(1,2,3)
+set(x : x in A)
