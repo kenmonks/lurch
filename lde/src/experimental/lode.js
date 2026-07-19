@@ -697,6 +697,8 @@ rpl.defineCommand( "compileparser", {
 rpl.defineCommand( "parsertest", {
   help: "Run the parser golden-snapshot tests (options: --update, --verbose).",
   action(args) {
+    if (!args) console.log(commentPen(`\n(Use option ${itemPen('--update')} to certify the current changes)\n`))
+
     // check that the whole multiline test document still builds an LC from
     // its putdown output (the snapshot suite only checks the output string)
     try {

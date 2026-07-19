@@ -606,6 +606,22 @@ x^2-2 cdot x+1
 (x+y)^2/(x-y)
 sum k=1 to n of k^3
 sum(1/k,k,1,n)
+
+// summation over a set (sumOver)
+sum k in S of k^2
+sum k in A cup B of f(k)
+sum k in NN of 1/k^2
+2 cdot sum k in S of k^2
+sum k in S of k^2 + sum j in T of j^3
+(sum k in S of k) = n
+sum x in ｛1,2,3｝ of x
+sum i in I of sum j in J of x(i,j)
+sum of k^2 for k in I
+sum k^2 for k in I
+sum of f(i) for i in A cap B
+sum of 1/k for k in NN
+2 cdot sum of k for k in I + 1
+
 int x=0 to 1 of x^2
 int(sin(x),x)
 paren(x+1)

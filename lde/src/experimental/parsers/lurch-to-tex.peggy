@@ -107,7 +107,12 @@
     return `\\displaystyle\\sum_{${k}=${a}}^{${b}} ${f}`
   }
 
-  // convert summations to tex
+  // convert summations over a set to tex
+  const sumOver = (f,k,S) => {
+    return `\\displaystyle\\sum_{${k}\\in ${S}} ${f}`
+  }
+
+  // convert integrals to tex
   const integral = (f,x,a,b) => {
     if (a) return `\\displaystyle\\int_{${a}}^{${b}} ${f}\\,\\mathrm{d}${x}`
     return `\\displaystyle\\int ${f}\\,\\mathrm{d}${x}`
@@ -906,7 +911,13 @@ Algebraic = Choose / Sum / Product / Summation / Integral / IndexedUnion / Index
                 'sum'i __ ('of'i __)? f:Product __
                 ('as'i __ / 'for'i__) k:Symbol __ ('goes'i __)?
                 a:('from' __ @Algebraic __)? 'to'i __ b:Algebraic
-                    { return summation(f,k,a,b) } 
+                    { return summation(f,k,a,b) }  /
+
+                'sum'i __ k:Symbol __ 'in' __ S:Set __ 'of' __ f:Product 
+                    { return sumOver(f,k,S) } /
+
+                'sum'i __ ('of' __)? f:Product __ 'for' __ k:Symbol __ 'in' __ S:Set
+                    { return sumOver(f,k,S) }
       
     // definite integrals are similar to summations, but we don't have to fuss about 
     // their precedence relative to addition because they have a closing delimiter

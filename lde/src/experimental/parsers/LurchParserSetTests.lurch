@@ -53,6 +53,11 @@ P({1,2})
 𝒫({1,2})
 forall x in {1,2,3}.x leq 3
 
+// summation over a set literal (sumOver)
+sum k in {1,2,3} of k^2
+sum x in {1,2} union {3} of x^2
+sum of x^2 for x in {1,2,3}
+
 // set builder
 { x : x^2 leq 2 }
 x in {n : n is even}
