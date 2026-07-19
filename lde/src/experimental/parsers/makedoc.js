@@ -90,6 +90,8 @@ const syntax =
   'int x^2 wrt x',
   'int(x^2,x)'                       ],`\\int x^2\\,\\mathrm{d}x`],
 [['Fib_(n+2)'                        ],`F_{n+2}`],
+[['index(G,K)',
+  '[G:H]'                            ],`\left[G\mathbin{:}K\right]`],
 
 'Set Theory',
 [['x in A', 'x∈A'                    ],`x\\in A` ],
@@ -98,6 +100,8 @@ const syntax =
 [['{ p:p is prime}', 
   'set(p:p is prime)'                ],`\\left\\{\\,a,b,c\\,\\right\\}` ],
 [['A subset B', 'A subseteq B', 'A⊆B'],`A\\subseteq B`],
+[['A subgroup B', 
+  'A sqsubseteq B', 'A⊑B'            ],`A\\sqsubseteq B`],
 [['A cup B', 'A union B', 'A∪B'      ],`A\\cup B`],
 [['A cap B', 'A intersect B', 'A∩B'  ],`A\\cap B`],
 [['A setminus B', 'A∖B'              ],`A\\setminus B`],

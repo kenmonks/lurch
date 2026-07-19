@@ -230,6 +230,7 @@
       oplus   : '\\oplus'   , otimes   : '\\otimes'    , odot       : '\\odot'       ,
       infty   : '\\infty'   , infinity : '\\infty'     , rel        : '\\backsim'    ,
       sim     : '\\sim'     , backsim  : '\\backsim'   , lt         : '\\lt'         ,
+      subgroup            : '\\sqsubseteq'                 , 
       Union               : '\\bigcup'                     ,
       Intersect           : '\\bigcap'                     ,
       iff                 : '\\Leftrightarrow'             ,
@@ -373,14 +374,15 @@
     [ '(?<![a-zA-Z0-9])triple\\('  , 'tuple('             ]
   ]
 
-  const UnicodeNames = {
+  const UnicodeNames = { 
     '⋅' : '*'          ,  '≤' : 'leq'       , '¬' : 'neg'    , '→' : 'to'        ,
     '←' : 'from'       ,  '⇒' : 'implies'   , '⇔' : 'iff'    , '∩' : 'intersect' ,
     '∪' : 'union'      ,  '×' : 'cross'     , '∈' : 'in'     , '⊆' : 'subset'    ,
     '∖' : 'setminus'   ,  '∘' : 'circ'      , '∧' : 'wedge'  , '∨' : 'vee'       ,
     '≡' : 'equiv'      ,  '↦' : 'mapsto'    , '≈' : 'approx' , '∀' : 'forall'    ,
     '∃' : 'exists'     ,  '⟨' : 'langle'    , '⟩' : 'rangle' , '➤' : 'comment'   ,
-    '°' : 'complement' ,  '≅' : 'cong'      , '\\' : ' '     , '!' : 'factorial'
+    '°' : 'complement' ,  '≅' : 'cong'      , '\\' : ' '     , '!' : 'factorial' ,
+    '⊑' : 'subgroup'
   }
 
   const internalNames = {
@@ -392,7 +394,7 @@
     'in'        : '∈' , 'Sum'      : 'sum', '\\'     : ' '  , 'fear'         : 'fears' ,
     'complement': '°' , 'intersect': '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
     'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'star'         : '★'     ,
-    'neg'       : '¬'
+    'neg'       : '¬' , 'subgroup' : '⊑'
   }
 
   // for use in Declare's, look up the internal name of a reserved word or
@@ -427,7 +429,7 @@
            .replace(/𝒫/g  , ' powerset' ) // usually used as a function so no following space
       // now replace the given unicode characters that do not appear in strings or
       // putdown
-      const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'
+      const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆⊑∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'
       const regex = new RegExp(`(?<!«[^«»]*)(?<!^[^"]*"[^"]*)${chars}(?![^«»]*»)`,'mg')
       const ans = shrink(t.replace(regex, c => { return ` ${UnicodeNames[c]} ` } ) )
       return ans
@@ -776,7 +778,9 @@ Relations = Turnstile /Maps / Partition / Congruent / Subset / ElementOf / NotEl
                b:(Binding/RelArg)
                  { return `${a}\\underset{${c}}{\\equiv}${b}` }
   Subset     = a:RelArg|2..,_('subset'/'subseteq')_x|
-                 { return a.join('\\subseteq ') }
+                 { return a.join('\\subseteq ') } /
+               a:RelArg|2..,_('subgroup'/'sqsubseteq')_x|
+                 { return a.join('\\sqsubseteq ') }
   NotEltOf   = a:RelArg _'notin'_x b:RelArg
                  { return `${a}\\notin ${b}` }
   ElementOf  = a:RelArg _'in'_x b:RelArg
@@ -1065,8 +1069,15 @@ Prefix =  // LDE EFA's first
             { return tuple(a,'') } /
           // allow 'class' to be case insensitive (one or two args)
           'class('i _ a:Expression _')'  { return `\\left[${a}\\right]` } /
-          'class('i _ a:Expression comma b:Expression')'
+          'class('i _ a:Expression comma b:Expression _ ')'
             { return `\\left[${a}\\right]_{${b}}` } /
+          // index of a subgroup in a group
+          'index(' _ a:Expression comma b:Expression _ ')' 
+            { return `\\left[${a}\\mathbin{:}${b}\\right]` } /
+          // avariant of index (not prefix notation, but we put it here because
+          // its related)
+          '[' _ a:Expression _ ':' _ b:Expression _ ']' 
+            { return `\\left[${a}\\mathbin{:}${b}\\right]` } /
           // the inverse of a square matrix (to support Algebrite, but you can
           // apply it to any expression, keeping in mind that it assumes
           // parentheses are not required before applying the exponent
@@ -1127,8 +1138,8 @@ Atomic = Parenthesized / StringLiteral / // EquivalenceClass
 //   '[' a:Expression comma b:'~' ']'    { return `\\left[${a}\\right]_{\\sim}` }
 // matrices - semantically they are just tuples of tuples, but we format them in 2d
 Matrix = '['_ a:_row_|..,comma| _']' b:"'"? !alphanum
-         { if (!isRectangular(a)) error("Matrix rows must all have the same length", location()) 
-          return matrix(a,b) }
+           { if (!isRectangular(a)) error("Matrix rows must all have the same length", location()) 
+            return matrix(a,b) }
     // this next rule doesn't return a tex string!  It just returns the js array of
     // tex strings for a row or column of a matrix for use with the Matrix Rule
     // above.         
@@ -1137,9 +1148,9 @@ Matrix = '['_ a:_row_|..,comma| _']' b:"'"? !alphanum
 
 // tuples - a optional trailing tick mark transposes the output
 Tuple = '['_ a:Expression|..,comma| _']' b:"'"? !alphanum
-        { return tuple(a,b) } /
+          { return tuple(a,b) } /
         'langle'_x a:ExpressionSeq _'rangle' !alphanum
-        { return tuple(a,'') }
+          { return tuple(a,'') }
 // sets
 SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
                  { return `\\left\\{\\,${a}:\\,${b}\\right\\}` } /
@@ -1149,12 +1160,12 @@ SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
 // don't need them.  Do summations first because of the precedence of products
 // vs summation
 Parenthesized = '(' _ a:Summation _ ')' {
-                return `\\left(${a}\\right)` } /
+                  return `\\left(${a}\\right)` } /
                 // some things come with their own, so don't need extras
                 '(' _ a:(Choose/Multinomial/Integral/Prefix) _ ')' { return a  } /
                 '(' _ a:Expression _ ')' {
-                // we have to check for ~ as a special case (see above)
-                return (a === '\\sim') ? a : `\\left(${a}\\right)` }
+                  // we have to check for ~ as a special case (see above)
+                  return (a === '\\sim') ? a : `\\left(${a}\\right)` }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Numbers

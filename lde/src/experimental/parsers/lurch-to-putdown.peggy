@@ -193,7 +193,8 @@
     '∖' : 'setminus'   ,  '∘' : 'circ'      , '∧' : 'wedge'  , '∨' : 'vee'       ,
     '≡' : 'equiv'      ,  '↦' : 'mapsto'    , '≈' : 'approx' , '∀' : 'forall'    ,
     '∃' : 'exists'     ,  '⟨' : 'langle'    , '⟩' : 'rangle' , '➤' : 'comment'   ,
-    '°' : 'complement' ,  '≅' : 'cong'      , '\\': ' '      , '!' : 'factorial' 
+    '°' : 'complement' ,  '≅' : 'cong'      , '\\': ' '      , '!' : 'factorial' ,
+    '⊑' : 'subgroup'
   }
   
   const internalNames = {
@@ -206,7 +207,8 @@
     'complement': '°' , 'intersect': '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
     'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'cross'        : '×'     ,
     'star'      : '★' , 'division' : '/'  , 'neg'    : '¬'  , 'oplus'        : '⊕'     ,
-    'otimes'    : '⊗' , 'odot'     : '⊙'  , 'vdash'  : '⊢'  , 'proves'       : '⊢'
+    'otimes'    : '⊗' , 'odot'     : '⊙'  , 'vdash'  : '⊢'  , 'proves'       : '⊢'     ,
+    'subgroup'  : '⊑'
   }
 
   // for use in Declare's, look up the internal name of a reserved word or
@@ -236,7 +238,7 @@
          .replace(/𝒫/g  , ' powerset' ) // usually used as a function so no following space
     // now replace the given unicode characters that do not appear in strings or
     // putdown
-    const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'      
+    const chars = '[⋅≤¬→←⇒⇔∩∪×∈⊆⊑∖∘∧∨≡↦≈∀∃⟨⟩➤°!⁻≅\\\\]'      
     const regex = new RegExp(`(?<!«[^«»]*)(?<!^[^"]*"[^"]*)${chars}(?![^«»]*»)`,'mg')
     const ans = shrink(s.replace(regex, c => { return ` ${UnicodeNames[c]} ` } ) )
     return ans
@@ -572,7 +574,9 @@ Relations = Turnstile / Maps / Partition / Congruent / Subset / ElementOf / NotE
                b:(Binding/RelArg)
                  { return lispSeq('≅',[a,b,c]) }              
   Subset     = a:RelArg|2..,_('subset'/'subseteq')_x|  
-                 { return lispSeq('⊆',a) }
+                 { return lispSeq('⊆',a) } /
+               a:RelArg|2..,_('subgroup'/'sqsubseteq')_x|  
+                 { return lispSeq('⊑',a) }  
   NotEltOf   = a:RelArg _'notin'_x b:RelArg        
                  { return `(¬ ${lispBinary('∈',a,b)})` }
   ElementOf  = a:RelArg _'in'_x b:RelArg           
@@ -850,6 +854,9 @@ Algebraic = Choose / Sum / Product / IndexedUnion / IndexedIntersect
               // allow 'class' to be case insensitive
               'class('i _ b:ExpressionSeq _')'  
                 { return `(class ${b})` } /
+              // avariant of index that is not prefix notation, but it can also be entered as simply 'index(a,b)' which doesn't need a special rule
+              '[' _ a:Expression _ ':' _ b:Expression _ ']' 
+                 { return `(index ${a} ${b})` } /
               // convert 'pair' and 'triple' to 'tuple'
               ('pair('/'triple('/'tuple(') _ b:ExpressionSeq _')' 
                 { return `(tuple ${b})` } /
