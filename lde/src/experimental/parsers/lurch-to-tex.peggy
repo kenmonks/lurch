@@ -231,6 +231,8 @@
       infty   : '\\infty'   , infinity : '\\infty'     , rel        : '\\backsim'    ,
       sim     : '\\sim'     , backsim  : '\\backsim'   , lt         : '\\lt'         ,
       subgroup            : '\\sqsubseteq'                 , 
+      sqsubseteq          : '\\sqsubseteq'                 , 
+      subseteq            : '\\subseteq'                   , 
       Union               : '\\bigcup'                     ,
       Intersect           : '\\bigcap'                     ,
       iff                 : '\\Leftrightarrow'             ,
@@ -1188,7 +1190,13 @@ Natural = $( [1-9][0-9]* / '0' )
 Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { return texsymbol(a) } /
   StringLiteral / !(ReservedWord !alphanum) a:([a-z]i alphanum* )
   { let b = texsymbol(a[0]+a[1].join(''))
-    return (b.length>1 && !b.startsWith('\\')) ? `\\text{${b}}` : b }
+    return (b.length>1 && !b.startsWith('\\')) ? `\\text{${b}}` : b } /
+  // these reserved words should come after the generic rule for symbols so they 
+  // don't capture a symbol prefixed by one of them, e.g., 'starry'
+  'star'     { return '\\star'  }      / 'oplus'          { return '\\oplus'  }   /
+  'otimes'   { return '\\otimes' }     / 'odot'           { return '\\odot'  }    /
+  'subset'   { return '\\subseteq' }   / 'subseteq'       { return '\\subseteq' } /
+  'subgroup' { return '\\sqsubseteq' } / 'sqsubseteq'     { return '\\sqsubseteq'  } 
 
 // Reserved Words
 //
@@ -1199,7 +1207,8 @@ ReservedWord  = $(
     'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' / 'lt' /
     'not' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
     'Cup' / 'Cap' / 'Union' / 'Intersect' / 'bigcup'i / 'bigcap'i /
-    'cross' / 'subset' / 'setminus'i / 'circ' / 'wedge' / 'vee' /
+    'cross' / 'subset' / 'subseteq' / 'setminus'i / 'circ' / 'wedge' / 'vee' /
+    'subgroup' / 'sqsubseteq' /
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' /
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / '^')
 

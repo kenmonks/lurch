@@ -182,17 +182,17 @@
   }
   
   const internalNames = {
-    'equiv'     : '≡' , 'forall'   : '∀'  , 'exists' : '∃'  , 'existsUnique' : '∃!'    ,
-    'iff'       : '⇔' , 'implies'  : '⇒'  , 'vee'    : 'or' , 'wedge'        : 'and'   ,
-    'not'       : '¬' , 'setminus' : '∖'  , 'subset' : '⊆'  , 'subseteq'     : '⊆'     ,
-    'cong'      : '≅' , 'leq'      : '≤'  , 'lt'     : '<'  , 'factorial'    : '!'     ,
-    'divides'   : '|' , 'cdot'     : '⋅'  , '*'      : '⋅'  , 'love'         : 'loves' ,
-    'in'        : '∈' , 'Sum'      : 'sum', '\\'     : ' '  , 'fear'         : 'fears' ,
-    'complement': '°' , 'intersect': '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
-    'cup'       : '∪' , 'comp'     : '∘'  , 'circ'   : '∘'  , 'cross'        : '×'     ,
-    'star'      : '★' , 'division' : '/'  , 'neg'    : '¬'  , 'oplus'        : '⊕'     ,
-    'otimes'    : '⊗' , 'odot'     : '⊙'  , 'vdash'  : '⊢'  , 'proves'       : '⊢'     ,
-    'subgroup'  : '⊑'
+    'equiv'     : '≡' , 'forall'     : '∀'  , 'exists' : '∃'  , 'existsUnique' : '∃!'    ,
+    'iff'       : '⇔' , 'implies'    : '⇒'  , 'vee'    : 'or' , 'wedge'        : 'and'   ,
+    'not'       : '¬' , 'setminus'   : '∖'  , 'subset' : '⊆'  , 'subseteq'     : '⊆'     ,
+    'cong'      : '≅' , 'leq'        : '≤'  , 'lt'     : '<'  , 'factorial'    : '!'     ,
+    'divides'   : '|' , 'cdot'       : '⋅'  , '*'      : '⋅'  , 'love'         : 'loves' ,
+    'in'        : '∈' , 'Sum'        : 'sum', '\\'     : ' '  , 'fear'         : 'fears' ,
+    'complement': '°' , 'intersect'  : '∩'  , 'union'  : '∪'  , 'cap'          : '∩'     ,
+    'cup'       : '∪' , 'comp'       : '∘'  , 'circ'   : '∘'  , 'cross'        : '×'     ,
+    'star'      : '★' , 'division'   : '/'  , 'neg'    : '¬'  , 'oplus'        : '⊕'     ,
+    'otimes'    : '⊗' , 'odot'       : '⊙'  , 'vdash'  : '⊢'  , 'proves'       : '⊢'     ,
+    'subgroup'  : '⊑' , 'sqsubseteq' : '⊑'
   }
 
   // for use in Declare's, look up the internal name of a reserved word or

@@ -90,8 +90,8 @@ const syntax =
   'int x^2 wrt x',
   'int(x^2,x)'                       ],`\\int x^2\\,\\mathrm{d}x`],
 [['Fib_(n+2)'                        ],`F_{n+2}`],
-[['index(G,K)',
-  '[G:H]'                            ],`\left[G\mathbin{:}K\right]`],
+[['index(G,H)',
+  '[G:H]'                            ],`\left[G\mathbin{:}H\right]`],
 
 'Set Theory',
 [['x in A', 'x∈A'                    ],`x\\in A` ],

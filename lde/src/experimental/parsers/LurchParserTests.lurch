@@ -626,6 +626,24 @@ int x=0 to 1 of x^2
 int(sin(x),x)
 paren(x+1)
 
+// subgroup relation
+H subgroup G
+H sqsubseteq G
+H ⊑ G
+H ⊑ K ⊑ G
+H subgroup G implies e in H
+Declare subgroup
+
+// index of a subgroup in a group
+index(G,H)
+[G:H]
+[G : H]
+[G:H] = n
+n = [G:H] cdot [H:K]
+[G:H]!
+abs([G:H])
+[f:A to B]
+
 // more declarations
 Declare leq
 Declare and, or, not

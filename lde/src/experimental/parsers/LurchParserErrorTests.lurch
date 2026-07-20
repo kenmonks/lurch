@@ -29,3 +29,7 @@ Rule {
 // malformed numbers
 0.5.2
 x..y
+// the index bracket notation is strictly binary
+[G:H:K]
+// exponents other than atomics require parentheses, e.g. 2^([G:H])
+2^[G:H]
