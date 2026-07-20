@@ -404,8 +404,8 @@ const numericToCAS = e => {
  *
  * @template T
  * @param {T[]} arr - The input array
- * @param {(x: T) => boolean} pred - Predicate function
- * @returns {[matches: T[], nonMatches: T[]]} A tuple of two arrays
+ * @param {function(T): boolean} f - Predicate function
+ * @returns {Array.<T[]>} A pair of arrays, `[matches, nonMatches]`
  */
 const partition = function (arr,f) {
   const yes = [], no = []

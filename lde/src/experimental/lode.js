@@ -749,7 +749,7 @@ rpl.defineCommand( "makedocs", {
       execStr('rm -rf docs && jsdoc ./* -d docs -c utils/jsdoc-conf.json -u tutorials/ && node utils/post-docs')
       console.log(defaultPen('...done'))
     } catch (err) {
-      console.log('Error building experimental docs.')
+      console.log('Error building experimental docs.\n' + String(err.stderr || err.message))
     }
     try {
       console.log(defaultPen('Building lde docs...')) 
@@ -757,7 +757,7 @@ rpl.defineCommand( "makedocs", {
       execStr('cd ../.. && npm run docs')
       console.log(defaultPen('...done'))
     } catch (err) {
-      console.log('Error building lde docs.')
+      console.log('Error building lde docs.\n' + String(err.stderr || err.message))
     }
     try {
       console.log(defaultPen('Building lurchmath docs...')) 
@@ -765,7 +765,7 @@ rpl.defineCommand( "makedocs", {
       execStr('cd ../../../lurchmath && npm run docs')
       console.log(defaultPen('...done'))
     } catch (err) {
-      console.log('Error building lurchmath docs.')
+      console.log('Error building lurchmath docs.\n' + String(err.stderr || err.message))
     }
     this.displayPrompt()
   }
