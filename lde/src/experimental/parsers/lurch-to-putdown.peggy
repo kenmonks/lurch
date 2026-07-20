@@ -573,7 +573,7 @@ Relations = Turnstile / Maps / Partition / Congruent / Subset / ElementOf / NotE
                a:(Binding/RelArg) _'cong mod'i_x c:(Binding/RelArg) _'to'_x 
                b:(Binding/RelArg)
                  { return lispSeq('≅',[a,b,c]) }              
-  Subset     = a:RelArg|2..,_('subset'/'subseteq')_x|  
+  Subset     = a:RelArg|2..,_('subseteq'/'subset')_x|
                  { return lispSeq('⊆',a) } /
                a:RelArg|2..,_('subgroup'/'sqsubseteq')_x|  
                  { return lispSeq('⊑',a) }  
@@ -937,7 +937,7 @@ Symbol "Symbol" =
   // don't capture a symbol prefixed by one of them, e.g., 'starry'
   'star'          { return '★'  }  / 'oplus'          { return '⊕'  } /
   'otimes'        { return '⊗'  }  / 'odot'           { return '⊙'  } /
-  'subset'        { return '⊆'  }  / 'subseteq'       { return '⊆'  } /
+  'subseteq'      { return '⊆'  }  / 'subset'         { return '⊆'  } /
   'subgroup'      { return '⊑'  }  / 'sqsubseteq'     { return '⊑'  } 
 
 // Reserved Words
@@ -948,7 +948,7 @@ Symbol "Symbol" =
 ReservedWord  = $(
     'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' /
     'not' / 'neg' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
-    'cross' / 'subset' / 'setminus'i / 'circ' / 'comp' / 'wedge' / 'vee' / 
+    'cross' / 'subseteq' / 'subset' / 'setminus'i / 'circ' / 'comp' / 'wedge' / 'vee' /
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' / 
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / 
     'sum'i / 'to' / 'of' / 'from' / 'as' / 'for' / '^' / 'division' /

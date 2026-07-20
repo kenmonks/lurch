@@ -634,6 +634,15 @@ H ⊑ K ⊑ G
 H subgroup G implies e in H
 Declare subgroup
 
+// subset and subgroup words as first-class relation symbols
+A subseteq B
+A subseteq B subseteq C
+subset is transitive
+subseteq is transitive
+subgroup is transitive
+sqsubseteq is transitive
+Declare subseteq, sqsubseteq
+
 // index of a subgroup in a group
 index(G,H)
 [G:H]

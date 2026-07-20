@@ -779,7 +779,7 @@ Relations = Turnstile /Maps / Partition / Congruent / Subset / ElementOf / NotEl
                a:(Binding/RelArg) _'cong mod'i_x c:(Binding/RelArg) _'to'_x
                b:(Binding/RelArg)
                  { return `${a}\\underset{${c}}{\\equiv}${b}` }
-  Subset     = a:RelArg|2..,_('subset'/'subseteq')_x|
+  Subset     = a:RelArg|2..,_('subseteq'/'subset')_x|
                  { return a.join('\\subseteq ') } /
                a:RelArg|2..,_('subgroup'/'sqsubseteq')_x|
                  { return a.join('\\sqsubseteq ') }
@@ -1195,7 +1195,7 @@ Symbol "Symbol" =  a:('contradiction' / '✔︎' / '✗' / '⁉︎' / '~' ) { re
   // don't capture a symbol prefixed by one of them, e.g., 'starry'
   'star'     { return '\\star'  }      / 'oplus'          { return '\\oplus'  }   /
   'otimes'   { return '\\otimes' }     / 'odot'           { return '\\odot'  }    /
-  'subset'   { return '\\subseteq' }   / 'subseteq'       { return '\\subseteq' } /
+  'subseteq' { return '\\subseteq' }   / 'subset'         { return '\\subseteq' } /
   'subgroup' { return '\\sqsubseteq' } / 'sqsubseteq'     { return '\\sqsubseteq'  } 
 
 // Reserved Words
@@ -1207,7 +1207,7 @@ ReservedWord  = $(
     'declare'i / 'existsUnique' / 'forall' / 'exists' / '*' / 'leq' / 'lt' /
     'not' / 'to' / 'from' / 'implies' / 'iff' / 'intersect' / 'union' /
     'Cup' / 'Cap' / 'Union' / 'Intersect' / 'bigcup'i / 'bigcap'i /
-    'cross' / 'subset' / 'subseteq' / 'setminus'i / 'circ' / 'wedge' / 'vee' /
+    'cross' / 'subseteq' / 'subset' / 'setminus'i / 'circ' / 'wedge' / 'vee' /
     'subgroup' / 'sqsubseteq' /
     'equiv' / 'mapsto' / 'approx' / 'langle' / 'rangle' / 'complement' /
     'in' / 'and' / 'or' / '=' / '<' / '+' / '*' / '|' / '-' / '^')
