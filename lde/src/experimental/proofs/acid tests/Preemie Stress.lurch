@@ -1,0 +1,110 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Preemie Stress Tests
+//
+// Systematic stress tests of the preemie check and declaration-sensitive
+// atom identity on SUPPORTED input (no declarations inside declaration
+// bodies).  These are the concrete versions of the configurations that the
+// former preemie-redesign notes listed as required adversarial tests; with
+// this file they are certified against the current implementation:
+//
+//   1. nested Lets, with a conclusion using variables from both levels;
+//   2. a typed Let whose (expression) body mentions an outer Let variable;
+//   3. the mixed omitted/active state: a target inside its own Let, with a
+//      shared outer Let ignored while an accessible sibling's typed Let -
+//      whose body mentions the outer variable - remains active;
+//   4. sibling equivalent Let-environments, including an accessible earlier
+//      Let-environment satisfying a rule's Let-environment premise;
+//   5. a target valid for a legitimate reason even though a prohibited
+//      Let-dependent route also exists;
+//   6. redeclaration flagged by the independent scoping checker.
+//
+// Note for test authors: intermediate facts must be stated explicitly
+// (textbook style).  The instantiation loop only matches a rule's first
+// maximally Weeny pattern (plus dopplegangers), so a conclusion like Q(b)
+// justified by rules "P(u)" and "P(u) ⊢ Q(u)" requires the user to state
+// P(b); nothing else binds u to b.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "nested Lets, with a conclusion drawing on both levels"
+{
+  Declare P, Q, R
+  Rule: :{ P(u) }
+  Rule: :{ :P(u)  Q(u) }
+  Rule: :{ :P(u) :P(v)  R(u,v) }
+  { Let a
+    P(a) ✔︎
+    { Let b
+      P(b) ✔︎
+      Q(b) ✔︎
+      R(a,b) ✔︎
+    }
+  }
+}
+
+➤ "a typed Let whose body mentions an outer Let variable"
+{
+  Declare D, E
+  Rule: :{ :D(u,v)  E(u) }
+  { Let w
+    { Let x be such that D(x,w)
+      E(x) ✔︎
+    }
+  }
+}
+
+➤ "mixed omitted/active state: outer Let ignored, sibling's typed Let active"
+{
+  Declare F, G, M, H
+  Rule: :{ :F(u,v)  G(u,v) }
+  Rule: :{ :{ Let x be such that F(x,v)  G(x,v) }  M(v) }
+  Rule: :{ :M(v)  H(v) }
+  { Let w
+    { Let x be such that F(x,w)
+      G(x,w) ✔︎
+    }
+    M(w) ✔︎
+    { Let y
+      H(w) ✔︎
+    }
+  }
+}
+
+➤ "sibling equivalent Let-environments; earlier Let-env satisfies a premise"
+{
+  Declare ∈, ⊆, A, B
+  Rule: :{ :x∈A :A⊆B  x∈B }
+  Rule: :{ :{ Let x  :x∈A  x∈B }  A⊆B }
+  {
+    { Let x
+      Assume x∈A
+      x∈B ✗
+    }
+    { Let x
+      Assume x∈B
+      A⊆B ✔︎
+    }
+  }
+}
+
+➤ "a legitimate route survives even though a prohibited route also exists"
+{
+  Declare J, K
+  Rule: :{ K }
+  Rule: :{ :{ Let x  J(x) }  K }
+  { Let w
+    J(w) ✗
+    K ✔︎
+  }
+}
+
+➤ "redeclaration is flagged by the independent scoping checker"
+{
+  Declare T
+  { Let z
+    { Let z ⁉︎
+      T(z)
+    }
+  }
+}

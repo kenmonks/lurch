@@ -136,6 +136,7 @@ const loadAcidTests = () => {
       'Environment Body Forms',
       'Unnecessary Declarations',
       'Unsupported Declarations',
+      'Preemie Stress',
       'Transitive Chains', 'Cases', 'BIH Cases', 'user-thms',
       'ArithmeticNatural', 'ArithmeticInteger', 'ArithmeticRational',
       ['prop', 'math299'], ['pred', 'math299'], ['peanoBIH', 'math299'],
