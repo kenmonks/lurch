@@ -9,6 +9,9 @@ node_modules/
 test-results/
 playwright-report/
 
+# ignore the cached TinyMCE for testing
+.cache/
+
 # ignore the output of the line counter extension
 .VSCodeCounter
 
@@ -26,5 +29,4 @@ initproofs.js
 /learn/proofs/embed
 studentfiles299
 AGENTS.md
-AGENTS2.md
 super-natural-deduction.md
