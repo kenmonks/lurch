@@ -109,17 +109,35 @@ global.parse = (s,opts) => {
   }
 }
 
-// load the Lurch to TeX parser precompiled for efficiency
-import { parse as lurchToTex } from './parsers/lurch-to-tex.js'
+// LaTeX comes from the same unified parser (Phase 2b): the tex option
+// renders the AST with ast-to-tex.js
+const lurchToTex = (s, opts = {}) => lurchToPutdown(s, { ...opts, tex: true })
 global.tex = (s,opts)  => {
-  try { 
+  try {
     return lurchToTex(s,opts)
   } catch(e) {
     if (typeof e.format === 'function') {
       console.log(e.format([{
         text:s
       }]))
-    } else {    
+    } else {
+      console.log(e.toString())
+    }
+    return undefined
+  }
+}
+
+// return the raw AST built by the same parser (see ast-to-putdown.js for
+// the node vocabulary)
+global.ast = (s,opts) => {
+  try {
+    return lurchToPutdown(s, { ...opts, ast: true })
+  } catch(e) {
+    if (typeof e.format === 'function') {
+      console.log(e.format([{
+        text:s
+      }]))
+    } else {
       console.log(e.toString())
     }
     return undefined
@@ -154,8 +172,7 @@ global.trace = (s, opts = {}) => {
   }
 }
 
-// load the Lurch to TeX parser precompiled for efficiency
-import { parse as lurchToTexTrace } from './parsers/lurch-to-tex-trace.js'
+// trace the same unified parser while rendering LaTeX output
 global.textrace = (s, opts = {}) => {
   const tracer = new CompactTracer({
     mode: 'tree',
@@ -166,8 +183,34 @@ global.textrace = (s, opts = {}) => {
     ...opts
   })
   try {
-    const out = lurchToTexTrace(s, {
+    const out = lurchToPutdownTrace(s, {
       cache: true,
+      tex: true,
+      tracer,
+      __setTraceInput: norm => { tracer.input = norm }
+    })
+    return out
+  } catch (e) {
+    if (typeof e.format === 'function') console.log(e.format([{ text: s }]))
+    else console.log(e.toString())
+    return undefined
+  }
+}
+
+// trace the same unified parser and return the raw AST
+global.asttrace = (s, opts = {}) => {
+  const tracer = new CompactTracer({
+    mode: 'tree',
+    preview: true,
+    noIndent: true,
+    breakOnSpanChange: true,
+    input: s,
+    ...opts
+  })
+  try {
+    const out = lurchToPutdownTrace(s, {
+      cache: true,
+      ast: true,
       tracer,
       __setTraceInput: norm => { tracer.input = norm }
     })
@@ -663,20 +706,28 @@ rpl.defineCommand( "testall", {
 rpl.defineCommand( "compileparser", {
   help: "Compile the Lurch parsers and rebuild the parser docs.",
   action(trace) {
+    // npx resolves the peggy version pinned in lde/node_modules, NOT
+    // whatever global peggy happens to be on the PATH (a bare `peggy`
+    // once silently compiled with a globally installed major version
+    // that generates different code - see the Phase 3d-i decision log)
     const compile = (name) => {
       console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}.js...`))
-      execStr(`cd parsers && peggy --cache --format es -o lurch-to-${name}.js lurch-to-${name}.peggy`)
+      execStr(`cd parsers && npx peggy --cache --format es -o lurch-to-${name}.js lurch-to-${name}.peggy`)
+      // replace peggy's plain-object results cache with a Map (see
+      // fix-parser-cache.js - the object's dictionary-mode lookups make
+      // parse time swing with input length and content)
+      execStr(`cd parsers && node fix-parser-cache.js lurch-to-${name}.js`)
       if (trace) {
         console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}-trace.js...`))
-        execStr(`cd parsers && peggy --cache --trace --format es -o lurch-to-${name}-trace.js lurch-to-${name}.peggy`)
-      } 
-    }  
+        execStr(`cd parsers && npx peggy --cache --trace --format es -o lurch-to-${name}-trace.js lurch-to-${name}.peggy`)
+        execStr(`cd parsers && node fix-parser-cache.js lurch-to-${name}-trace.js`)
+      }
+    }
 
     try {
       console.log('')
       if (!trace) console.log(commentPen(`(Use option ${itemPen('.compileparser true')} to recompile the tracing parsers)\n`))
       compile('putdown')
-      compile('tex')
     } catch (err) {
       console.log(xPen('Error compiling the parser.'))
     }
@@ -689,6 +740,24 @@ rpl.defineCommand( "compileparser", {
       console.log(xPen('Error rebuilding the parser doc page.'))
     }
     console.log()
+    this.displayPrompt()
+  }
+})
+
+// Define the Lode .compilenotation command: regenerate the
+// lurch-notation-compiled.js transport wrapper from lurch-notation.txt
+// (the .compileparser analog for the Phase 4 notation file; the golden
+// suite fails loudly when the wrapper is stale)
+rpl.defineCommand( "compilenotation", {
+  help: "Recompile lurch-notation.txt to its ES-module wrapper.",
+  action() {
+    try {
+      execStr(`cd parsers && node compile-notation.js`)
+      console.log(defaultPen(`Recompiled lurch-notation.txt → lurch-notation-compiled.js`))
+    } catch (err) {
+      console.log(xPen('Error compiling the notation file:'))
+      console.log(String(err.stdout ?? err.message ?? err))
+    }
     this.displayPrompt()
   }
 })
@@ -731,6 +800,7 @@ rpl.defineCommand( "webtest", {
   help: "Run the web UI test suite (npm test in the lurchmath folder).",
   action() {
     try {
+      console.log(defaultPen(`If the test fails run ${itemPen('npx playwright show-report')} in the lurchmath folder`)) 
       execLive('cd ../../../lurchmath && npm test')
     } catch {
       console.log(xPen('The web UI test suite reported errors.'))

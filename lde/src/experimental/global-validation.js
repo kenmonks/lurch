@@ -121,8 +121,16 @@ import {
   LogicConcept, Expression, Declaration, Environment, LurchSymbol,
   Matching, Formula, Scoping, Validation, Application, BindingExpression
 } from '../index.js'
-import { isArithmetic, arithmeticToCAS, isNegationOfArithmetic, 
-         isNumberType, hasMatrixOps } from './parsing.js'
+import { isArithmetic, arithmeticToCAS, algebraToCAS,
+         isNegationOfArithmetic, isNumberType, hasMatrixOps
+       } from './parsing.js'
+// the chain-operator families (Slice 2 of the chains-first-class plan,
+// 2026-07-28): head → family, family → conclusion ladder, and the
+// ChainsRule(op, ...) parameter resolution - all derived from the
+// chainFamilies table, the same single-source-of-truth precedent as
+// interpret.js's autoDeclaredConstants import
+import { chainOpFamily, chainFamilyConclusion, chainFamiliesOfHead,
+         chainParamFamily } from './parsers/notation-tables.js'
 
 const Problem = Matching.Problem
 const isAnEFA = Matching.isAnEFA
@@ -880,23 +888,86 @@ const processEquations = doc => {
 
 /**
  * Transitivity Instantiations
- * 
+ *
  * Go through and fetch all of the user's chains (i.e., only chains that
  * are conclusions) which have more than two arguments and create and insert
  * them after the ChainsRule rule.  For example, `a=b<c=d≤e` would produce
  * and insert the instantiation `:{ :a=b :b<c :c=d :d=e a<e }`
- * 
+ *
+ * Since the cong-chains upgrade (2026-07) a chain may also mix `=` with
+ * congruence steps, whose operator is the compound Application `(≅ m)`
+ * rather than a Symbol, so operators are compared with `.equals()`, not
+ * `.text()`.  Since the chain-operator table (Slice 2 of the
+ * chains-first-class plan, 2026-07-28) the operator families and their
+ * transitive-conclusion policies come from the chainFamilies table in
+ * parsers/notation-tables.js: `=` is neutral, a chain's symbol operators
+ * all belong to one family (ineq, bare ≅, |, or ⊆), and the conclusion
+ * operator is the strongest family op present among the steps (`<` beats
+ * `≤` beats `=`; a single-op family's op beats `=`), while a
+ * parameterized-congruence chain concludes with its compound operator
+ * itself.  The parser guarantees one family per chain AND structurally
+ * equal parameters on every congruence step (the equal-moduli
+ * commitment), so every parsed chain has a transitive conclusion; the
+ * family and all-equal checks below are defensive, for trans_chain LCs
+ * built directly in putdown (Lode documents, embedded raw putdown)
+ * rather than by the parser - such a chain still splits into steps, but
+ * emits no transitivity instantiation.
+ *
+ * The rule may be the parameterized `(ChainsRule op ...)` form (the
+ * AlgebraRule(NoMatrixOps) precedent): each listed op names the families
+ * to enable via chainFamiliesOfHead (`ChainsRule(lt)` enables ineq,
+ * `ChainsRule(cong)` both congruence families, ...), and a chain of a
+ * family the rule does not enable gets no transitivity instantiation.
+ * Pure-= chains are always enabled - they are the ChainsRule machinery
+ * itself.  A bare `ChainsRule` (or `EquationsRule`) enables everything.
+ *
  * This is a helper utility called by `processChains()`.
  */
 const instantiateTransitives = (doc,rule) => {
+  // the enabled families: null means all (the bare rule)
+  const ruleHead = rule.child(0)
+  const enabled = (ruleHead instanceof Application)
+    ? new Set(ruleHead.children().slice(1)
+        .filter( a => a instanceof LurchSymbol )
+        .flatMap( a => chainFamiliesOfHead(a.text()) ))
+    : null
+
   // fetch the conclusion equations (argument = true)
   doc.chains(true).forEach( eq => {
-    
+
     // let n be the number of arguments to `trans_chain`
     let n = eq.numChildren()
-    // collect the set of operators to know what the transitive chain conclusion
-    // should be
-    let ops =new Set('=')
+
+    // the step operators sit at child positions 2, 4, ..., n-2
+    const stepOps = []
+    for (let k=2;k<n-1;k+=2) stepOps.push(eq.child(k))
+
+    // determine the chain's family (see above): compound operators are
+    // the parameterized-congruence family, symbol operators map through
+    // the table's head → family, and '=' is neutral
+    const congs = stepOps.filter( x => !(x instanceof LurchSymbol) )
+    const heads = [...new Set(stepOps.filter( x => x instanceof LurchSymbol )
+                                     .map( x => x.text() ))]
+                  .filter( h => h!=='=' )
+    const families = new Set(heads.map( h => chainOpFamily[h] ))
+    if (congs.length>0) families.add(chainParamFamily)
+    // defensive (raw-putdown chains only): unknown ops or mixed families
+    if (families.size>1 || families.has(undefined)) return
+    const family = (families.size===1) ? [...families][0] : null
+
+    // skip families the (parameterized) rule does not enable
+    if (family !== null && enabled !== null && !enabled.has(family)) return
+
+    // find the correct operation for the transitive conclusion
+    let op
+    if (congs.length>0) {
+      // parameterized congruence: all step operators must agree
+      if (!congs.every( c => c.equals(congs[0]) )) return
+      op = congs[0].copy()
+    } else {
+      op = new LurchSymbol(
+        chainFamilyConclusion[family]?.find( h => heads.includes(h) ) ?? '=' )
+    }
 
     // create the relevant instantiation.  Even with only 4 args we want to
     // remove the `trans_chain` head
@@ -907,21 +978,18 @@ const instantiateTransitives = (doc,rule) => {
       let newtrio = eq.slice(k,k+3)
       newtrio.unshiftChild( eq.child(k+1).copy() )
       newtrio.removeChild(2)
-      ops.add(eq.child(k+1).text())
       inst.pushChild(newtrio.asA('given'))
     }
-    // find the correct operation
-    const op = new LurchSymbol((ops.has('<'))?'<':(ops.has('≤'))?'≤':'=')
-    
+
     // construct and add the conclusion
     inst.pushChild(
       new Application(
-        op, 
+        op,
         eq.child(1).copy(),
         eq.lastChild().copy()
       )
     )
-    
+
     // and insert it
     insertInstantiation( inst, rule, eq )
     // We also want the conclusion of that instantiation to be a Consider so
@@ -932,7 +1000,7 @@ const instantiateTransitives = (doc,rule) => {
     const conc = inst.lastChild().copy()
     insertInstantiation( conc , rule , eq )
     // finally, if it is an equation
-    if (op.text()==='=') {
+    if (op instanceof LurchSymbol && op.text()==='=') {
       // Consider its reverse
       insertInstantiation( reverseEquation(conc) , rule)
     }
@@ -1071,24 +1139,20 @@ const eq2chain = eq => {
 /**
  * Go through and fetch all of the user's chains (i.e., only chains that are
  * conclusions).  Split them into binary pairs and insert them in the document.
+ *
+ * The trios need no notation of their own: the by-algebra tool converts a
+ * trio's two sides to CAS syntax structurally (algebraToCAS, 2026-07-28),
+ * so the old practice of slicing the chain's typed lurchNotation string
+ * across the trios is gone.  Each trio records its 0-based step index in
+ * the js attribute `.chainStep`, so the validation worker can report
+ * per-row results for the future in-atom row markers (the trios already
+ * share the chain's `_id` via the attribute-preserving slice).
  */
 const splitChains = doc => {
   // any user equations that aren't chains should be marked as such
   doc.equations(true).forEach(x=>x.equation=true)
   // fetch the conclusion equations (argument = true)
   doc.chains(true).forEach( eq => {
-    // if it has lurch notation (from the browers) we need to transfer it to the
-    // individual triples for 'by algebra' to use
-    let lurchmath = ''
-    if (eq.hasAttribute('lurchNotation')) {
-      lurchmath = eq.getAttribute('lurchNotation')
-      // remove the 'by algebra' strings because they are handled by the js 'by'
-      // attribute
-      lurchmath = lurchmath.replace(/\s*by\s+algebra\s*/g, ' ').trim()
-      // split by the operators, keeping them as tokens
-      lurchmath = lurchmath.split(/\s*(=|leq|<)\s*/).filter(Boolean)
-    } 
-        
     // Since it should be created by parsing a user's transitive chain it should
     // have an even number of arguments to trans_chain,
     let n = eq.numChildren()
@@ -1101,16 +1165,12 @@ const splitChains = doc => {
       let newtrio = eq.slice(k,k+3)
       newtrio.unshiftChild(eq.child(k+1).copy())
       newtrio.removeChild(2)
-      if (newtrio.isAnEquation()) newtrio.equation = true 
-      // apply the 'by algebra' attribute if necessary.  In this case it also
-      // needs the original Lurch notation to pass to Algebrite
+      newtrio.chainStep = (k-1)/2
+      if (newtrio.isAnEquation()) newtrio.equation = true
+      // apply the 'by algebra' attribute if necessary
       if (eq.child(k+2).by) {
         newtrio.by = eq.child(k+2).by
         delete eq.child(k+2).by
-        
-        if (lurchmath) {
-          newtrio.setAttribute('lurchNotation',lurchmath.slice(k-1,k+2).join(' '))
-        }
       }
       // insert it
       newtrio.insertAfter(last)
@@ -1477,35 +1537,37 @@ const processAlgebra = doc => {
       return    
     }
 
-    // otherwise pass the lurch notation to algebrite
-    // get the lurch notation for the expression
-    let lurchmath = c.getAttribute('lurchNotation')
-    // if the user included 'by anything' in the same Atom as the identity, remove it
-    // this can occur if 'by algebra' is in the same expression atom, or in Chains if the 
-    // line or previous line has 'by something' after it
-    lurchmath = lurchmath.replace(/\bby\s+\w+/gi, '')
-
-    // a regex for an equation
-    const eqn = /^([^=]+)=([^=]+)$/
-    // if it's not a simple equation both in putdown and lurchmath we're done
-    if (!(c instanceof Application && c.numChildren() === 3 && c.child(0).matches('=') &&
-          eqn.test(lurchmath)) ) {
-      c.setResult('algebra', 'inapplicable' , 'CAS')      
+    // otherwise it must be a simple equation A=B, whose two sides are
+    // converted to Algebrite syntax STRUCTURALLY from the LC itself
+    // (algebraToCAS in parsing.js, 2026-07-28).  The typed lurchNotation
+    // string is no longer consulted: the old practice of regex-slicing
+    // the notation and passing the typed substrings to Algebrite
+    // verbatim required students to type Algebrite-compatible notation
+    // (and misparsed any operand containing '='); now any Lurch notation
+    // whose MEANING lies in the CAS fragment works, including in Lode
+    // documents and test files that carry no notation attribute at all.
+    if (!(c instanceof Application && c.numChildren() === 3 &&
+          c.child(0).matches('='))) {
+      c.setResult('algebra', 'inapplicable' , 'CAS')
       return
     }
 
     // if we are forbidding matrix ops and it isn't a matrix identity, we're done
     if ( noMatrixOps && hasMatrixOps(c) ) {
-      c.setResult('algebra' , 'inapplicable' , 'CAS')      
+      c.setResult('algebra' , 'inapplicable' , 'CAS')
       return
     }
 
-    // otherwise get the LHS and RHS
-    let [LHS,RHS]=lurchmath.match(eqn).slice(-2)
-    // remove any transpose-formatting apostrophe's (they are not semantic)
-    LHS = LHS.replace(/]'/g, ']')
-    RHS = RHS.replace(/]'/g, ']')
-    
+    // convert the two sides; an expression outside the CAS fragment
+    // (relations, quantifiers, set aggregates, user glyph operators) is
+    // inapplicable, exactly like Algebrite syntax errors below
+    const LHS = algebraToCAS(c.child(1))
+    const RHS = algebraToCAS(c.child(2))
+    if ( LHS === undefined || RHS === undefined ) {
+      c.setResult('algebra', 'inapplicable' , 'CAS')
+      return
+    }
+
     // We need two tests.  The second command is stronger at evaluating
     // identities than the first but only the first can evaluate matrix
     // identities. The first test works for non-matrix identities too, but we

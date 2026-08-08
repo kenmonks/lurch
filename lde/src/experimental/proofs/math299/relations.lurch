@@ -18,7 +18,7 @@ include libs/Relations
 	  { 
 			➤ "Define '~' to be congruence mod m."
 			Let m
-			Definition: :{ x~y ≡ x ≈ y mod m } 
+			Definition: :{ x~y ≡ x cong y mod m } 
 			➤ "Reflexive:"
 			{ Let x
         
@@ -27,7 +27,7 @@ include libs/Relations
 			  
 				∃d. x-x = m⋅d		
 			  m | x-x
-				x ≈ x mod m
+				x cong x mod m
 				x ~ x
 			}
 	  	'~' is reflexive
@@ -35,7 +35,7 @@ include libs/Relations
 			➤ "Symmetric:"
 			{ Let x,y such that x~y
         
-				x ≈ y mod m
+				x cong y mod m
 			  m | x-y
         x-y = m⋅k for some k
         
@@ -59,15 +59,15 @@ include libs/Relations
 				
 				∃d.y-x=m⋅d
 				m | y-x
-				y ≈ x mod m
+				y cong x mod m
 				y ~ x
 			}
 			'~' is symmetric
 			{ Let x,y,z such that x~y and y~z
 				x~y 
 				y~z
-        x ≈ y mod m
-        y ≈ z mod m
+        x cong y mod m
+        y cong z mod m
 				m | x-y
 				m | y-z
 				x-y = m⋅i for some i
@@ -82,7 +82,7 @@ include libs/Relations
 
 				∃d.x-z=m⋅d
 				m | x-z
-				x ≈ z mod m
+				x cong z mod m
 				x~z
 			}
 			'~' is transitive

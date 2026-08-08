@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////
-// Negative tests for the Peggy parsers (2026-07)
+// Negative tests for the Peggy parsers
 //
 // Every line in this file is expected to FAIL to parse in BOTH the
 // putdown and tex parsers (with default options), locking in the
@@ -7,8 +7,6 @@
 // golden-snapshot suite in parsertests.js, NOT by the .parsertest
 // command in Lode, which requires its files to parse successfully.
 
-// no infix rule exists for approx (yet)
-x ≈ y
 // negation cannot apply directly to another negation without parentheses
 not not P
 // ticks bind too loosely to allow application of a complemented function
@@ -33,3 +31,230 @@ x..y
 [G:H:K]
 // exponents other than atomics require parentheses, e.g. 2^([G:H])
 2^[G:H]
+// the EFA marker is @ or 𝜆 (U+1D706); Greek λ (U+03BB) is rejected
+λP(k)
+// classified keywords are not symbols (the token classification is
+// the authority: 'sum' is an operator name, 'of' and 'for' are
+// structural keywords - while 'as' is no keyword at all, just an
+// ordinary symbol, and lives in LurchParserTests)
+sum
+of + 1
+for + 1
+// the 'is a <noun> <prep>' registry: a committed noun row
+// with an unparseable right-hand side does not fall back past the is row,
+// whose 'subset' operand is a classified operator word; a wrong article
+// never matches the noun row at all; and a phrase leftover that cannot
+// reparse ('is A' dangling after the right-hand hole) is an error, not a
+// junk LC sequence
+x is a subset of, P
+A is an subset of B
+x is a element of A
+~ is not a relation on x is A
+// naked bindings are not relation arguments: a binding operand
+// must be parenthesized to keep its scope legible - (x.f(x)) ~ (y.f(y))
+// parses via the ordinary paren operand.  (The | and bare-cong
+// versions of these locks live in LurchParserTests: a chain step's
+// right-hand side accepts a
+// Binding, so 'a | x.y' parses like
+// 'a = x.y'.)
+a in x.y
+x is x.y
+a ~ x.y
+a rel x.y
+a ≈ x.y
+a ~ x mapsto y
+A is a partition of x.y
+A is not a partition of x.y
+// 'normal' is an operator word now (the ⊴ row), so it cannot be an
+// ordinary symbol in operand position
+normal + 1
+// a relation token whose leftover cannot reparse as a symbol ('in' is a
+// reserved word), and mixed relation families that do not chain
+// ('a subset b = c' and 'a = b subset c' are ⊆-family transitive
+// chains, locked in LurchParserTests)
+x in
+a in b in c
+// committed keyword choices with unparseable right-hand sides where the
+// leftovers cannot reparse as symbols either
+x is an and
+x is not and y is b
+x is a partition of, P
+// an ended expression whose leftover cannot reparse.  An indexed
+// the star family shares one level, so the leftover '⊙ c' (raw ⊙ has no
+// symbol rendering) fails; and '+ b' is not a valid operand for the first
+// '+'.  ('Union(B,k,A) + x' parses: delimited call forms are
+// closed units - locked in LurchParserTests.)
+a ⊗ b ⊙ c
+a + + b
+// interior big-operator keywords (of,
+// for, in, to, =, d) are case-sensitive lowercase for every operator,
+// and the English ones require whitespace on both sides - `in(S)` reads
+// as applying a function named `in`, since function application forbids
+// a space before its parentheses
+sum OF f for k in S
+sum f FOR k in S
+Union OF B for k in S
+Union B FOR k in S
+sum k=1 TO n of f
+sum k=1 to n OF f
+sum k in(S) of f
+sum f for k in(S)
+Union k in(S) of B
+// the same no-abutting-paren rule covers every alphabetic keyword:
+// a ¬-desugar word or an interior tail keyword before '('
+// has no application fallback, so these are errors, not splits
+a notin(b)
+a neq(b)
+f : A to(B)
+// the retired variant zoo: the from/as/goes limit forms and the wrt
+// indefinite forms no longer parse
+sum k from 0 to n of k^2
+sum of k^2 as k goes from 0 to n
+sum k^2 for k to n
+sum of k^2 for k to n
+int x from 0 to n of x^2
+int of x^2 as x goes from 0 to n
+int x^2 for x to n
+int with respect to x of x^2
+int wrt x of x^2
+int of x^2 with respect to x
+// the limit form requires its 'of' ('sum k to 5 k^3' is awkward to read)
+sum k to n f
+sum k to 5 k^3
+// defint is only the Algebrite call form
+defint k = 1 to n of f
+// every Union/Intersect name is strictly
+// case-sensitive: an off-case bigcup is an ordinary symbol, so the
+// English form's 'of' keyword is a leftover reserved word
+BIGCUP k in NN of A(k)
+Bigcap k in NN of A(k)
+// maps holes are plain relation arguments - no bindings, and no chaining
+// of the 'to' keyword
+f : A to x.y
+f : A to B to C
+
+////////////////////////////////////////////////////////////////////
+// Token classification, the mention rule, and the keyword-case
+// sweep.  A classified word in
+// operand position is a parse error (with a hint naming the mention
+// syntax) instead of silently parsing as a symbol, and
+// junk-parses that dangle leftover operator words as separate symbol
+// LCs are errors too.
+
+// structural keywords are not symbols anywhere
+1+by^2
+1+assume^2
+Comment
+x + and
+// phrase replacement requires word boundaries on both sides:
+// a missing space after 'for all' is flagged, not guessed away
+for allz.T(z)
+// the negated English verbs keep the verb stem (no s)
+a does not loves b
+// operator words and glyphs are not symbols in unmarked operand
+// positions (mention them as (op) or 'op' instead)
+lt
+x^star
+star = y
+// a mistyped big-operator call form stays an error instead of silently
+// degrading to a function application (bare application of a
+// big-operator name is excluded from the head mention hole)
+sum(f,k)
+defint(f,x)
+int x^2 wrt x
+// relations consume exactly one step; a dangling relation keyword can
+// no longer reparse as a symbol LC, so the whole input fails
+a is b is c
+a proves b proves c
+a sim b sim c
+a ~ b subset c
+a cong b mod c cong d mod e
+// the single-step relation rows (⊑ ⊴ ~ ≈ rel) do not chain: an
+// n-ary run like 'a ~ b ~ c' is a parse error, because the
+// leftover ' ~ c' has no LC reading (~ is not a chain operator)
+x~y~z
+x ~y~ z
+x ~ y ~ z
+a ~ b ~ c
+a~(b+1)~c~d^2
+H ⊑ K ⊑ G
+H subgroup G sqsubseteq K
+A normal B ⊴ C
+a rel b rel c
+a ≈ b ≈ c
+// cross-family chain tokens end the chain, and these leftovers have no
+// LC reading (a lone | / subset / < cannot start an LC)
+a subset b | c
+a | b subset c
+a subset b lt c
+a < b subset c
+a cong b | c
+a cong_(m) b cong c
+// a committed keyword choice ('is a') whose right-hand side fails has no
+// fallback to bare 'is', and the leftovers are no longer symbols
+x is a and y is b
+x is a, y is b
+x is the and y
+// ditto at end of input: 'is a' commits and
+// the missing right-hand side is an error, like the lines above
+a is a
+// a same-level climb token that cannot continue its run ends the
+// expression (choose is not chainable; the star family shares a level);
+// the leftover operator no longer reparses, so these old three-LC
+// junk-parses are errors now
+a choose b choose c
+a choose b + c choose d
+a star b oplus c
+a star b oplus c + d
+a choose b + c choose d + e
+a oplus - b
+// iff is non-associative (assoc 'none'): an unparenthesized
+// iff run ends before its second iff, whose leftover is a targeted error
+// (neither nesting is the pairwise chain a reader means by 'P iff Q iff
+// R' - parenthesize)
+P iff Q iff R
+P iff Q implies R iff S
+// a parameterized star token cannot continue a run whose parameters
+// differ or are absent: the leftover '⊕ c' has no LC reading (the
+// equal-parameters case parses left-nested, and the mismatched-params
+// case junk-splits via the subscripted mention - both locked in
+// LurchParserTests)
+a ⊕_(n) b ⊕ c
+// exponentiation still binds above application: an application result
+// is not an exponent base (write (f(x))^2 or f^2(x) -
+// this and the exponent-tower lock above get instructive targeted
+// messages, see enrichParseError), the @P(k) EFA form is an application
+// too, and a compound exponent still wants parentheses (write
+// 2^(sum(f,k,1,n)))
+f(x)^2
+@P(k)^2
+f^2(x)^2
+2^sum(f,k,1,n)
+// dangling operators after a completed relation no longer parse as junk
+A subset B subset
+x neq
+a ~
+// congruence chains: a chain committed to the congruence family
+// does not consume an inequality step - the chain ends before the
+// cross-family token, which has no operand reading, so the whole input
+// is a targeted error
+a cong_(m) b < c
+a cong_(m) b leq c
+x = y cong_(m) z < w
+// ('a cong b' is NOT an error: bare congruence is a chain
+// family - the geometer's (≅ a b) - locked in LurchParserTests,
+// along with the 'a cong b MOD m' / 'a cong mod b TO c' keyword-case
+// locks, which junk-parse via bare cong exactly as their = versions do)
+// the keyword-case sweep: the interior keywords (mod, the
+// quantifier/Let/ForSome 'in', be such that, and the is-phrase nouns)
+// are case-sensitive lowercase.  (Uppercase IN/BE/SUCH/THAT remain ordinary
+// symbols, so 'Let x IN A' still parses - as a bare Let plus symbol LCs;
+// those junk-parse locks live in LurchParserTests.)
+a cong MOD b to c
+forall x IN S. P
+// `a cong mod m to b` is not a congruence surface: the bare-cong
+// chain grabs 'mod' as its
+// right-hand operand and the leftover 'm to b' has no LC reading ('to'
+// is reserved), so the whole input is an error
+a cong mod m to b
+X is a Partition of Y

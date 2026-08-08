@@ -1,0 +1,25 @@
+{
+  "name": "lurch-notation-highlighting",
+  "displayName": "Lurch Notation Highlighting",
+  "description": "Auto-detects lurch-notation.txt and highlights it with the Peggy TextMate grammar, without attaching Peggy's language server (so no spurious error squiggles).",
+  "version": "1.0.0",
+  "publisher": "lurch",
+  "engines": { "vscode": "^1.75.0" },
+  "contributes": {
+    "languages": [
+      {
+        "id": "lurch-notation",
+        "aliases": [ "Lurch Notation" ],
+        "filenames": [ "lurch-notation.txt" ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "lurch-notation",
+        "scopeName": "source.lurch-notation",
+        "path": "./lurch-notation.tmLanguage.json"
+      }
+    ]
+  }
+}

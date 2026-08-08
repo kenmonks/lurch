@@ -1,0 +1,318 @@
+// =========================================================================
+// lurch-notation.txt — the Lurch notation table
+//
+// One declaration per notation: write WHAT THE USER TYPES, with holes.
+//   - single letters appearing in the -> putdown are holes; everything
+//     else is a literal keyword (so the article in `is a subset of` is
+//     just a word).  Degenerate infix `a OP b` needs no arrow: it means
+//     (OP a b).
+//   - `also:` lines are synonym surfaces of the same declaration;
+//     `word:`/`words:` list one-word synonyms of the keyword.
+//   - RENDERING RULE: a declaration WITH `tex:` renders its one-word
+//     surfaces symbolically (subset, vdash, proves all print the symbol);
+//     WITHOUT `tex:` the keyword prints as English text (loves, is).
+//     Multi-word surfaces (is a subset of) echo as English either way,
+//     unless that line carries its own tex: template.  An also: line may
+//     carry its own tex:, giving PER-SURFACE rendering (P and Q echoes
+//     English, P wedge Q prints \wedge).
+//   - words are case-sensitive; `case: any` opts a name into either case.
+//   - word keywords match at word boundaries and never directly abut a
+//     '(' - `R(x)` reads as function application, so write `a is (b)`;
+//     glyphs match anywhere (`0<(x+1)` is fine).
+//   - any surface shaped `x is a|an ⟨noun...⟩ of|on y` automatically gets
+//     its `is not` twin (¬-wrapped); the article you write is used
+//     verbatim in both rows (no English policing).
+// =========================================================================
+
+// ------------------------------------------------------------------------
+// Propositional connectives (these four rows are the bottom of the
+// precedence ladder, in this order, loosest first)
+// ------------------------------------------------------------------------
+group infix
+  P iff Q                assoc: none    tex: \Leftrightarrow
+    also: P ⇔ Q
+  P implies Q            assoc: right   tex: \Rightarrow
+    also: P ⇒ Q
+  // per-surface tex: the or/and surfaces echo as English, while
+  // vee/wedge (and the glyphs ∨/∧, which rewrite to those words) carry
+  // their own tex: and render symbolically
+  P or Q     -> (or P Q)   assoc: nary   // putdown keeps the English head,
+    also: P vee Q          tex: \vee     // so the rewrites are explicit here
+    also: P ∨ Q
+  P and Q    -> (and P Q)  assoc: nary
+    also: P wedge Q        tex: \wedge
+    also: P ∧ Q
+
+// ------------------------------------------------------------------------
+// Relations — all bind at the relation level; single-step (chains below
+// handle transitive runs)
+// ------------------------------------------------------------------------
+group relation
+  f : A to B             -> (maps f A B)         tex: f\colon A\to B
+                                                 example: f : A to B
+  // congruence, English surfaces (deliberately non-chaining; the chaining
+  // form cong_(m) is a chain family below; same word, three machineries —
+  // resolved by rank, linted for collisions)
+  a cong b mod m         -> ((≅ m) a b)          tex: a\underset{m}{\equiv}b
+    also: a = b mod m
+                                                 example: 25 cong 13 mod 6
+
+  a proves b   word: vdash                       tex: \vdash
+    also: a ⊢ b
+    // tex: present, so `proves` renders \vdash; the loves/proves
+    // rendering distinction is exactly this field
+  a does not prove b     -> (¬ (⊢ a b))
+
+  a subgroup b  word: sqsubseteq                 tex: \sqsubseteq
+    also: a ⊑ b
+    also: K is a subgroup of G                   // echoes as English
+                                                 example: K is a subgroup of G
+  a normal b             -> (⊴ a b)              tex: \trianglelefteq
+    also: a ⊴ b
+    also: N is a normal subgroup of G
+
+  a in b                 -> (∈ a b)              tex: \in     bare: right
+    also: a ∈ b
+    also: x is an element of S
+                                                 example: ⟨x,y⟩ in ~
+  a notin b              -> (¬ (∈ a b))          tex: \notin  bare: right
+    also: a ∉ b
+  a neq b                -> (¬ (= a b))          tex: \neq    word: ne
+    also: a ≠ b
+                                                 example: x neq 0
+
+  // phrase-only heads (no symbolic partner row)
+  P is a partition of S  -> (partition P S)
+                                                 example: P is a partition of S
+  R is a relation on A   -> (relation R A)
+  A is a subset of B     -> (⊆ A B)      // symbolic ⊆ lives in chains below
+  d is a divisor of n    -> (| d n)      // symbolic | lives in chains below
+
+  // generic relations (the instructor escape hatch), parameterizable
+  a ~ b                                          tex: \sim
+  a ~_(u) b              -> ((~ u) a b)
+                                                 example: a ~_(u) b
+  a approx b                                     tex: \approx
+    also: a ≈ b
+  a approx_(u) b         -> ((≈ u) a b)
+  a sim b                                        tex: \sim
+  a rel b                                        tex: \backsim
+  a rel_(u) b            -> ((rel u) a b)
+  a =_(u) b              -> ((= u) a b)
+
+  // English verbs (no tex: — they render as \text{ phrases })
+  a loves b    word: love
+  a fears b    word: fear
+  a does not love b      -> (¬ (loves a b))
+  a does not fear b      -> (¬ (fears a b))
+
+  // the generic copula — ranked below every `is a ⟨noun⟩ ⟨prep⟩` surface;
+  // the negative row precedes the positive one (longest-first try order,
+  // the PEG heritage the ranked matcher reproduces)
+  a is not b             -> (¬ (is a b))
+    also: a is not an b, a is not a b, a are not b
+  a is b                 -> (is a b)
+    also: a is an b, a is a b, a is the b, a are b
+                                                 example: ⊆ is transitive
+
+// ------------------------------------------------------------------------
+// Transitive-chain families — members in STRENGTH order (a mixed chain's
+// conclusion uses the first-listed member that occurs; = is neutral in
+// every family)
+// ------------------------------------------------------------------------
+chain family ineq
+  a < b        word: lt                          tex: \lt
+  a leq b                                        tex: \leq
+    also: a ≤ b
+                                                 example: 1 < 2 = 1+1 leq 3
+
+chain family cong    param        // operator requires _(m); equal moduli
+  a cong_(m) b           -> ((≅ m) a b)          tex: \cong
+                                                 example: a cong_(m) b cong_(m) c
+
+chain family ≅                    // the geometer's bare congruence
+  a cong b               -> (≅ a b)              tex: \cong
+    also: a ≅ b
+
+chain family |       bare: left
+  a | b                                          tex: \mid
+    also: a divides b   // no tex: a STANDALONE `a divides b` step echoes
+                        // as English; multi-step chains always print \mid
+                                                 example: 2 | 4 | 8
+
+chain family ⊆       bare: left
+  a subseteq b word: subset                      tex: \subseteq
+    also: a ⊆ b
+                                                 example: A ⊆ A ∪ B ⊆ S
+
+// ------------------------------------------------------------------------
+// Set and algebraic infix operators (loosest to tightest; each row's
+// anchor is referenced by `level: like ⟨op⟩`)
+// ------------------------------------------------------------------------
+group infix
+  A setminus B           assoc: left             tex: \setminus
+    also: A ∖ B
+  A times B    word: cross   assoc: nary         tex: \times
+    also: A × B
+  A cup B      word: union   assoc: nary         tex: \cup
+    also: A ∪ B
+  A cap B      word: intersect  assoc: nary      tex: \cap
+    also: A ∩ B
+  f circ g     word: comp    assoc: nary         tex: \circ
+    also: f ∘ g
+  n choose k              assoc: none            tex: \binom{n}{k}
+                                                 example: (n+1) choose (k-1)
+  a + b                   assoc: nary
+    also: a - b  -> (+ a (- b))    // inverse-pair desugar; surface signs
+                                   // remembered for printing
+  a ⋅ b                   assoc: nary            tex: \cdot
+    also: a / b  -> (⋅ a (/ b))    // inverse-pair, same as subtraction
+    words: cdot, *
+
+// the generic-operator family: one shared level above ⋅ (tight holes —
+// `a ★ -b` needs parens — a property of this LEVEL, not a field here)
+group infix    level: like ★    assoc: left    params: ok
+  a ★ b        word: star                        tex: \star
+  a ⊕ b        word: oplus                       tex: \oplus
+                                                 example: x oplus_(n) y
+  a ⊗ b        word: otimes                      tex: \otimes
+  a ⊙ b        word: odot                        tex: \odot
+
+// ------------------------------------------------------------------------
+// Big operators — each line selects a registered form shape (call /
+// callIndef / d / eq / inOf / forIn) and states its putdown head after ->.
+// Every head named here (incl. overrides) is AUTO-DECLARED CONSTANT:
+// Algebrite fixes its meaning, so it must never be a metavariable.
+// tex-open defaults to `postfix, factor` for rows with open English forms.
+// ------------------------------------------------------------------------
+group bigop
+bigop sum      case: any                         tex: \sum
+  sum(f, k, a, b)                                // Algebrite call form
+                                                 example: sum(3*k, k, 2, 5)
+  sum k = a to b of f
+    also: sum k to b of f                        // lower limit defaults to 0
+                                                 example: sum k = 2 to 5 of 3*k
+  sum k in S of f        -> sumOver
+  sum of f for k in S    -> sumOver
+                                                 example: sum of 3*k for k in A
+
+bigop int      names: integral   case: any       tex: \int
+               tex-open: postfix                 // \int f dx! reads as x!
+  int(f, x, a, b)        -> defint               // definite → Algebrite defint
+  int x = a to b of f    -> defint
+    also: int x to b of f
+                                                 example: int x = 0 to 2 of x^2
+  int(f, x)              -> integral             // indefinite → integral
+  int f dx               -> integral
+                                                 example: int x^2 dx
+  defint(f, x, a, b)     -> defint               // Algebrite name, call only
+
+bigop product  case: any                         tex: \prod
+  product(f, k, a, b)
+                                                 example: product(k^2, k, 1, n)
+
+bigop Union    names: Cup, bigcup   body: set    tex: \bigcup
+  // all names case-sensitive (the default): capitalization IS the
+  // distinction from infix union/cup
+  Union(B, k, S)
+  Union k in S of B
+                                                 example: Union k in A of B(k)
+  Union of B for k in S
+
+bigop Intersect  names: Cap, bigcap  body: set   tex: \bigcap
+  Intersect(B, k, S)
+  Intersect k in S of B
+  Intersect of B for k in S
+
+// ------------------------------------------------------------------------
+// Delimited forms — fixed-arity patterns that begin and end with non-word
+// delimiter tokens, with one expression hole between each adjacent pair.
+// A form carries its own delimiters, so its members are closed units:
+// valid in any hole, and they take the postfixes and exponents ([G:H]^2).
+// The -> rewrite is required and names the head; the head's call form
+// (index(G,H)) is ordinary function application and needs no row.
+// ------------------------------------------------------------------------
+group delimited
+  [ G : H ]    -> (index G H)                    tex: \left[G\mathbin{:}H\right]
+                                                 example: index(G,H)
+  ⌊ x ⌋        -> (floor x)                      tex: \left\lfloor x\right\rfloor
+                                                 example: floor(x)
+  ⌈ x ⌉        -> (ceiling x)                    tex: \left\lceil x\right\rceil
+                                                 example: ceiling(x)
+
+// ------------------------------------------------------------------------
+// Constants, renamings, and phrase abbreviations (one group: a "phrase"
+// is just a constant whose alias contains spaces)
+// ------------------------------------------------------------------------
+group constant
+  ℕ     word: NN                                 tex: \mathbb{N}
+  ℤ     word: ZZ                                 tex: \mathbb{Z}
+  ℚ     word: QQ                                 tex: \mathbb{Q}
+  ℝ     word: RR                                 tex: \mathbb{R}
+  ℂ     word: CC                                 tex: \mathbb{C}
+  𝕀     word: II                                 tex: \mathbb{I}
+  𝕆     word: OO                                 tex: \mathbb{O}
+  ∞     words: infty, infinity                   tex: \infty
+  σ     word: sigma                              tex: \sigma
+  →←    words: contradiction                     tex: \rightarrow\leftarrow
+  ∃!    words: exists unique, exists!            tex: \exists!
+  equivalenceRelation   words: equivalence relation
+  strictPartialOrder    words: strict partial order
+  partialOrder          words: partial order
+  totalOrder            words: total order
+  topSpace              words: topological space
+  // (phrase replacement happens in file order; keep the quantifier
+  // lines after the order phrases)
+  ∀     words: for all, for each, for every, forall    tex: \forall
+  ∃     words: there exists, exists              tex: \exists
+  // rule-enabling constants: a Rule containing one of these (e.g.
+  // `Rule: :{ AlgebraRule }`) adds that validation tool to the context;
+  // users then cite `by algebra` etc. — the constant is never cited
+  // directly.  Unquoted names are safe because `rule` is a structural
+  // keyword, never a bare symbol; the quoted forms must come FIRST (the
+  // phrase table replaces in order, and the quoted pattern must consume
+  // its quotes before the unquoted pattern can match inside them)
+  AlgebraRule    words: "algebra rule", algebra rule
+  ChainsRule     words: "chains rule", chains rule
+  EquationsRule  words: "equations rule", equations rule
+  // constants without renamings, listed for their tex only
+  smiley  tex: 😀       pie  tex: 🥧      basket  tex: 🧺
+  tree    tex: 🌳       apple  tex: 🍎    cherry  tex: 🍒
+  blueberry  tex: 🫐    Fib  tex: F       inv  tex: \text{inv}
+  powerset   tex: \mathscr{P}
+
+// every listed word renders as its own LaTeX command \word
+latex names: alpha, beta, gamma, Gamma, delta, Delta, epsilon, varepsilon,
+  zeta, eta, theta, vartheta, Theta, iota, kappa, lambda, Lambda, mu, nu,
+  xi, Xi, pi, Pi, rho, varrho, sigma, Sigma, tau, upsilon, Upsilon, phi,
+  varphi, Phi, chi, psi, Psi, omega, Omega
+
+// ------------------------------------------------------------------------
+// Unicode input rewrites — ONLY the glyphs belonging to no row above
+// (row glyphs like ⊆ ∈ ⇒ ∧ ≠ now derive from their `also:` surfaces);
+// these are structural or toxic characters handled by the tokenizer
+// ------------------------------------------------------------------------
+unicode
+  → -> to         ← -> from       ↦ -> mapsto     ¬ -> neg
+  ∀ -> forall     ∃ -> exists     ⟨ -> langle     ⟩ -> rangle
+  ➤ -> comment    ° -> complement ! -> factorial  ≡ -> equiv
+  // toxic replacements (context-sensitive spacing; see tokenizer.js)
+  𝜎 -> sigma      𝜆 -> @          ⁻ -> ^-         𝒫 -> powerset
+
+// =========================================================================
+// NOT declarable here (engine/grammar work): structural keywords (assume,
+// let, by, ...), quantifier grammar, the precedence anchors and their
+// order (incl. which levels have tight holes), big-operator form SHAPES,
+// prefix -, reciprocal /, postfix !/', exponent ^, function application,
+// tuples/sets/setbuilder, EFA @, «» escapes, the tokenizer, and the
+// grammar-level operator words (not, neg, mapsto, division, complement,
+// factorial, forall, exists, existsUnique).
+//
+// Derived automatically (never edited): reserved/operator word
+// classification, the Declare name map (any alias word declares its row's
+// head), declared-name tex (from each row's tex:), auto-declared
+// constants (all bigop heads above), the tex printer's operator tables
+// (leaf tex: joins, English echoes, per-surface renderings), the docs
+// syntax page and golden corpus lines (from each declaration's surfaces
+// and example: fields), and the property tests.
+// =========================================================================

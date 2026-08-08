@@ -1,0 +1,82 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Chain Families
+//
+// The chain-operator table (Slice 2 of the chains-first-class plan,
+// 2026-07-28): a transitive chain mixes = with the operators of exactly
+// one family - (<,≤,=), (cong_(m),=), (≅,=) bare congruence, (|,=), or
+// (⊆,=) - and the ChainsRule tool emits the per-family transitive
+// conclusion (the strongest family operator present among the steps).
+// The | and ⊆ operators moved from the relation rows into the chain
+// machinery, so their multi-step forms are chains now; bare congruence
+// `a cong b` is new (the geometer's (≅ a b)).
+//
+// The last section certifies the defensive path: the parser guarantees
+// one family per chain, so the only way a mixed-family trans_chain LC
+// can exist is raw putdown that bypassed the parser - such a chain
+// still splits into steps, but emits no transitivity instantiation.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+Declare =, |, subset, cong
+Rule: :{ ChainsRule }
+
+➤ "a divisibility chain: steps validate and the transitive conclusion is |"
+{
+  Declare a, b, c
+  {
+    Assume a | b
+    Assume b | c
+    { a | b | c } ✔︎
+    a | c ✔︎
+    c | a ✗
+  }
+}
+
+➤ "an inclusion chain mixing = : the conclusion is ⊆ (⊆ beats =)"
+{
+  Declare A, B, C, D
+  {
+    Assume A subset B
+    Assume B = C
+    Assume C subset D
+    { A subset B = C subset D } ✔︎
+    A subset D ✔︎
+    A = D ✗
+  }
+}
+
+➤ "a bare congruence chain: the geometer's a cong b, transitive"
+{
+  Declare x, y, z
+  {
+    Assume x cong y
+    Assume y cong z
+    { x cong y cong z } ✔︎
+    x cong z ✔︎
+    z = x ✗
+  }
+}
+
+➤ "a pure = chain still concludes with = (the neutral operator)"
+{
+  Declare u, v, w
+  {
+    Assume u = v
+    Assume v = w
+    { u = v = w } ✔︎
+    u = w ✔︎
+  }
+}
+
+➤ "defensive: a mixed-family trans_chain built in raw putdown splits into steps but emits no transitive conclusion"
+{
+  Declare p, q, r
+  {
+    Assume p | q
+    Assume q subset r
+    «{ (trans_chain p | q ⊆ r) }» ✔︎
+    p | r ✗
+    p subset r ✗
+  }
+}

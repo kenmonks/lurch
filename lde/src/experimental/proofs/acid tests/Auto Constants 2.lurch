@@ -1,0 +1,54 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Auto Constants 2 - the invisible structural heads
+//
+// The invisible structural heads (maps, index, tuple, set, setbuilder,
+// class, trans_chain - parsers/notation-tables.js invisibleHeads, Ken
+// approved 2026-08-03) are auto-declared constants: the user types
+// `f : A to B` or `⟨a,b⟩` and never the head words themselves, so "what
+// constant should I Declare?" is unanswerable for them, and a Rule using
+// such notation with its head left a metavariable can instantiate the
+// head to a DIFFERENT invisible head of the same arity - the same
+// soundness hazard class the big-operator heads closed (sum := defint,
+// see Auto Constants.lurch).
+//
+// The motivating hazard here: `f : A to B` parses to (maps f A B) and
+// `⟨g,X,Y⟩` to (tuple g X Y), both ternary applications, so with maps a
+// metavariable the domain rule below instantiates maps := tuple inside
+// its equation weeny and a 3-tuple falsely justifies a domain claim.
+// (The equation shape is just one instance: a bare metavariable-headed
+// premise fires the same way - `:{ :Maps(f,A,B) Maps(f,B,A) }` with
+// undeclared capital-M Maps lets Likes(food,friends,meatballs) justify
+// Likes(food,meatballs,friends), verified 2026-08-03 - which for user
+// symbols like Maps is intended second-order Rule behavior, and for the
+// invisible heads is exactly what auto-declaration prevents.)
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.  The head maps
+// is deliberately NOT declared ANYWHERE in this file - interpretation
+// hoists every Declare to the top of the document, so a Declare in any
+// section would neutralize the hazard - because auto-declaration is
+// exactly what is under test (the third section redeclares OTHER
+// invisible heads for the harmlessness check).
+
+Declare =, dom
+
+➤ "an undeclared maps head is not a metavariable: a 3-tuple must not instantiate it"
+{
+  Declare g, X, Y
+  Rule: :{ dom((f : A to B)) = A }
+  dom(⟨g,X,Y⟩) = X ✗
+}
+
+➤ "the same rule still fires on real maps statements: f, A, B stay metavariables"
+{
+  Declare h, U, V
+  Rule: :{ dom((f : A to B)) = A }
+  dom((h : U to V)) = U ✔︎
+}
+
+➤ "re-declaring invisible heads is harmless"
+{
+  Declare tuple, index, j, S, T
+  Rule: :{ dom((f : A to B)) = A }
+  dom((j : S to T)) = S ✔︎
+}

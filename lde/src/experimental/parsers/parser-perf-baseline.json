@@ -1,0 +1,48 @@
+{
+  "recorded": "2026-07-22T04:11:53.459Z",
+  "node": "v24.1.0",
+  "cpu": "Apple M2 Max",
+  "platform": "darwin arm64",
+  "corpus": {
+    "putdown": {
+      "inputs": 913,
+      "totalMs": 130.927
+    },
+    "tex": {
+      "inputs": 912,
+      "totalMs": 39.764
+    }
+  },
+  "expressions": {
+    "long sum (200 terms)": {
+      "chars": 399,
+      "putdownMs": 0.776,
+      "texMs": 0.845
+    },
+    "products and powers (60 factors)": {
+      "chars": 534,
+      "putdownMs": 0.569,
+      "texMs": 0.592
+    },
+    "nested parens (40 deep)": {
+      "chars": 83,
+      "putdownMs": 0.244,
+      "texMs": 0.375
+    },
+    "propositional (50 connectives)": {
+      "chars": 441,
+      "putdownMs": 0.559,
+      "texMs": 0.599
+    },
+    "quantifiers and sums": {
+      "chars": 104,
+      "putdownMs": 0.133,
+      "texMs": 0.157
+    },
+    "chain (10 steps)": {
+      "chars": 92,
+      "putdownMs": 0.132,
+      "texMs": 0.168
+    }
+  }
+}

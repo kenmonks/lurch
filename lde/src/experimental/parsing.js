@@ -18,6 +18,7 @@
 import { Environment } from '../environment.js'
 import { Symbol as LurchSymbol } from '../symbol.js'
 import { Application } from '../application.js'
+import { BindingExpression } from '../binding-expression.js'
 import Algebrite from '../../dependencies/algebrite.js'
 import { addIndex } from './index-definitions.js'
 const compute = Algebrite.run
@@ -391,9 +392,96 @@ const numericToCAS = e => {
   // division is unary reciprocal
   } else if (kids[0].matches('/')) {
     return `(1/${convert(kids[1])})`
-  // negation is what's left  
+  // negation is what's left
   } else {
     return `(${kids[0].text()}${convert(kids[1])})`
+  }
+}
+
+/**
+ * Convert an algebraic expression LC to Algebrite (CAS) syntax, or return
+ * `undefined` when the expression lies outside the CAS fragment.
+ *
+ * This is the structural (LC→CAS) replacement for the old practice of
+ * passing the user's typed `lurchNotation` string to Algebrite verbatim
+ * (2026-07-28): the by-algebra tool converts each side of an equation with
+ * this function, so students may write ANY Lurch notation whose meaning
+ * lands in the fragment - the typed surface no longer needs to be
+ * Algebrite-compatible, and expressions with no notation attribute at all
+ * (Lode documents, test files) work identically.
+ *
+ * The fragment: numbers and symbols (by their text - Algebrite rejects
+ * names it cannot read, which the caller reports as inapplicable, so no
+ * allow-list of names is needed); the n-ary `+` and `⋅` (the precedence
+ * climb flattens same-level runs, so these are NOT binary); the unary
+ * reciprocal `/`, negation `-`, and factorial `!`; binary `^`; `choose`
+ * (an Algebrite built-in); tuples in bracket notation (vectors and
+ * matrices - a transpose tick on a tuple is formatting-only and never
+ * reaches the LC, matching the old behavior of stripping `]'`); the big
+ * operators sum/product/defint/integral, whose putdown heads are the
+ * Algebrite call forms by design (Phase 3c); and ordinary function
+ * applications with simple alphanumeric names (cos, sqrt, det, adj, inv,
+ * dot, ln, user functions - unknown names stay symbolic in Algebrite).
+ * Everything else - relations, connectives, quantifiers, bindings, set
+ * aggregates, glyph-headed operators like ★ or ∪, compound heads like the
+ * parameterized (≅ m) - is out of the fragment and yields `undefined`.
+ *
+ * @param {LogicConcept} e - The expression to convert.
+ * @returns {string|undefined} The CAS string, or `undefined` if any part
+ *   of the expression is outside the CAS fragment.
+ */
+export const algebraToCAS = e => {
+  const convert = algebraToCAS
+  // symbols (numbers and names) pass through as their text
+  if (e instanceof LurchSymbol) return e.text()
+  if (!(e instanceof Application)) return
+  const op = e.child(0)
+  if (!(op instanceof LurchSymbol)) return
+  const args = e.children().slice(1)
+  // convert every argument, or fail the whole expression
+  const all = xs => {
+    const out = xs.map(convert)
+    return out.some( x => x === undefined ) ? undefined : out
+  }
+  const a = op.matches('sum') || op.matches('product') ||
+            op.matches('defint') || op.matches('integral') ? null : all(args)
+  if (a === undefined) return
+  switch (op.text()) {
+    // n-ary sums and products
+    case '+' : return `(${a.join('+')})`
+    case '⋅' : return `(${a.join('*')})`
+    // unary reciprocal, negation, factorial; binary exponentiation
+    case '/' : return args.length === 1 ? `(1/${a[0]})` : undefined
+    case '-' : return args.length === 1 ? `(-${a[0]})` : undefined
+    case '!' : return args.length === 1 ? `(${a[0]}!)` : undefined
+    case '^' : return args.length === 2 ? `(${a[0]}^${a[1]})` : undefined
+    // vectors and matrices
+    case 'tuple' : return `[${a.join(',')}]`
+    // the big operators: (sum (k , f) lo hi) → sum(f,k,lo,hi),
+    // (integral (x , f)) → integral(f,x), and so on.  In putdown the
+    // parenthesized binding (k , f) is an Application wrapping a
+    // one-binding group, so unwrap it first.
+    case 'sum' : case 'product' : case 'defint' : case 'integral' : {
+      let bind = args[0]
+      if ( bind instanceof Application && bind.numChildren() === 1 )
+        bind = bind.child(0)
+      if (!(bind instanceof BindingExpression) ||
+          bind.numChildren() !== 2) return
+      const k = convert(bind.child(0)), f = convert(bind.child(1))
+      const rest = all(args.slice(1))
+      if (k === undefined || f === undefined || rest === undefined) return
+      return `${op.text()}(${[ f, k, ...rest ].join(',')})`
+    }
+    // set aggregates are not CAS material (Algebrite would treat them as
+    // uninterpreted functions of their elements, giving wrong verdicts
+    // for reordered elements)
+    case 'set' : case 'class' : case 'setbuilder' : return
+    default :
+      // any other simple alphanumeric name is an ordinary function call;
+      // structural and glyph heads (∈ ¬ λ ★ ∪ trans_chain ...) fail the
+      // name test and stay out of the fragment
+      return /^[A-Za-z][A-Za-z0-9]*$/.test(op.text())
+        ? `${op.text()}(${a.join(',')})` : undefined
   }
 }
 
@@ -790,20 +878,45 @@ export const processShorthands = L => {
     m.replaceWith(env)
   } )
 
-  // add the next sibling, if present, to the body of the previous declaration.
-  // Note that this should not appear in the user's document if it is not after
-  // a Let declaration whose body is empty (i.e., its last child is the symbol
-  // "LDE empty") because the UI doesn't allow it to be constructed otherwise,
-  // so we don't check for that.
-  processSymbol( '<be' ,  m => { 
-    let dec = m.previousSibling()
-    const body = m.nextSibling()
+  // Add the next sibling, if present, to the body of the previous declaration.
+  // If the next sibling is a continuation (the first in a comma separated list
+  // of claims) the entire sequence belongs to the body.
+  //
+  // There are two possible cases to check for, depending if the declaration
+  // already has a body or not (due to the `Let x,y in A` shortcut, which can
+  // be combined with `(be) such that`).  A single such-that condition on a
+  // bodyless Let becomes the body itself; otherwise the body is an
+  // environment containing any membership body the declaration already had
+  // followed by the such-that conditions, mirroring what some> does for
+  // ForSomes.  Note that <be should not appear in the user's document if it
+  // is not after a Let declaration because the UI doesn't allow it to be
+  // constructed otherwise, so we don't check for that.
+  processSymbol( '<be' ,  m => {
+    const dec = m.previousSibling()
+    const next = m.nextSibling()
     // if it doesn't have a next sibling, don't do anything.
-    if (!body) return
-    dec.popChild()
-    dec.pushChild(body) // should remove body as the next sibling too
+    if (!next) return
+    // collect the comma-continued sequence of such-that conditions
+    const seq = [ next ]
+    while ( seq[seq.length-1].continued && seq[seq.length-1].nextSibling() )
+      seq.push( seq[seq.length-1].nextSibling() )
+    const curr = dec.body()
+    // base case: a single condition on a bodyless Let is the body itself
+    if ( !curr && seq.length === 1 ) {
+      dec.setBody( next ) // should remove next as the next sibling too
+    // otherwise the body is an environment
+    } else {
+      // if the body isn't an environment, make it one, keeping any
+      // membership body as its first child
+      if ( !(curr instanceof Environment) ) {
+        dec.setBody( new Environment() )
+        if ( curr ) dec.body().pushChild( curr )
+      }
+      // then push the conditions onto it
+      seq.forEach( x => dec.body().pushChild( x ) )
+    }
     m.remove()
-    return 
+    return
   } )
 
   // Add the previous sibling, if present, to the body of the next declaration.
@@ -890,9 +1003,9 @@ export const processShorthands = L => {
 }
 
 export default {
-  isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger, 
-  isRational, isNumeric, isNumberType, isNaturalArithmetic, 
-  isIntegerArithmetic, isRationalArithmetic, hasMatrixOps, numericToCAS, 
-  parseLines, makeParser
+  isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger,
+  isRational, isNumeric, isNumberType, isNaturalArithmetic,
+  isIntegerArithmetic, isRationalArithmetic, hasMatrixOps, numericToCAS,
+  algebraToCAS, parseLines, makeParser
 }
 ///////////////////////////////////////////////////////////////////////////////

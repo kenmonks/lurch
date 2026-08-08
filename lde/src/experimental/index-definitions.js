@@ -149,11 +149,19 @@ export const addLurchIndices = (indexer, phase) => {
        x.child(0,1).matches('ℕ|ℤ|ℚ')
     )
 
-    // Find the EquationRule or ChainsRule if present
-    define( 'Chains rule', x=> 
-      (x.isA('Rule') || x.isA('Inst')) && 
-      x.numChildren()==1 && 
-      (x.child(0).matches('EquationsRule') || x.child(0).matches('ChainsRule'))
+    // Find the EquationRule or ChainsRule if present.  Since the
+    // chain-operator table (2026-07-28) the rule may be parameterized on
+    // the AlgebraRule(NoMatrixOps) precedent: `ChainsRule(op, ...)`
+    // parses to the Application (ChainsRule op ...), and processChains
+    // reads the listed ops as the enabled chain families (bare
+    // ChainsRule enables all of them).
+    define( 'Chains rule', x=>
+      (x.isA('Rule') || x.isA('Inst')) &&
+      x.numChildren()==1 &&
+      (x.child(0).matches('EquationsRule') || x.child(0).matches('ChainsRule') ||
+        (x.child(0) instanceof Application &&
+         x.child(0).numChildren()>1 &&
+         x.child(0,0).matches('ChainsRule')))
     )
 
   } else {

@@ -1,197 +1,179 @@
-// Raw Example Data for the LurchMath Parser
-import { parse as lurchToTex } from './lurch-to-tex.js'
-const tex = lurchToTex
+///////////////////////////////////////////////////////////////////////////
+// The syntax documentation table for the LurchMath parser
+//
+// The DECLARABLE notation rows
+// derive from lurch-notation.txt: the loader records one surface pool per
+// declaration (chain family / big-operator section) in
+// notationExtras.docRows - primary pattern, word: synonyms, also:
+// surfaces, the isa registry's automatic `is not` twins, and the
+// example: instances - and this module expands each pool into docs boxes
+// by grouping inputs whose tex renderings are IDENTICAL (the dedup
+// policy: a box lists only synonyms that render the same
+// way; surfaces with per-surface renderings, like `P wedge Q` or the
+// `is a` echoes, get their own box).  A new notation-file row therefore
+// appears on the docs page and in the golden corpus with zero JS edits.
+//
+// The hand skeleton below contributes the section headers, the
+// { derive: band } placeholders, and the rows for GRAMMAR-LEVEL notation
+// the file cannot declare (quantifiers, algebraic/postfix forms, sets and
+// tuples, declarations, mentions).  Hand rows are plain arrays of input
+// strings; the rendered column is always the live tex parse of the first
+// input, so there is nothing here to drift.
+//
+// Exported so the golden-snapshot suite in parsertests.js can test every
+// documented input with both parsers - see the MakedocExamples suite
+// there.  Any input added here (or in the notation file) is automatically
+// picked up by the tests.
 
-const syntax = 
-[
+import { parse } from './lurch-to-putdown.js'
+import { notationExtras } from './notation-tables.js'
+const tex = ( s, opts = {} ) => parse( s, { ...opts, tex: true } )
 
-'Logic',
-[['P and Q', 'P∧Q'                   ],`P\\text{ and }Q`],
-[['P or Q',  'P∨Q'                   ],`P\\text{ or }Q`],
-[['not P'                            ],`\\text{not }P`],
-[['neg P', '¬P'                      ],`\\neg P`],
-[['P implies Q', 'P⇒Q'               ],`P\\Rightarrow Q`],
-[['P iff Q', 'P⇔Q'                   ],`P\\Leftrightarrow Q`],
-[['contradiction', '→←'              ],`\\rightarrow\\leftarrow`],
-[['lambda proves P', 
-  'lambda vdash P', 
-  'lambda ⊢ P'                       ],`\\lambda\\vdash P`],
+// the docs page renders with sets enabled, exactly as the tests parse it
+const texOf = input => {
+  try { return tex( input, { enableSets: true } ) }
+  catch { return null }
+}
+
+// expand one docRow pool into boxes: inputs with identical tex share a
+// box, in order of first appearance; inputs that do not parse standalone
+// (the bare quantifier words of the constants group) are skipped - they
+// are grammar participants, documented by the hand rows
+const boxesOf = row => {
+  const boxes = [], byTex = new Map()
+  row.inputs.forEach( input => {
+    const t = texOf(input)
+    if ( t === null ) return
+    if ( byTex.has(t) ) byTex.get(t).push(input)
+    else { const box = [ input ]; byTex.set(t, box); boxes.push(box) }
+  } )
+  return boxes
+}
+
+const expand = table => table.flatMap( entry =>
+  typeof entry === 'object' && !Array.isArray(entry)
+    ? notationExtras.docRows.filter( r => r.band === entry.derive )
+        .flatMap(boxesOf)
+    : [ entry ] )
+
+// The hand skeleton: section header strings, { derive: band } placeholders
+// (bands: prop, relation, chain, setAlg, bigop, constant - the notation
+// file's group structure), and hand boxes for grammar-level notation.
+const skeleton = [
+
+'Propositional logic',
+{ derive: 'prop' },
+['not P'],
+['neg P', '¬P'],
 
 'Quantifiers and bindings',
-[['forall x.x leq x+1',
-  'for all x.x leq x+1', 
-  '∀x.x leq x+1'                      ],`\\forall x, x\\leq x+1` ],
-[['exists x.x=2 cdot x', 
-  '∃x.x=2⋅x'                         ],`\\exists x, x=2\\cdot x` ],
-[['exists unique x.x=2*x', 
-  '∃!x.x=2⋅x'                        ],`\\exists ! x, x=2\\cdot x` ],
-[['x.x+2', 'x mapsto x+2' , 'x↦x+2'  ],`x, x+1`],
-
-'Algebraic expressions',
-[['(x)'                              ],'\\left(x\\right)'],
-[['x+y'                              ],`x+y`],
-[['2+x+y'                            ],`2+x+y`],
-[['-x'                               ],`-x` ],
-[['1-x'                              ],`1-x`],
-[['x*y','x cdot y', 'x⋅y'            ],`x\\cdot  y`],
-[['2*x*y','2 cdot x cdot y', '2⋅x⋅y' ],`2\\cdot x\\cdot y`],
-[['2*3*x','2 cdot 3 cdot x', '2⋅3⋅x' ],`2\\cdot 3\\cdot x`],
-[['1/x'                              ],`\\frac{1}{x}`],
-[['2*1/x*y'                          ],`2\\cdot\\frac{1}{x}\\cdot y`],
-[['(2*1)/(x*y)'                      ],`\\frac{2\\cdot 1}{x\\cdot y}`],
-[['x^2'                              ],`x^2`],
-[['x factorial', 'x!'                ],`x!`],
-[['(n+1) choose (k-1)'               ],`\\binom{n+1}{k-1}`],
-[['multinomial(m,n)'                 ],`(m,n)`],
-[['abs((1-x)/(1+x))'                 ],`\\left|\\,\\frac{1+x}{1-x}\\,\\right|`],
-[['x star y'                         ],`x\\star y`],
-[['x star y star z'                  ],`x\\star y\\star z`],
-[['x oplus y'                        ],`x\\oplus y`],
-[['x oplus y oplus z'                ],`x\\oplus y\\oplus z`],
-[['x otimes y'                       ],`x\\otimes y`],
-[['x otimes y otimes z'              ],`x\\otimes y\\otimes z`],
-[['x odot y'                         ],`x\\odot y`],
-[['x odot y odot z'                  ],`x\\odot y\\odot z`],
-[['star is associative'              ],`\\star\text{ is associative}`],
-[['oplus is associative'             ],`\\oplus\text{ is associative}`],
-[['otimes is associative'            ],`\\otimes\text{ is associative}`],
-[['odot is associative'              ],`\\odot\text{ is associative}`],
-[['sum k=0 to n of k^2',
-  'sum k from 0 to n of k^2',
-  'sum k to n of k^2',
-  'sum of k^2 as k goes from 0 to n',
-  'sum k^2 as k goes from 0 to n',
-  'sum k^2 as k from 0 to n',
-  'sum k^2 for k from 0 to n',
-  'sum k^2 for k to n',
-  'sum of k^2 as k to n',
-  'sum of k^2 for k to n',
-  'sum( k^2 , k , 0 , n )',
-  'sum(k^2,k,0,n)',
-  'sum(k^2,k,n)'                     ],`\\sum_{k=0}^n k^2`],
-[['sum k in I of k^2',
-  'sum of k^2 for k in I'            ],`\\sum_{k\\in I} k^2`],
-[['product(k^2,k,0,n)'               ],`\\prod_{k=0}^n k^2`],
-[['int x=0 to n of x^2',
-  'int x from 0 to n of x^2',
-  'int of x^2 as x goes from 0 to n',
-  'int x^2 as x goes from 0 to n',
-  'int x^2 as x from 0 to n',
-  'int x^2 for x from 0 to n',
-  'int x^2 for x to n',
-  'int of x^2 as x to n',
-  'int of x^2 for x to n',
-  'int( x^2 , x , 0 , n )',
-  'int(x^2,x,0,n)'                   ],`\\int_0^n x^2\\,\\mathrm{d}x`],
-[['int x^2 dx',
-  'int with respect to x of x^2',
-  'int wrt x of x^2',
-  'int of x^2 with respect to x',
-  'int x^2 wrt x',
-  'int(x^2,x)'                       ],`\\int x^2\\,\\mathrm{d}x`],
-[['Fib_(n+2)'                        ],`F_{n+2}`],
-[['index(G,H)',
-  '[G:H]'                            ],`\left[G\mathbin{:}H\right]`],
-
-'Set Theory',
-[['x in A', 'x∈A'                    ],`x\\in A` ],
-[['x notin A', 'x∉A'                 ],`x\\notin A` ],
-[['{a,b,c}', 'set(a,b,c)'            ],`\\left\\{\\,a,b,c\\,\\right\\}` ],
-[['{ p:p is prime}', 
-  'set(p:p is prime)'                ],`\\left\\{\\,a,b,c\\,\\right\\}` ],
-[['A subset B', 'A subseteq B', 'A⊆B'],`A\\subseteq B`],
-[['A subgroup B', 
-  'A sqsubseteq B', 'A⊑B'            ],`A\\sqsubseteq B`],
-[['A cup B', 'A union B', 'A∪B'      ],`A\\cup B`],
-[['A cap B', 'A intersect B', 'A∩B'  ],`A\\cap B`],
-[['A setminus B', 'A∖B'              ],`A\\setminus B`],
-[['A\'','A complement', 'A°'         ],`A'`],
-[['powerset(A)', '𝒫(A)'              ],`\\textbf{P}(A)`],
-[['f:A to B', 'f:A→B'                ],`f\\colon A\\to B`],
-[['f(x)'                             ],`f\\left(x\\right)`],
-[['f_(x)'                            ],`f_x`],
-[['f_(0)(x)_(n+1)'                   ],`f_{0}\\left(x\\right)_{n+1}`],
-[['g circ f', 'g comp f' , 'g∘f'     ],`g\\circ f`],
-[['A times B', 'A cross B' ,'A×B'    ],`A\\times B`],
-[['infty' , 'infinity'               ],`\\infty`],
-[['[x,y]','pair(x,y)' , 'tuple(x,y)',
-  '⟨x,y⟩'                            ],`\\langle x,y \\rangle`],
-[['[x,y,z]','triple(x,y,z)' , 
-  'tuple(x,y,z)', '⟨x,y,z⟩'          ],`\\langle x,y,z \\rangle`],
-[['[w,x,y,z]','tuple(w,x,y,z)' , 
-  '⟨w,x,y,z⟩'                        ],`\\langle x,y \\rangle`],
-[['[[1,2],[3,4]]'                    ],
-  `\\left[\\begin{matrix}1 & 2 \\\\ 3 & 4 \\end{matrix}\\right]`],  
-[[`[x,y]'`                           ],
-  `\\left[\\begin{matrix}x \\\\ y \\end{matrix}\\right]`],
-[[`[x,y,z]'`                          ],
-  `\\left[\\begin{matrix}x \\\\ y \\\\ z \\end{matrix}\\right]`],
-[[`[[1,2,3],[4,5,6]]'`                    ],
-  `\\left[\\begin{matrix}1 & 4 \\\\ 2 & 5 \\\\ 3 & 6 \\end{matrix}\\right]`],  
-[['Union i in I of A_(i)',
-  'Union of A_(i) for i in I',
-  'Union(A_(i),i,I)',
-  'Cup i in I of A_(i)',
-  'bigcup i in I of A_(i)'           ],`\\Bigcup_{i\\in I} A_i`],
-[['Intersect i in I of A_(i)',
-  'Intersect of A_(i) for i in I',
-  'Intersect(A_(i),i,I)',
-  'Cap i in I of A_(i)',
-  'bigcap i in I of A_(i)'           ],`\\Bigcap_{i\\in I} A_i`],
+['forall x.x leq x+1', 'for all x.x leq x+1', '∀x.x leq x+1'],
+['exists x.x=2 cdot x', '∃x.x=2⋅x'],
+['exists unique x.x=2*x', '∃!x.x=2⋅x'],
+['x.x+2', 'x mapsto x+2', 'x↦x+2'],
 
 'Relations',
-[['x lt 0', 'x &lt; 0'               ],`x\\lt 0` ],
-[['x leq 0', 'x ≤ 0'                 ],`x\\leq 0` ],
-[['x neq 0', 'x ne 0', 'x≠0'         ],`x\\neq 0` ],
-[['m | n', 'm divides n'             ],`m\\mid n` ],
-[['a cong b mod m', 
-  'a cong mod m to b'                ],`a\\underset{m}{\\equiv}b` ],
-[['x~y'                              ],`x\\sim y`],
-[['x~y~z'                            ],`x\\sim y\\sim z`],
-[['x=y'                              ],`x=y`],
-[['x=y=z'                            ],`x=y=z`],
-[['X loves Y'                        ],`X\\text{ loves }Y`],
-[['X is Y', 'X is an Y', 'X is a Y',
-  'X are Y'                          ],`X\\text{ is }Y`],
-[['P is a partition of A'            ],`P\\text{ is a partition of }A`],
-[[`'~' is an equivalence relation`   ],`\\sim\\text{ is equivalence relation}`],
-[['class(a)'                         ],`\\left[a\\right]` ],
-[['class(a,~)'                       ],`\\left[a\\right]_{\\sim}` ],
-[[`'~' is a strict partial order`    ],`\\sim\\text{ is strict partial order}`],
-[[`'~' is a partial order`           ],`\\sim\\text{ is partial order}`],
-[[`'~' is a total order`             ],`\\sim\\text{ is total order}`],
+{ derive: 'relation' },
+
+'Transitive chains',
+['x=y'],
+['x=y=z'],
+{ derive: 'chain' },
+
+'Set and algebraic operators',
+{ derive: 'setAlg' },
+
+'Big operators',
+{ derive: 'bigop' },
+
+'Delimited forms',
+{ derive: 'delimited' },
+
+'Constants and phrases',
+{ derive: 'constant' },
+
+'Algebraic expressions',
+['(x)'],
+['2+x+y'],
+['-x'],
+['1-x'],
+['1/x'],
+['2*1/x*y'],
+['(2*1)/(x*y)'],
+['x^2'],
+['x factorial', 'x!'],
+['multinomial(m,n)'],
+['abs((1-x)/(1+x))'],
+['x star y star z'],
+['Fib_(n+2)'],
+
+'Sets, functions, and tuples',
+['{a,b,c}', 'set(a,b,c)'],
+['{ p:p is prime}', 'set(p:p is prime)'],
+["A'", 'A complement', 'A°'],
+['powerset(A)', '𝒫(A)'],
+['f:A→B'],
+['f(x)'],
+['f_(x)'],
+['f_(0)(x)_(n+1)'],
+['[x,y]', 'pair(x,y)', 'tuple(x,y)', '⟨x,y⟩'],
+['[x,y,z]', 'triple(x,y,z)', 'tuple(x,y,z)', '⟨x,y,z⟩'],
+['[w,x,y,z]', 'tuple(w,x,y,z)', '⟨w,x,y,z⟩'],
+['[[1,2],[3,4]]'],
+["[x,y]'"],
+["[x,y,z]'"],
+["[[1,2,3],[4,5,6]]'"],
+['class(a)'],
+['class(a,~)'],
 
 'Assumptions and Declarations (case insensitive, phrase is echoed)',
-[['Assume P', 'Given P', 'From P',
-  'Suppose P', 'If P', 'Define P', 
-  ':P',                              ],`\\text{Assume }P\\text{  (etc.)}` ],
-[['Let x'                            ],`\\text{Let }x` ],
-[['Let x in A'                       ],`\\text{Let }x\\in A` ],
-// [['Let x,y,z in A'                   ],`\\text{Let }x,y,z\\in A` ],
-[['Let x be such that x in RR',
-  'Let x such that x in RR'          ],
-  `\\text{Let }x\\text{ be such that }x\\in\\mathbb{R}` ],
-[['f(c)=0 for some c'                ],`f(c)=0\\text{ for some }c` ],
-[['f(c)=0 for some c in A'           ],`f(c)=0\\text{ for some }c\\in A` ],
-[['Declare is, 0, +, cos'            ],`\\text{Declare is, 0, +, and cos}` ],
+['Assume P', 'Given P', 'From P', 'Suppose P', 'If P', 'Define P', ':P'],
+['Let x'],
+['Let x in A'],
+['Let x be such that x in RR', 'Let x such that x in RR'],
+['Let x in RR be such that 0 leq x'],
+['f(c)=0 for some c'],
+['f(c)=0 for some c in A'],
+['Declare is, 0, +, cos'],
+
+'Mentioning an operator as a symbol (any operator name or glyph)',
+['(star)', "'star'"],
+['(subset)', "'⊆'"],
+['oplus(x,y)', "'⊕'(x,y)", '(⊕)(x,y)'],
+['~ is reflexive', "'~' is reflexive"],
+["⟨x,y⟩ in '~'", '⟨x,y⟩ in ~'],
+['star is associative'],
+['oplus is associative'],
+['otimes is associative'],
+['odot is associative'],
+["'~' is an equivalence relation"],
+["'~' is a strict partial order"],
+["'~' is a partial order"],
+["'~' is a total order"],
 
 'Miscellaneous',
-[['1.23[456]'                        ],`1.23\\overline{456}`],
-[['x^-' , 'x⁻'                       ],`x^-`],
-[['@P(k)', 'λP(k)'                   ],`\\lambda{P}(k)` ]
+['1.23[456]'],
+['x^-', 'x⁻'],
+['@P(k)', '𝜆P(k)']
 
 ]
+
+export const syntax = expand(skeleton)
+
+const esc = s => s.replaceAll('&', '&amp;')
+                  .replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+
 export const makedoc = () => {
   let ans = ''
   syntax.forEach( row => {
     if (typeof row === 'string') {
-      ans = ans + 
+      ans = ans +
         `\n<tr><td colspan="2" class="subheader">${row}</td></tr>\n`
     } else {
-      ans = ans + 
+      ans = ans +
        `<tr>
-          <td>${row[0].join('<br/>')}</td>
-          <td>$${tex(row[0][0],{enableSets:true})}$</td>
+          <td>${row.map(esc).join('<br/>')}</td>
+          <td>$${tex(row[0],{enableSets:true})}$</td>
         </tr>\n`
     }
   })

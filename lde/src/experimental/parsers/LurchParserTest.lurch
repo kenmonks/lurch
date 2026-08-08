@@ -318,10 +318,12 @@ f(0):A∩B → A∪B°
 f:NN → NN
 f⁻:A→B
 
-// relations
+// relations (~ is single-step, so n-ary runs like a~(b+1)~c~d^2 do
+// not parse)
 x~y
 x ~ y
-a~(b+1)~c~d^2
+a~(b+1)
+c~d^2
 a ≅ b mod m
 a+k ≅ b-3 mod m
 
@@ -331,7 +333,7 @@ a+k ≅ b-3 mod m
 {
   // Assignment #8 (b)
   { 
-    Declare 0 lt 7
+    Declare 0, lt, 7
     {  
       Assume 0 lt 7
       exists x.0 lt x

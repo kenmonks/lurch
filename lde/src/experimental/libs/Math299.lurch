@@ -201,7 +201,7 @@ Definitions:
 //////////////////////////////////
 // Axioms for the Reals
 //////////////////////////////////
-Declare ⁻
+Declare ^, -  // for the inverse notation f⁻, which is (^ f -)
 Axioms:  
 {
 		// Axioms of addition

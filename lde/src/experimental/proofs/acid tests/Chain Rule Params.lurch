@@ -1,0 +1,51 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Chain Rule Params
+//
+// The parameterized ChainsRule form (Slice 2 of the chains-first-class
+// plan, 2026-07-28), on the AlgebraRule(NoMatrixOps) precedent:
+// `ChainsRule(op, ...)` parses to the Application (ChainsRule op ...)
+// and enables transitivity ONLY for the families of the listed
+// operators - here ChainsRule(lt) enables the inequality ladder and
+// nothing else.  Chains of every family still SPLIT into steps (the
+// steps below all validate from their Assumes), and pure-= chains are
+// always enabled (they are the ChainsRule machinery itself), but a
+// disabled family's transitive conclusion is not emitted.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+Declare =, |, <
+Rule: :{ ChainsRule(lt) }
+
+➤ "an inequality chain: its family is enabled, so the conclusion is emitted"
+{
+  Declare a, b, c
+  {
+    Assume a = b
+    Assume b < c
+    { a = b < c } ✔︎
+    a < c ✔︎
+  }
+}
+
+➤ "a pure = chain is always enabled"
+{
+  Declare u, v, w
+  {
+    Assume u = v
+    Assume v = w
+    { u = v = w } ✔︎
+    u = w ✔︎
+  }
+}
+
+➤ "a divisibility chain: steps still split and validate, but its family is not listed, so no transitive conclusion"
+{
+  Declare x, y, z
+  {
+    Assume x | y
+    Assume y | z
+    { x | y | z } ✔︎
+    x | z ✗
+  }
+}

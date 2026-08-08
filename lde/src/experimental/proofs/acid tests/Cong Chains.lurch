@@ -1,0 +1,72 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Cong Chains
+//
+// Transitive chains may mix = with congruence steps cong_(m) (the
+// cong-chains upgrade, 2026-07): a chain commits to one operator family
+// - the inequality family =/</≤ or the congruence family =/cong_(m) -
+// AND, for congruences, to one modulus (the equal-moduli commitment:
+// congruences compose only when the moduli agree, so a cong step with a
+// structurally different modulus ends the chain at the parser).  The
+// ChainsRule tool therefore always emits the per-family transitive
+// conclusion; the only way a mixed-moduli trans_chain LC can exist is
+// raw putdown that bypassed the parser, and the third section certifies
+// that defensive path: such a chain still splits into steps, but emits
+// no transitivity instantiation.
+//
+// The last section checks the by-algebra plumbing: the by-algebra tool
+// converts a trio's two sides to Algebrite syntax structurally from the
+// LC (algebraToCAS, 2026-07-28), so an = step justified by algebra
+// works inside a cong chain - and works HERE, in a test file whose LCs
+// carry no lurchNotation attribute at all, which the old
+// notation-string slicing could never do.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+Declare =, cong, ⋅, +
+Rule: :{ ChainsRule }
+
+➤ "a mixed =/cong chain: steps validate, and the transitive conclusion is the congruence"
+{
+  Declare a, b, c, m
+  {
+    Assume a cong_(m) b
+    Assume b = c
+    { a cong_(m) b = c } ✔︎
+    a cong_(m) c ✔︎
+  }
+}
+
+➤ "a pure congruence chain: transitive conclusion, same modulus required"
+{
+  Declare x, y, z, k, j
+  {
+    Assume x cong_(k) y
+    Assume y cong_(k) z
+    { x cong_(k) y cong_(k) z } ✔︎
+    x cong_(k) z ✔︎
+    x cong_(j) z ✗
+  }
+}
+
+➤ "defensive: a mixed-moduli trans_chain built in raw putdown still splits into steps but emits no transitive conclusion"
+{
+  Declare p, q, r
+  {
+    Assume p cong_(2) q
+    Assume q cong_(3) r
+    «{ (trans_chain p (≅ 2) q (≅ 3) r) }» ✔︎
+    p cong_(2) r ✗
+    p cong_(3) r ✗
+  }
+}
+
+➤ "an = step by algebra inside a cong chain converts structurally (no notation attribute needed)"
+Rule: :{ AlgebraRule }
+{
+  Declare u
+  {
+    Assume 2*u+2 cong_(2) 0
+    { 2*(u+1) = 2*u+2 by algebra cong_(2) 0 } ✔︎
+  }
+}

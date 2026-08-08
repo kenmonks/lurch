@@ -27,9 +27,6 @@ Definitions:
 	   '~' is reflexive '~' is symmetric  '~' is transitive  }
 	:{ x∈[a] ≡ x~a } // equivalence class
 
-  // congruence mod m
-  :{ a ≈ b mod m  ≡  m | a-b } 
-  
 	// partition TODO: after doing indexed union
   // :{ :P is a partition of A  P⊆𝒫(A) ∪P=A {:s∈A :t∈A s∩t=Set() or s=t } }
 

@@ -33,7 +33,7 @@ n in { n : n in { 1,2,3 } }
 S in { { 0 }, { 0 , {0}}, { p : p cong 3 mod 4 } }
 
 ////////////////////////////////////////////////////////////////////
-// Extended tests (2026-07), used with the golden-snapshot suite in
+// Extended tests, used with the golden-snapshot suite in
 // parsertests.js.  Every line below must parse in BOTH the putdown and
 // tex parsers with the option enableSets:true.
 
@@ -68,3 +68,18 @@ x in A by {membership}
 
 // raw putdown escapes without braces are unaffected by set mode
 «(∈ 2 (set 1 2))»
+// the set-brace replacement
+// and colon padding never reach inside «» escapes or "strings"
+«{ :A A }»
+% "a {b} c"
+
+// set literals are closed units, so they take the whole
+// postfix/exponent layer; locked here for the set-mode
+// invariance check (the tokenizer's brace replacement composes with
+// Closed)
+{1,2}^2
+{1,2}!
+{1,2}'
+{}^2
+2 in {1,2}^2
+({1,2} cap {2,3})^2

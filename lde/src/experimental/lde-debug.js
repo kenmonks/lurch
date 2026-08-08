@@ -38,7 +38,9 @@ import { parse } from "./parsers/lurch-to-putdown.js"
 self.parse = parse
 self.lurchToPutdown = parse
 
-import { parse as lurchToLatex } from "./parsers/lurch-to-tex.js"
+// LaTeX comes from the same unified parser (Phase 2b): the tex option
+// renders the AST with ast-to-tex.js
+const lurchToLatex = (s, opts = {}) => parse(s, { ...opts, tex: true })
 self.lurchToLatex = lurchToLatex
 self.tex = lurchToLatex
 

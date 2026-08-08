@@ -19,6 +19,9 @@ import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig( {
     testDir : './tests/ui',
+    // download the app's CDN resources (TinyMCE etc.) into a local cache
+    // once, so the tests do not depend on the network - see cdn-cache.js
+    globalSetup : './tests/ui/cdn-cache.js',
     // each test gets ample time because the first one boots the whole app
     timeout : 60000,
     // one app instance per worker; tests within a file run in order

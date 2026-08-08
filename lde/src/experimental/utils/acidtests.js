@@ -136,8 +136,12 @@ const loadAcidTests = () => {
       'Environment Body Forms',
       'Unnecessary Declarations',
       'Unsupported Declarations',
+      'Auto Constants',
+      'Auto Constants 2',
       'Preemie Stress',
-      'Transitive Chains', 'Cases', 'BIH Cases', 'user-thms',
+      'Transitive Chains', 'Cong Chains', 'Chain Families',
+      'Chain Rule Params', 'Algebra', 'Cases', 'BIH Cases',
+      'user-thms',
       'ArithmeticNatural', 'ArithmeticInteger', 'ArithmeticRational',
       ['prop', 'math299'], ['pred', 'math299'], ['peanoBIH', 'math299'],
       ['peano', 'math299'], ['midterm', 'math299'], ['recursion', 'math299'],
@@ -181,6 +185,7 @@ const runTests = () => {
       const resultMatches =
         (Validation.result(s)?.result === s.ExpectedResult) ||
         (s.results('arithmetic')?.result === s.ExpectedResult) ||
+        (s.results('algebra')?.result === s.ExpectedResult) ||
         (s.badBIH && s.ExpectedResult === 'invalid') ||
         (s.getAttribute('scope errors')?.redeclared && s.ExpectedResult === 'invalid') ||
         (s.isAChain() && computeChainResult(s) === s.ExpectedResult)

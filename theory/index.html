@@ -548,11 +548,11 @@
         </ul>
         <h3>Parsing</h3>
         <p class="smallskip"
-          >The Lurch web interface uses two parsers written using
-          <a href="https://peggyjs.org" target="_blank">Peggy</a>. One converts
-          the user’s input for meaningful expressions into the internal data
-          structure used by the validation algorithm. The other converts it to
-          the $\LaTeX$ source needed to render mathematics in the document.</p
+          >The Lurch web interface parses the user’s input for meaningful
+          expressions with a single parser written using [Peggy]. It produces a
+          syntax tree that is then rendered in two ways: as the internal data
+          structure used by the validation algorithm, and as the $\LaTeX$ source
+          needed to render mathematics in the document.</p
         >
         <ul class="disc strong-tags dash-after bigskip">
           <li
@@ -566,19 +566,13 @@
           >
           <li
             ><a
-              href="https://github.com/kenmonks/lurch/blob/main/lde/src/experimental/parsers/lurch-to-tex.peggy"
-              target="_blank"
-              >Peggy LaTeX Parser Grammar</a
-            >
-            this is the full Peggy source code for the tex parser.</li
-          >
-          <li
-            ><a
               href="https://github.com/kenmonks/lurch/blob/main/lde/src/experimental/parsers/lurch-to-putdown.peggy"
               target="_blank"
-              >Peggy Putdown Parser Grammar</a
+              >Peggy Parser Grammar</a
             >
-            this is corresponding Peggy source code for the putdown parser.</li
+            this is the full Peggy source code for the Lurch notation parser (a
+            single grammar whose syntax tree is rendered as either putdown or
+            LaTeX).</li
           >
         </ul>
         <div class="note-box small">

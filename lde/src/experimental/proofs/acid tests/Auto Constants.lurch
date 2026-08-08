@@ -1,0 +1,47 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Auto Constants
+//
+// The big-operator heads (sum, sumOver, defint, integral, product, Union,
+// Intersect) are auto-declared constants: their meaning is fixed by Lurch
+// itself (a validation tool interprets them), so a Rule that uses one
+// without a Declare must not treat it as a metavariable.  The list is
+// derived from the notation tables (parsers/notation-tables.js
+// autoDeclaredConstants) and folded into the systemConstants machinery in
+// interpret.js.
+//
+// The motivating hazard (see the 2026-07-27 roadmap decision log entry):
+// sum and defint both parse to 4-ary applications whose first argument is
+// a binding, so they are each other's best match targets.  With sum a
+// metavariable, the summation split rule in the first section instantiates
+// sum := defint and silently justifies a FALSE integral identity (the
+// integral split is at c, not c+1).  Auto-declaring the head costs nothing
+// expressively: the body, index, and limits stay metavariables, which the
+// second section checks.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.  The heads sum and
+// product are deliberately NOT declared in the first two sections -
+// auto-declaration is exactly what is under test.
+
+Declare =, +, ⋅
+
+➤ "an undeclared sum is not a metavariable: it must not instantiate to defint"
+{
+  Declare g, p, q, r
+  Rule: :{ sum(f,k,a,b) = sum(f,k,a,c) + sum(f,k,c+1,b) }
+  defint(g,x,p,q) = defint(g,x,p,r) + defint(g,x,r+1,q) ✗
+}
+
+➤ "the same rule still fires on sums: body, index, and limits stay metavariables"
+{
+  Declare h, u, v, w
+  Rule: :{ sum(f,k,a,b) = sum(f,k,a,c) + sum(f,k,c+1,b) }
+  sum(h,x,u,v) = sum(h,x,u,w) + sum(h,x,w+1,v) ✔︎
+}
+
+➤ "re-declaring an auto-constant is harmless"
+{
+  Declare product, s, m, n, e
+  Rule: :{ product(f,k,a,b) = product(f,k,a,c) ⋅ product(f,k,c+1,b) }
+  product(s,x,m,n) = product(s,x,m,e) ⋅ product(s,x,e+1,n) ✔︎
+}

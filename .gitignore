@@ -9,8 +9,13 @@ node_modules/
 test-results/
 playwright-report/
 
-# ignore the cached TinyMCE for testing
+# the local CDN cache the test suite downloads for itself (see cdn-cache.js)
 .cache/
+
+# ignore .claude settings and project management cruft
+.claude/
+parser-intersection-audit.md
+parser-upgrade-roadmap.md
 
 # ignore the output of the line counter extension
 .VSCodeCounter

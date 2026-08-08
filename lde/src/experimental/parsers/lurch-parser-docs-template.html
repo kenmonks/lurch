@@ -6,7 +6,7 @@
 
   <script type="module">
     import { parse as lurch2putdown } from './lurch-to-putdown.js'
-    import { parse as lurch2tex } from './lurch-to-tex.js'
+    const lurch2tex = ( s, opts = {} ) => lurch2putdown( s, { ...opts, tex: true } )
     window.onload = function() {
       const textarea = document.getElementById('source')
       const update = () => {

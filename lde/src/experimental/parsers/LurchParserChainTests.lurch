@@ -1,0 +1,76 @@
+////////////////////////////////////////////////////////////////////
+// Multi-line transitive chain tests for the Peggy parsers
+//
+// Each blank-line-separated block below is parsed as a single input
+// by BOTH parsers ('blocks' mode in parsertests.js).  Newline
+// positions inside a chain are significant: the tex parser chooses
+// an align* layout when a chain operator has a newline on either
+// side, so these cannot be tested by the line-at-a-time suites.
+// Full-line // comments (like this header) separate blocks and are
+// not parsed; trailing // comments inside a block are chain syntax.
+
+x = y
+= z by algebra
+
+x = y
+leq z // comment
+= w by arithmetic
+
+x leq y
+leq z
+leq w by algebra
+
+x = y
+= z
+= w by cases
+
+// a chain can mix same-line and newline operators
+
+x = y = z
+= w by substitution
+
+a+b leq c
+= d by arithmetic
+
+// an expository comment with no final by reason
+
+x = y
+= z // just a comment
+
+x^2-1 = (x-1) cdot (x+1) // factor
+= 0 by algebra
+
+// congruence chains and mixed =/cong chains
+// use the align* layout exactly like the inequality family
+
+a cong_(2) b
+cong_(2) c by test
+
+5+7 = 12 by arithmetic
+cong_(3) 0 // 12 is a multiple of 3
+
+x cong_(m) y // given
+= z
+cong_(m) w by transitivity
+
+// the |, ⊆, and bare-≅ families
+// use the align* layout exactly like the inequality family
+
+m | n by thm1
+| p // divisibility is transitive
+= q
+
+A subset B // A is contained in B
+subset C by transitivity
+
+A = B by defn
+subset C // and B is inside C
+
+a cong b by SAS
+cong c // congruence is transitive
+= d by defn
+
+// a bare operator mention may open a | or ⊆ chain across lines
+
+~ subset A cross A // a relation on A
+subset B cross B by monotonicity

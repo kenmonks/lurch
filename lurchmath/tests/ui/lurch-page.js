@@ -23,6 +23,7 @@
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { installCdnCache } from './cdn-cache.js'
 
 const fixtureDir = join( dirname( fileURLToPath( import.meta.url ) ), 'fixtures' )
 const repoRoot = join( dirname( fileURLToPath( import.meta.url ) ),
@@ -68,6 +69,9 @@ export class LurchPage {
      * @returns {Promise<LurchPage>}
      */
     static async boot ( page, entry = '/student.html?actAsEmbed=true' ) {
+        // serve TinyMCE and other CDN resources from the local cache, so no
+        // test ever waits on (or is wrecked by) the network - see cdn-cache.js
+        await installCdnCache( page )
         // skip the 750ms "Validation... done!" dialog delay in every test
         await page.addInitScript( () =>
             localStorage.setItem( 'lurch-show validation has completed', 'false' ) )

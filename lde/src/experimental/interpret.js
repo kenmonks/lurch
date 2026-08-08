@@ -50,6 +50,8 @@ const MCE ='multi-conclusion-environments'
 
 // import the LDE options
 import { LurchOptions } from './lurch-options.js'
+// the parser table-derived auto-declared constants (the big-operator heads)
+import { autoDeclaredConstants, invisibleHeads } from './parsers/notation-tables.js'
 
 /**
  *  ### Interpret
@@ -114,13 +116,12 @@ const interpret = doc => {
 const systemConstants = [
   'LDE EFA','➤',
   'AlgebraRule','NoMatrixOps','Arithmetic','ChainsRule','EquationsRule',
-  'ℕ','ℤ','ℚ','ℝ','ℂ'
+  'ℕ','ℤ','ℚ','ℝ','ℂ',...autoDeclaredConstants,...invisibleHeads
 ]
 
 /** 
  * Add system declarations to the top of the document. These are reserved
- * symbols that the user is not allowed to use. Currently they are
- * 'LDE EFA' and '➤'.
+ * symbols that the user is not allowed to use. 
  * 
 */
 const addSystemDeclarations = doc => {

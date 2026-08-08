@@ -1,0 +1,2 @@
+# the local CDN cache the test suite downloads for itself (see cdn-cache.js)
+.cache/

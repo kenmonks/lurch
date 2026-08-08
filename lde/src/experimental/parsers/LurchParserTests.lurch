@@ -98,6 +98,22 @@ x⁻
 x⋅x⁻
 (x+1)⁻
 (2⋅x⁻+1⁻)⁻
+// the unary inverse /x is the multiplicative analog of -x:
+// with no operand before it, / parses as (/ x); after an operand it is
+// division - an inverse-pair alias of the ⋅ climb row,
+// exactly parallel to subtraction.  (The % comment below
+// shields the whole-file acid parse: it separates these lines from the
+// preceding expression, so its trailing ⁻ cannot make the / on the next
+// line a division across the line break)
+% "unary inverse tests"
+/x
+/2
+/(x+1)
+/x/y
+x + /y
+// the ⁻ exponent token is an operand ender, so x⁻/y keeps its division
+// parse (a deliberate edge)
+x⁻/y
 // sums
 x+y
 2+x
@@ -344,24 +360,18 @@ f⁻:A→B
 // relations
 x~y
 x ~ y
-a~(b+1)~c~d^2
+a~(b+1)
 a≅b mod m
 a cong b mod m
 a+k ≅ b-3 mod m
 a+k cong b-3 mod m
 
-// summations
+// summations: the Algebrite call form and the 'k [= a] to b of f'
+// limit form; the from/as/goes variants are parse errors - see
+// LurchParserErrorTests
 sum k=0 to n of k^2
-sum k from 0 to n of k^2
 sum k to n of k^2
-
-sum of k^2 as k goes from 0 to n
-sum k^2 as k goes from 0 to n
-sum k^2 as k from 0 to n
-sum k^2 for k from 0 to n
-sum k^2 for k to n
-sum of k^2 as k to n
-sum of k^2 for k to n
+sum k to 5 of k^3
 
 sum( k^2 , k , 0 , n )
 sum(k^2,k,0,n)
@@ -377,30 +387,28 @@ sum k to n of x^k*y
 x*sum k to n of x^k*y
 x*(sum k to n of x^k)*y
 
-// definite integrals
+// definite integrals: int, integral, and (call form only) defint are all
+// accepted; the putdown head is the Algebrite operator defint
 int x=0 to n of x^2
-int x from 0 to n of x^2
-
-int of x^2 as x goes from 0 to n
-int x^2 as x goes from 0 to n
-int x^2 as x from 0 to n
-int x^2 for x from 0 to n
-int x^2 for x to n
-int of x^2 as x to n
-int of x^2 for x to n
+integral x=0 to n of x^2
+integral k to n of f
 
 int( x^2 , x , 0 , n )
 int(x^2,x,0,n)
+integral(x^2,x,0,n)
 
-// indefinite integrals
-int with respect to x of x^2
-int wrt x of x^2
+// definite integrals with a missing lower limit default it to 0, like sums
+int x to n of x^2
+defint(x^2,x,n)
 
-int of x^2 with respect to x
-int x^2 wrt x
+// indefinite integrals: int and integral are both accepted; the putdown
+// head is the Algebrite operator integral
 int x^2 dx
+integral x^2 dx
 
 int(x^2,x)
+integral(x^2,x)
+Integral(x^2,x)
 
 // misc
 ∀y.𝜆P(y) ⇒ y=x
@@ -408,7 +416,6 @@ int(x^2,x)
 
 // BIH
 Recall { "This is a BIH" }
-Comment
 ➤ "This is a comment"
 // Theorems
 Theorem { Iamatheorem }
@@ -425,12 +432,11 @@ x ~_(1,2,3) y
 (x+1) ~ (y-1)
 x rel y
 x sim y
-x~y~z
-x ~y~ z
-x ~ y ~ z
+// (the n-ary x~y~z forms are parse errors: ~ is a single-step
+// relation, not a chain family - locked in LurchParserErrorTests)
 
 ////////////////////////////////////////////////////////////////////
-// Extended tests (2026-07), used with the golden-snapshot suite in
+// Extended tests, used with the golden-snapshot suite in
 // parsertests.js.  Every line below must parse in BOTH the putdown and
 // tex parsers so that the .parsertest command in Lode stays green.
 // A few tex outputs are known to be imperfect (e.g. floor, ceiling,
@@ -467,6 +473,12 @@ sigma(n)
 𝒫(A)
 contradiction
 →←
+// rule-enabling constants: the quoted phrase forms and
+// their unquoted twins both name the constant
+"algebra rule"
+algebra rule
+chains rule
+equations rule
 
 // unicode operator variants
 P ⇒ Q
@@ -485,11 +497,12 @@ f ∘ g
 a ≤ b
 a ≡ b
 
-// propositional precedence
+// propositional precedence (implies is right-associative:
+// P implies Q implies R is (⇒ P (⇒ Q R)); an
+// unparenthesized iff run is an error - see LurchParserErrorTests)
 P and Q or R
 P or Q and R
 P implies Q implies R
-P iff Q iff R
 P and Q implies R or S
 not P and not Q
 P wedge Q
@@ -524,7 +537,28 @@ Gamma vdash P
 S is a partition of A
 '~' is a relation on A
 '~' is an equivalence relation
-a cong mod m to b
+// the 'is a <noun> <prep>' registry: a phrase may be an
+// English synonym for a symbolic head (subset, subgroup), each noun also
+// generates an 'is not' row, and the right-hand hole is a full relation
+// argument
+A is a subset of S
+K is a subgroup of G
+A is a subset of B union C
+A is not a subset of B
+x is not a partition of y
+A is not a relation on B
+~ is not a relation on A
+// more registry nouns: element/divisor/normal subgroup (a
+// multi-word noun), incl. the bare-mention right hole of element-of
+x is an element of A
+x is not an element of A
+d is a divisor of n
+K is a normal subgroup of G
+K is not a normal subgroup of G
+⟨x,y⟩ is an element of ~
+// (`a cong mod m to b` is not a congruence surface - a parse error,
+// locked in LurchParserErrorTests)
+// a ⊆ chain (builds a trans_chain, not an n-ary (⊆ A B C))
 A subset B subset C
 x neq y
 x ne y
@@ -538,7 +572,8 @@ they are not friends
 x is the answer
 epsilon is a "positive real number"
 
-// transitive chains
+// transitive chains ('by' accepts arbitrary reasons;
+// 'lt' parses as a mentionable symbol)
 x = y = z
 x leq y lt z
 0 lt 1 leq 2 = 2
@@ -546,6 +581,7 @@ x = y by algebra
 x = y = z by substitution
 x^2-1 = (x-1) cdot (x+1) by algebra
 x = y // an expository comment
+x = y by transitivity
 
 // more sets
 A cap B cup C
@@ -558,6 +594,10 @@ A'
 (A cup B)'
 A' cap B
 bigcup k in NN of A(k)
+// every Union/Intersect name is strictly
+// case-sensitive, so an off-case name is an ordinary symbol (and
+// `BIGCUP k in NN of A(k)` is locked as an error in LurchParserErrorTests)
+Bigcup(B,k,S)
 Cup k in NN of A(k)
 Union k in NN of A(k)
 Cap k in NN of A(k)
@@ -588,6 +628,10 @@ sqrt(2)
 sqrt(x+1)
 floor(x)
 ceiling(x)
+⌊x⌋
+⌈x+1⌉
+⌊x⌋^2
+⌊⌈x⌉⌋
 multinomial(a,b)
 inv(A)
 dot(A,B)
@@ -626,22 +670,29 @@ int x=0 to 1 of x^2
 int(sin(x),x)
 paren(x+1)
 
-// subgroup relation
+// subgroup relation (single-step: the n-ary H ⊑ K ⊑ G is a parse
+// error, locked in LurchParserErrorTests - ⊑ is not a chain family)
 H subgroup G
 H sqsubseteq G
 H ⊑ G
-H ⊑ K ⊑ G
 H subgroup G implies e in H
 Declare subgroup
 
 // subset and subgroup words as first-class relation symbols
 A subseteq B
+// a ⊆ chain
 A subseteq B subseteq C
 subset is transitive
 subseteq is transitive
 subgroup is transitive
 sqsubseteq is transitive
 Declare subseteq, sqsubseteq
+// case-insensitive big-operator names normalize their case in
+// Declares: 'Declare Sum' names the same sum symbol
+// that Sum(f,k,0,n) parses to (libs/Recursion.lurch relies on this);
+// strictly case-sensitive names (Union, Cup) do not normalize
+Declare Sum, SUM, Int
+Declare Union, Cup
 
 // index of a subgroup in a group
 index(G,H)
@@ -662,6 +713,9 @@ declare union, intersect, subset
 Let epsilon in RR
 Let x be such that x in A
 Let x such that x in A
+Let x in RR be such that 0<x, x<1
+Let x in RR such that 0<x
+Let x, y in NN be such that x<y
 Let u, v, w
 x in A for some x in NN
 a+b=c for some a, b in NN
@@ -698,11 +752,400 @@ id_(A)(x)
 x_(0)
 x_(n+1)
 (f)(x)
+f(x)_(n+1)
+f_(0)(x)_(n+1)
 @P(k)
 @P(f(x))
+@P(j,k)
+@P(x)(y)
 pair(1,2)
 triple(1,2,3)
 class(a)
 class(a,'~')
 set(1,2,3)
 set(x : x in A)
+
+// table-driven relation edge cases:
+// a longer keyword sequence that fails to complete falls back to a
+// shorter one (the ranked-row retry)
+x is a partition
+x is a relation
+// (every relation consumes exactly one step, and a
+// dangling relation keyword is a parse error rather than a symbol LC -
+// those locks live in LurchParserErrorTests, as do the n-ary
+// runs of the single-step rows: H subgroup G sqsubseteq K,
+// A normal B ⊴ C, a ~ b ~ c, a rel b rel c are parse errors)
+// mixed ⊆ aliases share one chain family
+A subset B subseteq C
+// naked bindings are not relation arguments: a binding
+// operand must be parenthesized to keep its scope legible (the naked
+// forms are locked in LurchParserErrorTests)
+(x.f(x)) ~ (y.f(y))
+a ~ (x.y)
+// 'normal' classifies as an operator word, so it works in the bare
+// mention holes like any other operator
+normal is not transitive
+// the one word-boundary rule: word keywords end at word
+// boundaries, so relx/simx are ordinary symbols; and a word keyword may
+// not directly abut '(' - a name followed by '(' with
+// no space reads as function application in Lurch, so these split into
+// an operand plus a mention-headed application (visibly different from
+// the spaced infix forms below them)
+a relx b
+a simx b
+a is(b)
+a sim(b)
+x leq(y)
+n divides(n+1)*n
+n divides (n+1)*n
+// sim no longer needs whitespace on its left, so a digit boundary works
+// exactly as it does for leq
+2sim 3
+(a)in b
+(a)is b
+// operator words remain mentionable symbols in relation operands
+loves is a relation on people
+is is weird
+// a keyword choice that matched inside ONE old rule is committed: when
+// the right-hand side after 'is a' fails, there is NO fallback to bare
+// 'is' - fallback exists only across rows, like the
+// partition row falling back to the is row here (the
+// committed-and-failed shapes are parse errors, locked in
+// LurchParserErrorTests)
+x is a partition, P
+// table-driven precedence-climb edge
+// cases: same-level runs of a flat row flatten n-ary, even across
+// tighter operators in between (an unparenthesized iff run is an
+// error - see LurchParserErrorTests)
+P or Q and R or S
+A cup B cap C cup D
+a + b - c + d
+a cup b cup c cap d cap e
+// delimited big-operator
+// call forms (and `int f dx`) are closed units, valid in every hole -
+// including the star holes and the unary - and / operands - and the English
+// indexed-set forms are ordinary operand units of every row
+sum(f,k,1,n) star x
+x star sum(f,k,1,n)
+- sum(f,k,1,n)
+/sum(f,k,1,n)
+int x^2 dx star y
+Union(B,k,A) cdot x
+Union(B,k,A) + x
+x cdot Union k in A of B
+x + Union k in A of B
+// closed calls are tight units:
+// they take the postfix factorial and serve as exponentiation bases
+sum(f,k,1,n)!
+sum(f,k,1,n)^2
+product(f,k,1,n)^2
+product(f,k,1,n)^2!
+Union(B,k,A)^2
+int f dx ^ 2
+sum(f,k,1,n)'
+sum(f,k,1,n)^2'
+// the closed-unit schema: every closed form takes
+// the postfixes and serves as an exponent base EXCEPT application
+// results, so the delimited Prefix call forms, the index bracket, and
+// all postfix results join the big-operator calls above (f(x)^2 and
+// @P(k)^2 alone stay targeted errors, and exponents stay Atomic - see
+// LurchParserErrorTests)
+set(1,2)^2
+tuple(1,2)^2
+paren(x+1)^2
+[G:H]^2
+x!!
+A''
+x!'
+x!^2
+A'^2
+f(x)!^2
+sum(f,k,1,n)!^2
+x^2!'
+// the param-aware climb: a star-family token may carry a
+// subscripted parameter group, applying the compound operator, and a run
+// continues only on structurally equal parameters (left-nested, like the
+// plain star family); mismatched parameters end the expression and the
+// leftover junk-splits via the subscripted mention, the same locked
+// leftover class as mismatched chain moduli
+a oplus_(n) b
+x star_(G) y
+a ⊕_(n) b ⊕_(n) c
+a ⊕_(n+1) b ⊕_( n + 1 ) c
+a ⊕_(n) b ⊕_(m) c
+// prop connectives with the grammar-level prefix not
+not P and Q
+P and not forall x. Q
+(P)iff Q
+// a quantifier is allowed as a connective operand with maximal-scope
+// body: the body extends rightward to the enclosing delimiter
+P implies exists y. Q
+P implies exists y. Q and R
+P iff exists y. Q implies R
+0 < x implies exists y. x < y
+forall x in RR. 0 < x implies exists y. x < y
+// (a same-level token that cannot continue the run still ends the
+// expression - choose is not chainable, the star family shares one
+// level - the dangling leftovers are parse errors,
+// locked in LurchParserErrorTests)
+// a tighter operator in between opens a fresh same-level run
+a choose b circ c choose d
+a star b cdot c oplus d
+// the greedy-right asymmetry of the old ladder: composition takes a
+// full algebraic right operand, so it binds looser than + on the right
+A circ B + C
+A + B circ C
+// operand classes: the star family takes only the tight units
+a star b factorial
+a factorial star b
+- a star b
+// the indexed-set forms take only setminus..circ on either side (the
+// violating compositions are parse errors, locked in
+// LurchParserErrorTests)
+Union(B,k,A) circ g
+Union(B,k,A) cap C
+// the sum and int big operators take ⋅ and looser but never the star
+// level (product(...) is an ordinary Prefix unit and stars fine)
+sum(f,k,1,n) cdot 2
+sum(f,k,1,n) choose 2
+product(f,k,1,n) star x
+// a delimited summation is a closed unit and composes like any other
+// operand on both sides, so these parse as ordinary sums
+1 + sum(f,k,1,n) cdot 2
+2 cdot sum(f,k,1,n) + 1
+sum(f,k,1,n) cdot 2 + 1
+a choose sum(f,k,1,n) cdot 2 + 1
+// the multi-hole mixfix patterns (maps and the English congruence)
+// are table rows resolved by the same ranked machinery as the
+// single-keyword relations
+f : A cup B to C cross D
+g circ f : A to C
+f(x) : A to B
+f_(0) : NN to A
+(g circ f) : A to B
+forall f. f : A to B
+f : A to B iff P
+f : A to B, g : B to C
+a CONG b mod m
+a cong (b+1) mod (m cdot 2)
+P and a cong b mod m
+a cong b mod m by transitivity
+// call-form bodies are AlgExpr for
+// every operator, the over-a-set keyword regimes are uniform (the
+// English interior keywords are case-sensitive lowercase and spaced on
+// both sides), and leading names are case-insensitive
+int(x+y,k,1,n)
+sum(x+y,k,1,n)
+product(x+y,k,1,n)
+Union x+y for k in S
+Union k in (S) of B
+sum k in (A union B) of k
+sum f for k in (S)
+sum k=2 to 5 of 3*k
+product(sum(f,k,1,n),j,1,m)
+Union k in A of Intersect j in J of B
+int f dx cdot 2
+Product(f,k,1,n)
+DEFINT(f,x,a,b)
+integral(f,k,1,n)
+// (defint outside its 4-argument Algebrite call form, and the
+// wrt forms, are parse errors - locked in
+// LurchParserErrorTests - instead of silently degrading to function
+// applications and symbol LCs)
+// opaque tokenizer segments: «» escapes, "string literals", and
+// // comments pass through input normalization verbatim - no comma/colon
+// padding, space shrinking, phrase/unicode replacement, or division
+// rewriting inside them - and a unicode operator BETWEEN two strings on
+// one line is no longer mistaken for string content
+«[a,b]»
+% "a,b  with commas, doubled  spaces, and for all phrases"
+% "a" P∧Q % "b"
+x = y // trans, and/or  note
+
+////////////////////////////////////////////////////////////////////
+// Token classification, the uniform
+// mention rule, the bare-mention holes, the ≈ relation
+// row, and the keyword-case sweep.  (The dangling-operator junk-parses
+// that used to end this file are parse errors now, locked in
+// LurchParserErrorTests.)
+
+// ≈ is a generic relation like ~ (single-step since the chain-operator
+// table: a ≈ b ≈ c is a parse error, locked in LurchParserErrorTests);
+// the glyph reaches the grammar as 'approx' and the canonical head is ≈
+x ≈ y
+a approx b
+'≈' is reflexive
+Declare ~, ≈, reflexive
+// the uniform mention rule: an operator name alone in parentheses or
+// single quotes denotes the operator symbol, for every alias (quotes and
+// parens produce the same atom)
+(subset)
+'star'
+(+)
+(=)
+'≈' subset A cross A
+as + 1
+// bare-mention holes: application heads and lone arguments accept an
+// operator name with no marker (all three head forms agree), and so do
+// tuple and set elements - the algebraic-structure tuple names its
+// operation bare ...
+[G,star,e]
+[a,~]
+⟨G,star,e⟩
+set(star,cdot)
+oplus(2,3)
+⊕(2,3)
+'⊕'(2,3)
+(oplus)(2,3)
+and(P,Q)
+loves(x,y)
+P_(~)
+// ... as do the first operand of any relation ...
+~ is a relation on A
+~ subset A cross A
+subset is transitive
+// ... the ∈ right-hand side ...
+x in cap
+⊕ in S
+// negated English verbs (note English drops the s), and 'proves' now
+// renders as English text in tex while vdash/⊢ stay the turnstile
+a does not love b
+Dracula does not fear Alice
+a does not prove b
+// ... and declared-name and bound-variable slots
+Let otimes
+Let star be such that x star y = y star x
+forall otimes. x otimes y = y otimes x
+oplus.k
+// phrase replacement now needs word boundaries on BOTH sides: 'xfor
+// ally' is two symbols, not a corrupted forall, and 'for allz.T(z)'
+// (missing space) is a parse error, locked in LurchParserErrorTests
+xfor ally
+// uppercase variants of the CS-lowercase interior keywords are ordinary
+// symbols (the keyword-case policy pollutes no more of the symbol space
+// than the keywords themselves), so these parse - as junk symbol LCs
+Let x IN A
+Let x BE SUCH THAT x in A
+
+////////////////////////////////////////////////////////////////////
+// parameterized infix relations - a op_(params) b applies
+// the compound operator (op params...),
+// for op among ~, approx, rel, and =; congruence mod m is the
+// parameterized ((≅ m) a b) with four synonymous surfaces (since the
+// cong-chains slice the cong_(m) surface is a chain step - see the
+// section below - whose single-step output is byte-identical)
+a cong_(m) b
+a = b mod m
+a=b mod m
+x =_(0) y
+a approx_(p) b
+x rel_(r) y
+a ≈ _(p) b
+// 'mod' is CS lowercase and 'Mod' an ordinary symbol, so these parse as
+// an equation plus symbol LCs, not congruences
+a = b Mod m
+a = b mod
+
+// times → × and are → is live in the internal-name
+// table (Declare/mention agreement), so Declares of those words declare
+// the operators, like every other alias
+Declare times, are
+
+// the quoted mention of the division glyph works like every
+// other glyph mention, and dividing by a quoted mention is
+// still a division
+'/'
+(/)
+x / '~'
+x/'~'
+
+// a mention of cong is the operator ≅ (renders \cong in tex)
+(cong)
+
+////////////////////////////////////////////////////////////////////
+// cong_(m) is a transitive-chain operator.
+// A chain mixes = (neutral) with ONE operator family - the inequality
+// family =/</≤ or the congruence family =/cong_(m) - committing at its
+// first non-= step; the single-step case prints ((≅ m) a b), exactly
+// the old ParamRel output, and the English 'a cong b mod m' remains
+// deliberately non-chaining
+a cong_(m) b cong_(m) c
+a = b cong_(m) c
+a cong_(m) b = c
+a = b cong_(m) c = d cong_(m) e
+2 cong_(2) 0 cong_(2) 4
+a+1 cong_(m) b*2 cong_(m) c^2
+a ≅_(m) b ≅_(m) c
+a cong_(m) b cong_(m) c by test
+not a cong_(m) b
+forall x. x cong_(m) y cong_(m) z
+x in set(k : k cong_(m) a = j)
+// a congruence chain also commits to its MODULUS: a cong
+// step with structurally different parameters ends the chain like a
+// cross-family token, so a chain's transitive conclusion always exists
+// (congruences compose only when the moduli agree).  The leftover
+// parses as the subscripted mention plus its operand - the expression
+// dialog's chain gate is what refuses trans_chain-plus-leftovers input.
+// The comparison strips fmt and parens, so cong_( m ) continues a
+// cong_(m) chain but cong_(1+1) does not continue a cong_(2) chain.
+a cong_(m) b cong_(k) c
+a cong_(m) b cong_( m ) c
+a cong_(2) b cong_(1+1) c
+a cong_(m,k) b cong_(m,k) c
+a cong_(m,k) b cong_(k,m) c
+// a congruence token after a committed inequality chain ends the chain,
+// and the leftover cong_(m) still parses as the subscripted mention
+// (≅ m) - the one pre-existing junk-split this slice does not remove,
+// byte-identical to the pre-slice parse (the cong-committed direction
+// is a targeted error; see the error suite)
+a = b < c cong_(m) d
+
+////////////////////////////////////////////////////////////////////
+// The chain-operator
+// table: families (<,≤,=), (cong_(m),=), (≅,=), (|,=), (⊆,=).
+// The | and ⊆ rows live in the chain machinery with
+// unchanged single-step output, and bare congruence chains too: the
+// geometer's `a cong b` is (≅ a b).
+// single-step chains print exactly what the relation rows printed
+m | n
+m divides n
+A subset B
+A ⊆ B
+a cong b
+// multi-step chains per family, = neutral throughout
+a | b | c
+m divides n divides p
+a = b | c
+a | b = c
+A subset B = C
+A = B subset C
+a cong b cong c
+a = b cong c
+a cong b = c
+a cong b cong c by test
+// chain steps carry by-reasons like every chain family
+m | n by arithmetic
+A subset B subset C by transitivity
+// a bare operator mention may open a | or ⊆ chain (the old
+// BareRelation reachability, preserved when the rows moved)
+~ | b
+~ subset A cross A
+~ subset A subset B
+// cross-family tokens end the chain; the leftover here parses as the
+// subscripted mention (≅ m) plus its operand, exactly like the
+// ineq-then-cong_(m) leftover locked above
+a cong b cong_(m) c
+// bare cong is an operator like =, so the junk-absorptions = permits
+// are permitted verbatim for it (each is byte-parallel to the same
+// input with = in place of cong - the uppercase MOD/TO keyword-case
+// locks and the naked-binding | lock below.  The bindings
+// 'a cong x.y mod c' / 'a cong x mapsto y mod c' junk-parse the same
+// way but are locked nowhere: their canonical reprints rejoin across
+// line breaks into the English congruence row, so they cannot live in
+// the round-tripped line corpus.)
+a cong b MOD m
+a cong mod b TO c
+a | x.y
+
+// ('a is a' does not belong here: 'is a' commits with no
+// right-hand side, a parse error locked in LurchParserErrorTests)
