@@ -585,12 +585,24 @@ export class Expression extends Atom {
                 return null
             }
         }
-        // utility used below
-        const convertToLC = () => {
+        // utility used below Parse the user's input into the LCs it means, or
+        // return null if the input is not acceptable.  Both notations come from
+        // the same unified grammar, so checking that the input parses to
+        // putdown also guarantees that it converts to LaTeX for the preview; no
+        // separate check of the LaTeX conversion is needed.  The one extra
+        // requirement is that a transitive chain must be the only LC the input
+        // produces, since an atom has just one validation result to report, and
+        // thus if the chain parse splits into several LCs it would not be
+        // obvious to the user. Note that shorthands are LCs at this stage
+        // (interpretation absorbs them later) and are not an exception to that
+        // rule, so an assumed chain, or a declaration with a chain for a body,
+        // is currently not permitted.
+        const convertToLCs = () => {
             try {
-              return LogicConcept.fromPutdown( 
-                converter( dialog.get( 'lurchNotation' ), 'lurch', 'putdown' ) 
-              )
+                const LCs = parse( dialog.get( 'lurchNotation' ), 'lurchNotation' )
+                if ( !( LCs instanceof Array ) ) return null // parsing error
+                if ( LCs.length > 1 && LCs.some( LC => LC.isAChain() ) ) return null
+                return LCs
             } catch {
                 return null
             }
@@ -598,31 +610,26 @@ export class Expression extends Atom {
         // if they edit the Lurch notation or latex, keep them in sync
         dialog.onChange = ( _, component ) => {
             if ( component.name == 'lurchNotation' ) {
-                // be sure the user input is valid syntax for BOTH parsers
-                // before allowing them to enter it
+                // be sure the user input is acceptable before allowing them to
+                // enter it
+                const validSyntax = !!convertToLCs()
                 const convertedTex = convertToLatex()
-                const convertedLC = convertToLC()
-                const validSyntax = !!(convertedLC && (convertedTex || convertedTex === ''))
-                if ( validSyntax ) mathLivePreview.setValue( convertedTex )
+                if ( validSyntax && typeof convertedTex === 'string' )
+                    mathLivePreview.setValue( convertedTex )
                 const lurchInputElement = dialog.querySelector( 'textarea' )
-                if ( lurchInputElement ) {
-                    if ( validSyntax && typeof convertedTex === 'string' ) {
-                        lurchInputElement.classList.remove('badsyntax')
-                    } else {
-                        lurchInputElement.classList.add('badsyntax')
-                    }
-                }
+                if ( lurchInputElement )
+                    lurchInputElement.classList.toggle( 'badsyntax', !validSyntax )
                 dialog.dialog.setEnabled( 'OK', validSyntax )
             }
         }
         // Show it and if they accept any changes, apply them to the atom.
         const result = dialog.show().then( userHitOK => {
-            if ( !userHitOK || !convertToLatex() || !convertToLC() ) return false
+            if ( !userHitOK || !convertToLCs() ) return false
             this.saveAdvancedModeData( dialog.get( 'lurchNotation' ) )
             this.update()
             return true
         } )
-        dialog.dialog.setEnabled( 'OK', !!(convertToLatex() && convertToLC()) )
+        dialog.dialog.setEnabled( 'OK', !!convertToLCs() )
         // prevent enter to confirm if the input is invalid
         const lurchInputElement = dialog.querySelector( 'textarea' )
         if ( lurchInputElement ) {
@@ -735,7 +742,7 @@ export class Expression extends Atom {
                 if ( event.key == 'Enter' ) {
                     if ( event.shiftKey ) {
                         // allow Shift+Enter to add a line
-                    } else if ( !!( convertToLatex() && convertToLC() ) ) {
+                    } else if ( convertToLCs() ) {
                         dialog.querySelector( 'button[title="OK"]' ).click()
                         event.preventDefault()
                         event.stopPropagation()
