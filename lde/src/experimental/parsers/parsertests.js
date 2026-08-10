@@ -83,6 +83,7 @@ const makedocInputs = [ ...new Set(
 export const suites = [
   { file: 'LurchParserTests',          mode: 'lines',  opts: {} },
   { file: 'LurchParserSetTests',       mode: 'lines',  opts: { enableSets: true } },
+  { file: 'LurchParserSequentTests',   mode: 'lines',  opts: {} },
   { file: 'TopDownTests',              mode: 'lines',  opts: {} },
   { file: 'LurchParserChainTests',     mode: 'blocks', opts: {} },
   { file: 'LurchParserErrorTests',     mode: 'errors', opts: {} },

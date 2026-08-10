@@ -240,7 +240,16 @@ export const extraOperatorWords = [
   { lit: 'not', noBare: true }, { lit: 'neg', noBare: true },
   { lit: 'mapsto' }, { lit: 'division' },
   { lit: 'complement' }, { lit: 'factorial' },
-  { lit: 'forall' }, { lit: 'exists' }, { lit: 'existsUnique' }
+  { lit: 'forall' }, { lit: 'exists' }, { lit: 'existsUnique' },
+  // the sequent turnstile words: the sequent is a grammar form (the
+  // Sequent rules in lurch-to-putdown.peggy), not a table row, so its
+  // words are classified here - keeping them out of the Symbol space and
+  // letting them mention/Declare the turnstile head (⊢, from
+  // engineInternalNames) like any operator word.  noBare: a stray
+  // 'proves' in operand position is a malformed sequent, not a mention
+  // of ⊢ (the ⊢ glyph in operatorGlyphs below remains bare-mentionable,
+  // so `⊢ is transitive` still parses)
+  { lit: 'vdash', noBare: true }, { lit: 'proves', noBare: true }
 ].map( e => ({ ...e, head: internalNames[e.lit] ?? e.lit }) )
 
 // Operator glyphs: single-character operator tokens as they reach the

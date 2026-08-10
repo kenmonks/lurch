@@ -80,6 +80,14 @@ const skeleton = [
 ['x=y=z'],
 { derive: 'chain' },
 
+'Sequents',
+['A ⊢ B', 'A vdash B', 'A proves B'],
+['(⊢ B)', '(vdash B)'],
+['(A, B ⊢ C)'],
+['(A, B ⊢ C, D)'],
+['A ⊢_(Gamma) B'],
+['not (A ⊢ B)', 'A does not prove B'],
+
 'Set and algebraic operators',
 { derive: 'setAlg' },
 

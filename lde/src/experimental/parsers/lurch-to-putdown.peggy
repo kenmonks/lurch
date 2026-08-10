@@ -140,6 +140,15 @@
   /////////////////////////////////////////////////////////////////
   // Parser specific utilities
 
+  // a multi-step transitive chain asserts several claims at once, so it
+  // cannot be a single sequent premise or conclusion (its trans_chain
+  // shorthand would also be trapped inside the sequent's tuple, where
+  // the post-processor cannot expand it); the Sequent rules reject it
+  // with a targeted error.  Single-step chains are ordinary relations
+  // (x = y) and pass
+  const multiStepChain = n =>
+    typeof n === 'object' && n?.type === 'chain' && n.steps?.length > 1
+
   // for debugging, echo a string with line numbers
   const say = s => {
     const lines = s.split('\n')
@@ -205,7 +214,8 @@
 //   in precedence.  The order we define here is roughly as follows from lowest
 //   to highest.
 //
-//     - Quantified : 
+//     - Sequent    :
+//     - Quantified :
 //     - Binding    :
 //     - Prop       :
 //     - Relations  :
@@ -242,8 +252,13 @@ LC = Meta / Given / Environment / Declaration / Expression
   Meta = Putdown / Comment / Label / Ref / Shorthand 
   // Declarations
   Declaration = Declare / ForSome / Let 
-  // Expressions
-  Expression =  Quantified / Binding / Prop / PropArg
+  // Expressions.  The sequent turnstile (⊢/vdash/proves - see the
+  // Sequents section below) is the loosest operator of all: a bare
+  // sequent is tried first, and its sides are InnerExpressions, so a
+  // side can never swallow a turnstile (nested sequents must be
+  // parenthesized)
+  Expression =  Sequent / InnerExpression
+    InnerExpression = Quantified / Binding / Prop / PropArg
     // higher precedence than Prop ops for use in Props
     PropArg  = Relations / RelArg
       // higher precedence than Relations for use in Relations: the whole
@@ -386,6 +401,75 @@ Let = k:$'Let'i __ a:(DeclaredName)|1..,comma| __ 'in' __ b:Expression __
 // compound sets or algebraic expressions that begin with an atomic. To do this,
 // we think of each category above Atomic as representing compound expressions
 // only of that category and order everything in terms of precedence.
+
+///////////////////////////////////////////////////////////////////////////////
+// Sequents
+//
+// A sequent is `A_1, ..., A_n ⊢ B_1, ..., B_m` (n ≥ 0, m ≥ 1): the
+// turnstile (⊢, vdash, proves, and the English negative `does not
+// prove`) with an optional formal-system subscript, `⊢_(Gamma)`.
+// Putdown wraps BOTH sides in tuples -
+//
+//     (⊢ (tuple A_1 ... A_n) (tuple B_1 ... B_m))
+//     ((⊢ Gamma) (tuple ...) (tuple ...))     for the subscripted form
+//
+// - even when a side is a singleton or empty, so the small-cases Rule
+// shapes are uniform across arities and a single pair premise
+// `⟨a,b⟩ ⊢ C` stays distinct from the two-premise `(a, b ⊢ C)`.  An
+// application with no operands, (tuple), is legal putdown, so n = 0
+// needs no special head.  The English negative ¬-wraps the sequent and
+// takes no subscript.
+//
+// The turnstile is the LOOSEST operator: a bare sequent is the first
+// Expression alternative, and its sides are InnerExpressions, so
+// `A and B ⊢ C or D` is ((A∧B) ⊢ (C∨D)) and a side can never swallow a
+// turnstile - a nested sequent must be parenthesized, ((A ⊢ B) ⊢ C).  A
+// LEADING quantifier or binding still has maximal scope, as with every
+// other operator: `forall x. P(x) ⊢ Q` puts the sequent inside the
+// binding's body; parenthesize the quantifier to make it a premise.
+//
+// Comma-separated sides live ONLY in the parenthesized form
+// (ParenSequent, an Atomic).  A bare top-level comma keeps its meaning
+// as the <comma continuation shorthand, so `Assume A, B, D ⊢ E` chains
+// three assumptions of which the last is the sequent D ⊢ E, and a
+// multi-premise sequent in such a chain is written `Assume A, (D, D' ⊢ E)`.
+// The prefix form also works bare (`⊢ true`), but `not` binds a PropArg,
+// so negating a sequent always requires the parens: `not (⊢ false)`,
+// `not (A ⊢ B)`.  (A consequence of the bare prefix form: `a ⊢ b ⊢ c`
+// is not an error but TWO LCs, the sequent a ⊢ b and then the prefix
+// sequent ⊢ c, exactly as top-level juxtaposition always parses.)
+Sequent = a:InnerExpression _ t:Turnstile _ b:InnerExpression
+            { if ( [a, b].some(multiStepChain) ) error(
+                'A transitive chain cannot be a sequent premise or ' +
+                'conclusion; state the chain separately' )
+              return { type:'sequent', lhs:[a], rhs:[b], param:t.param,
+                       neg:t.neg, fmt:{ src:t.src } } } /
+          t:Turnstile _ b:InnerExpression
+            { if ( multiStepChain(b) ) error(
+                'A transitive chain cannot be a sequent conclusion; ' +
+                'state the chain separately' )
+              return { type:'sequent', lhs:[], rhs:[b], param:t.param,
+                       neg:t.neg, fmt:{ src:t.src } } }
+
+  // the general parenthesized form, an Atomic (tried before ParenMention
+  // and Parenthesized, which cannot match it: `(A, B)` without a
+  // turnstile stays the parse error it always was)
+  ParenSequent = '('_ a:InnerExpression|..,comma|
+                 _ t:Turnstile _ b:InnerExpression|1..,comma| _')'
+                 { if ( [...a, ...b].some(multiStepChain) ) error(
+                     'A transitive chain cannot be a sequent premise or ' +
+                     'conclusion; state the chain separately' )
+                   return { type:'sequent', lhs:a, rhs:b, param:t.param,
+                            neg:t.neg, fmt:{ src:t.src, paren:true } } }
+
+  // the turnstile token: the glyph or its word synonyms, optionally
+  // subscripted on the ParamRel pattern, or the English negative phrase
+  // (which takes no subscript, like the other `does not ⟨verb⟩` surfaces)
+  Turnstile = s:$('⊢' / ('vdash' / 'proves') !alphanum) g:TurnstileParam?
+                { return { src:s, neg:false, param:g ?? null } } /
+              'does' __ 'not' __ 'prove' !alphanum
+                { return { src:'does not prove', neg:true, param:null } }
+  TurnstileParam = _'_' '('_ @Expression _')'
 
 ///////////////////////////////////////////////////////////////////////////////
 // Quantified and Binding
@@ -1231,7 +1315,8 @@ StarExpr = a:Closed
 // Atomic Expressions
 //
 // morally atomic expressions (do not require parentheses)
-Atomic = StringLiteral / QuoteMention / ParenMention / Parenthesized /
+Atomic = StringLiteral / QuoteMention / ParenSequent / ParenMention /
+         Parenthesized /
          // EquivalenceClass /
          Tuple / SetBracketed / Symbol / Number
 

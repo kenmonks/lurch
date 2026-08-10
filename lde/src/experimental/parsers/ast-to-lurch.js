@@ -143,7 +143,7 @@ const err = node => {
 // parentheses); everything else - including big-operator call forms - is
 // conservatively wrapped by operand() below.
 const closed = new Set([ 'app', 'efa', 'set', 'setbuilder', 'class',
-                         'tuple', 'paren' ])
+                         'tuple', 'paren', 'sequent' ])
 
 const operand = node => {
   if ( typeof node === 'string' ) return leaf(node)
@@ -286,6 +286,17 @@ const P = node => {
       return head + groups.map( g => `(${callArgs(g)})` ).join('')
     }
     case 'efa' : return `@${node.name}(${callArgs(node.args)})`
+
+    // sequents always print the parenthesized general form, which is
+    // self-delimiting and reparses to the same putdown whatever the
+    // original surface was (bare binary, prefix, or comma-separated);
+    // the sides are InnerExpressions, so printing them unwrapped is safe
+    case 'sequent' : {
+      const t = node.neg ? 'does not prove'
+              : `⊢${ node.param ? `_(${P(node.param)})` : '' }`
+      const lhs = node.lhs.map(P).join(', ')
+      return `(${lhs}${ lhs ? ' ' : '' }${t} ${node.rhs.map(P).join(', ')})`
+    }
 
     // aggregates
     case 'setbuilder' : return `set(${node.v} : ${P(node.pred)})`

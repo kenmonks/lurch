@@ -576,6 +576,20 @@ export const astToTex = node => {
       if ( elts.length === 2 ) return `\\left[${elts[0]}\\right]_{${elts[1]}}`
       return `\\text{class}\\left(${elts.join(',')}\\right)`
     }
+    // sequents: comma-joined sides around the turnstile, which renders
+    // \vdash (with the formal-system subscript when present) for every
+    // positive surface; the English negative echoes as text, like the
+    // other `does not ⟨verb⟩` surfaces.  The parenthesized form
+    // reproduces its parentheses
+    case 'sequent'   : {
+      const t = node.neg ? `\\text{ does not prove }`
+              : `\\vdash${ node.param ? `_{${T(node.param)}}` : '' } `
+      const lhs = node.lhs.map(T).join(', ')
+      const rhs = node.rhs.map(T).join(', ')
+      const seq = `${lhs}${t}${rhs}`
+      return node.fmt?.paren ? `\\left(${seq}\\right)` : seq
+    }
+
     case 'tuple'     : {
       const fmt = node.fmt || {}
       // a bracket tuple whose entries are all untick'd bracket tuples is a

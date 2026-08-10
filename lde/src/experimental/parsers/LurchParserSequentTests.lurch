@@ -1,0 +1,86 @@
+// Sequent tests
+//
+// A sequent is `A_1, ..., A_n ⊢ B_1, ..., B_m` (n ≥ 0, m ≥ 1), putdown
+// (⊢ (tuple A_1 ... A_n) (tuple B_1 ... B_m)) - both sides ALWAYS
+// tuple-wrapped, even singletons and the empty LHS, so the small-cases
+// Rule shapes are uniform across arities.  See the Sequents section of
+// lurch-to-putdown.peggy.  The comma-separated sides live only in the
+// parenthesized form; the turnstile is the loosest operator of all.
+
+// the bare binary form, all three positive surfaces
+A ⊢ B
+A vdash B
+A proves B
+Gamma vdash P
+
+// the parenthesized general form: n = 0, 1, 2 crossed with m = 1, 2
+(A ⊢ B)
+(⊢ B)
+(vdash B)
+(⊢ C, D)
+(A, B ⊢ C)
+(A, B ⊢ C, D)
+(A ⊢ C, D)
+
+// the bare prefix form (n = 0 needs no parens standing alone)
+⊢ true
+
+// the turnstile is looser than every propositional connective: no
+// parens needed around compound sides
+A and B ⊢ C or D
+A implies B ⊢ C
+A ⊢ B iff C
+
+// a LEADING quantifier keeps its maximal scope, so the sequent is
+// inside the binding's body (parenthesize the quantifier to make it a
+// premise)
+forall x. P(x) ⊢ Q
+(forall x. P(x)) ⊢ Q
+
+// a bare top-level comma keeps its meaning as the continuation
+// shorthand: this is THREE chained assumptions, the last a sequent
+Assume A, B, D ⊢ E
+
+// negation requires the parenthesized form (`not` binds a PropArg) ...
+not (⊢ false)
+not (A ⊢ B)
+// ... or the English surface, which ¬-wraps and echoes as English in tex
+A does not prove B
+
+// sequents compose as parenthesized operands
+(A ⊢ B) iff (⊢ A implies B)
+
+// a single pair premise is distinct from the two-premise sequent (the
+// uniform tuple wrapping is what keeps them apart in putdown)
+⟨a,b⟩ ⊢ C
+(a, b ⊢ C)
+
+// nested sequents must be parenthesized
+((A ⊢ B) ⊢ C)
+
+// the subscripted turnstile: provability in a formal system, putdown
+// head (⊢ Gamma)
+A ⊢_(Gamma) B
+A vdash_(Gamma) B
+(A, B ⊢_(Gamma) C)
+(⊢_(Gamma) B)
+
+// a single-step chain relation is an ordinary expression and may be a
+// side (multi-step chains are a targeted error, locked in the error
+// tests)
+x = y ⊢ P
+
+// a consequence of the bare prefix form: this is not an error but TWO
+// LCs, the sequent a ⊢ b and then the prefix sequent ⊢ c, exactly as
+// top-level juxtaposition always parses
+a ⊢ b ⊢ c
+a proves b proves c
+
+// the turnstile glyph is still a mentionable, declarable operator, and
+// the word surfaces mention/Declare the same head
+⊢ is transitive
+(⊢) is transitive
+'⊢' is transitive
+(vdash) is transitive
+Declare ⊢
+Declare vdash

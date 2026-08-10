@@ -165,7 +165,6 @@ int x^2 wrt x
 // relations consume exactly one step; a dangling relation keyword can
 // no longer reparse as a symbol LC, so the whole input fails
 a is b is c
-a proves b proves c
 a sim b sim c
 a ~ b subset c
 a cong b mod c cong d mod e
@@ -258,3 +257,22 @@ forall x IN S. P
 // is reserved), so the whole input is an error
 a cong mod m to b
 X is a Partition of Y
+// sequents: `not` binds a PropArg, never a bare sequent - negating one
+// requires the parenthesized form, not (⊢ b) - and the turnstile words
+// are classified operator words, not symbols.  (`a ⊢ b ⊢ c` is NOT an
+// error: it is the sequent a ⊢ b followed by the prefix sequent ⊢ c,
+// locked in LurchParserSequentTests)
+not ⊢ b
+not vdash b
+// commas inside plain parentheses still only mean a sequent's sides: no
+// turnstile, no reading (comma-separated sides live in ParenSequent
+// only, so `(a, b)` stays the parse error it always was)
+(a, b)
+// a sequent needs at least one conclusion
+(a, b ⊢)
+⊢
+// a multi-step transitive chain asserts several claims at once, so it
+// cannot be a single sequent premise or conclusion (targeted error)
+x = y = z ⊢ P
+(x = y = z ⊢ P)
+⊢ x = y = z

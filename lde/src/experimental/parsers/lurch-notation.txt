@@ -9,8 +9,9 @@
 //   - `also:` lines are synonym surfaces of the same declaration;
 //     `word:`/`words:` list one-word synonyms of the keyword.
 //   - RENDERING RULE: a declaration WITH `tex:` renders its one-word
-//     surfaces symbolically (subset, vdash, proves all print the symbol);
-//     WITHOUT `tex:` the keyword prints as English text (loves, is).
+//     surfaces symbolically (subset, subgroup, sqsubseteq print the
+//     symbol); WITHOUT `tex:` the keyword prints as English text (loves,
+//     is).
 //     Multi-word surfaces (is a subset of) echo as English either way,
 //     unless that line carries its own tex: template.  An also: line may
 //     carry its own tex:, giving PER-SURFACE rendering (P and Q echoes
@@ -57,11 +58,12 @@ group relation
     also: a = b mod m
                                                  example: 25 cong 13 mod 6
 
-  a proves b   word: vdash                       tex: \vdash
-    also: a ⊢ b
-    // tex: present, so `proves` renders \vdash; the loves/proves
-    // rendering distinction is exactly this field
-  a does not prove b     -> (¬ (⊢ a b))
+  // sequents (⊢/vdash/proves, incl. `does not prove` and the subscripted
+  // ⊢_(Gamma)) are NOT table rows: `A_1,...,A_n ⊢ B_1,...,B_m` has
+  // comma-separated sides of full expressions and an empty-LHS prefix
+  // form, so it is a grammar form looser than the whole ladder - see the
+  // Sequent rules in lurch-to-putdown.peggy.  Its words are classified in
+  // extraOperatorWords (notation-tables.js) instead of by a row here.
 
   a subgroup b  word: sqsubseteq                 tex: \sqsubseteq
     also: a ⊑ b
@@ -304,9 +306,10 @@ unicode
 // let, by, ...), quantifier grammar, the precedence anchors and their
 // order (incl. which levels have tight holes), big-operator form SHAPES,
 // prefix -, reciprocal /, postfix !/', exponent ^, function application,
-// tuples/sets/setbuilder, EFA @, «» escapes, the tokenizer, and the
-// grammar-level operator words (not, neg, mapsto, division, complement,
-// factorial, forall, exists, existsUnique).
+// tuples/sets/setbuilder, EFA @, «» escapes, the tokenizer, sequents
+// (the ⊢/vdash/proves turnstile - see the Sequent rules in the grammar),
+// and the grammar-level operator words (not, neg, mapsto, division,
+// complement, factorial, forall, exists, existsUnique, vdash, proves).
 //
 // Derived automatically (never edited): reserved/operator word
 // classification, the Declare name map (any alias word declares its row's

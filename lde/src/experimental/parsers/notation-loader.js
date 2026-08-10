@@ -427,7 +427,9 @@ const toxicGlyphs = new Set( [ '𝜎', '𝜆', '⁻', '𝒫', '≠', '∉' ] )
 // aliases of any file row, but Declare and mentions must know their heads
 const engineInternalNames = {
   equiv: '≡', not: '¬', neg: '¬', complement: '°', factorial: '!',
-  forall: '∀', exists: '∃', existsUnique: '∃!', division: '/', '\\': ' '
+  forall: '∀', exists: '∃', existsUnique: '∃!', division: '/', '\\': ' ',
+  // the sequent turnstile words (the Sequent rules in the grammar)
+  vdash: '⊢', proves: '⊢'
 }
 
 // validation marks pass through the leading symbol renames as themselves
@@ -444,10 +446,10 @@ const engineUnicodeRewrites = { '\\': ' ', '⋅': '*' }
 const engineTexSymbols = {
   not: '\\neg', and: '\\text{and}', or: '\\text{or}',
   by: '\\text{ by }', '^': '{}^\\wedge', complement: '\'',
-  mapsto: '\\mapsto'
+  mapsto: '\\mapsto', vdash: '\\vdash', proves: '\\vdash'
 }
 const engineOperatorHeadTex = {
-  '¬': '\\neg', '≡': '\\equiv', '°': '\'', '↦': '\\mapsto',
+  '¬': '\\neg', '≡': '\\equiv', '°': '\'', '↦': '\\mapsto', '⊢': '\\vdash',
   // '~' is the one ASCII operator head with a tex leaf rendering
   '~': '\\sim'
 }

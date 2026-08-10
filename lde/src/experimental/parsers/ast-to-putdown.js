@@ -178,6 +178,17 @@ export const astToPutdown = node => {
     case 'app'       : return `(${P(node.head)} ${spaced(node.args)})`
     case 'efa'       : return `(λ ${node.name} ${spaced(node.args)})`
 
+    // sequents - both sides are ALWAYS tuple-wrapped, even singletons
+    // and the empty LHS, so the small-cases Rule shapes are uniform (see
+    // the Sequents section of lurch-to-putdown.peggy); the subscripted
+    // form compounds the head and the English negative ¬-wraps
+    case 'sequent'   : {
+      const head = node.param ? `(⊢ ${P(node.param)})` : `⊢`
+      const side = elts => elts.length ? `(tuple ${spaced(elts)})` : `(tuple)`
+      const seq = `(${head} ${side(node.lhs)} ${side(node.rhs)})`
+      return node.neg ? `(¬ ${seq})` : seq
+    }
+
     // aggregates
     case 'setbuilder': return `(setbuilder (${node.v},${P(node.pred)}))`
     case 'set'       : return `(set ${spaced(node.elts)})`
