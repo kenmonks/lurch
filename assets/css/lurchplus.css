@@ -173,7 +173,7 @@ body {
 
 body.course {
   font-family: Roboto, Arial, Helvetica, sans-serif;
-  --nav-background-color: #fafafa;
+  --nav-background-color: var(--page-background-color);
   --nav-link-color: #025d8c;
   --nav-plain-color: #444;
   --book-borders: #ddd;
@@ -187,10 +187,14 @@ body.course #leftnav {
 }
 
 body.course #courseinfo {
-  background: #ffffff;
-  border: 1px solid #ddd;
+  margin: 0.25rem 0 0.75rem;
+  padding: 0.55rem 0.4rem 0.8rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
   color: var(--black-font);
-  box-shadow: 0 2px 8px rgba(16, 27, 39, 0.08);
+  box-shadow: none;
 }
 
 body.course #courseinfo h1 {
