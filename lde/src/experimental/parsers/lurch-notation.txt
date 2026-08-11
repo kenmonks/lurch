@@ -274,9 +274,10 @@ group constant
   // keyword, never a bare symbol; the quoted forms must come FIRST (the
   // phrase table replaces in order, and the quoted pattern must consume
   // its quotes before the unquoted pattern can match inside them)
-  AlgebraRule    words: "algebra rule", algebra rule
-  ChainsRule     words: "chains rule", chains rule
-  EquationsRule  words: "equations rule", equations rule
+  AlgebraRule     words: "algebra rule", algebra rule
+  ChainsRule      words: "chains rule", chains rule
+  EquationsRule   words: "equations rule", equations rule
+  SetBuilderRule  words: "set builder rule", set builder rule
   // constants without renamings, listed for their tex only
   smiley  tex: 😀       pie  tex: 🥧      basket  tex: 🧺
   tree    tex: 🌳       apple  tex: 🍎    cherry  tex: 🍒
