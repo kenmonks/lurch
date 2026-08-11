@@ -137,7 +137,8 @@ const isAnEFA = Matching.isAnEFA
 
 // import experimental tools
 import Interpret from './interpret.js'
-const { markDeclaredSymbols, renameBindings, assignProperNames, interpret } = Interpret
+const { markDeclaredSymbols, renameBindings, replaceBindings, assignProperNames,
+        interpret } = Interpret
 // import experimental utilities
 import Utils from './utils.js'
 const { subscript, commonInitialSlice } = Utils
@@ -256,6 +257,12 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   //
   // Rule: { EquationsRule }
   // profile(()=>processEquations(doc),'process Equations')
+
+  ///////////////////////////////////
+  // Set Builders
+  //
+  // Rule: { SetBuilderRule }
+  profile(()=>processSetBuilders(doc),'process Set Builders')
 
   ///////////////////////////////////
   // Arithmetic
@@ -1107,6 +1114,131 @@ const copyEquation = eq => {
              eq.child(1).copy(),
              eq.child(2).copy()
   )
+}
+
+/**
+ * Set Builder Memberships
+ *
+ * Check if the doc contains the Rule `:{ SetBuilderRule }`.  If not, do
+ * nothing.  Otherwise every membership in a set builder that occurs anywhere
+ * inside one of the user's propositions (or Considers) - as the whole
+ * proposition or as a subexpression under ¬, inside a conditional, or under a
+ * binder - gets the two directions of
+ *
+ *    z ∈ { x∈S : P₁(x), …, Pₙ(x) }   ≡   z ∈ S, P₁(z), …, Pₙ(z)
+ *
+ * inserted as ready-made instantiations of the SetBuilderRule, for arbitrary
+ * n, with no matching and no EFAs.  The parser folds an `in S` domain into a
+ * leading ∈-condition and wraps two or more conditions in the invisible seq>
+ * head, so a builder's body here is either a seq> sequence of conditions or a
+ * single classic condition - the built-in therefore subsumes the manual rule
+ * `z in { x : @P(x) } ≡ @P(z)`.  Domainless builders are included: this is
+ * full comprehension, granting the same power the manual rule already grants,
+ * so a library that opts in takes on the usual responsibility for what its
+ * builders may say.
+ *
+ * Every instantiation is a substitution instance of the comprehension schema
+ * for the exact builder subterm the user wrote: the conditions cᵢ(z) are the
+ * builder's conditions with its bound variable replaced by z
+ * capture-avoidingly (the body's bound variables are first renamed to the
+ * canonical y-names users cannot type, the same device formula instantiation
+ * uses).  The instantiations contain no declarations, so scoping and the
+ * preemie machinery are untouched.  Both directions are inserted regardless
+ * of the occurrence's polarity - the SAT solver uses what it needs - and
+ * occurrences sharing a propositional form (in particular alpha-variant
+ * builders, whose canonical binding ProperNames agree) share one set of
+ * instantiations.
+ */
+const processSetBuilders = doc => {
+  // check options
+  if (!LurchOptions.processSetBuilders) return
+
+  // check if the SetBuilderRule is around, if not, we're done
+  const rule = doc.index.get('SetBuilder rule')[0]
+  if (!rule) return
+
+  // the parser emits (setbuilder ((x , body))) - the binding sits inside a
+  // one-child Application - so unwrap that layer, tolerating a bare binding
+  // for documents built directly in putdown
+  const builderBinding = b => {
+    const arg = b.child(1)
+    return (arg instanceof BindingExpression) ? arg :
+           (arg instanceof Application && arg.numChildren()===1 &&
+            arg.child(0) instanceof BindingExpression) ? arg.child(0) : undefined
+  }
+
+  // a membership in a set builder: (∈ t (setbuilder ((x , body))))
+  const isSetBuilderMembership = m =>
+    m instanceof Application && m.numChildren()===3 &&
+    m.child(0).matches('∈') &&
+    m.child(2) instanceof Application &&
+    m.child(2).numChildren()===2 &&
+    m.child(2,0).matches('setbuilder') &&
+    builderBinding(m.child(2))?.boundSymbolNames().length===1
+
+  // collect the occurrences inside the user's propositions and Considers -
+  // the same collection the instantiation loop matches against, so nothing
+  // inside generated Rules, Parts, or Insts
+  const memberships = [...doc.descendantsSatisfyingIterator(
+    x => x.isAProposition() || x.isA('Consider'),
+    x => x.isA('Rule') || x.isA('Part') || x.isA('Inst')
+  )].flatMap( prop => prop.descendantsSatisfying( isSetBuilderMembership ) )
+
+  // process each occurrence once per propositional form
+  const done = new Set()
+  memberships.forEach( mem => {
+    const key = mem.prop()
+    if (done.has(key)) return
+    done.add(key)
+
+    const t = mem.child(1)
+    const builder = mem.child(2)
+
+    // rename the bound variables in a copy of the builder's binding to the
+    // canonical y-names, so substituting t for the builder's variable cannot
+    // capture a free variable of t, and a condition that rebinds the same
+    // name keeps its inner occurrences (they now have a different name)
+    const binding = builderBinding(builder).copy()
+    replaceBindings(binding)
+    const boundName = binding.boundSymbolNames()[0]
+
+    // the body is one Expression: either the invisible seq> head wrapping
+    // two or more conditions, or a single classic condition
+    const body = binding.lastChild()
+    const conditions =
+      (body instanceof Application && body.child(0).matches('seq>'))
+        ? body.children().slice(1)
+        : [ body ]
+
+    // a condition with t substituted for the builder's bound variable.
+    // After the renaming above every occurrence of that name is free in the
+    // condition and nothing free in t can be captured, so plain replacement
+    // is capture-avoiding substitution
+    const substitute = c => {
+      if (c.matches(boundName)) return t.copy()
+      const ans = c.copy()
+      ans.descendantsSatisfying( d => d.matches(boundName) )
+         .forEach( d => d.replaceWith(t.copy()) )
+      return ans
+    }
+    const conditions_t = conditions.map(substitute)
+
+    // a fresh copy of the membership itself, for premises and conclusions
+    const membership = () =>
+      new Application( new LurchSymbol('∈'), t.copy(), builder.copy() )
+
+    // elimination: one single-conclusion Inst per condition, the same shape
+    // the ≡ shorthand expansion of the manual fixed-n rule produces
+    conditions_t.forEach( c => {
+      insertInstantiation(
+        new Environment( membership().asA('given'), c.copy() ), rule, mem )
+    })
+
+    // introduction: one Inst concluding the membership from all conditions
+    insertInstantiation(
+      new Environment( ...conditions_t.map( c => c.copy().asA('given') ),
+                       membership() ), rule, mem )
+  })
 }
 
 /**
@@ -2514,7 +2646,7 @@ const markDeclarationContexts = doc => {
 export default {
   validate, getUserPropositions, instantiate, insertInstantiation, 
   insertSymmetricEquivalences, reverseEquation, markDeclarationContexts, processBIHs, 
-  processChains, processEquations, upgradeChains, eq2chain, splitChains, 
+  processChains, processEquations, processSetBuilders, upgradeChains, eq2chain, splitChains,
   splitEquations, processDomains, diff, cacheFormulaDomainInfo, 
   getCaselikeRules, LurchOptions, matchPropositions, LogicConcept, 
   Formula, Scoping, Validation, patternForm

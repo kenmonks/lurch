@@ -20,6 +20,7 @@
  *      metavariable        
  *   * `processChains` - process chains and equations iff this is true  
  *   * `processEquations` - process equations iff this is true  
+ *   * `processSetBuilders` - process set-builder memberships iff this is true
  *   * `processCases`- process the cases tool iff this is true 
  *   * `autoCases` - similar to avoidLoneMetavars=false. If true, then identify
  *      all Cases-like rules and try to instantiate their univar conclusion with
@@ -49,6 +50,7 @@ export const LurchOptions = {
   avoidLoneElementOfs: true ,    
   processChains: true ,    
   processEquations: true ,    
+  processSetBuilders: true ,
   processCases: true ,    
   autoCases: false ,
   processCAS: false ,

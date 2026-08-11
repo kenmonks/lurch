@@ -1,0 +1,118 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Set Builders
+//
+// The SetBuilderRule built-in: when a document loads the Rule
+// `:{ SetBuilderRule }`, every membership in a set builder occurring
+// anywhere inside the user's propositions gets the two directions of
+//
+//    z ∈ { x∈S : P₁(x), …, Pₙ(x) }  ≡  z ∈ S, P₁(z), …, Pₙ(z)
+//
+// as ready-made instantiations, for arbitrary n, with no matching and
+// no EFAs.  The domain folds into a leading ∈-condition, the classic
+// single-condition form is subsumed, domainless builders give full
+// comprehension, and occurrences anywhere inside a proposition count -
+// under ¬, inside a conditional, or under a binder.  The set(...) call
+// form of the notation is used throughout because acid tests parse
+// with braces as environments (enableSets is off).
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+Declare ∈, ¬, ⇒, ∀, →←
+Rule: :{ SetBuilderRule }
+
+➤ "elimination: the domain and each condition, separately extractable"
+{
+  Declare S1, P1, Q1
+  Assume z1 in set(x in S1 : P1(x), Q1(x))
+  z1 in S1 ✔︎
+  P1(z1) ✔︎
+  Q1(z1) ✔︎
+}
+
+➤ "introduction: membership from the domain and all conditions"
+{
+  Declare S2, P2, Q2
+  Assume w2 in S2
+  Assume P2(w2)
+  Assume Q2(w2)
+  w2 in set(x in S2 : P2(x), Q2(x)) ✔︎
+}
+
+➤ "domainless builder: full comprehension, both directions"
+{
+  Declare P3, Q3
+  Assume P3(u3)
+  Assume Q3(u3)
+  u3 in set(x : P3(x), Q3(x)) ✔︎
+  {
+    Assume v3 in set(x : P3(x), Q3(x))
+    Q3(v3) ✔︎
+  }
+}
+
+➤ "classic single-condition form: the built-in subsumes the manual rule"
+{
+  Declare P4
+  Assume z4 in set(x : P4(x))
+  P4(z4) ✔︎
+  {
+    Assume P4(w4)
+    w4 in set(x : P4(x)) ✔︎
+  }
+}
+
+➤ "negated membership: prove t ∉ SB, and use a given t ∉ SB"
+{
+  Declare P5, Q5
+  Rule: :{ :W5 :not W5 →← }
+  Rule: :{ :{ :W5 →← } not W5 }
+  Assume not P5(c5)
+  {
+    Assume c5 in set(x : P5(x), Q5(x))
+    P5(c5) ✔︎
+    →← ✔︎
+  }
+  c5 notin set(x : P5(x), Q5(x)) ✔︎
+  Assume u5 notin set(x : P5(x), Q5(x))
+  {
+    Assume P5(u5)
+    Assume Q5(u5)
+    u5 in set(x : P5(x), Q5(x)) ✔︎
+    →← ✔︎
+  }
+}
+
+➤ "membership only inside a conditional: subexpression occurrences fire"
+{
+  Declare S6, P6, R6
+  Rule: :{ :W6 :(W6 implies V6) V6 }
+  Assume z6 in set(x in S6 : P6(x)) implies R6
+  Assume z6 in S6
+  Assume P6(z6)
+  R6 ✔︎
+}
+
+➤ "nested builders: elimination through an explicit intermediate step"
+{
+  Declare P7
+  Assume z7 in set(x : x in set(y : P7(y)))
+  z7 in set(y : P7(y)) ✔︎
+  P7(z7) ✔︎
+}
+
+➤ "alpha-variant builders: one propositional form, one instantiation set"
+{
+  Declare P8
+  Assume z8 in set(x : P8(x))
+  P8(z8) ✔︎
+  z8 in set(w : P8(w)) ✔︎
+}
+
+➤ "capture: the condition binds the same name as the member"
+{
+  Declare L9
+  Assume z9 in set(x : forall z9. L9(x,z9))
+  forall w9. L9(z9,w9) ✔︎
+  forall w9. L9(w9,w9) ✗
+}

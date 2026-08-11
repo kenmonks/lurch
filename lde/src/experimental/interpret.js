@@ -115,8 +115,10 @@ const interpret = doc => {
  */
 const systemConstants = [
   'LDE EFA','➤',
-  'AlgebraRule','NoMatrixOps','Arithmetic','ChainsRule','EquationsRule',
-  'ℕ','ℤ','ℚ','ℝ','ℂ',...autoDeclaredConstants,...invisibleHeads
+  'AlgebraRule','NoMatrixOps','Arithmetic','ChainsRule','EquationsRule','SetBuilderRule',
+  'ℕ','ℤ','ℚ','ℝ','ℂ',
+  ...autoDeclaredConstants,
+  ...invisibleHeads
 ]
 
 /** 

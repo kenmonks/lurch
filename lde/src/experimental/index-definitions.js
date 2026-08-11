@@ -164,6 +164,14 @@ export const addLurchIndices = (indexer, phase) => {
          x.child(0,0).matches('ChainsRule')))
     )
 
+    // Find the SetBuilderRule if present, the opt-in for the set-builder
+    // membership tool in global-validation.js
+    define( 'SetBuilder rule', x=>
+      (x.isA('Rule') || x.isA('Inst')) &&
+      x.numChildren()==1 &&
+      x.child(0).matches('SetBuilderRule')
+    )
+
   } else {
 
   }

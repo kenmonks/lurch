@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Set Builders Absent
+//
+// Without the Rule `:{ SetBuilderRule }` in the document the
+// set-builder membership tool must not fire: memberships in set
+// builders justify nothing, in either direction.
+
+Declare ∈
+
+➤ "no SetBuilderRule: neither direction fires"
+{
+  Declare S1, P1
+  Assume z1 in set(x in S1 : P1(x))
+  z1 in S1 ✗
+  P1(z1) ✗
+  {
+    Assume P1(w1)
+    Assume w1 in S1
+    w1 in set(x in S1 : P1(x)) ✗
+  }
+}
