@@ -1,0 +1,43 @@
+////////////////////////////////////////////////////////////////////
+// Tests for the extended set-builder notation, parsed with the option
+// enableSets:true
+//
+// This file is parsed one line at a time individually.
+//
+// { x in S : P1(x), ..., Pn(x) } takes an optional `in S` domain on the
+// bound variable and a comma-separated list of conditions.  The domain
+// folds into a leading ∈-condition and the (≥2) conditions are wrapped
+// in the invisible seq> head, so the binding's body is one Expression:
+// (setbuilder (x,(seq> (∈ x S) (P1 x) ... (Pn x)))).  The classic
+// single-condition domainless form { x : P(x) } keeps its original
+// putdown (setbuilder (x,(P x))).
+
+// domain only (n=1)
+{ x in S : P(x) }
+{ x ∈ NN : 0<x }
+{n in NN:n is even}
+set(x in S : P(x))
+set(k in ZZ : k^2 leq 10)
+
+// multiple comma-separated conditions, no domain
+{ x : P(x), Q(x) }
+{ x : P(x), Q(x), R(x) }
+set(x : 0<x, x<1)
+
+// domain and multiple conditions
+{ x in NN : 0<x , x<10 }
+{ x in NN : 0<x , x<10 , P(x) }
+set(x in A union B : x notin C, P(x))
+
+// membership statements about extended set builders (rule shapes)
+z in { x in S : @P(x) }
+z in { x in S : @P(x), @Q(x) }
+2 in { k in NN : k < 5 }
+
+// nesting
+{ x in NN : x in { y in NN : y < x } }
+
+// classic forms are unchanged, and a braced membership with no colon is
+// still a finite set containing one membership statement
+{ x : P(x) }
+{ x in S }

@@ -568,7 +568,13 @@ export const astToTex = node => {
       node.args.map(T).join(',')}\\right)`
 
     // aggregates
-    case 'setbuilder': return `\\left\\{\\,${leafTex(node.v)}:\\,${T(node.pred)}\\right\\}`
+    case 'setbuilder': {
+      const v = node.dom ? `${leafTex(node.v)}\\in ${T(node.dom)}`
+                         : leafTex(node.v)
+      const preds = node.pred !== undefined ? T(node.pred)
+                  : node.preds.map(T).join(',\\,')
+      return `\\left\\{\\,${v}:\\,${preds}\\right\\}`
+    }
     case 'set'       : return `\\left\\{\\,${node.elts.map(T).join(',')}\\,\\right\\}`
     case 'class'     : {
       const elts = node.elts.map(T)

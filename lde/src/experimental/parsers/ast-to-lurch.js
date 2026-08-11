@@ -299,7 +299,12 @@ const P = node => {
     }
 
     // aggregates
-    case 'setbuilder' : return `set(${node.v} : ${P(node.pred)})`
+    case 'setbuilder' : {
+      const v = node.dom ? `${node.v} in ${P(node.dom)}` : node.v
+      const preds = node.pred !== undefined ? P(node.pred)
+                  : node.preds.map(P).join(', ')
+      return `set(${v} : ${preds})`
+    }
     case 'set'        : return `set(${callArgs(node.elts)})`
     case 'class'      : return `class(${callArgs(node.elts)})`
     case 'tuple'      : return `tuple(${callArgs(node.elts)})`

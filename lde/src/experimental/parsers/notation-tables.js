@@ -379,6 +379,12 @@ export const autoDeclaredConstants = [ ...new Set( bigOpRows.flatMap(
 export const invisibleHeads =
   [ ...new Set( [
     'maps', 'index', 'tuple', 'set', 'setbuilder', 'class', 'trans_chain',
+    // the extended set-builder's condition wrapper: { x in S : P, Q }
+    // puts (seq> (∈ x S) P Q) in the binding's body, turning the
+    // sequence of conditions into the single Expression an LC binding
+    // requires (its putdown-only name echoes the rule>/thm> shorthand
+    // family, which the user likewise never types)
+    'seq>',
     // every delimited-form head is invisible vocabulary too: ⌊x⌋ never
     // shows the user the word floor, so nothing prompts a Declare, and
     // an undeclared head is hijackable by a Rule metavariable

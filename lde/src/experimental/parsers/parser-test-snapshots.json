@@ -1739,6 +1739,46 @@
       "({1,2} cap {2,3})^2": "{\\left(\\left\\{\\,1,2\\,\\right\\}\\cap \\left\\{\\,2,3\\,\\right\\}\\right)}^{2}"
     }
   },
+  "LurchParserSetBuilderTests": {
+    "putdown": {
+      "{ x in S : P(x) }": "(setbuilder (x,(seq> (∈ x S) (P x))))",
+      "{ x ∈ NN : 0<x }": "(setbuilder (x,(seq> (∈ x ℕ) (< 0 x))))",
+      "{n in NN:n is even}": "(setbuilder (n,(seq> (∈ n ℕ) (is n even))))",
+      "set(x in S : P(x))": "(setbuilder (x,(seq> (∈ x S) (P x))))",
+      "set(k in ZZ : k^2 leq 10)": "(setbuilder (k,(seq> (∈ k ℤ) (≤ (^ k 2) 10))))",
+      "{ x : P(x), Q(x) }": "(setbuilder (x,(seq> (P x) (Q x))))",
+      "{ x : P(x), Q(x), R(x) }": "(setbuilder (x,(seq> (P x) (Q x) (R x))))",
+      "set(x : 0<x, x<1)": "(setbuilder (x,(seq> (< 0 x) (< x 1))))",
+      "{ x in NN : 0<x , x<10 }": "(setbuilder (x,(seq> (∈ x ℕ) (< 0 x) (< x 10))))",
+      "{ x in NN : 0<x , x<10 , P(x) }": "(setbuilder (x,(seq> (∈ x ℕ) (< 0 x) (< x 10) (P x))))",
+      "set(x in A union B : x notin C, P(x))": "(setbuilder (x,(seq> (∈ x (∪ A B)) (¬ (∈ x C)) (P x))))",
+      "z in { x in S : @P(x) }": "(∈ z (setbuilder (x,(seq> (∈ x S) (λ P x)))))",
+      "z in { x in S : @P(x), @Q(x) }": "(∈ z (setbuilder (x,(seq> (∈ x S) (λ P x) (λ Q x)))))",
+      "2 in { k in NN : k < 5 }": "(∈ 2 (setbuilder (k,(seq> (∈ k ℕ) (< k 5)))))",
+      "{ x in NN : x in { y in NN : y < x } }": "(setbuilder (x,(seq> (∈ x ℕ) (∈ x (setbuilder (y,(seq> (∈ y ℕ) (< y x))))))))",
+      "{ x : P(x) }": "(setbuilder (x,(P x)))",
+      "{ x in S }": "(set (∈ x S))"
+    },
+    "tex": {
+      "{ x in S : P(x) }": "\\left\\{\\,x\\in S:\\,P\\left(x\\right)\\right\\}",
+      "{ x ∈ NN : 0<x }": "\\left\\{\\,x\\in \\mathbb{N}:\\,0\\lt x\\right\\}",
+      "{n in NN:n is even}": "\\left\\{\\,n\\in \\mathbb{N}:\\,n\\text{ is }\\text{even}\\right\\}",
+      "set(x in S : P(x))": "\\left\\{\\,x\\in S:\\,P\\left(x\\right)\\right\\}",
+      "set(k in ZZ : k^2 leq 10)": "\\left\\{\\,k\\in \\mathbb{Z}:\\,{k}^{2}\\leq 10\\right\\}",
+      "{ x : P(x), Q(x) }": "\\left\\{\\,x:\\,P\\left(x\\right),\\,Q\\left(x\\right)\\right\\}",
+      "{ x : P(x), Q(x), R(x) }": "\\left\\{\\,x:\\,P\\left(x\\right),\\,Q\\left(x\\right),\\,R\\left(x\\right)\\right\\}",
+      "set(x : 0<x, x<1)": "\\left\\{\\,x:\\,0\\lt x,\\,x\\lt 1\\right\\}",
+      "{ x in NN : 0<x , x<10 }": "\\left\\{\\,x\\in \\mathbb{N}:\\,0\\lt x,\\,x\\lt 10\\right\\}",
+      "{ x in NN : 0<x , x<10 , P(x) }": "\\left\\{\\,x\\in \\mathbb{N}:\\,0\\lt x,\\,x\\lt 10,\\,P\\left(x\\right)\\right\\}",
+      "set(x in A union B : x notin C, P(x))": "\\left\\{\\,x\\in A\\cup B:\\,x\\notin C,\\,P\\left(x\\right)\\right\\}",
+      "z in { x in S : @P(x) }": "z\\in \\left\\{\\,x\\in S:\\,\\mathcal{P}\\left(x\\right)\\right\\}",
+      "z in { x in S : @P(x), @Q(x) }": "z\\in \\left\\{\\,x\\in S:\\,\\mathcal{P}\\left(x\\right),\\,\\mathcal{Q}\\left(x\\right)\\right\\}",
+      "2 in { k in NN : k < 5 }": "2\\in \\left\\{\\,k\\in \\mathbb{N}:\\,k\\lt 5\\right\\}",
+      "{ x in NN : x in { y in NN : y < x } }": "\\left\\{\\,x\\in \\mathbb{N}:\\,x\\in \\left\\{\\,y\\in \\mathbb{N}:\\,y\\lt x\\right\\}\\right\\}",
+      "{ x : P(x) }": "\\left\\{\\,x:\\,P\\left(x\\right)\\right\\}",
+      "{ x in S }": "\\left\\{\\,x\\in S\\,\\right\\}"
+    }
+  },
   "LurchParserSequentTests": {
     "putdown": {
       "A ⊢ B": "(⊢ (tuple A) (tuple B))",

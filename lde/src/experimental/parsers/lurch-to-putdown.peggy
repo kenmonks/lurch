@@ -137,6 +137,23 @@
   // src records the source text the user typed for the tex printer
   const sh = (text, src) => { return { type:'shorthand', text, fmt:{ src } } }
 
+  // a set-builder node: v the bound variable, dom the optional domain
+  // expression (from `v in S`), preds the nonempty condition list.  The
+  // classic single-condition domainless form { x : P(x) } keeps its
+  // original one-predicate shape so existing rules and documents are
+  // unaffected; every richer form - a domain, or several comma-separated
+  // conditions - carries { dom, preds }, and ast-to-putdown.js folds the
+  // domain into a leading ∈-condition and wraps the resulting sequence
+  // (always ≥ 2 conditions) in the invisible seq> head, keeping the
+  // binding's body a single Expression
+  const setBuilder = ( v, dom, preds, fmt ) => {
+    const node = ( !dom && preds.length === 1 )
+      ? { type:'setbuilder', v, pred:preds[0] }
+      : { type:'setbuilder', v, dom, preds }
+    if ( fmt ) node.fmt = fmt
+    return node
+  }
+
   /////////////////////////////////////////////////////////////////
   // Parser specific utilities
 
@@ -1258,9 +1275,13 @@ StarExpr = a:Closed
                     { type:'efa', name:a, args:b[0] } ) } /
               // allow 'set' to be case insensitive, check for setbuilder before
               // finite sets (fmt.call distinguishes the set(...) call form
-              // from ｛...｝ brackets for the tex printer's parenthesization)
-              'set('i _ a:Symbol _ ':' _ b:Expression _')'
-                { return { type:'setbuilder', v:a, pred:b, fmt:{ call:true } } } /
+              // from ｛...｝ brackets for the tex printer's parenthesization).
+              // The bound variable takes an optional `in S` domain and the
+              // conditions are a comma-separated list, so set-builder reads
+              // the way mathematicians write it: set(x in NN : 0<x, x<5)
+              'set('i _ a:Symbol d:( _ 'in' _x @Expression )? _ ':' _
+                    b:Expression|1..,comma| _')'
+                { return setBuilder( a, d, b, { call:true } ) } /
               // allow 'set' to be case insensitive (elements are
               // bare-mention holes, like tuples: {star, cdot} is a set
               // of operators)
@@ -1377,9 +1398,13 @@ Tuple = '['_ a:MentionableSeq _']' t:"'"? !alphanum
           { return { type:'tuple', elts:a, fmt:{ style:'bracket', tick:!!t } } } /
         'langle'_x a:MentionableSeq _'rangle'!alphanum
           { return { type:'tuple', elts:a, fmt:{ style:'langle' } } }
-// sets
-SetBracketed = '｛'_ a:Symbol _ ':' _ b:Expression _'｝'
-                 { return { type:'setbuilder', v:a, pred:b } } /
+// sets - set-builder takes an optional `in S` domain on the bound
+// variable and a comma-separated condition list (see the setBuilder
+// helper); a braced membership with no colon, like { x in S }, still
+// falls through to a finite set containing one membership statement
+SetBracketed = '｛'_ a:Symbol d:( _ 'in' _x @Expression )? _ ':' _
+                    b:Expression|1..,comma| _'｝'
+                 { return setBuilder( a, d, b ) } /
                '｛'_ a:MentionableSeq _'｝' { return { type:'set', elts:a } }
 // parenthesized (recorded in the AST as a formatting-only wrapper node:
 // putdown drops it, the tex printer reproduces it)

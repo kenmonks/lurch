@@ -68,7 +68,17 @@
 //   { type:'efa', name, args }         @P(k) expression function
 //                                      application; extra (...) groups nest
 //                                      as ordinary app nodes around it
-//   { type:'setbuilder', v, pred }     { v : pred } set-builder notation
+//   { type:'setbuilder', v, pred }     { v : pred } set-builder notation;
+//                                      the extended form
+//                                      { v in dom : p1, ..., pn } carries
+//                                      { v, dom, preds } instead (dom null
+//                                      when no domain was typed), and its
+//                                      putdown folds the domain into a
+//                                      leading ∈-condition and wraps the
+//                                      resulting ≥2 conditions in the
+//                                      invisible seq> head, so the
+//                                      binding's body stays a single
+//                                      Expression
 //   { type:'set', elts }               finite set
 //   { type:'class', elts }             equivalence class class(a,~)
 //   { type:'tuple', elts }             tuple / pair / triple / matrix row
@@ -190,7 +200,14 @@ export const astToPutdown = node => {
     }
 
     // aggregates
-    case 'setbuilder': return `(setbuilder (${node.v},${P(node.pred)}))`
+    case 'setbuilder': {
+      if ( node.pred !== undefined )
+        return `(setbuilder (${node.v},${P(node.pred)}))`
+      const conds = [
+        ...( node.dom ? [ `(∈ ${node.v} ${P(node.dom)})` ] : [] ),
+        ...node.preds.map( P ) ]
+      return `(setbuilder (${node.v},(seq> ${conds.join(' ')})))`
+    }
     case 'set'       : return `(set ${spaced(node.elts)})`
     case 'class'     : return `(class ${spaced(node.elts)})`
     case 'tuple'     : return `(tuple ${spaced(node.elts)})`
