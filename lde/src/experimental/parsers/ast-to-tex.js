@@ -596,6 +596,17 @@ export const astToTex = node => {
       return node.fmt?.paren ? `\\left(${seq}\\right)` : seq
     }
 
+    // the bare range operator has no traditional standalone symbol, so
+    // it echoes the typed dots; interval notation DOES have a
+    // traditional rendering and tex has no tuple/bracket collision to
+    // dodge, so it renders that way regardless of how the user typed it
+    case 'range'     : return `${T(node.from)}\\mathinner{.\\,.}${T(node.to)}`
+    case 'interval'  : {
+      const open  = node.closedLeft  ? '\\left[' : '\\left('
+      const close = node.closedRight ? '\\right]' : '\\right)'
+      return `${open}${T(node.from)},${T(node.to)}${close}`
+    }
+
     case 'tuple'     : {
       const fmt = node.fmt || {}
       // a bracket tuple whose entries are all untick'd bracket tuples is a

@@ -26,7 +26,6 @@ Rule {
 { :P
 // malformed numbers
 0.5.2
-x..y
 // the index bracket notation is strictly binary
 [G:H:K]
 // exponents other than atomics require parentheses, e.g. 2^([G:H])
@@ -276,3 +275,11 @@ not vdash b
 x = y = z ⊢ P
 (x = y = z ⊢ P)
 ⊢ x = y = z
+// the range operator's dot run must be contiguous - space between the
+// dots splits it into single dots, which have no reading here (a
+// Binding's separating dot must be adjacent to the bound name)
+a . . b
+// range does not chain: a second dot run after a complete range has no
+// reading for its leftover (contrast the sequent prefix form, which IS
+// a standalone Expression and so splits into two LCs instead of erroring)
+a...b...c

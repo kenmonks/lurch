@@ -808,7 +808,19 @@
       "a cong b cong_(m) c": "(≅ a b) (≅ m) c",
       "a cong b MOD m": "(≅ a b) MOD m",
       "a cong mod b TO c": "(≅ a mod) b TO c",
-      "a | x.y": "(| a x, y)"
+      "a | x.y": "(| a x, y)",
+      "a..b": "(range a b)",
+      "(a..b)": "(interval (range a b))",
+      "[a..b)": "(interval a (range a b))",
+      "(a..b]": "(interval (range a b) b)",
+      "[a..b]": "(interval a (range a b) b)",
+      "( a  .... b ]": "(interval (range a b) b)",
+      "[a+1..b-1]": "(interval (+ a 1) (range (+ a 1) (+ b (- 1))) (+ b (- 1)))",
+      "3..5": "(range 3 5)",
+      "x in (a..b)": "(∈ x (interval (range a b)))",
+      "(a..b) union (c..d)": "(∪ (interval (range a b)) (interval (range c d)))",
+      "(a..b)^2": "(^ (interval (range a b)) 2)",
+      "not (a..b) subset S": "(¬ (⊆ (interval (range a b)) S))"
     },
     "tex": {
       "0": "0",
@@ -1618,7 +1630,19 @@
       "a cong b cong_(m) c": "a\\cong b \\cong_{m} c",
       "a cong b MOD m": "a\\cong b \\text{MOD} m",
       "a cong mod b TO c": "a\\cong \\text{mod} b \\text{TO} c",
-      "a | x.y": "a\\mid x.\\, y"
+      "a | x.y": "a\\mid x.\\, y",
+      "a..b": "a\\mathinner{.\\,.}b",
+      "(a..b)": "\\left(a,b\\right)",
+      "[a..b)": "\\left[a,b\\right)",
+      "(a..b]": "\\left(a,b\\right]",
+      "[a..b]": "\\left[a,b\\right]",
+      "( a  .... b ]": "\\left(a,b\\right]",
+      "[a+1..b-1]": "\\left[a+1,b-1\\right]",
+      "3..5": "3\\mathinner{.\\,.}5",
+      "x in (a..b)": "x\\in \\left(a,b\\right)",
+      "(a..b) union (c..d)": "\\left(a,b\\right)\\cup \\left(c,d\\right)",
+      "(a..b)^2": "{\\left(a,b\\right)}^{2}",
+      "not (a..b) subset S": "\\text{not } \\left(a,b\\right)\\subseteq S"
     }
   },
   "LurchParserSetTests": {
@@ -1974,7 +1998,6 @@
       "Rule {": "(parse error)",
       "{ :P": "(parse error)",
       "0.5.2": "(parse error)",
-      "x..y": "(parse error)",
       "[G:H:K]": "(parse error)",
       "2^[G:H]": "(parse error)",
       "λP(k)": "(parse error)",
@@ -2096,7 +2119,9 @@
       "⊢": "(parse error)",
       "x = y = z ⊢ P": "(parse error)",
       "(x = y = z ⊢ P)": "(parse error)",
-      "⊢ x = y = z": "(parse error)"
+      "⊢ x = y = z": "(parse error)",
+      "a . . b": "(parse error)",
+      "a...b...c": "(parse error)"
     },
     "tex": {
       "not not P": "(parse error)",
@@ -2112,7 +2137,6 @@
       "Rule {": "(parse error)",
       "{ :P": "(parse error)",
       "0.5.2": "(parse error)",
-      "x..y": "(parse error)",
       "[G:H:K]": "(parse error)",
       "2^[G:H]": "(parse error)",
       "λP(k)": "(parse error)",
@@ -2234,7 +2258,9 @@
       "⊢": "(parse error)",
       "x = y = z ⊢ P": "(parse error)",
       "(x = y = z ⊢ P)": "(parse error)",
-      "⊢ x = y = z": "(parse error)"
+      "⊢ x = y = z": "(parse error)",
+      "a . . b": "(parse error)",
+      "a...b...c": "(parse error)"
     }
   },
   "MakedocExamples": {

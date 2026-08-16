@@ -1149,3 +1149,27 @@ a | x.y
 
 // ('a is a' does not belong here: 'is a' commits with no
 // right-hand side, a parse error locked in LurchParserErrorTests)
+
+////////////////////////////////////////////////////////////////////
+// The range operator and interval notation: `a..b` (any run of two or
+// more literal dots, no internal space) is (range a b); the bracketed
+// forms wrap it in interval(), with a bare endpoint alongside the
+// range() marking the side that bracket closes
+a..b
+(a..b)
+[a..b)
+(a..b]
+[a..b]
+// optional space around the endpoints and a longer dot run
+( a  .... b ]
+// endpoints are full algebraic expressions, not just atoms
+[a+1..b-1]
+// a numeral immediately before the dot run does not get half-eaten as
+// a trailing bare-dot decimal (3.) plus a stray leftover dot
+3..5
+// intervals compose with the surrounding relations/operators like any
+// other Atomic, e.g. tuples and sets do
+x in (a..b)
+(a..b) union (c..d)
+(a..b)^2
+not (a..b) subset S

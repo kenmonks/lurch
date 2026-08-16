@@ -280,8 +280,24 @@ LC = Meta / Given / Environment / Declaration / Expression
     PropArg  = Relations / RelArg
       // higher precedence than Relations for use in Relations: the whole
       // set/algebraic tower, one table-driven climb
-      RelArg = SetAlg
-  
+      RelArg = Range / SetAlg
+
+  // The range operator: `a..b` is a value, not a relation, so it sits
+  // between Relations and SetAlg - tighter than =/</etc (a range can be
+  // a relation operand) and one level looser than SetAlg (its own
+  // endpoints, so `a+1..b-1` parses the arithmetic first).  The token is
+  // ANY run of two or more literal dots with no internal space (DotRun),
+  // never one dot - a single '.' already means something else (the
+  // Binding separator, x.body), and Decimal's trailing bare-dot form is
+  // guarded below so it never eats the first dot of a run.  Optional
+  // space is allowed around the endpoints but not inside the dot run
+  // itself.  Interval notation (the bracketed forms below, an Atomic)
+  // reuses this same token but parses its own endpoints directly rather
+  // than going through Range, since `(`/`[` must be tried before this
+  // rule ever gets a chance to see the input.
+  Range = a:SetAlg _ DotRun _ b:SetAlg { return { type:'range', from:a, to:b } }
+  DotRun = $( '.' '.'+ )
+
   // It is often useful to have a sequence of one or more expressions separated
   // by commas (returned as an array of AST nodes)
   ExpressionSeq = a:Expression|..,comma| { return a }
@@ -1337,9 +1353,26 @@ StarExpr = a:Closed
 //
 // morally atomic expressions (do not require parentheses)
 Atomic = StringLiteral / QuoteMention / ParenSequent / ParenMention /
-         Parenthesized /
+         Interval / Parenthesized /
          // EquivalenceClass /
          Tuple / SetBracketed / Symbol / Number
+
+// Interval notation.  Traditional (a,b)/[a,b)/(a,b]/[a,b] would collide
+// with tuples, which already own `[a,b]`, so the interior uses the same
+// dot-run Range token as the bare operator: `(a..b)`, `[a..b)`,
+// `(a..b]`, `[a..b]`.  Tried before Parenthesized/Tuple (both of which
+// own one of these two brackets) so a mismatched-bracket pair or a bare
+// dot-run inside brackets always reads as an interval, never a
+// one-element tuple or a paren-wrapped range.  Closed endpoints are
+// recorded as bare a/b flanking the range() call, mirroring how a
+// closed side is the one that additionally names its endpoint:
+//   (a..b)  -> (interval (range a b))
+//   [a..b)  -> (interval a (range a b))
+//   (a..b]  -> (interval (range a b) b)
+//   [a..b]  -> (interval a (range a b) b)
+Interval = ob:[([] _ a:SetAlg _ DotRun _ b:SetAlg _ cb:[)\]]
+             { return { type:'interval', from:a, to:b,
+                        closedLeft: ob === '[', closedRight: cb === ']' } }
 
 // The uniform mention rule: an operator token alone in parentheses - or
 // in single quotes - denotes the operator symbol
@@ -1415,7 +1448,10 @@ Parenthesized = '(' _ a:Expression _ ')' { return { type:'paren', expr:a } }
 // (negatives and fractions are compound)
 Number  = RepeatingDecimal / Decimal / Natural
 RepeatingDecimal = $(Decimal '[' [0-9]+ ']') 
-Decimal = $( Natural '.' [0-9]* ) 
+// the trailing bare-dot form ('3.') never fires when the dot starts a
+// dot-run of two or more - '3..5' must stay available to the range
+// operator, not get half-eaten as the Decimal '3.' plus a stray dot
+Decimal = $( Natural '.' ![.] [0-9]* )
 Natural = $( [1-9][0-9]* / '0' )
 
 ///////////////////////////////////////////////////////////////////////////////

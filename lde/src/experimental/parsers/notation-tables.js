@@ -379,6 +379,9 @@ export const autoDeclaredConstants = [ ...new Set( bigOpRows.flatMap(
 export const invisibleHeads =
   [ ...new Set( [
     'maps', 'index', 'tuple', 'set', 'setbuilder', 'class', 'trans_chain',
+    // 'a..b' -> (range a b); the bracketed interval forms wrap it in
+    // 'interval' - the user types dots and brackets, never these words
+    'range', 'interval',
     // the extended set-builder's condition wrapper: { x in S : P, Q }
     // puts (seq> (∈ x S) P Q) in the binding's body, turning the
     // sequence of conditions into the single Expression an LC binding

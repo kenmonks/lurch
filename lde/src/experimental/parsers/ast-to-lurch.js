@@ -143,7 +143,7 @@ const err = node => {
 // parentheses); everything else - including big-operator call forms - is
 // conservatively wrapped by operand() below.
 const closed = new Set([ 'app', 'efa', 'set', 'setbuilder', 'class',
-                         'tuple', 'paren', 'sequent' ])
+                         'tuple', 'paren', 'sequent', 'interval' ])
 
 const operand = node => {
   if ( typeof node === 'string' ) return leaf(node)
@@ -308,6 +308,15 @@ const P = node => {
     case 'set'        : return `set(${callArgs(node.elts)})`
     case 'class'      : return `class(${callArgs(node.elts)})`
     case 'tuple'      : return `tuple(${callArgs(node.elts)})`
+    // the dot-run range operator has only one surface, a..b - not
+    // self-delimiting, so it is wrapped by operand() wherever it is used
+    // as a sub-expression (e.g. inside an interval's brackets)
+    case 'range'      : return `${operand(node.from)}..${operand(node.to)}`
+    case 'interval'   : {
+      const open  = node.closedLeft  ? '[' : '('
+      const close = node.closedRight ? ']' : ')'
+      return `${open}${operand(node.from)}..${operand(node.to)}${close}`
+    }
 
     // formatting wrappers
     case 'paren' : return `(${P(node.expr)})`

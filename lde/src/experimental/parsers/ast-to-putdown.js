@@ -82,6 +82,10 @@
 //   { type:'set', elts }               finite set
 //   { type:'class', elts }             equivalence class class(a,~)
 //   { type:'tuple', elts }             tuple / pair / triple / matrix row
+//   { type:'range', from, to }         a..b, the bare infix range operator
+//   { type:'interval', from, to,       (a..b)/[a..b)/(a..b]/[a..b], wraps
+//     closedLeft, closedRight }        a range with the endpoints that are
+//                                      closed named bare alongside it
 //   { type:'paren', expr }             user-typed or paren() parentheses:
 //                                      formatting only, dropped in putdown
 //
@@ -211,6 +215,15 @@ export const astToPutdown = node => {
     case 'set'       : return `(set ${spaced(node.elts)})`
     case 'class'     : return `(class ${spaced(node.elts)})`
     case 'tuple'     : return `(tuple ${spaced(node.elts)})`
+    case 'range'     : return `(range ${P(node.from)} ${P(node.to)})`
+    case 'interval'  : {
+      const range = `(range ${P(node.from)} ${P(node.to)})`
+      const args = [
+        ...( node.closedLeft  ? [ P(node.from) ] : [] ),
+        range,
+        ...( node.closedRight ? [ P(node.to) ]   : [] ) ]
+      return `(interval ${args.join(' ')})`
+    }
 
     // formatting-only wrappers
     case 'paren'     : return P(node.expr)
