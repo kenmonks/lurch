@@ -5,6 +5,158 @@ import { getHeader } from './header-editor.js'
 import { Environment } from './lde-cdn.js'
 import { isOnScreen } from './utilities.js'
 import { lookup } from './document-settings.js'
+import { tokenize } from '../lde/src/experimental/parsers/tokenizer.js'
+
+// Internal use only
+// Maps a Shell's `type` metadata (i.e., the name under which its subclass
+// was registered with Atom.registerSubclass()) to the Lurch Notation
+// keyword that, placed before a `{ ... }` environment, reproduces the same
+// meaning that shell's finalize() gives it (see shells.js).  A value of
+// `null` means a plain, unmarked environment is enough.  Shell types absent
+// from this table (e.g. Recall, Preview) have no Lurch Notation keyword; see
+// shellFallbackPutdown() below for how those are handled instead.
+const shellKeywords = {
+    shell : null,
+    subproof : null,
+    premise : ':',
+    proof : 'proof:',
+    rule : 'rule:',
+    definition : 'definition:',
+    axiom : 'axiom:',
+    theorem : 'theorem:',
+    lemma : 'lemma:',
+    corollary : 'corollary:'
+}
+
+// Internal use only
+// A minimal echo of the recursive shell/atom-array walk in
+// Message.document()'s documentLC(), but building plain LogicConcept
+// children (no IDs, no feedback messages) instead, for use only by
+// shellFallbackPutdown() below, when a shell has no Lurch Notation keyword
+// and so must be rendered as raw putdown instead.
+const buildFallbackChildren = ( array, context ) => {
+    while ( array.length > 0 ) {
+        const head = array.shift()
+        if ( !( head instanceof Shell ) ) {
+            let LCs
+            try { LCs = head.toLCs() } catch ( e ) { LCs = [ ] }
+            LCs.forEach( LC => context.pushChild( LC ) )
+            continue
+        }
+        const after = array.findIndex( entry => !head.element.contains( entry.element ) )
+        const inside = after == -1 ? array.splice( 0 ) : array.splice( 0, after )
+        const headLCs = head.toLCs()
+        if ( headLCs.length != 1 ) continue
+        const innerContext = headLCs[0]
+        buildFallbackChildren( inside, innerContext )
+        head.finalize( innerContext )
+        context.pushChild( innerContext )
+    }
+}
+
+// Internal use only
+// Compute the putdown notation for a shell (and its contents) that has no
+// Lurch Notation keyword of its own, for embedding via the grammar's
+// «...» raw-putdown escape.  See buildFallbackChildren() above.
+const shellFallbackPutdown = ( head, inside ) => {
+    const headLCs = head.toLCs()
+    if ( headLCs.length != 1 )
+        throw new Error( `${head.getMetadata( 'type' )} must represent exactly one LC` )
+    const shellLC = headLCs[0]
+    buildFallbackChildren( inside, shellLC )
+    head.finalize( shellLC )
+    return shellLC.toPutdown()
+}
+
+// Internal use only
+// The Lurch Notation for one non-shell atom, or the empty string if the
+// atom has no meaning of its own (e.g., expository text) or fails to parse
+// (in which case it is silently omitted, just as Message.document() omits
+// unparsable atoms from the putdown it builds).  Atom notation is written
+// by the user in "set mode" (enableSets:true), under which `{...}` always
+// means a set or set-builder expression; pre-tokenizing it here, before it
+// is spliced into the reassembled document text (which is meant to be
+// parsed in the default mode), rewrites any such `{`/`}` into the
+// fullwidth `｛`/`｝` the grammar also accepts for sets in every mode, so the
+// meaning survives being tokenized again, in the default mode, later.
+const lurchNotationForAtom = head => {
+    let LCs
+    try { LCs = head.toLCs() } catch ( e ) { return '' }
+    if ( LCs.length == 0 ) return ''
+    const raw = head.getMetadata( 'lurchNotation' )
+    return typeof raw == 'string' ? tokenize( raw, { enableSets : true } ) : ''
+}
+
+// Internal use only
+// Indent every line of the given text by one more level (two spaces), so
+// that nesting an already-indented block inside another environment just
+// means indenting the whole block again - no depth bookkeeping needed.
+const indent = text => text.split( '\n' ).map( line => `  ${line}` ).join( '\n' )
+
+// Internal use only
+// Wrap the given (already fully-assembled) inner text in a `{ }`
+// environment, on its own lines and indented, with the given keyword (if
+// any) in front - or just `{ }` if the inner text is empty.
+const wrapEnvironment = ( keyword, innerText ) => {
+    const prefix = keyword ? `${keyword} ` : ''
+    return innerText ? `${prefix}{\n${indent( innerText )}\n}` : `${prefix}{ }`
+}
+
+// Internal use only
+// The recursive heart of Message.documentInLurchNotation(); see its
+// documentation for the overall approach.  Consumes (shift()s/splice()s)
+// the array passed to it, just as documentLC() does in Message.document().
+const lurchNotationFor = array => {
+    const pieces = [ ]
+    while ( array.length > 0 ) {
+        const head = array.shift()
+        if ( !( head instanceof Shell ) ) {
+            const text = lurchNotationForAtom( head )
+            if ( text ) pieces.push( text )
+            continue
+        }
+        const after = array.findIndex( entry => !head.element.contains( entry.element ) )
+        const inside = after == -1 ? array.splice( 0 ) : array.splice( 0, after )
+        const type = head.getMetadata( 'type' )
+        // Previews are read-only display copies of a dependency's content;
+        // they have no meaning of their own, so they contribute nothing.
+        if ( type == 'preview' ) continue
+        const keyword = shellKeywords[type]
+        if ( keyword !== undefined ) {
+            pieces.push( wrapEnvironment( keyword, lurchNotationFor( inside ) ) )
+        } else {
+            // No Lurch Notation keyword reproduces this shell's meaning
+            // (e.g., Recall), or it is a shell type this function does not
+            // recognize; fall back to embedding its putdown form directly.
+            try {
+                pieces.push( `«${shellFallbackPutdown( head, inside )}»` )
+            } catch ( e ) {
+                pieces.push( `// [Could not export ${type || 'this'} environment: ${e.message}]` )
+            }
+        }
+    }
+    // A bare newline is not always a safe separator: the grammar's
+    // precedence climbing for chains and n-ary arithmetic operators (+, -,
+    // ...) does not stop at atom boundaries, only at tokens it cannot
+    // extend a parse with.  E.g. two sibling atoms "x+(-x)=0" and
+    // "-x+x=0" would otherwise be reparsed as one continued chain,
+    // silently merging two separate claims into one.  A `//` comment is
+    // dropped by the printer (see ast-to-putdown.js's 'linecomment' case)
+    // and so is invisible in the result, but still forces the grammar to
+    // end the previous LC, so it is inserted between every pair of
+    // sibling pieces to prevent that - EXCEPT when the preceding piece
+    // ends in a comma, since a comma is how the user spreads one
+    // Given/Let/ForSome list (e.g. "Suppose A, B, C") or one transitive
+    // chain across several atoms for readability, each atom on its own
+    // being an incomplete fragment (see processShorthands()'s `<comma`
+    // and `given>` handling in parsing.js); a `//` there would prevent
+    // the grammar from reassembling that list at all.
+    return pieces.reduce( ( text, piece, i ) => {
+        if ( i == 0 ) return piece
+        const continues = pieces[i - 1].trimEnd().endsWith( ',' )
+        return text + ( continues ? '\n' : '\n//\n' ) + piece
+    }, '' )
+}
 
 /**
  * This class simplifies communication between the main thread and worker
@@ -354,6 +506,54 @@ export class Message {
                    encoding == 'putdown' ? LC.toPutdown() :
                    undefined // should not happen; see check above
         } )
+    }
+
+    /**
+     * Convert the document inside the given editor into the Lurch Notation
+     * that, if pasted into Lode (or fed back through the Lurch Notation
+     * parser), reproduces the document's meaning.  Unlike {@link
+     * Message.document document()}, this does not produce putdown; it
+     * reassembles the actual Lurch Notation the user typed into each
+     * expression atom, adding only the environment brackets and keywords
+     * (`Rule:`, `Theorem:`, etc.) that the user's shells imply but do not
+     * themselves contain, since a shell in the document is just a styled
+     * `<div>`, not typed notation.
+     *
+     * Two wrinkles, both handled internally:
+     *
+     *  1. Atom content is parsed in "set mode" (`enableSets:true`), under
+     *     which `{...}` always means a finite set or set-builder
+     *     expression.  The reassembled document, however, is meant to be
+     *     parsed in the default mode, under which `{...}` means an
+     *     environment.  So each atom's notation is pre-tokenized with
+     *     `enableSets:true` before being spliced in; this rewrites any
+     *     literal `{`/`}` the user typed for a set into the fullwidth
+     *     `｛`/`｝` the grammar also recognizes as set brackets regardless
+     *     of mode, so the meaning survives being re-tokenized in the
+     *     default mode later.
+     *  2. Some shell types (e.g. {@link Recall}, {@link Preview}) have no
+     *     Lurch Notation keyword that reproduces their meaning.  For those,
+     *     this function falls back to computing that shell's putdown
+     *     directly and embedding it verbatim using the grammar's `«...»`
+     *     raw-putdown escape.  A `Preview` shell is skipped entirely,
+     *     since it has no meaning of its own (it is a read-only display of
+     *     a dependency's content).
+     *
+     * The returned text wraps the whole document in one `{ }` environment
+     * (the document itself, as a single environment), and indents every
+     * line two spaces per level of environment nesting.
+     *
+     * @param {tinymce.Editor} editor - the editor containing the document to
+     *   be converted
+     * @returns {string} the Lurch Notation for the document
+     */
+    static documentInLurchNotation ( editor ) {
+        const selector = `.${atomClassName}:not(#context):not(#context .${atomClassName})`
+        const atoms = [
+            ...( getHeader( editor )?.querySelectorAll( selector ) || [ ] ),
+            ...editor.dom.doc.querySelectorAll( selector )
+        ].filter( isOnScreen ).map( element => Atom.from( element, editor ) )
+        return wrapEnvironment( '', lurchNotationFor( atoms ) )
     }
 
     /**
