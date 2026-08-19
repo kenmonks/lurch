@@ -89,6 +89,7 @@ group relation
   R is a relation on A   -> (relation R A)
   A is a subset of B     -> (⊆ A B)      // symbolic ⊆ lives in chains below
   d is a divisor of n    -> (| d n)      // symbolic | lives in chains below
+  M is an upper bound of S    -> (upperbound M S)
 
   // generic relations (the instructor escape hatch), parameterizable
   a ~ b                                          tex: \sim
@@ -279,6 +280,7 @@ group constant
   EquationsRule   words: "equations rule", equations rule
   SetBuilderRule  words: "set builder rule", set builder rule
   // constants without renamings, listed for their tex only
+  upperbound  tex: \text{upper~bound}
   smiley  tex: 😀       pie  tex: 🥧      basket  tex: 🧺
   tree    tex: 🌳       apple  tex: 🍎    cherry  tex: 🍒
   blueberry  tex: 🫐    Fib  tex: F       inv  tex: \text{inv}
