@@ -347,6 +347,7 @@ const texApp = (node, T) => {
     if (h === 'inv' && args.length === 1) return `${args[0]}^{-1}`
     if (h === 'dot' && args.length >= 2) return args.join('\\cdot ')
     if (node.head === 'abs') return `\\left| ${seq} \\right|`
+    if (node.head === 'card') return `\\left| ${seq} \\right|`
     if (node.head === 'AlgebraRule' && args.length === 1 &&
         node.args[0] === 'NoMatrixOps')
       return '\\text{algebra rule (with no matrix operations)}'

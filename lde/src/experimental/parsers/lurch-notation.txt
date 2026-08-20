@@ -89,7 +89,8 @@ group relation
   R is a relation on A   -> (relation R A)
   A is a subset of B     -> (⊆ A B)      // symbolic ⊆ lives in chains below
   d is a divisor of n    -> (| d n)      // symbolic | lives in chains below
-  M is an upper bound of S    -> (upperbound M S)
+  M is an upper bound of S   -> (upperbound M S)
+  m is a lower bound of S    -> (lowerbound m S)
 
   // generic relations (the instructor escape hatch), parameterizable
   a ~ b                                          tex: \sim
@@ -279,15 +280,17 @@ group constant
   ChainsRule      words: "chains rule", chains rule
   EquationsRule   words: "equations rule", equations rule
   SetBuilderRule  words: "set builder rule", set builder rule
+  natural         words: "natural number", natural number
   // constants without renamings, listed for their tex only
-  upperbound  tex: \text{upper~bound}
+  upperbound  tex: \text{upper}\;\text{bound}
+  lowerbound  tex: \text{lower}\;\text{bound}
   smiley  tex: 😀       pie  tex: 🥧      basket  tex: 🧺
   tree    tex: 🌳       apple  tex: 🍎    cherry  tex: 🍒
   blueberry  tex: 🫐    Fib  tex: F       inv  tex: \text{inv}
   powerset   tex: \mathscr{P}
 
 // every listed word renders as its own LaTeX command \word
-latex names: alpha, beta, gamma, Gamma, delta, Delta, epsilon, varepsilon,
+latex names: aleph, alpha, beta, gamma, Gamma, delta, Delta, epsilon, varepsilon,
   zeta, eta, theta, vartheta, Theta, iota, kappa, lambda, Lambda, mu, nu,
   xi, Xi, pi, Pi, rho, varrho, sigma, Sigma, tau, upsilon, Upsilon, phi,
   varphi, Phi, chi, psi, Psi, omega, Omega

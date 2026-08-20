@@ -709,7 +709,7 @@ rpl.defineCommand( "compileparser", {
     // npx resolves the peggy version pinned in lde/node_modules, NOT
     // whatever global peggy happens to be on the PATH (a bare `peggy`
     // once silently compiled with a globally installed major version
-    // that generates different code - see the Phase 3d-i decision log)
+    // that generates different code)
     const compile = (name) => {
       console.log(defaultPen(`Compiling Lurch parser to lurch-to-${name}.js...`))
       execStr(`cd parsers && npx peggy --cache --format es -o lurch-to-${name}.js lurch-to-${name}.peggy`)
@@ -744,11 +744,10 @@ rpl.defineCommand( "compileparser", {
   }
 })
 
-// Define the Lode .compilenotation command: regenerate the
+// Define the Lode .updatenotation command: regenerate the
 // lurch-notation-compiled.js transport wrapper from lurch-notation.txt
-// (the .compileparser analog for the Phase 4 notation file; the golden
-// suite fails loudly when the wrapper is stale)
-rpl.defineCommand( "compilenotation", {
+// (the test suite fails when the wrapper is stale)
+rpl.defineCommand( "updatenotation", {
   help: "Recompile lurch-notation.txt to its ES-module wrapper.",
   action() {
     try {
