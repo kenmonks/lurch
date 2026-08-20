@@ -62,7 +62,7 @@ const texDelimTemplate = (tpl, args, T) =>
 // then fall back to the texsymbol table with the \text{} wrapping rule
 // for multi-character words.
 
-const leafMap = { ...operatorHeadTex }
+const leafMap = { ...operatorHeadTex, then: '\\text{ then }' }
 putdownLeadingSymbolRenames.forEach( e => { leafMap[e.out] = texsymbol(e.lit) } )
 
 // render a string leaf (Symbol, Number, "string literal") as tex
