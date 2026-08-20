@@ -225,6 +225,9 @@ const P = node => {
       if ( op === 'maps' )
         return `${operand(args[0])} : ${operand(args[1])} to ` +
                operand(args[2])
+      if ( op === 'nbhd' )
+        return `${operand(args[0])} is a neighborhood of ${
+                 operand(args[1])} in ` + operand(args[2])
       // delimited-form heads print their declared surface, holes back
       // in pattern order - [G : H] for the group index, ⌊x⌋ for floor
       // (the call synonym index(G,H) parses as a plain application, so

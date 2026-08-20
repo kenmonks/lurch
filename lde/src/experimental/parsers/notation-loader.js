@@ -573,11 +573,15 @@ export const compileNotation = parsed => {
   // just any word) is what keeps this from firing on the generic
   // copula's own filler surfaces (`a is an b`, `a is not b`, ...): those
   // have no room for both a content word and a preposition before the
-  // final hole.
+  // final hole.  Noun words are required to be 2+ letters (holes are
+  // always single letters), so a middle hole in a genuinely 3+-hole
+  // mixfix surface (`N is a neighborhood of x in T`) can never be
+  // absorbed into the noun run - that surface correctly falls through
+  // to ordinary multi-keyword-group relation parsing instead.
   const isaPreps = [ 'of', 'on', 'in', 'at', 'to' ]
   const isaSurface = pattern => {
     const m = pattern.match( new RegExp(
-      `^([A-Za-z]) is (?:(an?) )?((?:[a-z]+ )*[a-z]+) (${
+      `^([A-Za-z]) is (?:(an?) )?((?:[a-z]{2,} )*[a-z]{2,}) (${
         isaPreps.join('|')}) ([A-Za-z])$` ) )
     return m ? { article: m[2], noun: m[3], prep: m[4] } : null
   }

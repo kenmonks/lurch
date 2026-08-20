@@ -499,6 +499,8 @@ export const astToTex = node => {
         // parameterized operator - see the paramop case; partition and
         // relation render via the fmt.phrase branch)
         case 'maps'      : return `${T(a[0])}\\colon ${T(a[1])}\\to ${T(a[2])}`
+        case 'nbhd'      : return `${T(a[0])}\\text{ is a neighborhood of }${
+                                    T(a[1])}\\text{ in }${T(a[2])}`
         case 'choose'    : return `\\binom{${nopar(T(a[0]))}}{${nopar(T(a[1]))}}`
         case '+'         : return texSum(node, T)
         case '⋅'         : return texProduct(a, T)

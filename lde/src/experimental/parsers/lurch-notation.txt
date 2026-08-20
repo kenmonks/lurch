@@ -96,6 +96,12 @@ group relation
                                                  example: x is open in y
   x is closed in y           -> (closed x y)
                                                  example: x is closed in y
+  N is a neighborhood of x in T   -> (nbhd N x T)
+                                     tex: N\text{ is a neighborhood of }x\text{ in }T
+                                                 example: N is a neighborhood of x in T
+  N is a limitpoint of x in T     -> (limpt N x T)
+                                     tex: N\text{ is a limit point of }x\text{ in }T
+                                                 example: N is a limit point of x in T
 
   // generic relations (the instructor escape hatch), parameterizable
   a ~ b                                          tex: \sim
