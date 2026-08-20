@@ -1,0 +1,555 @@
+<!-- @format -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Topology</title>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="This is the home page for lurch.plus, the home of the Lurch proof assistant, plus additional content." />
+    <meta
+      name="keywords"
+      content="Lurch, Lurch plus, proof assistant, math academy, summer courses, math proof camp, math proofs, mathematical proof, proof class, proof course, summer math camp, summer math program, summer math class, math camp, math program, math class, MATHCOUNTS, AMC, AIME, USAMO, IMO, ARML, math contest training, math competition training, math olympiad, AP olympiad, Intel Science, ISEF, ISTS, Regeneron competition, Siemens competition, math gifted, summer school program, camps for kids, academic summer camp, summer academy, summer schools, summer school usa, summer academic programs, summer classes, academy of mathematics, university of scranton, Lehigh Valley ARML" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../../assets/media/favicon-L+.svg" />
+    <!-- load Font Awesome icon pack 
+     see https://fontawesome.com/search?m=free&o=r for more icons
+-->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet" />
+
+    <link
+      href="//fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,700,300"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../assets/css/monks.css" />
+    <link rel="stylesheet" href="../../assets/css/lurchplus.css" />
+
+    <!-- <link rel='stylesheet' href='assets/css/bootstrap.min.css'> -->
+  </head>
+
+  <body class="course">
+    <button id="nav-toggle" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="nav-backdrop"></div>
+
+    <div id="leftnav">
+      <div id="courseinfo">
+        <h1 class="site-title">
+          <a
+            href="/learn/topology/"
+            target="lurchtopology"
+            aria-label="Go to course home"
+            >Topology</a
+          >
+        </h1>
+
+        <div class="byline">
+          <a href="mailto:monks@scranton.edu">Ken Monks</a>
+        </div>
+
+        <div class="site">
+          <a href="https://monks.scranton.edu" target="monks"
+            >monks.scranton.edu</a
+          >
+        </div>
+      </div>
+
+      <div id="menu-scroll">
+        <ul class="side-nav"
+          ><li class="active">
+            <a href="/learn/topology/">Topology Contexts</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-powered">
+        <!-- <a href="/" class="powered-link" target="lurchplus" rel="noopener noreferrer">
+    <span class="powered-label">powered by</span>
+    <img
+      src="/assets/media/lurchlogo.png"
+      alt="Lurch"
+      class="powered-logo">
+  </a> -->
+        <ul class="side-nav">
+          <li>
+            <a href="/" target="lurchplus" rel="noopener noreferrer">
+              <i class="fa-solid fa-house" aria-hidden="true"></i>Home
+              (lurch.plus)
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- flex column for content-block and footer-block -->
+    <div id="wrap">
+      <div id="content-block" class="problems" style="--chapter: ''">
+        <div class="title-box">
+          <h1>Introduction to Topology</h1>
+        </div>
+        <h2>Lurch Contexts</h2>
+        <p
+          >Here we summarize all of the Lurch contexts and rules used in these
+          notes in one place for convenient access and reference. See
+          <a
+            href="https://stevenclontz.github.io/intro-to-topology/frontmatter-1.html"
+            target="'_blank'"
+            >course notes</a
+          >
+          by
+          <a href="https://clontz.org" target="'_blank'">Steven Clontz</a> for
+          additional details.</p
+        >
+        <p>They are organized by topic as follows.</p>
+        <ul class="circle">
+          <li><a href="#foundation">Foundation: Logic and Equality</a></li>
+          <li
+            ><a href="#settheory"
+              >Set Theory, Real Numbers, Functions, and Relations</a
+            ></li
+          >
+          <li
+            ><a href="#numbersystems"
+              >Number Systems - Real, Rational, Integer, Natural</a
+            ></li
+          >
+          <li><a href="#topology">Topology</a></li>
+        </ul>
+        <h2 id="foundation">Foundation: Logic and Equality</h2>
+        <p
+          >Each of the contexts in this section includes the rules defined in
+          the contexts above it.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Propositional Logic</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Prop.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>and</code>, <code>or</code>, <code>not</code>,
+            <code>implies</code>, <code>iff</code>, and
+            <code>contradiction</code>.
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Prop-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Predicate Logic with Equality</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Pred.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>forall</code> $\left(\forall\right)$,
+            <code>exists</code> $\left(\exists\right)$ and
+            <code>equality</code> $\left(=\right)$.
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Pred-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Logic Theorems</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Logic-theorems.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Provides some common theorems about logic. (<span
+              class="context-includes"
+              >Includes: Equations</span
+            >)
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Logic-theorems-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <h2 id="settheory">Set Theory, Functions, and Relations</h2>
+        <p
+          >Each of the contexts in this section includes the rules defined in
+          the contexts above it in this section, and all of the rules from the
+          Foundation section above.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Set Theory</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Sets.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>in</code> $\left(\in\right)$,
+            <code>subset</code> $\left(\subseteq\right)$,
+            <code>intersection</code> $\left(\cap\right)$,
+            <code>union</code> $\left(\cup\right)$,
+            <code>complement</code> $\left('\right)$,
+            <code>set difference</code> $\left(\setminus\right)$,
+            <code>power set</code> $\left(\mathscr{P}\right)$,
+            <code>Cartesian product</code> $\left(\times\right)$,
+            <code>finite set</code> $\left\{ \ldots \right\}$,
+            <code>tuple</code> $\langle\ldots\rangle$,
+            <code>Indexed Union</code> $\left(\bigcup\right)$,
+            <code>Indexed Intersection</code> $\left(\bigcap\right)$ and
+            <code>Set Builder notation</code> $\left\{ z :\ldots \right\}$.
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Sets-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Functions</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Functions.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>maps</code> $\left(f\colon A \to B\right)$,
+            <code>function application</code> $\left(f(x)\right)$,
+            <code>maps to</code> $\left(\mapsto\right)$,
+            <code>image</code> $\left(f(U)\right)$,
+            <code>identity map</code> $\left(\text{id}_A\right)$
+            <code>inverse image</code> $\left(f^\text{inv}(U)\right)$,
+            <code>composition</code> $\left(\circ\right)$,
+            <code>inverse function</code> $\left(f^{-1}\right)$,
+            <code>injective</code>, <code>surjective</code> and
+            <code>bijective</code>.
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Functions-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Relations</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Relations.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>reflexive</code>, <code>symmetric</code>,
+            <code>transitive</code>, <code>irreflexive</code>,
+            <code>antisymmetric</code>, <code>total</code>,
+            <code>partial order</code>, <code>strict partial order</code>,
+            <code>total order</code>, <code>equivalence relation</code>,
+            <code>partition</code>, <code>equivalence class</code> $[a]$
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Relations-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <h2 id="numbersystems">Number Systems</h2>
+        <p
+          >Each of the contexts in this section includes the rules defined in
+          the contexts above it in this section, and all of the rules from the
+          Foundation and Set Theory sections above.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Real Numbers</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Reals.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines the field axioms for the Real Numbers.
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Reals-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Number Systems</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Number-systems.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines the sets $\NN$, $\ZZ$, and $\QQ$, and some basic theorems
+            about them including induction, strong induction, and induction from
+            $a$ in $\NN$. (<span class="context-includes"
+              >Includes: Arithmetic in $\QQ$</span
+            >)
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Number-systems-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Number Theory Definitions</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Number-theory.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>divides</code> $\left(\mid\right)$,
+            <code>even</code>, <code>odd</code>, <code>composite</code>,
+            <code>prime</code> and
+            <code>congruence</code> ($\underset{m}{\equiv}$).
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Number-theory-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Sequences and Recursion</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Sequences.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>summation</code> $\left(\sum\right)$,
+            <code>Fibonacci numbers</code> $\left(F_n\right)$,
+            <code>factorial</code> $\left(!\right)$,
+            <code>multinomial coefficients</code> $\left(m,n\right)$,
+            <code>binomial coefficients</code> $\binom{n}{k}$ and
+            <code>exponentiation</code> $\left(z^n\right)$. (<span
+              class="context-includes"
+              >Includes: Algebra</span
+            >)
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Sequences-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <h2 id="topology">Topology</h2>
+        <p
+          >Each of the contexts in this section includes the rules defined in
+          the contexts above it in this section, and all of the rules from the
+          Foundation, Set Theory, and Number Systems sections above.</p
+        >
+        <p class="bigskip"></p>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Analysis Background</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Analysis.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>interval notation</code>, <code>upper bound</code>,
+            <code>lower bound</code>, <code>sup</code>, <code>inf</code>,
+            <code>Archimedean principle</code>,
+            <code>finite indexing set</code> ($\II_n$), <code>finite set</code>,
+            <code>infinite set</code>, <code>cardinality</code>,
+            <code>countable</code> and <code>uncountable</code>.
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Analysis-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+        <div class="context-entry">
+          <div class="context-head">
+            <p>Topology</p>
+            <p
+              ><a
+                href="../../student.html?load=learn/topology/rules/Topology.lurch"
+                class="lurch-open lurch-link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Use in Lurch (opens in new tab)">
+                <span class="lurch-open__label">Use in Lurch</span>
+                <i
+                  class="fa-solid fa-arrow-up-right-from-square lurch-open__icon"
+                  aria-hidden="true"></i> </a
+            ></p>
+          </div>
+          <p
+            >Defines <code>topological space</code>, <code>open</code>,
+            <code>closed</code>, and <code>continuous</code> (in a topological
+            space). Includes the Sequences and Recursion context.
+            <a
+              href="../../instructor.html?load=learn/topology/rules/Topology-Rules.lurch"
+              class="context-link"
+              >view rules</a
+            ></p
+          >
+        </div>
+      </div>
+
+      <div id="footer-block">
+        <footer class="microfooter" aria-label="Site footer">
+          <span class="microfooter__copyright"> © Kenneth G. Monks </span>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://monks.scranton.edu"
+            target="_blank"
+            rel="noopener noreferrer">
+            monks.scranton.edu
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://lurch.plus"
+            target="_blank"
+            rel="noopener noreferrer">
+            lurch.plus
+          </a>
+
+          <span class="microfooter__sep" aria-hidden="true">•</span>
+
+          <a
+            class="microfooter__link"
+            href="https://proveitmath.org"
+            target="_blank"
+            rel="noopener noreferrer">
+            Prove it! Math Academy
+          </a>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      if (!window.name) window.name = 'lurchtopology'</script
+    ><script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/mathjax-config.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+      id="MathJax-script"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+
+            <div id="loadlink">
+                <p><a>Open this file in the Lurch web app</a></p>
+                <script language="javascript">
+                    const link = document.querySelector( '#loadlink > p > a' )
+                    const thisURL = encodeURIComponent( window.location.href )
+                    link?.setAttribute( 'href', 'http://localhost:3000/instructor.html?load=' + thisURL )
+                </script>
+            </div>
+        
+            <div id="metadata" style="display: none;"><div data-category="main" data-key="header" data-value-type="html"></div></div>
+            <div id="document"><h1>Rules, Definitions, and Theorems</h1>
+<h3>Introduction to Topology</h3>
+<p>Below you will find some of the rules, definitions, theorems, and declarations useful for a first course in topology.</p>
+<p>&nbsp;</p></div>
+        
