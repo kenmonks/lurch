@@ -852,16 +852,20 @@ export const processShorthands = L => {
   processSymbol( 'then' ,  m => { 
     // make a new array to contain the relevant LHS and RHS siblings
     let sibs = []
-    // get all of the consecutive previous given siblings and unshift them onto
-    // the array
+    // get all of the consecutive previous given siblings in the 
+    // continuation-chain and unshift them onto the array
     let prev = m.previousSibling()
-    while (prev && prev.isA('given')) { 
+    // if there isn't a given sibling before the 'then', just return
+    if ( !prev || !prev.isA('given') ) return
+    // otherwise add it to the sibs array and get its previous sibling
+    sibs.unshift(prev)
+    prev=prev.previousSibling()
+    // then find all of the siblings in the .continued chain
+    while ( prev && prev.continued && prev.isA('given') ) { 
       sibs.unshift(prev)
       prev=prev.previousSibling()
     }
-    // if there weren't any, just return without doing anything
-    if (!sibs.length) return
-    // now get the continuation-sequence of claims that follow it and push them
+    // now get the continuation-chain of claims that follow it and push them
     // onto the array
     let next = m.nextSibling()
     // if there aren't any, just return without doing anything
