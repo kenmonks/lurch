@@ -20,8 +20,9 @@
 //   - word keywords match at word boundaries and never directly abut a
 //     '(' - `R(x)` reads as function application, so write `a is (b)`;
 //     glyphs match anywhere (`0<(x+1)` is fine).
-//   - any surface shaped `x is a|an ⟨noun...⟩ of|on y` automatically gets
-//     its `is not` twin (¬-wrapped); the article you write is used
+//   - any surface shaped `x is (a|an)? ⟨word...⟩ ⟨prep⟩ y` (prep one of
+//     of/on/in/at/to, article optional) automatically gets its `is not`
+//     twin (¬-wrapped); the article you write (or its absence) is used
 //     verbatim in both rows (no English policing).
 // =========================================================================
 
@@ -91,6 +92,10 @@ group relation
   d is a divisor of n    -> (| d n)      // symbolic | lives in chains below
   M is an upper bound of S   -> (upperbound M S)
   m is a lower bound of S    -> (lowerbound m S)
+  x is open in y             -> (open x y)
+                                                 example: x is open in y
+  x is closed in y           -> (closed x y)
+                                                 example: x is closed in y
 
   // generic relations (the instructor escape hatch), parameterizable
   a ~ b                                          tex: \sim

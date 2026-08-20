@@ -565,12 +565,20 @@ export const compileNotation = parsed => {
   }
 
   // ── the is-a registry (spec §7: the schema auto-fires on any
-  // `x is a|an ⟨noun...⟩ ⟨prep⟩ y` surface).  Detection runs on the raw
-  // pattern, before hole analysis, so an isa synonym may use its own
-  // hole letters (`K is a subgroup of G` on the `a subgroup b` row).
+  // `x is (a|an)? ⟨word...⟩ ⟨prep⟩ y` surface, article optional, prep
+  // drawn from a small closed set of relational prepositions).
+  // Detection runs on the raw pattern, before hole analysis, so an isa
+  // synonym may use its own hole letters (`K is a subgroup of G` on the
+  // `a subgroup b` row).  Requiring a genuine trailing preposition (not
+  // just any word) is what keeps this from firing on the generic
+  // copula's own filler surfaces (`a is an b`, `a is not b`, ...): those
+  // have no room for both a content word and a preposition before the
+  // final hole.
+  const isaPreps = [ 'of', 'on', 'in', 'at', 'to' ]
   const isaSurface = pattern => {
-    const m = pattern.match(
-      /^([A-Za-z]) is (an?) ((?:[a-z]+ )*[a-z]+) (of|on) ([A-Za-z])$/ )
+    const m = pattern.match( new RegExp(
+      `^([A-Za-z]) is (?:(an?) )?((?:[a-z]+ )*[a-z]+) (${
+        isaPreps.join('|')}) ([A-Za-z])$` ) )
     return m ? { article: m[2], noun: m[3], prep: m[4] } : null
   }
   let isaSpliceAt = null   // index in relationRows where the block goes
@@ -578,7 +586,8 @@ export const compileNotation = parsed => {
     if ( isaSpliceAt === null ) isaSpliceAt = tables.relationRows.length
     // the declared article is used verbatim (no English policing -
     // `a unit` is correct despite the vowel letter, and the instructor's
-    // spelling is what users will type)
+    // spelling is what users will type); no article at all (`x is open
+    // in y`) is equally valid - none is fabricated for it
     const row = { noun: entry.noun, prep: entry.prep, head: entry.head,
                   article: entry.article,
                   ...( host?.bareRight ? { bareRight: true } : {} ) }
@@ -587,15 +596,16 @@ export const compileNotation = parsed => {
   // instantiate the registry exactly as notation-tables.js does (the
   // generated rows must deep-equal its isaRows)
   const isaRows = () => tables.isaNouns.flatMap( e => {
-    const article = e.article ?? ( /^[aeiou]/.test(e.noun) ? 'an' : 'a' )
+    const articleWords = e.article !== undefined ? [ e.article ] : []
     const nounWords = e.noun.split(' ')
     const mk = words => ({
       head: e.head, fmtKey: 'phrase',
       ...( e.bareRight ? { bareRight: true } : {} ),
       aliases: [ mkAlias(words, 'bound') ] })
     return [
-      { ...mk( [ 'is', 'not', article, ...nounWords, e.prep ] ), wrapNeg: true },
-      mk( [ 'is', article, ...nounWords, e.prep ] ) ]
+      { ...mk( [ 'is', 'not', ...articleWords, ...nounWords, e.prep ] ),
+        wrapNeg: true },
+      mk( [ 'is', ...articleWords, ...nounWords, e.prep ] ) ]
   } ).map( row => remember({ kind: 'relation', prec: 'REL', ...row },
                            lineOf.get(tables.isaNouns[0]) ?? 0) )
 
@@ -620,7 +630,7 @@ export const compileNotation = parsed => {
       ...decl.also.map( s => s.pattern ) ]
     ;[ decl.pattern, ...decl.also.map( s => s.pattern ) ].forEach( p => {
       if ( isaSurface(p) )
-        inputs.push( p.replace(/ is (an?) /, ' is not $1 ') )
+        inputs.push( p.replace(/ is /, ' is not ') )
     } )
     if ( decl.fields.example !== undefined )
       inputs.push( decl.fields.example )

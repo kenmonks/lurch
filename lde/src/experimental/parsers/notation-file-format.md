@@ -127,10 +127,16 @@ glyphs are declared as `also:` surfaces and their rewrites are derived).
 
 Schemas applied automatically:
 
-- **isa**: any relation surface shaped `x is a|an ⟨noun...⟩ ⟨prep⟩ y`
+- **isa**: any relation surface shaped `x is (a|an)? ⟨word...⟩ ⟨prep⟩ y`
   gets its `is not` twin (¬-wrapped) and ranks above the bare `is` row.
-  The declared article is used verbatim in both rows (no English
-  policing — `a unit` is correct despite the vowel letter).
+  The article is optional and, when present, is used verbatim in both
+  rows (no English policing — `a unit` is correct despite the vowel
+  letter); `prep` is one of a small closed set of relational
+  prepositions (`of`, `on`, `in`, `at`, `to`) — requiring a genuine
+  trailing preposition, not just any word, is what keeps the schema
+  from firing on the generic copula's own filler surfaces (`a is an b`,
+  `a is not b`, ...), which have no room for both a content word and a
+  preposition before the final hole.
 - **chain family**: rows are member operators in strength order (the
   conclusion policy); `param` marks a family whose operator requires a
   `_(...)` group with equal parameters across the chain; `bare: left`
