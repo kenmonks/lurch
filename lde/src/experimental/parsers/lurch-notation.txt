@@ -99,6 +99,18 @@ group relation
   N is a neighborhood of x in T   -> (nbhd N x T)
                                      tex: N\text{ is a neighborhood of }x\text{ in }T
                                                  example: N is a neighborhood of x in T
+  N is a limit point of x in T    -> (limitpoint N x T)
+                                     tex: N\text{ is a limit point of }x\text{ in }T
+                                                 example: N is a limit point of x in T
+  N is a boundary point of x in T -> (boundarypoint N x T)
+                                     tex: N\text{ is a boundary point of }x\text{ in }T
+                                                 example: N is a boundary point of x in T
+  N is an interior point of x in T -> (interiorpoint N x T)
+                                     tex: N\text{ is an interior point of }x\text{ in }T
+                                                 example: N is an interior point of x in T
+  N is an exterior point of x in T -> (exteriorpoint N x T)
+                                     tex: N\text{ is an exterior point of }x\text{ in }T
+                                                 example: N is an exterior point of x in T
 
   // generic relations (the instructor escape hatch), parameterizable
   a ~ b                                          tex: \sim

@@ -744,15 +744,15 @@ rpl.defineCommand( "compileparser", {
   }
 })
 
-// Define the Lode .updatenotation command: regenerate the
+// Define the Lode .recompilenotation command: regenerate the
 // lurch-notation-compiled.js transport wrapper from lurch-notation.txt
 // (the test suite fails when the wrapper is stale)
-rpl.defineCommand( "updatenotation", {
+rpl.defineCommand( "recompilenotation", {
   help: "Recompile lurch-notation.txt to its ES-module wrapper.",
   action() {
     try {
       execStr(`cd parsers && node compile-notation.js`)
-      console.log(defaultPen(`Recompiled lurch-notation.txt → lurch-notation-compiled.js`))
+      console.log(defaultPen(`Recompiled ${itemPen('lurch-notation.txt')} → ${itemPen('lurch-notation-compiled.js')}`))
     } catch (err) {
       console.log(xPen('Error compiling the notation file:'))
       console.log(String(err.stdout ?? err.message ?? err))

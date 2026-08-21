@@ -228,6 +228,18 @@ const P = node => {
       if ( op === 'nbhd' )
         return `${operand(args[0])} is a neighborhood of ${
                  operand(args[1])} in ` + operand(args[2])
+      if ( op === 'limitpoint' )
+        return `${operand(args[0])} is a limit point of ${
+                 operand(args[1])} in ` + operand(args[2])
+      if ( op === 'boundarypoint' )
+        return `${operand(args[0])} is a boundary point of ${
+                 operand(args[1])} in ` + operand(args[2])
+      if ( op === 'interiorpoint' )
+        return `${operand(args[0])} is an interior point of ${
+                 operand(args[1])} in ` + operand(args[2])
+      if ( op === 'exteriorpoint' )
+        return `${operand(args[0])} is an exterior point of ${
+                 operand(args[1])} in ` + operand(args[2])
       // delimited-form heads print their declared surface, holes back
       // in pattern order - [G : H] for the group index, ⌊x⌋ for floor
       // (the call synonym index(G,H) parses as a plain application, so
