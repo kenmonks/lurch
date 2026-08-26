@@ -1284,11 +1284,19 @@ StarExpr = a:Closed
     // enter function application.  This seems more valuable than learning that,
     // e.g. in LaTeX you would enter `x_{n+1}` instead of `x_(n+1)`.
     Prefix = // the first argument group forms the EFA; any extra groups
-              // nest as ordinary application, like f(x)(y)
-              '@' a:[a-z]i b:( '('_ @ExpressionSeq _')' )+
+              // nest as ordinary application, like f(x)(y).  As with
+              // ordinary application, each group's opening parenthesis
+              // may be preceded by a formatting-only underscore: @P_(k)
+              // means (λ P k) just like @P(k), but tex renders the
+              // arguments as a subscript.
+              '@' a:[a-z]i
+              b:( u:'_'? '('_ s:ExpressionSeq _')'
+                    { return { sub:!!u, args:s } } )+
                 { return b.slice(1).reduce(
-                    (head,args) => { return { type:'app', head, args } },
-                    { type:'efa', name:a, args:b[0] } ) } /
+                    (head,g) => { return { type:'app', head, args:g.args,
+                                           fmt:{ sub:g.sub } } },
+                    { type:'efa', name:a, args:b[0].args,
+                      fmt:{ sub:b[0].sub } } ) } /
               // allow 'set' to be case insensitive, check for setbuilder before
               // finite sets (fmt.call distinguishes the set(...) call form
               // from ｛...｝ brackets for the tex printer's parenthesization).

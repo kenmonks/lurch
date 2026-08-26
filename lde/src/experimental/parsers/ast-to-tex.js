@@ -24,7 +24,8 @@
 //   fmt.mapsto   binding typed as x mapsto e rather than x.e
 //   fmt.be       'Let x be such that' vs 'Let x such that'
 //   fmt.signs    surface signs of a signed sum (a-b vs a+-b)
-//   fmt.sub      function-application group typed as a subscript x_(0)
+//   fmt.sub      function-application or EFA group typed as a subscript
+//                (x_(0), @P_(k))
 //   fmt.style    tuple surface: 'bracket' [..], 'langle' ⟨..⟩, or 'call'
 //   fmt.tick     trailing tick mark on a bracket tuple (transpose display)
 //   fmt.call     set/setbuilder/paren typed in call form (set(..),
@@ -575,8 +576,11 @@ export const astToTex = node => {
 
     // application forms
     case 'app'       : return texApp(node, T)
-    case 'efa'       : return `\\mathcal{${node.name}}\\left(${
-      node.args.map(T).join(',')}\\right)`
+    case 'efa'       : {
+      const seq = node.args.map(T).join(',')
+      return `\\mathcal{${node.name}}` +
+        ( node.fmt?.sub ? `_{${seq}}` : `\\left(${seq}\\right)` )
+    }
 
     // aggregates
     case 'setbuilder': {

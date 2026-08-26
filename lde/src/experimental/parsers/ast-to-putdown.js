@@ -67,7 +67,9 @@
 //                                      in head position for f(x)(y)
 //   { type:'efa', name, args }         @P(k) expression function
 //                                      application; extra (...) groups nest
-//                                      as ordinary app nodes around it
+//                                      as ordinary app nodes around it;
+//                                      like app, carries fmt.sub when
+//                                      typed as a subscript (@P_(k))
 //   { type:'setbuilder', v, pred }     { v : pred } set-builder notation;
 //                                      the extended form
 //                                      { v in dom : p1, ..., pn } carries
