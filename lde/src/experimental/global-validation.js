@@ -555,11 +555,12 @@ const forbiddenWeeny = L =>
         ) 
       )
     ) ||
-    // don't match x∈A when A is a metavariable because almost every
+    // don't match x∈A when x and A are metavariables because almost every
     // statment in a typical Set Theory proof has this form and will match
     ( LurchOptions.avoidLoneElementOfs && 
       L instanceof Application && L.child(0) instanceof LurchSymbol &&
-      L.child(0).text()==='∈'  && L.child(2) instanceof LurchSymbol && 
+      L.child(0).text()==='∈'  && L.child(1) instanceof LurchSymbol && 
+      L.child(2).isA(metavariable) && L.child(2) instanceof LurchSymbol && 
       L.child(2).isA(metavariable)
     )
   )
