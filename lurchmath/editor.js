@@ -269,6 +269,12 @@ window.Lurch = {
                 menubar : 'file edit insert format document developer help',
                 menu : menuData,
                 browser_spellcheck: true,
+                // Disable TinyMCE's markdown-style autoformatting (e.g., typing
+                // "1. " or "* " at the start of a line auto-converts to a list),
+                // since it doesn't play nice with Lurch atoms. This only affects
+                // as-you-type conversion; explicit list toolbar/menu commands
+                // and pasted markdown/lists are unaffected.
+                text_patterns : false,
                 contextmenu : 'atoms lurchBase',
                 plugins : 'lists link contextmenu',
                 link_context_toolbar: true,
