@@ -630,6 +630,40 @@ export const processShorthands = L => {
     m.remove()
   }
 
+  // Within a comma-separated continuation chain (the sequence of consecutive
+  // `.continued` siblings starting at `first`), expand any run of bare
+  // Symbols that is immediately followed by a membership expression `s in S`
+  // (where `s` is itself a Symbol) so that every Symbol in the run gets its
+  // own copy of that same `in S` condition. E.g. the sub-sequence `x, y, z in
+  // NN` within a chain becomes `x in NN, y in NN, z in NN`. A chain may
+  // contain several such runs; each is expanded independently, and a Symbol
+  // run with no trailing `in S` is left untouched. This is used to give
+  // `given>` chains (`If`) and the claim chain after `then` the same
+  // multi-variable membership shorthand that `Let`/`for some` already have.
+  const expandMembershipChains = first => {
+    let run = []
+    let node = first
+    while (node) {
+      const isMembership = node instanceof Application && node.numChildren() === 3 &&
+        node.child(0).matches('∈') && node.child(1) instanceof LurchSymbol
+      if (isMembership) {
+        const S = node.child(2)
+        run.forEach( sym => {
+          const expanded = new Application(
+            new LurchSymbol('∈'), sym.copy(), S.copy() )
+          expanded.continued = sym.continued
+          sym.replaceWith(expanded)
+        } )
+        run = []
+      } else if (node instanceof LurchSymbol) {
+        run.push(node)
+      } else {
+        run = []
+      }
+      node = node.continued ? node.nextSibling() : undefined
+    }
+  }
+
   // In addition to processing Symbols, we also want to sometimes react
   // to the presence of certain attributes.
   
@@ -669,9 +703,10 @@ export const processShorthands = L => {
   // true, do the same for its next sibling, and iterate until you reach a next
   // sibling that doesn't have that attribute or you run out of next siblings,
   // whichever comes first.  Then delete the 'given>' symbol.
-  processSymbol( 'given>' ,  m => { 
+  processSymbol( 'given>' ,  m => {
+    expandMembershipChains(m.nextSibling())
     let next = m.nextSibling()
-    while (next) { 
+    while (next) {
       next.makeIntoA('given')
       next = (next.continued) ? next.nextSibling() : undefined
     }
@@ -870,8 +905,11 @@ export const processShorthands = L => {
     let next = m.nextSibling()
     // if there aren't any, just return without doing anything
     if (!next || next.isA('given')) return
+    // expand any `x,y,z in S` runs in the claim chain before collecting it
+    expandMembershipChains(next)
+    next = m.nextSibling()
     // otherwise get them all
-    while (next && !next.isA('given')) { 
+    while (next && !next.isA('given')) {
       sibs.push(next)
       next = (next.continued) ? next.nextSibling() : undefined
     }
