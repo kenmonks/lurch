@@ -429,9 +429,21 @@ export const astToTex = node => {
       case 'by'     : return leafTex(node.fmt.src)
       default       : return txt(node.fmt.src)
     }
-    case 'given'     : return node.exprs.length
-      ? `${txt(node.label)} ${sequence(node.exprs.map(T))}`
-      : txt(node.label)
+    case 'given'     : {
+      // omit the expository 'and' when the chain ends in a run of bare
+      // symbols followed by a bare-symbol membership (`x, y, z in S`):
+      // that's the shorthand for `x in S, y in S, z in S`, where 'and'
+      // before the last item would wrongly suggest it conjoins only the
+      // last two names with `in S`. A membership not preceded by a bare
+      // symbol (e.g. `x in A, x in B`) is unaffected.
+      const last = node.exprs[node.exprs.length - 1]
+      const penultimate = node.exprs[node.exprs.length - 2]
+      const endsInMembership = last?.type === 'op' && last.op === '∈' &&
+        typeof last.args[0] === 'string' && typeof penultimate === 'string'
+      return node.exprs.length
+        ? `${txt(node.label)} ${sequence(node.exprs.map(T), endsInMembership)}`
+        : txt(node.label)
+    }
 
     // declarations
     case 'declare'   : return `${txt(node.fmt.kw)} ${sequence(node.names.map(declName))}`
