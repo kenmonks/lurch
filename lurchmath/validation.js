@@ -457,7 +457,7 @@ export const install = editor => {
         tooltip : 'View the Lurch notation for the document in a new tab',
         onAction : () => {
             const code = Message.documentInLurchNotation( editor )
-            const html = makehtml( 'Putdown code for the document', code )
+            const html = makehtml( 'Lurch notation code for the document', code )
             const link = document.createElement( 'a' )
             link.setAttribute( 'target', '_blank' )
             const blob = new Blob( [ html ], { type: "text/html" } )
