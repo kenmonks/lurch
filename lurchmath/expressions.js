@@ -546,12 +546,27 @@ export class Expression extends Atom {
         return result
     }
 
+    /**
+     * The read-only counterpart to {@link module:ExpressionAtoms.Expression#edit
+     * edit()}.  Shows the same advanced-mode dialog used for editing, but with
+     * the Lurch notation locked against changes and with no save performed when
+     * the dialog closes.  Used when the user clicks (or presses Enter on) an
+     * expression atom that is not currently editable, e.g. one shown inside a
+     * document's read-only "context" panel.
+     *
+     * @returns {Promise} same convention as specified in
+     *   {@link module:Atoms.Atom#edit edit() for Atoms}
+     */
+    viewSource () { return this.editInAdvancedMode( true ) }
+
     // Internal use only.
-    // Used by edit() if the user's settings are in advanced mode.
-    editInAdvancedMode () {
+    // Used by edit() if the user's settings are in advanced mode.  Also used
+    // by viewSource(), passing readOnly = true, to show the same dialog
+    // without allowing any changes to be made or saved.
+    editInAdvancedMode ( readOnly = false ) {
         const { lurchNotation } = this.loadAdvancedModeData()
         // set up dialog contents
-        const dialog = new Dialog( 'Edit math', this.editor )
+        const dialog = new Dialog( readOnly ? 'View math' : 'Edit math', this.editor )
         dialog.hideHeader = dialog.hideFooter = true
         const lurchInput = new LongTextInputItem( 'lurchNotation', '', '' )
         dialog.addItem( lurchInput )
@@ -563,6 +578,13 @@ export class Expression extends Atom {
         }
         dialog.addItem( mathLivePreview )
         dialog.addItem(new HTMLItem(
+           readOnly ?
+           `<div id="shortcut-footer">
+              <div id="shortcut-hint">
+               <kbd>Esc</kbd> close
+              </div>
+            </div>
+           ` :
            `<div id="shortcut-footer">
               <div id="shortcut-hint">
                <kbd>Esc</kbd> cancel
@@ -608,23 +630,26 @@ export class Expression extends Atom {
             }
         }
         // if they edit the Lurch notation or latex, keep them in sync
-        dialog.onChange = ( _, component ) => {
-            if ( component.name == 'lurchNotation' ) {
-                // be sure the user input is acceptable before allowing them to
-                // enter it
-                const validSyntax = !!convertToLCs()
-                const convertedTex = convertToLatex()
-                if ( validSyntax && typeof convertedTex === 'string' )
-                    mathLivePreview.setValue( convertedTex )
-                const lurchInputElement = dialog.querySelector( 'textarea' )
-                if ( lurchInputElement )
-                    lurchInputElement.classList.toggle( 'badsyntax', !validSyntax )
-                dialog.dialog.setEnabled( 'OK', validSyntax )
+        // (not needed in read-only mode, since the notation cannot change)
+        if ( !readOnly )
+            dialog.onChange = ( _, component ) => {
+                if ( component.name == 'lurchNotation' ) {
+                    // be sure the user input is acceptable before allowing them to
+                    // enter it
+                    const validSyntax = !!convertToLCs()
+                    const convertedTex = convertToLatex()
+                    if ( validSyntax && typeof convertedTex === 'string' )
+                        mathLivePreview.setValue( convertedTex )
+                    const lurchInputElement = dialog.querySelector( 'textarea' )
+                    if ( lurchInputElement )
+                        lurchInputElement.classList.toggle( 'badsyntax', !validSyntax )
+                    dialog.dialog.setEnabled( 'OK', validSyntax )
+                }
             }
-        }
         // Show it and if they accept any changes, apply them to the atom.
+        // (In read-only mode, never save; just report that nothing changed.)
         const result = dialog.show().then( userHitOK => {
-            if ( !userHitOK || !convertToLCs() ) return false
+            if ( readOnly || !userHitOK || !convertToLCs() ) return false
             this.saveAdvancedModeData( dialog.get( 'lurchNotation' ) )
             this.update()
             return true
@@ -635,7 +660,11 @@ export class Expression extends Atom {
         if ( lurchInputElement ) {
             lurchInputElement.classList.add( 'advancedTextArea' )
             lurchInputElement.classList.remove( 'badsyntax' )
-        
+            if ( readOnly ) {
+                lurchInputElement.readOnly = true
+                lurchInputElement.classList.add( 'readonly' )
+            }
+
             // Ensure the textarea starts as a true one-line control when content is short.
             lurchInputElement.rows = 1
         
