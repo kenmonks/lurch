@@ -1,0 +1,14 @@
+// Alias tests
+//
+// `x := E` declares x as a shorthand for the expression E; putdown is the
+// alias> shorthand followed by the declaration `[x , E]`, which the LDE
+// expands during interpretation (processAliases in interpret.js).  The
+// tokenizer pads every colon, so the spacing around := is free.
+
+c := f(a,b)
+c:=f(a,b)
+c : = f(a,b)
+H := forall n. P(n) and Q
+B := A cup C
+x := 1/2
+y := (a+b)^2

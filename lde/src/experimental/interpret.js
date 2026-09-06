@@ -10,6 +10,7 @@
  *  Interpret an LC as a document. It does the following, in order.
  *  - addSystemDeclarations(doc)
  *  - processShorthands(doc)
+ *  - processAliases(doc)
  *  - moveDeclaresToTop(doc)
  *  - processTheorems(doc)
  *  - processDeclarationBodies(doc)
@@ -60,6 +61,7 @@ import { autoDeclaredConstants, invisibleHeads } from './parsers/notation-tables
  *  preparation for validation.  It does the following:
  *  - addSystemDeclarations(doc)
  *  - processShorthands(doc)
+ *  - processAliases(doc)
  *  - moveDeclaresToTop(doc)
  *  - processTheorems(doc)
  *  - processDeclarationBodies(doc)
@@ -81,6 +83,7 @@ const interpret = doc => {
 
   addIndex(doc,'Parsing')
   processShorthands(doc)
+  processAliases(doc)
   addIndex(doc,'Interpret')
   moveDeclaresToTop(doc)
   processTheorems(doc)
@@ -201,6 +204,11 @@ const processTheorems = doc => {
       if ( thm.isALetEnvironment() ) thm.firstChild().makeIntoA('unnecessary')
       // make a formula copy of the thm
       let thmrule = Formula.from(thm)
+      // an alias declaration inside the theorem has already been expanded
+      // (see processAliases), so drop it from the copy - as a formula it
+      // would declare a metavariable that occurs nowhere else and so could
+      // never be instantiated
+      removeAliases(thmrule)
       // if it doesn't have any metavars there's no need for it
       if ( Formula.domain(thmrule).size === 0 ) { return }
       // if it does, change it from a Theorem to a Rule
@@ -220,6 +228,118 @@ const processTheorems = doc => {
   
   return doc
 }
+
+/**
+ * Process Aliases
+ *
+ * An alias `x := E` (putdown `alias> [x , E]`, marked `alias` by
+ * processShorthands) introduces the symbol `x` as a shorthand for the
+ * expression `E`.  It has no propositional content of its own: the document
+ * should validate exactly as if the user had typed `E` wherever `x` occurs
+ * free in the scope of the alias.  So we expand it here, before anything else
+ * in interpretation looks at the document (in particular before the Rule copy
+ * of a Theorem is made and before bindings are canonicalized), by replacing
+ * each free occurrence of `x` in the alias's scope with a copy of `E`.
+ *
+ * The declaration itself stays in the tree, inert, so that the scoping check
+ * can still report a redeclaration of `x` and so the user's atom has
+ * something to carry feedback: it is marked `.ignore` (like a Comment) so it
+ * is never a proposition or a validation target, its body is detached once
+ * the expansion is done (so the definition site declares nothing but `x`, and
+ * each copy of `E` is scoped where it lands), and processRules and
+ * processTheorems drop it from formulas.  markFlaggedDeclarations() in
+ * global-validation.js turns the outcome recorded here into feedback:
+ *
+ *   - `E` may not mention `x` (recorded as `alias error: 'selfreferential'`);
+ *     nothing is expanded.
+ *   - an occurrence is not expanded when a free symbol of `E` would be
+ *     captured by a binder there (`alias error: 'captured'`); the other
+ *     occurrences are still expanded.
+ *   - every outermost expression left containing an unexpanded `x` records
+ *     the names in its js attribute `.unaliased`.  In the current design such an
+ *     expression still validates as an ordinary expression about an
+ *     arbitrary symbol `x`, which is sound but not what the user meant, so
+ *     it is reported.
+ *
+ * A whole-line occurrence of `x` carries the line's identity - its `given`
+ * type, its ID in the web UI, and the test harness's expected result - so
+ * those are transferred to the expression that replaces it.
+ *
+ * Aliases are expanded in document order, so a later alias whose body
+ * mentions an earlier one is expanded correctly.
+ */
+const processAliases = doc => {
+  doc.descendantsSatisfying( d => d.isA('alias') ).forEach( dec => {
+    // whatever happens below, the alias is never a proposition
+    dec.ignore = true
+    // the shape `[x , E]` is guaranteed by the Lurch notation parser, so
+    // anything else is hand-written putdown
+    if ( !(dec instanceof Declaration) || dec.symbols().length !== 1 ||
+         !dec.body() )
+      throw new Error('An alias must declare one symbol and have a body.')
+    const name = dec.symbols()[0].text()
+    const body = dec.body()
+    // free/bound questions are judged relative to the environment containing
+    // the alias: binders above it enclose the definition and its uses alike
+    const root = dec.parent()
+    // the declared symbols of a declaration are not uses of the name (a later
+    // `Let x` is a redeclaration for the scoping check to report, not an
+    // occurrence to expand)
+    const isDeclaredName = s => s.parent() instanceof Declaration &&
+                                s.parent().symbols().includes(s)
+    // the free occurrences of the name in the scope of the alias
+    const occurrences = dec.scope(false).filter( s =>
+      s instanceof LurchSymbol && s.text() === name &&
+      !isDeclaredName(s) && s.isFree(root) )
+    // record that an occurrence was left unexpanded on its outermost expression
+    const markUnaliased = s => {
+      const outer = s.getOutermost()
+      outer.unaliased ??= []
+      if ( !outer.unaliased.includes(name) ) outer.unaliased.push(name)
+    }
+    // an alias may not mention its own name (even bound: an expansion would
+    // then redeclare x inside x's own scope)
+    if ( body.hasDescendantSatisfying( d =>
+           d instanceof LurchSymbol && d.text() === name ) ) {
+      dec.setAttribute( 'alias error', 'selfreferential' )
+      occurrences.forEach( markUnaliased )
+    } else {
+      occurrences.forEach( occ => {
+        // no free symbol of E may become bound where it lands
+        if ( !body.isFreeToReplace( occ, root ) ) {
+          dec.setAttribute( 'alias error', 'captured' )
+          markUnaliased(occ)
+          return
+        }
+        const copy = body.copy()
+        // a whole-line occurrence carries the line's identity, so transfer
+        // its LC attributes (type flags, web UI ID - but not the text that
+        // makes it the symbol x) and the js fields the test harness and
+        // comma chains use to the replacement
+        const notText = keys => keys.filter( k => k !== 'symbol text' )
+        const stale = notText( copy.getAttributeKeys() )
+        if ( stale.length > 0 ) copy.clearAttributes( ...stale )
+        notText( occ.getAttributeKeys() ).forEach( k =>
+          copy.setAttribute( k, occ.getAttribute(k) ) )
+        ;[ 'continued', 'ExpectedResult' ].forEach( k => {
+          if ( occ[k] !== undefined ) copy[k] = occ[k]
+        } )
+        occ.replaceWith(copy)
+      } )
+    }
+    // the expansion is done, so detach the body: the definition site now
+    // declares nothing but x, and each copy of E is scoped where it landed
+    dec.lastChild().replaceWith( Declaration.emptyBody().copy() )
+  } )
+  return doc
+}
+
+/**
+ * Remove any alias declarations inside an LC (used on Rules and on the Rule
+ * copy of a Theorem, after processAliases has expanded them).
+ */
+const removeAliases = L =>
+  L.descendantsSatisfying( d => d.isA('alias') ).forEach( d => d.remove() )
 
 /**
  * Process Declaration Bodies
@@ -322,6 +442,10 @@ const processRules = doc => {
     // remains as a given, so the rule still means the typed universal closure
     // the author presumably intended.
     if ( f.isALetEnvironment() ) f.firstChild().makeIntoA('unnecessary')
+    // an alias declaration in a Rule has already been expanded (see
+    // processAliases), so drop it before converting to a formula, where it
+    // would declare a metavariable that could never be instantiated
+    removeAliases(f)
     // convert it to a formula
     // the second arg specifies it should be done in place
     Formula.from(f,true)
@@ -451,8 +575,10 @@ const splitConclusions = doc => {
 const assignProperNames = doc => {
   // get all the declarations we need to process, skipping unnecessary ones
   // (leading Lets of Rules or Theorems), which validation ignores as if they
-  // were deleted, so they must not rename the symbols in their scope
-  const declarations = doc.declarations().filter( d => !d.isA('unnecessary') )
+  // were deleted, so they must not rename the symbols in their scope, and
+  // aliases, which have already been expanded and are likewise inert
+  const declarations = doc.declarations().filter( d =>
+    !d.isA('unnecessary') && !d.isA('alias') )
   // cache the proper names as we compute them, and track any recursive calls
   const properNames = new Map()
   const computing = new Set()
@@ -687,7 +813,7 @@ const markDeclaredSymbols = ( target ) => {
 }
 
 export default { interpret, addSystemDeclarations, processShorthands, 
-  moveDeclaresToTop, processTheorems, processDeclarationBodies, 
+  processAliases, moveDeclaresToTop, processTheorems, processDeclarationBodies, 
   processLetEnvironments, removeTrailingGivens, splitConclusions, 
   processBindings, processRules, assignProperNames, markDeclaredSymbols,
   replaceBindings, renameBindings

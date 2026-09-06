@@ -202,6 +202,7 @@ const P = node => {
     case 'let'     : return `Let ${node.names.join(', ')}` +
                        ( node.set ? ` in ${operand(node.set)}` : '' ) +
                        ( node.be ? ' be such that' : '' )
+    case 'alias'   : return `${node.name} := ${P(node.expr)}`
 
     // quantifiers and bindings
     case 'quant' : return node.bind

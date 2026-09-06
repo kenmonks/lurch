@@ -64,7 +64,7 @@ export const addLurchIndices = (indexer, phase) => {
   const ShorthandsList = [
     'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
     '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
-    '✔︎','✗','⁉︎','⊘','➤','<<','>>'
+    'alias>','✔︎','✗','⁉︎','⊘','➤','<<','>>'
   ]
 
   ////////////////////

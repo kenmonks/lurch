@@ -136,6 +136,7 @@ const loadAcidTests = () => {
       'Environment Body Forms',
       'Unnecessary Declarations',
       'Unsupported Declarations',
+      'Aliases',
       'Auto Constants',
       'Auto Constants 2',
       'Preemie Stress',

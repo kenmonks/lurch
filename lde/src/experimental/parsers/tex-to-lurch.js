@@ -4,7 +4,8 @@
 
 export const latexToLurch = (input) =>
 { 
-  return input.replace(/Rightarrow/g, 'implies')
+  return input.replace(/\\coloneqq?/g, ' := ')
+              .replace(/Rightarrow/g, 'implies')
               .replace(/Leftrightarrow/g, 'iff')
               .replace(/mid/g, 'divides')
               .replace(/sim/g, '~')

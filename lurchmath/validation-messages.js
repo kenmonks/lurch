@@ -607,7 +607,31 @@ export class Message {
             names.length == 2 ? names.join( ' and ' ) :
             names.slice( 0, -1 ).join( ', ' ) + ', and ' + names[names.length - 1]
         if ( data.type == 'scoping' ) {
-            if ( data.hasOwnProperty( 'unnecessary' ) ||
+            if ( data.hasOwnProperty( 'selfreferential' ) ) {
+                // an alias x := E whose E mentions x
+                return {
+                    type : 'scoping',
+                    result : 'inapplicable',
+                    reason : `The definition of ${listify(data.selfreferential)} may not mention ${listify(data.selfreferential)} itself.`,
+                    code : 'self-referential alias'
+                }
+            } else if ( data.hasOwnProperty( 'captured' ) ) {
+                // an alias whose expansion was blocked somewhere by capture
+                return {
+                    type : 'scoping',
+                    result : 'inapplicable',
+                    reason : `${listify(data.captured)} cannot be expanded everywhere it is used, because a variable in its definition would be captured by a quantifier there.`,
+                    code : 'captured alias'
+                }
+            } else if ( data.hasOwnProperty( 'unaliased' ) ) {
+                // an expression containing an alias name that was not expanded
+                return {
+                    type : 'scoping',
+                    result : 'inapplicable',
+                    reason : `The shorthand ${listify(data.unaliased)} could not be expanded here, so this was not checked.`,
+                    code : 'alias not expanded'
+                }
+            } else if ( data.hasOwnProperty( 'unnecessary' ) ||
                  data.hasOwnProperty( 'unsupported' ) ) {
                 // an unnecessary declaration (a Rule or Theorem may not begin
                 // with a Let) or an unsupported one (a declaration body may

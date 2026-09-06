@@ -459,6 +459,8 @@ export const astToTex = node => {
         return `${decl}\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }`
       return decl
     }
+    // \mathrel{:=} rather than \coloneqq, whose colon is too small to see
+    case 'alias'     : return `${leafTex(node.name)}\\mathrel{:=}${T(node.expr)}`
 
     // quantifiers and bindings
     case 'quant'     : return node.bind

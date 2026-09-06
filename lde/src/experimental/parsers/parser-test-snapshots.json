@@ -1895,6 +1895,26 @@
       "Declare vdash": "\\text{Declare } \\vdash"
     }
   },
+  "LurchParserAliasTests": {
+    "putdown": {
+      "c := f(a,b)": "alias> [c , (f a b)]",
+      "c:=f(a,b)": "alias> [c , (f a b)]",
+      "c : = f(a,b)": "alias> [c , (f a b)]",
+      "H := forall n. P(n) and Q": "alias> [H , (∀ n, (and (P n) Q))]",
+      "B := A cup C": "alias> [B , (∪ A C)]",
+      "x := 1/2": "alias> [x , (⋅ 1 (/ 2))]",
+      "y := (a+b)^2": "alias> [y , (^ (+ a b) 2)]"
+    },
+    "tex": {
+      "c := f(a,b)": "c\\mathrel{:=}f\\left(a,b\\right)",
+      "c:=f(a,b)": "c\\mathrel{:=}f\\left(a,b\\right)",
+      "c : = f(a,b)": "c\\mathrel{:=}f\\left(a,b\\right)",
+      "H := forall n. P(n) and Q": "H\\mathrel{:=}\\forall n.\\, P\\left(n\\right)\\text{ and }Q",
+      "B := A cup C": "B\\mathrel{:=}A\\cup C",
+      "x := 1/2": "x\\mathrel{:=}\\frac{1}{2}",
+      "y := (a+b)^2": "y\\mathrel{:=}{\\left(a+b\\right)}^{2}"
+    }
+  },
   "TopDownTests": {
     "putdown": {
       "{}": "{  }",
@@ -2578,6 +2598,7 @@
       "f(c)=0 for some c": "(= (f c) 0) some> [c]",
       "f(c)=0 for some c in A": "(= (f c) 0) some> [c,{ (∈ c A) }]",
       "Declare is, 0, +, cos": "declare> :[is 0 + cos]",
+      "c := f(a,b)": "alias> [c , (f a b)]",
       "(star)": "★",
       "'star'": "★",
       "(subset)": "⊆",
@@ -2906,6 +2927,7 @@
       "f(c)=0 for some c": "f\\left(c\\right)=0\\text{ for some }c",
       "f(c)=0 for some c in A": "f\\left(c\\right)=0\\text{ for some }c\\in A",
       "Declare is, 0, +, cos": "\\text{Declare } \\text{is}\\text{, }0\\text{, }+\\text{, }\\textcolor{black}{\\text{and }}\\text{cos}",
+      "c := f(a,b)": "c\\mathrel{:=}f\\left(a,b\\right)",
       "(star)": "\\left(\\star\\right)",
       "'star'": "\\left(\\star\\right)",
       "(subset)": "\\left(\\subseteq\\right)",

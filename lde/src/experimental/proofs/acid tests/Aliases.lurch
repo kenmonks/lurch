@@ -1,0 +1,129 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Aliases
+//
+// An alias `x := E` introduces the symbol x as a shorthand for the expression
+// E.  It has no propositional content of its own: during interpretation every
+// free occurrence of x in the scope of the alias is replaced by a copy of E,
+// so the document validates exactly as if the user had typed E there, and the
+// alias itself is inert (see processAliases in interpret.js).
+//
+// Feedback: the alias gets ✔︎ when it was expanded everywhere it is used, ⁉︎
+// when it redeclares a name already in use (the scoping error, as for any
+// redeclaration), and ⊘ when its body mentions its own name or its expansion
+// was blocked somewhere by variable capture.  Any expression left containing
+// an unexpanded alias name also gets ⊘.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "a term alias is expanded wherever it is used"
+{
+  Declare P, Q, f, a, b
+  Rule: :{ :P(x) Q(x) }
+  c := f(a,b) ✔︎
+  Assume P(c)
+  Q(c) ✔︎
+}
+
+➤ "an alias has no propositional content of its own (it is not an equation)"
+{
+  Declare R, g, k
+  d := g(k) ✔︎
+  d = g(k) ✗
+}
+
+➤ "a propositional alias may abbreviate a whole line, as a given or a claim"
+{
+  Declare S, T, U, m
+  Rule: :{ :W :W⇒V V }
+  H := S(m) and T(m) ✔︎
+  Assume H
+  Assume H ⇒ U(m)
+  H ✔︎
+  U(m) ✔︎
+}
+
+➤ "aliases may build on earlier aliases"
+{
+  Declare A, B, u, v
+  Rule: :{ :A(x) B(x) }
+  p := u+v ✔︎
+  q := p*p ✔︎
+  Assume A(q)
+  B((u+v)*(u+v)) ✔︎
+}
+
+➤ "an alias may mention a Let variable inside the Let's scope"
+{
+  Declare C, D
+  Rule: :{ :C(x) D(x) }
+  {
+    Let n
+    r := n+1 ✔︎
+    Assume C(r)
+    D(n+1) ✔︎
+  }
+}
+
+➤ "an alias is only visible in its own scope"
+{
+  Declare Y
+  { rr := Y ✔︎ }
+  rr ✗
+}
+
+➤ "an alias inside a Theorem is expanded before its Rule copy is made"
+{
+  Declare K, L, h
+  Theorem:
+  {
+    :K(y)
+    w := y ✔︎
+    L(w) ✗
+  }
+  Assume K(h)
+  L(h) ✔︎
+}
+
+➤ "an alias inside a Rule is expanded before the Rule becomes a formula"
+{
+  Declare M, N, j, e
+  Rule:
+  :{
+    t := j(x)
+    :M(t)
+    N(t)
+  }
+  Assume M(j(e))
+  N(j(e)) ✔︎
+}
+
+➤ "an alias may not mention its own name"
+{
+  Declare F, z
+  s := z + s ⊘
+  F(s) ⊘
+}
+
+➤ "an alias is not expanded where a variable in its definition would be captured"
+{
+  Declare G, o
+  vv := i + o ⊘
+  forall i. G(vv) ⊘
+  G(vv) ✗
+}
+
+➤ "an alias may not reuse a name already in use"
+{
+  Declare I
+  Let l
+  l := I ⁉︎
+}
+
+➤ "a name introduced by an alias may not be declared or bound again in its scope"
+{
+  Declare J
+  qq := J ✔︎
+  Let qq
+  forall qq. J ✗
+}

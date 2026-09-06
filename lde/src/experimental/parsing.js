@@ -533,6 +533,11 @@ const partition = function (arr,f) {
  *       | 'thm>'      | 'Theorem' |
  *       | '<thm'      | 'Theorem' |
  *       | 'proof>'    | 'Proof'   |
+ *       | 'alias>'    | 'alias'   |
+ *
+ *     The `alias>` shorthand marks the declaration `[x , E]` produced by the
+ *     Lurch notation `x := E`; it is also made a claim.  Interpretation
+ *     expands the alias (see `processAliases` in interpret.js).
  *
  *   * Scan for occurrences of the symbol `rules>`. Its next sibling should be
  *     an environment containing given Environments. Mark each child of the next
@@ -722,6 +727,7 @@ export const processShorthands = L => {
   processSymbol( '<thm'          , m => makePrevious(m,'Theorem','claim') )  
   processSymbol( 'proof>'        , m => makeNext(m,'Proof','claim') )
   processSymbol( 'cases>'        , m => makeNext(m,'Cases','given') )  
+  processSymbol( 'alias>'        , m => makeNext(m,'alias','claim') )
 
   // Label a rule.  We imitate
   processSymbol( 'label>'         , m => {

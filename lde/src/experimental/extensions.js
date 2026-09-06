@@ -235,7 +235,8 @@ LogicConcept.prototype.isADeclaration = function () {
  * declarations will have atomic propositional forms and a separate copy of the
  * body. It ignores anything flagged with .ignore for defining shortucts and
  * other content that is supposed to be ignored, and ignores anything passed in
- * the argument ignores.
+ * the argument ignores.  An alias declaration (`x := E`, expanded and made
+ * inert by interpretation) is never a proposition either.
  * 
  * @memberof Extensions
  * @param {LogicConcept[]} ignores
@@ -248,6 +249,7 @@ LogicConcept.prototype.isAProposition = function ( ignores = []) {
          ) || 
          ( this.isADeclaration() && 
           !this.isA('Declare')   &&
+          !this.isA('alias')     &&
           !ignores.includes(this)
          ) 
 }

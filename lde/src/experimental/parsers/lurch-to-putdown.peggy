@@ -268,7 +268,7 @@ LC = Meta / Given / Environment / Declaration / Expression
   // Things it searches for and replaces up front
   Meta = Putdown / Comment / Label / Ref / Shorthand 
   // Declarations
-  Declaration = Declare / ForSome / Let 
+  Declaration = Declare / ForSome / Let / Alias
   // Expressions.  The sequent turnstile (⊢/vdash/proves - see the
   // Sequents section below) is the loosest operator of all: a bare
   // sequent is tried first, and its sides are InnerExpressions, so a
@@ -406,6 +406,13 @@ Let = k:$'Let'i __ a:(DeclaredName)|1..,comma| __ 'in' __ b:Expression __
       k:$'Let'i __ a:SymbolSeq __ e:($('be' __))? 'such' __ 'that' // __ b:Expression
                             { return { type:'let', names:a, be:true, fmt:{ kw:k, be:!!e } } } /
       k:$'Let'i __ a:SymbolSeq { return { type:'let', names:a, fmt:{ kw:k } } }
+// Alias declaration (always a claim): `x := E` introduces the name x as a
+// shorthand for the expression E, which the LDE expands wherever x is used
+// in its scope (see processAliases in interpret.js).  The putdown is the
+// alias> shorthand followed by the declaration of x with body E.  (The
+// tokenizer pads every colon on the right, so `:=` arrives as `: =`.)
+Alias = a:DeclaredName _ ':' _ '=' _ b:Expression
+          { return { type:'alias', name:a, expr:b } }
   // a declarable name: an ordinary Symbol, or a bare operator mention
   DeclaredName = Symbol / BareOpName
   // Comma separated symbols, numbers, and classified keywords - any

@@ -342,8 +342,9 @@ const validate = ( doc, target = doc , scopingMethod = Scoping.declareWhenSeen )
   // Flagged Declarations
   //
   // Give feedback for declarations flagged during interpretation: leading
-  // Lets of Rules and Theorems ('unnecessary') and declarations whose body
-  // contains another declaration ('unsupported').  This must run after
+  // Lets of Rules and Theorems ('unnecessary'), declarations whose body
+  // contains another declaration ('unsupported'), and aliases together with
+  // any expressions they could not be expanded in.  This must run after
   // Scoping.validate, so the scoping pass cannot erase the scope errors we
   // add, and after propositional validation, so a flagged claim declaration's
   // 'inapplicable' result is not overwritten by its propositional result.
@@ -2205,17 +2206,53 @@ const insertInstantiation = ( inst, formula, creator ) => {
  * gate.  Declarations inside generated instantiations are skipped, since
  * feedback belongs on the user's content, not on copies.
  *
+ * It also gives the feedback for aliases (`x := E`, see processAliases in
+ * interpret.js), which interpretation expanded and made inert.  An alias that
+ * was expanded everywhere gets an ordinary 'valid' result.  One that
+ * redeclares its name gets an 'invalid' result alongside the scoping pass's
+ * redeclaration error (its expansion went ahead, since the name was already
+ * in use before it).  One whose body mentions its own name, or whose expansion
+ * was blocked somewhere by variable capture, gets a scoping error keyed by
+ * the recorded `alias error` and an 'inapplicable' result; so does every
+ * expression left containing an unexpanded alias name (recorded in its js
+ * attribute `.unaliased`), replacing whatever propositional result it got
+ * as an expression about an arbitrary symbol.
+ *
  * This must be called after `Scoping.validate()` so that the scoping pass
  * cannot erase the scope errors added here.
  */
 const markFlaggedDeclarations = doc => {
-  doc.descendantsSatisfying( x => x.isA('unnecessary') || x.isA('unsupported') )
+  doc.descendantsSatisfying( x => x.isA('unnecessary') || x.isA('unsupported') ||
+                                  x.isA('alias') || x.unaliased )
      .forEach( d => {
     // skip copies inside generated instantiations, but not inside a
     // metavariable-free Rule, which processRules marks as its own
     // instantiation (.rule === itself) yet is still the user's own content
     if ( d.hasAncestorSatisfying( a => a.isA(instantiation) && a.rule !== a ) )
       return
+    // an expression still containing an alias name that was not expanded
+    if ( d.unaliased ) {
+      Scoping.addScopeError( d, { unaliased: d.unaliased } )
+      Validation.setResult( d,
+        { result: 'inapplicable', reason: 'alias not expanded' } )
+      return
+    }
+    // an alias declaration
+    if ( d.isA('alias') ) {
+      const names = d.symbols().map( s => s.text() )
+      const error = d.getAttribute('alias error')
+      if ( error ) {
+        Scoping.addScopeError( d, { [error]: names } )
+        Validation.setResult( d,
+          { result: 'inapplicable', reason: `${error} alias` } )
+      } else if ( Scoping.scopeErrors(d)?.redeclared ) {
+        Validation.setResult( d,
+          { result: 'invalid', reason: 'redeclared alias' } )
+      } else {
+        Validation.setResult( d, { result: 'valid', reason: 'alias' } )
+      }
+      return
+    }
     // add a scoping error listing the declared symbols, keyed by the flag
     const reason = d.isA('unnecessary') ? 'unnecessary' : 'unsupported'
     Scoping.addScopeError( d, { [reason]: d.symbols().map( s => s.text() ) } )

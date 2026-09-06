@@ -156,6 +156,9 @@ export const astToPutdown = node => {
       // the membership body or there is more than one condition
       return decl + ( node.be ? ' <be' : '' )
     }
+    // an alias `x := E` is the alias> shorthand followed by the declaration
+    // of x with body E (expanded during interpretation)
+    case 'alias'     : return `alias> [${node.name} , ${P(node.expr)}]`
 
     // quantifiers and bindings (typed quantifiers desugar to ⇒ / and)
     case 'quant'     : return node.bind

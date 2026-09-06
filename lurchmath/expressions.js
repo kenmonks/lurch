@@ -1,4 +1,7 @@
 
+// NOTE: Beginner and Intermediate modes are deprecated.  Only Advanced mode is
+// supported.  I just haven't got around to cleaning the code yet.
+
 /**
  * This file installs one tool into the user interface, a menu item for
  * inserting an inline atom into the document, one that allows the user to write
