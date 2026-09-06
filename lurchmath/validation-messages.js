@@ -615,16 +615,27 @@ export class Message {
                     reason : `The definition of ${listify(data.selfreferential)} may not mention ${listify(data.selfreferential)} itself.`,
                     code : 'self-referential alias'
                 }
-            } else if ( data.hasOwnProperty( 'captured' ) ) {
-                // an alias whose expansion was blocked somewhere by capture
+            } else if ( data.hasOwnProperty( 'misused' ) ) {
+                // an expression using a parameterized alias x(s,t) := E bare
+                // or with the wrong number of arguments
                 return {
                     type : 'scoping',
                     result : 'inapplicable',
-                    reason : `${listify(data.captured)} cannot be expanded everywhere it is used, because a variable in its definition would be captured by a quantifier there.`,
+                    reason : `${listify(data.misused)} is a shorthand with parameters, not a function, so it can only be used with the same number of arguments as in its definition; this was not checked.`,
+                    code : 'misused alias'
+                }
+            } else if ( data.hasOwnProperty( 'captured' ) ) {
+                // an expression in which an alias could not be expanded
+                // because a variable would be captured by a quantifier
+                return {
+                    type : 'scoping',
+                    result : 'inapplicable',
+                    reason : `The shorthand ${listify(data.captured)} could not be expanded here, because a variable would be captured by a quantifier, so this was not checked.`,
                     code : 'captured alias'
                 }
             } else if ( data.hasOwnProperty( 'unaliased' ) ) {
-                // an expression containing an alias name that was not expanded
+                // an expression containing an alias name that was not
+                // expanded because its definition is not valid
                 return {
                     type : 'scoping',
                     result : 'inapplicable',

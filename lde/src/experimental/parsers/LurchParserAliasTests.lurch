@@ -12,3 +12,19 @@ H := forall n. P(n) and Q
 B := A cup C
 x := 1/2
 y := (a+b)^2
+
+// a parameterized alias `x(s,t) := E` has the binding (λ (s t) , E) as its
+// body; the parameter list hugs the name, like function application
+sq(s) := s*s
+sq(s):=s*s
+h(s,t) := s+t
+K(s,t,u) := forall n. P(n,s) and Q(t,u)
+c(s) := f(a,s)
+
+// the English surface `write x for E` means the same as `x := E`; the
+// keyword is case-insensitive (the tex echoes it as typed)
+write c for f(a,b)
+Write c for f(a,b)
+WRITE H for forall n. P(n) and Q
+write sq(s) for s*s
+Write h(s,t) for s+t

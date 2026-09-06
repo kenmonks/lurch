@@ -137,6 +137,7 @@ const loadAcidTests = () => {
       'Unnecessary Declarations',
       'Unsupported Declarations',
       'Aliases',
+      'Aliases With Parameters',
       'Auto Constants',
       'Auto Constants 2',
       'Preemie Stress',

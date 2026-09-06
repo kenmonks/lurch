@@ -283,3 +283,10 @@ a . . b
 // reading for its leftover (contrast the sequent prefix form, which IS
 // a standalone Expression and so splits into two LCs instead of erroring)
 a...b...c
+// alias parameters must be distinct
+x(s,s) := s*s
+write x(s,t,s) for s+t
+// `write x for E` needs both a name and a body
+write x
+write x for
+write for E

@@ -203,6 +203,15 @@
   // Hand the normalized input to an external tracer, if provided
   if (options && typeof options.__setTraceInput === 'function') options.__setTraceInput(input)
 
+  // build a parameterized alias node (see the Alias rule); a repeated
+  // parameter is a syntax error, reported here because error() is only
+  // in scope inside the parser
+  const aliasNode = (name, params, expr) => {
+    if ( new Set(params).size !== params.length )
+      error(`the parameters of ${name} must be distinct`)
+    return { type:'alias', name, params, expr }
+  }
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -411,8 +420,26 @@ Let = k:$'Let'i __ a:(DeclaredName)|1..,comma| __ 'in' __ b:Expression __
 // in its scope (see processAliases in interpret.js).  The putdown is the
 // alias> shorthand followed by the declaration of x with body E.  (The
 // tokenizer pads every colon on the right, so `:=` arrives as `: =`.)
-Alias = a:DeclaredName _ ':' _ '=' _ b:Expression
-          { return { type:'alias', name:a, expr:b } }
+// A parameterized alias `x(s,t) := E` makes x(a,b) a shorthand for E with
+// a,b substituted for s,t; its body is the binding (λ (s t) , E), so the
+// parameters are bound in the declaration rather than free.  As in function
+// application, no space may separate the name from its parameter list, and
+// the parameters must be distinct.  The English surface `write x for E`
+// (case-insensitive `write`, echoed by the tex printer) means the same as
+// `x := E`.
+Alias = a:DeclaredName p:AliasParams _ ':' _ '=' _ b:Expression
+          { return aliasNode(a, p, b) } /
+        a:DeclaredName _ ':' _ '=' _ b:Expression
+          { return { type:'alias', name:a, expr:b } } /
+        k:$'write'i __ a:DeclaredName p:AliasParams __ 'for' __ b:Expression
+          { return { ...aliasNode(a, p, b), fmt:{ kw:k } } } /
+        k:$'write'i __ a:DeclaredName __ 'for' __ b:Expression
+          { return { type:'alias', name:a, expr:b, fmt:{ kw:k } } }
+  // The parameter list is only checked once the whole alias has matched:
+  // x(s,s) is a fine application elsewhere, but a duplicate parameter in an
+  // alias is an outright syntax error (error() aborts the parse), not a
+  // reason to fall back to some other reading of the line.
+  AliasParams = '(' _ p:DeclaredName|1..,comma| _ ')' { return p }
   // a declarable name: an ordinary Symbol, or a bare operator mention
   DeclaredName = Symbol / BareOpName
   // Comma separated symbols, numbers, and classified keywords - any

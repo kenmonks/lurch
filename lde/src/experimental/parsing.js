@@ -536,7 +536,9 @@ const partition = function (arr,f) {
  *       | 'alias>'    | 'alias'   |
  *
  *     The `alias>` shorthand marks the declaration `[x , E]` produced by the
- *     Lurch notation `x := E`; it is also made a claim.  Interpretation
+ *     Lurch notation `x := E` (or `write x for E`); it is also made a claim.
+ *     A parameterized alias `x(s,t) := E` produces `[x , (λ (s t) , E)]`,
+ *     whose λ becomes `LDE EFA` below like any other.  Interpretation
  *     expands the alias (see `processAliases` in interpret.js).
  *
  *   * Scan for occurrences of the symbol `rules>`. Its next sibling should be

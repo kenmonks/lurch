@@ -459,8 +459,15 @@ export const astToTex = node => {
         return `${decl}\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }`
       return decl
     }
-    // \mathrel{:=} rather than \coloneqq, whose colon is too small to see
-    case 'alias'     : return `${leafTex(node.name)}\\mathrel{:=}${T(node.expr)}`
+    // \mathrel{:=} rather than \coloneqq, whose colon is too small to see;
+    // the `write x for E` surface echoes its keyword as typed, like Let
+    case 'alias'     : {
+      const name = leafTex(node.name) + ( node.params
+        ? `\\left(${node.params.map(leafTex).join(',')}\\right)` : '' )
+      return node.fmt?.kw
+        ? `${txt(node.fmt.kw)}${name}\\text{ for }${T(node.expr)}`
+        : `${name}\\mathrel{:=}${T(node.expr)}`
+    }
 
     // quantifiers and bindings
     case 'quant'     : return node.bind

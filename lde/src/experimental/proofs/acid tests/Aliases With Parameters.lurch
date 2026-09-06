@@ -1,0 +1,159 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Aliases With Parameters
+//
+// A parameterized alias `x(s,t) := E` makes x(a,b) a shorthand for E with a
+// and b substituted for s and t.  Like an unparameterized alias it has no
+// propositional content: during interpretation every free application of x to
+// exactly as many arguments as there are parameters is replaced by the
+// corresponding instance of E (see processAliases in interpret.js), and the
+// alias itself is inert.  The English surface `write x for E` means the same
+// as `x := E`.
+//
+// Feedback: as for unparameterized aliases (see Aliases.lurch), the alias's
+// own marker being local to its definition; an expression gets ⊘ when it uses
+// a parameterized alias bare or with the wrong number of arguments (it is
+// notation, not a function object), or when an argument would be captured by
+// a binder inside the definition.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "a parameterized alias is expanded at each application, with the arguments substituted"
+{
+  Declare P, Q, f, a, b
+  Rule: :{ :P(x) Q(x) }
+  g(s,t) := f(t,s) ✔︎
+  Assume P(f(b,a))
+  Q(g(a,b)) ✔︎
+  Q(g(b,a)) ✗
+}
+
+➤ "the substitution is simultaneous, even when an argument mentions a parameter"
+{
+  Declare R, S, h
+  Rule: :{ :R(x) S(x) }
+  sw(s,t) := h(t,s) ✔︎
+  Assume R(h(s,t))
+  S(sw(t,s)) ✔︎
+  S(h(s,s)) ✗
+}
+
+➤ "a propositional alias may abbreviate a whole line, as a given or a claim"
+{
+  Declare T, U, m, n
+  Rule: :{ :W :W⇒V V }
+  Both(s,t) := T(s) and U(t) ✔︎
+  Assume Both(m,n)
+  Assume Both(m,n) ⇒ T(n)
+  Both(m,n) ✔︎
+  T(n) ✔︎
+}
+
+➤ "nested applications are expanded from the inside out"
+{
+  Declare A, B, u, v
+  Rule: :{ :A(x) B(x) }
+  p(s) := u+s ✔︎
+  Assume A(u+(u+v))
+  B(p(p(v))) ✔︎
+}
+
+➤ "aliases may build on earlier parameterized aliases"
+{
+  Declare C, D, d
+  Rule: :{ :C(x) D(x) }
+  mul(s,t) := s*t ✔︎
+  sqr(s) := mul(s,s) ✔︎
+  Assume C(d*d)
+  D(sqr(d)) ✔︎
+}
+
+➤ "an argument may be a metavariable of the Rule containing the alias"
+{
+  Declare E, F, c
+  Rule:
+  :{
+    both(s) := E(s) and F(s)
+    :both(x)
+    F(x)
+  }
+  Assume E(c) and F(c)
+  F(c) ✔︎
+}
+
+➤ "the surface `write x for E` means the same as `x := E`"
+{
+  Declare Y, Z, e
+  Rule: :{ :Y(x) Z(x) }
+  write dbl for e+e ✔︎
+  Write tw(s) for s+s ✔︎
+  Assume Y(e+e)
+  Z(dbl) ✔︎
+  Z(tw(e)) ✔︎
+}
+
+➤ "an unparameterized alias may be applied, as macro expansion dictates"
+{
+  Declare M, N, q
+  Rule: :{ :M(x) N(x) }
+  op := N ✔︎
+  Assume M(q)
+  op(q) ✔︎
+}
+
+➤ "a parameter may reuse a name in use outside the alias"
+{
+  Declare O
+  {
+    Let z
+    sh(z) := O(z) ✔︎
+    Assume O(z)
+    sh(z) ✔︎
+  }
+}
+
+➤ "a parameter bound inside the definition has no free occurrence to substitute"
+{
+  Declare G, k
+  al(s) := forall s. G(s) ✔︎
+  Assume forall s. G(s)
+  al(k) ✔︎
+}
+
+➤ "an argument is not substituted where a binder inside the definition would capture it"
+{
+  Declare H, o
+  ex(s) := exists i. H(i,s) ✔︎
+  ex(i) ⊘
+  Assume exists i. H(i,o)
+  ex(o) ✔︎
+}
+
+➤ "the definition's own free symbols are not expanded where a binder would capture them"
+{
+  Declare I, w
+  cap(s) := I(s, j) ✔︎
+  forall j. cap(w) ⊘
+  Assume I(w, j)
+  cap(w) ✔︎
+}
+
+➤ "a parameterized alias is notation, not a function object"
+{
+  Declare J, K, r
+  pr(s,t) := J(s,t) ✔︎
+  K(pr) ⊘
+  pr(r) ⊘
+  pr(r,r,r) ⊘
+  Assume J(r,r)
+  pr(r,r) ✔︎
+}
+
+➤ "a parameterized alias may not mention its own name, even as a parameter"
+{
+  Declare L, l
+  rec(s) := L(s) + rec(l) ⊘
+  rec(l) ⊘
+  own(own) := L(own) ⊘
+  own(l) ⊘
+}

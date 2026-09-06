@@ -143,7 +143,8 @@ const skeleton = [
 ['f(c)=0 for some c'],
 ['f(c)=0 for some c in A'],
 ['Declare is, 0, +, cos'],
-['c := f(a,b)'],
+['c := f(a,b)', 'write c for f(a,b)'],
+['c(s,t) := f(s,t)', 'Write c(s,t) for f(s,t)'],
 
 'Mentioning an operator as a symbol (any operator name or glyph)',
 ['(star)', "'star'"],

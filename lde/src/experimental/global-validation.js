@@ -2207,16 +2207,20 @@ const insertInstantiation = ( inst, formula, creator ) => {
  * feedback belongs on the user's content, not on copies.
  *
  * It also gives the feedback for aliases (`x := E`, see processAliases in
- * interpret.js), which interpretation expanded and made inert.  An alias that
- * was expanded everywhere gets an ordinary 'valid' result.  One that
- * redeclares its name gets an 'invalid' result alongside the scoping pass's
- * redeclaration error (its expansion went ahead, since the name was already
- * in use before it).  One whose body mentions its own name, or whose expansion
- * was blocked somewhere by variable capture, gets a scoping error keyed by
- * the recorded `alias error` and an 'inapplicable' result; so does every
- * expression left containing an unexpanded alias name (recorded in its js
- * attribute `.unaliased`), replacing whatever propositional result it got
- * as an expression about an arbitrary symbol.
+ * interpret.js), which interpretation expanded and made inert.  The alias's
+ * own marker is local - it depends only on the definition and its position,
+ * never on the uses that follow it: one whose body mentions its own name gets
+ * a scoping error keyed by the recorded `alias error` ('selfreferential') and
+ * an 'inapplicable' result; otherwise one that redeclares its name gets an
+ * 'invalid' result alongside the scoping pass's redeclaration error, exactly
+ * like a Let or ForSome redeclaring a name (its expansion went ahead, since
+ * the name was already in use before it); and otherwise it gets an ordinary
+ * 'valid' result.  Each expression left containing an unexpanded alias name
+ * (its js attribute `.unaliased` maps the name to the reason) gets scoping
+ * errors keyed 'unaliased' (all such names) and, for those blocked by
+ * variable capture or by misuse of a parameterized alias, 'captured' or
+ * 'misused' as well, and an 'inapplicable' result replacing whatever
+ * propositional result it got as an expression about an arbitrary symbol.
  *
  * This must be called after `Scoping.validate()` so that the scoping pass
  * cannot erase the scope errors added here.
@@ -2230,9 +2234,15 @@ const markFlaggedDeclarations = doc => {
     // instantiation (.rule === itself) yet is still the user's own content
     if ( d.hasAncestorSatisfying( a => a.isA(instantiation) && a.rule !== a ) )
       return
-    // an expression still containing an alias name that was not expanded
+    // an expression still containing an alias name that was not expanded:
+    // list the names, and separately those blocked by capture or misuse (a
+    // self-referential alias is reported on its own declaration instead)
     if ( d.unaliased ) {
-      Scoping.addScopeError( d, { unaliased: d.unaliased } )
+      const errors = { unaliased: Object.keys(d.unaliased) }
+      Object.entries(d.unaliased)
+        .filter( ( [ , why ] ) => why !== 'selfreferential' )
+        .forEach( ( [ x, why ] ) => ( errors[why] ??= [ ] ).push(x) )
+      Scoping.addScopeError( d, errors )
       Validation.setResult( d,
         { result: 'inapplicable', reason: 'alias not expanded' } )
       return

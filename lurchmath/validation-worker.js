@@ -78,11 +78,13 @@ const getValidationResults = LC => {
     const results = [ ]
     // Scope errors are highest priority
     const scopeErrors = LDE.Scoping.scopeErrors( LC )
-    // alias errors (x := E whose E mentions x, whose expansion was blocked by
-    // variable capture, or an expression left containing an unexpanded alias
-    // name) also get the 'inapplicable' marker; the message is composed by
-    // validation-messages.js from the keys copied below
-    const aliasKeys = [ 'selfreferential', 'captured', 'unaliased' ]
+    // alias errors (x := E whose E mentions x, and expressions left containing
+    // an unexpanded alias name - because its expansion was blocked by variable
+    // capture, a parameterized alias was used bare or with the wrong number of
+    // arguments, or its definition is not valid) also get the 'inapplicable'
+    // marker; the message is composed by validation-messages.js from the keys
+    // copied below
+    const aliasKeys = [ 'selfreferential', 'captured', 'misused', 'unaliased' ]
         .filter( key => scopeErrors && scopeErrors[key] )
     if ( aliasKeys.length > 0 ) {
         const result = {

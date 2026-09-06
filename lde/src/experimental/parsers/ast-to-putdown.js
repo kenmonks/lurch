@@ -157,8 +157,17 @@ export const astToPutdown = node => {
       return decl + ( node.be ? ' <be' : '' )
     }
     // an alias `x := E` is the alias> shorthand followed by the declaration
-    // of x with body E (expanded during interpretation)
-    case 'alias'     : return `alias> [${node.name} , ${P(node.expr)}]`
+    // of x with body E (expanded during interpretation); the body of a
+    // parameterized alias `x(s,t) := E` is the binding (λ (s t) , E), whose
+    // bound-variable list is parenthesized only when there are several
+    // (the LDE's own putdown convention for bindings)
+    case 'alias'     : {
+      const body = node.params
+        ? `(λ ${ node.params.length > 1
+                  ? `(${node.params.join(' ')})` : node.params[0] } , ${P(node.expr)})`
+        : P(node.expr)
+      return `alias> [${node.name} , ${body}]`
+    }
 
     // quantifiers and bindings (typed quantifiers desugar to ⇒ / and)
     case 'quant'     : return node.bind

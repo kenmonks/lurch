@@ -7,11 +7,13 @@
 // so the document validates exactly as if the user had typed E there, and the
 // alias itself is inert (see processAliases in interpret.js).
 //
-// Feedback: the alias gets ✔︎ when it was expanded everywhere it is used, ⁉︎
-// when it redeclares a name already in use (the scoping error, as for any
-// redeclaration), and ⊘ when its body mentions its own name or its expansion
-// was blocked somewhere by variable capture.  Any expression left containing
-// an unexpanded alias name also gets ⊘.
+// Feedback is local, as in Lurch generally: the alias's own marker depends
+// only on its definition and position, never on the uses that follow it.  It
+// gets ⊘ when its body mentions its own name, otherwise ⁉︎ when it redeclares
+// a name already in use (the scoping error, as for any redeclaration), and
+// otherwise ✔︎.  Any expression left containing an unexpanded alias name gets
+// its own ⊘, saying why (the definition is not valid, or a variable would be
+// captured by a quantifier).
 //
 // Each section below uses its own disjoint constants so that rules and
 // instantiations cannot cross-justify between sections.
@@ -108,7 +110,7 @@
 ➤ "an alias is not expanded where a variable in its definition would be captured"
 {
   Declare G, o
-  vv := i + o ⊘
+  vv := i + o ✔︎
   forall i. G(vv) ⊘
   G(vv) ✗
 }

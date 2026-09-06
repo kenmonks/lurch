@@ -1903,7 +1903,17 @@
       "H := forall n. P(n) and Q": "alias> [H , (∀ n, (and (P n) Q))]",
       "B := A cup C": "alias> [B , (∪ A C)]",
       "x := 1/2": "alias> [x , (⋅ 1 (/ 2))]",
-      "y := (a+b)^2": "alias> [y , (^ (+ a b) 2)]"
+      "y := (a+b)^2": "alias> [y , (^ (+ a b) 2)]",
+      "sq(s) := s*s": "alias> [sq , (λ s , (⋅ s s))]",
+      "sq(s):=s*s": "alias> [sq , (λ s , (⋅ s s))]",
+      "h(s,t) := s+t": "alias> [h , (λ (s t) , (+ s t))]",
+      "K(s,t,u) := forall n. P(n,s) and Q(t,u)": "alias> [K , (λ (s t u) , (∀ n, (and (P n s) (Q t u))))]",
+      "c(s) := f(a,s)": "alias> [c , (λ s , (f a s))]",
+      "write c for f(a,b)": "alias> [c , (f a b)]",
+      "Write c for f(a,b)": "alias> [c , (f a b)]",
+      "WRITE H for forall n. P(n) and Q": "alias> [H , (∀ n, (and (P n) Q))]",
+      "write sq(s) for s*s": "alias> [sq , (λ s , (⋅ s s))]",
+      "Write h(s,t) for s+t": "alias> [h , (λ (s t) , (+ s t))]"
     },
     "tex": {
       "c := f(a,b)": "c\\mathrel{:=}f\\left(a,b\\right)",
@@ -1912,7 +1922,17 @@
       "H := forall n. P(n) and Q": "H\\mathrel{:=}\\forall n.\\, P\\left(n\\right)\\text{ and }Q",
       "B := A cup C": "B\\mathrel{:=}A\\cup C",
       "x := 1/2": "x\\mathrel{:=}\\frac{1}{2}",
-      "y := (a+b)^2": "y\\mathrel{:=}{\\left(a+b\\right)}^{2}"
+      "y := (a+b)^2": "y\\mathrel{:=}{\\left(a+b\\right)}^{2}",
+      "sq(s) := s*s": "\\text{sq}\\left(s\\right)\\mathrel{:=}s\\cdot s",
+      "sq(s):=s*s": "\\text{sq}\\left(s\\right)\\mathrel{:=}s\\cdot s",
+      "h(s,t) := s+t": "h\\left(s,t\\right)\\mathrel{:=}s+t",
+      "K(s,t,u) := forall n. P(n,s) and Q(t,u)": "K\\left(s,t,u\\right)\\mathrel{:=}\\forall n.\\, P\\left(n,s\\right)\\text{ and }Q\\left(t,u\\right)",
+      "c(s) := f(a,s)": "c\\left(s\\right)\\mathrel{:=}f\\left(a,s\\right)",
+      "write c for f(a,b)": "\\text{write }c\\text{ for }f\\left(a,b\\right)",
+      "Write c for f(a,b)": "\\text{Write }c\\text{ for }f\\left(a,b\\right)",
+      "WRITE H for forall n. P(n) and Q": "\\text{WRITE }H\\text{ for }\\forall n.\\, P\\left(n\\right)\\text{ and }Q",
+      "write sq(s) for s*s": "\\text{write }\\text{sq}\\left(s\\right)\\text{ for }s\\cdot s",
+      "Write h(s,t) for s+t": "\\text{Write }h\\left(s,t\\right)\\text{ for }s+t"
     }
   },
   "TopDownTests": {
@@ -2151,7 +2171,12 @@
       "(x = y = z ⊢ P)": "(parse error)",
       "⊢ x = y = z": "(parse error)",
       "a . . b": "(parse error)",
-      "a...b...c": "(parse error)"
+      "a...b...c": "(parse error)",
+      "x(s,s) := s*s": "(parse error)",
+      "write x(s,t,s) for s+t": "(parse error)",
+      "write x": "(parse error)",
+      "write x for": "(parse error)",
+      "write for E": "(parse error)"
     },
     "tex": {
       "not not P": "(parse error)",
@@ -2290,7 +2315,12 @@
       "(x = y = z ⊢ P)": "(parse error)",
       "⊢ x = y = z": "(parse error)",
       "a . . b": "(parse error)",
-      "a...b...c": "(parse error)"
+      "a...b...c": "(parse error)",
+      "x(s,s) := s*s": "(parse error)",
+      "write x(s,t,s) for s+t": "(parse error)",
+      "write x": "(parse error)",
+      "write x for": "(parse error)",
+      "write for E": "(parse error)"
     }
   },
   "MakedocExamples": {
@@ -2599,6 +2629,9 @@
       "f(c)=0 for some c in A": "(= (f c) 0) some> [c,{ (∈ c A) }]",
       "Declare is, 0, +, cos": "declare> :[is 0 + cos]",
       "c := f(a,b)": "alias> [c , (f a b)]",
+      "write c for f(a,b)": "alias> [c , (f a b)]",
+      "c(s,t) := f(s,t)": "alias> [c , (λ (s t) , (f s t))]",
+      "Write c(s,t) for f(s,t)": "alias> [c , (λ (s t) , (f s t))]",
       "(star)": "★",
       "'star'": "★",
       "(subset)": "⊆",
@@ -2928,6 +2961,9 @@
       "f(c)=0 for some c in A": "f\\left(c\\right)=0\\text{ for some }c\\in A",
       "Declare is, 0, +, cos": "\\text{Declare } \\text{is}\\text{, }0\\text{, }+\\text{, }\\textcolor{black}{\\text{and }}\\text{cos}",
       "c := f(a,b)": "c\\mathrel{:=}f\\left(a,b\\right)",
+      "write c for f(a,b)": "\\text{write }c\\text{ for }f\\left(a,b\\right)",
+      "c(s,t) := f(s,t)": "c\\left(s,t\\right)\\mathrel{:=}f\\left(s,t\\right)",
+      "Write c(s,t) for f(s,t)": "\\text{Write }c\\left(s,t\\right)\\text{ for }f\\left(s,t\\right)",
       "(star)": "\\left(\\star\\right)",
       "'star'": "\\left(\\star\\right)",
       "(subset)": "\\left(\\subseteq\\right)",

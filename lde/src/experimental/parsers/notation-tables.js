@@ -216,7 +216,7 @@ const kw = words => words.map( w =>
 export const structuralKeywords = kw([
   // declarations and given labels
   ['declare'], ['let'], ['assume'], ['given'], ['suppose'], ['if'],
-  ['from'], ['define'], ['for'], ['some'], 'be', 'such', 'that',
+  ['from'], ['define'], ['for'], ['some'], ['write'], 'be', 'such', 'that',
   // meta: labels, citations, comments
   ['by'], ['label'], ['ref'], ['comment'],
   // shorthands

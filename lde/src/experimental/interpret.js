@@ -39,7 +39,8 @@
 // import { Formula } from '../formula.js'
 // import { BindingExpression } from '../binding-expression.js'
 import {
-  Environment, Expression, Declaration, LurchSymbol, BindingExpression, Formula
+  Environment, Expression, Application, Declaration, LurchSymbol,
+  BindingExpression, Formula
 } from '../index.js'
 
 import { addIndex } from './index-definitions.js'
@@ -241,6 +242,15 @@ const processTheorems = doc => {
  * of a Theorem is made and before bindings are canonicalized), by replacing
  * each free occurrence of `x` in the alias's scope with a copy of `E`.
  *
+ * A parameterized alias `x(s,t) := E` (putdown `alias> [x , (λ (s t) , E)]`,
+ * the λ having just become `LDE EFA`) makes each free application `x(a,b)` of
+ * exactly as many arguments as there are parameters a shorthand for `E` with
+ * `a,b` substituted simultaneously for the free occurrences of `s,t`.  It is
+ * notation, not a function: a bare `x`, or an `x(...)` with the wrong number
+ * of arguments, is a misuse and is left alone.  (An unparameterized alias
+ * may be applied, though: `x(a)` then expands to `E(a)`, as macro expansion
+ * dictates.)
+ *
  * The declaration itself stays in the tree, inert, so that the scoping check
  * can still report a redeclaration of `x` and so the user's atom has
  * something to carry feedback: it is marked `.ignore` (like a Comment) so it
@@ -248,22 +258,30 @@ const processTheorems = doc => {
  * the expansion is done (so the definition site declares nothing but `x`, and
  * each copy of `E` is scoped where it lands), and processRules and
  * processTheorems drop it from formulas.  markFlaggedDeclarations() in
- * global-validation.js turns the outcome recorded here into feedback:
+ * global-validation.js turns the outcome recorded here into feedback, which
+ * is local, as feedback in Lurch generally is: the alias's own marker says
+ * whether the definition is valid where it stands, and never changes because
+ * of what comes after it, while each use that could not be expanded gets its
+ * own marker saying why.
  *
- *   - `E` may not mention `x` (recorded as `alias error: 'selfreferential'`);
- *     nothing is expanded.
- *   - an occurrence is not expanded when a free symbol of `E` would be
- *     captured by a binder there (`alias error: 'captured'`); the other
- *     occurrences are still expanded.
+ *   - `E` may not mention `x` (recorded on the declaration as
+ *     `alias error: 'selfreferential'`); nothing is expanded.
+ *   - an occurrence is not expanded when a free symbol of `E` (other than a
+ *     parameter) would be captured by a binder where it lands, or when a
+ *     free symbol of an argument would be captured by a binder inside `E`
+ *     (`'captured'`); the other occurrences are still expanded.
+ *   - a misused parameterized alias (see above) is left alone (`'misused'`);
+ *     the well-formed occurrences are still expanded.
  *   - every outermost expression left containing an unexpanded `x` records
- *     the names in its js attribute `.unaliased`.  In the current design such an
- *     expression still validates as an ordinary expression about an
- *     arbitrary symbol `x`, which is sound but not what the user meant, so
- *     it is reported.
+ *     the reason under the name in its js attribute `.unaliased` (an object
+ *     `{ x: 'selfreferential' | 'captured' | 'misused' }`).  In the current
+ *     design such an expression still validates as an ordinary expression
+ *     about an arbitrary symbol `x`, which is sound but not what the user
+ *     meant, so it is reported.
  *
- * A whole-line occurrence of `x` carries the line's identity - its `given`
- * type, its ID in the web UI, and the test harness's expected result - so
- * those are transferred to the expression that replaces it.
+ * A whole-line occurrence of `x` (or of `x(a,b)`) carries the line's identity
+ * - its `given` type, its ID in the web UI, and the test harness's expected
+ * result - so those are transferred to the expression that replaces it.
  *
  * Aliases are expanded in document order, so a later alias whose body
  * mentions an earlier one is expanded correctly.
@@ -279,6 +297,15 @@ const processAliases = doc => {
       throw new Error('An alias must declare one symbol and have a body.')
     const name = dec.symbols()[0].text()
     const body = dec.body()
+    // a parameterized alias has the binding (LDE EFA (s t) , E) as its body:
+    // the parameters are its bound symbols and E its own body; otherwise the
+    // body is E itself
+    const binding = body instanceof Application && body.numChildren() === 2 &&
+      body.child(0) instanceof LurchSymbol &&
+      body.child(0).text() === 'LDE EFA' &&
+      body.child(1) instanceof BindingExpression ? body.child(1) : undefined
+    const params = binding ? binding.boundSymbolNames() : []
+    const template = binding ? binding.body() : body
     // free/bound questions are judged relative to the environment containing
     // the alias: binders above it enclose the definition and its uses alike
     const root = dec.parent()
@@ -287,34 +314,63 @@ const processAliases = doc => {
     // occurrence to expand)
     const isDeclaredName = s => s.parent() instanceof Declaration &&
                                 s.parent().symbols().includes(s)
-    // the free occurrences of the name in the scope of the alias
+    // the free occurrences of the name in the scope of the alias, innermost
+    // first (the scope is in document order, each node before its
+    // descendants) so that an occurrence inside the arguments of another,
+    // as in x(x(a),b), is expanded before the outer one copies its arguments
     const occurrences = dec.scope(false).filter( s =>
       s instanceof LurchSymbol && s.text() === name &&
-      !isDeclaredName(s) && s.isFree(root) )
-    // record that an occurrence was left unexpanded on its outermost expression
-    const markUnaliased = s => {
+      !isDeclaredName(s) && s.isFree(root) ).reverse()
+    // record on its outermost expression that an occurrence was left
+    // unexpanded, and why (the first reason found for a name stands)
+    const markUnaliased = ( s, why ) => {
       const outer = s.getOutermost()
-      outer.unaliased ??= []
-      if ( !outer.unaliased.includes(name) ) outer.unaliased.push(name)
+      outer.unaliased ??= { }
+      outer.unaliased[name] ??= why
     }
     // an alias may not mention its own name (even bound: an expansion would
     // then redeclare x inside x's own scope)
     if ( body.hasDescendantSatisfying( d =>
            d instanceof LurchSymbol && d.text() === name ) ) {
       dec.setAttribute( 'alias error', 'selfreferential' )
-      occurrences.forEach( markUnaliased )
+      occurrences.forEach( s => markUnaliased( s, 'selfreferential' ) )
     } else {
-      occurrences.forEach( occ => {
-        // no free symbol of E may become bound where it lands
-        if ( !body.isFreeToReplace( occ, root ) ) {
-          dec.setAttribute( 'alias error', 'captured' )
-          markUnaliased(occ)
-          return
-        }
-        const copy = body.copy()
+      occurrences.forEach( sym => {
+        // the occurrence to replace: the symbol itself, or for a
+        // parameterized alias the application of it to as many arguments as
+        // there are parameters (anything else is a misuse)
+        const occ = params.length === 0 ? sym : sym.parent()
+        if ( params.length > 0 && !( occ instanceof Application &&
+             occ.child(0) === sym &&
+             occ.numChildren() === params.length + 1 ) )
+          return markUnaliased( sym, 'misused' )
+        const args = occ.children().slice(1)
+        // no free symbol of E, other than its parameters (the binding's free
+        // symbols exclude the ones it binds), may become bound where the
+        // instance lands
+        if ( !( binding ?? body ).isFreeToReplace( occ, root ) )
+          return markUnaliased( sym, 'captured' )
+        // build the instance of E: collect the free occurrences of every
+        // parameter first, then replace them all by copies of the arguments,
+        // so the substitution is simultaneous even when an argument mentions
+        // a parameter; no free symbol of an argument may become bound by a
+        // binder inside E
+        let copy = template.copy()
+        const slots = params.map( p => copy.descendantsSatisfying( d =>
+          d instanceof LurchSymbol && d.text() === p && d.isFree(copy) ) )
+        if ( slots.some( ( ss, i ) =>
+               ss.some( slot => !args[i].isFreeToReplace( slot, copy ) ) ) )
+          return markUnaliased( sym, 'captured' )
+        slots.forEach( ( ss, i ) => ss.forEach( slot => {
+          const arg = args[i].copy()
+          // E may be the bare parameter, in which case the instance is the
+          // argument itself
+          if ( slot === copy ) copy = arg
+          else slot.replaceWith(arg)
+        } ) )
         // a whole-line occurrence carries the line's identity, so transfer
         // its LC attributes (type flags, web UI ID - but not the text that
-        // makes it the symbol x) and the js fields the test harness and
+        // makes an instance a symbol) and the js fields the test harness and
         // comma chains use to the replacement
         const notText = keys => keys.filter( k => k !== 'symbol text' )
         const stale = notText( copy.getAttributeKeys() )
