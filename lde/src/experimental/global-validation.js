@@ -2649,7 +2649,9 @@ LogicConcept.prototype.irrelevantTo = function (target) {
   allProps.forEach( s => { 
     const pname = s.getAttribute('ProperName')
     s.setAttribute('ProperName', 
-      pname.replace(/([^#]+)#(.+)/,`$1#${lookup.indexOf(pname)}`))
+      pname.replace(/([^#]+)#([\s\S]+)/, `$1#${lookup.indexOf(pname)}`)
+      // pname.replace(/([^#]+)#(.+)/,`$1#${lookup.indexOf(pname)}`)
+    )
   })
 }
 
