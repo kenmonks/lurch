@@ -461,7 +461,7 @@ export const astToTex = node => {
       : `${kw}${sequence(node.names.map(leafTex))}`
     if ( !node.be ) return decl
     if ( !node.fmt.comma )
-      return `${decl}\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }`
+      return `${decl}\\textcolor{black}{\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }}`
     return and ? `${decl}${AND}` : `${decl},`
   }
   const seqTex = seq => {
