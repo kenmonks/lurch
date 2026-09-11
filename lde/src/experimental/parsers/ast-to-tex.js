@@ -23,6 +23,7 @@
 //                though its putdown is (⊆ A S))
 //   fmt.mapsto   binding typed as x mapsto e rather than x.e
 //   fmt.be       'Let x be such that' vs 'Let x such that'
+//   fmt.comma    the such-that connective was typed as a comma
 //   fmt.signs    surface signs of a signed sum (a-b vs a+-b)
 //   fmt.sub      function-application or EFA group typed as a subscript
 //                (x_(0), @P_(k))
@@ -97,7 +98,7 @@ const sequence = ( s, omitAND = false ) => {
   if (omitAND) { return a.join(',') }
   if (a.length > 2) {
     return a.slice(0, -1).join(
-      '\\text{, }') + '\\text{, }\\textcolor{black}{\\text{and }}' + a[a.length-1]
+      '\\text{, }') + '\\textcolor{black}{\\text{ and }}' + a[a.length-1]
   } else if (a.length === 2) {
     return `${a[0]}\\textcolor{black}{\\text{ and }}${a[1]}`
   } else {
@@ -455,8 +456,10 @@ export const astToTex = node => {
       const decl = node.set
         ? `${kw}${sequence(node.names.map(leafTex), true)}\\in ${T(node.set)}`
         : `${kw}${sequence(node.names.map(leafTex))}`
-      if ( node.be )
-        return `${decl}\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }`
+      // the such-that connective echoes its spelling: the phrase as typed,
+      // or a bare comma (rendered like the <comma shorthand that follows)
+      if ( node.be ) return node.fmt.comma ? `${decl},` :
+        `${decl}\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }`
       return decl
     }
     // \mathrel{:=} rather than \coloneqq, whose colon is too small to see;

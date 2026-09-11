@@ -503,6 +503,8 @@ export const runTablePropertyTests = (args = []) => {
       'x star y star z', 'A setminus B setminus C', 'P implies Q implies R',
       'sum(f,k,1,n) star x', 'x + Union k in A of B',
       'Let x', 'Let x, y in A', 'Let x be such that x in NN',
+      'Let x, y in A, x<y', 'Let a, b, a|b, b|a', 'Let a, b, (P)',
+      'Let a, b, P', 'Let x, x in A',
       'Declare and, or, not', 'Declare is, 0, +, cos', 'Assume P, Q',
       'f(c)=0 for some c', 'f(c)=0 for some c in A',
       '{ :A A }', '«(∈ x A)»', '% "a comment"', 'contradiction', 'NN',

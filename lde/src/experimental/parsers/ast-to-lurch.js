@@ -199,9 +199,13 @@ const P = node => {
     case 'declare' : return `Declare ${node.names.join(', ')}`
     case 'forsome' : return `for some ${node.names.join(', ')}` +
                        ( node.set ? ` in ${operand(node.set)}` : '' )
+    // the such-that connective keeps its comma spelling when that is what
+    // was typed (`Let a, b in A, P`); the reparse is faithful because the
+    // comma form only ever parsed with a non-symbol first condition, and a
+    // parenthesized one keeps its parens in the AST
     case 'let'     : return `Let ${node.names.join(', ')}` +
                        ( node.set ? ` in ${operand(node.set)}` : '' ) +
-                       ( node.be ? ' be such that' : '' )
+                       ( !node.be ? '' : node.fmt?.comma ? ',' : ' be such that' )
     case 'alias'   : return node.name +
                        ( node.params ? `(${node.params.join(', ')})` : '' ) +
                        ` := ${P(node.expr)}`

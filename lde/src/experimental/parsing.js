@@ -934,13 +934,14 @@ export const processShorthands = L => {
   //
   // There are two possible cases to check for, depending if the declaration
   // already has a body or not (due to the `Let x,y in A` shortcut, which can
-  // be combined with `(be) such that`).  A single such-that condition on a
-  // bodyless Let becomes the body itself; otherwise the body is an
-  // environment containing any membership body the declaration already had
-  // followed by the such-that conditions, mirroring what some> does for
-  // ForSomes.  Note that <be should not appear in the user's document if it
-  // is not after a Let declaration because the UI doesn't allow it to be
-  // constructed otherwise, so we don't check for that.
+  // be combined with `(be) such that` or its comma spelling `Let x,y in A,
+  // P`).  A single such-that condition on a bodyless Let becomes the body
+  // itself; otherwise the body is an environment containing any membership
+  // body the declaration already had followed by the such-that conditions,
+  // mirroring what some> does for ForSomes.  Note that <be should not appear
+  // in the user's document if it is not after a Let declaration because the
+  // UI doesn't allow it to be constructed otherwise, so we don't check for
+  // that.
   processSymbol( '<be' ,  m => {
     const dec = m.previousSibling()
     const next = m.nextSibling()

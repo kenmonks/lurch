@@ -140,6 +140,7 @@ const skeleton = [
 ['Let x in A'],
 ['Let x be such that x in RR', 'Let x such that x in RR'],
 ['Let x in RR be such that 0 leq x'],
+['Let x in RR, 0 leq x'],
 ['f(c)=0 for some c'],
 ['f(c)=0 for some c in A'],
 ['Declare is, 0, +, cos'],

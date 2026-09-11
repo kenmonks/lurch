@@ -113,7 +113,7 @@
 
   <p>English phrases such as <code>Given</code> or <code>declare</code> are case sensitive and will produce LaTeX with the same phrase in the same case. Spaces within an expression are usually ignored and can be used for legibility.  The main exception is that there cannot be any spaces between a function and the parentheses containing its arguments in a function application expression.</p>
 
-  <p>A comma separated sequence preceeded by one of the <code>Given</code> keywords has the same effect as saying that each of them is a <code>Given</code> individually. The shortcut declaration <code>Let x in A</code> has the same meaning as <code>Let x be such that x in A</code>. The shortcut declaration <code>P(x) for some x in A</code> has the same meaning as <code>P(x) and x in A for some x</code>.</p>
+  <p>A comma separated sequence preceeded by one of the <code>Given</code> keywords has the same effect as saying that each of them is a <code>Given</code> individually. The shortcut declaration <code>Let x in A</code> has the same meaning as <code>Let x be such that x in A</code>. In a <code>Let</code> declaration a comma may replace the phrase <code>be such that</code>, so <code>Let a, b in ZZ, a|n, b|n</code> means <code>Let a, b in ZZ be such that a|n, b|n</code>. Similarly, the declaration <code>P(x), Q(x) for some x in A</code> has the same meaning as <code>P(x), Q(x) x in A for some x</code>.</p>
   
   <p>The following symbols are automatically declared to be constants globally in every document.<br/> <code>𝜆 ➤ AlgebraRule NoMatrixOps Arithmetic ChainsRule EquationsRule SetBuilderRule ℕ ℤ ℚ ℝ ℂ  defint integral product Union Intersect maps index tuple set sum sumOver class setbuilder trans_chain range interval seq> floor ceiling</code>.</p>
 

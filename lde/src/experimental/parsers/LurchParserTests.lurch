@@ -717,6 +717,18 @@ Let x in RR be such that 0<x, x<1
 Let x in RR such that 0<x
 Let x, y in NN be such that x<y
 Let u, v, w
+Let x in RR, 0<x, x<1
+Let x, y in NN, x<y
+Let a, b in ZZ, n|a, n|b
+Let a, b, n|a, n|b
+Let a, b, P(x)
+Let a, b, (P)
+Let a, b, P
+Let a, b, P, Q(x)
+Let x, x in A
+Let x, y, x in A
+Let a, b, x in A, P
+Let a, otimes, a otimes b = b otimes a
 x in A for some x in NN
 a+b=c for some a, b in NN
 P(a,b) for some a,b

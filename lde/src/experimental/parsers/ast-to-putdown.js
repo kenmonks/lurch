@@ -36,7 +36,9 @@
 //   { type:'forsome', names, set }     for some x, y (in A); set may be null
 //   { type:'let', names, set, be }     Let x, y (in A) ((be) such that)
 //                                      (set node or absent; be boolean;
-//                                      both may be present at once)
+//                                      both may be present at once; the
+//                                      connective may also be a comma,
+//                                      recorded only in fmt)
 //   { type:'quant', q, v, set, body }  typed forall x in A. P; q is the
 //                                      quantifier symbol ∀ ∃ ∃!
 //   { type:'quant', q, bind }          untyped forall z. P

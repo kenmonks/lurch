@@ -405,16 +405,50 @@ ForSome = 'for'i __ 'some'i __ a:(DeclaredName)|1..,comma| __ 'in' __ b:Expressi
 // The `in ⟨set⟩` and `(be) such that` forms may be combined; the membership
 // body prints inside the declaration and the such-that conditions follow via
 // the <be shorthand, which merges them into an environment body.
-Let = k:$'Let'i __ a:(DeclaredName)|1..,comma| __ 'in' __ b:Expression __
-      e:($('be' __))? 'such' __ 'that'
+//
+// A comma may stand in for the such-that phrase, as it does for the Given
+// keywords: `Let a, b in ZZ, n|a, n|b` means `Let a, b in ZZ be such that
+// n|a, n|b`.  After a Let-in the comma is unambiguous, since the set ends
+// the name list.  A bare `Let a, b, ...` is the one place the two spellings
+// can differ: `Let a, b, P` declares THREE symbols, exactly as it always
+// has, while `Let a, b be such that P` declares two with the body P.  So
+// the bare comma form takes as names every comma-separated item that is a
+// bare symbol and reads the comma before the first item that is not one
+// (`n|a`, `P(x)`, or a parenthesized `(P)`) as the such-that comma.  A
+// mathematician reads `Let a, b, n|a` that way, and a bare-symbol
+// condition is still available by phrase or by parenthesizing it.
+//
+// The Let-in name list is tried first and greedily, so `Let a, b, x in A`
+// declares three symbols in A, never `Let a, b` with the body x∈A - except
+// that a name list with a REPEATED name is refused, so `Let x, x in A` and
+// `Let x, y, x in A` fall through to the comma reading, `Let x (, y) be
+// such that x in A`, which is the only sensible thing they can mean.
+Let = k:$'Let'i __ a:LetInNames __ 'in' __ b:Expression s:SuchThat
                             { return { type:'let', names:a, set:b, be:true,
-                                       fmt:{ kw:k, be:!!e } } } /
-      k:$'Let'i __ a:(DeclaredName)|1..,comma| __ 'in' __ b:Expression
+                                       fmt:{ kw:k, ...s } } } /
+      k:$'Let'i __ a:LetInNames __ 'in' __ b:Expression
                             { return { type:'let', names:a, set:b, fmt:{ kw:k } } } /
       // upgrade <be to a shorthand to allow environment bodies
-      k:$'Let'i __ a:SymbolSeq __ e:($('be' __))? 'such' __ 'that' // __ b:Expression
-                            { return { type:'let', names:a, be:true, fmt:{ kw:k, be:!!e } } } /
+      k:$'Let'i __ a:SymbolSeq s:SuchThatPhrase // __ b:Expression
+                            { return { type:'let', names:a, be:true, fmt:{ kw:k, ...s } } } /
+      k:$'Let'i __ a:LetBareNames s:SuchThatComma
+                            { return { type:'let', names:a, be:true, fmt:{ kw:k, ...s } } } /
       k:$'Let'i __ a:SymbolSeq { return { type:'let', names:a, fmt:{ kw:k } } }
+  // the such-that connective, as a phrase or as a comma; the result is
+  // merged into fmt so the tex printer can echo whichever was typed
+  SuchThat = SuchThatPhrase / SuchThatComma
+  SuchThatPhrase = __ e:($('be' __))? 'such' __ 'that' { return { be:!!e } }
+  SuchThatComma  = _ ',' { return { comma:true } }
+  // the greedy name list of a Let-in, refused when a name repeats
+  LetInNames = a:(DeclaredName)|1..,comma| &{ return new Set(a).size === a.length }
+                 { return a }
+  // the name list of a bare comma-form Let: further names are taken only
+  // while the item after the comma is a bare symbol - an Expression that
+  // parses to a plain name, or an operator mention such as `otimes`, which
+  // is no Expression at all - so the first condition ends the list
+  LetBareNames = h:DeclaredName t:(comma @BareName)* { return [h, ...t] }
+  BareName = &( e:Expression &{ return typeof e === 'string' } ) @DeclaredName /
+             !Expression @BareOpName
 // Alias declaration (always a claim): `x := E` introduces the name x as a
 // shorthand for the expression E, which the LDE expands wherever x is used
 // in its scope (see processAliases in interpret.js).  The putdown is the
