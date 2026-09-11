@@ -55,15 +55,20 @@ export class ExpositoryMath extends Atom {
      * MathLive editor is read-only, also to imitate the advanced mode behavior
      * of the dialog for {@link Expression} atoms.
      * 
+     * @param {boolean} readOnly - if true, the dialog behaves as in
+     *   {@link module:ExpositoryMathAtoms.ExpositoryMath#viewSource
+     *   viewSource()}: the LaTeX source cannot be edited and no changes are
+     *   saved when the dialog closes
      * @returns {Promise} same convention as specified in
      *   {@link module:Atoms.Atom#edit edit() for Atoms}
      */
-    edit () {
+    edit ( readOnly = false ) {
         // const mode = appSettings.get( 'expository math editor type' )
         const mode = 'Advanced'
         const latex = this.getMetadata( 'latex' )
         // set up dialog contents
-        const dialog = new Dialog( 'Edit expository math', this.editor )
+        const dialog = new Dialog(
+            readOnly ? 'View expository math' : 'Edit expository math', this.editor )
         dialog.hideHeader = dialog.hideFooter = mode == 'Advanced'
         const latexInput = mode == 'Advanced' 
             // use an expandable textarea for Advanced mode
@@ -104,6 +109,13 @@ export class ExpositoryMath extends Atom {
         dialog.addItem( mathLivePreview )
         // help footer
         dialog.addItem(new HTMLItem(
+           readOnly ?
+           `<div id="shortcut-footer">
+              <div id="shortcut-hint">
+               <kbd>Esc</kbd> close
+              </div>
+            </div>
+           ` :
            `<div id="shortcut-footer">
               <div id="shortcut-hint">
                <kbd>Esc</kbd> cancel
@@ -111,7 +123,7 @@ export class ExpositoryMath extends Atom {
                <kbd>Enter</kbd> accept
               </div>
             </div>
-           `))        
+           `))
 
         // initialize dialog with data from the atom
         dialog.setInitialData( { latex } )
@@ -119,22 +131,25 @@ export class ExpositoryMath extends Atom {
         // utility: is the current latex empty?
         const empty = () => dialog.get( 'latex' ).trim() == ''
         // if they edit the Lurch notation or latex, keep them in sync
-        dialog.onChange = ( _, component ) => {
-            if ( component.name == 'latex' ) {
-                mathLivePreview.setValue( dialog.get( 'latex' ) )
-              // get the dom element and render it on load
-              // const jaxinthebox = dialog.querySelector( '#mathjaxPreview' )
-              // jaxinthebox.innerHTML = `$$${dialog.get( 'latex' )}$$`
-              // MathJax.typeset()
+        // (not needed in read-only mode, since the latex cannot change)
+        if ( !readOnly )
+            dialog.onChange = ( _, component ) => {
+                if ( component.name == 'latex' ) {
+                    mathLivePreview.setValue( dialog.get( 'latex' ) )
+                  // get the dom element and render it on load
+                  // const jaxinthebox = dialog.querySelector( '#mathjaxPreview' )
+                  // jaxinthebox.innerHTML = `$$${dialog.get( 'latex' )}$$`
+                  // MathJax.typeset()
+                }
+                if ( component.name == 'preview' )
+                    dialog.querySelector( textSelector ).value =
+                        mathLivePreview.mathLiveEditor.value
+                dialog.dialog.setEnabled( 'OK', !empty() )
             }
-            if ( component.name == 'preview' )
-                dialog.querySelector( textSelector ).value =
-                    mathLivePreview.mathLiveEditor.value
-            dialog.dialog.setEnabled( 'OK', !empty() )
-        }
         // Show it and if they accept any changes, apply them to the atom.
+        // (In read-only mode, never save; just report that nothing changed.)
         const result = dialog.show().then( userHitOK => {
-            if ( !userHitOK || empty() ) return false
+            if ( readOnly || !userHitOK || empty() ) return false
             this.setMetadata( 'latex', dialog.get( 'latex' ) )
             this.update()
             return true
@@ -175,6 +190,10 @@ export class ExpositoryMath extends Atom {
             } )
             // add the css class
             latexInputElement.classList.add( 'advancedTextArea' )
+            if ( readOnly ) {
+                latexInputElement.readOnly = true
+                latexInputElement.classList.add( 'readonly' )
+            }
 
             // give it focus, but if it ever loses focus, close the dialog if they won't 
             // lose changes, otherwise show instructions how to close the dialog
@@ -194,6 +213,19 @@ export class ExpositoryMath extends Atom {
         latexInputElement.parentNode.style.display = mode == 'Beginner' ? 'none' : ''
         return result
     }
+
+    /**
+     * The read-only counterpart to {@link module:ExpositoryMathAtoms.ExpositoryMath#edit
+     * edit()}.  Shows the same dialog used for editing, but with the LaTeX
+     * source locked against changes and with no save performed when the dialog
+     * closes.  Used when the user clicks (or presses Enter on) an expository
+     * math atom that is not currently editable, e.g. one shown inside a
+     * document's read-only "context" panel.
+     *
+     * @returns {Promise} same convention as specified in
+     *   {@link module:Atoms.Atom#edit edit() for Atoms}
+     */
+    viewSource () { return this.edit( true ) }
 
     /**
      * Render the LaTeX from the dialog as HTML and place that HTML into the
