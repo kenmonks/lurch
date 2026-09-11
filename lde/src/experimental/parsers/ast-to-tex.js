@@ -92,18 +92,68 @@ const isTexReserved = n => texReservedWords.some( e =>
 // plain text; single characters (like ':') stay bare
 const txt = a => ( a.length > 1 ) ? `\\text{${a} }` : a
 
+// the expository 'and' that replaces the last comma of a sequence
+const AND = '\\textcolor{black}{\\text{ and }}'
+
 // comma sequence with an expository 'and' before the last item
 const sequence = ( s, omitAND = false ) => {
   const a = s.map(texsymbol)
   if (omitAND) { return a.join(',') }
   if (a.length > 2) {
-    return a.slice(0, -1).join(
-      '\\text{, }') + '\\textcolor{black}{\\text{ and }}' + a[a.length-1]
+    return a.slice(0, -1).join('\\text{, }') + AND + a[a.length-1]
   } else if (a.length === 2) {
-    return `${a[0]}\\textcolor{black}{\\text{ and }}${a[1]}`
+    return `${a[0]}${AND}${a[1]}`
   } else {
     return a[0]
   }
+}
+
+// The comma-separated conditions of a declaration body are separate
+// sequence items glued by <comma shorthands: `Let a in ZZ, 0<a, 3|a` is
+// the items [Let, 0<a, <comma, 3|a] and `0<a, 3|a for some a` is
+// [0<a, <comma, 3|a, forsome].  Like a Given's list, such a run reads
+// best with the expository 'and' in place of its LAST comma, so this
+// finds the runs of expressions joined by commas that follow a
+// such-that Let or precede a ForSome and returns the indices of the
+// commas to render as 'and'.  A run that ends in a dangling comma
+// (`Let a in ZZ, 0<a,` - a long body split across atoms, continued in
+// the next) is not a complete list, so it keeps every comma and gets no
+// 'and'.
+//
+// When a Let-in spells its connective as a comma and has exactly ONE
+// condition, that comma is the last one of the list and is itself the
+// 'and': `Let a, b in ZZ, 0<a+b` reads "Let a, b ∈ ℤ and 0 < a+b".  (Not
+// for the bare form, whose name list already ends in 'and' - `Let a and
+// b, n|a` - and not when the one condition is followed by a dangling
+// comma.)  Those Lets are returned as a second set.
+const isComma = item => item?.type === 'shorthand' && item.text === '<comma'
+const isCondition = item => typeof item === 'string' || ( item &&
+  ![ 'shorthand', 'let', 'forsome', 'given', 'declare', 'alias',
+     'linecomment', 'label', 'ref' ].includes(item.type) )
+const expositoryAnds = items => {
+  const ands = new Set(), lets = new Set()
+  // the run of conditions starting at index k, scanning forwards (dir 1)
+  // or backwards (dir -1); returns the index of the run's last comma in
+  // document order, or -1 when the run has fewer than two conditions or
+  // ends in a dangling comma
+  const lastCommaOfRun = (k, dir) => {
+    if ( !isCondition(items[k]) ) return -1
+    let j = k
+    while ( isComma(items[j + dir]) && isCondition(items[j + 2 * dir]) )
+      j += 2 * dir
+    if ( dir > 0 && isComma(items[j + 1]) ) return -1
+    return j === k ? -1 : dir > 0 ? j - 1 : k - 1
+  }
+  items.forEach( (item, k) => {
+    if ( item?.type === 'let' && item.be ) {
+      ands.add(lastCommaOfRun(k + 1, 1))
+      if ( item.fmt.comma && item.set && isCondition(items[k + 1]) &&
+           !isComma(items[k + 2]) ) lets.add(k)
+    }
+    if ( item?.type === 'forsome' ) ands.add(lastCommaOfRun(k - 1, -1))
+  } )
+  ands.delete(-1)
+  return { ands, lets }
 }
 
 // join a tex sequence with an infix operator (note: operators that end in
@@ -400,15 +450,35 @@ const texParen = (node, T) => {
 export const astToTex = node => {
   if ( typeof node === 'string' ) return leafTex(node)
   const T = astToTex
+  // a Let; the such-that connective echoes its spelling: the phrase as
+  // typed, or a bare comma (rendered like the <comma shorthand that
+  // follows) - which the sequence printer asks to render as the expository
+  // 'and' when it is the last comma of the body (see expositoryAnds)
+  const letTex = (node, and = false) => {
+    const kw = txt(node.fmt.kw)
+    const decl = node.set
+      ? `${kw}${sequence(node.names.map(leafTex), true)}\\in ${T(node.set)}`
+      : `${kw}${sequence(node.names.map(leafTex))}`
+    if ( !node.be ) return decl
+    if ( !node.fmt.comma )
+      return `${decl}\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }`
+    return and ? `${decl}${AND}` : `${decl},`
+  }
   const seqTex = seq => {
+    const { ands, lets } = expositoryAnds(seq.items)
     const parts = []
-    seq.items.forEach( item => {
-      const r = T(item)
+    let glue = false
+    seq.items.forEach( (item, k) => {
+      // the last comma of a declaration-body run becomes the expository
+      // 'and', glued to its neighbors like the 'and' of a Given's list
+      const r = ands.has(k) ? AND : lets.has(k) ? letTex(item, true) : T(item)
       // a for-some declaration attaches to the expression before it
       // ('P for some c' renders as a single phrase)
-      if ( typeof item === 'object' && item.type === 'forsome' &&
-           parts.length ) parts[parts.length-1] += r
+      if ( parts.length && ( glue || ands.has(k) ||
+           ( typeof item === 'object' && item.type === 'forsome' ) ) )
+        parts[parts.length-1] += r
       else parts.push(r)
+      glue = ands.has(k) || lets.has(k)
     } )
     return parts.join(' ')
   }
@@ -451,17 +521,7 @@ export const astToTex = node => {
     case 'forsome'   : return '\\text{ for some }' + ( node.set
       ? `${node.names.map(leafTex).join(',')}\\in ${T(node.set)}`
       : sequence(node.names.map(leafTex)) )
-    case 'let'       : {
-      const kw = txt(node.fmt.kw)
-      const decl = node.set
-        ? `${kw}${sequence(node.names.map(leafTex), true)}\\in ${T(node.set)}`
-        : `${kw}${sequence(node.names.map(leafTex))}`
-      // the such-that connective echoes its spelling: the phrase as typed,
-      // or a bare comma (rendered like the <comma shorthand that follows)
-      if ( node.be ) return node.fmt.comma ? `${decl},` :
-        `${decl}\\text{ ${node.fmt.be ? 'be such that' : 'such that'} }`
-      return decl
-    }
+    case 'let'       : return letTex(node)
     // \mathrel{:=} rather than \coloneqq, whose colon is too small to see;
     // the `write x for E` surface echoes its keyword as typed, like Let
     case 'alias'     : {

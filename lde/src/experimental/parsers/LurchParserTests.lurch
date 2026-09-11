@@ -729,6 +729,11 @@ Let x, x in A
 Let x, y, x in A
 Let a, b, x in A, P
 Let a, otimes, a otimes b = b otimes a
+Let x in RR, 0<x, x<1,
+Let a, b in ZZ, 0<a+b
+Let a in ZZ, 0<a,
+0<x, x<1 for some x in RR
+P, Q, R for some y
 x in A for some x in NN
 a+b=c for some a, b in NN
 P(a,b) for some a,b
