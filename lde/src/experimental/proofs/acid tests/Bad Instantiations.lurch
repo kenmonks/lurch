@@ -1,0 +1,108 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Bad Instantiations - declarations may not declare constants
+//
+// A metavariable declared by a Let or ForSome inside a Rule must never be
+// instantiated with a constant.  Numerals (strings of digits) are automatic
+// constants and every symbol in a Declare is a constant, so `Let 1` and
+// `Let k` for a Declared k are both nonsense: they would collapse a
+// universally quantified Let-environment premise into a single instance.
+// isBadInstantiation() rejects any instantiation containing such a
+// declaration before it is inserted.
+//
+// The hazard, with the gcd rule below: the conclusion gcd(a,b)=d matches
+// gcd(n,n+1)=1 giving the Part with only c left; then c|d, now c|1,
+// matches the user's 1|1 giving c := 1.  If that instantiation survives,
+// its Let-environment premise { :Let 1 in ZZ st 1|n, 1|n+1  1|1 } is
+// satisfied by the user's own 1|1 and gcd(n,n+1)=1 is falsely justified,
+// even though the user never proved that every common divisor divides 1.
+//
+// Numerals are the propositionally dangerous case because ProperName
+// renaming leaves them alone, so 1|1 inside the instantiated Let has the
+// same prop form as the user's 1|1.  A Declared constant k in `Let k` is
+// renamed inside the Let's scope and flagged as redeclared, so such an
+// instantiation cannot justify anything; rejecting it removes bloat and
+// spurious scope errors rather than an unsound grade.  The third section
+// below therefore stays indeterminate with or without the filter; it
+// records that the instantiation is at least generated (the weeny R(x,y)
+// outranks the bare Let x) and rejected without side effects.
+//
+// Each section below uses its own variables so that instantiations
+// created for one section cannot justify claims in another.
+
+Declare = , in , | , gcd
+
+➤ "a declared metavariable instantiated with a numeral is rejected"
+{
+  rule: {
+    If a , b , d in ZZ , a neq 0 or b neq 0
+    : {
+      d | a
+      d|b
+      {
+        Let c in ZZ be such that c|a , c|b
+        c | d
+      }
+    }
+    gcd(a , b)=d
+  }
+
+  proof: {
+    Assume n in ZZ
+    n+1 in ZZ
+    n neq 0 or n+1 neq 0
+    1|1
+    1|n
+    1|n+1
+    1 in ZZ
+    gcd(n , n+1)=1 ✗
+  }
+}
+
+➤ "the same rule still fires when the Let-environment is actually written"
+{
+  rule: {
+    If a , b , d in ZZ , a neq 0 or b neq 0
+    : {
+      d | a
+      d|b
+      {
+        Let c in ZZ be such that c|a , c|b
+        c | d
+      }
+    }
+    gcd(a , b)=d
+  }
+
+  proof: {
+    Assume m in ZZ
+    m+1 in ZZ
+    m neq 0 or m+1 neq 0
+    1|m
+    1|m+1
+    1 in ZZ
+    {
+      Let c in ZZ be such that c|m , c|m+1
+      c | 1
+    }
+    gcd(m , m+1)=1 ✔︎
+  }
+}
+
+➤ "a declared metavariable instantiated with a Declared constant is rejected"
+{
+  Declare R, T, k, j
+  Rule: :{ :{ Let x  R(x,y) } T(y) }
+  R(k,j)
+  T(j) ✗
+}
+
+➤ "the same rule still fires on a genuine Let"
+{
+  Declare S, U
+  Rule: :{ :{ Let x  S(x) } U }
+  {
+    Let y
+    S(y)
+  }
+  U ✔︎
+}

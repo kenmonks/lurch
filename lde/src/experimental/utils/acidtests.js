@@ -140,6 +140,7 @@ const loadAcidTests = () => {
       'Aliases With Parameters',
       'Auto Constants',
       'Auto Constants 2',
+      'Bad Instantiations',
       'Preemie Stress',
       'Transitive Chains', 'Cong Chains', 'Chain Families',
       'Chain Rule Params', 'Set Builders', 'Set Builders Absent',

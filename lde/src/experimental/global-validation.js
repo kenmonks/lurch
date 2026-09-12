@@ -138,7 +138,7 @@ const isAnEFA = Matching.isAnEFA
 // import experimental tools
 import Interpret from './interpret.js'
 const { markDeclaredSymbols, renameBindings, replaceBindings, assignProperNames,
-        interpret } = Interpret
+        interpret, isConstantSymbol } = Interpret
 // import experimental utilities
 import Utils from './utils.js'
 const { subscript, commonInitialSlice } = Utils
@@ -2105,6 +2105,12 @@ const insertInstantiation = ( inst, formula, creator ) => {
       inst.ignore=true
     }
 
+    // Before doing any further work on it, reject this instantiation if it
+    // contains a declaration that declares a constant or that declares the
+    // same symbol twice.  Deciding this needs the document's Declares, and the
+    // instantiation is not in the document yet, so pass the document in.
+    if (isBadInstantiation(inst, formula.root())) return
+
     // it might contain a Let which was instantiated by some other
     // statement, so we might have to add the tickmarks.
     //
@@ -2122,18 +2128,6 @@ const insertInstantiation = ( inst, formula, creator ) => {
 
     // insert it after the formula, the order doesn't matter
     inst.insertAfter(formula)
-
-    // and mark the declared constants in the instantiation
-    // markDeclaredSymbols(inst.root(), inst) // Can this be removed?
-
-    // check if this instantiation should be rejected because it contains a
-    // declaration that is declaring a constant or a declaration declaring more than
-    // one symbol that are instantiated with the same thing.
-    if (isBadInstantiation(inst)) { 
-      // if so, remove it
-      inst.remove()
-      return 
-    }
 
     // save the rule (whether formula is a Part or Rule)
     inst.rule = formula.rule || formula
@@ -2279,8 +2273,15 @@ const markFlaggedDeclarations = doc => {
  *  * If it declares more than one symbol that are instantiated with the same
  *    thing, it's bad.
  *
+ * Constants are recognized by text (numerals and the document's Declared
+ * symbols), not by the `.constant` js attribute, because `Formula.instantiate`
+ * does not copy js attributes, so a fresh instantiation has none set.
+ *
+ * @param {LogicConcept} inst - the proposed instantiation
+ * @param {LogicConcept} [doc=inst.root()] - the document whose Declares apply
+ *        (required if `inst` has not been inserted into the document yet)
  */
-const isBadInstantiation = ( inst ) => {
+const isBadInstantiation = ( inst, doc = inst.root() ) => {
   // get the declarations in this instantiation, skipping unnecessary ones
   // (leading Lets of Rules or Theorems), which validation ignores as if they
   // were deleted, so what they appear to declare is irrelevant
@@ -2290,7 +2291,7 @@ const isBadInstantiation = ( inst ) => {
     // get the array of symbols in this declaration
     const symbols = decs[k].symbols()
     // check each one to see if it declares a constant
-    if (symbols.findIndex(s=>{return s.constant})!==-1) {
+    if (symbols.some( s => isConstantSymbol(s, doc) )) {
       // return true if it does
       return true
     }

@@ -639,7 +639,7 @@ const assignProperNames = doc => {
   const properNames = new Map()
   const computing = new Set()
   // only non-constant, non-numeric, non-metavariable symbols get new names
-  const isNumeric = s => /^\d+$|^\d+\.\d*(\[\d+\])?$/.test(s.text())
+  const isNumeric = s => numeral.test(s.text())
   const shouldRename = s => !s.isA('Metavar') && !s.constant && !isNumeric(s)
   // check whether one LC occurs inside another
   const contains = (ancestor, descendant) =>
@@ -840,31 +840,56 @@ const resetComputedAttributes = doc => {
   return doc
 }
 
+// A numeral is a string of digits, a decimal, or a repeating decimal such as
+// `1.23[456]`.  Numerals are constants automatically, so users need not
+// Declare every number they mention.
+const numeral = /^\d+$|^\d+\.\d*(\[\d+\])?$/
+
+/**
+ * Is this symbol a constant?
+ *
+ * A symbol is a constant if it is a numeral or if it is declared by some
+ * `Declare` in the document.  All `Declare`s are global (interpretation hoists
+ * them to the top of the document), so this does not depend on where the
+ * symbol sits.  The texts of the Declared symbols are cached in
+ * `doc.constants` the first time they are needed.
+ *
+ * This is the single definition of "constant" used both to set the `.constant`
+ * js attribute on the symbols of a document (see `markDeclaredSymbols`) and to
+ * reject instantiations that try to declare a constant (see
+ * `isBadInstantiation` in global-validation.js), so the two cannot drift apart.
+ * The latter needs the document passed in explicitly, because `.constant` is a
+ * js attribute that `Formula.instantiate` does not copy, and the instantiation
+ * being tested is not yet in the document.
+ *
+ * @param {LurchSymbol} s - the symbol to test
+ * @param {LogicConcept} [doc=s.root()] - the document whose `Declare`s apply
+ */
+const isConstantSymbol = ( s, doc = s.root() ) => {
+  // if the text of the constants is cached in doc.constants, fetch it,
+  // otherwise compute it
+  if (!doc.constants) {
+    doc.constants = new Set(doc.index.get('Declares')
+                    .map(x=>x.children().map(kid=>kid.text())).flat())
+  }
+  return numeral.test(s.text()) || doc.constants.has(s.text())
+}
+
 /**
  * Mark Declared Symbols
  *
- * Mark explicitly declared symbols `s`, throughout an LC by setting
- * `s.constant=true`.  Symbols consisting of a string of digits, decimals, and
- * repeating decimals like `1.23[456]` are automatically marked as constants.
+ * Mark every constant symbol `s` throughout an LC by setting `s.constant=true`,
+ * where "constant" is decided by `isConstantSymbol`: explicitly Declared
+ * symbols and numerals.
  *
  * @param {LurchDocument} [target] - The target 
  */
 const markDeclaredSymbols = ( target ) => {
   // get the document
   const doc = target.root()
-  // if the text of the constants is cached in an array in doc.constants, fetch
-  // it, otherwise compute it
-  if (!doc.constants) { 
-    doc.constants = new Set(doc.index.get('Declares')
-                    .map(x=>x.children().map(kid=>kid.text())).flat())
-  }
-  // fetch all of the symbols in the target
-  let symbols = target.descendantsSatisfying( x => x instanceof LurchSymbol )
-  // for each one, see if it is in the scope of any Declare declaration of that symbol
-  symbols.forEach( s => {
-      if ( /^\d+$|^\d+\.\d*(\[\d+\])?$/.test(s.text()) || 
-           doc.constants.has(s.text())) s.constant = true
-  })
+  // mark every symbol in the target that is a constant
+  target.descendantsSatisfying( x => x instanceof LurchSymbol )
+        .forEach( s => { if (isConstantSymbol(s, doc)) s.constant = true } )
   return target
 }
 
@@ -872,5 +897,6 @@ export default { interpret, addSystemDeclarations, processShorthands,
   processAliases, moveDeclaresToTop, processTheorems, processDeclarationBodies, 
   processLetEnvironments, removeTrailingGivens, splitConclusions, 
   processBindings, processRules, assignProperNames, markDeclaredSymbols,
+  isConstantSymbol,
   replaceBindings, renameBindings
 }
