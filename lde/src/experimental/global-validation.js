@@ -2172,6 +2172,13 @@ const insertInstantiation = ( inst, formula, creator ) => {
         inst.makeIntoA('Part')
         // since it still has metavariables, ignore it for prop form
         inst.ignore = true
+        // a Part re-enters matching on later passes as its own formula, but
+        // Formula.instantiate() copied it without the .constant js attribute
+        // (see the note on js vs. LC attributes above), so cantMatch()'s
+        // constant shortcut cannot fire on any of its symbols until we mark
+        // them again here.  Cheap: doc.constants is already cached, and this
+        // walks only the Part, not the whole document.
+        markDeclaredSymbols(inst)
       }
     }
 
