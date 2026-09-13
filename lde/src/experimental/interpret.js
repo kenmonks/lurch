@@ -14,6 +14,7 @@
  *  - moveDeclaresToTop(doc)
  *  - processTheorems(doc)
  *  - processDeclarationBodies(doc)
+ *  - processGivenChains(doc)
  *  - processLetEnvironments(doc)
  *  - processBindings(doc)
  *  - processRules(doc)
@@ -66,6 +67,7 @@ import { autoDeclaredConstants, invisibleHeads } from './parsers/notation-tables
  *  - moveDeclaresToTop(doc)
  *  - processTheorems(doc)
  *  - processDeclarationBodies(doc)
+ *  - processGivenChains(doc)
  *  - processLetEnvironments(doc)
  *  - processBindings(doc)
  *  - processRules(doc)
@@ -89,6 +91,9 @@ const interpret = doc => {
   moveDeclaresToTop(doc)
   processTheorems(doc)
   processDeclarationBodies(doc)
+  // after the body copies exist (so a chain body copy is split too) and before
+  // processRules() converts Rules to formulas
+  processGivenChains(doc)
   processLetEnvironments(doc)
   addIndex(doc,'Interpret')
   // removeTrailingGivens(doc)
@@ -434,6 +439,61 @@ const processDeclarationBodies = doc => {
   })
   // overkill, but let's do it for now since the body might be almost anything
   doc.index.update('Statements')
+  return doc
+}
+
+
+/**
+ * Process Given Chains
+ *
+ * A transitive chain asserts each of its steps, so a *given* chain - the
+ * `0 ≤ r < b` in `Assume a=q⋅b+r, 0 ≤ r < b`, say - means exactly what the two
+ * assumptions `0≤r` and `r<b` mean.  An Environment distributes a conjunction
+ * over either polarity (`{ :{A B} X }` and `{ :A :B X }` have the same
+ * propositional form), so replacing a given chain by given trios is valid
+ * unconditionally: it assumes nothing about the operators, and in particular
+ * does not need the `ChainsRule` to be present.  (The `ChainsRule` remains the
+ * opt-in for a given chain's *transitive conclusion* - `0<b` above - which
+ * `instantiateTransitives()` in global-validation.js supplies.)
+ *
+ * Claim chains are split later, during validation, by `splitChains()`, which
+ * also feeds them to the diff/substitution machinery.  A given chain needs
+ * none of that, but it must be split here, during interpretation, for two
+ * reasons: `chains()` never looks inside a Rule, and a Rule has to be split
+ * before `processRules()` converts it to a formula.
+ *
+ * Inside a Rule the chain is *removed* rather than marked `.ignore`, because
+ * `.ignore` is a js attribute and so is not copied by `Formula.instantiate()`:
+ * an ignored chain in a Rule would come back in every instantiation as a given
+ * premise nothing can satisfy, and the rule would never fire.  Everywhere else
+ * the chain is marked `.ignore`, just as `splitChains()` does for a claim
+ * chain, so it keeps its position and its web UI `_id` but has no
+ * propositional form.
+ *
+ * Only chains whose parent is an Environment are split.  That excludes the
+ * original body inside a Declaration, whose structure must not change and from
+ * which the declaration's `ProperName` signature is computed; the copy of that
+ * body inserted by `processDeclarationBodies()` is an ordinary sibling in an
+ * Environment and is split like any other given chain.  It also excludes claim
+ * chains, whose polarity leaves them to `splitChains()`.
+ */
+const processGivenChains = doc => {
+  doc.descendantsSatisfying( x =>
+    x.isAChain() && x.isA('given') && x.parent() instanceof Environment
+  ).forEach( chain => {
+    // insert the trios in chain order after the chain (see chainTrios() in
+    // extensions.js - the trios inherit the chain's `given` type)
+    let last = chain
+    chain.chainTrios().forEach( trio => {
+      trio.insertAfter(last)
+      last = trio
+    } )
+    // see above for why a Rule's chain must go rather than be made inert
+    if ( chain.hasAncestorSatisfying( a => a.isA('Rule') ) ) chain.remove()
+    else chain.ignore = true
+  } )
+  // the caller rebuilds the index after this pass, so the new trios do not
+  // need to be indexed here
   return doc
 }
 

@@ -1,0 +1,47 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Given Chains Params
+//
+// A given chain honors the parameterized ChainsRule's family gating
+// exactly as a claimed chain does (see 'Chain Rule Params'): every
+// family still SPLITS, since splitting a given chain needs no rule at
+// all, but only an enabled family's transitive conclusion is emitted.
+// Here ChainsRule(lt) enables the inequality ladder and nothing else.
+//
+// Each section below uses its own disjoint constants so that rules
+// and instantiations cannot cross-justify between sections.
+
+Declare ≤, <, =, subset, 0
+Rule: :{ ChainsRule(lt) }
+
+➤ "the enabled inequality family gets its transitive conclusion"
+{
+  Declare r1, b1
+  {
+    Assume 0 ≤ r1 < b1
+    0 ≤ r1 ✔︎
+    r1 < b1 ✔︎
+    0 < b1 ✔︎
+  }
+}
+
+➤ "a pure = given chain is always enabled"
+{
+  Declare u2, v2, w2
+  {
+    Assume u2 = v2 = w2
+    u2 = v2 ✔︎
+    v2 = w2 ✔︎
+    u2 = w2 ✔︎
+  }
+}
+
+➤ "a disabled family still splits, but gets no transitive conclusion"
+{
+  Declare A3, B3, C3
+  {
+    Assume A3 subset B3 subset C3
+    A3 subset B3 ✔︎
+    B3 subset C3 ✔︎
+    A3 subset C3 ✗
+  }
+}

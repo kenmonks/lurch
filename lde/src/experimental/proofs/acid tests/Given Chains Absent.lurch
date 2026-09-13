@@ -1,0 +1,60 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Given Chains Absent
+//
+// Splitting a given chain into its steps is valid for any operators -
+// a chain asserts each of its steps, and an Environment distributes
+// that conjunction over either polarity - so processGivenChains()
+// splits unconditionally and the steps of a given chain are available
+// with NO ChainsRule in the document.
+//
+// What the ChainsRule adds for a given chain is the transitive
+// conclusion, which must not appear here.
+//
+// Each section below uses its own disjoint constants so that rules
+// and instantiations cannot cross-justify between sections.
+
+Declare ≤, <, subset, 0
+
+➤ "no ChainsRule: the steps are available, the transitive conclusion is not"
+{
+  Declare r1, b1
+  {
+    Assume 0 ≤ r1 < b1
+    0 ≤ r1 ✔︎
+    r1 < b1 ✔︎
+    0 < b1 ✗
+    0 ≤ b1 ✗
+  }
+}
+
+➤ "no ChainsRule: the steps still satisfy an ordinary rule"
+{
+  Declare r2, b2, P2
+  Rule: :{ :0 ≤ x  :x < y  P2(x,y) }
+  {
+    Assume 0 ≤ r2 < b2
+    P2(r2,b2) ✔︎
+  }
+}
+
+➤ "no ChainsRule: a given chain as a Rule premise still works"
+{
+  Declare r3, b3, Q3
+  Rule: :{ :0 ≤ x < y   Q3(x,y) }
+  {
+    Assume 0 ≤ r3
+    Assume r3 < b3
+    Q3(r3,b3) ✔︎
+  }
+}
+
+➤ "no ChainsRule: an inclusion chain splits too"
+{
+  Declare A4, B4, C4
+  {
+    Assume A4 subset B4 subset C4
+    A4 subset B4 ✔︎
+    B4 subset C4 ✔︎
+    A4 subset C4 ✗
+  }
+}

@@ -1,0 +1,164 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Given Chains
+//
+// A transitive chain used as a *given* asserts each of its steps, so
+// `Assume 0 ≤ r < b` means exactly what `Assume 0 ≤ r` and
+// `Assume r < b` mean.  processGivenChains() (interpret.js) splits
+// every given chain whose parent is an Environment into given trios
+// during interpretation.  The rewrite assumes nothing about the
+// operators involved - an Environment distributes a conjunction over
+// either polarity - so the steps of a given chain are available with
+// no ChainsRule in the document at all (certified by the companion
+// file 'Given Chains Absent').  What the ChainsRule adds for a given
+// chain is its transitive conclusion, and the parameterized form's
+// family gating applies to given chains too ('Given Chains Params').
+//
+// The chain itself becomes inert: marked .ignore in the user's own
+// content, and REMOVED inside a Rule, where .ignore (a js attribute)
+// would not survive Formula.instantiate() and the leftover chain
+// would be a premise nothing could satisfy, keeping the rule from
+// ever firing.
+//
+// Each section below uses its own disjoint constants so that rules
+// and instantiations cannot cross-justify between sections.
+
+Declare ≤, <, =, |, subset, +, ⋅, 0
+Rule: :{ ChainsRule }
+
+➤ "the steps of a given chain are available, but not their converses"
+{
+  Declare r1, b1
+  {
+    Assume 0 ≤ r1 < b1
+    0 ≤ r1 ✔︎
+    r1 < b1 ✔︎
+    b1 < 0 ✗
+    b1 ≤ r1 ✗
+  }
+}
+
+➤ "with the ChainsRule the transitive conclusion follows as well"
+{
+  Declare r2, b2
+  {
+    Assume 0 ≤ r2 < b2
+    0 < b2 ✔︎
+    b2 ≤ 0 ✗
+  }
+}
+
+➤ "a given chain's steps can satisfy an ordinary rule's premises"
+{
+  Declare r3, b3, P3
+  Rule: :{ :0 ≤ x  :x < y  P3(x,y) }
+  {
+    Assume 0 ≤ r3 < b3
+    P3(r3,b3) ✔︎
+  }
+}
+
+➤ "a given chain as a Rule premise, satisfied either way"
+{
+  Declare r4, b4, Q4
+  Rule: :{ :0 ≤ x < y   Q4(x,y) }
+  {
+    Assume 0 ≤ r4
+    Assume r4 < b4
+    Q4(r4,b4) ✔︎
+  }
+  {
+    Assume 0 ≤ r4 < b4
+    Q4(r4,b4) ✔︎
+  }
+  {
+    Assume 0 ≤ r4
+    Q4(r4,b4) ✗
+  }
+}
+
+➤ "a given chain as a Theorem hypothesis"
+{
+  Declare r5, b5, Q5
+  Rule: :{ :0 ≤ x  :x < y  Q5(x,y) }
+  Theorem: { :0 ≤ u < v   Q5(u,v) } ✔︎
+  {
+    Assume 0 ≤ r5 < b5
+    Q5(r5,b5) ✔︎
+  }
+}
+
+➤ "the division algorithm's hypotheses: a comma list ending in a chain"
+{
+  Declare a6, q6, b6, r6
+  {
+    Assume a6 = q6 ⋅ b6 + r6, 0 ≤ r6 < b6
+    a6 = q6 ⋅ b6 + r6 ✔︎
+    0 ≤ r6 ✔︎
+    r6 < b6 ✔︎
+    0 < b6 ✔︎
+  }
+}
+
+➤ "a given chain as the body of a Let"
+{
+  Declare b7
+  { Let r7 be such that 0 ≤ r7 < b7
+    0 ≤ r7 ✔︎
+    r7 < b7 ✔︎
+    0 < b7 ✔︎
+  }
+}
+
+➤ "splitting is family-independent: a given inclusion chain"
+{
+  Declare A8, B8, C8
+  {
+    Assume A8 subset B8 subset C8
+    A8 subset B8 ✔︎
+    B8 subset C8 ✔︎
+    A8 subset C8 ✔︎
+    C8 subset A8 ✗
+  }
+}
+
+➤ "splitting is family-independent: a given divisibility chain"
+{
+  Declare m9, n9, k9
+  {
+    Assume m9 | n9 | k9
+    m9 | n9 ✔︎
+    n9 | k9 ✔︎
+    m9 | k9 ✔︎
+    k9 | m9 ✗
+  }
+}
+
+// The next two sections check that a given chain is confined to the
+// scope it was assumed in.  Each puts exactly ONE claim after the
+// subproof, because an accessible earlier claim is temporarily
+// treated as a given (so that a target is checked independently of
+// whether those earlier claims were themselves justified).  Writing
+// `0 ≤ r` and `r < b` as claims just before `0 < b` would therefore
+// make `0 < b` genuinely valid, by transitivity, from those two
+// assumed-for-the-sake-of-the-check claims - correct behavior, and
+// nothing to do with the chain, but it would hide the leak this is
+// testing for.
+
+➤ "a step of a chain assumed in a subproof does not leak out of it"
+{
+  Declare r10, b10
+  { Assume 0 ≤ r10 < b10
+    0 ≤ r10 ✔︎
+    r10 < b10 ✔︎
+  }
+  0 ≤ r10 ✗
+}
+
+➤ "nor does the transitive conclusion of that chain"
+{
+  Declare r11, b11
+  { Assume 0 ≤ r11 < b11
+    0 < b11 ✔︎
+  }
+  0 < b11 ✗
+}

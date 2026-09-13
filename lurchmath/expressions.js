@@ -28,6 +28,7 @@ import {
     Expression as LCExpression, Declaration as LCDeclaration
 } from './lde-cdn.js'
 import { DeclarationType } from './declarations.js'
+import { ShorthandsList } from '../lde/src/experimental/index-definitions.js'
 import { copyHTMLToClipboard } from './utilities.js'
 import { HTMLItem } from './dialog.js'
 
@@ -594,17 +595,23 @@ export class Expression extends Atom {
         // putdown also guarantees that it converts to LaTeX for the preview; no
         // separate check of the LaTeX conversion is needed.  The one extra
         // requirement is that a transitive chain must be the only LC the input
-        // produces, since an atom has just one validation result to report, and
-        // thus if the chain parse splits into several LCs it would not be
-        // obvious to the user. Note that shorthands are LCs at this stage
-        // (interpretation absorbs them later) and are not an exception to that
-        // rule, so an assumed chain, or a declaration with a chain for a body,
-        // is currently not permitted.
+        // produces that can carry a validation result, since an atom has just
+        // one result to report, and thus if the chain parse splits into several
+        // reportable LCs it would not be obvious to the user.  Shorthands are
+        // still LCs at this stage (interpretation absorbs them later) but they
+        // have no propositional content and no result, so they do not count -
+        // which is what lets an assumed chain through, `Assume 0 ≤ r < b`
+        // producing the `given>` shorthand plus the chain.  A declaration with
+        // a chain for a body is still not permitted, since the declaration
+        // itself gets a result of its own.
+        const isShorthand = LC => ShorthandsList.some( s => LC.isSymbol( s ) )
         const convertToLCs = () => {
             try {
                 const LCs = parse( dialog.get( 'lurchNotation' ), 'lurchNotation' )
                 if ( !( LCs instanceof Array ) ) return null // parsing error
-                if ( LCs.length > 1 && LCs.some( LC => LC.isAChain() ) ) return null
+                const reportable = LCs.filter( LC => !isShorthand( LC ) )
+                if ( reportable.length > 1 &&
+                     reportable.some( LC => LC.isAChain() ) ) return null
                 return LCs
             } catch {
                 return null

@@ -898,10 +898,17 @@ const processEquations = doc => {
 /**
  * Transitivity Instantiations
  *
- * Go through and fetch all of the user's chains (i.e., only chains that
- * are conclusions) which have more than two arguments and create and insert
- * them after the ChainsRule rule.  For example, `a=b<c=d≤e` would produce
- * and insert the instantiation `:{ :a=b :b<c :c=d :d=e a<e }`
+ * Go through and fetch all of the user's chains which have more than two
+ * arguments and create and insert them after the ChainsRule rule.  For
+ * example, `a=b<c=d≤e` would produce and insert the instantiation
+ * `:{ :a=b :b<c :c=d :d=e a<e }`
+ *
+ * Both the user's claimed chains (which are conclusions) and the user's given
+ * chains get a transitive conclusion, so `Assume 0 ≤ r < b` makes `0<b`
+ * available just as claiming the chain would.  A given chain's steps are
+ * already available without this - processGivenChains() splits every given
+ * chain during interpretation, needing no rule - so what the ChainsRule adds
+ * for a given chain is exactly the transitivity.
  *
  * Since the cong-chains upgrade (2026-07) a chain may also mix `=` with
  * congruence steps, whose operator is the compound Application `(≅ m)`
@@ -941,8 +948,26 @@ const instantiateTransitives = (doc,rule) => {
         .flatMap( a => chainFamiliesOfHead(a.text()) ))
     : null
 
-  // fetch the conclusion equations (argument = true)
-  doc.chains(true).forEach( eq => {
+  // A transitive conclusion is emitted for two kinds of chain: the user's
+  // claim chains, which are the conclusions (splitChains above has already
+  // split them and marked them .ignore), and the user's given chains, which
+  // processGivenChains split and marked .ignore during interpretation and
+  // which are therefore not conclusions.  The parent test picks the copy of a
+  // chain declaration body that was inserted into an Environment rather than
+  // the original inside the Declaration, so a chain body yields one
+  // instantiation and not two.  Chains inside a Rule are excluded
+  // automatically: chains() never looks inside one, and processGivenChains
+  // removes a Rule's given chains outright.
+  //
+  // Emitting this for a given chain is sound for the same reason it is for a
+  // claimed one.  The transitivity is asserted only as the implication
+  // `:{ :step₁ ⋯ :stepₖ conclusion }`, which the user's own steps discharge
+  // wherever those steps are accessible; it is what makes `0<b` follow from
+  // `Assume 0 ≤ r < b`.  Note that chains(true) is this same traversal with
+  // the conclusion test added, so filtering one walk avoids walking twice.
+  doc.chains().filter( c => c.isAConclusionIn() ||
+                            ( c.isA('given') && c.parent() instanceof Environment )
+  ).forEach( eq => {
 
     // let n be the number of arguments to `trans_chain`
     let n = eq.numChildren()
@@ -1287,29 +1312,23 @@ const splitChains = doc => {
   doc.equations(true).forEach(x=>x.equation=true)
   // fetch the conclusion equations (argument = true)
   doc.chains(true).forEach( eq => {
-    // Since it should be created by parsing a user's transitive chain it should
-    // have an even number of arguments to trans_chain,
-    let n = eq.numChildren()
     let last = eq
-    for (let k=1;k<n-2;k+=2) {
-      // instead of building a new equation from a pair of arguments, we copy
-      // the original equation and delete children that are not needed in order
-      // to preserve any LC attributes that might be stored on the original
-      // equation.  Note .slice for LCs makes an LC copy, not a 'shallow' copy.
-      let newtrio = eq.slice(k,k+3)
-      newtrio.unshiftChild(eq.child(k+1).copy())
-      newtrio.removeChild(2)
-      newtrio.chainStep = (k-1)/2
+    // chainTrios() does the slicing (see extensions.js); the trios inherit the
+    // chain's LC attributes, so a claimed chain yields claimed trios
+    eq.chainTrios().forEach( (newtrio,i) => {
       if (newtrio.isAnEquation()) newtrio.equation = true
-      // apply the 'by algebra' attribute if necessary
-      if (eq.child(k+2).by) {
-        newtrio.by = eq.child(k+2).by
-        delete eq.child(k+2).by
+      // apply the 'by algebra' attribute if necessary.  Trio i is built from
+      // the chain's children 2i+1, 2i+2, 2i+3, so the user attached any `by`
+      // to child 2i+3, the trio's RHS.
+      const rhs = eq.child(2*i+3)
+      if (rhs.by) {
+        newtrio.by = rhs.by
+        delete rhs.by
       }
       // insert it
       newtrio.insertAfter(last)
       last=newtrio
-    }
+    })
     eq.ignore = true
   })
 }

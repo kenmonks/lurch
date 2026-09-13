@@ -310,9 +310,50 @@ LogicConcept.prototype.equations = function ( conclusionsOnly = false ) {
  * @param {boolean} conclusionsOnly - if true, only return inferences
  */
 LogicConcept.prototype.chains = function ( conclusionsOnly = false ) {
-  return [...this.descendantsSatisfyingIterator( 
+  return [...this.descendantsSatisfyingIterator(
     x => x.isAChain() && (!conclusionsOnly || x.isAConclusionIn()) ,
     x => x.isA('Declare') || x.isA('Rule') || x.isA('Part') || x.isA('Inst') )]
+}
+
+/**
+ * Split a transitive chain into its constituent binary trios.
+ *
+ * A chain `(trans_chain a₁ op₁ a₂ op₂ ⋯ aₙ)` asserts each of its steps, so it
+ * is propositionally equivalent to the sequence of trios `(op₁ a₁ a₂)`,
+ * `(op₂ a₂ a₃)`, ... - a conjunction, which an Environment distributes over
+ * either polarity, so this rewrite is valid for a given chain as well as for a
+ * claimed one and assumes nothing about the operators involved.
+ *
+ * Each trio is built by slicing the chain rather than by constructing a fresh
+ * Application, so it inherits the LC attributes stored on the chain - in
+ * particular its `given` type (a given chain therefore yields given trios) and
+ * its web UI `_id` - and it records its 0-based step index in the js attribute
+ * `.chainStep`.
+ *
+ * The trios are returned rather than inserted: the caller decides where they
+ * go and what becomes of the chain itself.  See `splitChains()` (claim chains,
+ * at validation time) and `processGivenChains()` (given chains, at
+ * interpretation time) in global-validation.js and interpret.js respectively.
+ *
+ * @memberof Extensions
+ * @returns {LogicConcept[]} the trios, in chain order
+ */
+LogicConcept.prototype.chainTrios = function ( ) {
+  const n = this.numChildren()
+  const trios = []
+  // the operands sit at the odd child positions with the operators between
+  // them at the even ones, so step k is built from children k, k+1, k+2
+  for (let k=1;k<n-2;k+=2) {
+    // slice out the trio, then move a copy of its operator to the front and
+    // drop the original.  Note .slice for LCs makes an LC copy, not a
+    // 'shallow' copy, which is what preserves the chain's LC attributes.
+    const trio = this.slice(k,k+3)
+    trio.unshiftChild(this.child(k+1).copy())
+    trio.removeChild(2)
+    trio.chainStep = (k-1)/2
+    trios.push(trio)
+  }
+  return trios
 }
 
 /**
