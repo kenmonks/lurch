@@ -145,6 +145,8 @@ const loadAcidTests = () => {
       'Transitive Chains', 'Cong Chains', 'Chain Families',
       'Chain Rule Params',
       'Given Chains', 'Given Chains Absent', 'Given Chains Params',
+      'Chain Abbreviations',
+      'Set Builder Chains', 'Set Builder Chains Absent',
       'Set Builders', 'Set Builders Absent',
       'Algebra', 'Cases', 'BIH Cases',
       'user-thms',

@@ -1,0 +1,33 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Set Builder Chains Absent
+//
+// Splicing a chain condition into its trios says what the set builder
+// notation denotes, so processSetBuilderChains() is unconditional: it
+// consults neither the SetBuilderRule nor the ChainsRule, and with
+// neither in the document the two spellings of a condition list still
+// produce the same LC and so share a propositional atom.
+//
+// What is missing without the SetBuilderRule is the membership
+// inference itself, in either direction.
+
+Declare ∈, ≤
+
+➤ "no rules: the spellings still share an atom"
+{
+  Declare m1, n1
+  Assume n1 in set(k in ℤ : m1 ≤ k ≤ n1)
+  n1 in set(k in ℤ : m1 ≤ k, k ≤ n1) ✔︎
+}
+
+➤ "no SetBuilderRule: neither direction of membership fires"
+{
+  Declare m2, n2
+  {
+    Assume n2 in set(k in ℤ : m2 ≤ k ≤ n2)
+    m2 ≤ n2 ✗
+  }
+  {
+    Assume m2 ≤ n2
+    n2 in set(k in ℤ : m2 ≤ k ≤ n2) ✗
+  }
+}

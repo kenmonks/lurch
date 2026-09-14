@@ -37,20 +37,6 @@ export const addIndex = ( doc, phase ) => {
 }
 
 /**
- * The texts of the Shorthand symbols, the symbols that `processShorthands()`
- * in parsing.js absorbs during interpretation.  They are LCs while a document
- * is being parsed but have no propositional content and carry no validation
- * result, so anything that reasons about how many meaningful LCs a piece of
- * user input produced needs to know to discount them (see `convertToLCs()` in
- * lurchmath/expressions.js).
- */
-export const ShorthandsList = [
-  'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
-  '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
-  'alias>','✔︎','✗','⁉︎','⊘','➤','<<','>>'
-]
-
-/**
  * addLurchIndices
  *
  * This routine populates the generic tree indexer with the index definition we
@@ -73,6 +59,13 @@ export const addLurchIndices = (indexer, phase) => {
   // a convenient utility
   const define = (key,selector,order = 'Depth') => 
     indexer.define(key,{ selector: selector , order: order})
+
+  // Find and cache Shorthands
+  const ShorthandsList = [
+    'given>','<comma','BIH>','declare>','rule>','cases>','label>','subs>','thm>',
+    '<thm','proof>','by','rules>','λ','@','pair','triple','≡','then','<be','some>',
+    'alias>','✔︎','✗','⁉︎','⊘','➤','<<','>>'
+  ]
 
   ////////////////////
   //  Phase 0: Parsing

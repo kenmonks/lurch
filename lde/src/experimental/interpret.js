@@ -14,7 +14,8 @@
  *  - moveDeclaresToTop(doc)
  *  - processTheorems(doc)
  *  - processDeclarationBodies(doc)
- *  - processGivenChains(doc)
+ *  - processChainAbbreviations(doc)
+ *  - processSetBuilderChains(doc)
  *  - processLetEnvironments(doc)
  *  - processBindings(doc)
  *  - processRules(doc)
@@ -67,7 +68,8 @@ import { autoDeclaredConstants, invisibleHeads } from './parsers/notation-tables
  *  - moveDeclaresToTop(doc)
  *  - processTheorems(doc)
  *  - processDeclarationBodies(doc)
- *  - processGivenChains(doc)
+ *  - processChainAbbreviations(doc)
+ *  - processSetBuilderChains(doc)
  *  - processLetEnvironments(doc)
  *  - processBindings(doc)
  *  - processRules(doc)
@@ -91,9 +93,10 @@ const interpret = doc => {
   moveDeclaresToTop(doc)
   processTheorems(doc)
   processDeclarationBodies(doc)
-  // after the body copies exist (so a chain body copy is split too) and before
-  // processRules() converts Rules to formulas
-  processGivenChains(doc)
+  // both after the body copies exist (so a chain body copy is expanded too)
+  // and before processRules() converts Rules to formulas
+  processChainAbbreviations(doc)
+  processSetBuilderChains(doc)
   processLetEnvironments(doc)
   addIndex(doc,'Interpret')
   // removeTrailingGivens(doc)
@@ -444,45 +447,44 @@ const processDeclarationBodies = doc => {
 
 
 /**
- * Process Given Chains
+ * Process Chain Abbreviations
  *
- * A transitive chain asserts each of its steps, so a *given* chain - the
- * `0 ≤ r < b` in `Assume a=q⋅b+r, 0 ≤ r < b`, say - means exactly what the two
- * assumptions `0≤r` and `r<b` mean.  An Environment distributes a conjunction
- * over either polarity (`{ :{A B} X }` and `{ :A :B X }` have the same
- * propositional form), so replacing a given chain by given trios is valid
- * unconditionally: it assumes nothing about the operators, and in particular
- * does not need the `ChainsRule` to be present.  (The `ChainsRule` remains the
- * opt-in for a given chain's *transitive conclusion* - `0<b` above - which
- * `instantiateTransitives()` in global-validation.js supplies.)
+ * A transitive chain asserts each of its steps, so in almost every position a
+ * chain is simply shorthand for the conjunction of its trios.  `Assume
+ * a=q⋅b+r, 0 ≤ r < b` means what `Assume 0 ≤ r` and `Assume r < b` mean; a
+ * Rule concluding `a = b < c` concludes each of `a = b` and `b < c`.  An
+ * Environment distributes a conjunction over either polarity (`{ :{A B} X }`
+ * and `{ :A :B X }` have the same propositional form), so expanding a chain
+ * into trios of the chain's own polarity is valid unconditionally: it assumes
+ * nothing about the operators, and in particular does not need the
+ * `ChainsRule`.  (What the `ChainsRule` still supplies is the chain's
+ * *transitive conclusion* - `0 < b` above - see `instantiateTransitives()` in
+ * global-validation.js.)
  *
- * Claim chains are split later, during validation, by `splitChains()`, which
- * also feeds them to the diff/substitution machinery.  A given chain needs
- * none of that, but it must be split here, during interpretation, for two
- * reasons: `chains()` never looks inside a Rule, and a Rule has to be split
- * before `processRules()` converts it to a formula.
+ * The one chain that is NOT an abbreviation is a chain claimed as a
+ * conclusion, which is a proof step the user expects to see treated row by
+ * row, with `by` reasons, diffs feeding the substitution machinery, and
+ * per-row feedback.  `splitChains()` handles those at validation time.
+ * `isAnAbbreviatingChain()` in extensions.js draws exactly that line, and also
+ * spares any chain inside a Declaration, since the original body's putdown is
+ * the declaration's `ProperName` signature.
+ *
+ * This has to run during interpretation rather than alongside `splitChains()`
+ * for two reasons: `chains()` never looks inside a Rule, and a Rule must be
+ * expanded before `processRules()` converts it to a formula.
  *
  * Inside a Rule the chain is *removed* rather than marked `.ignore`, because
- * `.ignore` is a js attribute and so is not copied by `Formula.instantiate()`:
- * an ignored chain in a Rule would come back in every instantiation as a given
- * premise nothing can satisfy, and the rule would never fire.  Everywhere else
- * the chain is marked `.ignore`, just as `splitChains()` does for a claim
- * chain, so it keeps its position and its web UI `_id` but has no
- * propositional form.
- *
- * Only chains whose parent is an Environment are split.  That excludes the
- * original body inside a Declaration, whose structure must not change and from
- * which the declaration's `ProperName` signature is computed; the copy of that
- * body inserted by `processDeclarationBodies()` is an ordinary sibling in an
- * Environment and is split like any other given chain.  It also excludes claim
- * chains, whose polarity leaves them to `splitChains()`.
+ * `.ignore` is a js attribute and so survives neither `Formula.instantiate()`
+ * nor the `e.copy()` in `splitConclusions()`: a merely ignored chain would
+ * come back in every instantiation as a premise nothing can satisfy, or as a
+ * second unprovable conclusion, and the rule would never fire.  Everywhere
+ * else the chain is marked `.ignore`, just as `splitChains()` does, so it
+ * keeps its position and its web UI `_id` but has no propositional form.
  */
-const processGivenChains = doc => {
-  doc.descendantsSatisfying( x =>
-    x.isAChain() && x.isA('given') && x.parent() instanceof Environment
-  ).forEach( chain => {
+const processChainAbbreviations = doc => {
+  doc.descendantsSatisfying( x => x.isAnAbbreviatingChain() ).forEach( chain => {
     // insert the trios in chain order after the chain (see chainTrios() in
-    // extensions.js - the trios inherit the chain's `given` type)
+    // extensions.js - the trios inherit the chain's given/claim type)
     let last = chain
     chain.chainTrios().forEach( trio => {
       trio.insertAfter(last)
@@ -494,6 +496,67 @@ const processGivenChains = doc => {
   } )
   // the caller rebuilds the index after this pass, so the new trios do not
   // need to be indexed here
+  return doc
+}
+
+
+/**
+ * Process Set Builder Chains
+ *
+ * A chain used as a set builder's condition abbreviates its trios in the same
+ * way a statement-level chain does, so
+ *
+ * ```text
+ * { k ∈ ℤ : m ≤ k ≤ n }    means    { k ∈ ℤ : m ≤ k , k ≤ n }
+ * ```
+ *
+ * A condition list parses to the invisible `seq>` head - the parser emits
+ * `(setbuilder (k,(seq> (∈ k ℤ) (trans_chain m ≤ k ≤ n))))` - and a lone
+ * condition parses to itself, with no `seq>` wrapper.  This pass splices each
+ * chain condition into its trios in place, wrapping a lone chain condition in
+ * a `seq>` so it becomes a list.  The result is *literally the same LC* the
+ * user would have gotten by typing the trios out, so the two spellings share a
+ * propositional atom and `processSetBuilders()` needs no knowledge of chains
+ * at all: both directions of set builder membership then work through its
+ * ordinary per-condition machinery.
+ *
+ * This is a fact about what the notation denotes, not a rule-gated inference,
+ * so it is unconditional and does not consult the `SetBuilderRule`.  Like
+ * `processChainAbbreviations()` it runs before `processRules()`, so a rule's
+ * set builders normalize the same way a user's do.
+ *
+ * A chain here is a subexpression rather than a statement, so it is found with
+ * `hasChainHead()` rather than `isAChain()`.
+ */
+const processSetBuilderChains = doc => {
+  doc.descendantsSatisfying( x =>
+    x instanceof Application && x.numChildren()===2 &&
+    x.child(0).matches('setbuilder')
+  ).forEach( builder => {
+    // the parser wraps the binding in a one-child Application; tolerate a bare
+    // binding for documents built directly in putdown (as processSetBuilders
+    // does)
+    const arg = builder.child(1)
+    const binding = (arg instanceof BindingExpression) ? arg :
+      (arg instanceof Application && arg.numChildren()===1 &&
+       arg.child(0) instanceof BindingExpression) ? arg.child(0) : undefined
+    if (!binding) return
+    const body = binding.lastChild()
+    // a lone chain condition becomes a seq> list of its trios
+    if ( body.hasChainHead() ) {
+      body.replaceWith(
+        new Application( new LurchSymbol('seq>'), ...body.chainTrios() ) )
+      return
+    }
+    // otherwise splice each chain condition of the list into its trios
+    if ( !(body instanceof Application && body.child(0).matches('seq>')) ) return
+    body.children().slice(1).filter( c => c.hasChainHead() ).forEach( c => {
+      const trios = c.chainTrios()
+      let last = c
+      trios.forEach( trio => { trio.insertAfter(last); last = trio } )
+      c.remove()
+    } )
+  } )
   return doc
 }
 

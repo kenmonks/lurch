@@ -1,0 +1,94 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Set Builder Chains
+//
+// A chain used as a set builder's condition abbreviates its trios, so
+//
+//    { k ∈ ℤ : m ≤ k ≤ n }   means   { k ∈ ℤ : m ≤ k , k ≤ n }
+//
+// processSetBuilderChains() (interpret.js) splices each chain
+// condition into its trios during interpretation, wrapping a lone
+// chain condition in the invisible seq> head so that it becomes a
+// list.  The result is literally the same LC the comma spelling
+// produces, so the two spellings share a propositional atom and
+// processSetBuilders() needs no knowledge of chains at all: both
+// directions of set builder membership then work through its ordinary
+// per-condition machinery.
+//
+// The normalization states what the notation denotes rather than
+// licensing an inference, so it is unconditional and does not consult
+// the SetBuilderRule; 'Set Builder Chains Absent' certifies that.
+// The set(...) call form is used throughout because acid tests parse
+// with braces as environments (enableSets is off).
+//
+// Each section below uses its own disjoint constants so that rules
+// and instantiations cannot cross-justify between sections.
+
+Declare ∈, ≤, <
+Rule: :{ ChainsRule }
+Rule: :{ SetBuilderRule }
+
+➤ "elimination: the domain and each step of the chain condition"
+{
+  Declare m1, n1
+  Assume n1 in set(k in ℤ : m1 ≤ k ≤ n1)
+  n1 ∈ ℤ ✔︎
+  m1 ≤ n1 ✔︎
+  n1 ≤ n1 ✔︎
+}
+
+➤ "introduction: membership from the domain and the chain's steps"
+{
+  Declare m2, n2
+  Assume n2 ∈ ℤ
+  Assume m2 ≤ n2
+  Assume n2 ≤ n2
+  n2 in set(k in ℤ : m2 ≤ k ≤ n2) ✔︎
+}
+
+➤ "a chain among several conditions, each still separately extractable"
+{
+  Declare m3, n3, P3, Q3
+  Assume n3 in set(k in ℤ : P3(k), m3 ≤ k ≤ n3, Q3(k))
+  n3 ∈ ℤ ✔︎
+  P3(n3) ✔︎
+  m3 ≤ n3 ✔︎
+  n3 ≤ n3 ✔︎
+  Q3(n3) ✔︎
+}
+
+➤ "a lone chain condition, with no domain: full comprehension"
+{
+  Declare m4, n4
+  Assume n4 in set(k : m4 ≤ k ≤ n4)
+  m4 ≤ n4 ✔︎
+  n4 ≤ n4 ✔︎
+}
+
+➤ "the chain and comma spellings share an atom, so each justifies the other"
+{
+  Declare m5, n5
+  {
+    Assume n5 in set(k in ℤ : m5 ≤ k ≤ n5)
+    n5 in set(k in ℤ : m5 ≤ k, k ≤ n5) ✔︎
+  }
+  {
+    Assume n5 in set(k in ℤ : m5 ≤ k, k ≤ n5)
+    n5 in set(k in ℤ : m5 ≤ k ≤ n5) ✔︎
+  }
+}
+
+➤ "a chain inside a nested set builder normalizes too"
+{
+  Declare m6, n6
+  Assume n6 in set(k in ℤ : k in set(j : m6 ≤ j ≤ n6))
+  n6 in set(j : m6 ≤ j, j ≤ n6) ✔︎
+}
+
+➤ "a set builder chain in a Rule normalizes the same way a user's does"
+{
+  Declare m7, n7, S7, G7, =
+  Rule: :{ :G7(a,b)  S7 = set(k in ℤ : a ≤ k ≤ b) }
+  Assume G7(m7,n7)
+  S7 = set(k in ℤ : m7 ≤ k, k ≤ n7) ✔︎
+  S7 = set(k in ℤ : m7 ≤ k ≤ n7) ✔︎
+}

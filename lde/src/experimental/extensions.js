@@ -202,20 +202,64 @@ LogicConcept.prototype.isAnEquation = function ( ) {
 }
 
 /**
+ * Whether this is an Application headed by the `trans_chain` Symbol, wherever
+ * it sits.  Most chain machinery wants the statement-level
+ * {@link LogicConcept#isAChain isAChain()} instead, but a chain can also occur
+ * as a subexpression - a condition inside a set builder, say - and this is the
+ * head test both share.
+ *
+ * @memberof Extensions
+ * @returns {boolean}
+ */
+LogicConcept.prototype.hasChainHead = function ( ) {
+  return (this instanceof Application) &&
+          this.child(0) instanceof LurchSymbol &&
+          this.child(0).text()==='trans_chain'
+}
+
+/**
  * A Chain is an outermost Application whose operation is the Symbol whose
  * .text() is 'trans_chain'.  The intended use is with transitive chains of =,
  * ≤, and <, and the trans_chain symbol will be invisible to them. We don't
  * check the number and types of arguments since the assumption is that will
- * only be created by parsing a user input transitive chain. 
+ * only be created by parsing a user input transitive chain.
  *
  * @memberof Extensions
  * @returns {boolean}
  */
 LogicConcept.prototype.isAChain = function ( ) {
-  return (this instanceof Application) && 
-          this.isOutermost() && 
-          this.child(0) instanceof LurchSymbol && 
-          this.child(0).text()==='trans_chain'
+  return this.hasChainHead() && this.isOutermost()
+}
+
+/**
+ * Whether this chain is *abbreviating* - standing for its trios - rather than
+ * being a proof step in its own right.
+ *
+ * A chain claimed as a conclusion is a proof step: the user is asserting each
+ * of its steps and expects the full treatment, with `by` reasons and comments
+ * attached to individual rows, diffs driving the substitution machinery, and
+ * per-row feedback.  `splitChains()` in global-validation.js handles those, at
+ * validation time.
+ *
+ * Every other statement-level chain is just shorthand for the conjunction of
+ * its steps, whether it is an assumption (`Assume 0 ≤ r < b`), the conclusion
+ * of a Rule, or a claim sitting inside a given environment (which is how a
+ * `Let r ∈ ℤ, 0 ≤ r < b` body copy arrives).  `processChainAbbreviations()` in
+ * interpret.js expands those into trios during interpretation.
+ *
+ * A chain inside a Declaration is excluded: the original body's putdown is the
+ * declaration's `ProperName` signature and must not change.  The copy of that
+ * body inserted by `processDeclarationBodies()` is an ordinary sibling in an
+ * Environment, so it is expanded like any other abbreviating chain.
+ *
+ * @memberof Extensions
+ * @returns {boolean}
+ */
+LogicConcept.prototype.isAnAbbreviatingChain = function ( ) {
+  return this.isAChain() &&
+         !this.isAConclusionIn() &&
+         this.parent() instanceof Environment &&
+         !this.hasAncestorSatisfying( a => a instanceof Declaration )
 }
 
 

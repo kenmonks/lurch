@@ -28,7 +28,6 @@ import {
     Expression as LCExpression, Declaration as LCDeclaration
 } from './lde-cdn.js'
 import { DeclarationType } from './declarations.js'
-import { ShorthandsList } from '../lde/src/experimental/index-definitions.js'
 import { copyHTMLToClipboard } from './utilities.js'
 import { HTMLItem } from './dialog.js'
 
@@ -589,29 +588,44 @@ export class Expression extends Atom {
                 return null
             }
         }
-        // utility used below Parse the user's input into the LCs it means, or
-        // return null if the input is not acceptable.  Both notations come from
-        // the same unified grammar, so checking that the input parses to
-        // putdown also guarantees that it converts to LaTeX for the preview; no
-        // separate check of the LaTeX conversion is needed.  The one extra
-        // requirement is that a transitive chain must be the only LC the input
-        // produces that can carry a validation result, since an atom has just
-        // one result to report, and thus if the chain parse splits into several
-        // reportable LCs it would not be obvious to the user.  Shorthands are
-        // still LCs at this stage (interpretation absorbs them later) but they
-        // have no propositional content and no result, so they do not count -
-        // which is what lets an assumed chain through, `Assume 0 ≤ r < b`
-        // producing the `given>` shorthand plus the chain.  A declaration with
-        // a chain for a body is still not permitted, since the declaration
-        // itself gets a result of its own.
-        const isShorthand = LC => ShorthandsList.some( s => LC.isSymbol( s ) )
+        // utility used below.  An atom shows one validation marker, so a
+        // transitive chain sharing an atom with unrelated LCs is usually a
+        // parsing accident - the user thought they typed one chain and the
+        // grammar produced a chain plus something else - and we refuse it.
+        // But a chain legitimately sits among siblings whenever it is part of
+        // a larger structure the user can see they are writing, and each such
+        // structure leaves a telltale shorthand symbol next to the chain:
+        // `given>` from `Assume`, `<be` from `(be) such that`, `some>` from
+        // `for some`, `then` from an inline `If ... then ...`, and `<comma`
+        // from a meaningful comma.  Those mark a sequence of givens or a
+        // declaration with a body - something between an expression and an
+        // environment - so the chain is plainly not meant to stand alone.
+        //
+        // Checking the chain's immediate neighbours, rather than the shape of
+        // the whole input, is what lets the user break one long structure
+        // across several atoms for line breaking or interleaved commentary.
+        // Splitting `Assume A, B, C, s<t<w, D` after any comma leaves the
+        // chain with a `<comma` on one side or the other, so `<comma` counts
+        // on either side; the others can only appear on the side shown.
+        const chainPreceders = [ 'given>', '<be', '<comma', 'then' ]
+        const chainFollowers = [ '<comma', 'some>' ]
+        const isStructuralChain = ( LCs, i ) =>
+            chainPreceders.some( s => LCs[i - 1]?.isSymbol( s ) ) ||
+            chainFollowers.some( s => LCs[i + 1]?.isSymbol( s ) )
+        // Parse the user's input into the LCs it means, or return null if the
+        // input is not acceptable.  Both notations come from the same unified
+        // grammar, so checking that the input parses to putdown also guarantees
+        // that it converts to LaTeX for the preview; no separate check of the
+        // LaTeX conversion is needed.  Only a top-level chain is checked: a
+        // chain nested inside a larger expression, as a set builder condition
+        // is, did not split the input into several LCs at all.
         const convertToLCs = () => {
             try {
                 const LCs = parse( dialog.get( 'lurchNotation' ), 'lurchNotation' )
                 if ( !( LCs instanceof Array ) ) return null // parsing error
-                const reportable = LCs.filter( LC => !isShorthand( LC ) )
-                if ( reportable.length > 1 &&
-                     reportable.some( LC => LC.isAChain() ) ) return null
+                if ( LCs.length > 1 && LCs.some( ( LC, i ) =>
+                        LC.isAChain() && !isStructuralChain( LCs, i ) ) )
+                    return null
                 return LCs
             } catch {
                 return null

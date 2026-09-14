@@ -948,25 +948,25 @@ const instantiateTransitives = (doc,rule) => {
         .flatMap( a => chainFamiliesOfHead(a.text()) ))
     : null
 
-  // A transitive conclusion is emitted for two kinds of chain: the user's
-  // claim chains, which are the conclusions (splitChains above has already
-  // split them and marked them .ignore), and the user's given chains, which
-  // processGivenChains split and marked .ignore during interpretation and
-  // which are therefore not conclusions.  The parent test picks the copy of a
-  // chain declaration body that was inserted into an Environment rather than
-  // the original inside the Declaration, so a chain body yields one
-  // instantiation and not two.  Chains inside a Rule are excluded
-  // automatically: chains() never looks inside one, and processGivenChains
-  // removes a Rule's given chains outright.
+  // Every chain that was expanded into trios gets a transitive conclusion:
+  // the user's conclusion chains, which splitChains above has just expanded,
+  // and the abbreviating chains that processChainAbbreviations expanded during
+  // interpretation (assumptions, Rule conclusions, and claims inside given
+  // environments).  Those two cases are complementary by definition, so this
+  // is every chain still standing in the user's content.  Chains inside a Rule
+  // are excluded automatically: chains() never looks inside one, and
+  // processChainAbbreviations removes a Rule's chains outright.  Chains inside
+  // a Declaration body are excluded by isAnAbbreviatingChain(), which is why
+  // a chain declaration body yields one instantiation - from the inserted
+  // copy - rather than two.
   //
-  // Emitting this for a given chain is sound for the same reason it is for a
-  // claimed one.  The transitivity is asserted only as the implication
+  // Emitting this for an abbreviating chain is sound for the same reason it is
+  // for a claimed one.  The transitivity is asserted only as the implication
   // `:{ :step₁ ⋯ :stepₖ conclusion }`, which the user's own steps discharge
   // wherever those steps are accessible; it is what makes `0<b` follow from
   // `Assume 0 ≤ r < b`.  Note that chains(true) is this same traversal with
   // the conclusion test added, so filtering one walk avoids walking twice.
-  doc.chains().filter( c => c.isAConclusionIn() ||
-                            ( c.isA('given') && c.parent() instanceof Environment )
+  doc.chains().filter( c => c.isAConclusionIn() || c.isAnAbbreviatingChain()
   ).forEach( eq => {
 
     // let n be the number of arguments to `trans_chain`

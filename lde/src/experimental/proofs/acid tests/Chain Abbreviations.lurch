@@ -1,0 +1,122 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Chain Abbreviations
+//
+// In almost every position a transitive chain is shorthand for the
+// conjunction of its trios, and processChainAbbreviations()
+// (interpret.js) expands it into trios of the chain's own polarity
+// during interpretation.  The one chain that is NOT an abbreviation
+// is a chain claimed as a conclusion: that is a proof step the user
+// expects to see treated row by row, with `by` reasons, substitution
+// diffs and per-row feedback, and splitChains() still handles those
+// at validation time.  isAnAbbreviatingChain() in extensions.js draws
+// exactly that line.
+//
+// Covered here beyond plain assumptions (see 'Given Chains'):
+//
+//  - a chain as a Let's such-that body.  The `be such that` shorthand
+//    turns a comma list into an environment body, so the chain is a
+//    CLAIM inside a GIVEN environment - neither a conclusion nor a
+//    given, and therefore invisible to both of the older passes.
+//  - a chain as a Rule's conclusion, which becomes one conclusion per
+//    step.
+//  - the boundaries of each.
+//
+// Companion files: 'Given Chains', 'Given Chains Absent', 'Given
+// Chains Params', 'Set Builder Chains'.
+//
+// Each section below uses its own disjoint constants so that rules
+// and instantiations cannot cross-justify between sections.
+
+Declare ≤, <, =, ∈, 0
+Rule: :{ ChainsRule }
+
+➤ "a typed Let whose such-that body is a chain"
+{
+  Declare b1
+  { Let r1 ∈ ℤ, 0 ≤ r1 < b1
+    r1 ∈ ℤ ✔︎
+    0 ≤ r1 ✔︎
+    r1 < b1 ✔︎
+    0 < b1 ✔︎
+  }
+}
+
+➤ "a bare Let whose such-that body is a chain, and the converse guard"
+{
+  Declare b2
+  { Let r2, 0 ≤ r2 < b2
+    0 ≤ r2 ✔︎
+    r2 < b2 ✔︎
+    b2 ≤ r2 ✗
+  }
+}
+
+➤ "a chain in a Let-environment Rule premise, satisfied by the user's Let"
+{
+  Declare b3, P3, G3
+  Rule: :{ :{ Let x ∈ ℤ, 0 ≤ x < b3  P3(x) }  G3 }
+  Rule: :{ :y < b3  P3(y) }
+  { Let r3 ∈ ℤ, 0 ≤ r3 < b3
+    r3 < b3 ✔︎
+    P3(r3) ✔︎
+  }
+  G3 ✔︎
+}
+
+// A Let's propositional identity comes from its ORIGINAL body, which
+// this pass deliberately leaves untouched (that putdown is the
+// declaration's ProperName signature).  So the two spellings of a
+// such-that body are NOT interchangeable: a rule premise written with
+// commas is not satisfied by a user's Let written as a chain, even
+// though their body copies expand to the same trios.  Recorded here
+// as the current boundary; note the premise below is not vacuous, so
+// this really is the Let atoms failing to match.
+
+➤ "but the two spellings of a such-that body do not share an atom"
+{
+  Declare b4, P4, G4
+  Rule: :{ :{ Let x ∈ ℤ, 0 ≤ x, x < b4  P4(x) }  G4 }
+  Rule: :{ :y < b4  P4(y) }
+  { Let r4 ∈ ℤ, 0 ≤ r4 < b4
+    r4 < b4 ✔︎
+    P4(r4) ✔︎
+  }
+  G4 ✗
+}
+
+➤ "a Rule concluding a chain concludes each of its steps"
+{
+  Declare A5, u5, v5, w5
+  Rule: :{ :A5(x,y,z)  x = y < z }
+  Assume A5(u5,v5,w5)
+  u5 = v5 ✔︎
+  v5 < w5 ✔︎
+  w5 < u5 ✗
+}
+
+// A Rule's chain contains metavariables, so no ground transitivity
+// instantiation can be built from it, and the chain is removed from
+// the Rule rather than left inert.  The transitive conclusion of a
+// rule-concluded chain is therefore not supplied by the rule itself;
+// the user gets it by writing the chain in their own proof, where it
+// is an ordinary conclusion chain.  Only one claim follows the Assume
+// below, because an accessible earlier claim is treated as a given
+// and two claimed steps plus transitivity would make the third valid.
+
+➤ "a Rule's own chain does not supply its transitive conclusion"
+{
+  Declare A6, u6, v6, w6
+  Rule: :{ :A6(x,y,z)  x = y < z }
+  Assume A6(u6,v6,w6)
+  u6 < w6 ✗
+}
+
+➤ "the user recovers it by claiming the chain, an ordinary proof step"
+{
+  Declare A7, u7, v7, w7
+  Rule: :{ :A7(x,y,z)  x = y < z }
+  Assume A7(u7,v7,w7)
+  { u7 = v7 < w7 ✔︎
+    u7 < w7 ✔︎
+  }
+}
