@@ -486,6 +486,21 @@ export class Atom {
     }
 
     /**
+     * This is a placeholder implementation of this method, to be sure that all
+     * Atom instances have one.  It is the read-only counterpart to
+     * {@link module:Atoms.Atom#edit edit()}: it is called (by the click and
+     * Enter-key handlers installed in {@link module:Atoms.install install()})
+     * when the user clicks on (or presses Enter on) an atom that is not
+     * currently {@link module:Atoms.Atom#isEditable editable}.  In subclasses
+     * whose content is meaningful to view even when read-only (such as math
+     * expressions), this should pop up a dialog showing the atom's source, but
+     * with no way to edit or save it.  This placeholder implementation does
+     * nothing, preserving the old behavior (clicking a non-editable atom has no
+     * effect) for atom types that do not override it.
+     */
+    viewSource () { }
+
+    /**
      * Atoms are always editable, unless they sit inside some DOM node that is
      * marked as `contenteditable=false`.  This function checks to see if that
      * is the case, and returns true iff no ancestor DOM node has that property.
@@ -1020,12 +1035,15 @@ export const install = editor => {
     // Expose this class publicly through the editor, for use in debugging at
     // the console, and for use in the CLI through Puppeteer.
     editor.Atom = Atom
-    // Install click handler to edit the atom that was clicked
+    // Install click handler to edit the atom that was clicked, or, if it is
+    // not editable, to show its source in a read-only viewer instead
     editor.on( 'init', () =>
         editor.dom.doc.body.addEventListener( 'click', event =>
             setTimeout( () => {
                 const toEdit = Atom.findAbove( event.target, editor )
-                if ( toEdit?.isEditable() ) toEdit.edit()
+                if ( !toEdit ) return
+                if ( toEdit.isEditable() ) toEdit.edit()
+                else toEdit.viewSource()
             } ) ) )
     // Install Enter key handler for same purpose
     editor.on( 'keydown', event => {
@@ -1035,7 +1053,9 @@ export const install = editor => {
         if ( Atom.isAtomElement( selected ) )
             setTimeout( () => {
                 const toEdit = Atom.from( selected, editor )
-                if ( toEdit?.isEditable() ) toEdit.edit()
+                if ( !toEdit ) return
+                if ( toEdit.isEditable() ) toEdit.edit()
+                else toEdit.viewSource()
             } )
     } )
     // Whenever anything changes, check to see which atoms appeared and which
