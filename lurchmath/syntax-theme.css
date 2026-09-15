@@ -271,11 +271,16 @@ div.lurch-atom#context * {
 }
 /* don't flatten the gaps between paragraphs that are children of the context atom */
 /* also making the transition to using a class for preview css */
-div.lurch-atom#context div.lurch-atom.preview > div > p,
 div.lurch-atom#context div.lurch-atom.preview > p {
   margin-top: var(--p-gap);
   line-height: var(--line-height);
 }
+/* But inside a rule at the top level, remove the top margin */
+div.lurch-atom#context div.lurch-atom.preview > div > p {
+  margin-top: 0;
+  line-height: var(--line-height);
+}
+
 /* center the main title */
 h1#contextTitle {
   text-align: center;
