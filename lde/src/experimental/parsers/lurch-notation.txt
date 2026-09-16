@@ -83,6 +83,9 @@ group relation
   a neq b                -> (¬ (= a b))          tex: \neq    word: ne
     also: a ≠ b
                                                  example: x neq 0
+  a ndiv b               -> (¬ (| a b))          tex: \nmid  bare: right
+    also: a nmid b
+    also: a ∤ b
 
   // phrase-only heads (no symbolic partner row)
   P is a partition of S  -> (partition P S)
