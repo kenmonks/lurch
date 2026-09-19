@@ -30,11 +30,11 @@ Rule: :{ Arithmetic(QQ) }
   2<3/2 ✗ by arithmetic
   0<1/(-2) ✗ by arithmetic
 	3/6=2 ✗ by arithmetic
+	1+1+1≤2 ✗ by arithmetic 
 }
 
 // inapplicable ones
 {
-  1+1+1≤2 ⊘ by arithmetic // no associative ops
   2^(-1) ⊘ by arithmetic // no negative exponents
   2^(1/2) ⊘ by arithmetic // no noninteger exponents
   3/0 ⊘ by arithmetic // no zero denominators

@@ -124,8 +124,8 @@ import {
 import { isArithmetic, arithmeticToCAS, algebraToCAS,
          isNegationOfArithmetic, isNumberType, hasMatrixOps
        } from './parsing.js'
-// the chain-operator families (Slice 2 of the chains-first-class plan,
-// 2026-07-28): head → family, family → conclusion ladder, and the
+// the chain-operator families 
+// head → family, family → conclusion ladder, and the
 // ChainsRule(op, ...) parameter resolution - all derived from the
 // chainFamilies table, the same single-source-of-truth precedent as
 // interpret.js's autoDeclaredConstants import
@@ -1692,7 +1692,7 @@ const processAlgebra = doc => {
 
     // otherwise it must be a simple equation A=B, whose two sides are
     // converted to Algebrite syntax STRUCTURALLY from the LC itself
-    // (algebraToCAS in parsing.js, 2026-07-28).  The typed lurchNotation
+    // (algebraToCAS in parsing.js).  The typed lurchNotation
     // string is no longer consulted: the old practice of regex-slicing
     // the notation and passing the typed substrings to Algebrite
     // verbatim required students to type Algebrite-compatible notation

@@ -156,8 +156,11 @@ const isNatural = e => {
   // it is an Application so get the op
   const op = e.child(0)
   const nargs = e.numChildren()
-  // check the binary ops
-  if (['\\+','⋅','\\^'].some(x=>op.matches(x)) && nargs == 3) 
+  // check the n-ary ops
+  if (['\\+','⋅'].some(x=>op.matches(x))) 
+    return e.children().slice(1).every(isNatural)
+  // check the binary op
+  if (op.matches('\\^') && nargs == 3)
     return e.children().slice(1).every(isNatural)
   // check unary ops
   if (op.matches('!') && nargs == 2) 
@@ -192,7 +195,7 @@ const isInteger = e => {
   // and the arity
   const nargs = e.numChildren()
   // check the easy binary ops
-  if (['\\+','⋅'].some(x=>op.matches(x)) && nargs == 3 &&
+  if (['\\+','⋅'].some(x=>op.matches(x)) && // nargs == 3 &&
       e.children().slice(1).every(isInteger)) return true
   // for ^ check that the second arg is non-negative
   if (op.matches('\\^') && nargs == 3 &&
@@ -234,7 +237,7 @@ const isRational = e => {
   // and the arity
   const nargs = e.numChildren()
   // check the easy binary ops
-  if (['\\+','⋅'].some(x=>op.matches(x)) && nargs == 3 &&
+  if (['\\+','⋅'].some(x=>op.matches(x)) && // nargs == 3 && // letting them be nary
       e.children().slice(1).every(isRational)) return true
   // for ^ check that the second arg is an integer expression (no roots)
   // Note: we don't allow rational expressions that simplify to an integer
@@ -382,9 +385,14 @@ const numericToCAS = e => {
   if (isNaturalNumber(e)) return e.text()
   // It isn't a number so it must be compound
   const kids = e.children()
-  // binary infix ops (all for now)
-  if (kids.length===3) {
-    return `(${convert(kids[1])}${kids[0].text()}${convert(kids[2])})`.replace(/⋅/g,'*')
+  // + and ⋅ are n-ary
+  if (kids[0].matches('\\+')) {
+    return '(' + kids.slice(1).map(convert).join('+') + ')'
+  } else if (kids[0].matches('⋅')) {
+    return '(' + kids.slice(1).map(convert).join('*') + ')'
+  // binary infix ops
+  } else if (kids.length===3) {
+    return `(${convert(kids[1])}${kids[0].text()}${convert(kids[2])})`
   // unary on the right
   } else if (kids[0].matches('!')) {
     return `(${convert(kids[1])}!)`
@@ -404,7 +412,7 @@ const numericToCAS = e => {
  *
  * This is the structural (LC→CAS) replacement for the old practice of
  * passing the user's typed `lurchNotation` string to Algebrite verbatim
- * (2026-07-28): the by-algebra tool converts each side of an equation with
+ * the by-algebra tool converts each side of an equation with
  * this function, so students may write ANY Lurch notation whose meaning
  * lands in the fragment - the typed surface no longer needs to be
  * Algebrite-compatible, and expressions with no notation attribute at all
@@ -419,7 +427,7 @@ const numericToCAS = e => {
  * matrices - a transpose tick on a tuple is formatting-only and never
  * reaches the LC, matching the old behavior of stripping `]'`); the big
  * operators sum/product/defint/integral, whose putdown heads are the
- * Algebrite call forms by design (Phase 3c); and ordinary function
+ * Algebrite call forms by design and ordinary function
  * applications with simple alphanumeric names (cos, sqrt, det, adj, inv,
  * dot, ln, user functions - unknown names stay symbolic in Algebrite).
  * Everything else - relations, connectives, quantifiers, bindings, set
@@ -1057,6 +1065,6 @@ export default {
   isNonnegative, isNonzero, isNaturalNumber, isNatural, isInteger,
   isRational, isNumeric, isNumberType, isNaturalArithmetic,
   isIntegerArithmetic, isRationalArithmetic, hasMatrixOps, numericToCAS,
-  algebraToCAS, parseLines, makeParser
+  arithmeticToCAS, algebraToCAS, parseLines, makeParser
 }
 ///////////////////////////////////////////////////////////////////////////////

@@ -35,6 +35,7 @@ Rule: :{ Arithmetic(ZZ) }
   (2 neq 2) ✗ by arithmetic
   (-2 neq -2) ✗ by arithmetic
   (-2 neq 2-4) ✗ by arithmetic
+	1+1+1≤2 ✗ by arithmetic
 }
 
 // inapplicable ones
@@ -42,7 +43,6 @@ Rule: :{ Arithmetic(ZZ) }
   6/3=2 ⊘ by arithmetic // no division
   1+2/2=2 ⊘ by arithmetic // no division
   2^(-1)<3 ⊘ by arithmetic // no negative exponents
-  1+1+1≤2 ⊘ by arithmetic // no associative ops
   2^(-1) ⊘ by arithmetic // no negative exponents
   2^(1/2) ⊘ by arithmetic // no rational exponents
   3/0 ⊘ by arithmetic // no zero denominators
