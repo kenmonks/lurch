@@ -124,6 +124,8 @@ const skeleton = [
 ['f(x)'],
 ['f_(x)'],
 ['f_(0)(x)_(n+1)'],
+['1_(R)'],
+['0_(G)'],
 ['[x,y]', 'pair(x,y)', 'tuple(x,y)', '⟨x,y⟩'],
 ['[x,y,z]', 'triple(x,y,z)', 'tuple(x,y,z)', '⟨x,y,z⟩'],
 ['[w,x,y,z]', 'tuple(w,x,y,z)', '⟨w,x,y,z⟩'],

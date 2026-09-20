@@ -1394,6 +1394,23 @@ StarExpr = a:Closed
               // convert 'pair' and 'triple' to 'tuple'
               ('pair('/'triple('/'tuple(') _ b:MentionableSeq _')'
                 { return { type:'tuple', elts:b, fmt:{ style:'call' } } } /
+              // A numeric constant may head an application, but ONLY in
+              // the subscripted form: the ring identity 1_(R) and the
+              // group identity 0_(G) are (1 R) and (0 G), the same
+              // application as x_(R) is (x R).  The bare call form is
+              // deliberately NOT allowed for a numeric head, because
+              // students write 2(x+1) meaning multiplication; that stays
+              // a parse error (honest feedback) instead of silently
+              // reading as an application they did not mean.  The `&'_'`
+              // guard is what enforces this - the groups after the first
+              // then follow the ordinary rule below, so 1_(R)(x) nests
+              // like f(x)(y).  Since the surface form is not optional
+              // here, astToLurch prints a numeric head's first argument
+              // group with its underscore, so the output reparses.
+              a:Number &'_'
+              b:( u:'_'? '('_ s:MentionableSeq _')' { return { sub:!!u, args:s } } )+
+                { return b.reduce( (head,g) =>
+                    { return { type:'app', head, args:g.args, fmt:{ sub:g.sub } } }, a ) } /
               // everything else (nested one app node per argument group).
               // Each argument group may be preceded by an underscore, which
               // is formatting only: x_(0) and x(0) both mean (x 0), but tex

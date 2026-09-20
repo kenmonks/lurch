@@ -305,7 +305,12 @@ const P = node => {
         base = base.head
       }
       const head = typeof base === 'string' ? leaf(base) : P(base)
-      return head + groups.map( g => `(${callArgs(g)})` ).join('')
+      // a numeric head is only legal in the subscripted form (1_(R)), so
+      // the first group keeps its underscore; elsewhere the subscript is
+      // formatting only and canonicalizes away to the call form
+      const sub = typeof base === 'string' && /^\d/.test(base) ? '_' : ''
+      return head + groups.map( (g,i) =>
+        `${ i === 0 ? sub : '' }(${callArgs(g)})` ).join('')
     }
     case 'efa' : return `@${node.name}(${callArgs(node.args)})`
 

@@ -228,6 +228,16 @@ f(x)^2
 @P(k)^2
 f^2(x)^2
 2^sum(f,k,1,n)
+1_(R)^2
+// a numeric constant heads an application only in the SUBSCRIPT form
+// (1_(R), locked in LurchParserTests).  The bare call form stays an
+// error on purpose: students write 2(x+1) meaning multiplication, and
+// an honest parse error beats silently reading it as an application
+// they did not mean.  The underscore must hug the number, as for any
+// other application head.
+1(R)
+2(x+1)
+1 _(R)
 // dangling operators after a completed relation no longer parse as junk
 A subset B subset
 x neq
