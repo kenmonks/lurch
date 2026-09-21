@@ -66,6 +66,9 @@ group relation
   // Sequent rules in lurch-to-putdown.peggy.  Its words are classified in
   // extraOperatorWords (notation-tables.js) instead of by a row here.
 
+  a subring b                                    tex: \sqsubseteq
+    also: S is a subring of R                    // echoes as English
+                                                 
   a subgroup b  word: sqsubseteq                 tex: \sqsubseteq
     also: a ⊑ b
     also: K is a subgroup of G                   // echoes as English
@@ -288,6 +291,8 @@ group constant
   partialOrder          words: partial order
   totalOrder            words: total order
   topSpace              words: topological space
+  idring                words: ring with identity
+  intdomain             words: integral domain
   // (phrase replacement happens in file order; keep the quantifier
   // lines after the order phrases)
   ∀     words: for all, for each, for every, forall    tex: \forall
