@@ -64,7 +64,7 @@ const texDelimTemplate = (tpl, args, T) =>
 // then fall back to the texsymbol table with the \text{} wrapping rule
 // for multi-character words.
 
-const leafMap = { ...operatorHeadTex, then: '\\text{ then }' }
+const leafMap = { ...operatorHeadTex }
 putdownLeadingSymbolRenames.forEach( e => { leafMap[e.out] = texsymbol(e.lit) } )
 
 // render a string leaf (Symbol, Number, "string literal") as tex
@@ -494,6 +494,9 @@ export const astToTex = node => {
     case 'ref'       : return `\\text{\\textcolor{grey}{ ${node.fmt.kw} ${node.label}}}`
     case 'shorthand' : switch ( node.text ) {
       case '≡'      : return '~\\equiv~'
+      // the inline if-then's `then` reads as a word in the sentence the
+      // `if` label started, so it keeps spaces on both sides
+      case 'then'   : return '\\text{ then }'
       case 'cases>' : return txt('Cases')
       case 'subs>'  : return txt('Substitution')
       case '<comma' : return txt(',')

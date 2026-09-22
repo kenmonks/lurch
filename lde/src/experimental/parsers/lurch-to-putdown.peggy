@@ -347,10 +347,16 @@ Ref = k:RefLabel _ [(\[{"] _ a:([^)\]}"]+) _ [)\]}"]
 // of a larger expression and are post-processed by the LDE
 // They cannot be part of a longer symbol
 // Each returns its LDE token plus the source text typed (for the tex printer)
-Shorthand = a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Equiv / Comma)
-              !alphanum { return sh(a.text, a.src) }
+Shorthand = a:(BIH / Ruleset / Rule / Thm / Proof / Cases / Subs / Equiv /
+               Then / Comma) !alphanum { return sh(a.text, a.src) }
   // Shorthands
   Equiv = s:$'equiv'i { return { text:'≡', src:s } }
+  // the inline if-then environment's `then` (a structural keyword, so it
+  // is never a Symbol): as a shorthand it cannot join the expression that
+  // follows it, which is what an operand reading would do with a leading
+  // sign - `if a in S then -a in S` once parsed its claim as
+  // (∈ (+ then (- a)) S)
+  Then = s:$'then' { return { text:'then', src:s } }
   BIH = s:$('since'i / 'because'i / 'recall'i) { return { text:'>>', src:s } }
   Ruleset = s:$(('rules'i / 'axioms'i / 'definitions'i) ':'?) { return { text:'rules>', src:s } }
   Rule = s:$(('rule'i / 'axiom'i / 'definition'i) ':'?) { return { text:'rule>', src:s } }

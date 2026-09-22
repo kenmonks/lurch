@@ -120,7 +120,7 @@ const quantWord = { '∀': 'forall', '∃': 'exists', '∃!': 'exists unique' }
 const shorthandSrc = {
   '≡': 'equiv', '>>': 'since', 'rules>': 'rules:', 'rule>': 'rule:',
   'thm>': 'thm:', 'proof>': 'proof:', 'cases>': 'CasesRule:',
-  'subs>': 'SubsRule:', '<comma': ',', 'by': 'by'
+  'subs>': 'SubsRule:', '<comma': ',', 'by': 'by', 'then': 'then'
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -167,9 +167,11 @@ const byReason = by => typeof by === 'string' ? by : P(by)
 // neighbors, and a for-some rider follows its statement on the same line
 const seqJoiner = (a, b) =>
   ( a.type === 'let' && a.be ) || ( a.type === 'shorthand' &&
-    ( a.text === '<comma' || a.text === 'by' || a.text === '>>' ) ) ||
+    ( a.text === '<comma' || a.text === 'by' || a.text === '>>' ||
+      a.text === 'then' ) ) ||
   b.type === 'forsome' ||
-  ( b.type === 'shorthand' && b.text === '<comma' ) ? ' ' : '\n'
+  ( b.type === 'shorthand' &&
+    ( b.text === '<comma' || b.text === 'then' ) ) ? ' ' : '\n'
 
 const P = node => {
   if ( typeof node === 'string' ) return leaf(node)

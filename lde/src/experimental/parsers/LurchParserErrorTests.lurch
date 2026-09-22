@@ -67,6 +67,11 @@ A is not a partition of x.y
 // 'normal' is an operator word now (the ⊴ row), so it cannot be an
 // ordinary symbol in operand position
 normal + 1
+// 'then' is the inline if-then's structural keyword, so it is not a
+// symbol in an operand position either (the shorthand rule matches it
+// only where a whole LC may start)
+f(then)
+then + 1
 // a relation token whose leftover cannot reparse as a symbol ('in' is a
 // reserved word), and mixed relation families that do not chain
 // ('a subset b = c' and 'a = b subset c' are ⊆-family transitive

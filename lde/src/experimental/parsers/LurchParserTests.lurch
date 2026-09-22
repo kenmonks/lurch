@@ -757,6 +757,20 @@ Recall { P }
 P ≡ Q
 { :P Q } equiv { :Q P }
 
+// the inline if-then environment: `then` is a shorthand, never a Symbol,
+// so it cannot become an operand of the expression that follows it (a
+// leading sign once made `if a in S then -a in S` parse its claim as
+// (∈ (+ then (- a)) S) - a subtraction whose left side was the `then`)
+if A then B
+if a in S then -a in S
+if 0<x, 0<y then 0<x*y
+If A in tau, B in tau then A cap B in tau
+if a in S, then -a in S
+if A, B then C, D
+if A then -B for some c
+Let x be such that if A then -B
+Declare then
+
 // sequences of LCs on one line
 P Q R
 :P :Q

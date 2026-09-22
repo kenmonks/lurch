@@ -211,12 +211,14 @@ const kw = words => words.map( w =>
 // The closed structural-keyword list (an engine fact, spec §1 - not
 // declarable in the notation file).  [w] entries block case-insensitively
 // (their grammar sites are 'w'i literals); plain entries are interior
-// CS-lowercase keywords (be/such/that in Let, to/of in the big-operator
-// and maps forms).
+// CS-lowercase keywords (be/such/that in Let, then in the inline
+// if-then, to/of in the big-operator and maps forms).
 export const structuralKeywords = kw([
   // declarations and given labels
   ['declare'], ['let'], ['assume'], ['given'], ['suppose'], ['if'],
   ['from'], ['define'], ['for'], ['some'], ['write'], 'be', 'such', 'that',
+  // the inline if-then environment's interior keyword
+  'then',
   // meta: labels, citations, comments
   ['by'], ['label'], ['ref'], ['comment'],
   // shorthands
