@@ -207,6 +207,11 @@ group infix    level: like ★    assoc: left    params: ok
                                                  example: x oplus_(n) y
   a ⊗ b        word: otimes                      tex: \otimes
   a ⊙ b        word: odot                        tex: \odot
+  a ⊞ b        word: boxplus                     tex: \boxplus
+  a ⊠ b        word: boxtimes                    tex: \boxtimes
+  a ⊡ b        word: boxdot                      tex: \boxdot
+  a ∔ b        word: dotplus                    tex: \dotplus
+  a ⊛ b        words: circledast, oast          tex: \circledast
 
 // ------------------------------------------------------------------------
 // Big operators — each line selects a registered form shape (call /
