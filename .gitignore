@@ -26,12 +26,12 @@ toc.html
 # ignore the initproofs.js file for Lode
 initproofs.js
 
-# ignore the following folders from math299
+# ignore the following folders
 /mystuff
 /math299
 /pima
 /cicm
 /learn/proofs/embed
 studentfiles299
+/tasks
 AGENTS.md
-super-natural-deduction.md
