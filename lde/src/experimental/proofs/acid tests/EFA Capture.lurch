@@ -1,0 +1,87 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: EFA Capture - capture-avoiding instantiation of @P solutions
+//
+// When the instantiation loop solves an expression-function metavariable
+// @P, the body of the λ it gets back is copied from the user's proposition,
+// so its binders carry the user's symbol text.  Substituting a user
+// expression for a metavariable inside that body - by β-reduction in a
+// direct Inst, or by completing a Part whose body was already β-reduced -
+// could then capture a free symbol of the substituted expression.
+// Matching itself is de Bruijn and capture-safe; the leak was the
+// name-based instantiation afterwards.  The fix renames the binders inside
+// every EF value of a Solution to the reserved z₁, z₂, ... before
+// instantiating.
+//
+// Sections 1-4 check that bound-variable names in the user's propositions
+// do not matter (each had a claim wrongly ✗ from a captured Inst, and
+// sections 1 and 2 were order-dependent because α-equivalent assumptions
+// are deduplicated keeping the first).  Section 5 is the unsound case: a
+// captured Inst used to justify ∃y∈W. y≠y.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "α-equivalent assumptions, first binder order"
+{
+  Declare forall , =
+  rule: {
+    If forall x.@P(x)
+    @P(t)
+  }
+  Assume forall y.forall x.y = x
+  Assume forall x.forall y.x = y
+  forall y.x = y ✔︎
+  forall x.y = x ✔︎
+}
+
+➤ "α-equivalent assumptions, other binder order"
+{
+  Declare forall , E
+  rule: {
+    If forall x.@P(x)
+    @P(t)
+  }
+  Assume forall x.forall y.E(x , y)
+  Assume forall y.forall x.E(y , x)
+  forall y.E(x , y) ✔︎
+  forall x.E(y , x) ✔︎
+}
+
+➤ "typed quantifiers"
+{
+  Declare forall , in , neq
+  rule: {
+    If t in S , forall x in S.@P(x)
+    @P(t)
+  }
+  Assume forall x in X.forall y in X.x neq y
+  Assume x in X , y in X
+  forall y in X.x neq y ✔︎
+  forall y in X.forall x in X.y neq x ✔︎
+  forall x in X.y neq x ✔︎
+}
+
+➤ "bound-variable-name independence"
+{
+  Declare forall , f
+  rule: {
+    If forall x.@P(x)
+    @P(t)
+  }
+  Assume forall y.forall x.f(y , x)
+  forall y.f(x , y) ✔︎
+}
+
+➤ "a captured instantiation must not justify an unsound conclusion"
+{
+  Declare forall , exists , in , neq
+  rule: {
+    If t in S , forall x in S.@P(x)
+    @P(t)
+  }
+  proof: {
+    Assume forall x in W.exists y in W.x neq y
+    Assume y in W
+    exists y in W.y neq y ✗
+  }
+}

@@ -590,7 +590,7 @@ const processBIHs = doc => {
     formulas.forEach(f => {
       const toggle = matchGivens(f, b);
       try {
-        ;[...Formula.allPossibleInstantiations(f, b)].forEach(s => {
+        ;[...Formula.allPossibleInstantiations(f, b)].map(sanitizeSolution).forEach(s => {
           found = true
           const inst = Formula.instantiate(f, s)
           assignProperNames(inst)
@@ -1493,7 +1493,7 @@ const processCases = doc => {
     // for each one construct the relevant partial instantiation
     usercases.forEach( c => {
       try {
-        ;[...Formula.allPossibleInstantiations(p, c)].forEach(s => {
+        ;[...Formula.allPossibleInstantiations(p, c)].map(sanitizeSolution).forEach(s => {
           
           // for each solution (there should only be one) instantiate the rule
           const inst = Formula.instantiate(rule, s)
@@ -1514,7 +1514,7 @@ const processCases = doc => {
       .forEach( e =>{  
       rules.forEach( r => {
         try {
-          ;[...Formula.allPossibleInstantiations(r.lastChild(), e)].forEach(s => {
+          ;[...Formula.allPossibleInstantiations(r.lastChild(), e)].map(sanitizeSolution).forEach(s => {
             const inst = Formula.instantiate(r, s)
             // do the usual prepping
             assignProperNames(inst)
@@ -1923,6 +1923,37 @@ const getUserPropositions = doc => {
 }
 
 /**
+ * Rename the binders inside every expression-function value of a matching
+ * Solution to `z₁, z₂, ...`, in place, and return the Solution.
+ *
+ * An EF value's body is copied from the user's proposition, so its binders
+ * carry the user's symbol text.  `Formula.instantiate` substitutes by name
+ * (β-reducing with `applyEF`, or later completing a Part whose body was
+ * already β-reduced), neither of which avoids capture, so a free user
+ * symbol substituted under such a binder could be captured.  After this
+ * renaming the binders above any substitution site are rule binders
+ * (`y`-names, from `processRules`) or EF-body binders (`z`-names), while
+ * substituted values have free symbols that are user symbols or `y`-names
+ * that are passed as EFA arguments under their own binder.  The subscript
+ * digits are reserved for internal use, so the pools cannot collide.  The
+ * prefix must not be `y`: numbering restarts at 1 in each body, so a body's
+ * `y₁` would capture the rule's own `y₁` passed as in `(λ P y₁)`.
+ *
+ * A Solution is freshly decoded from de Bruijn form and shares no subtrees
+ * with the document, so renaming it in place is safe.
+ *
+ * @param {Solution} s - a solution to a matching problem
+ * @returns {Solution} the same solution, with its EF binders renamed
+ */
+const sanitizeSolution = s => {
+  [...s.domain()].forEach(name => {
+    const value = s.get(name)
+    if (Matching.isAnEF(value)) replaceBindings(value, 'z')
+  })
+  return s
+}
+
+/**
  * Matching Propositions. 
  * 
  * Since we consider Lets and ForSomes to be proposition, we want to be able to
@@ -1959,7 +1990,7 @@ const matchPropositions = (p, e) => {
   if (cantMatch(p,e)) { return [ ] }
   // now use the real deal
   if (p instanceof Expression && e instanceof Expression) {
-    return Array.from(new Problem(p, e).solutions())
+    return Array.from(new Problem(p, e).solutions()).map(sanitizeSolution)
     // if they are declarations that declare the same number of symbols ...
   } else if (p instanceof Declaration && e instanceof Declaration &&
     p.symbols().length === e.symbols().length) {
@@ -1967,10 +1998,10 @@ const matchPropositions = (p, e) => {
     const esymbols = e.symbols()
     let merged = p.symbols().map((x, k) => [x, esymbols[k]]).flat()
     if (!p.body() && !e.body()) {
-      return Array.from(new Problem(...merged).solutions())
+      return Array.from(new Problem(...merged).solutions()).map(sanitizeSolution)
       // ... but if both have bodies, include them in the problem  
     } else if (p.body() && e.body()) {
-      return Array.from(new Problem(...merged, p.body(), e.body()).solutions())
+      return Array.from(new Problem(...merged, p.body(), e.body()).solutions()).map(sanitizeSolution)
     }
   }
   // if we made it to here it's not going to match      

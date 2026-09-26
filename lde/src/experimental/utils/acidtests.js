@@ -142,6 +142,7 @@ const loadAcidTests = () => {
       'Auto Constants 2',
       'Bad Instantiations',
       'Preemie Stress',
+      'EFA Capture',
       'Transitive Chains', 'Cong Chains', 'Chain Families',
       'Chain Rule Params',
       'Given Chains', 'Given Chains Absent', 'Given Chains Params',
