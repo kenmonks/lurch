@@ -137,11 +137,10 @@ const or = ( P, Q, getNewSymbol ) => {
     return [ ...P.map( unionWith( [  newSymbol ] ) ),
              ...Q.map( unionWith( [ -newSymbol ] ) ) ]
 }
-const highestMentioned = CNF => {
-    const allVarsMentioned = CNF.flat( 2 )
-    return allVarsMentioned.length > 0 ?
-        Math.max( ...allVarsMentioned.map( Math.abs ) ) : 0
-}
+// Avoid spreading literals into a call: large CNFs can exceed argument limits.
+const highestMentioned = CNF => CNF.reduce( ( highest, clause ) =>
+    clause.reduce( ( maximum, literal ) =>
+        Math.max( maximum, Math.abs( literal ) ), highest ), 0 )
 const firstUnmentioned = CNF => highestMentioned( CNF ) + 1
 
 // Utility function for the union of two arrays of integers, treating the

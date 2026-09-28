@@ -197,4 +197,29 @@ describe( 'Conjunctive normal form', () => {
         expect( CNFTools.isSatisfiable( test3 ) ).to.equal( true )
     } )
 
+    it( 'uses a fresh switch variable with sparse, negative indices', () => {
+        const result = CNFTools.or(
+            [ [ 1 ], [ -7 ], [ -101 ] ], [ [ 5 ], [ 9 ] ] )
+        expect( result ).to.eql( [
+            [ 102, 1 ], [ 102, -7 ], [ 102, -101 ],
+            [ -102, 5 ], [ -102, 9 ]
+        ] )
+        expect( CNFTools.isSatisfiable( result ) ).to.equal( true )
+    } )
+
+    // More literal occurrences than can safely be passed as function
+    // arguments.  The unit clauses force each long clause to require -101.
+    const largeCNF = () => Array.from( { length: 32768 },
+        () => [ 1, 2, 3, 4, 5, 6, 7, -101 ] ).concat(
+        [ [ -1 ], [ -2 ], [ -3 ], [ -4 ], [ -5 ], [ -6 ], [ -7 ] ] )
+
+    it( 'can check satisfiability with many literal occurrences', () => {
+        expect( CNFTools.isSatisfiable( largeCNF() ) ).to.equal( true )
+    } )
+
+    it( 'can detect contradictions with many literal occurrences', () => {
+        const cnf = largeCNF().concat( [ [ 101 ] ] )
+        expect( CNFTools.isSatisfiable( cnf ) ).to.equal( false )
+    } )
+
 } )

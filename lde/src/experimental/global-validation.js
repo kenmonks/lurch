@@ -2446,13 +2446,15 @@ LogicConcept.prototype._validate = function (target = this,
       cnf = this.cnf(target, checkPreemies)
       answer = !CNF.isSatisfiable(cnf)
     } catch (e) {
-      doc.negate()
       console.log(`\nError validating the following for ${(checkPreemies) ? 'preemies' : 'prop'}:\n`)
-      write(target)
+      console.log(target)
       console.log(`at address: ${target.address()}`)
+      console.error(e)
+      throw e
+    } finally {
+      // Restore the original polarity even if CNF conversion or SAT throws.
+      doc.negate()
     }
-    // un-negate this
-    doc.negate()
     return answer
   }
 
