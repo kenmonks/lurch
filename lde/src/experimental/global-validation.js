@@ -511,60 +511,115 @@ export const isDopplegangerOf = (p1, p2) => {
  * bot P and x are metaviarables.  But if the premise that is the equation is
  * instantiated first to create a partial instantiation of the rule, then the x
  * will be replaced by an expression not containing any metavariables which is
- * MUCH more efficient for matching.  For example, in an expression like 
- *                  `(-(z*y)+z*x)+z*y = z*y+(-(z*y)+z*x)`
- * (an actual example) trying to match that expression to @P(x) where x and P
- * are metavars produces a whopping 191 matches.  But trying to match it to 
- * e.g. @P(z*y), only produces 16 matches... much more manageable.
+ * MUCH more efficient for matching.  For example, in an expression like
+ *
+ * `(-(z*y)+z*x)+z*y = z*y+(-(z*y)+z*x)` (an actual example) 
+ *
+ * trying to match that expression to @P(x) where x and P are metavars produces
+ * a whopping 191 matches.  But trying to match it to e.g. @P(z*y), only
+ * produces 16 matches... much more manageable.
  *
  * The LurchOptions.avoidLoneMetavars and LurchOptions.avoidLoneEFAs options can
  * be used to change the behavior of this function in the corresponding manner.
  * They are both true by default.
+ *
+ * We also don't match x∈A when x and A are metavariables or x is a metavariable
+ * and A is an EFA that is not partially instantiated because almost every
+ * statment in a typical Set Theory proof will match patterns of these forms
  */
-const forbiddenWeeny = L => 
-  // if we are told to not forbid anything either as an attribute or option
-  // then return false
-  !(L.root().getAttribute('instantiateEverything') ||
-    LurchOptions.instantiateEverything
-   ) &&
-  // otherwise check each case 
-  (
-    // it's an Environment
-    ( L instanceof Environment ) ||
-    // or it's a declaration whose body is not a single expression, e.g. an
-    // environment or (unsupported) another declaration, since the Matching
-    // package can only match expression bodies
-    ( L instanceof Declaration && L.body() && !(L.body() instanceof Expression) ) ||
-    // or it's an unnecessary declaration (a leading Let of a Rule or Theorem),
-    // which is ignored by validation as if it were deleted
-    ( L instanceof Declaration && L.isA('unnecessary') ) ||
-    // or we are avoiding lone metavars and it is one
-    ( LurchOptions.avoidLoneMetavars && 
-      (L instanceof LurchSymbol)
-    ) || 
-    // or we are avoiding LoneEFAs except for the subsitutition rule when the
-    // conclusion is partially instantiated, and in that case only the conclusion
-    // is checked against a user proposition that is flagged 'by substitution' for
-    // efficiency, since that will determine P for the premise.
-    ( LurchOptions.avoidLoneEFAs && 
-      isAnEFA(L) && 
-      ( !L.isA('Subs') || 
-        !L.children().slice(1).some(kid =>
-          kid.hasDescendantSatisfying( x => 
-            (x instanceof LurchSymbol) && !x.isA(metavariable)
-          )
-        ) 
+
+const forbiddenWeeny = L => {
+  if (L.root().getAttribute('instantiateEverything') ||
+      LurchOptions.instantiateEverything) return false
+
+  const isLoneMetavar = x =>
+    x instanceof LurchSymbol && x.isA(metavariable)
+
+  // Preserve the existing test for an EFA with no fixed content.
+  // Skip its leading EFA marker, checking the function slot and arguments.
+  const isBadEFA = x =>
+    isAnEFA(x) &&
+    !x.children().slice(1).some(kid =>
+      kid.hasDescendantSatisfying(y =>
+        y instanceof LurchSymbol && !y.isA(metavariable)
       )
-    ) ||
-    // don't match x∈A when x and A are metavariables because almost every
-    // statment in a typical Set Theory proof has this form and will match
-    ( LurchOptions.avoidLoneElementOfs && 
-      L instanceof Application && L.child(0) instanceof LurchSymbol &&
-      L.child(0).text()==='∈'  && L.child(1) instanceof LurchSymbol && 
-      L.child(2).isA(metavariable) && L.child(2) instanceof LurchSymbol && 
-      L.child(2).isA(metavariable)
     )
+
+  return (
+    // Matching cannot handle environments as propositions.
+    (L instanceof Environment) ||
+
+    // Declaration bodies must be expressions to participate in matching.
+    (L instanceof Declaration &&
+      L.body() &&
+      !(L.body() instanceof Expression)) ||
+
+    // Leading Lets in Rules and Theorems are ignored by validation.
+    (L instanceof Declaration && L.isA('unnecessary')) ||
+
+    (LurchOptions.avoidLoneMetavars && L instanceof LurchSymbol) ||
+
+    // A lone EFA is allowed only for a partially instantiated Subs
+    // conclusion.  The matching loop separately requires "by substitution".
+    (LurchOptions.avoidLoneEFAs &&
+      isAnEFA(L) &&
+      (!L.isA('Subs') || isBadEFA(L))) ||
+
+    // Avoid x∈A when x is a metavariable and A is either a metavariable
+    // or an EFA with no fixed content.
+    (LurchOptions.avoidLoneElementOfs &&
+      L instanceof Application &&
+      L.numChildren() === 3 &&
+      L.child(0) instanceof LurchSymbol && L.child(0).text() === '∈' &&
+      isLoneMetavar(L.child(1)) &&
+      (isLoneMetavar(L.child(2)) || isBadEFA(L.child(2))))
   )
+}
+
+// const forbiddenWeeny = L => 
+//   // if we are told to not forbid anything either as an attribute or option
+//   // then return false
+//   !(L.root().getAttribute('instantiateEverything') ||
+//     LurchOptions.instantiateEverything
+//    ) &&
+//   // otherwise check each case 
+//   (
+//     // it's an Environment
+//     ( L instanceof Environment ) ||
+//     // or it's a declaration whose body is not a single expression, e.g. an
+//     // environment or (unsupported) another declaration, since the Matching
+//     // package can only match expression bodies
+//     ( L instanceof Declaration && L.body() && !(L.body() instanceof Expression) ) ||
+//     // or it's an unnecessary declaration (a leading Let of a Rule or Theorem),
+//     // which is ignored by validation as if it were deleted
+//     ( L instanceof Declaration && L.isA('unnecessary') ) ||
+//     // or we are avoiding lone metavars and it is one
+//     ( LurchOptions.avoidLoneMetavars && 
+//       (L instanceof LurchSymbol)
+//     ) || 
+//     // or we are avoiding LoneEFAs except for the subsitutition rule when the
+//     // conclusion is partially instantiated, and in that case only the conclusion
+//     // is checked against a user proposition that is flagged 'by substitution' for
+//     // efficiency, since that will determine P for the premise.
+//     ( LurchOptions.avoidLoneEFAs && 
+//       isAnEFA(L) && 
+//       ( !L.isA('Subs') || 
+//         !L.children().slice(1).some(kid =>
+//           kid.hasDescendantSatisfying( x => 
+//             (x instanceof LurchSymbol) && !x.isA(metavariable)
+//           )
+//         ) 
+//       )
+//     ) ||
+//     // don't match x∈A when x and A are metavariables because almost every
+//     // statment in a typical Set Theory proof has this form and will match
+//     ( LurchOptions.avoidLoneElementOfs && 
+//       L instanceof Application && 
+//       L.child(0) instanceof LurchSymbol && L.child(0).text()==='∈' && 
+//       L.child(1) instanceof LurchSymbol && L.child(2).isA(metavariable) &&
+//       L.child(2) instanceof LurchSymbol && L.child(2).isA(metavariable)
+//     )
+//   )
 /** 
  * Process BIHs
  * 
