@@ -767,6 +767,14 @@ if 0<x, 0<y then 0<x*y
 If A in tau, B in tau then A cap B in tau
 if a in S, then -a in S
 if A, B then C, D
+// a trailing run of bare symbols sharing one membership test (`x, y in
+// NN`) keeps plain commas throughout, with no expository 'and' at all
+// when the run is the whole list, but gets the expository 'and' before
+// the comma that joins it to a preceding non-symbol condition
+if x, y in NN
+If A, B=0, x, y in ZZ
+If A, B=0, a, b, c in NN
+If A, B, x, y in ZZ
 if A then -B for some c
 Let x be such that if A then -B
 Declare then

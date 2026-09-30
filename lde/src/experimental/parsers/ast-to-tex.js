@@ -504,18 +504,35 @@ export const astToTex = node => {
       default       : return txt(node.fmt.src)
     }
     case 'given'     : {
-      // omit the expository 'and' when the chain ends in a run of bare
-      // symbols followed by a bare-symbol membership (`x, y, z in S`):
-      // that's the shorthand for `x in S, y in S, z in S`, where 'and'
-      // before the last item would wrongly suggest it conjoins only the
-      // last two names with `in S`. A membership not preceded by a bare
-      // symbol (e.g. `x in A, x in B`) is unaffected.
-      const last = node.exprs[node.exprs.length - 1]
-      const penultimate = node.exprs[node.exprs.length - 2]
+      // Keep plain commas inside a trailing run of bare symbols followed
+      // by a bare-symbol membership (`x, y, z in S`): that's the
+      // shorthand for `x in S, y in S, z in S`, where an 'and' before the
+      // last name would wrongly suggest it conjoins only the last two
+      // names with `in S`. A membership not preceded by a bare symbol
+      // (e.g. `x in A, x in B`) is unaffected. When other conditions
+      // precede such a run, the comma joining the run to them still
+      // becomes the expository 'and', as for an ordinary sequence - only
+      // the commas inside the run itself stay plain.
+      const exprs = node.exprs
+      const last = exprs[exprs.length - 1]
       const endsInMembership = last?.type === 'op' && last.op === '∈' &&
-        typeof last.args[0] === 'string' && typeof penultimate === 'string'
-      return node.exprs.length
-        ? `${txt(node.label)} ${sequence(node.exprs.map(T), endsInMembership)}`
+        typeof last.args[0] === 'string' &&
+        typeof exprs[exprs.length - 2] === 'string'
+      let runStart = exprs.length
+      if (endsInMembership) {
+        runStart = exprs.length - 2
+        while (runStart > 0 && typeof exprs[runStart - 1] === 'string')
+          runStart--
+      }
+      const items = exprs.map(T)
+      const rendered = runStart === exprs.length ? sequence(items)
+        : runStart === 0 ? sequence(items, true)
+        : sequence([
+            ...items.slice(0, runStart),
+            items.slice(runStart).join(',')
+          ])
+      return exprs.length
+        ? `${txt(node.label)} ${rendered}`
         : txt(node.label)
     }
 
