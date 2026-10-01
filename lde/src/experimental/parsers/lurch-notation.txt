@@ -77,6 +77,15 @@ group relation
     also: a ⊴ b
     also: N is a normal subgroup of G
 
+  a assoc b              ->(◇ a b)               tex: \diamond
+    also: a ◇ b
+    also: a is an associate of b
+
+  R isom S              ->(isom R S)               tex: \cong
+    also: R is isomorphic to S
+
+  a has b               ->(has a b)
+
   a in b                 -> (∈ a b)              tex: \in     bare: right
     also: a ∈ b
     also: x is an element of S
@@ -298,6 +307,7 @@ group constant
   topSpace              words: topological space
   idring                words: ring with identity
   intdomain             words: integral domain
+  Units                                            tex: \mathcal{U} 
   // (phrase replacement happens in file order; keep the quantifier
   // lines after the order phrases)
   ∀     words: for all, for each, for every, forall    tex: \forall
