@@ -84,7 +84,9 @@ group relation
   R isom S              ->(isom R S)               tex: \cong
     also: R is isomorphic to S
 
-  a has b               ->(has a b)
+  // `R is a ring with identity` = `R has identity` (the generic `has` row
+  // below); a rewrite can only reference holes, so the property is one
+  R is a ring with S -> (has R S)
 
   a in b                 -> (∈ a b)              tex: \in     bare: right
     also: a ∈ b
@@ -152,6 +154,12 @@ group relation
     also: a is not an b, a is not a b, a are not b
   a is b                 -> (is a b)
     also: a is an b, a is a b, a is the b, a are b
+
+  // `has`, handled like the copula (negative row first)
+  a does not have b      -> (¬ (has a b))
+    also: a does not have a b, a does not have an b
+  a has b                -> (has a b)
+    also: a has a b, a has an b
                                                  example: ⊆ is transitive
 
 // ------------------------------------------------------------------------
@@ -305,7 +313,7 @@ group constant
   partialOrder          words: partial order
   totalOrder            words: total order
   topSpace              words: topological space
-  idring                words: ring with identity
+  identity
   intdomain             words: integral domain
   Units                                            tex: \mathcal{U} 
   // (phrase replacement happens in file order; keep the quantifier
