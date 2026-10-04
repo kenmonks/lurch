@@ -305,3 +305,10 @@ write x(s,t,s) for s+t
 write x
 write x for
 write for E
+x_[1]
+f[G:H]
+f[x)
+f(x]
+f[x]y
+2[1,2]
+f[x]^2

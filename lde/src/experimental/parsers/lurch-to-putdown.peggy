@@ -1357,20 +1357,33 @@ StarExpr = a:Closed
     // difference and that subscripting is just a notationally different way to
     // enter function application.  This seems more valuable than learning that,
     // e.g. in LaTeX you would enter `x_{n+1}` instead of `x_(n+1)`.
+    // One argument group of a prefix application.  Parentheses may be
+    // preceded by a formatting-only underscore (subscript rendering);
+    // square brackets are the alternative delimiter, f[x] meaning exactly
+    // f(x) (tex renders f\left[x\right]).  There is deliberately no _[
+    // form, and no space is allowed before the group - `f [1,2]` is two
+    // LCs, a name and a tuple - so a name immediately followed by [ is
+    // always application.  The tuple transpose tick is not part of a group.
+    ArgGroup = u:'_'? '('_ s:MentionableSeq _')' { return { sub:!!u, args:s } } /
+               '['_ s:MentionableSeq _']'        { return { bracket:true, args:s } }
+
     Prefix = // the first argument group forms the EFA; any extra groups
               // nest as ordinary application, like f(x)(y).  As with
               // ordinary application, each group's opening parenthesis
               // may be preceded by a formatting-only underscore: @P_(k)
               // means (λ P k) just like @P(k), but tex renders the
-              // arguments as a subscript.
+              // arguments as a subscript.  Square brackets may delimit a
+              // group instead (@P[k]), also formatting only; see ArgGroup.
               '@' a:[a-z]i
               b:( u:'_'? '('_ s:ExpressionSeq _')'
-                    { return { sub:!!u, args:s } } )+
+                    { return { sub:!!u, args:s } } /
+                  '['_ s:ExpressionSeq _']'
+                    { return { bracket:true, args:s } } )+
                 { return b.slice(1).reduce(
                     (head,g) => { return { type:'app', head, args:g.args,
-                                           fmt:{ sub:g.sub } } },
+                                           fmt:{ sub:g.sub, bracket:g.bracket } } },
                     { type:'efa', name:a, args:b[0].args,
-                      fmt:{ sub:b[0].sub } } ) } /
+                      fmt:{ sub:b[0].sub, bracket:b[0].bracket } } ) } /
               // allow 'set' to be case insensitive, check for setbuilder before
               // finite sets (fmt.call distinguishes the set(...) call form
               // from ｛...｝ brackets for the tex printer's parenthesization).
@@ -1414,9 +1427,10 @@ StarExpr = a:Closed
               // here, astToLurch prints a numeric head's first argument
               // group with its underscore, so the output reparses.
               a:Number &'_'
-              b:( u:'_'? '('_ s:MentionableSeq _')' { return { sub:!!u, args:s } } )+
+              b:ArgGroup+
                 { return b.reduce( (head,g) =>
-                    { return { type:'app', head, args:g.args, fmt:{ sub:g.sub } } }, a ) } /
+                    { return { type:'app', head, args:g.args,
+                               fmt:{ sub:g.sub, bracket:g.bracket } } }, a ) } /
               // everything else (nested one app node per argument group).
               // Each argument group may be preceded by an underscore, which
               // is formatting only: x_(0) and x(0) both mean (x 0), but tex
@@ -1430,9 +1444,10 @@ StarExpr = a:Closed
               // slots likewise accept a lone bare operator (P_(~), f(~)).
               a:(Exp / Symbol / QuoteMention / ParenMention / Parenthesized /
                  BareOpName)
-              b:( u:'_'? '('_ s:MentionableSeq _')' { return { sub:!!u, args:s } } )+
+              b:ArgGroup+
                 { return b.reduce( (head,g) =>
-                    { return { type:'app', head, args:g.args, fmt:{ sub:g.sub } } }, a ) }
+                    { return { type:'app', head, args:g.args,
+                               fmt:{ sub:g.sub, bracket:g.bracket } } }, a ) }
 
     // The head-forming exponent.
     // The choice of precedence of function application vs Exp is tricky:

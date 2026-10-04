@@ -27,6 +27,8 @@
 //   fmt.signs    surface signs of a signed sum (a-b vs a+-b)
 //   fmt.sub      function-application or EFA group typed as a subscript
 //                (x_(0), @P_(k))
+//   fmt.bracket  function-application or EFA group delimited by square
+//                brackets, f[x] (same meaning as f(x))
 //   fmt.style    tuple surface: 'bracket' [..], 'langle' ⟨..⟩, or 'call'
 //   fmt.tick     trailing tick mark on a bracket tuple (transpose display)
 //   fmt.call     set/setbuilder/paren typed in call form (set(..),
@@ -405,7 +407,8 @@ const texApp = (node, T) => {
       return '\\text{algebra rule (with no matrix operations)}'
   }
   return T(node.head) +
-    ( node.fmt?.sub ? `_{${seq}}` : `\\left(${seq}\\right)` )
+    ( node.fmt?.sub ? `_{${seq}}`
+      : node.fmt?.bracket ? `\\left[${seq}\\right]` : `\\left(${seq}\\right)` )
 }
 
 // is this application one of the special forms NOT treated as
@@ -683,7 +686,8 @@ export const astToTex = node => {
     case 'efa'       : {
       const seq = node.args.map(T).join(',')
       return `\\mathcal{${node.name}}` +
-        ( node.fmt?.sub ? `_{${seq}}` : `\\left(${seq}\\right)` )
+        ( node.fmt?.sub ? `_{${seq}}`
+          : node.fmt?.bracket ? `\\left[${seq}\\right]` : `\\left(${seq}\\right)` )
     }
 
     // aggregates

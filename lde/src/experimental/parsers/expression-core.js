@@ -85,14 +85,15 @@ const aliasMatch = (t, input, pos) => {
   }
   // the word-boundary rule: a word keyword may not be followed
   // by an alphanumeric, and may not directly abut an
-  // open parenthesis - Lurch's hard rule is that a name immediately
-  // followed by '(' reads as function application (`R(x)` applies R, as
-  // `isPrime(n-1)(n+1)` shows), so `a is(b)` / `n divides(n+1)` split
+  // open parenthesis or square bracket - Lurch's hard rule is that a name
+  // immediately followed by '(' or '[' reads as function application (`R(x)`
+  // applies R, as `isPrime(n-1)(n+1)` shows, and `f[x]` means `f(x)`), so
+  // `a is(b)` / `n divides(n+1)` / `A cap[1,2]` split
   // into an operand and a mention-headed application instead of quietly
   // reading as the infix relation; write `a is (b)` for that.  Glyph
   // keywords ('any') are unaffected: `0<(x+1)` needs no space.
   if ( t.after === 'bound' &&
-       ( alphanum(input[p]) || input[p] === '(' ) ) return -1
+       ( alphanum(input[p]) || input[p] === '(' || input[p] === '[' ) ) return -1
   // engine fact: '//' opens a line comment (which survives tokenization
   // verbatim), so an alias ending in '/' - the ⋅ row's division alias -
   // never matches immediately before another '/'; the comment
@@ -348,6 +349,22 @@ export const enrichParseError = (normalized, error) => {
         ` intend)`
       return
     }
+  }
+  // A '[' directly after a name or ')' is a square-bracket argument group
+  // (f[x] means f(x)), so a parse that fails there is a malformed group,
+  // e.g. the index [G:H] typed as f[G:H]; remind the user of the spacing
+  // rule.  A number is not a name (2[1,2] is rejected for the same reason
+  // as 2(x+1), which gets no hint either), so the word before the bracket
+  // must not start with a digit.
+  let nameStart = pos
+  while ( nameStart > 0 && alphanum(normalized[nameStart-1]) ) nameStart--
+  if ( normalized[pos] === '[' && pos > 0 &&
+       ( ( nameStart < pos && !/[0-9]/.test(normalized[nameStart]) ) ||
+         normalized[pos-1] === ')' ) ) {
+    error.message += ` (a name immediately followed by '[' is function` +
+      ` application, like f(x); put a space before '[' to start a tuple or` +
+      ` bracket form instead)`
+    return
   }
   // look at the failure token; if it is a glyph, also peek at the next
   // word (the real culprit in inputs like 'x + and')

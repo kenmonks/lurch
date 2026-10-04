@@ -71,7 +71,10 @@
 //                                      application; extra (...) groups nest
 //                                      as ordinary app nodes around it;
 //                                      like app, carries fmt.sub when
-//                                      typed as a subscript (@P_(k))
+//                                      typed as a subscript (@P_(k)),
+//                                      or fmt.bracket when delimited by
+//                                      square brackets (f[x], @P[k]);
+//                                      both are formatting only
 //   { type:'setbuilder', v, pred }     { v : pred } set-builder notation;
 //                                      the extended form
 //                                      { v in dom : p1, ..., pn } carries
