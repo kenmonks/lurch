@@ -74,7 +74,7 @@ const goldstar     = starPen('★')
 const redstar      = xPen('☆')
 const greencheck   = checkPen('✔︎')
 const redx         = xPen('✗')
-const inapplicable = '⊘'     
+const inapplicable = xPen('⚠︎')  
 const idunno       = '❓'  // the emoji itself is red
 const preemiex     = xPen('⁉︎') 
 

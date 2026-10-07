@@ -451,7 +451,7 @@ span.marker-redx::after {
 }
 span.feedback-marker-inapplicable::after, 
 span.marker-nosymbol::after {
-  content: "⚠️";
+  content: "⚠︎";
   font-size: 100%;
   font-weight: bold;
   color: var(--questionmark-color);

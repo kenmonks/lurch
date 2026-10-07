@@ -703,7 +703,8 @@ export class Message {
                 type : 'algebra',
                 result : data.result,
                 reason : data.result == 'valid' ? 'Nice algebra!' :
-                    'As far as I can tell, this is not algebraically correct.',
+                    data.result == 'inapplicable' ? 'This expression cannot be justified by algebra.'  :
+                    'As far as I can tell, this is not an algebraic identity.',
                 code : `algebraically ${data.result}`
             }
         } else if ( data.type == 'arithmetic' ) {
@@ -712,7 +713,7 @@ export class Message {
                 result : data.result,
                 reason : data.result == 'valid' ? 'Nice arithmetic!' :
                     data.result == 'inapplicable' ? 'Arithmetic in the number system specified by the rule does not apply here.' :
-                    'As far as I can tell, this is not correct by arithmetic.',
+                    'As far as I can tell, this is not correct arithmetic.',
                 code : `arithmetically ${data.result}`
             }
         } else if ( data.type == 'error' ) {
