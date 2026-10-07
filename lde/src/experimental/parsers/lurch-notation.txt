@@ -86,7 +86,7 @@ group relation
 
   // `R is a ring with identity` = `R has identity` (the generic `has` row
   // below); a rewrite can only reference holes, so the property is one
-  R is a ring with S -> (has R S)
+  R is a ring with S     -> (has R S)
 
   a in b                 -> (∈ a b)              tex: \in     bare: right
     also: a ∈ b
@@ -313,9 +313,9 @@ group constant
   partialOrder          words: partial order
   totalOrder            words: total order
   topSpace              words: topological space
-  identity
   intdomain             words: integral domain
-  Units                                            tex: \mathcal{U} 
+	eventuallyZero        words: eventually zero
+  Units                                         tex: \mathcal{U}
   // (phrase replacement happens in file order; keep the quantifier
   // lines after the order phrases)
   ∀     words: for all, for each, for every, forall    tex: \forall
