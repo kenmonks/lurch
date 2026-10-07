@@ -451,10 +451,10 @@ span.marker-redx::after {
 }
 span.feedback-marker-inapplicable::after, 
 span.marker-nosymbol::after {
-  content: "⊘";
-  font-size: 110%;
+  content: "⚠️";
+  font-size: 100%;
   font-weight: bold;
-  color: var(--x-color);
+  color: var(--questionmark-color);
 }
 span.feedback-marker-error::after {
   content: "!";
