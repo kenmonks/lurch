@@ -1,0 +1,33 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: renamed constants reaching the CAS (by algebra)
+//
+// The Lurch notation parser renames the typed words `infinity`/`infty`
+// and `sigma` to the glyphs ∞ and σ.  Algebrite cannot read those
+// glyphs (syntax error), and before the parser upgrade the typed word
+// reached the CAS verbatim, so the geometric-series identity below used
+// to validate and silently stopped doing so.  algebraToCAS (parsing.js)
+// now sends such a constant back under its Algebrite spelling.  The
+// constants are disjoint from those in Algebra.lurch.
+
+➤ "Renamed constants via CAS"
+Declare =, +, *, /, ^
+
+Rule: :{ AlgebraRule }
+
+// the identity that regressed, typed with either word for ∞
+{
+  (1-x)*sum(x^k,k,0,infinity)=sum(x^k,k,0,infinity)-x*sum(x^k,k,0,infinity) ✔︎ by algebra
+  (1-x)*sum(x^k,k,0,infty)=sum(x^k,k,0,infty)-x*sum(x^k,k,0,infty) ✔︎ by algebra
+}
+
+// CAS limit: Algebrite keeps an infinite sum symbolic, so it can verify
+// identities that rearrange the sum term (above) but not closed forms
+{
+  sum(1/2^k,k,0,infinity)=2 ✗ by algebra
+}
+
+// sigma is an ordinary symbol to Algebrite once it is spelled as a word
+{
+  sigma*(a+b)=sigma*a+sigma*b ✔︎ by algebra
+  sigma*(a+b)=sigma*a+b ✗ by algebra
+}

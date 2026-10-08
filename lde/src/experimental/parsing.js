@@ -406,6 +406,10 @@ const numericToCAS = e => {
   }
 }
 
+// the renamed constants of the Lurch notation parser that lie in the CAS
+// fragment, keyed by the glyph the LC holds, valued by the Algebrite name
+const casConstantNames = { '∞' : 'infinity', 'σ' : 'sigma' }
+
 /**
  * Convert an algebraic expression LC to Algebrite (CAS) syntax, or return
  * `undefined` when the expression lies outside the CAS fragment.
@@ -440,8 +444,14 @@ const numericToCAS = e => {
  */
 export const algebraToCAS = e => {
   const convert = algebraToCAS
-  // symbols (numbers and names) pass through as their text
-  if (e instanceof LurchSymbol) return e.text()
+  // symbols (numbers and names) pass through as their text, except the
+  // constants the Lurch notation parser renames to glyphs Algebrite cannot
+  // read (the `constant` group in lurch-notation.txt): those go back to
+  // the Algebrite spelling.  Before the parser upgrade the typed word
+  // reached the CAS verbatim, so `sum(x^k,k,0,infinity)` validated; now
+  // the LC holds ∞, which is a syntax error in Algebrite.
+  if (e instanceof LurchSymbol)
+    return casConstantNames[e.text()] ?? e.text()
   if (!(e instanceof Application)) return
   const op = e.child(0)
   if (!(op instanceof LurchSymbol)) return

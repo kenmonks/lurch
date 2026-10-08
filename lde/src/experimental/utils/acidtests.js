@@ -149,7 +149,7 @@ const loadAcidTests = () => {
       'Chain Abbreviations',
       'Set Builder Chains', 'Set Builder Chains Absent',
       'Set Builders', 'Set Builders Absent',
-      'Algebra', 'Cases', 'BIH Cases',
+      'Algebra', 'Algebra Constants', 'Cases', 'BIH Cases',
       'user-thms',
       'ArithmeticNatural', 'ArithmeticInteger', 'ArithmeticRational',
       ['prop', 'math299'], ['pred', 'math299'], ['peanoBIH', 'math299'],
