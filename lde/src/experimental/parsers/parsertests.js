@@ -278,7 +278,8 @@ export const runParserTests = (args = []) => {
           failures++
           console.log(`${redx} ${xPen(label +
                       ': no snapshot for new test (run with --update):')}\n` +
-                      `    input: ${itemPen(input)}`)
+                      `    input: ${itemPen(input)}\n` +
+                      `    output: ${itemPen(output)}`)
         } else if (snap[input] !== output) {
           failures++
           if (snap[input].length > LONG_OUTPUT || output.length > LONG_OUTPUT) {

@@ -107,6 +107,8 @@ group relation
   R is a relation on A   -> (relation R A)
   A is a subset of B     -> (⊆ A B)      // symbolic ⊆ lives in chains below
   d is a divisor of n    -> (| d n)      // symbolic | lives in chains below
+	x is a unit of R       -> (unit x R)
+	x is a unit in R       -> (unit x R)
   M is an upper bound of S   -> (upperbound M S)
   m is a lower bound of S    -> (lowerbound m S)
   x is open in y             -> (open x y)
