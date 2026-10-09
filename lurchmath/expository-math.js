@@ -141,7 +141,13 @@ export class ExpositoryMath extends Atom {
                   // jaxinthebox.innerHTML = `$$${dialog.get( 'latex' )}$$`
                   // MathJax.typeset()
                 }
-                if ( component.name == 'preview' )
+                // Copy MathLive edits back into the LaTeX input, but only when
+                // the user can edit the MathLive field.  In Advanced mode it is
+                // a read-only preview, so its only changes are our own
+                // setValue() calls above, and copying those back would replace
+                // the user's text with MathLive's normalization of it (e.g.,
+                // `\Z_` becomes `\Z_{}`) and move the cursor to the end.
+                if ( component.name == 'preview' && mode != 'Advanced' )
                     dialog.querySelector( textSelector ).value =
                         mathLivePreview.mathLiveEditor.value
                 dialog.dialog.setEnabled( 'OK', !empty() )
