@@ -819,6 +819,34 @@ class(a,'~')
 set(1,2,3)
 set(x : x in A)
 
+// quotient sets: A modulo B is the set of equivalence classes of A under
+// the relation B, putdown (quotient A B); the call form quotient(A,B) is
+// the same head; the right hole admits a bare relation operator (bare:
+// right, like the ∈ rows); tight star level, left assoc, so a nested or
+// compound operand on the right needs parentheses (ZZ modulo n*ZZ is
+// (ZZ modulo n)*ZZ, as for any star-level operator)
+G modulo N
+R modulo I
+S modulo ~
+S modulo (~)
+S modulo '~'
+S modulo ~_(u)
+S modulo cong_(m)
+quotient(S,~)
+quotient(G,N)
+G modulo N cross H modulo K
+G modulo N modulo K
+(G modulo N) modulo (K modulo N)
+(G cross H) modulo N
+ZZ modulo (n*ZZ)
+ZZ modulo n*ZZ
+(G modulo N)^2
+a oplus I in R modulo I
+class(a) in S modulo ~
+S modulo ~ = T
+Declare quotient
+Declare modulo
+
 // table-driven relation edge cases:
 // a longer keyword sequence that fails to complete falls back to a
 // shorter one (the ranked-row retry)

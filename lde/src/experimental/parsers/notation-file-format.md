@@ -153,7 +153,7 @@ Fields:
 | `assoc:`    | infix (G)  | `nary` \| `left` \| `right` \| `none` |
 | `level:`    | infix (G)  | `like ⟨op⟩` — existing anchors only |
 | `params:`   | infix (G)  | `ok` — operator may carry `_(...)` |
-| `bare:`     | relation / chain family | `right` / `left` bare-mention holes |
+| `bare:`     | relation / chain family / infix | `right` / `left` bare-mention holes (`right` also on an infix row: `A modulo B`) |
 | `case:`     | any name   | `any` — case-insensitive matching |
 | `names:`    | bigop      | additional leading names |
 | `body:`     | bigop      | `set` — body hole admits set expressions |

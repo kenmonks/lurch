@@ -924,6 +924,7 @@ export const compileNotation = parsed => {
            !isGlyphToken(primaryKw) ) row.fmtKey = 'src'
       if ( flags.signed ) row.signed = true
       if ( groupFields.params === 'ok' ) row.params = true
+      if ( flags.bareRight ) row.bareRight = true
       row.aliases = sorted
       row.sharedLevel = sharedLevel
       infixBands[band].push( remember(row, decl.line) )
@@ -1343,6 +1344,7 @@ export const compileNotation = parsed => {
                                ? { hole: prec === 'STAR' ? 'star' : 'full' }
                                : {} ),
                           ...( rest.params ? { params: true } : {} ),
+                          ...( rest.bareRight ? { bareRight: true } : {} ),
                           aliases: rest.aliases }
         lineOf.set( stamped, lineOf.get(row) )
         out.push(stamped)

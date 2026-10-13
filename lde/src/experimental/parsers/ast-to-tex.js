@@ -246,6 +246,28 @@ const tuple = (a, b) => {
 // a \frac instead - see texProduct)
 const texInverse = s => `\\frac{1}{${nopar(s)}}`
 
+// quotient sets (A modulo B, quotient(A,B)): A/B with an inline slash,
+// never a \frac - that is division's rendering, and the two are different
+// heads.  Operands are closed units by grammar, so user parentheses print
+// via texParen; a nested quotient on the left (the left-assoc (G/N)/K)
+// needs no parens in the grammar, so it is parenthesized here.  A bare
+// relation operator in the denominator (S modulo ~, or the mention (~))
+// renders as an ordinary symbol, S/\mathord{\sim}, so the binary spacing
+// of \sim does not open a gap after the slash.
+const bareOpLeaf = node =>
+  typeof node === 'string'
+    ? ( Object.prototype.hasOwnProperty.call(leafMap, node) ? node : null )
+    : node?.type === 'paren' ? bareOpLeaf(node.expr) : null
+const texQuotient = (a, T) => {
+  const num = ( a[0]?.type === 'op' && a[0].op === 'quotient' )
+    ? `\\left(${T(a[0])}\\right)` : T(a[0])
+  const op = bareOpLeaf(a[1])
+  const den = op !== null ? `\\mathord{${leafTex(op)}}`
+            : a[1]?.type === 'paramop' ? `\\mathord{${T(a[1])}}`   // ~_(u)
+            : T(a[1])
+  return `${num}/${den}`
+}
+
 // products, including the (/ x) inverse factors that become \frac's.  The
 // factors arrive as AST nodes (inverse factors must be recognized by node,
 // since their standalone rendering is a \frac) and are rendered here.
@@ -402,6 +424,9 @@ const texApp = (node, T) => {
     if (h === 'dot' && args.length >= 2) return args.join('\\cdot ')
     if (node.head === 'abs') return `\\left| ${seq} \\right|`
     if (node.head === 'card') return `\\left| ${seq} \\right|`
+    // the call form of the quotient set renders like its infix surface
+    if (node.head === 'quotient' && node.args.length === 2)
+      return texQuotient(node.args, T)
     if (node.head === 'AlgebraRule' && args.length === 1 &&
         node.args[0] === 'NoMatrixOps')
       return '\\text{algebra rule (with no matrix operations)}'
@@ -632,6 +657,7 @@ export const astToTex = node => {
         case '⊕'         : return texJoin('\\oplus ', a.map(T))
         case '⊗'         : return texJoin('\\otimes ', a.map(T))
         case '⊙'         : return texJoin('\\odot ', a.map(T))
+        case 'quotient'  : return texQuotient(a, T)
         // Any head declared in lurch-notation.txt with a
         // hole-free tex: rendering joins its arguments with it, and an
         // English-echo infix head (or/and via desugar-built nodes, with

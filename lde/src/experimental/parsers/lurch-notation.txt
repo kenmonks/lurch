@@ -232,6 +232,20 @@ group infix    level: like ★    assoc: left    params: ok
   a ∔ b        word: dotplus                    tex: \dotplus
   a ⊛ b        words: circledast, oast          tex: \circledast
 
+// quotient sets: the set of equivalence classes of A under the relation B
+// (G modulo N, R modulo I, S modulo ~), spoken "A modulo B".  Same level
+// as the generic operators (tight holes, left assoc: G modulo N cross H
+// modulo K is (G/N)×(H/K), G modulo N modulo K is (G/N)/K).  The call
+// form quotient(A,B) is ordinary application of the same head.  No tex:
+// here - the printer renders the inline slash itself (A/B, with a bare
+// relation denominator as an ordinary symbol, S/\mathord{\sim}), so the
+// word modulo and the mentioned head keep their own text renderings
+// instead of the division slash.  bare: right admits a bare relation
+// operator in the right hole, as the ∈ rows do (S modulo ~).
+group infix    level: like ★    assoc: left
+  A modulo B   -> (quotient A B)                 bare: right
+                                                 example: G modulo N
+
 // ------------------------------------------------------------------------
 // Big operators — each line selects a registered form shape (call /
 // callIndef / d / eq / inOf / forIn) and states its putdown head after ->.

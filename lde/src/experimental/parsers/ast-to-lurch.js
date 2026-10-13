@@ -35,7 +35,7 @@
 
 import { relationRows, propRows, setAlgRows, paramOpRows, delimitedRows,
          putdownLeadingSymbolRenames } from './notation-tables.js'
-import { wordClassClaims } from './expression-core.js'
+import { wordClassClaims, matchDeclarableName } from './expression-core.js'
 import { operatorGlyphs } from './notation-tables.js'
 
 // delimited-form rows by head, for printing a head's declared surface
@@ -126,10 +126,17 @@ const shorthandSrc = {
 ///////////////////////////////////////////////////////////////////////////
 // The printer
 
-// a string leaf, in expression position
+// a string leaf, in expression position.  An operator head prints as its
+// mention, (star), unless the head is itself an ordinary word the grammar
+// does not classify (quotient, partition, nbhd: heads of rows whose
+// surfaces are other words) - such a head reads back as a plain Symbol, so
+// it prints raw and the call form quotient(S,(~)) stays recognizable
+// instead of (modulo)(S,(~))
+const plainHead = s =>
+  /^[A-Za-z][A-Za-z0-9]*$/.test(s) && matchDeclarableName(s, 0)?.len !== s.length
 const leaf = s => {
   if ( s.startsWith('"') || /^\d/.test(s) ) return s
-  if ( mentionCanon.has(s) ) return `(${mentionCanon.get(s)})`
+  if ( mentionCanon.has(s) && !plainHead(s) ) return `(${mentionCanon.get(s)})`
   return renameSrc.get(s) ?? s
 }
 

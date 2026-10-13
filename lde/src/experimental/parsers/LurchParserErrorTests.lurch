@@ -312,3 +312,10 @@ f(x]
 f[x]y
 2[1,2]
 f[x]^2
+
+// quotient sets: modulo is an operator word that needs both operands,
+// and its tight star-level right hole does not admit a unary minus
+// (write S modulo (-x))
+modulo
+S modulo
+S modulo -x

@@ -917,7 +917,8 @@ SetAlg = a:FullUnit
                  _ '_' '('_ @ExpressionSeq _')' )?
              &{ return climbAccepts(o, p, precedence.SETMINUS) }
              _ b:( &{ return o.row.hole === 'star' } @Closed /
-                   &{ return o.row.hole !== 'star' } @FullUnit )
+                   &{ return o.row.hole !== 'star' } @FullUnit /
+                   &{ return o.row.bareRight === true } @BareOpName )
              &{ return climbTake(o, p) }
              { return { tok:o, arg:b, params:p } } )*
          { return resolveClimb(a, t) }
@@ -931,7 +932,8 @@ AlgExpr = a:FullUnit
                   _ '_' '('_ @ExpressionSeq _')' )?
               &{ return climbAccepts(o, p, precedence.CHOOSE) }
               _ b:( &{ return o.row.hole === 'star' } @Closed /
-                    &{ return o.row.hole !== 'star' } @FullUnit )
+                    &{ return o.row.hole !== 'star' } @FullUnit /
+                    &{ return o.row.bareRight === true } @BareOpName )
               &{ return climbTake(o, p) }
               { return { tok:o, arg:b, params:p } } )*
           { return resolveClimb(a, t) }
@@ -943,7 +945,8 @@ ProductExpr = a:FullUnit
                       _ '_' '('_ @ExpressionSeq _')' )?
                   &{ return climbAccepts(o, p, precedence.PROD) }
                   _ b:( &{ return o.row.hole === 'star' } @Closed /
-                        &{ return o.row.hole !== 'star' } @FullUnit )
+                        &{ return o.row.hole !== 'star' } @FullUnit /
+                        &{ return o.row.bareRight === true } @BareOpName )
                   &{ return climbTake(o, p) }
                   { return { tok:o, arg:b, params:p } } )*
               { return resolveClimb(a, t) }
@@ -955,7 +958,8 @@ StarExpr = a:Closed
                    _ '_' '('_ @ExpressionSeq _')' )?
                &{ return climbAccepts(o, p, precedence.STAR) }
                _ b:( &{ return o.row.hole === 'star' } @Closed /
-                     &{ return o.row.hole !== 'star' } @FullUnit )
+                     &{ return o.row.hole !== 'star' } @FullUnit /
+                     &{ return o.row.bareRight === true } @BareOpName )
                &{ return climbTake(o, p) }
                { return { tok:o, arg:b, params:p } } )*
            { return resolveClimb(a, t) }
