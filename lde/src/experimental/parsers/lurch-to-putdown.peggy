@@ -381,7 +381,7 @@ Given = a:GivenLabel _ !Declaration b:(Expression / BareOpName)|1..,comma| !comm
           { return { type:'given', label:a, exprs:b } } /
         a:GivenLabel { return { type:'given', label:a, exprs:[] } }
   GivenLabel = $':' / $(('assume'i / 'given'i / 'suppose'i /
-                         'if'i / 'from'i / 'define'i ) !alphanum)
+                         'if'i / 'from'i / 'define'i / 'pretend'i ) !alphanum)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Environments
