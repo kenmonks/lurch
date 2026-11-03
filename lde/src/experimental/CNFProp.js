@@ -304,7 +304,7 @@ hasCNFform() {
   static toCNF ( Lprop , switchvar ) {
     if (Number.isInteger(Lprop)) { return [[Lprop]] }
     if (Lprop.kids.length===0) { return (Lprop.op==='and') ? [] : [[]] }
-    if (Lprop.kids.length===1) { return CNFProp.toCNF(Lprop.kids[0]) }
+    if (Lprop.kids.length===1) { return CNFProp.toCNF(Lprop.kids[0],switchvar) }
     // it's compound
     if (Lprop.op==='and') { 
       return CNF.and(...Lprop.kids.map(x=>CNFProp.toCNF(x,switchvar))) 
