@@ -431,6 +431,11 @@ const texApp = (node, T) => {
         node.args[0] === 'NoMatrixOps')
       return '\\text{algebra rule (with no matrix operations)}'
   }
+  // the subscripted congruence mention cong_(m) is the chain operator
+  // itself, so it renders as that operator does (chainTexOp): the modulus
+  // under the ≡, not \cong with a subscript
+  if ( node.head === '≅' && node.fmt?.sub )
+    return `\\underset{${seq}}{\\equiv}`
   return T(node.head) +
     ( node.fmt?.sub ? `_{${seq}}`
       : node.fmt?.bracket ? `\\left[${seq}\\right]` : `\\left(${seq}\\right)` )

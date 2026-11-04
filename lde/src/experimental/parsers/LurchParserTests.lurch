@@ -832,6 +832,7 @@ S modulo (~)
 S modulo '~'
 S modulo ~_(u)
 S modulo cong_(m)
+cong_(m) is a relation on S
 quotient(S,~)
 quotient(G,N)
 G modulo N cross H modulo K
