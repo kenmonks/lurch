@@ -109,7 +109,7 @@ group relation
   d is a divisor of n    -> (| d n)      // symbolic | lives in chains below
 	x is a unit of R       -> (unit x R)
 	  also: x is a unit in R
-	I is an ideal of R     -> (idealof I R)
+	I is an ideal of R     -> (ideal I R)
   M is an upper bound of S   -> (upperbound M S)
   m is a lower bound of S    -> (lowerbound m S)
   x is open in y             -> (open x y)
