@@ -848,6 +848,60 @@ S modulo ~ = T
 Declare quotient
 Declare modulo
 
+// generalized cosets: lcoset(a,S,c) is the set of all a c s for s in S and
+// rcoset(S,a,c) the set of all s c a, for any infix operator c mentioned
+// bare or subscripted as the third argument; ordinary application in the
+// putdown, but the tex renders the infix expression abbreviated (the first
+// two arguments in order, joined by the operator), and an operator written
+// in parentheses, rcoset(N,a,(*)), is elided in the tex (the juxtaposition
+// Na) with no change to the putdown.  Operands at the operator's level or
+// looser are parenthesized, as is a coset that is itself the operand of an
+// operator at its level or tighter (the call form carries no parentheses
+// of its own).  A third argument that is not an operator mention leaves
+// the call form as it is.
+lcoset(a,N,+)
+lcoset(a,N,(+))
+rcoset(N,a,*)
+rcoset(N,a,(*))
+lcoset(a,N,★)
+lcoset(a,N,(★))
+lcoset(a,N,oplus)
+rcoset(N,a,(oplus))
+lcoset(a,N,cup)
+lcoset(a,N,★_(n))
+lcoset(a,N,(★_(n)))
+lcoset(a,N,cong_(m))
+rcoset(N,a,-)
+lcoset(a,N,f)
+lcoset(a,N,(f))
+lcoset(a,N)
+lcoset(a+b,N,*)
+lcoset(a*b,N,+)
+lcoset(a,N cup M,*)
+lcoset(-a,N,+)
+lcoset(a^2,N,*)
+lcoset(a!,N,+)
+lcoset(a cup b,N,cap)
+rcoset(N cap M,a,(*))
+lcoset(lcoset(a,N,*),M,*)
+lcoset(lcoset(a,N,+),M,*)
+(lcoset(a,N,*))
+(lcoset(a,N,+))^2
+x*lcoset(a,N,+)
+x*lcoset(a,N,(*))
+x*lcoset(a,N,(+))
+lcoset(a,N,+)*x
+x+lcoset(a,N,*)
+-lcoset(a,N,+)
+x in lcoset(a,N,*)
+lcoset(a,N,*) subseteq N
+lcoset(a,N,+) = rcoset(N,a,+)
+lcoset(a,N,+) modulo M
+lcoset(a,N,+) cross M
+{lcoset(a,N,+),rcoset(N,b,(*))}
+f(lcoset(a,N,+))
+Declare lcoset, rcoset
+
 // table-driven relation edge cases:
 // a longer keyword sequence that fails to complete falls back to a
 // shorter one (the ranked-row retry)

@@ -46,7 +46,7 @@ import {
   texsymbol, texReservedWords, putdownLeadingSymbolRenames, operatorHeadTex,
   texRightOpen, headJoinTex, englishInfixJoin, srcJointTex, srcEchoTex,
   englishRelationHeads, negFixedTex, chainFamilies, bigOpHeadTex, bigOpDHeads,
-  delimitedTexTemplates
+  delimitedTexTemplates, precedence, propRows, setAlgRows, relationRows
 } from './notation-tables.js'
 
 // render a delimited-form head via its derived template (see
@@ -268,6 +268,76 @@ const texQuotient = (a, T) => {
   return `${num}/${den}`
 }
 
+// cosets, generalized: lcoset(a,S,c) is the set of all a c s for s in S,
+// and rcoset(S,a,c) the set of all s c a, where c is any infix operator
+// mentioned as the third argument - bare (lcoset(a,N,+)), or subscripted
+// (lcoset(a,N,★_(n))).  Both are ordinary application in the putdown,
+// (lcoset a S c), so the context rules can define them; the tex renders
+// the infix expression the name abbreviates - the first two arguments in
+// order, joined by the operator's own rendering: a+N, N\cdot a.  Writing
+// the operator in parentheses, rcoset(N,a,(*)), elides it in the tex -
+// the juxtaposition Na of multiplicative cosets - and nothing else
+// changes: (c) is just the mention of c, so the putdown is the same.  An
+// operand that is itself an infix expression at the operator's level or
+// looser (a+b in lcoset(a+b,N,*)) is parenthesized, as is any operand
+// that is not self-delimiting; a tighter infix operand (a*b in
+// lcoset(a*b,N,+)) and the postfix/exponent/inverse forms render bare.
+// The elided operator parenthesizes as the operator it stands for.  A
+// third argument that is not an operator mention leaves the call form as
+// it is.
+const infixLevel = Object.fromEntries(
+  [ ...propRows, ...setAlgRows, ...relationRows ]
+    .map( r => [ r.head, precedence[r.prec] ] ) )
+// the operator of a coset application: its head, its node, whether it is
+// elided, and the precedence level it parenthesizes at; null when the
+// node is not a coset with an operator mention as its third argument
+const cosetOp = node => {
+  if ( node?.type !== 'app' || node.args.length !== 3 ||
+       ( node.head !== 'lcoset' && node.head !== 'rcoset' ) ) return null
+  const c = node.args[2]
+  const elide = c?.type === 'paren'
+  const op = elide ? c.expr : c
+  const head = typeof op === 'string' ? op
+    : ( op?.type === 'app' && op.fmt?.sub && typeof op.head === 'string' )
+      ? op.head : null
+  return head === null ? null
+    : { head, op, elide, level: infixLevel[head] ?? precedence.STAR }
+}
+const cosetOpTex = op =>
+  op === '+' ? '+' : op === '⋅' ? '\\cdot '
+  : headJoinTex[op] ?? `\\mathbin{${leafTex(op)}}`
+const selfDelimiting = new Set( [ 'app', 'paren', 'set', 'setbuilder',
+  'class', 'tuple', 'efa', 'range', 'interval' ] )
+const texCoset = (node, T) => {
+  const { op, elide, level } = cosetOp(node)
+  const opTex = elide ? '' : typeof op === 'string' ? cosetOpTex(op)
+              : `\\mathbin{${T(op)}}`
+  // a nested coset is an application node but renders infix, so it
+  // parenthesizes by its own operator's level, like an infix operand
+  const operand = n => {
+    const inner = cosetOp(n)
+    if ( inner !== null ) return inner.level > level ? T(n) : T({ type: 'paren', expr: n })
+    if ( typeof n === 'string' || selfDelimiting.has(n.type) ) return T(n)
+    const tight = n.type === 'op' &&
+      ( [ '^', '!', '°', '/' ].includes(n.op) || infixLevel[n.op] > level )
+    return tight ? T(n) : `\\left(${T(n)}\\right)`
+  }
+  return `${operand(node.args[0])}${opTex}${operand(node.args[1])}`
+}
+// A coset renders as an infix expression, but the user types a call form,
+// which the grammar accepts bare where the infix expression would have
+// needed parentheses.  So an operator whose operand is a coset at its
+// level or looser (x*lcoset(a,N,+), -lcoset(a,N,+), the base of ^)
+// renders it as if the user had parenthesized it: the operand is wrapped
+// in a paren node, which texParen keeps visible for cosets (wrappedApp).
+// Null when no operand needs wrapping.
+const wrapCosetOperands = node => {
+  const level = infixLevel[node.op] ?? Infinity
+  const wrap = n => cosetOp(n) !== null && cosetOp(n).level <= level
+  return node.args.some(wrap) ? { ...node, args: node.args.map( n =>
+    wrap(n) ? { type: 'paren', expr: n } : n ) } : null
+}
+
 // products, including the (/ x) inverse factors that become \frac's.  The
 // factors arrive as AST nodes (inverse factors must be recognized by node,
 // since their standalone rendering is a \frac) and are rendered here.
@@ -409,6 +479,12 @@ const texApp = (node, T) => {
        delimitedTexTemplates[node.head] !== undefined &&
        node.args.length === delimitedTexTemplates[node.head].arity )
     return texDelimTemplate( delimitedTexTemplates[node.head], node.args, T )
+  // the generalized cosets render as the infix expression they abbreviate
+  if ( ( node.head === 'lcoset' || node.head === 'rcoset' ) &&
+       node.args.length === 3 ) {
+    const coset = texCoset(node, T)
+    if ( coset !== null ) return coset
+  }
   const args = node.args.map(T)
   const seq = args.join(',')
   if (typeof node.head === 'string') {
@@ -445,8 +521,9 @@ const texApp = (node, T) => {
 // self-delimiting inside user parentheses? ((floor(x)) keeps its
 // parentheses - snapshot-locked)
 const wrappedApp = node =>
-  typeof node.head === 'string' && node.args.length === 1 &&
-  ['floor', 'ceiling'].includes(node.head.toLowerCase())
+  ( typeof node.head === 'string' && node.args.length === 1 &&
+    ['floor', 'ceiling'].includes(node.head.toLowerCase()) ) ||
+  cosetOp(node) !== null
 
 // user parentheses: reproduce which constructs render bare inside them
 const texParen = (node, T) => {
@@ -595,6 +672,10 @@ export const astToTex = node => {
 
     // operators
     case 'op'        : {
+      // an infix-rendered coset operand renders parenthesized (see
+      // wrapCosetOperands); the wrapped node has nothing left to wrap
+      const wrapped = wrapCosetOperands(node)
+      if ( wrapped !== null ) return T(wrapped)
       const o = node.op, a = node.args
       // the `is a ⟨noun⟩ ⟨prep⟩` registry phrases render the
       // typed phrase, before the operator lookup so a symbolic head (⊆, ⊑)

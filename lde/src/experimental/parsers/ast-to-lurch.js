@@ -319,6 +319,21 @@ const P = node => {
       // formatting only and canonicalizes away to the call form; the
       // square-bracket delimiter f[x] (fmt.bracket) canonicalizes away too
       const sub = typeof base === 'string' && /^\d/.test(base) ? '_' : ''
+      // the operator argument of a generalized coset keeps its exact
+      // surface: the tex elides an operator written in parentheses,
+      // lcoset(a,N,(+)), so a bare mention must stay bare (every bare
+      // operator word parses as a call argument) and a parenthesized one
+      // must keep exactly one pair
+      if ( ( base === 'lcoset' || base === 'rcoset' ) &&
+           groups.length === 1 && groups[0].length === 3 ) {
+        const c = groups[0][2]
+        const bare = s => mentionCanon.get(s) ?? renameSrc.get(s) ?? s
+        const op = typeof c === 'string' ? bare(c)
+          : ( c.type === 'paren' && typeof c.expr === 'string' )
+            ? `(${bare(c.expr)})` : null
+        if ( op !== null )
+          return `${head}(${callArgs(groups[0].slice(0, 2))},${op})`
+      }
       return head + groups.map( (g,i) =>
         `${ i === 0 ? sub : '' }(${callArgs(g)})` ).join('')
     }
