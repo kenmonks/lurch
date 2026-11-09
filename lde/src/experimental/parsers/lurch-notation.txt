@@ -333,6 +333,8 @@ group constant
   intdomain             words: integral domain
 	eventuallyZero        words: eventually zero
   Units                                         tex: \mathcal{U}
+	ee                                            tex: e
+	Sym                                           tex: S
   // (phrase replacement happens in file order; keep the quantifier
   // lines after the order phrases)
   ∀     words: for all, for each, for every, forall    tex: \forall
