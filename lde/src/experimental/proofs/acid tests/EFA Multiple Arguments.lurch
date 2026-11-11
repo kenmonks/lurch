@@ -1,0 +1,72 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: EFA Multiple Arguments - @P(a,b) solutions keep their parameters
+//
+// The matcher solves a multi-argument expression-function metavariable
+// such as @P(a,b) with a λ binding one parameter per argument, e.g.
+// (λ (v₁ v₂) , body).  The instantiation loop then renames the binders
+// of every EF value to reserved z-names (sanitizeSolution, see the acid
+// test EFA Capture) so that nothing in the body can capture an argument.
+// That renaming once went through canonicalizeBindings, which assigns
+// one name per BindingExpression, so a two-parameter λ became
+// (λ (z₁ z₁) , body): both parameters collapsed into one, the body lost
+// the distinction between the two argument slots, and every Inst of the
+// rule had the wrong premise and conclusion.  The fix renames only the
+// binders inside the λ's body, leaving the fresh parameters alone.
+//
+// Section 1 is the rule for proving the existence of a function that
+// surfaced the bug (the user's f is deliberately the same symbol as the
+// rule's bound f).  Section 2 checks that the two argument slots are not
+// confused in either direction.  Section 3 is a plain two-argument EFA
+// whose arguments are both metavariables.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "existence of a function from a Let-environment premise"
+{
+  Declare exists , existsUnique , forall , and , implies , in , = , maps , class
+  rule: {
+    : {
+      {
+        Let a in A
+        existsUnique b in B.@P(a , b)
+      }
+    }
+    exists f.f: A to B and (forall x in A.@P(x , f(x)))
+  }
+  proof: {
+    {
+      Let A in Q
+      existsUnique s in S.forall a in R.A=class(a) implies s=f(a)
+    }
+    exists g.g: Q to S and (forall A in Q.forall a in R.A=class(a) implies g(A)=f(a)) ✔︎
+    exists g.g: Q to S and (forall A in Q.forall a in R.A=class(a) implies A=f(a)) ✗
+    exists g.g: Q to S and (forall A in Q.forall a in R.A=class(a) implies g(a)=f(A)) ✗
+  }
+}
+
+➤ "the two argument slots are not confused"
+{
+  Declare forall , implies , R , T
+  rule: {
+    If forall x.forall y.@P(x , y) , @P(s , t)
+    @P(t , s)
+  }
+  Assume forall x.forall y.R(x , y) implies T(y , x)
+  Assume R(u , w) implies T(w , u)
+  R(w , u) implies T(u , w) ✔︎
+  R(w , u) implies T(w , u) ✗
+  R(u , w) implies T(u , w) ✗
+}
+
+➤ "two-argument EFA with metavariable arguments"
+{
+  Declare forall , M
+  rule: {
+    If forall x.forall y.@P(x , y)
+    @P(s , t)
+  }
+  Assume forall x.forall y.M(x , y , x)
+  M(u , w , u) ✔︎
+  M(u , w , w) ✗
+}

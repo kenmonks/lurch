@@ -1978,8 +1978,16 @@ const getUserPropositions = doc => {
 }
 
 /**
- * Rename the binders inside every expression-function value of a matching
- * Solution to `z₁, z₂, ...`, in place, and return the Solution.
+ * Rename the binders inside the body of every expression-function value of
+ * a matching Solution to `z₁, z₂, ...`, in place, and return the Solution.
+ *
+ * Only the body is renamed, never the λ's own parameters.  Those are fresh
+ * symbols from the matcher's symbol stream, so they can neither capture nor
+ * be captured, and they disappear when the EFA is β-reduced.  Renaming the
+ * whole λ through `canonicalizeBindings` would give all its parameters one
+ * name (it assigns one name per BindingExpression), so a two-argument
+ * `@P(a,b)` would lose the distinction between its argument slots; the
+ * acid test `EFA Multiple Arguments` certifies this.
  *
  * An EF value's body is copied from the user's proposition, so its binders
  * carry the user's symbol text.  `Formula.instantiate` substitutes by name
@@ -2003,7 +2011,7 @@ const getUserPropositions = doc => {
 const sanitizeSolution = s => {
   [...s.domain()].forEach(name => {
     const value = s.get(name)
-    if (Matching.isAnEF(value)) replaceBindings(value, 'z')
+    if (Matching.isAnEF(value)) replaceBindings(value.lastChild().body(), 'z')
   })
   return s
 }
