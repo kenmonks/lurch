@@ -144,6 +144,7 @@ const loadAcidTests = () => {
       'Preemie Stress',
       'EFA Capture',
       'EFA Multiple Arguments',
+      'Instantiation Body Binders',
       'Transitive Chains', 'Cong Chains', 'Chain Families',
       'Chain Rule Params',
       'Given Chains', 'Given Chains Absent', 'Given Chains Params',

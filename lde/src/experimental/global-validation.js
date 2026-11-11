@@ -1571,7 +1571,10 @@ const processCases = doc => {
         try {
           ;[...Formula.allPossibleInstantiations(r.lastChild(), e)].map(sanitizeSolution).forEach(s => {
             const inst = Formula.instantiate(r, s)
-            // do the usual prepping
+            // do the usual prepping: rename the bindings to match what the
+            // user would have for the same expressions in his document, and
+            // do so before assigning ProperNames (see insertInstantiation)
+            inst.statements().forEach(x => renameBindings(x))
             assignProperNames(inst)
             cacheFormulaDomainInfo(inst)
             // the inst is no longer a Rule
@@ -1590,10 +1593,6 @@ const processCases = doc => {
             inst.part = r
             if (!r.creators) r.creators = []
             inst.creators = [ ...r.creators, e ]
-            // also rename the bindings to match what the user would have
-            // for the same expressions in his document
-            // time('Rename bindings')
-            inst.statements().forEach(x => renameBindings(x))
             // then insert this instantiation after its formula
             Formula.addCachedInstantiation(r, inst)
             // finally mark the declared symbols in the instantiation
@@ -2237,6 +2236,14 @@ const insertInstantiation = ( inst, formula, creator ) => {
     //
     // TODO: does this have to be done before inserting it?
     // Ans: I tried that and it works, but it's slightly slower for some reason.
+    //
+    // The bindings must be renamed first.  A declaration's ProperName suffix
+    // renders its body's bound variables via their canonical ProperNames, and
+    // an EF value's body arrives carrying the ProperNames of the user
+    // proposition it was copied from, where the binder may sit at a different
+    // depth (so x₂ instead of x₁).  Naming before renaming would give the
+    // instantiated Let a different atom from the user's identical Let.
+    inst.statements().forEach(x => renameBindings(x))
     assignProperNames(inst)
 
     // insert it after the formula, the order doesn't matter
@@ -2261,10 +2268,7 @@ const insertInstantiation = ( inst, formula, creator ) => {
     inst.makeIntoA(instantiation)
     // all instantiations are givens, even Considers
     inst.makeIntoA('given')
-    // also rename the bindings to match what the user would have
-    // for the same expressions in his document
-    inst.statements().forEach(x => renameBindings(x))
-    
+
     // if it's an expression, it's a Consider
     // if (inst instanceof Expression) {
     //   inst.makeIntoA('Consider')

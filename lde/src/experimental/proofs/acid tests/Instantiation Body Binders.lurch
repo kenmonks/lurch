@@ -1,0 +1,60 @@
+////////////////////////////////////////////////////////////////////
+// Acid Test: Instantiation Body Binders
+//
+// A declaration's propositional atom is text#bodySignature, and the
+// signature renders the body's bound variables via their canonical
+// alpha-equivalence ProperNames (x₁, x₂, ...).  When a declaration with a
+// body is instantiated as a side effect of matching some other Weeny - as a
+// typed Let with an environment body must be, since it is a forbidden
+// Weeny - the EF value substituted into its body arrives carrying the
+// ProperNames of the user proposition it was copied from.  If that
+// proposition nested the binder one level deeper (here under ∃!), the
+// binder is named x₂ there but x₁ in the user's Let body.
+//
+// Regression: insertInstantiation assigned ProperNames before renaming the
+// instantiation's bindings, so the instantiated Let got a different atom
+// (t#...x₂...) from the user's identical Let (t#...x₁...) and the
+// Let-environment premise was never discharged.  The bindings must be
+// renamed first.
+//
+// Each section below uses its own disjoint constants so that rules and
+// instantiations cannot cross-justify between sections.
+
+➤ "typed ∃! introduction, environment-body Let, quantified property"
+{
+  Declare ∃!, ∀, c, Q, S
+  Rule: :{ :t in S :@P(t)  :{ Let y in S be such that @P(y)  y=t }  ∃!x in S.@P(x) }
+  Rule: :{ :∀a.Q(a,y)   y=c }
+  Assume ∀a.Q(a,c)
+  Assume c in S
+  { Let t in S be such that ∀a.Q(a,t)
+    t=c ✔︎
+  }
+  ∃!x in S.∀a.Q(a,x) ✔︎
+}
+
+➤ "same, with an implication under the quantifier mentioning an outer Let"
+{
+  Declare ∃!, ∀, ⇒, d, R, T, f, g
+  Rule: :{ :t in T :@P(t)  :{ Let y in T be such that @P(y)  y=t }  ∃!x in T.@P(x) }
+  Rule: :{ :∀a.(B=g(a) ⇒ y=f(a))   y=d }
+  Let B
+  Assume ∀a.(B=g(a) ⇒ d=f(a))
+  Assume d in T
+  { Let t in T be such that ∀a.(B=g(a) ⇒ t=f(a))
+    t=d ✔︎
+  }
+  ∃!x in T.∀a.(B=g(a) ⇒ x=f(a)) ✔︎
+}
+
+➤ "untyped expression-body Let still works"
+{
+  Declare ∃!, ∀, e, W
+  Rule: :{ :@P(t)  :{ Let y be such that @P(y)  y=t }  ∃!x.@P(x) }
+  Rule: :{ :∀a.W(a,y)   y=e }
+  Assume ∀a.W(a,e)
+  { Let t be such that ∀a.W(a,t)
+    t=e ✔︎
+  }
+  ∃!x.∀a.W(a,x) ✔︎
+}
