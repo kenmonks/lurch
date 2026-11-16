@@ -470,7 +470,7 @@ const texSum = (node, T) => {
 }
 
 // function application: the heads with special
-// renderings (multinomial, floor, ceiling, sqrt, inv, dot, abs, index)
+// renderings (multinomial, floor, ceiling, sqrt, inv, dot, abs, card, order, index)
 const texApp = (node, T) => {
   // a delimited-form head applied to exactly its arity renders the
   // declared template, so the call synonym prints like the delimited
@@ -500,6 +500,7 @@ const texApp = (node, T) => {
     if (h === 'dot' && args.length >= 2) return args.join('\\cdot ')
     if (node.head === 'abs') return `\\left| ${seq} \\right|`
     if (node.head === 'card') return `\\left| ${seq} \\right|`
+    if (node.head === 'order') return `\\left| ${seq} \\right|`
     // the call form of the quotient set renders like its infix surface
     if (node.head === 'quotient' && node.args.length === 2)
       return texQuotient(node.args, T)
