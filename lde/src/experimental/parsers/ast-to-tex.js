@@ -470,7 +470,8 @@ const texSum = (node, T) => {
 }
 
 // function application: the heads with special
-// renderings (multinomial, floor, ceiling, sqrt, inv, dot, abs, card, order, index)
+// renderings (multinomial, floor, ceiling, sqrt, inv, dot, abs, card, order,
+// index, quotient, gen)
 const texApp = (node, T) => {
   // a delimited-form head applied to exactly its arity renders the
   // declared template, so the call synonym prints like the delimited
@@ -504,6 +505,9 @@ const texApp = (node, T) => {
     // the call form of the quotient set renders like its infix surface
     if (node.head === 'quotient' && node.args.length === 2)
       return texQuotient(node.args, T)
+    // gen(a1,...,an) - the generated substructure - renders like a tuple,
+    // ⟨a1,...,an⟩, with the head elided (the putdown keeps (gen a1 ... an))
+    if (node.head === 'gen' || node.head === 'genset') return tuple(args, '')
     if (node.head === 'AlgebraRule' && args.length === 1 &&
         node.args[0] === 'NoMatrixOps')
       return '\\text{algebra rule (with no matrix operations)}'
