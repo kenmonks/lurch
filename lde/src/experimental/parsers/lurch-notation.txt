@@ -336,6 +336,7 @@ group constant
 	ee                                            tex: e
 	Sym                                           tex: S
 	center                                        tex: Z
+
   // (phrase replacement happens in file order; keep the quantifier
   // lines after the order phrases)
   ∀     words: for all, for each, for every, forall    tex: \forall
@@ -364,7 +365,7 @@ group constant
 latex names: aleph, alpha, beta, gamma, Gamma, delta, Delta, epsilon, varepsilon,
   zeta, eta, theta, vartheta, Theta, iota, kappa, lambda, Lambda, mu, nu,
   xi, Xi, pi, Pi, rho, varrho, sigma, Sigma, tau, upsilon, Upsilon, phi,
-  varphi, Phi, chi, psi, Psi, omega, Omega
+  varphi, Phi, chi, psi, Psi, omega, Omega, ell
 
 // ------------------------------------------------------------------------
 // Unicode input rewrites — ONLY the glyphs belonging to no row above
